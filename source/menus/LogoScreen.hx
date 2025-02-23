@@ -59,7 +59,7 @@ class LogoScreen extends FlxState
 
             FlxTimer.wait(2.65, () -> 
             {
-                FlxTween.tween(haxeSplash, {y: haxeSplash.y + 150.0}, 0.6, {ease: FlxEase.smoothStepOut});
+                FlxTween.tween(haxeSplash, {y: haxeSplash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
 
                 FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
             });
