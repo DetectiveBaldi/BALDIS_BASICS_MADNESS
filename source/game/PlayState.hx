@@ -35,7 +35,7 @@ import game.events.ScrollSpeedChangeEvent;
 
 import menus.OptionsMenu;
 
-import music.MusicSubState;
+import music.MusicState;
 
 import ui.Countdown;
 
@@ -45,7 +45,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class PlayState extends MusicSubState
+class PlayState extends MusicState
 {
     public var gameCamera(get, never):FlxCamera;
     

@@ -1,7 +1,6 @@
 package menus;
 
 import flixel.FlxG;
-import flixel.FlxState;
 
 import flixel.sound.FlxSound;
 
@@ -12,9 +11,11 @@ import flixel.util.FlxColor;
 import core.Assets;
 import core.Paths;
 
+import effects.TransitionState;
+
 import game.levels.Level1;
 
-class WarningScreen extends FlxState
+class WarningScreen extends TransitionState
 {
     public var text:FlxText;
 

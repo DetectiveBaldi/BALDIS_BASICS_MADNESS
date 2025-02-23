@@ -1,11 +1,11 @@
 package music;
 
-import flixel.FlxState;
+import effects.TransitionState;
 
 /**
- * An extended `flixel.FlxState` designed to support musical timing events.
+ * An extended `effects.TransitionState` designed to support musical timing events.
  */
-class MusicState extends FlxState
+class MusicState extends TransitionState
 {
     public var conductor:Conductor;
 

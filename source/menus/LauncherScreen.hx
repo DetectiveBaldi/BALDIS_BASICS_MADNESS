@@ -2,7 +2,6 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
 
 import flixel.sound.FlxSound;
 
@@ -12,7 +11,9 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-class LauncherScreen extends FlxState
+import effects.TransitionState;
+
+class LauncherScreen extends TransitionState
 {
     public var background:FlxSprite;
 
@@ -72,6 +73,12 @@ class LauncherScreen extends FlxState
     public function playSlapSound(onComplete:()->Void):Void
     {
         FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/globals/slap")), 1.0, false, null, true, onComplete);
+
+        playButton.onClick.removeAll();
+
+        discordButton.onClick.removeAll();
+
+        exitButton.onClick.removeAll();
     }
 
     public function clickPlayButton():Void

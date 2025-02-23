@@ -2,7 +2,6 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -23,9 +22,11 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
+import effects.TransitionState;
+
 import game.levels.Level1;
 
-class OptionsMenu extends FlxState
+class OptionsMenu extends TransitionState
 {
     public var background:FlxSprite;
 

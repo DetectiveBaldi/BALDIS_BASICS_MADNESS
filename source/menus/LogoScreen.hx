@@ -2,7 +2,6 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -17,7 +16,9 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
-class LogoScreen extends FlxState
+import effects.TransitionState;
+
+class LogoScreen extends TransitionState
 {
     public var haxeSplash:FlxSprite;
 
@@ -44,6 +45,8 @@ class LogoScreen extends FlxState
         add(haxeSplash);
 
         logo = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/logo")));
+
+        logo.active = false;
 
         logo.setPosition((FlxG.width - logo.width) * 0.5, -logo.height);
 

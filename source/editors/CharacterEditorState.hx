@@ -9,7 +9,6 @@ import openfl.desktop.Clipboard;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
-import flixel.FlxState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
@@ -44,6 +43,8 @@ import core.Paths;
 import data.AnimationData;
 import data.CharacterData;
 
+import effects.TransitionState;
+
 import game.Character;
 import game.levels.Level1;
 
@@ -51,7 +52,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class CharacterEditorState extends FlxState
+class CharacterEditorState extends TransitionState
 {
     public var gameCamera(get, never):FlxCamera;
     
