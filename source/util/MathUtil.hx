@@ -65,10 +65,10 @@ class MathUtil
     public static overload inline extern function centerTo(object:FlxObject, axes:FlxAxes = XY):FlxObject
     {
         if (axes.x)
-            object.x = FlxG.width - object.width * 0.5;
+            object.x = (FlxG.width - object.width) * 0.5;
 
         if (axes.y)
-            object.y = FlxG.height - object.height * 0.5;
+            object.y = (FlxG.height - object.height) * 0.5;
 
         return object;
     }

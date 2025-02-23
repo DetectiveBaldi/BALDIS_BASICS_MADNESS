@@ -12,7 +12,7 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-import game.levels.Level1;
+import menus.LogoScreen;
 
 class LauncherScreen extends FlxState
 {
@@ -33,8 +33,6 @@ class LauncherScreen extends FlxState
         background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LauncherScreen/background")));
 
         background.active = false;
-
-        background.antialiasing = false;
 
         background.scale *= 1.5;
 
@@ -80,7 +78,7 @@ class LauncherScreen extends FlxState
 
     public function clickPlayButton():Void
     {
-        FlxG.switchState(() -> new Level1());
+        FlxG.switchState(() -> new LogoScreen());
     }
 
     public function clickDiscordButton():Void
