@@ -13,6 +13,7 @@ import flixel.util.typeLimit.NextState;
 
 import core.Assets;
 import core.Options;
+import core.Paths;
 
 import plugins.Log;
 
@@ -41,7 +42,7 @@ class InitState extends FlxState
 
         Toolkit.init();
 
-        Toolkit.theme = "dark";
+        Toolkit.theme = Theme.DARK;
 
         FocusManager.instance.autoFocus = false;
 
@@ -50,8 +51,6 @@ class InitState extends FlxState
         FlxG.updateFramerate = MathUtil.maxInt(FlxG.stage.window.displayMode.refreshRate, 144);
 
         FlxG.drawFramerate = MathUtil.maxInt(FlxG.stage.window.displayMode.refreshRate, 144);
-
-        FlxG.mouse.visible = false;
 
         FlxG.console.registerClass(InitState);
         
@@ -69,13 +68,15 @@ class InitState extends FlxState
 
         Assets.init();
 
+        FlxG.signals.preStateSwitch.add(() -> FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/cursor")).bitmap));
+
         log = new Log();
 
         FlxG.plugins.addPlugin(log);
 
         perfStats = new PerfStats(10.0, 5.0);
         
-        FlxG.game.addChildAt(perfStats, FlxG.game.getChildIndex(FlxG.game.debugger));
+        FlxG.game.addChildAt(perfStats, 2);
 
         FlxG.switchState(nextState);
     }
