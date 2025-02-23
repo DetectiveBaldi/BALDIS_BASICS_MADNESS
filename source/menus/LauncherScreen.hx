@@ -12,8 +12,6 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-import menus.LogoScreen;
-
 class LauncherScreen extends FlxState
 {
     public var background:FlxSprite;

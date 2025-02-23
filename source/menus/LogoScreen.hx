@@ -17,8 +17,6 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
-import game.levels.Level1;
-
 class LogoScreen extends FlxState
 {
     public var haxeSplash:FlxSprite;
@@ -61,12 +59,12 @@ class LogoScreen extends FlxState
 
             FlxTimer.wait(2.65, () -> 
             {
-                FlxTween.tween(haxeSplash, {y: haxeSplash.y + 150.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                FlxTween.tween(haxeSplash, {y: haxeSplash.y + 150.0}, 0.6, {ease: FlxEase.smoothStepOut});
 
-                FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 150.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
             });
 
-            FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.0, false, () -> FlxG.switchState(() -> new Level1())));
+            FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
         });
     }
 }
