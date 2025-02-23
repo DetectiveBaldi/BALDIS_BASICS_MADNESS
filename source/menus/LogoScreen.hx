@@ -30,13 +30,15 @@ class LogoScreen extends TransitionState
     {
         super.create();
 
+        FlxG.mouse.visible = false;
+
         haxeSplash = new FlxSprite();
 
         haxeSplash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/haxeSplash")), Paths.xml("assets/images/menus/LogoScreen/haxeSplash"));
 
         haxeSplash.animation.addByPrefix("this", "this", 11.0, false);
 
-        haxeSplash.scale *= 1.5;
+        haxeSplash.scale.set(1.5, 1.5);
 
         haxeSplash.updateHitbox();
 
@@ -56,7 +58,7 @@ class LogoScreen extends TransitionState
         {
             haxeSplash.animation.play("this");
 
-            tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/sounds/menus/LogoScreen/tune")));
+            tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/LogoScreen/tune")));
 
             tune.play();
 

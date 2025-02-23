@@ -13,8 +13,6 @@ import core.Paths;
 
 import effects.TransitionState;
 
-import game.levels.Level1;
-
 class WarningScreen extends TransitionState
 {
     public var text:FlxText;
@@ -24,6 +22,10 @@ class WarningScreen extends TransitionState
     override function create():Void
     {
         super.create();
+
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
 
         var _text:String = "";
 
@@ -71,7 +73,7 @@ class WarningScreen extends TransitionState
 
         text.addFormat(colorSwap, 248, 260);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/sounds/menus/WarningScreen/tune")), 1.0, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/WarningScreen/tune")), 1.0, true);
 
         tune.play();
     }
@@ -79,6 +81,6 @@ class WarningScreen extends TransitionState
     override function update(elapsed:Float):Void
     {
         if (FlxG.keys.justPressed.ANY || FlxG.mouse.justPressed)
-            FlxG.switchState(() -> new Level1());
+            FlxG.switchState(() -> new TitleScreen());
     }
 }

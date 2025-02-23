@@ -29,11 +29,15 @@ class LauncherScreen extends TransitionState
     {
         super.create();
 
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/retroCursor")).bitmap);
+
         background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LauncherScreen/background")));
 
         background.active = false;
 
-        background.scale *= 1.5;
+        background.scale.set(1.5, 1.5);
 
         background.updateHitbox();
 
@@ -41,7 +45,7 @@ class LauncherScreen extends TransitionState
 
         add(background);
 
-        playButton = new LauncherButton(0.0, 0.0, "play");
+        playButton = new LauncherButton(0.0, 0.0, "playButton0");
 
         playButton.onClick.add(() -> playSlapSound(clickPlayButton));
 
@@ -49,7 +53,7 @@ class LauncherScreen extends TransitionState
 
         add(playButton);
 
-        discordButton = new LauncherButton(0.0, 0.0, "discord");
+        discordButton = new LauncherButton(0.0, 0.0, "discordButton");
 
         discordButton.onClick.add(() -> playSlapSound(clickDiscordButton));
 
@@ -57,7 +61,7 @@ class LauncherScreen extends TransitionState
 
         add(discordButton);
 
-        exitButton = new LauncherButton(0.0, 0.0, "exit");
+        exitButton = new LauncherButton(0.0, 0.0, "exitButton0");
 
         exitButton.onClick.add(() -> playSlapSound(clickExitButton));
 
@@ -65,7 +69,7 @@ class LauncherScreen extends TransitionState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/sounds/menus/LauncherScreen/tune")));
+        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/LauncherScreen/tune")));
 
         tune.play();
     }
@@ -99,29 +103,25 @@ class LauncherScreen extends TransitionState
 
 class LauncherButton extends FlxSprite
 {
-    public var type:String;
-
     public var onClick:FlxSignal;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _type:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
     {
         super(x, y);
 
-        type = _type;
+        onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic(Paths.png('assets/images/menus/LauncherScreen/${type}Button')), true, 83, 15);
+        loadGraphic(Assets.getGraphic(Paths.png('assets/images/menus/LauncherScreen/${_path}')), true, 83, 15);
 
         animation.add("0", [0], 0.0, false);
 
         animation.add("1", [1], 0.0, false);
 
-        scale *= 1.5;
+        scale.set(1.5, 1.5);
 
         updateHitbox();
 
         animation.play("0");
-
-        onClick = new FlxSignal();
     }
 
     override function update(elapsed:Float):Void

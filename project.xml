@@ -3,7 +3,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<meta title="Baldi's Basics Madness" package="com.baldimadness.baldimadness" version="0.0.1" company="BaldiMadness" />
+	<meta title="Baldi's Basics Madness" package="com.mamacitas.baldimadness" version="0.0.1" company="MamaCitas" />
 
 	<app main="Main" file="MADNESS" />
 

@@ -13,7 +13,6 @@ import flixel.util.typeLimit.NextState;
 
 import core.Assets;
 import core.Options;
-import core.Paths;
 
 import plugins.Log;
 
@@ -52,6 +51,8 @@ class InitState extends FlxState
 
         FlxG.drawFramerate = MathUtil.maxInt(FlxG.stage.window.displayMode.refreshRate, 144);
 
+        FlxG.mouse.visible = false;
+
         FlxG.console.registerClass(InitState);
         
         FlxG.console.registerClass(Options);
@@ -67,8 +68,6 @@ class InitState extends FlxState
         FlxG.fullscreen = Options.fullscreen;
 
         Assets.init();
-
-        FlxG.signals.preStateSwitch.add(() -> FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/cursor")).bitmap));
 
         log = new Log();
 
