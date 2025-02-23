@@ -1,0 +1,62 @@
+name: Build
+
+on: [push]
+
+jobs:
+  HashLink:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.6
+      - name: Install Dependencies
+        run: |
+          haxelib install hxcpp --quiet
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib git flixel https://github.com/HaxeFlixel/flixel --quiet --skip-dependencies
+          haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons --quiet
+          haxelib git flixel-text-input https://github.com/Starmapo/flixel-text-input --quiet
+          haxelib git haxeui-flixel https://github.com/haxeui/haxeui-flixel --quiet --skip-dependencies
+          haxelib git haxeui-core https://github.com/haxeui/haxeui-core --quiet
+        shell: cmd
+      - name: Build
+        run: |
+          haxelib run lime build hl -debug
+        shell: cmd
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Baldi's Basics Madness (HashLink)
+          path: bin/debug/hl/bin
+
+  Windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.6
+      - name: Install Dependencies
+        run: |
+          haxelib install hxcpp --quiet
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib git flixel https://github.com/HaxeFlixel/flixel --quiet --skip-dependencies
+          haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons --quiet
+          haxelib git flixel-text-input https://github.com/Starmapo/flixel-text-input --quiet
+          haxelib git haxeui-flixel https://github.com/haxeui/haxeui-flixel --quiet --skip-dependencies
+          haxelib git haxeui-core https://github.com/haxeui/haxeui-core --quiet
+        shell: cmd
+      - name: Build
+        run: |
+          haxelib run lime build cpp -debug
+        shell: cmd
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Baldi's Basics Madness (Windows)
+          path: bin/debug/windows/bin

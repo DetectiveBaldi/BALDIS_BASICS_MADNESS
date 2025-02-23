@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+	<!-- _________________________ Application Settings _________________________ -->
+
+	<meta title="Baldi's Basics Madness" package="com.baldimadness.baldimadness" version="0.0.1" company="BaldiMadness" />
+
+	<app main="Main" file="MADNESS" />
+
+	<!-- The Flixel preloader is not accurate in Chrome. 
+    	You can use it regularly if you embed the SWF into an HTML file,
+    	or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal" -->
+	<app preloader="flixel.system.FlxPreloader" />
+
+	<!-- Minimum requirements:
+    	- Without FLX_NO_GAMEPAD: 11.8
+    	- Without FLX_NO_NATIVE_CURSOR: 11.2 -->
+	<set name="SWF_VERSION" value="11.8" />
+
+	<!-- ____________________________ Window Settings ___________________________ -->
+
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
+
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
+
+	<window if="html5" resizable="true" />
+
+	<!-- ______________________________ Defines, Haxedefs, and Libraries _____________________________ -->
+
+	<haxelib name="flixel" />
+
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+
+	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
+
+	<haxedef name="FLX_NO_HEALTH" />
+
+	<haxelib name="flixel-addons" />
+
+	<haxelib name="haxeui-flixel" />
+
+	<haxelib name="haxeui-core" />
+
+	<!-- _____________________________ Path Settings ____________________________ -->
+
+	<set name="BUILD_DIR" value="bin/debug" if="debug" />
+
+	<set name="BUILD_DIR" value="bin/stable" unless="debug" />
+
+	<assets path="assets/data" />
+
+	<assets path="assets/fonts" />
+
+	<assets path="assets/images" />
+
+	<assets path="assets/music" />
+
+	<assets path="assets/sounds" />
+
+	<source path="source" />
+
+	<!-- _____________________________ Resources ____________________________ -->
+
+	<icon path="resources/logo.png" />
+</project>
