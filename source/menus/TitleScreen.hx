@@ -133,6 +133,8 @@ class TitleScreen extends TransitionState
 
     public function clickButton():Void
     {
+        playButton.onClick.removeAll();
+        
         exitButton.onClick.removeAll();
     }
 }
