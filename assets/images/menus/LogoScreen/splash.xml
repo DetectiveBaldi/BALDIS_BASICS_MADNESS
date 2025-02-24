@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="haxeSplash.png">
+<TextureAtlas imagePath="splash.png">
     <SubTexture name="this0000" x="381" y="434" width="94" height="85" frameX="-102" frameY="-127" frameWidth="300" frameHeight="300" />
     <SubTexture name="this0001" x="475" y="434" width="95" height="85" frameX="-101" frameY="-126" frameWidth="300" frameHeight="300" />
     <SubTexture name="this0002" x="0" y="434" width="95" height="98" frameX="-100" frameY="-112" frameWidth="300" frameHeight="300" />

@@ -20,7 +20,7 @@ import effects.TransitionState;
 
 class LogoScreen extends TransitionState
 {
-    public var haxeSplash:FlxSprite;
+    public var splash:FlxSprite;
 
     public var logo:FlxSprite;
 
@@ -32,19 +32,19 @@ class LogoScreen extends TransitionState
 
         FlxG.mouse.visible = false;
 
-        haxeSplash = new FlxSprite();
+        splash = new FlxSprite();
 
-        haxeSplash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/haxeSplash")), Paths.xml("assets/images/menus/LogoScreen/haxeSplash"));
+        splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/splash")), Paths.xml("assets/images/menus/LogoScreen/splash"));
 
-        haxeSplash.animation.addByPrefix("this", "this", 11.0, false);
+        splash.animation.addByPrefix("this", "this", 11.0, false);
 
-        haxeSplash.scale.set(1.5, 1.5);
+        splash.scale.set(1.5, 1.5);
 
-        haxeSplash.updateHitbox();
+        splash.updateHitbox();
 
-        haxeSplash.screenCenter();
+        splash.screenCenter();
 
-        add(haxeSplash);
+        add(splash);
 
         logo = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/logo")));
 
@@ -56,7 +56,7 @@ class LogoScreen extends TransitionState
 
         FlxTimer.wait(0.5, () ->
         {
-            haxeSplash.animation.play("this");
+            splash.animation.play("this");
 
             tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/LogoScreen/tune")));
 
@@ -64,7 +64,7 @@ class LogoScreen extends TransitionState
 
             FlxTimer.wait(2.65, () -> 
             {
-                FlxTween.tween(haxeSplash, {y: haxeSplash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
+                FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
 
                 FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
             });

@@ -45,7 +45,7 @@ class LauncherScreen extends TransitionState
 
         add(background);
 
-        playButton = new LauncherButton(0.0, 0.0, "playButton0");
+        playButton = new LauncherButton(0.0, 0.0, "playButton");
 
         playButton.onClick.add(() -> playSlapSound(clickPlayButton));
 
@@ -61,7 +61,7 @@ class LauncherScreen extends TransitionState
 
         add(discordButton);
 
-        exitButton = new LauncherButton(0.0, 0.0, "exitButton0");
+        exitButton = new LauncherButton(0.0, 0.0, "exitButton");
 
         exitButton.onClick.add(() -> playSlapSound(clickExitButton));
 

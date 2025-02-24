@@ -74,7 +74,7 @@ class TitleScreen extends TransitionState
 
         add(logo);
 
-        playButton = new TitleButton(0.0, 0.0, "playButton1");
+        playButton = new TitleButton(0.0, 0.0, "playButton");
 
         playButton.onClick.add(clickPlayButton);
 
@@ -84,7 +84,7 @@ class TitleScreen extends TransitionState
 
         add(playButton);
 
-        exitButton = new TitleButton(0.0, 0.0, "exitButton1");
+        exitButton = new TitleButton(0.0, 0.0, "exitButton");
 
         exitButton.onClick.add(clickExitButton);
 
