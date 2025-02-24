@@ -94,13 +94,13 @@ class TitleScreen extends TransitionState
 
         add(exitButton);
 
-        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 MamaCita's Studio");
+        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 Basically Madness");
 
         studio.color = FlxColor.BLACK;
 
         studio.font = Paths.ttf("assets/fonts/Comic Sans MS");
 
-        studio.size = 36;
+        studio.size = 42;
 
         studio.alignment = RIGHT;
 

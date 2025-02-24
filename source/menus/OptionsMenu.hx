@@ -402,6 +402,6 @@ class OptionsMenu extends TransitionState
         for (i in 0 ... option)
             targetY -= (i < options.members.length - 2.0 ? options.members[i].height : 0.0);
 
-        options.y = targetY + (options.y - targetY) * Math.exp(-15.0 * elapsed);
+        options.y = FlxMath.lerp(options.y, targetY, FlxMath.getElapsedLerp(0.15, elapsed));
     }
 }
