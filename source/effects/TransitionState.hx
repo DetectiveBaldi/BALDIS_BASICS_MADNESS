@@ -1,5 +1,6 @@
 package effects;
 
+import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSubState;
 
@@ -7,6 +8,8 @@ import flixel.addons.display.FlxBackdrop;
 
 import core.Assets;
 import core.Paths;
+
+using util.ArrayUtil;
 
 class TransitionState extends FlxState
 {
@@ -51,6 +54,8 @@ class CustomTransition extends FlxSubState
     override function create():Void
     {
         super.create();
+
+        camera = FlxG.cameras.list.newest();
 
         var backdrop:FlxBackdrop = new FlxBackdrop();
 

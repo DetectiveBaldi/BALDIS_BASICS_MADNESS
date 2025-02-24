@@ -72,10 +72,6 @@ class CharacterEditorState extends TransitionState
 
     override function create():Void
     {
-        super.create();
-
-        FlxG.mouse.visible = true;
-
         gameCamera.zoom = 0.75;
 
         hudCamera = new FlxCamera();
@@ -83,6 +79,10 @@ class CharacterEditorState extends TransitionState
         hudCamera.bgColor.alpha = 0;
 
         FlxG.cameras.add(hudCamera, false);
+        
+        super.create();
+
+        FlxG.mouse.visible = true;
 
         var background:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(32, 32, 64, 64, true, 0xFFE7E6E6, 0xFFD9D5D5));
 

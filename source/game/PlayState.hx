@@ -97,8 +97,6 @@ class PlayState extends MusicState
 
     override function create():Void
     {
-        super.create();
-
         gameCameraTarget = new FlxObject();
 
         add(gameCameraTarget);
@@ -114,6 +112,8 @@ class PlayState extends MusicState
         FlxG.cameras.add(hudCamera, false);
 
         hudCameraZoom = hudCamera.zoom;
+        
+        super.create();
 
         loadChart(FlxStringUtil.getClassName(this, true));
 
