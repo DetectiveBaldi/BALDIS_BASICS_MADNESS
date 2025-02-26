@@ -24,7 +24,7 @@ import core.Paths;
 
 import effects.TransitionState;
 
-import game.levels.Level1;
+import game.PlayState;
 
 class OptionsMenu extends TransitionState
 {
@@ -395,7 +395,7 @@ class OptionsMenu extends TransitionState
             descText.text = options.members[option].description;
 
         if (FlxG.keys.justPressed.ESCAPE)
-            FlxG.switchState(() -> new Level1());
+            PlayState.continueWeek();
 
         var targetY:Float = 0.0;
 

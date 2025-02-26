@@ -46,7 +46,7 @@ import data.CharacterData;
 import effects.TransitionState;
 
 import game.Character;
-import game.levels.Level1;
+import game.PlayState;
 
 using StringTools;
 
@@ -316,7 +316,7 @@ class CharacterEditorState extends TransitionState
             }
 
             if (FlxG.keys.justPressed.ESCAPE)
-                FlxG.switchState(() -> new Level1());
+                PlayState.continueWeek();
         }
     }
 

@@ -1,4 +1,4 @@
-package game.levels;
+package game.levels.week1;
 
 import game.stages.Week1;
 

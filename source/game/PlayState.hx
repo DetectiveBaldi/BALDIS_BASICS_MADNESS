@@ -25,6 +25,8 @@ import data.Chart.RawEvent;
 import data.Chart.RawNote;
 import data.ChartConverters;
 import data.HealthBarIconData;
+import data.LevelData.RawLevelData;
+import data.WeekData.RawWeekData;
 
 import editors.CharacterEditorState;
 
@@ -33,7 +35,9 @@ import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
 
+import menus.LauncherScreen;
 import menus.OptionsMenu;
+import menus.TitleScreen;
 
 import music.MusicState;
 
@@ -47,6 +51,39 @@ using util.ArrayUtil;
 
 class PlayState extends MusicState
 {
+    public static var week:RawWeekData;
+
+    public static var campaignLevel:Int;
+
+    public static var isCampaign:Bool;
+
+    public static function getNextCampaignLevel():PlayState
+    {
+        var _level:RawLevelData = week.levels[campaignLevel];
+
+        var __level:Class<Dynamic> = Type.resolveClass('game.levels.${week.name}.Level${_level.id}');
+
+        var ___level:PlayState = Type.createInstance(__level, []);
+
+        return ___level;
+    }
+
+    public static function loadWeek(_week:RawWeekData, _campaignLevel:Int = 0, _isCampaign:Bool = true):Void
+    {
+        week = _week;
+
+        campaignLevel = _campaignLevel;
+
+        isCampaign = _isCampaign;
+
+        FlxG.switchState(() -> getNextCampaignLevel());
+    }
+
+    public static function continueWeek():Void
+    {
+        loadWeek(week, campaignLevel, isCampaign);
+    }
+
     public var gameCamera(get, never):FlxCamera;
     
     @:noCompletion
@@ -271,7 +308,7 @@ class PlayState extends MusicState
             FlxG.switchState(() -> new OptionsMenu());
         
         if (FlxG.keys.justPressed.ESCAPE)
-            FlxG.resetState();
+            endSong();
     }
 
     override function measureHit(measure:Int):Void
@@ -340,8 +377,6 @@ class PlayState extends MusicState
 
         instrumental.onComplete = endSong;
 
-        instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('assets/music/game/levels/${level}/Instrumental')));
-
         if (FileSystem.exists(Paths.ogg('assets/music/game/levels/${level}/Vocals-Main')))
             mainVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('assets/music/game/levels/${level}/Vocals-Main')));
         else
@@ -367,7 +402,29 @@ class PlayState extends MusicState
 
     public function endSong():Void
     {
-        FlxG.resetState();
+        // Uh oh! Looks like something malfunctioned... let's head back to `menus.LauncherScreen`!
+
+        if (week == null)
+            FlxG.switchState(() -> new LauncherScreen());
+        else
+        {
+            /* You completed the week!
+                Or perhaps, you were never truly in a week to begin with.
+                    Either way, you can go back to `menus.TitleScreen` for the time being. */
+
+            if (campaignLevel + 1.0 >= week.levels.length || !isCampaign)
+            {
+                FlxG.switchState(() -> new TitleScreen());
+
+                return;
+            }
+
+            // You still have places to be! Let's keep going!
+
+            campaignLevel++;
+
+            FlxG.switchState(() -> getNextCampaignLevel());
+        }
     }
 
     public function gameOver():Void

@@ -14,6 +14,8 @@ import flixel.util.typeLimit.NextState;
 import core.Assets;
 import core.Options;
 
+import data.WeekData;
+
 import plugins.Log;
 
 import ui.PerfStats;
@@ -59,6 +61,8 @@ class InitState extends FlxState
 
         FlxG.plugins.drawOnTop = true;
 
+        Assets.init();
+
         Options.init();
 
         FlxG.autoPause = Options.autoPause;
@@ -67,7 +71,7 @@ class InitState extends FlxState
         
         FlxG.fullscreen = Options.fullscreen;
 
-        Assets.init();
+        WeekData.load();
 
         log = new Log();
 

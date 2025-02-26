@@ -15,7 +15,7 @@ import effects.TransitionState;
 
 class LauncherScreen extends TransitionState
 {
-    public var background:FlxSprite;
+    public var launcher:FlxSprite;
 
     public var playButton:LauncherButton;
 
@@ -33,23 +33,23 @@ class LauncherScreen extends TransitionState
 
         FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/retroCursor")).bitmap);
 
-        background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LauncherScreen/background")));
+        launcher = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/LauncherScreen/launcher")));
 
-        background.active = false;
+        launcher.active = false;
 
-        background.scale.set(1.5, 1.5);
+        launcher.scale.set(1.5, 1.5);
 
-        background.updateHitbox();
+        launcher.updateHitbox();
 
-        background.screenCenter();
+        launcher.screenCenter();
 
-        add(background);
+        add(launcher);
 
         playButton = new LauncherButton(0.0, 0.0, "playButton");
 
         playButton.onClick.add(() -> playSlapSound(clickPlayButton));
 
-        playButton.setPosition(background.x + 15.0, background.y + background.height - playButton.height - 15.0);
+        playButton.setPosition(launcher.x + 15.0, launcher.y + launcher.height - playButton.height - 15.0);
 
         add(playButton);
 
@@ -57,7 +57,7 @@ class LauncherScreen extends TransitionState
 
         discordButton.onClick.add(() -> playSlapSound(clickDiscordButton));
 
-        discordButton.setPosition(background.getMidpoint().x - discordButton.width * 0.5, background.y + background.height - discordButton.height - 15.0);
+        discordButton.setPosition(launcher.getMidpoint().x - discordButton.width * 0.5, launcher.y + launcher.height - discordButton.height - 15.0);
 
         add(discordButton);
 
@@ -65,7 +65,7 @@ class LauncherScreen extends TransitionState
 
         exitButton.onClick.add(() -> playSlapSound(clickExitButton));
 
-        exitButton.setPosition(background.x + background.width - exitButton.width - 15.0, background.y + background.height - exitButton.height - 15.0);
+        exitButton.setPosition(launcher.x + launcher.width - exitButton.width - 15.0, launcher.y + launcher.height - exitButton.height - 15.0);
 
         add(exitButton);
 

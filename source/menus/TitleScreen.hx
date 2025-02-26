@@ -18,13 +18,15 @@ import effects.TransitionState;
 import core.Assets;
 import core.Paths;
 
-import game.levels.Level1;
+import data.WeekData;
+
+import game.PlayState;
 
 class TitleScreen extends TransitionState
 {
     public var background:FlxSprite;
 
-    public var education:FlxSprite;
+    public var title:FlxSprite;
 
     public var logo:FlxSprite;
 
@@ -44,6 +46,8 @@ class TitleScreen extends TransitionState
 
         background = new FlxSprite();
 
+        background.active = false;
+
         background.makeGraphic(1, 1, FlxColor.WHITE);
 
         background.scale.set(864.0, FlxG.height);
@@ -54,17 +58,21 @@ class TitleScreen extends TransitionState
 
         add(background);
 
-        education = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/education")));
+        title = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/title")));
 
-        education.scale.set(1.8, 1.8);
+        title.active = false;
 
-        education.updateHitbox();
+        title.scale.set(1.8, 1.8);
 
-        education.setPosition((FlxG.width - education.width) * 0.5, FlxG.height - education.height + 25.0);
+        title.updateHitbox();
 
-        add(education);
+        title.setPosition((FlxG.width - title.width) * 0.5, FlxG.height - title.height + 25.0);
+
+        add(title);
 
         logo = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/logo")));
+
+        logo.active = false;
 
         logo.scale.set(0.7, 0.7);
 
@@ -94,7 +102,7 @@ class TitleScreen extends TransitionState
 
         add(exitButton);
 
-        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 Basically Madness");
+        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 MamaCita's Studio");
 
         studio.color = FlxColor.BLACK;
 
@@ -123,7 +131,7 @@ class TitleScreen extends TransitionState
 
     public function clickPlayButton():Void
     {
-        FlxG.switchState(() -> new Level1());
+        PlayState.loadWeek(WeekData.get("week1"));
     }
 
     public function clickExitButton():Void

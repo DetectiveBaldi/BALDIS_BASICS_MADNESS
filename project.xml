@@ -59,6 +59,8 @@
 
 	<source path="source" />
 
+	<haxeflag name="--macro" value="include('game.levels')" />
+
 	<!-- _____________________________ Resources ____________________________ -->
 
 	<icon path="resources/logo.png" />

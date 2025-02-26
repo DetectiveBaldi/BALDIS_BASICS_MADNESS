@@ -36,7 +36,11 @@ class LogoScreen extends TransitionState
 
         splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/splash")), Paths.xml("assets/images/menus/LogoScreen/splash"));
 
-        splash.animation.addByPrefix("this", "this", 11.0, false);
+        splash.animation.addByIndices("formation", "this",  [for (i in 0 ... 29) i ], "", 17.4, false);
+
+        splash.animation.addByIndices("spin", "this",  [for (i in 29 ... 45) i ], "", 12.0, false);
+
+        splash.animation.play("formation");
 
         splash.scale.set(1.5, 1.5);
 
@@ -50,20 +54,24 @@ class LogoScreen extends TransitionState
 
         logo.active = false;
 
+        logo.scale.set(2.5, 2.5);
+
+        logo.updateHitbox();
+
         logo.setPosition((FlxG.width - logo.width) * 0.5, -logo.height);
 
         add(logo);
 
-        FlxTimer.wait(0.5, () ->
+        FlxTimer.wait(0.65, () ->
         {
-            splash.animation.play("this");
-
             tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/LogoScreen/tune")));
 
             tune.play();
 
             FlxTimer.wait(2.65, () -> 
             {
+                splash.animation.play("spin");
+
                 FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
 
                 FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
