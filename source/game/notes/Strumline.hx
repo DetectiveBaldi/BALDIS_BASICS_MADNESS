@@ -186,12 +186,12 @@ class Strumline extends FlxGroup
             if (automated && note.isHittable())
                 noteHit(note);
 
-            var isLate:Bool = conductor.time > note.time + 166.0;
+            var isLate:Bool = conductor.time > note.time + 166.6;
 
             if (!automated && note.status == IDLING && isLate)
                 noteMiss(note, false);
 
-            var isExpired:Bool = conductor.time > note.time + note.length + 166.0;
+            var isExpired:Bool = conductor.time > (note.time + note.length + (166.6 / scrollSpeed));
 
             if (isLate && isExpired)
                 notesPendingRemoval.push(note);
@@ -211,7 +211,7 @@ class Strumline extends FlxGroup
                     {
                         note.unholdTime += elapsed * 1000.0;
 
-                        if (note.unholdTime > 166.0)
+                        if (note.unholdTime > 166.6)
                             noteMiss(note, true);
                     }
                 }
@@ -437,7 +437,7 @@ class Strumline extends FlxGroup
 
     public function resizeSustainNote(note:Note):Void
     {
-        note.length = Math.max(note.length + note.time - conductor.time, 0.01);
+        note.length += note.time - conductor.time;
 
         note.time = conductor.time;
     }

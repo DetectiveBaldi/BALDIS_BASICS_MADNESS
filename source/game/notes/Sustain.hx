@@ -42,7 +42,7 @@ class Sustain extends FlxSprite
         if (note.status == HIT)
             length -= note.strumline.conductor.time - note.time;
 
-        var _height:Float = (length * 0.45 * note.strumline.scrollSpeed);
+        var _height:Float = Math.max(length * 0.45 * note.strumline.scrollSpeed, 0.0);
 
         setGraphicSize(frameWidth * 0.7, _height);
 

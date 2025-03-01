@@ -48,7 +48,15 @@ class Note extends FlxSprite
 
     public var direction:Int;
 
-    public var length:Float;
+    public var length(default, set):Float;
+
+    @:noCompletion
+    function set_length(_length:Float):Float
+    {
+        length = Math.max(_length, 0.0);
+
+        return length;
+    }
 
     public var lane:Int;
 
@@ -107,12 +115,9 @@ class Note extends FlxSprite
     {
         super.kill();
 
-        if (length > 0.0)
-        {
-            sustain.kill();
+        sustain?.kill();
 
-            sustain.trail.kill();
-        }
+        sustain?.trail?.kill();
     }
 
     public function isHittable():Bool
