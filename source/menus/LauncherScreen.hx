@@ -49,6 +49,8 @@ class LauncherScreen extends TransitionState
 
         playButton.onClick.add(() -> playSlapSound(clickPlayButton));
 
+        playButton.onClick.add(clearClickSignals);
+
         playButton.setPosition(launcher.x + 15.0, launcher.y + launcher.height - playButton.height - 15.0);
 
         add(playButton);
@@ -65,6 +67,8 @@ class LauncherScreen extends TransitionState
 
         exitButton.onClick.add(() -> playSlapSound(clickExitButton));
 
+        exitButton.onClick.add(clearClickSignals);
+
         exitButton.setPosition(launcher.x + launcher.width - exitButton.width - 15.0, launcher.y + launcher.height - exitButton.height - 15.0);
 
         add(exitButton);
@@ -77,17 +81,11 @@ class LauncherScreen extends TransitionState
     public function playSlapSound(onComplete:()->Void):Void
     {
         FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/globals/slap")), 1.0, false, null, true, onComplete);
-
-        playButton.onClick.removeAll();
-
-        discordButton.onClick.removeAll();
-
-        exitButton.onClick.removeAll();
     }
 
     public function clickPlayButton():Void
     {
-        FlxG.switchState(() -> new LogoScreen());
+        FlxG.switchState(() -> new #if debug TitleScreen #else LogoScreen #end ());
     }
 
     public function clickDiscordButton():Void
@@ -98,6 +96,15 @@ class LauncherScreen extends TransitionState
     public function clickExitButton():Void
     {
         Sys.exit(0);
+    }
+
+    public function clearClickSignals():Void
+    {
+        playButton.onClick.removeAll();
+
+        discordButton.onClick.removeAll();
+
+        exitButton.onClick.removeAll();
     }
 }
 

@@ -24,11 +24,7 @@ import game.PlayState;
 
 class TitleScreen extends TransitionState
 {
-    public var background:FlxSprite;
-
     public var title:FlxSprite;
-
-    public var logo:FlxSprite;
 
     public var exitButton:TitleButton;
 
@@ -44,43 +40,17 @@ class TitleScreen extends TransitionState
     {
         super.create();
 
-        background = new FlxSprite();
-
-        background.active = false;
-
-        background.makeGraphic(1, 1, FlxColor.WHITE);
-
-        background.scale.set(864.0, FlxG.height);
-
-        background.updateHitbox();
-
-        background.screenCenter();
-
-        add(background);
-
         title = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/title")));
 
         title.active = false;
 
-        title.scale.set(1.8, 1.8);
+        title.scale.set(2.0, 2.0);
 
         title.updateHitbox();
 
-        title.setPosition((FlxG.width - title.width) * 0.5, FlxG.height - title.height + 25.0);
+        title.setPosition((FlxG.width - title.width) * 0.5, 0.0);
 
         add(title);
-
-        logo = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/logo")));
-
-        logo.active = false;
-
-        logo.scale.set(0.7, 0.7);
-
-        logo.updateHitbox();
-
-        logo.setPosition((FlxG.width - logo.width) * 0.5, -50.0);
-
-        add(logo);
 
         playButton = new TitleButton(0.0, 0.0, "playButton");
 
@@ -98,11 +68,11 @@ class TitleScreen extends TransitionState
 
         exitButton.onClick.add(clickButton);
 
-        exitButton.setPosition(background.x, background.y + background.height - exitButton.height);
+        exitButton.setPosition(title.x, title.y + title.height - exitButton.height);
 
         add(exitButton);
 
-        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 MamaCita's Studio");
+        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 MamaCita's");
 
         studio.color = FlxColor.BLACK;
 
@@ -116,7 +86,7 @@ class TitleScreen extends TransitionState
 
         studio.textField.sharpness = 400;
 
-        studio.setPosition(background.x + background.width - studio.width - 5.0, background.y + background.height - studio.height - 5.0);
+        studio.setPosition(title.x + title.width - studio.width - 5.0, title.y + title.height - studio.height - 5.0);
 
         add(studio);
 
