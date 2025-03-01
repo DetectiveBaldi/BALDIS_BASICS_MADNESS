@@ -429,6 +429,10 @@ class PlayState extends MusicState
 
     public function gameOver():Void
     {
+        #if debug
+            return;
+        #end
+
         persistentDraw = false;
 
         openSubState(new GameOverScreen(this));

@@ -418,8 +418,10 @@ class Strumline extends FlxGroup
 
     public function holdSustainNote(note:Note):Void
     {
-        if (lastStep != conductor.step)
+        if (lastStep != conductor.step || note.status != HIT)
         {
+            note.status = HIT;
+            
             var strum:Strum = note.strum;
 
             strum.confirmTimer = 0.0;
@@ -435,7 +437,7 @@ class Strumline extends FlxGroup
 
     public function resizeSustainNote(note:Note):Void
     {
-        note.length += note.time - conductor.time;
+        note.length = Math.max(note.length + note.time - conductor.time, 0.01);
 
         note.time = conductor.time;
     }

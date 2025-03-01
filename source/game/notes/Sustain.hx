@@ -42,9 +42,9 @@ class Sustain extends FlxSprite
         if (note.status == HIT)
             length -= note.strumline.conductor.time - note.time;
 
-        var expectedHeight:Float = (length * 0.45 * note.strumline.scrollSpeed);
+        var _height:Float = (length * 0.45 * note.strumline.scrollSpeed);
 
-        setGraphicSize(frameWidth * 0.7, expectedHeight);
+        setGraphicSize(frameWidth * 0.7, _height);
 
         updateHitbox();
 
@@ -53,14 +53,14 @@ class Sustain extends FlxSprite
         y = note.y + note.height * 0.5;
 
         if (note.strumline.downscroll)
-            y -= expectedHeight;
+            y -= _height;
 
         trail.x = getMidpoint().x - trail.width * 0.5;
 
-        trail.y = y + expectedHeight;
+        trail.y = y + _height;
 
         if (note.strumline.downscroll)
-            trail.y -= expectedHeight + trail.height;
+            trail.y -= _height + trail.height;
 
         trail.y -= 2.0 * (note.strumline.downscroll ? -1.0 : 1.0);
 
