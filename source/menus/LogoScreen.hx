@@ -32,6 +32,8 @@ class LogoScreen extends TransitionState
 
         FlxG.mouse.visible = false;
 
+        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+
         splash = new FlxSprite();
 
         splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/LogoScreen/splash")), Paths.xml("assets/images/menus/LogoScreen/splash"));

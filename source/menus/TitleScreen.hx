@@ -40,6 +40,10 @@ class TitleScreen extends TransitionState
     {
         super.create();
 
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+
         title = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/TitleScreen/title")));
 
         title.active = false;
