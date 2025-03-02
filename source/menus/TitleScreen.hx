@@ -88,7 +88,7 @@ class TitleScreen extends TransitionState
 
         studio.textField.antiAliasType = ADVANCED;
 
-        studio.textField.sharpness = 400;
+        studio.textField.sharpness = 400.0;
 
         studio.setPosition(title.x + title.width - studio.width - 5.0, title.y + title.height - studio.height - 5.0);
 

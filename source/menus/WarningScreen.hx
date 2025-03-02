@@ -59,7 +59,7 @@ class WarningScreen extends TransitionState
 
         text.textField.antiAliasType = ADVANCED;
 
-        text.textField.sharpness = 400;
+        text.textField.sharpness = 400.0;
 
         text.screenCenter();
 

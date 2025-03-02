@@ -5,6 +5,7 @@ import sys.FileSystem;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSubState;
 
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
@@ -37,6 +38,7 @@ import game.events.ScrollSpeedChangeEvent;
 
 import menus.LauncherScreen;
 import menus.OptionsMenu;
+import menus.PauseSubState;
 import menus.TitleScreen;
 
 import music.MusicState;
@@ -301,6 +303,9 @@ class PlayState extends MusicState
                     playerVocals.time = instrumental.time;
         }
 
+        if (FlxG.keys.justPressed.ENTER && countdown.tick > 0.0)
+            openSubState(new PauseSubState(chart));
+
         if (FlxG.keys.checkStatus(debugInputs["EDITORS:CHARACTEREDITORSTATE"], JUST_PRESSED))
             FlxG.switchState(() -> new CharacterEditorState());
 
@@ -309,6 +314,38 @@ class PlayState extends MusicState
         
         if (FlxG.keys.justPressed.ESCAPE)
             endSong();
+    }
+
+    override function openSubState(subState:FlxSubState):Void
+    {
+        super.openSubState(subState);
+
+        if (Type.getClass(subState) == PauseSubState)
+        {
+            instrumental.pause();
+
+            mainVocals?.pause();
+
+            opponentVocals?.pause();
+
+            playerVocals?.pause();
+        }
+    }
+
+    override function closeSubState():Void
+    {
+        super.closeSubState();
+
+        if (Type.getClass(subState) == PauseSubState)
+        {
+            instrumental.resume();
+
+            mainVocals?.pause();
+
+            opponentVocals?.pause();
+
+            playerVocals?.pause();
+        }
     }
 
     override function measureHit(measure:Int):Void
