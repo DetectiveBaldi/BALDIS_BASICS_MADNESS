@@ -63,5 +63,5 @@
 
 	<!-- _____________________________ Resources ____________________________ -->
 
-	<icon path="resources/logo.png" />
+	<icon path="resources/appIcon.png" />
 </project>
