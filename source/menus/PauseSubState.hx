@@ -1,5 +1,8 @@
 package menus;
 
+import openfl.filters.BitmapFilter;
+import openfl.filters.BlurFilter;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -31,6 +34,8 @@ class PauseSubState extends FlxSubState
 {
     public var chart:Chart;
 
+    public var blur:BlurFilter;
+
     public var iconText:FlxText;
 
     public var pauseIcons:FlxTypedGroup<PauseMenuIcon>;
@@ -45,6 +50,12 @@ class PauseSubState extends FlxSubState
     override function create():Void
     {
         super.create();
+
+        blur = new BlurFilter(5.0, 5.0);
+
+        FlxG.camera.filters ??= new Array<BitmapFilter>();
+
+        FlxG.camera.filters.push(blur);
 
         camera = FlxG.cameras.list.newest();
 
@@ -62,7 +73,7 @@ class PauseSubState extends FlxSubState
         
         add(background);
 
-        FlxTween.tween(background, {alpha: 0.65}, 0.6, {ease: FlxEase.quartIn});
+        FlxTween.tween(background, {alpha: 0.65}, 0.65, {ease: FlxEase.quartIn});
 
         var separator:FlxSprite = new FlxSprite();
 
@@ -237,6 +248,13 @@ class PauseSubState extends FlxSubState
 
         if (FlxG.keys.justPressed.ESCAPE)
             close();
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.camera.filters.remove(blur);
     }
 }
 
