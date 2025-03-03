@@ -20,22 +20,6 @@ class Options
         return autoPause;
     }
 
-    public static var fullscreen(get, set):Bool;
-
-    @:noCompletion
-    static function get_fullscreen():Bool
-    {
-        return FlxG.save.data.options.fullscreen ??= true;
-    }
-
-    @:noCompletion
-    static function set_fullscreen(_fullscreen:Bool):Bool
-    {
-        FlxG.save.data.options.fullscreen = _fullscreen;
-
-        return fullscreen;
-    }
-
     public static var gpuCaching(get, set):Bool;
 
     @:noCompletion
@@ -84,16 +68,16 @@ class Options
         return _persistentCache;
     }
 
-    public static var controls(get, set):Map<String, Int>;
+    public static var controls(get, set):Map<String, Array<Int>>;
 
     @:noCompletion
-    static function get_controls():Map<String, Int>
+    static function get_controls():Map<String, Array<Int>>
     {
-        return FlxG.save.data.options.controls ??= ["NOTE:LEFT" => 65, "NOTE:DOWN" => 83, "NOTE:UP" => 87, "NOTE:RIGHT" => 68];
+        return FlxG.save.data.options.controls ??= ["NOTE:LEFT" => [65, 37], "NOTE:DOWN" => [83, 40], "NOTE:UP" => [87, 38], "NOTE:RIGHT" => [68, 39]];
     }
 
     @:noCompletion
-    static function set_controls(_controls:Map<String, Int>):Map<String, Int>
+    static function set_controls(_controls:Map<String, Array<Int>>):Map<String, Array<Int>>
     {
         FlxG.save.data.options.controls = _controls;
 
@@ -137,7 +121,7 @@ class Options
     @:noCompletion
     static function get_ghostTapping():Bool
     {
-        return FlxG.save.data.options.ghostTapping ??= false;
+        return FlxG.save.data.options.ghostTapping ??= true;
     }
 
     @:noCompletion

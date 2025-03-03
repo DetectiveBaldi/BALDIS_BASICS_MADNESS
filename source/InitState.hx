@@ -61,15 +61,13 @@ class InitState extends FlxState
 
         FlxG.plugins.drawOnTop = true;
 
-        Assets.init();
-
         Options.init();
+
+        Assets.init();
 
         FlxG.autoPause = Options.autoPause;
 
         FlxG.console.autoPause = Options.autoPause;
-        
-        FlxG.fullscreen = Options.fullscreen;
 
         WeekData.load();
 

@@ -6,6 +6,8 @@ import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.keyboard.FlxKeyboard;
 
+import flixel.math.FlxMath;
+
 import flixel.sound.FlxSound;
 
 import core.Assets;
@@ -14,14 +16,14 @@ import core.Paths;
 
 using util.ArrayUtil;
 
-class ControlOptionItem extends VariableOptionItem<Int>
+class ControlOptionItem extends VariableOptionItem<Array<Int>>
 {
-    override function get_value():Int
+    override function get_value():Array<Int>
     {
         return Options.controls[option];
     }
 
-    override function set_value(_value:Int):Int
+    override function set_value(_value:Array<Int>):Array<Int>
     {
         Options.controls[option] = _value;
 
@@ -33,6 +35,8 @@ class ControlOptionItem extends VariableOptionItem<Int>
     public var control:FlxSprite;
 
     public var input:FlxKeyboard;
+
+    public var index:Int;
 
     public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _description:String, _option:String):Void
     {
@@ -64,7 +68,9 @@ class ControlOptionItem extends VariableOptionItem<Int>
 
         FlxG.inputs.addInput(input);
 
-        titleText.text = '${title}: ${FlxKey.toStringMap[value]}';
+        index = 0;
+
+        updateTitleText();
     }
 
     override function update(elapsed:Float):Void
@@ -75,6 +81,21 @@ class ControlOptionItem extends VariableOptionItem<Int>
         {
             if (FlxG.keys.enabled)
             {
+                if (FlxG.keys.justPressed.LEFT)
+                    index = FlxMath.wrap(index - 1, 0, 1);
+
+                if (FlxG.keys.justPressed.RIGHT)
+                    index = FlxMath.wrap(index + 1, 0, 1);
+
+                if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)
+                {
+                    var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+
+                    scroll.onComplete = scroll.kill;
+
+                    updateTitleText();
+                }
+
                 if (FlxG.keys.justPressed.ENTER)
                 {
                     FlxG.mouse.enabled = false;
@@ -100,9 +121,9 @@ class ControlOptionItem extends VariableOptionItem<Int>
 
                     FlxG.keys.reset();
 
-                    value = firstJustPressed;
+                    value[index] = firstJustPressed;
 
-                    titleText.text = '${title}: ${FlxKey.toStringMap[value]}';
+                    updateTitleText();
 
                     input.enabled = false;
 
@@ -129,5 +150,13 @@ class ControlOptionItem extends VariableOptionItem<Int>
         input.enabled = false;
 
         input.destroy();
+    }
+
+    public function updateTitleText():Void
+    {
+        if (index == 0)
+            titleText.text = '${title}: (${FlxKey.toStringMap[value[0]]}) ${FlxKey.toStringMap[value[1]]}';
+        else
+            titleText.text = '${title}: ${FlxKey.toStringMap[value[0]]} (${FlxKey.toStringMap[value[1]]})';
     }
 }

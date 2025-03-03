@@ -16,6 +16,7 @@ import core.Paths;
 import data.AnimationData;
 import data.CharacterData.RawCharacterData;
 
+import game.notes.Note;
 import game.notes.Strumline;
 
 import music.Conductor;
@@ -122,7 +123,12 @@ class Character extends FlxSprite
 
         conductor = _conductor;
 
-        keys = [Options.controls["NOTE:LEFT"], Options.controls["NOTE:DOWN"], Options.controls["NOTE:UP"], Options.controls["NOTE:RIGHT"]];
+        keys =
+        [
+            for (i in 0 ... Note.DIRECTIONS.length)
+                for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
+                    Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
+        ];
         
         config = _config;
 

@@ -250,7 +250,12 @@ class Strumline extends FlxGroup
 
         FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
 
-        keys = [Options.controls["NOTE:LEFT"] => 0, Options.controls["NOTE:DOWN"] => 1, Options.controls["NOTE:UP"] => 2, Options.controls["NOTE:RIGHT"] => 3];
+        keys =
+        [
+            for (i in 0 ... Note.DIRECTIONS.length)
+                for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
+                    Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j] => i
+        ];
     }
 
     public function removeKeyboardListeners():Void

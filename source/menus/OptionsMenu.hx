@@ -2,6 +2,7 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -28,6 +29,8 @@ import game.PlayState;
 
 class OptionsMenu extends TransitionState
 {
+    public var nextState:Class<FlxState>;
+
     public var background:FlxSprite;
 
     public var backdrop:FlxBackdrop;
@@ -78,6 +81,13 @@ class OptionsMenu extends TransitionState
     public var descText:FlxText;
 
     public var tune:FlxSound;
+
+    public function new(_nextState:Class<FlxState>):Void
+    {
+        super();
+
+        nextState = _nextState;
+    }
 
     override function create():Void
     {
@@ -170,93 +180,85 @@ class OptionsMenu extends TransitionState
 
         options.add(bool);
 
-        var _bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Fullscreen", "Determines whether fullscreen is enabled on this window.", "fullscreen");
-
-        _bool.onUpdate.add((value:Bool) -> FlxG.fullscreen = value);
-
-        _bool.setPosition(FlxG.width - _bool.width + 50.0, bool.y + bool.height);
-
-        options.add(_bool);
-
         var _header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Asset Management", "");
 
-        _header.setPosition(FlxG.width - _header.width + 165.0, _bool.y + _bool.height);
+        _header.setPosition(FlxG.width - _header.width + 165.0, bool.y + bool.height);
 
         options.add(_header);
 
-        var __bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "GPU Caching", "If checked, bitmap pixel data is disposed from RAM\nwhere applicable (may require restarting the application).", "gpuCaching");
+        var _bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "GPU Caching", "If checked, bitmap pixel data is disposed from RAM\nwhere applicable (may require restarting the application).", "gpuCaching");
 
-        __bool.setPosition(FlxG.width - __bool.width + 50.0, _header.y + _header.height);
+        _bool.setPosition(FlxG.width - _bool.width + 50.0, _header.y + _header.height);
+
+        options.add(_bool);
+
+        var __bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Sound Streaming", "If checked, audio is loaded progressively\nwhere applicable (may require restarting the application).", "soundStreaming");
+
+        __bool.setPosition(FlxG.width - __bool.width + 50.0, _bool.y + _bool.height);
 
         options.add(__bool);
 
-        var ___bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Sound Streaming", "If checked, audio is loaded progressively\nwhere applicable (may require restarting the application).", "soundStreaming");
+        var ___bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on state switch.", "persistentCache");
+
+        ___bool.onUpdate.add((value:Bool) -> Assets.persistentCache = value);
 
         ___bool.setPosition(FlxG.width - ___bool.width + 50.0, __bool.y + __bool.height);
 
         options.add(___bool);
 
-        var ____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on state switch.", "persistentCache");
-
-        ____bool.onUpdate.add((value:Bool) -> Assets.persistentCache = value);
-
-        ____bool.setPosition(FlxG.width - ____bool.width + 50.0, ___bool.y + ___bool.height);
-
-        options.add(____bool);
-
         var __header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Controls", "");
 
-        __header.setPosition(FlxG.width - __header.width + 165.0, ____bool.y + ____bool.height);
+        __header.setPosition(FlxG.width - __header.width + 165.0, ___bool.y + ___bool.height);
 
         options.add(__header);
 
-        var keybind:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Left Note", "Keybindings for the first note in the strumline.", "NOTE:LEFT");
+        var control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Left Note", "Controls for the first note in the strumline.", "NOTE:LEFT");
 
-        keybind.setPosition(FlxG.width - keybind.width + 100.0, __header.y + __header.height);
+        control.setPosition(FlxG.width - control.width + 100.0, __header.y + __header.height);
 
-        options.add(keybind);
+        options.add(control);
 
-        var _keybind:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Down Note", "Keybindings for the second note in the strumline.", "NOTE:DOWN");
+        var _control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Down Note", "Controls for the second note in the strumline.", "NOTE:DOWN");
 
-        _keybind.setPosition(FlxG.width - _keybind.width + 100.0, keybind.y + keybind.height);
+        _control.setPosition(FlxG.width - _control.width + 100.0, control.y + control.height);
 
-        options.add(_keybind);
+        options.add(_control);
 
-        var __keybind:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Up Note", "Keybindings for the third note in the strumline.", "NOTE:UP");
+        var __control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Up Note", "Controls for the third note in the strumline.", "NOTE:UP");
 
-        __keybind.setPosition(FlxG.width - __keybind.width + 100.0, _keybind.y + _keybind.height);
+        __control.setPosition(FlxG.width - __control.width + 100.0, _control.y + _control.height);
 
-        options.add(__keybind);
+        options.add(__control);
 
-        var ___keybind:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Right Note", "Keybindings for the fourth note in the strumline.", "NOTE:RIGHT");
+        var ___control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Right Note", "Controls for the fourth note in the strumline.", "NOTE:RIGHT");
 
-        ___keybind.setPosition(FlxG.width - ___keybind.width + 100.0, __keybind.y + __keybind.height);
+        ___control.setPosition(FlxG.width - ___control.width + 100.0, __control.y + __control.height);
 
-        options.add(___keybind);
+        options.add(___control);
 
         var ___header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Gameplay", "");
 
-        ___header.setPosition(FlxG.width - ___header.width + 165.0, ___keybind.y + ___keybind.height);
+        ___header.setPosition(FlxG.width - ___header.width + 165.0, ___control.y + ___control.height);
 
         options.add(___header);
 
-        var _____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");
+        var ____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");
 
-        _____bool.setPosition(FlxG.width - _____bool.width + 50.0, ___header.y + ___header.height);
+        ____bool.setPosition(FlxG.width - ____bool.width + 50.0, ___header.y + ___header.height);
+
+        options.add(____bool);
+
+        var _____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Middlescroll", "If checked, centers the playable strumline and\nhides the opponent's.", "middlescroll");
+
+        _____bool.setPosition(FlxG.width - _____bool.width + 50.0, ____bool.y + ____bool.height);
 
         options.add(_____bool);
 
-        var ______bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Middlescroll", "If checked, centers the playable strumline and\nhides the opponent's.", "middlescroll");
+        var ______bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
 
         ______bool.setPosition(FlxG.width - ______bool.width + 50.0, _____bool.y + _____bool.height);
 
         options.add(______bool);
-
-        var _______bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
-
-        _______bool.setPosition(FlxG.width - _______bool.width + 50.0, ______bool.y + ______bool.height);
-
-        options.add(_______bool);
 
         option = 0;
 
@@ -395,7 +397,12 @@ class OptionsMenu extends TransitionState
             descText.text = options.members[option].description;
 
         if (FlxG.keys.justPressed.ESCAPE)
-            PlayState.continueWeek();
+        {
+            if (nextState == PlayState)
+                PlayState.continueWeek();
+            else
+                FlxG.switchState(() -> Type.createInstance(nextState, []));
+        }
 
         var targetY:Float = 0.0;
 

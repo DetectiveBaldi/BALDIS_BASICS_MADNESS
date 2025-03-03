@@ -56,7 +56,7 @@ class MainMenuScreen extends TransitionState
 
         playText.setPosition((FlxG.width - playText.width) * 0.5, chalkboard.y + 185.0);
 
-        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu()));
+        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(MainMenuScreen)));
 
         optionsText.setPosition((FlxG.width - optionsText.width) * 0.5, playText.y + playText.height + 50.0);
 
