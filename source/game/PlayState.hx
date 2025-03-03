@@ -154,6 +154,10 @@ class PlayState extends MusicState
         
         super.create();
 
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+
         loadChart(FlxStringUtil.getClassName(this, true));
 
         loadSong(FlxStringUtil.getClassName(this, true));
@@ -303,7 +307,7 @@ class PlayState extends MusicState
                     playerVocals.time = instrumental.time;
         }
 
-        if (FlxG.keys.justPressed.ENTER && countdown.tick > 0.0)
+        if (FlxG.keys.justPressed.ENTER)
             openSubState(new PauseSubState(chart));
 
         if (FlxG.keys.checkStatus(debugInputs["EDITORS:CHARACTEREDITORSTATE"], JUST_PRESSED))
@@ -346,6 +350,13 @@ class PlayState extends MusicState
 
             playerVocals?.pause();
         }
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
     }
 
     override function measureHit(measure:Int):Void

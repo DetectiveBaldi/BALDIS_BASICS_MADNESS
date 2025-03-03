@@ -1,9 +1,10 @@
 package menus;
 
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
+
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 import flixel.math.FlxMath;
 
@@ -30,6 +31,10 @@ class PauseSubState extends FlxSubState
 {
     public var chart:Chart;
 
+    public var iconText:FlxText;
+
+    public var pauseIcons:FlxTypedGroup<PauseMenuIcon>;
+
     public function new(_chart:Chart):Void
     {
         super();
@@ -41,11 +46,11 @@ class PauseSubState extends FlxSubState
     {
         super.create();
 
-        var _camera:FlxCamera = FlxG.cameras.list.newest();
+        camera = FlxG.cameras.list.newest();
 
         var background:FlxSprite = new FlxSprite();
 
-        background.camera = _camera;
+        background.active = false;
 
         background.alpha = 0.0;
 
@@ -63,7 +68,7 @@ class PauseSubState extends FlxSubState
 
         separator.makeGraphic(1, 1, FlxColor.WHITE);
 
-        separator.camera = _camera;
+        separator.active = false;
 
         separator.alpha = 0.0;
 
@@ -79,15 +84,13 @@ class PauseSubState extends FlxSubState
 
         var pausedText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "PAUSED?!");
 
-        pausedText.camera = _camera;
-
         pausedText.font = Paths.ttf("assets/fonts/Comic Sans MS");
 
         pausedText.size = 48;
 
         pausedText.alignment = CENTER;
 
-        pausedText.setBorderStyle(OUTLINE, FlxColor.WHITE, 1.0, 1.0);
+        pausedText.setBorderStyle(OUTLINE, FlxColor.WHITE, 0.5);
 
         pausedText.textField.antiAliasType = ADVANCED;
 
@@ -98,8 +101,6 @@ class PauseSubState extends FlxSubState
         add(pausedText);
 
         var nameText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "");
-
-        nameText.camera = _camera;
 
         nameText.alpha = 0.5;
 
@@ -115,71 +116,103 @@ class PauseSubState extends FlxSubState
 
         nameText.textField.sharpness = 400.0;
 
-        nameText.setPosition((FlxG.width - nameText.width) * 0.5, (FlxG.height - nameText.height) * 0.5 - 150.0);
+        nameText.setPosition((FlxG.width - nameText.width) * 0.5, (FlxG.height - nameText.height) * 0.5 + 150.0);
 
         add(nameText);
 
+        iconText = new FlxText(0.0, 0.0, FlxG.width, "");
+
+        iconText.alpha = 0.5;
+
+        iconText.text = chart.name;
+
+        iconText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+
+        iconText.size = 42;
+
+        iconText.alignment = CENTER;
+
+        iconText.textField.antiAliasType = ADVANCED;
+
+        iconText.textField.sharpness = 400.0;
+
+        iconText.setPosition((FlxG.width - iconText.width) * 0.5, (FlxG.height - iconText.height) * 0.5 - 150.0);
+
+        add(iconText);
+
+        pauseIcons = new FlxTypedGroup<PauseMenuIcon>();
+
+        add(pauseIcons);
+
         var resumeIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "resumeIcon");
 
-        resumeIcon.camera = _camera;
+        resumeIcon.camera = camera;
 
         resumeIcon.active = false;
 
         resumeIcon.alpha = 0.0;
 
+        resumeIcon.onSelect.add(() -> iconText.text = "Resume");
+
         resumeIcon.onClick.add(close);
 
         resumeIcon.setPosition(-resumeIcon.width, (FlxG.height - resumeIcon.height) * 0.5);
 
-        add(resumeIcon);
+        pauseIcons.add(resumeIcon);
 
         FlxTween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var quitIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "quitIcon");
 
-        quitIcon.camera = _camera;
+        quitIcon.camera = camera;
 
         quitIcon.active = false;
 
         quitIcon.alpha = 0.0;
 
+        quitIcon.onSelect.add(() -> iconText.text = "Quit");
+
         quitIcon.onClick.add(() -> FlxG.switchState(() -> new TitleScreen()));
 
         quitIcon.setPosition(-quitIcon.width, (FlxG.height - quitIcon.height) * 0.5);
 
-        add(quitIcon);
+        pauseIcons.add(quitIcon);
 
         FlxTween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var optionsIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "optionsIcon");
 
-        optionsIcon.camera = _camera;
+        optionsIcon.camera = camera;
 
         optionsIcon.active = false;
 
         optionsIcon.alpha = 0.0;
 
+        optionsIcon.onSelect.add(() -> iconText.text = "Options");
+
         optionsIcon.onClick.add(() -> FlxG.switchState(() -> new OptionsMenu()));
 
         optionsIcon.setPosition(-optionsIcon.width, (FlxG.height - optionsIcon.height) * 0.5);
 
-        add(optionsIcon);
+        pauseIcons.add(optionsIcon);
 
         FlxTween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var restartIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "restartIcon");
 
-        restartIcon.camera = _camera;
+        restartIcon.camera = camera;
 
         restartIcon.active = false;
 
         restartIcon.alpha = 0.0;
 
+        restartIcon.onSelect.add(() -> iconText.text = "Restart");
+
         restartIcon.onClick.add(PlayState.continueWeek);
 
         restartIcon.setPosition(-restartIcon.width, (FlxG.height - restartIcon.height) * 0.5);
 
-        add(restartIcon);
+        pauseIcons.add(restartIcon);
 
         FlxTween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
@@ -198,6 +231,9 @@ class PauseSubState extends FlxSubState
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        if (!FlxG.mouse.overlaps(pauseIcons, camera))
+            iconText.text = "";
 
         if (FlxG.keys.justPressed.ESCAPE)
             close();

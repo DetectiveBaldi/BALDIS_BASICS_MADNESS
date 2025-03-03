@@ -404,4 +404,11 @@ class OptionsMenu extends TransitionState
 
         options.y = FlxMath.lerp(options.y, targetY, FlxMath.getElapsedLerp(0.15, elapsed));
     }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+    }
 }
