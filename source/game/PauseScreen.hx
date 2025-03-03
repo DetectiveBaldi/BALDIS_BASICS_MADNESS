@@ -293,6 +293,8 @@ class PauseScreenIcon extends FlxSprite
     {
         super.destroy();
 
+        onSelect = cast FlxDestroyUtil.destroy(onSelect);
+
         onClick = cast FlxDestroyUtil.destroy(onClick);
     }
 }

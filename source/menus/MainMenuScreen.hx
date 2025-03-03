@@ -16,11 +16,7 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
-import data.WeekData;
-
 import effects.TransitionState;
-
-import game.PlayState;
 
 class MainMenuScreen extends TransitionState
 {
@@ -56,7 +52,7 @@ class MainMenuScreen extends TransitionState
 
         add(chalkboard);
 
-        var playText:MenuText = createText("Play!", () -> PlayState.loadWeek(WeekData.get("week1")));
+        var playText:MenuText = createText("Play!", () -> FlxG.switchState(() -> new ModeSelectScreen()));
 
         playText.setPosition((FlxG.width - playText.width) * 0.5, chalkboard.y + 185.0);
 
@@ -85,6 +81,8 @@ class MainMenuScreen extends TransitionState
         exitButton.scale.set(2.0, 2.0);
 
         exitButton.updateHitbox();
+
+        exitButton.setPosition(10.0, 10.0);
 
         add(exitButton);
 

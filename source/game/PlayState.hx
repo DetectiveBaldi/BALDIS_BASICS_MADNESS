@@ -298,16 +298,13 @@ class PlayState extends MusicState
                     playerVocals.time = instrumental.time;
         }
 
-        if (FlxG.keys.justPressed.ENTER)
-            openSubState(new PauseScreen(chart));
+        if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.ESCAPE)
+            pause();
 
         #if debug
             if (FlxG.keys.justPressed.EIGHT)
                 FlxG.switchState(() -> new CharacterEditorState());
         #end
-        
-        if (FlxG.keys.justPressed.ESCAPE)
-            endSong();
     }
 
     override function openSubState(subState:FlxSubState):Void
@@ -463,6 +460,11 @@ class PlayState extends MusicState
 
             FlxG.switchState(() -> getNextCampaignLevel());
         }
+    }
+
+    public function pause():Void
+    {
+        openSubState(new PauseScreen(chart));
     }
 
     public function gameOver():Void
