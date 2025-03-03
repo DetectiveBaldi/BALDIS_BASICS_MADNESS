@@ -18,10 +18,6 @@ import effects.TransitionState;
 import core.Assets;
 import core.Paths;
 
-import data.WeekData;
-
-import game.PlayState;
-
 class TitleScreen extends TransitionState
 {
     public var title:FlxSprite;
@@ -103,9 +99,16 @@ class TitleScreen extends TransitionState
         tune.play();
     }
 
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+    }
+
     public function clickPlayButton():Void
     {
-        PlayState.loadWeek(WeekData.get("week1"));
+        FlxG.switchState(() -> new MainMenuScreen());
     }
 
     public function clickExitButton():Void

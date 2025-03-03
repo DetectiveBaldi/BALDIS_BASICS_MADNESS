@@ -131,8 +131,6 @@ class PlayState extends MusicState
 
     public var countdown:Countdown;
 
-    public var debugInputs:Map<String, Int>;
-
     override function create():Void
     {
         gameCameraTarget = new FlxObject();
@@ -250,12 +248,6 @@ class PlayState extends MusicState
         countdown.start();
 
         add(countdown);
-
-        debugInputs = new Map<String, Int>();
-
-        debugInputs["EDITORS:CHARACTEREDITORSTATE"] = 55;
-
-        debugInputs["MENUS:OPTIONSMENU"] = 56;
     }
 
     override function update(elapsed:Float):Void
@@ -309,11 +301,10 @@ class PlayState extends MusicState
         if (FlxG.keys.justPressed.ENTER)
             openSubState(new PauseScreen(chart));
 
-        if (FlxG.keys.checkStatus(debugInputs["EDITORS:CHARACTEREDITORSTATE"], JUST_PRESSED))
-            FlxG.switchState(() -> new CharacterEditorState());
-
-        if (FlxG.keys.checkStatus(debugInputs["MENUS:OPTIONSMENU"], JUST_PRESSED))
-            FlxG.switchState(() -> new OptionsMenu());
+        #if debug
+            if (FlxG.keys.justPressed.EIGHT)
+                FlxG.switchState(() -> new CharacterEditorState());
+        #end
         
         if (FlxG.keys.justPressed.ESCAPE)
             endSong();

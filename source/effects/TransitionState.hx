@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSubState;
 
+import flixel.util.FlxTimer;
+
 import flixel.addons.display.FlxBackdrop;
 
 import core.Assets;
@@ -63,7 +65,11 @@ class CustomTransition extends FlxSubState
 
 		backdrop.animation.add("this", [for (i in 0 ... 7) i], 12, false);
 
-        backdrop.animation.onFinish.addOnce((name:String) ->
+		backdrop.animation.play("this", true, fade == IN);
+
+		add(backdrop);
+
+        FlxTimer.wait(0.5, () ->
         {
             if (fade == OUT)
                 close();
@@ -71,10 +77,6 @@ class CustomTransition extends FlxSubState
             if (onComplete != null)
                 onComplete();
         });
-
-		backdrop.animation.play("this", true, fade == IN);
-
-		add(backdrop);
     }
 
     override function destroy():Void
