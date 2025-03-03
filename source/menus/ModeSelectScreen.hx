@@ -106,7 +106,7 @@ class ModeSelectScreen extends TransitionState
 
         var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.get("week1")));
 
-        storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 63.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
+        storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 42.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
 
         exitButton = new FlxSprite();
 
@@ -207,7 +207,7 @@ class ModeSelectIcon extends FlxSprite
 
         onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic(Paths.png('assets/images/menus/ModeSelectScreen/${_path}')), true, 192, 300);
+        loadGraphic(Assets.getGraphic(Paths.png('assets/images/menus/ModeSelectScreen/${_path}')), true, 128, 192);
 
         animation.add("0", [0], 0.0, false);
 
@@ -215,7 +215,7 @@ class ModeSelectIcon extends FlxSprite
 
         animation.play("0");
 
-        scale.set(1.5, 1.5);
+        scale.set(2.0, 2.0);
 
         updateHitbox();
     }
