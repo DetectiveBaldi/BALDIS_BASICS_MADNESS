@@ -38,7 +38,6 @@ import game.events.ScrollSpeedChangeEvent;
 
 import menus.LauncherScreen;
 import menus.OptionsMenu;
-import menus.PauseSubState;
 import menus.TitleScreen;
 
 import music.MusicState;
@@ -308,7 +307,7 @@ class PlayState extends MusicState
         }
 
         if (FlxG.keys.justPressed.ENTER)
-            openSubState(new PauseSubState(chart));
+            openSubState(new PauseScreen(chart));
 
         if (FlxG.keys.checkStatus(debugInputs["EDITORS:CHARACTEREDITORSTATE"], JUST_PRESSED))
             FlxG.switchState(() -> new CharacterEditorState());
@@ -324,7 +323,7 @@ class PlayState extends MusicState
     {
         super.openSubState(subState);
 
-        if (Type.getClass(subState) == PauseSubState)
+        if (Type.getClass(subState) == PauseScreen)
         {
             instrumental.pause();
 
@@ -340,7 +339,7 @@ class PlayState extends MusicState
     {
         super.closeSubState();
 
-        if (Type.getClass(subState) == PauseSubState)
+        if (Type.getClass(subState) == PauseScreen)
         {
             instrumental.resume();
 

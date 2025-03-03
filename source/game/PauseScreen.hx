@@ -1,4 +1,4 @@
-package menus;
+package game;
 
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
@@ -26,11 +26,12 @@ import core.Paths;
 
 import data.Chart;
 
-import game.PlayState;
+import menus.OptionsMenu;
+import menus.TitleScreen;
 
 using util.ArrayUtil;
 
-class PauseSubState extends FlxSubState
+class PauseScreen extends FlxSubState
 {
     public var chart:Chart;
 
@@ -38,7 +39,7 @@ class PauseSubState extends FlxSubState
 
     public var iconText:FlxText;
 
-    public var pauseIcons:FlxTypedGroup<PauseMenuIcon>;
+    public var pauseIcons:FlxTypedGroup<PauseScreenIcon>;
 
     public function new(_chart:Chart):Void
     {
@@ -151,79 +152,23 @@ class PauseSubState extends FlxSubState
 
         add(iconText);
 
-        pauseIcons = new FlxTypedGroup<PauseMenuIcon>();
+        pauseIcons = new FlxTypedGroup<PauseScreenIcon>();
 
         add(pauseIcons);
 
-        var resumeIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "resumeIcon");
-
-        resumeIcon.camera = camera;
-
-        resumeIcon.active = false;
-
-        resumeIcon.alpha = 0.0;
-
-        resumeIcon.onSelect.add(() -> iconText.text = "Resume");
-
-        resumeIcon.onClick.add(close);
-
-        resumeIcon.setPosition(-resumeIcon.width, (FlxG.height - resumeIcon.height) * 0.5);
-
-        pauseIcons.add(resumeIcon);
+        var resumeIcon:PauseScreenIcon = createIcon("resumeIcon", "Resume", close);
 
         FlxTween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var quitIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "quitIcon");
-
-        quitIcon.camera = camera;
-
-        quitIcon.active = false;
-
-        quitIcon.alpha = 0.0;
-
-        quitIcon.onSelect.add(() -> iconText.text = "Quit");
-
-        quitIcon.onClick.add(() -> FlxG.switchState(() -> new TitleScreen()));
-
-        quitIcon.setPosition(-quitIcon.width, (FlxG.height - quitIcon.height) * 0.5);
-
-        pauseIcons.add(quitIcon);
+        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> FlxG.switchState(() -> new TitleScreen()));
 
         FlxTween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var optionsIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "optionsIcon");
-
-        optionsIcon.camera = camera;
-
-        optionsIcon.active = false;
-
-        optionsIcon.alpha = 0.0;
-
-        optionsIcon.onSelect.add(() -> iconText.text = "Options");
-
-        optionsIcon.onClick.add(() -> FlxG.switchState(() -> new OptionsMenu()));
-
-        optionsIcon.setPosition(-optionsIcon.width, (FlxG.height - optionsIcon.height) * 0.5);
-
-        pauseIcons.add(optionsIcon);
+        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu()));
 
         FlxTween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var restartIcon:PauseMenuIcon = new PauseMenuIcon(0.0, 0.0, "restartIcon");
-
-        restartIcon.camera = camera;
-
-        restartIcon.active = false;
-
-        restartIcon.alpha = 0.0;
-
-        restartIcon.onSelect.add(() -> iconText.text = "Restart");
-
-        restartIcon.onClick.add(PlayState.continueWeek);
-
-        restartIcon.setPosition(-restartIcon.width, (FlxG.height - restartIcon.height) * 0.5);
-
-        pauseIcons.add(restartIcon);
+        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", PlayState.continueWeek);
 
         FlxTween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
@@ -256,9 +201,30 @@ class PauseSubState extends FlxSubState
 
         FlxG.camera.filters.remove(blur);
     }
+
+    public function createIcon(path:String, text:String, onClick:()->Void):PauseScreenIcon
+    {
+        var icon:PauseScreenIcon = new PauseScreenIcon(path);
+
+        icon.camera = camera;
+
+        icon.active = false;
+
+        icon.alpha = 0.0;
+
+        icon.onSelect.add(() -> iconText.text = text);
+
+        icon.onClick.add(onClick);
+
+        icon.setPosition(-icon.width, (FlxG.height - icon.height) * 0.5);
+
+        pauseIcons.add(icon);
+
+        return icon;
+    }
 }
 
-class PauseMenuIcon extends FlxSprite
+class PauseScreenIcon extends FlxSprite
 {
     public var selected:Bool;
 
@@ -268,7 +234,9 @@ class PauseMenuIcon extends FlxSprite
 
     public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
     {
-        super(x, y, Assets.getGraphic(Paths.png('assets/images/menus/PauseSubState/${_path}')));
+        super(x, y, Assets.getGraphic(Paths.png('assets/images/game/PauseScreen/${_path}')));
+
+        selected = false;
 
         onSelect = new FlxSignal();
 
