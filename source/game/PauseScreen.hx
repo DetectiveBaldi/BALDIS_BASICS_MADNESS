@@ -11,6 +11,8 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 import flixel.math.FlxMath;
 
+import flixel.sound.FlxSound;
+
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
@@ -40,6 +42,8 @@ class PauseScreen extends FlxSubState
     public var iconText:FlxText;
 
     public var pauseIcons:FlxTypedGroup<PauseScreenIcon>;
+
+    public var tune:FlxSound;
 
     public function new(_chart:Chart):Void
     {
@@ -182,6 +186,14 @@ class PauseScreen extends FlxSubState
 
             restartIcon.active = true;
         });
+
+        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/game/PauseScreen/tune")), 1.0, true);
+
+        tune.volume = 0.0;
+
+        tune.play();
+
+        tune.fadeIn(1.0, 0.0, 0.5);
     }
 
     override function update(elapsed:Float):Void
@@ -200,6 +212,8 @@ class PauseScreen extends FlxSubState
         super.destroy();
 
         FlxG.camera.filters.remove(blur);
+
+        tune.stop();
     }
 
     public function createIcon(path:String, text:String, onClick:()->Void):PauseScreenIcon

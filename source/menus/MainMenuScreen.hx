@@ -90,6 +90,8 @@ class MainMenuScreen extends TransitionState
 
         tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true);
 
+        tune.volume = 0.0;
+
         tune.play();
 
         tune.fadeIn(1.0, 0.0, 1.0);
@@ -105,6 +107,8 @@ class MainMenuScreen extends TransitionState
 
             if (FlxG.mouse.justPressed)
             {
+                tune.fadeTween.cancel();
+
                 tune.fadeOut(0.5, 0.0);
 
                 FlxG.switchState(() -> new TitleScreen());
