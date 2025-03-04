@@ -320,6 +320,8 @@ class PlayState extends MusicState
             opponentVocals?.pause();
 
             playerVocals?.pause();
+
+            playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = false);
         }
     }
 
@@ -336,6 +338,8 @@ class PlayState extends MusicState
             opponentVocals?.resume();
 
             playerVocals?.resume();
+
+            playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = true);
         }
     }
 
