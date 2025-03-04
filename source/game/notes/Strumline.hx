@@ -454,17 +454,19 @@ class Strumline extends FlxGroup
 
         if (!automated)
         {
-            if (note.status == HIT)
+            if (keysHeld[note.direction])
             {
                 if (note.showPop)
                     showPop(note);
             }
-
-            if (!keysHeld[note.direction])
+            else
             {
                 var anim:String = Note.DIRECTIONS[note.strum.direction].toLowerCase() + "Static";
 
                 note.strum.animation.play(anim, true);
+
+                if (note.status != MISSED)
+                    noteMiss(note, false);
             }
         }
 
