@@ -331,11 +331,11 @@ class PlayState extends MusicState
         {
             instrumental.resume();
 
-            mainVocals?.pause();
+            mainVocals?.resume();
 
-            opponentVocals?.pause();
+            opponentVocals?.resume();
 
-            playerVocals?.pause();
+            playerVocals?.resume();
         }
     }
 
