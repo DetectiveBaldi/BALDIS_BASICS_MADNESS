@@ -29,15 +29,12 @@ import data.HealthBarIconData;
 import data.LevelData.RawLevelData;
 import data.WeekData.RawWeekData;
 
-import editors.CharacterEditorState;
-
 import game.notes.Strumline;
 import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
 
 import menus.LauncherScreen;
-import menus.OptionsMenu;
 import menus.TitleScreen;
 
 import music.MusicState;
@@ -303,7 +300,7 @@ class PlayState extends MusicState
 
         #if debug
             if (FlxG.keys.justPressed.EIGHT)
-                FlxG.switchState(() -> new CharacterEditorState());
+                FlxG.switchState(() -> new editors.CharacterEditorState());
         #end
     }
 

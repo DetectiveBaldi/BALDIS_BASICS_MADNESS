@@ -27,6 +27,8 @@ import effects.TransitionState;
 
 import game.PlayState;
 
+using util.ArrayUtil;
+
 class OptionsMenu extends TransitionState
 {
     public var nextState:Class<FlxState>;
@@ -161,13 +163,9 @@ class OptionsMenu extends TransitionState
 
         add(options);
 
-        var header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Window", "");
+        addHeaderOption("Window");
 
-        header.setPosition(FlxG.width - header.width + 165.0, 50.0);
-
-        options.add(header);
-
-        var bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Auto Pause", "If checked, the game will freeze when window focus is lost.", "autoPause");
+        var bool:BoolOptionItem = addBoolOption("Auto Pause", "If checked, the game will freeze when window focus is lost.", "autoPause");
 
         bool.onUpdate.add((value:Bool) -> 
         {
@@ -176,89 +174,31 @@ class OptionsMenu extends TransitionState
             FlxG.console.autoPause = value;
         });
 
-        bool.setPosition(FlxG.width - bool.width + 50.0, header.y + header.height);
+        addHeaderOption("Asset Management");
 
-        options.add(bool);
+        addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed from RAM\nwhere applicable (requires restarting the application).", "gpuCaching");
 
-        var _header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Asset Management", "");
+        addBoolOption("Sound Streaming", "If checked, audio is loaded progressively\nwhere applicable (requires restarting the application).", "soundStreaming");
 
-        _header.setPosition(FlxG.width - _header.width + 165.0, bool.y + bool.height);
+        addBoolOption("Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on scene switch.", "persistentCache");
 
-        options.add(_header);
+        addHeaderOption("Controls");
 
-        var _bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "GPU Caching", "If checked, bitmap pixel data is disposed from RAM\nwhere applicable (may require restarting the application).", "gpuCaching");
+        addControlOption("Left Note", "Controls for the first note in the strumline.", "NOTE:LEFT");
 
-        _bool.setPosition(FlxG.width - _bool.width + 50.0, _header.y + _header.height);
+        addControlOption("Down Note", "Controls for the second note in the strumline.", "NOTE:DOWN");
 
-        options.add(_bool);
+        addControlOption("Up Note", "Controls for the third note in the strumline.", "NOTE:UP");
 
-        var __bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Sound Streaming", "If checked, audio is loaded progressively\nwhere applicable (may require restarting the application).", "soundStreaming");
+        addControlOption("Right Note", "Controls for the fourth note in the strumline.", "NOTE:RIGHT");
 
-        __bool.setPosition(FlxG.width - __bool.width + 50.0, _bool.y + _bool.height);
+        addHeaderOption("Gameplay");
 
-        options.add(__bool);
+        addBoolOption("Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");
 
-        var ___bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on state switch.", "persistentCache");
+        addBoolOption("Middlescroll", "If checked, centers the playable strumline and\nhides the opponent's.", "middlescroll");
 
-        ___bool.onUpdate.add((value:Bool) -> Assets.persistentCache = value);
-
-        ___bool.setPosition(FlxG.width - ___bool.width + 50.0, __bool.y + __bool.height);
-
-        options.add(___bool);
-
-        var __header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Controls", "");
-
-        __header.setPosition(FlxG.width - __header.width + 165.0, ___bool.y + ___bool.height);
-
-        options.add(__header);
-
-        var control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Left Note", "Controls for the first note in the strumline.", "NOTE:LEFT");
-
-        control.setPosition(FlxG.width - control.width + 100.0, __header.y + __header.height);
-
-        options.add(control);
-
-        var _control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Down Note", "Controls for the second note in the strumline.", "NOTE:DOWN");
-
-        _control.setPosition(FlxG.width - _control.width + 100.0, control.y + control.height);
-
-        options.add(_control);
-
-        var __control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Up Note", "Controls for the third note in the strumline.", "NOTE:UP");
-
-        __control.setPosition(FlxG.width - __control.width + 100.0, _control.y + _control.height);
-
-        options.add(__control);
-
-        var ___control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, "Right Note", "Controls for the fourth note in the strumline.", "NOTE:RIGHT");
-
-        ___control.setPosition(FlxG.width - ___control.width + 100.0, __control.y + __control.height);
-
-        options.add(___control);
-
-        var ___header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, "Gameplay", "");
-
-        ___header.setPosition(FlxG.width - ___header.width + 165.0, ___control.y + ___control.height);
-
-        options.add(___header);
-
-        var ____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");
-
-        ____bool.setPosition(FlxG.width - ____bool.width + 50.0, ___header.y + ___header.height);
-
-        options.add(____bool);
-
-        var _____bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Middlescroll", "If checked, centers the playable strumline and\nhides the opponent's.", "middlescroll");
-
-        _____bool.setPosition(FlxG.width - _____bool.width + 50.0, ____bool.y + ____bool.height);
-
-        options.add(_____bool);
-
-        var ______bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, "Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
-
-        ______bool.setPosition(FlxG.width - ______bool.width + 50.0, _____bool.y + _____bool.height);
-
-        options.add(______bool);
+        addBoolOption("Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
 
         option = 0;
 
@@ -417,5 +357,44 @@ class OptionsMenu extends TransitionState
         super.destroy();
 
         FlxG.mouse.visible = false;
+    }
+
+    public function addBoolOption(title:String, description:String, option:String):BoolOptionItem
+    {
+        var newest:BaseOptionItem = options.members.newest();
+
+        var bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, description, option);
+
+        bool.setPosition(FlxG.width - bool.width + 75.0, newest == null ? 50.0 : newest.y + newest.height);
+
+        options.add(bool);
+
+        return bool;
+    }
+
+    public function addControlOption(title:String, description:String, option:String):ControlOptionItem
+    {
+        var newest:BaseOptionItem = options.members.newest();
+
+        var control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, description, option);
+
+        control.setPosition(FlxG.width - control.width + 100.0, newest == null ? 50.0 : newest.y + newest.height);
+
+        options.add(control);
+
+        return control;
+    }
+
+    public function addHeaderOption(title:String):HeaderOptionItem
+    {
+        var newest:BaseOptionItem = options.members.newest();
+
+        var header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, title, "");
+
+        header.setPosition(FlxG.width - header.width + 165.0, newest == null ? 50.0 : newest.y + newest.height);
+
+        options.add(header);
+
+        return header;
     }
 }

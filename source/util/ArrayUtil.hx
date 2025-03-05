@@ -6,6 +6,9 @@ class ArrayUtil
     {
         var output:T = null;
 
+        if (arr.length == 0.0)
+            return output;
+
         if (func == null)
             output = arr[0];
         else
@@ -29,6 +32,9 @@ class ArrayUtil
     public static function newest<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
         var output:T = null;
+
+        if (arr.length == 0.0)
+            return output;
 
         if (func == null)
             output = arr[arr.length - 1];
