@@ -168,22 +168,26 @@ class Options
 
     public static function getDefaultControl(name:String):Array<Int>
     {
-        return switch (name:String)
+        var defControl:Array<Int> = [];
+
+        switch (name:String)
         {
             case "NOTE:LEFT":
-                [65, 37]
+                defControl = [65, 37];
 
             case "NOTE:DOWN":
-                [83, 40]
+                defControl = [83, 40];
 
             case "NOTE:UP":
-                [87, 38]
+                defControl = [87, 38];
 
             case "NOTE:RIGHT":
-                [68, 39]
+                defControl = [68, 39];
 
             case "UI:PAUSE":
-                [13, 27]
+                defControl = [13, 27];
         }
+
+        return defControl;
     }
 }
