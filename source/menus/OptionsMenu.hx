@@ -192,6 +192,8 @@ class OptionsMenu extends TransitionState
 
         addControlOption("Right Note", "Controls for the fourth note in the strumline.", "NOTE:RIGHT");
 
+        addControlOption("Pause", "Controls associated with opening the pause menu.", "UI:PAUSE");
+
         addHeaderOption("Gameplay");
 
         addBoolOption("Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");

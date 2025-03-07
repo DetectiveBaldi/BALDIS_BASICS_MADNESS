@@ -73,7 +73,18 @@ class Options
     @:noCompletion
     static function get_controls():Map<String, Array<Int>>
     {
-        return FlxG.save.data.options.controls ??= ["NOTE:LEFT" => [65, 37], "NOTE:DOWN" => [83, 40], "NOTE:UP" => [87, 38], "NOTE:RIGHT" => [68, 39]];
+        return FlxG.save.data.options.controls ??= 
+        [
+            "NOTE:LEFT" => [65, 37],
+
+            "NOTE:DOWN" => [83, 40],
+            
+            "NOTE:UP" => [87, 38],
+            
+            "NOTE:RIGHT" => [68, 39],
+            
+            "UI:PAUSE" => [13, 27]
+        ];
     }
 
     @:noCompletion

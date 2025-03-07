@@ -187,13 +187,9 @@ class ProgressBar extends FlxSpriteGroup
 
                 emptiedSide.clipRect.x = emptiedSide.width - emptiedSide.clipRect.width;
 
-                emptiedSide.clipRect = emptiedSide.clipRect;
-
                 filledSide.clipRect.width = filledSide.width * (percent * 0.01);
 
                 filledSide.clipRect.height = filledSide.height;
-
-                filledSide.clipRect = filledSide.clipRect;
             }
 
             case RIGHT_TO_LEFT:
@@ -202,15 +198,11 @@ class ProgressBar extends FlxSpriteGroup
 
                 emptiedSide.clipRect.height = emptiedSide.height;
 
-                emptiedSide.clipRect = emptiedSide.clipRect;
-
                 filledSide.clipRect.width = filledSide.width * (percent * 0.01);
 
                 filledSide.clipRect.height = filledSide.height;
 
                 filledSide.clipRect.x = filledSide.width - filledSide.clipRect.width;
-
-                filledSide.clipRect = filledSide.clipRect;
             }
 
             case TOP_TO_BOTTOM:
@@ -221,13 +213,9 @@ class ProgressBar extends FlxSpriteGroup
 
                 emptiedSide.clipRect.y = emptiedSide.height - emptiedSide.clipRect.height;
 
-                emptiedSide.clipRect = emptiedSide.clipRect;
-
                 filledSide.clipRect.height = filledSide.height * (percent * 0.01);
 
                 filledSide.clipRect.width = filledSide.width;
-
-                filledSide.clipRect = filledSide.clipRect;
             }
 
             case BOTTOM_TO_TOP:
@@ -236,17 +224,17 @@ class ProgressBar extends FlxSpriteGroup
 
                 emptiedSide.clipRect.height = emptiedSide.height * (1.0 - percent * 0.01);
 
-                emptiedSide.clipRect = emptiedSide.clipRect;
-
                 filledSide.clipRect.width = filledSide.width;
 
                 filledSide.clipRect.height = filledSide.height * (percent * 0.01);
 
                 filledSide.clipRect.y = filledSide.height - filledSide.clipRect.height;
-
-                filledSide.clipRect = filledSide.clipRect;
             }
         }
+
+        emptiedSide.clipRect = emptiedSide.clipRect;
+
+        filledSide.clipRect = filledSide.clipRect;
     }
 }
 

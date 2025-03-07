@@ -5,8 +5,6 @@ import flixel.FlxSprite;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-import flixel.sound.FlxSound;
-
 import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
@@ -35,8 +33,6 @@ class ModeSelectScreen extends TransitionState
     public var modeIcons:FlxTypedGroup<ModeSelectIcon>;
 
     public var exitButton:FlxSprite;
-
-    public var tune:FlxSound;
 
     override function create():Void
     {
@@ -126,13 +122,7 @@ class ModeSelectScreen extends TransitionState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true);
-
-        tune.volume = 0.0;
-
-        tune.play();
-
-        tune.fadeIn(1.0, 0.0, 1.0);
+        MainMenuScreen.playMusic();
     }
 
     override function update(elapsed:Float):Void
@@ -151,13 +141,7 @@ class ModeSelectScreen extends TransitionState
             exitButton.animation.play("1");
 
             if (FlxG.mouse.justPressed)
-            {
-                tune.fadeTween.cancel();
-
-                tune.fadeOut(0.5, 0.0);
-
                 FlxG.switchState(() -> new MainMenuScreen());
-            }
         }
         else
             exitButton.animation.play("0");
@@ -173,6 +157,8 @@ class ModeSelectScreen extends TransitionState
 
             iconText.text = text;
         });
+
+        icon.onClick.add(MainMenuScreen.fadeMusic);
 
         icon.onClick.add(onClick);
 

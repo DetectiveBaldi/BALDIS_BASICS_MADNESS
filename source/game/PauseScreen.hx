@@ -29,7 +29,7 @@ import core.Paths;
 import data.Chart;
 
 import menus.OptionsMenu;
-import menus.TitleScreen;
+import menus.MainMenuScreen;
 
 using util.ArrayUtil;
 
@@ -164,7 +164,7 @@ class PauseScreen extends FlxSubState
 
         FlxTween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> FlxG.switchState(() -> new TitleScreen()));
+        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> FlxG.switchState(() -> new MainMenuScreen()));
 
         FlxTween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 

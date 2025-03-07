@@ -35,7 +35,7 @@ import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
 
 import menus.LauncherScreen;
-import menus.TitleScreen;
+import menus.ModeSelectScreen;
 
 import music.MusicState;
 
@@ -295,7 +295,7 @@ class PlayState extends MusicState
                     playerVocals.time = instrumental.time;
         }
 
-        if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.ESCAPE)
+        if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]))
             pause();
 
         #if debug
@@ -446,11 +446,11 @@ class PlayState extends MusicState
         {
             /* You completed the week!
                 Or perhaps, you were never truly in a week to begin with.
-                    Either way, you can go back to `menus.TitleScreen` for the time being. */
+                    Either way, you can go back to `menus.ModeSelectScreen` for the time being. */
 
             if (campaignLevel + 1.0 >= week.levels.length || !isCampaign)
             {
-                FlxG.switchState(() -> new TitleScreen());
+                FlxG.switchState(() -> new ModeSelectScreen());
 
                 return;
             }

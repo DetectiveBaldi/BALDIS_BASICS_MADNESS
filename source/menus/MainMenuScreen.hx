@@ -3,9 +3,9 @@ package menus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-import flixel.sound.FlxSound;
-
 import flixel.text.FlxText;
+
+import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
@@ -25,8 +25,6 @@ class MainMenuScreen extends TransitionState
     public var chalkboard:FlxSprite;
 
     public var exitButton:FlxSprite;
-
-    public var tune:FlxSound;
 
     override function create():Void
     {
@@ -53,6 +51,8 @@ class MainMenuScreen extends TransitionState
         add(chalkboard);
 
         var playText:MenuText = createText("Play!", () -> FlxG.switchState(() -> new ModeSelectScreen()));
+
+        playText.onClick.remove(fadeMusic);
 
         playText.setPosition((FlxG.width - playText.width) * 0.5, chalkboard.y + 185.0);
 
@@ -86,13 +86,7 @@ class MainMenuScreen extends TransitionState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true);
-
-        tune.volume = 0.0;
-
-        tune.play();
-
-        tune.fadeIn(1.0, 0.0, 1.0);
+        playMusic();
     }
 
     override function update(elapsed:Float):Void
@@ -105,9 +99,7 @@ class MainMenuScreen extends TransitionState
 
             if (FlxG.mouse.justPressed)
             {
-                tune.fadeTween.cancel();
-
-                tune.fadeOut(0.5, 0.0);
+                fadeMusic();
 
                 FlxG.switchState(() -> new TitleScreen());
             }
@@ -127,13 +119,39 @@ class MainMenuScreen extends TransitionState
     {
         var text:MenuText = new MenuText(0.0, 0.0, text);
 
-        text.onClick.add(() -> tune.fadeOut(0.5, 0.0));
+        text.onClick.add(fadeMusic);
 
         text.onClick.add(onClick);
 
         add(text);
 
         return text;
+    }
+
+    public static function playMusic():Void
+    {
+        if (FlxG.sound.music == null)
+        {
+            FlxG.sound.playMusic(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")));
+
+            FlxG.sound.music.volume = 0.0;
+
+            FlxG.sound.music.fadeIn(0.5, 0.0, 1.0);
+        }
+    }
+
+    public static function fadeMusic():Void
+    {
+        FlxG.sound.music.fadeTween.cancel();
+
+        FlxG.sound.music.fadeOut(0.5, 0.0, stopMusic);
+    }
+
+    public static function stopMusic(tween:FlxTween):Void
+    {
+        FlxG.sound.music.stop();
+
+        FlxG.sound.music = null;
     }
 }
 
