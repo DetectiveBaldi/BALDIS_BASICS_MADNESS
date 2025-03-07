@@ -27,6 +27,8 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
     {
         Options.controls[option] = _value;
 
+        Options.controls = Options.controls;
+
         return value;
     }
 
@@ -41,6 +43,9 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
     public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _description:String, _option:String):Void
     {
         super(_x, _y, _title, _description, _option);
+
+        if (value == null)
+            value = Options.getDefaultControl(_option);
 
         titleText.size = 36;
 

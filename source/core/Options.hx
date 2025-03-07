@@ -75,15 +75,15 @@ class Options
     {
         return FlxG.save.data.options.controls ??= 
         [
-            "NOTE:LEFT" => [65, 37],
+            "NOTE:LEFT" => getDefaultControl("NOTE:LEFT"),
 
-            "NOTE:DOWN" => [83, 40],
+            "NOTE:DOWN" => getDefaultControl("NOTE:DOWN"),
             
-            "NOTE:UP" => [87, 38],
+            "NOTE:UP" => getDefaultControl("NOTE:UP"),
             
-            "NOTE:RIGHT" => [68, 39],
+            "NOTE:RIGHT" => getDefaultControl("NOTE:RIGHT"),
             
-            "UI:PAUSE" => [13, 27]
+            "UI:PAUSE" => getDefaultControl("UI:PAUSE")
         ];
     }
 
@@ -162,5 +162,28 @@ class Options
     public static function init():Void
     {
         FlxG.save.data.options ??= {};
+    }
+
+    // Used for migrating and adding new controls without needing to reset save data!
+
+    public static function getDefaultControl(name:String):Array<Int>
+    {
+        return switch (name:String)
+        {
+            case "NOTE:LEFT":
+                [65, 37]
+
+            case "NOTE:DOWN":
+                [83, 40]
+
+            case "NOTE:UP":
+                [87, 38]
+
+            case "NOTE:RIGHT":
+                [68, 39]
+
+            case "UI:PAUSE":
+                [13, 27]
+        }
     }
 }
