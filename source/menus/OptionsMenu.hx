@@ -45,6 +45,10 @@ class OptionsMenu extends TransitionState
 
     public var options:FlxTypedSpriteGroup<BaseOptionItem>;
 
+    public var descriptor:FlxSprite;
+
+    public var descText:FlxText;
+
     public var option(default, set):Int;
 
     @:noCompletion
@@ -56,31 +60,24 @@ class OptionsMenu extends TransitionState
         {
             var _option:BaseOptionItem = options.members[i];
 
-            _option.alpha = 0.5;
+            _option.alpha = option == i ? 1.0 : 0.5;
 
             if (_option is BoolOptionItem)
-                cast (_option, BoolOptionItem).selectable = false;
+                cast (_option, BoolOptionItem).selectable = option == i;
 
             if (_option is ControlOptionItem)
-                cast (_option, ControlOptionItem).selectable = false;
+                cast (_option, ControlOptionItem).selectable = option == i;
         }
 
-        var _option:BaseOptionItem = options.members[option];
+        FlxTween.cancelTweensOf(descriptor);
 
-        _option.alpha = 1.0;
-
-        if (_option is BoolOptionItem)
-            cast (_option, BoolOptionItem).selectable = true;
-
-        if (_option is ControlOptionItem)
-            cast (_option, ControlOptionItem).selectable = true;
+        if (options.members[option] is HeaderOptionItem)
+            FlxTween.tween(descriptor, {alpha: 0.5}, 0.5);
+        else
+            FlxTween.tween(descriptor, {alpha: 1.0}, 0.5);
 
         return option;
     }
-
-    public var descriptor:FlxSprite;
-
-    public var descText:FlxText;
 
     public var tune:FlxSound;
 
@@ -202,8 +199,6 @@ class OptionsMenu extends TransitionState
 
         addBoolOption("Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
 
-        option = 0;
-
         descriptor = new FlxSprite();
 
         descriptor.antialiasing = true;
@@ -235,6 +230,8 @@ class OptionsMenu extends TransitionState
         descText.setPosition(descriptor.getMidpoint().x - descText.width * 0.5, descriptor.getMidpoint().y - descText.height * 0.5 - 25.0);
 
         add(descText);
+
+        option = 0;
 
         tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/OptionsMenu/tune")), 0.0, true);
 
