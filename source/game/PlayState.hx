@@ -448,7 +448,7 @@ class PlayState extends MusicState
 
             // You still have places to be! Let's keep going!
 
-            level = week.levels[i++];
+            level = week.levels[i + 1];
 
             FlxG.switchState(() -> getCampaignLevel());
         }
