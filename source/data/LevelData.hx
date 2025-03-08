@@ -5,6 +5,11 @@ package data;
 @:structInit
 class LevelData
 {
+    public static function fromRaw(raw:RawLevelData):LevelData
+    {
+        return {week: "", name: raw.name, id: raw.id};
+    }
+
     public var week:String;
 
     public var name:String;

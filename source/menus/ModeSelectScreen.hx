@@ -5,7 +5,11 @@ import flixel.FlxSprite;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
+import flixel.sound.FlxSound;
+
 import flixel.text.FlxText;
+
+import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
@@ -33,6 +37,8 @@ class ModeSelectScreen extends TransitionState
     public var modeIcons:FlxTypedGroup<ModeSelectIcon>;
 
     public var exitButton:FlxSprite;
+
+    public var tune:FlxSound;
 
     override function create():Void
     {
@@ -100,7 +106,7 @@ class ModeSelectScreen extends TransitionState
 
         text += "\nclear by Baldi and his friends...";
 
-        var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.get("week1")));
+        var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.fromRaw(WeekData.get("week1"))));
 
         storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 42.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
 
@@ -122,7 +128,7 @@ class ModeSelectScreen extends TransitionState
 
         add(exitButton);
 
-        MainMenuScreen.playMusic();
+        playMusic();
     }
 
     override function update(elapsed:Float):Void
@@ -158,7 +164,7 @@ class ModeSelectScreen extends TransitionState
             iconText.text = text;
         });
 
-        icon.onClick.add(MainMenuScreen.fadeMusic);
+        icon.onClick.add(fadeMusic);
 
         icon.onClick.add(onClick);
 
@@ -172,6 +178,29 @@ class ModeSelectScreen extends TransitionState
         super.destroy();
 
         FlxG.mouse.visible = false;
+    }
+
+    public function playMusic():Void
+    {
+        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true, null, true);
+
+        tune.volume = 0.0;
+
+        tune.play();
+
+        tune.fadeIn(0.5, 0.0, 1.0);
+    }
+
+    public function fadeMusic():Void
+    {
+        tune.fadeTween.cancel();
+
+        tune.fadeOut(0.5, 0.0, stopMusic);
+    }
+
+    public function stopMusic(tween:FlxTween):Void
+    {
+        tune.stop();
     }
 }
 

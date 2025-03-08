@@ -316,7 +316,7 @@ class CharacterEditorState extends TransitionState
             }
 
             if (FlxG.keys.justPressed.ESCAPE)
-                PlayState.continueWeek();
+                FlxG.switchState(() -> PlayState.getCampaignLevel());
         }
     }
 

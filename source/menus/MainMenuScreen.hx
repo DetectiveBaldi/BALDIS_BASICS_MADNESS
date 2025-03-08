@@ -3,6 +3,8 @@ package menus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.sound.FlxSound;
+
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxTween;
@@ -25,6 +27,8 @@ class MainMenuScreen extends TransitionState
     public var chalkboard:FlxSprite;
 
     public var exitButton:FlxSprite;
+
+    public var tune:FlxSound;
 
     override function create():Void
     {
@@ -52,11 +56,9 @@ class MainMenuScreen extends TransitionState
 
         var playText:MenuText = createText("Play!", () -> FlxG.switchState(() -> new ModeSelectScreen()));
 
-        playText.onClick.remove(fadeMusic);
-
         playText.setPosition((FlxG.width - playText.width) * 0.5, chalkboard.y + 185.0);
 
-        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(MainMenuScreen)));
+        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> new MainMenuScreen())));
 
         optionsText.setPosition((FlxG.width - optionsText.width) * 0.5, playText.y + playText.height + 50.0);
 
@@ -128,30 +130,27 @@ class MainMenuScreen extends TransitionState
         return text;
     }
 
-    public static function playMusic():Void
+    public function playMusic():Void
     {
-        if (FlxG.sound.music == null)
-        {
-            FlxG.sound.playMusic(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")));
+        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true, null, true);
 
-            FlxG.sound.music.volume = 0.0;
+        tune.volume = 0.0;
 
-            FlxG.sound.music.fadeIn(0.5, 0.0, 1.0);
-        }
+        tune.play();
+
+        tune.fadeIn(0.5, 0.0, 1.0);
     }
 
-    public static function fadeMusic():Void
+    public function fadeMusic():Void
     {
-        FlxG.sound.music.fadeTween.cancel();
+        tune.fadeTween.cancel();
 
-        FlxG.sound.music.fadeOut(0.5, 0.0, stopMusic);
+        tune.fadeOut(0.5, 0.0, stopMusic);
     }
 
-    public static function stopMusic(tween:FlxTween):Void
+    public function stopMusic(tween:FlxTween):Void
     {
-        FlxG.sound.music.stop();
-
-        FlxG.sound.music = null;
+        tune.stop();
     }
 }
 

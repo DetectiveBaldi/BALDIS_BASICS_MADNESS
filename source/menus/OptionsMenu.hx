@@ -2,7 +2,6 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -18,6 +17,8 @@ import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 
+import flixel.util.typeLimit.NextState;
+
 import flixel.addons.display.FlxBackdrop;
 
 import core.Assets;
@@ -25,13 +26,11 @@ import core.Paths;
 
 import effects.TransitionState;
 
-import game.PlayState;
-
 using util.ArrayUtil;
 
 class OptionsMenu extends TransitionState
 {
-    public var nextState:Class<FlxState>;
+    public var nextState:NextState;
 
     public var background:FlxSprite;
 
@@ -81,7 +80,7 @@ class OptionsMenu extends TransitionState
 
     public var tune:FlxSound;
 
-    public function new(_nextState:Class<FlxState>):Void
+    public function new(_nextState:NextState):Void
     {
         super();
 
@@ -336,12 +335,7 @@ class OptionsMenu extends TransitionState
             descText.text = options.members[option].description;
 
         if (FlxG.keys.justPressed.ESCAPE)
-        {
-            if (nextState == PlayState)
-                PlayState.continueWeek();
-            else
-                FlxG.switchState(() -> Type.createInstance(nextState, []));
-        }
+            FlxG.switchState(nextState);
 
         var targetY:Float = 0.0;
 

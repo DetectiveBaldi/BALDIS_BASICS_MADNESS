@@ -26,8 +26,8 @@ import data.Chart.RawEvent;
 import data.Chart.RawNote;
 import data.ChartConverters;
 import data.HealthBarIconData;
-import data.LevelData.RawLevelData;
-import data.WeekData.RawWeekData;
+import data.LevelData;
+import data.WeekData;
 
 import game.notes.Strumline;
 import game.events.CameraFollowEvent;
@@ -49,37 +49,26 @@ using util.ArrayUtil;
 
 class PlayState extends MusicState
 {
-    public static var week:RawWeekData;
+    public static var week:WeekData;
 
-    public static var campaignLevel:Int;
+    public static var level:LevelData;
 
     public static var isCampaign:Bool;
 
-    public static function getNextCampaignLevel():PlayState
+    public static function getCampaignLevel():PlayState
     {
-        var _level:RawLevelData = week.levels[campaignLevel];
-
-        var __level:Class<Dynamic> = Type.resolveClass('game.levels.${week.name}.Level${_level.id}');
-
-        var ___level:PlayState = Type.createInstance(__level, []);
-
-        return ___level;
+        return Type.createInstance(Type.resolveClass('game.levels.${week.name}.Level${level.id}'), []);
     }
 
-    public static function loadWeek(_week:RawWeekData, _campaignLevel:Int = 0, _isCampaign:Bool = true):Void
+    public static function loadWeek(_week:WeekData, _isCampaign:Bool = true, index:Int = 0):Void
     {
         week = _week;
 
-        campaignLevel = _campaignLevel;
+        level = week.levels[index];
 
         isCampaign = _isCampaign;
 
-        FlxG.switchState(() -> getNextCampaignLevel());
-    }
-
-    public static function continueWeek():Void
-    {
-        loadWeek(week, campaignLevel, isCampaign);
+        FlxG.switchState(() -> getCampaignLevel());
     }
 
     public var gameCamera(get, never):FlxCamera;
@@ -279,8 +268,8 @@ class PlayState extends MusicState
 
         if (countdown.finished || countdown.skipped)
         {
-            if (Math.abs(conductor.time - instrumental.time) >= 25.0)
-                conductor.time = instrumental.time;
+            if (Math.abs(instrumental.time - conductor.time) >= 25.0)
+                instrumental.time = conductor.time;
 
             if (mainVocals != null)
                 if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)
@@ -448,7 +437,9 @@ class PlayState extends MusicState
                 Or perhaps, you were never truly in a week to begin with.
                     Either way, you can go back to `menus.ModeSelectScreen` for the time being. */
 
-            if (campaignLevel + 1.0 >= week.levels.length || !isCampaign)
+            var i:Int = week.levels.indexOf(level);
+
+            if (i + 1.0 >= week.levels.length || !isCampaign)
             {
                 FlxG.switchState(() -> new ModeSelectScreen());
 
@@ -457,9 +448,9 @@ class PlayState extends MusicState
 
             // You still have places to be! Let's keep going!
 
-            campaignLevel++;
+            level = week.levels[i++];
 
-            FlxG.switchState(() -> getNextCampaignLevel());
+            FlxG.switchState(() -> getCampaignLevel());
         }
     }
 
