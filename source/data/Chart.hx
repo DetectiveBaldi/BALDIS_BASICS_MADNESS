@@ -2,32 +2,23 @@ package data;
 
 import haxe.Json;
 
-import core.Assets;
-import core.Paths;
-
 import util.TimedObjectUtil.TimedObject;
 
 class Chart
 {
-    public static function build(path:String):Chart
+    public static function fromRaw(raw:RawChart):Chart
     {
-        var output:Chart = new Chart();
+        var chart:Chart = new Chart();
 
-        var raw:RawChart = Json.parse(Assets.getText(Paths.json(path)));
+        chart.name = raw.name;
 
-        output.name = raw.name;
+        chart.tempo = raw.tempo; chart.scrollSpeed = raw.scrollSpeed;
 
-        output.tempo = raw.tempo;
+        chart.notes = raw.notes; chart.events = raw.events; chart.timeChanges = raw.timeChanges;
 
-        output.scrollSpeed = raw.scrollSpeed;
+        chart.spectator = raw.spectator; chart.opponent = raw.opponent; chart.player = raw.player;
 
-        output.notes = raw.notes;
-
-        output.events = raw.events;
-
-        output.timeChanges = raw.timeChanges;
-
-        return output;
+        return chart;
     }
 
     /**
@@ -45,6 +36,12 @@ class Chart
 
     public var timeChanges:Array<RawTimeChange>;
 
+    public var spectator:String;
+
+    public var opponent:String;
+
+    public var player:String;
+
     public function new():Void
     {
         name = "Test";
@@ -58,6 +55,18 @@ class Chart
         events = new Array<RawEvent>();
 
         timeChanges = new Array<RawTimeChange>();
+
+        spectator = "GIRLFRIEND";
+
+        opponent = "BOYFRIEND_PIXEL";
+
+        player = "BOYFRIEND";
+    }
+
+    public function toString():String
+    {
+        return Json.stringify({name: name, tempo: tempo, scrollSpeed: scrollSpeed, notes: notes, events: events,
+            timeChanges: timeChanges, spectator: spectator, opponent: opponent, player: player});
     }
 }
 
@@ -74,6 +83,12 @@ typedef RawChart =
     var events:Array<RawEvent>;
 
     var timeChanges:Array<RawTimeChange>;
+
+    var spectator:String;
+
+    var opponent:String;
+
+    var player:String;
 }
 
 typedef RawEvent = TimedObject &

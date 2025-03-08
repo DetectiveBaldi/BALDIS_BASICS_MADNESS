@@ -2,8 +2,6 @@ package game;
 
 import flixel.math.FlxMath;
 
-import flixel.util.FlxColor;
-
 import data.HealthBarIconData;
 
 import music.Conductor;
@@ -42,41 +40,13 @@ class HealthBar extends ProgressBar
         return fillDirection;
     }
 
-    public var opponentIcon(default, set):HealthBarIcon;
+    public var opponentIcon:HealthBarIcon;
 
-    @:noCompletion
-    function set_opponentIcon(_opponentIcon:HealthBarIcon):HealthBarIcon
+    public var playerIcon:HealthBarIcon;
+
+    public function new(x:Float = 0.0, y:Float = 0.0, _conductor:Conductor):Void
     {
-        opponentIcon = _opponentIcon;
-
-        var opponentIconHealthBarColor:String = opponentIcon.config.healthBarColor;
-
-        var emptiedSideColor:FlxColor = opponentIconHealthBarColor == null ? FlxColor.RED : FlxColor.fromString(opponentIconHealthBarColor);
-
-        emptiedSide.color = emptiedSideColor;
-
-        return opponentIcon;
-    }
-
-    public var playerIcon(default, set):HealthBarIcon;
-
-    @:noCompletion
-    function set_playerIcon(_playerIcon:HealthBarIcon):HealthBarIcon
-    {
-        playerIcon = _playerIcon;
-
-        var playerIconHealthBarColor:String = playerIcon.config.healthBarColor;
-
-        var filledSideColor:FlxColor = playerIconHealthBarColor == null ? FlxColor.LIME : FlxColor.fromString(playerIconHealthBarColor);
-
-        filledSide.color = filledSideColor;
-
-        return playerIcon;
-    }
-
-    public function new(x:Float = 0.0, y:Float = 0.0, barWidth:Int = 600, barHeight:Int = 25, fillDirection:ProgressBarFillDirection, _conductor:Conductor):Void
-    {
-        super(x, y, barWidth, barHeight, fillDirection);
+        super(x, y, 600, 25, RIGHT_TO_LEFT);
 
         borderSize = 5;
 

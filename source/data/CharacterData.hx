@@ -50,4 +50,8 @@ typedef RawCharacterData =
     var ?danceInterval:Float;
 
     var ?singDuration:Float;
+
+    var healthBarIcon:String;
+
+    var ?healthBarColor:String;
 }

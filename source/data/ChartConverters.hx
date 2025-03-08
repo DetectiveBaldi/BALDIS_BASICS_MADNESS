@@ -39,7 +39,7 @@ class ChartConverters
             if (Reflect.hasField(rawChart, "format"))
                 return PsychConverter.build(rawChartPath);
             else
-                return Chart.build(rawChartPath);
+                return Chart.fromRaw(Json.parse(Assets.getText(Paths.json(rawChartPath))));
         }
     }
 }
@@ -82,11 +82,17 @@ class FunkinConverter
             output.timeChanges.push({time: timeChange.t, tempo: timeChange.bpm, step: 0.0});
         }
 
+        output.spectator = rawMeta.playData.characters.girlfriend;
+
+        output.player = rawMeta.playData.characters.opponent;
+
+        output.opponent = rawMeta.playData.characters.player;
+
         sys.FileSystem.createDirectory("assets/data/game/FunkinConverter/");
 
         sys.FileSystem.createDirectory('assets/data/game/FunkinConverter/${output.name}/');
 
-        sys.io.File.saveContent('assets/data/game/FunkinConverter/${output.name}.json', Json.stringify({name: output.name, tempo: output.tempo, scrollSpeed: output.scrollSpeed, notes: output.notes, events: output.events, timeChanges: output.timeChanges}));
+        sys.io.File.saveContent('assets/data/game/FunkinConverter/${output.name}.json', output.toString());
 
         return output;
     }
@@ -158,11 +164,17 @@ class PsychConverter
             }
         }
 
+        output.spectator = raw.gfVersion;
+
+        output.opponent = raw.player2;
+
+        output.player = raw.player1;
+
         sys.FileSystem.createDirectory("assets/data/game/PsychConverter/");
 
         sys.FileSystem.createDirectory('assets/data/game/PsychConverter/${output.name}/');
 
-        sys.io.File.saveContent('assets/data/game/PsychConverter/${output.name}.json', Json.stringify({name: output.name, tempo: output.tempo, scrollSpeed: output.scrollSpeed, notes: output.notes, events: output.events, timeChanges: output.timeChanges}));
+        sys.io.File.saveContent('assets/data/game/PsychConverter/${output.name}.json', output.toString());
 
         return output;
     }

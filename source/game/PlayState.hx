@@ -14,6 +14,7 @@ import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
 
+import flixel.util.FlxColor;
 import flixel.util.FlxStringUtil;
 
 import core.Assets;
@@ -153,7 +154,7 @@ class PlayState extends MusicState
 
         stage.add(spectators);
 
-        spectator = new Character(conductor, 0.0, 0.0, CharacterData.get("GIRLFRIEND"));
+        spectator = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.spectator));
 
         spectator.skipSing = true;
 
@@ -161,13 +162,13 @@ class PlayState extends MusicState
 
         stage.add(opponents);
 
-        opponent = new Character(conductor, 0.0, 0.0, CharacterData.get("BOYFRIEND_PIXEL"));
+        opponent = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.opponent));
 
         players = new FlxTypedSpriteGroup<Character>();
 
         stage.add(players);
 
-        player = new Character(conductor, 0.0, 0.0, CharacterData.get("BOYFRIEND"));
+        player = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.player));
 
         playField = new PlayField(conductor, chart, instrumental);
 
@@ -175,23 +176,37 @@ class PlayState extends MusicState
 
         add(playField);
 
-        playField.healthBar.onEmptied.add(gameOver);
+        var healthBar:HealthBar = playField.healthBar;
 
-        playField.healthBar.opponentIcon.config = HealthBarIconData.get('${opponent.config.name}');
+        healthBar.onEmptied.add(gameOver);
 
-        playField.healthBar.opponentIcon = playField.healthBar.opponentIcon;
+        var opponentBarColor:String = opponent.config.healthBarColor;
 
-        playField.healthBar.playerIcon.config = HealthBarIconData.get('${player.config.name}');
+        var emptiedSideColor:FlxColor = opponentBarColor == null ? FlxColor.RED : FlxColor.fromString(opponentBarColor);
 
-        playField.healthBar.playerIcon = playField.healthBar.playerIcon;
+        var playerBarColor:String = player.config.healthBarColor;
 
-        playField.opponentStrumline.characters = opponents;
+        var filledSideColor:FlxColor = playerBarColor == null ? FlxColor.LIME : FlxColor.fromString(playerBarColor);
 
-        playField.opponentStrumline.vocals = opponentVocals ?? mainVocals;
+        healthBar.emptiedSide.color = emptiedSideColor;
 
-        playField.playerStrumline.characters = players;
+        healthBar.filledSide.color = filledSideColor;
 
-        playField.playerStrumline.vocals = playerVocals ?? mainVocals;
+        healthBar.opponentIcon.config = HealthBarIconData.get(opponent.config.healthBarIcon);
+
+        healthBar.playerIcon.config = HealthBarIconData.get(player.config.healthBarIcon);
+
+        var opponentStrumline:Strumline = playField.opponentStrumline;
+
+        var playerStrumline:Strumline = playField.playerStrumline;
+
+        opponentStrumline.characters = opponents;
+
+        opponentStrumline.vocals = opponentVocals ?? mainVocals;
+
+        playerStrumline.characters = players;
+
+        playerStrumline.vocals = playerVocals ?? mainVocals;
 
         spectators.group.memberAdded.add((spectator:Character) -> spectator.strumline = playField.opponentStrumline);
 

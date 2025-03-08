@@ -28,5 +28,9 @@
 
     "danceSteps": ["dance"],
 
-    "danceInterval": 2.0
+    "danceInterval": 2.0,
+
+    "healthBarIcon": "BOYFRIEND_PIXEL",
+
+    "healthBarColor": "0x7BD6F6"
 }

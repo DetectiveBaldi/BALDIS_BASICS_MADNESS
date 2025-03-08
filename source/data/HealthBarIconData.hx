@@ -32,6 +32,4 @@ typedef RawHealthBarIconData =
     var ?antialiasing:Bool;
 
     var ?scale:{?x:Float, ?y:Float};
-
-    var ?healthBarColor:String;
 }

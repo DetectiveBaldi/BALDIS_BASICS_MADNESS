@@ -30,5 +30,9 @@
 
     "danceSteps": ["dance"],
 
-    "danceInterval": 2.0
+    "danceInterval": 2.0,
+
+    "healthBarIcon": "BOYFRIEND",
+
+    "healthBarColor": "0x31B0D1"
 }
