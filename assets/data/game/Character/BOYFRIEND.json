@@ -32,7 +32,7 @@
 
     "danceInterval": 2.0,
 
-    "healthBarIcon": "BOYFRIEND",
+    "healthIcon": "BOYFRIEND",
 
-    "healthBarColor": "0x31B0D1"
+    "healthColor": "0x31B0D1"
 }

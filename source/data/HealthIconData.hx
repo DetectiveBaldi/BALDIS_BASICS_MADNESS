@@ -5,16 +5,16 @@ import haxe.Json;
 import core.Assets;
 import core.Paths;
 
-class HealthBarIconData
+class HealthIconData
 {
-    public static var list:Map<String, RawHealthBarIconData> = new Map<String, RawHealthBarIconData>();
+    public static var list:Map<String, RawHealthIconData> = new Map<String, RawHealthIconData>();
 
-    public static function get(path:String):RawHealthBarIconData
+    public static function get(path:String):RawHealthIconData
     {
         if (exists(path))
             return list[path];
 
-        list[path] = Json.parse(Assets.getText(Paths.json('assets/data/game/HealthBarIcon/${path}')));
+        list[path] = Json.parse(Assets.getText(Paths.json('assets/data/game/HealthIcon/${path}')));
 
         return list[path];
     }
@@ -25,7 +25,7 @@ class HealthBarIconData
     }
 }
 
-typedef RawHealthBarIconData =
+typedef RawHealthIconData =
 {
     var png:String;
 

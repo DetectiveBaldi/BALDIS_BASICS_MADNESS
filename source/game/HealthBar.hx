@@ -2,7 +2,7 @@ package game;
 
 import flixel.math.FlxMath;
 
-import data.HealthBarIconData;
+import data.HealthIconData;
 
 import music.Conductor;
 
@@ -40,9 +40,9 @@ class HealthBar extends ProgressBar
         return fillDirection;
     }
 
-    public var opponentIcon:HealthBarIcon;
+    public var opponentIcon:HealthIcon;
 
-    public var playerIcon:HealthBarIcon;
+    public var playerIcon:HealthIcon;
 
     public function new(x:Float = 0.0, y:Float = 0.0, _conductor:Conductor):Void
     {
@@ -52,7 +52,7 @@ class HealthBar extends ProgressBar
 
         conductor = _conductor;
 
-        opponentIcon = new HealthBarIcon(0.0, 0.0, HealthBarIconData.get("BOYFRIEND_PIXEL"));
+        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("BOYFRIEND_PIXEL"));
 
         opponentIcon.flipX = fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM;
 
@@ -60,7 +60,7 @@ class HealthBar extends ProgressBar
 
         add(opponentIcon);
 
-        playerIcon = new HealthBarIcon(0.0, 0.0, HealthBarIconData.get("BOYFRIEND"));
+        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("BOYFRIEND"));
 
         playerIcon.flipX = !(fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM);
 

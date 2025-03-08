@@ -26,7 +26,7 @@ import data.Chart;
 import data.Chart.RawEvent;
 import data.Chart.RawNote;
 import data.ChartConverters;
-import data.HealthBarIconData;
+import data.HealthIconData;
 import data.LevelData;
 import data.WeekData;
 
@@ -180,21 +180,21 @@ class PlayState extends MusicState
 
         healthBar.onEmptied.add(gameOver);
 
-        var opponentBarColor:String = opponent.config.healthBarColor;
+        var oppHealthColor:String = opponent.config.healthColor;
 
-        var emptiedSideColor:FlxColor = opponentBarColor == null ? FlxColor.RED : FlxColor.fromString(opponentBarColor);
+        var emptiedSideColor:FlxColor = oppHealthColor == null ? FlxColor.RED : FlxColor.fromString(oppHealthColor);
 
-        var playerBarColor:String = player.config.healthBarColor;
+        var plrHealthColor:String = player.config.healthColor;
 
-        var filledSideColor:FlxColor = playerBarColor == null ? FlxColor.LIME : FlxColor.fromString(playerBarColor);
+        var filledSideColor:FlxColor = plrHealthColor == null ? FlxColor.LIME : FlxColor.fromString(plrHealthColor);
 
         healthBar.emptiedSide.color = emptiedSideColor;
 
         healthBar.filledSide.color = filledSideColor;
 
-        healthBar.opponentIcon.config = HealthBarIconData.get(opponent.config.healthBarIcon);
+        healthBar.opponentIcon.config = HealthIconData.get(opponent.config.healthIcon);
 
-        healthBar.playerIcon.config = HealthBarIconData.get(player.config.healthBarIcon);
+        healthBar.playerIcon.config = HealthIconData.get(player.config.healthIcon);
 
         var opponentStrumline:Strumline = playField.opponentStrumline;
 

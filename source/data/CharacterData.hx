@@ -51,7 +51,7 @@ typedef RawCharacterData =
 
     var ?singDuration:Float;
 
-    var healthBarIcon:String;
+    var healthIcon:String;
 
-    var ?healthBarColor:String;
+    var ?healthColor:String;
 }

@@ -5,14 +5,14 @@ import flixel.FlxSprite;
 import core.Assets;
 import core.Paths;
 
-import data.HealthBarIconData.RawHealthBarIconData;
+import data.HealthIconData.RawHealthIconData;
 
-class HealthBarIcon extends FlxSprite
+class HealthIcon extends FlxSprite
 {
-    public var config(default, set):RawHealthBarIconData;
+    public var config(default, set):RawHealthIconData;
 
     @:noCompletion
-    function set_config(_config:RawHealthBarIconData):RawHealthBarIconData
+    function set_config(_config:RawHealthIconData):RawHealthIconData
     {
         config = _config;
 
@@ -27,7 +27,7 @@ class HealthBarIcon extends FlxSprite
         return config;
     }
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _config:RawHealthBarIconData):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, _config:RawHealthIconData):Void
     {
         super(x, y);
 
