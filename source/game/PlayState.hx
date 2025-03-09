@@ -180,17 +180,9 @@ class PlayState extends MusicState
 
         healthBar.onEmptied.add(gameOver);
 
-        var oppHealthColor:String = opponent.config.healthColor;
+        healthBar.emptiedSide.color = FlxColor.fromString(opponent.config.healthColor);
 
-        var emptiedSideColor:FlxColor = oppHealthColor == null ? FlxColor.RED : FlxColor.fromString(oppHealthColor);
-
-        var plrHealthColor:String = player.config.healthColor;
-
-        var filledSideColor:FlxColor = plrHealthColor == null ? FlxColor.LIME : FlxColor.fromString(plrHealthColor);
-
-        healthBar.emptiedSide.color = emptiedSideColor;
-
-        healthBar.filledSide.color = filledSideColor;
+        healthBar.filledSide.color = FlxColor.fromString(player.config.healthColor);
 
         healthBar.opponentIcon.config = HealthIconData.get(opponent.config.healthIcon);
 

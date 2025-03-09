@@ -3,6 +3,7 @@ package editors;
 import haxe.Json;
 
 import sys.FileSystem;
+
 import sys.io.File;
 
 import openfl.desktop.Clipboard;
@@ -15,6 +16,7 @@ import flixel.graphics.frames.FlxFrame;
 
 import flixel.math.FlxMath;
 
+import flixel.util.FlxColor;
 import flixel.util.FlxStringUtil;
 
 import flixel.addons.display.FlxBackdrop;
@@ -42,11 +44,15 @@ import core.Paths;
 
 import data.AnimationData;
 import data.CharacterData;
+import data.HealthIconData;
 
 import effects.TransitionState;
 
 import game.Character;
+import game.HealthIcon;
 import game.PlayState;
+
+import ui.ProgressBar;
 
 using StringTools;
 
@@ -67,6 +73,10 @@ class CharacterEditorState extends TransitionState
     public var character:Character;
 
     public var animationIndex:Int;
+
+    public var progBar:ProgressBar;
+
+    public var healthIcon:HealthIcon;
 
     public var ui:Box;
 
@@ -101,6 +111,24 @@ class CharacterEditorState extends TransitionState
         ui.camera = hudCamera;
 
         add(ui);
+
+        progBar = new ProgressBar(0.0, 0.0, 600, 25, 5, RIGHT_TO_LEFT);
+
+        progBar.camera = hudCamera;
+
+        progBar.setPosition(50.0, FlxG.height - progBar.height - 50.0);
+
+        add(progBar);
+
+        progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
+
+        healthIcon = new HealthIcon(0.0, 0.0, HealthIconData.get(character.config.healthIcon));
+
+        healthIcon.camera = hudCamera;
+
+        healthIcon.setPosition(15.0, progBar.getMidpoint().y - healthIcon.height * 0.5);
+
+        add(healthIcon);
 
         refreshMainTab();
 
@@ -252,11 +280,22 @@ class CharacterEditorState extends TransitionState
             InitState.log.warning("Some animations might be invalidated! Take a look!");
         }
 
+        ui.findComponent("___button", Button).onClick = (ev:MouseEvent) ->
+        {
+            character.config.healthIcon = ui.findComponent("_____textfield", TextField).text;
+
+            healthIcon.config = HealthIconData.get(character.config.healthIcon);
+
+            character.config.healthColor = ui.findComponent("______textfield", TextField).text;
+
+            progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
+        }
+
         refreshAnimationsTab();
 
-        ui.findComponent("___button", Button).onClick = (ev:MouseEvent) -> saveAnimation();
+        ui.findComponent("____button", Button).onClick = (ev:MouseEvent) -> saveAnimation();
 
-        ui.findComponent("____button", Button).onClick = (ev:MouseEvent) -> deleteAnimation();
+        ui.findComponent("_____button", Button).onClick = (ev:MouseEvent) -> deleteAnimation();
     }
 
     override function update(elapsed:Float):Void
@@ -357,15 +396,19 @@ class CharacterEditorState extends TransitionState
         ui.findComponent("___textfield", TextField).text = character.config.png;
 
         ui.findComponent("____textfield", TextField).text = character.config.xml;
+
+        ui.findComponent("_____textfield", TextField).text = character.config.healthIcon;
+
+        ui.findComponent("______textfield", TextField).text = character.config.healthColor;
     }
 
     public function refreshAnimationsTab():Void
     {
         var animation:AnimationData = character.config.animations[animationIndex];
 
-        ui.findComponent("_____textfield", TextField).text = animation.name;
+        ui.findComponent("_______textfield", TextField).text = animation.name;
 
-        ui.findComponent("______textfield", TextField).text = animation.prefix;
+        ui.findComponent("________textfield", TextField).text = animation.prefix;
 
         ui.findComponent("textarea", TextArea).text = animation.indices.toString();
 
@@ -379,7 +422,7 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("_____checkbox", CheckBox).value = animation.flipY ?? false;
 
-        ui.findComponent("_____________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
     }
 
     public function saveAnimation():Void
@@ -387,7 +430,7 @@ class CharacterEditorState extends TransitionState
         var frames:Array<FlxFrame> = new Array<FlxFrame>();
 
         @:privateAccess
-        character.animation.findByPrefix(frames, ui.findComponent("______textfield", TextField).text);
+        character.animation.findByPrefix(frames, ui.findComponent("________textfield", TextField).text);
         
         if (frames.length <= 0.0)
         {
@@ -398,15 +441,15 @@ class CharacterEditorState extends TransitionState
 
         var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text) ?? new Array<Int>();
 
-        var animation:AnimationData = character.config.animations.oldest((animation:AnimationData) -> ui.findComponent("_____textfield", TextField).text == animation.name);
+        var animation:AnimationData = character.config.animations.oldest((animation:AnimationData) -> ui.findComponent("_______textfield", TextField).text == animation.name);
 
         if (animation == null)
         {
             character.config.animations.push
             ({
-                name: ui.findComponent("_____textfield", TextField).text,
+                name: ui.findComponent("_______textfield", TextField).text,
 
-                prefix: ui.findComponent("______textfield", TextField).text,
+                prefix: ui.findComponent("________textfield", TextField).text,
 
                 indices: indices,
 
@@ -425,7 +468,7 @@ class CharacterEditorState extends TransitionState
         }
         else
         {
-            animation.prefix = ui.findComponent("______textfield", TextField).text;
+            animation.prefix = ui.findComponent("________textfield", TextField).text;
 
             animation.indices = indices;
 
@@ -485,7 +528,7 @@ class CharacterEditorState extends TransitionState
 
         animation.offset.y = y;
 
-        ui.findComponent("_____________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
     }
 
     public function addAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void

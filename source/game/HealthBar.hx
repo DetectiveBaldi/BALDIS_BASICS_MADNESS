@@ -46,7 +46,7 @@ class HealthBar extends ProgressBar
 
     public function new(x:Float = 0.0, y:Float = 0.0, _conductor:Conductor):Void
     {
-        super(x, y, 600, 25, RIGHT_TO_LEFT);
+        super(x, y, 600, 25, 5, RIGHT_TO_LEFT);
 
         borderSize = 5;
 

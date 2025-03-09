@@ -24,12 +24,14 @@ class WeekData
         return week;
     }
 
-    public static function load():Void
+    public static function init():Map<String, RawWeekData>
     {
         var list:Array<String> = FileSystem.readDirectory("assets/data/game/WeekData/");
 
         for (i in 0 ... list.length)
             get(list[i].split(".")[0]);
+
+        return raw;
     }
 
     public static function get(path:String):RawWeekData

@@ -69,7 +69,7 @@ class InitState extends FlxState
 
         FlxG.console.autoPause = Options.autoPause;
 
-        WeekData.load();
+        WeekData.init();
 
         log = new Log();
 
@@ -77,7 +77,7 @@ class InitState extends FlxState
 
         perfStats = new PerfStats(10.0, 5.0);
         
-        FlxG.game.addChildAt(perfStats, 2);
+        FlxG.game.addChildAt(perfStats, FlxG.game.getChildIndex(@:privateAccess FlxG.game._inputContainer) + 1);
 
         FlxG.switchState(nextState);
     }

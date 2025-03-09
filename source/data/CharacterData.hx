@@ -7,21 +7,9 @@ import core.Paths;
 
 class CharacterData
 {
-    public static var list:Map<String, RawCharacterData> = new Map<String, RawCharacterData>();
-
     public static function get(path:String):RawCharacterData
     {
-        if (exists(path))
-            return list[path];
-
-        list[path] = Json.parse(Assets.getText(Paths.json('assets/data/game/Character/${path}')));
-
-        return list[path];
-    }
-
-    public static function exists(path:String):Bool
-    {
-        return list.exists(path);
+        return Json.parse(Assets.getText(Paths.json('assets/data/game/Character/${path}')));
     }
 }
 

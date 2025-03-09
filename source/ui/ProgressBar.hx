@@ -105,7 +105,7 @@ class ProgressBar extends FlxSpriteGroup
         return borderSize;
     }
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _barWidth:Int = 600, _barHeight:Int = 25, _fillDirection:ProgressBarFillDirection):Void
+    public function new(_x:Float = 0.0, _y:Float = 0.0, _barWidth:Int = 600, _barHeight:Int = 25, _borderSize:Int = 5, _fillDirection:ProgressBarFillDirection):Void
     {
         super(_x, _y);
         
@@ -155,7 +155,7 @@ class ProgressBar extends FlxSpriteGroup
         
         add(border);
 
-        borderSize = 0;
+        borderSize = _borderSize;
     }
 
     override function destroy():Void
