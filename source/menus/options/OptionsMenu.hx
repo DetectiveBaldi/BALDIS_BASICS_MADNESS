@@ -1,4 +1,4 @@
-package menus;
+package menus.options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -25,6 +25,12 @@ import core.Assets;
 import core.Paths;
 
 import effects.TransitionState;
+
+import menus.options.items.BaseOptionItem;
+import menus.options.items.BoolOptionItem;
+import menus.options.items.ControlOptionItem;
+import menus.options.items.HeaderOptionItem;
+import menus.options.items.NumericOptionItem.IntOptionItem;
 
 using util.ArrayUtil;
 
@@ -61,11 +67,16 @@ class OptionsMenu extends TransitionState
 
             _option.alpha = option == i ? 1.0 : 0.5;
 
+            var selectable:Bool = option == i;
+
             if (_option is BoolOptionItem)
-                cast (_option, BoolOptionItem).selectable = option == i;
+                cast (_option, BoolOptionItem).selectable = selectable;
 
             if (_option is ControlOptionItem)
-                cast (_option, ControlOptionItem).selectable = option == i;
+                cast (_option, ControlOptionItem).selectable = selectable;
+
+            if (_option is IntOptionItem)
+                cast(_option, IntOptionItem).selectable = selectable;
         }
 
         FlxTween.cancelTweensOf(descriptor);
@@ -168,6 +179,24 @@ class OptionsMenu extends TransitionState
             FlxG.autoPause = value;
 
             FlxG.console.autoPause = value;
+        });
+
+        var int:IntOptionItem = addIntOption("Frame Rate", "How often the game ticks each second.", "frameRate", 60, 244, 1);
+
+        int.onUpdate.add((value:Int) ->
+        {
+            if (value > FlxG.updateFramerate)
+            {
+                FlxG.updateFramerate = value;
+
+                FlxG.drawFramerate = value;
+            }
+            else
+            {
+                FlxG.drawFramerate = value;
+
+                FlxG.updateFramerate = value;
+            }
         });
 
         addHeaderOption("Asset Management");
@@ -389,5 +418,18 @@ class OptionsMenu extends TransitionState
         options.add(header);
 
         return header;
+    }
+
+    public function addIntOption(title:String, description:String, option:String, min:Int, max:Int, step:Int):IntOptionItem
+    {
+        var newest:BaseOptionItem = options.members.newest();
+
+        var int:IntOptionItem = new IntOptionItem(0.0, 0.0, title, description, option, min, max, step);
+
+        int.setPosition(FlxG.width - int.width + 125.0, newest == null ? 50.0 : newest.y + newest.height);
+
+        options.add(int);
+
+        return int;
     }
 }

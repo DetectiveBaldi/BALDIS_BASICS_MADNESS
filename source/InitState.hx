@@ -49,9 +49,11 @@ class InitState extends FlxState
 
         FlxG.fixedTimestep = false;
 
-        FlxG.updateFramerate = MathUtil.maxInt(FlxG.stage.window.displayMode.refreshRate, 144);
+        Options.init();
 
-        FlxG.drawFramerate = MathUtil.maxInt(FlxG.stage.window.displayMode.refreshRate, 144);
+        FlxG.updateFramerate = Options.frameRate;
+
+        FlxG.drawFramerate = Options.frameRate;
 
         FlxG.mouse.visible = false;
 
@@ -60,8 +62,6 @@ class InitState extends FlxState
         FlxG.console.registerClass(Options);
 
         FlxG.plugins.drawOnTop = true;
-
-        Options.init();
 
         Assets.init();
 

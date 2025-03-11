@@ -20,6 +20,8 @@ import core.Paths;
 
 import effects.TransitionState;
 
+import menus.options.OptionsMenu;
+
 class MainMenuScreen extends TransitionState
 {
     public var pattern:FlxBackdrop;

@@ -1,4 +1,4 @@
-package menus;
+package menus.options.items;
 
 import flixel.FlxSprite;
 

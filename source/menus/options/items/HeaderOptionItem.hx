@@ -1,4 +1,4 @@
-package menus;
+package menus.options.items;
 
 import flixel.FlxSprite;
 
@@ -17,7 +17,7 @@ class HeaderOptionItem extends BaseOptionItem
 
         gear = new FlxSprite(Assets.getGraphic(Paths.png("assets/images/menus/HeaderOptionItem/gear")));
 
-        gear.active = false;
+        // gear.active = false;
 
         gear.antialiasing = true;
 

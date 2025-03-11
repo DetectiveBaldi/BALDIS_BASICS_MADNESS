@@ -112,10 +112,10 @@ class Assets
 
         var output:Sound;
 
-        if (Options.soundStreaming && soundStreaming && path.endsWith(".ogg"))
+        if (Options.soundStreaming && soundStreaming)
             output = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromBytes(getByteSet(path))));
         else
-            output = Sound.fromAudioBuffer(AudioBuffer.fromBytes(getByteSet(path)));
+            output = Sound.fromFile(path);
 
         sounds[path] = output;
 
@@ -193,10 +193,6 @@ class Assets
      */
     public static function getText(path:String):String
     {
-        var output:String = getByteSet(path).toString();
-
-        removeByteSet(path);
-
-        return output;
+        return File.getContent(path);
     }
 }

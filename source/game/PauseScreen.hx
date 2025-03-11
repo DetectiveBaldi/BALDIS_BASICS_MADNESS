@@ -28,8 +28,9 @@ import core.Paths;
 
 import data.Chart;
 
-import menus.OptionsMenu;
 import menus.MainMenuScreen;
+
+import menus.options.OptionsMenu;
 
 using util.ArrayUtil;
 

@@ -20,12 +20,27 @@ class Options
         return autoPause;
     }
 
+    public static var frameRate(get, set):Int;
+
+    @:noCompletion
+    static function get_frameRate():Int
+    {
+        return FlxG.save.data.options.frameRate ??= 60;
+    }
+
+    static function set_frameRate(_frameRate:Int):Int
+    {
+        FlxG.save.data.options.frameRate = _frameRate;
+
+        return frameRate;
+    }
+
     public static var gpuCaching(get, set):Bool;
 
     @:noCompletion
     static function get_gpuCaching():Bool
     {
-        return FlxG.save.data.options.gpuCaching ??= true;
+        return FlxG.save.data.options.gpuCaching ??= false;
     }
 
     @:noCompletion
@@ -41,7 +56,7 @@ class Options
     @:noCompletion
     static function get_soundStreaming():Bool
     {
-        return FlxG.save.data.options.soundStreaming ??= true;
+        return FlxG.save.data.options.soundStreaming ??= false;
     }
 
     @:noCompletion
