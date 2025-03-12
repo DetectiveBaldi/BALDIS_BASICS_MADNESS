@@ -15,7 +15,6 @@ import flixel.math.FlxMath;
 import flixel.sound.FlxSound;
 
 import flixel.util.FlxColor;
-import flixel.util.FlxStringUtil;
 
 import core.Assets;
 import core.Paths;
