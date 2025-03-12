@@ -29,9 +29,7 @@ typedef RawNotePopSkin =
 {
     var format:String;
 
-    var png:String;
-
-    var xml:String;
+    var image:String;
 
     var ?antialiasing:Bool;
 

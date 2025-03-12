@@ -52,9 +52,9 @@ class Character extends FlxSprite
     {
         config = _config;
 
-        var pngPath:String = Paths.image(Paths.png('game/Character/${config.png}'));
+        var pngPath:String = Paths.image(Paths.png('game/Character/${config.image}'));
 
-        var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.xml}'));
+        var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.image}'));
 
         switch (config.format ?? "".toLowerCase():String)
         {

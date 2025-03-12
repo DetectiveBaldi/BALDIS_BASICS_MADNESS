@@ -2,8 +2,6 @@ package data;
 
 import haxe.Json;
 
-import sys.FileSystem;
-
 import core.Assets;
 import core.Paths;
 
@@ -17,7 +15,7 @@ class HealthIconData
 
 typedef RawHealthIconData =
 {
-    var png:String;
+    var image:String;
 
     var ?antialiasing:Bool;
 

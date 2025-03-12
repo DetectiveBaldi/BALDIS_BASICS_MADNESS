@@ -3,9 +3,7 @@
 
     "format": "sparrow",
     
-    "png": "BOYFRIEND_PIXEL",
-
-    "xml": "BOYFRIEND_PIXEL",
+    "image": "BOYFRIEND_PIXEL",
 
     "antialiasing": false,
 

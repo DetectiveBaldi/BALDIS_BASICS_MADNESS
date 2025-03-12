@@ -1,9 +1,7 @@
 {
     "format": "sparrow",
 
-    "png": "default",
-
-    "xml": "default",
+    "image": "default",
 
     "animations":
     [

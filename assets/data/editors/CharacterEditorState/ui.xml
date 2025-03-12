@@ -60,26 +60,22 @@
 
                     <textfield id="__textfield" />
 
-                    <label id="_______label" text="Path to .png" verticalAlign="center" />
+                    <label id="_______label" text="Path to .png and .xml" verticalAlign="center" />
 
                     <textfield id="___textfield" width="250" />
-
-                    <label id="________label" text="Path to .xml" verticalAlign="center" />
-
-                    <textfield id="____textfield" width="250" />
 
                     <button id="__button" text="Refresh" />
 
                     <hbox id="_______hbox">
-                        <label id="_________label" text="Health Icon Path" verticalAlign="center" />
+                        <label id="________label" text="Path to Health Icon" verticalAlign="center" />
 
-                        <textfield id="_____textfield" width="150" />
+                        <textfield id="____textfield" width="150" />
                     </hbox>
 
                     <hbox id="________hbox">
-                        <label id="__________label" text="Health Color" verticalAlign="center" />
+                        <label id="_________label" text="Health Color" verticalAlign="center" />
 
-                        <textfield id="______textfield" width="150" />
+                        <textfield id="_____textfield" width="150" />
                     </hbox>
 
                     <button id="___button" text="Refresh" />
@@ -89,25 +85,25 @@
             <box id="__box" text="Animations">
                 <vbox id="___vbox" style="padding:10px; spacing:10px">
                     <hbox id="_________hbox">
-                        <label id="___________label" text="Name" verticalAlign="center" />
+                        <label id="__________label" text="Name" verticalAlign="center" />
+
+                        <textfield id="______textfield" />
+                    </hbox>
+
+                    <hbox id="__________hbox">
+                        <label id="___________label" text="Prefix" verticalAlign="center" />
 
                         <textfield id="_______textfield" />
                     </hbox>
 
-                    <hbox id="__________hbox">
-                        <label id="____________label" text="Prefix" verticalAlign="center" />
-
-                        <textfield id="________textfield" />
-                    </hbox>
-
                     <hbox id="___________hbox">
-                        <label id="_____________label" text="Indices" verticalAlign="center" />
+                        <label id="____________label" text="Indices" verticalAlign="center" />
 
                         <textarea id="textarea" style="height:auto; max-height:60px;" restrictChars="0-9," />
                     </hbox>
 
                     <hbox id="____________hbox">
-                        <label id="______________label" text="Frame Rate" verticalAlign="center" />
+                        <label id="_____________label" text="Frame Rate" verticalAlign="center" />
 
                         <number-stepper id="____number-stepper" step="1" />
                     </hbox>
@@ -118,7 +114,7 @@
 
                     <checkbox id="_____checkbox" text="Flip Y" />
 
-                    <label id="_______________label" verticalAlign="center" />
+                    <label id="______________label" verticalAlign="center" />
 
                     <hbox id="_____________hbox">
                         <button id="____button" text="Save" />

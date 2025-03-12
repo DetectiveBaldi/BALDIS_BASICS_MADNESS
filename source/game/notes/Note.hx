@@ -21,9 +21,9 @@ class Note extends FlxSprite
     {
         skin = _skin;
 
-        var pngPath:String = Paths.image(Paths.png('game/notes/Note/${skin.png}'));
+        var pngPath:String = Paths.image(Paths.png('game/notes/Note/${skin.image}'));
 
-        var xmlPath:String = Paths.image(Paths.xml('game/notes/Note/${skin.xml}'));
+        var xmlPath:String = Paths.image(Paths.xml('game/notes/Note/${skin.image}'));
 
         switch (skin.format ?? "".toLowerCase():String)
         {

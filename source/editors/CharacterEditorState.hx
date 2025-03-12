@@ -235,44 +235,35 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("__button", Button).onClick = (ev:MouseEvent) ->
         {
-            if (character.config.format == ui.findComponent("__textfield", TextField).text && character.config.png == ui.findComponent("___textfield", TextField).text && character.config.xml == ui.findComponent("____textfield", TextField).text)
-            {
-                InitState.log.error("The requested format and file(s) are in use!");
-                
-                return;
-            }
-
             character.config.format = ui.findComponent("__textfield", TextField).text;
 
-            character.config.png = ui.findComponent("___textfield", TextField).text;
+            character.config.image = ui.findComponent("___textfield", TextField).text;
 
-            character.config.xml = ui.findComponent("____textfield", TextField).text;
+            var pngPath:String = Paths.image(Paths.png('game/Character/${character.config.image}'));
+
+            var xmlPath:String = Paths.image(Paths.xml('game/Character/${character.config.image}'));
 
             switch (character.config.format ?? "".toLowerCase():String)
             {
-                case "sparrow":
-                    character.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png(character.config.png), true), Paths.xml(character.config.xml));
+                case "sparrow": character.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
 
-                case "texturepackerxml":
-                    character.frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(Paths.png(character.config.png), true), Paths.xml(character.config.xml));
+                case "texturepackerxml": character.frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
             }
 
             character.updateHitbox();
 
             character.screenCenter();
 
-            ui.findComponent("tabview", TabView).selectedPage = ui.findComponent("__box", Box);
-
             InitState.log.warning("Some animations might be invalidated! Take a look!");
         }
 
         ui.findComponent("___button", Button).onClick = (ev:MouseEvent) ->
         {
-            character.config.healthIcon = ui.findComponent("_____textfield", TextField).text;
+            character.config.healthIcon = ui.findComponent("____textfield", TextField).text;
 
             healthIcon.config = HealthIconData.get(character.config.healthIcon);
 
-            character.config.healthColor = ui.findComponent("______textfield", TextField).text;
+            character.config.healthColor = ui.findComponent("_____textfield", TextField).text;
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
         }
@@ -379,22 +370,20 @@ class CharacterEditorState extends TransitionState
     {
         ui.findComponent("__textfield", TextField).text = character.config.format;
 
-        ui.findComponent("___textfield", TextField).text = character.config.png;
+        ui.findComponent("___textfield", TextField).text = character.config.image;
 
-        ui.findComponent("____textfield", TextField).text = character.config.xml;
+        ui.findComponent("____textfield", TextField).text = character.config.healthIcon;
 
-        ui.findComponent("_____textfield", TextField).text = character.config.healthIcon;
-
-        ui.findComponent("______textfield", TextField).text = character.config.healthColor;
+        ui.findComponent("_____textfield", TextField).text = character.config.healthColor;
     }
 
     public function refreshAnimationsTab():Void
     {
         var animation:AnimationData = character.config.animations[animationIndex];
 
-        ui.findComponent("_______textfield", TextField).text = animation.name;
+        ui.findComponent("______textfield", TextField).text = animation.name;
 
-        ui.findComponent("________textfield", TextField).text = animation.prefix;
+        ui.findComponent("_______textfield", TextField).text = animation.prefix;
 
         ui.findComponent("textarea", TextArea).text = animation.indices.toString();
 
@@ -408,7 +397,7 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("_____checkbox", CheckBox).value = animation.flipY ?? false;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
+        ui.findComponent("______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
     }
 
     public function saveAnimation():Void
@@ -416,7 +405,7 @@ class CharacterEditorState extends TransitionState
         var frames:Array<FlxFrame> = new Array<FlxFrame>();
 
         @:privateAccess
-        character.animation.findByPrefix(frames, ui.findComponent("________textfield", TextField).text);
+        character.animation.findByPrefix(frames, ui.findComponent("_______textfield", TextField).text);
         
         if (frames.length <= 0.0)
         {
@@ -427,15 +416,15 @@ class CharacterEditorState extends TransitionState
 
         var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text) ?? new Array<Int>();
 
-        var animation:AnimationData = character.config.animations.oldest((animation:AnimationData) -> ui.findComponent("_______textfield", TextField).text == animation.name);
+        var animation:AnimationData = character.config.animations.oldest((animation:AnimationData) -> ui.findComponent("______textfield", TextField).text == animation.name);
 
         if (animation == null)
         {
             character.config.animations.push
             ({
-                name: ui.findComponent("_______textfield", TextField).text,
+                name: ui.findComponent("______textfield", TextField).text,
 
-                prefix: ui.findComponent("________textfield", TextField).text,
+                prefix: ui.findComponent("_______textfield", TextField).text,
 
                 indices: indices,
 
@@ -454,7 +443,7 @@ class CharacterEditorState extends TransitionState
         }
         else
         {
-            animation.prefix = ui.findComponent("________textfield", TextField).text;
+            animation.prefix = ui.findComponent("_______textfield", TextField).text;
 
             animation.indices = indices;
 
@@ -514,7 +503,7 @@ class CharacterEditorState extends TransitionState
 
         animation.offset.y = y;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
+        ui.findComponent("______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
     }
 
     public function addAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void
