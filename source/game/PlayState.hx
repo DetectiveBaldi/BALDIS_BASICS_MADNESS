@@ -60,7 +60,7 @@ class PlayState extends MusicState
         return Type.createInstance(Type.resolveClass('game.levels.${week.name}.Level${level.id}'), []);
     }
 
-    public static function loadWeek(_week:WeekData, _isCampaign:Bool = true, index:Int = 0):Void
+    public static function loadWeek(_week:WeekData, index:Int = 0, _isCampaign:Bool = true):Void
     {
         week = _week;
 
