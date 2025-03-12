@@ -55,7 +55,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         valueText.color = FlxColor.BLACK;
 
-        valueText.font = Paths.ttf("assets/fonts/Ubuntu Regular");
+        valueText.font = Paths.font(Paths.ttf("Ubuntu Regular"));
 
         valueText.alignment = RIGHT;
 
@@ -71,7 +71,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         lButton = new FlxSprite();
 
-        lButton.loadGraphic(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/lButton")), true, 48, 96);
+        lButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/lButton"))), true, 48, 96);
 
         lButton.antialiasing = true;
 
@@ -91,7 +91,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         rButton = new FlxSprite();
 
-        rButton.loadGraphic(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/rButton")), true, 48, 96);
+        rButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/rButton"))), true, 48, 96);
 
         rButton.antialiasing = true;
 

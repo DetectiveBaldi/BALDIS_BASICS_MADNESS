@@ -25,7 +25,7 @@ class WarningScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
 
         var _text:String = "";
 
@@ -51,7 +51,7 @@ class WarningScreen extends TransitionState
 
         text = new FlxText(0.0, 0.0, FlxG.width, _text);
 
-        text.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        text.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         text.alignment = CENTER;
 
@@ -73,7 +73,7 @@ class WarningScreen extends TransitionState
 
         text.addFormat(colorSwap, 248, 260);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/WarningScreen/tune")), 1.0, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/WarningScreen/tune"))), 1.0, true);
 
         tune.play();
     }

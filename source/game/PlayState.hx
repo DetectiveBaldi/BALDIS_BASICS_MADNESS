@@ -140,11 +140,11 @@ class PlayState extends MusicState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
 
-        loadChart(FlxStringUtil.getClassName(this, true));
+        loadChart();
 
-        loadSong(FlxStringUtil.getClassName(this, true));
+        loadSong();
 
         stage ??= new FlxGroup();
 
@@ -352,9 +352,9 @@ class PlayState extends MusicState
         hudCamera.zoom += 0.015;
     }
 
-    public function loadChart(level:String):Void
+    public function loadChart():Void
     {
-        chart = ChartConverters.build('assets/data/game/levels/${level}/');
+        chart = ChartConverters.build(Paths.data('game/levels/${week.name}/Level${level.id}'));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -403,21 +403,23 @@ class PlayState extends MusicState
         eventIndex = 0;
     }
 
-    public function loadSong(level:String):Void
+    public function loadSong():Void
     {
-        instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('assets/music/game/levels/${level}/Instrumental')));
+        var path:String = Paths.music('game/levels/${week.name}/Level${level.id}/');
+
+        instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Instrumental')));
 
         instrumental.onComplete = endSong;
 
-        if (FileSystem.exists(Paths.ogg('assets/music/game/levels/${level}/Vocals-Main')))
-            mainVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('assets/music/game/levels/${level}/Vocals-Main')));
+        if (FileSystem.exists(Paths.ogg('${path}Vocals-Main')))
+            mainVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Main')));
         else
         {
-            if (FileSystem.exists(Paths.ogg('assets/music/game/levels/${level}/Vocals-Opponent')))
-                opponentVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('assets/music/game/levels/${level}/Vocals-Opponent')));
+            if (FileSystem.exists(Paths.ogg('${path}Vocals-Opponent')))
+                opponentVocals = FlxG.sound.load(Paths.ogg('${path}Vocals-Opponent'));
 
-            if (FileSystem.exists(Paths.ogg('assets/music/game/levels/${level}/Vocals-Player')))
-                playerVocals = FlxG.sound.load(Assets.getSound(Paths.ogg ('assets/music/game/levels/${level}/Vocals-Player')));
+            if (FileSystem.exists(Paths.ogg('${path}Vocals-Player')))
+                playerVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Player')));
         }
     }
 

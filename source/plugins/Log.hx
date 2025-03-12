@@ -41,7 +41,7 @@ class Log extends FlxTypedGroup<FlxText>
 
         output.antialiasing = true;
 
-        output.font = Paths.ttf("assets/fonts/VCR OSD Mono");
+        output.font = Paths.font(Paths.ttf("VCR OSD Mono"));
 
         output.setBorderStyle(OUTLINE, FlxColor.BLACK, 2.2);
 

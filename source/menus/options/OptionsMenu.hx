@@ -104,7 +104,7 @@ class OptionsMenu extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/background")));
+        background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/background"))));
 
         background.active = false;
 
@@ -114,7 +114,7 @@ class OptionsMenu extends TransitionState
 
         add(background);
 
-        backdrop = new FlxBackdrop(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/backdrop")));
+        backdrop = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/backdrop"))));
 
         backdrop.antialiasing = true;
 
@@ -126,7 +126,7 @@ class OptionsMenu extends TransitionState
 
         add(backdrop);
 
-        gradient = new FlxSprite(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/gradient")));
+        gradient = new FlxSprite(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/gradient"))));
 
         gradient.active = false;
 
@@ -140,7 +140,7 @@ class OptionsMenu extends TransitionState
 
         cornerCutout.antialiasing = true;
 
-        cornerCutout.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/cornerCutout")), Paths.xml("assets/images/menus/OptionsMenu/cornerCutout"));
+        cornerCutout.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/cornerCutout"))), Paths.image(Paths.xml("menus/OptionsMenu/cornerCutout")));
 
         cornerCutout.animation.addByPrefix("cornerCutout", "cornerCutout", 12.0);
 
@@ -154,7 +154,7 @@ class OptionsMenu extends TransitionState
 
         add(cornerCutout);
 
-        gear = new FlxSprite(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/gear")));
+        gear = new FlxSprite(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/gear"))));
 
         gear.active = false;
 
@@ -233,7 +233,7 @@ class OptionsMenu extends TransitionState
 
         descriptor.color = descriptor.color.getDarkened(0.15);
 
-        descriptor.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png("assets/images/menus/OptionsMenu/descriptor")), Paths.xml("assets/images/menus/OptionsMenu/descriptor"));
+        descriptor.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/descriptor"))), Paths.image(Paths.xml("menus/OptionsMenu/descriptor")));
 
         descriptor.animation.addByPrefix("descriptor", "descriptor", 12.0);
 
@@ -251,7 +251,7 @@ class OptionsMenu extends TransitionState
 
         descText.color = FlxColor.BLACK;
 
-        descText.font = Paths.ttf("assets/fonts/Ubuntu Regular");
+        descText.font = Paths.font(Paths.ttf("Ubuntu Regular"));
 
         descText.alignment = CENTER;
 
@@ -261,7 +261,7 @@ class OptionsMenu extends TransitionState
 
         option = 0;
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/OptionsMenu/tune")), 0.0, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/OptionsMenu/tune"))), 0.0, true);
 
         tune.fadeIn(1.0, 0.0, 1.0);
 
@@ -276,7 +276,7 @@ class OptionsMenu extends TransitionState
         {
             option = FlxMath.wrap(option + 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -285,7 +285,7 @@ class OptionsMenu extends TransitionState
         {
             option = FlxMath.wrap(option - 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -298,7 +298,7 @@ class OptionsMenu extends TransitionState
             {
                 option = options.members.indexOf(_option);
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -312,7 +312,7 @@ class OptionsMenu extends TransitionState
             {
                 option = options.members.indexOf(_option);
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -324,7 +324,7 @@ class OptionsMenu extends TransitionState
             {
                 option = options.members.length - 1;
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -336,7 +336,7 @@ class OptionsMenu extends TransitionState
             {
                 option = 0;
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -346,7 +346,7 @@ class OptionsMenu extends TransitionState
         {
             option = FlxMath.wrap(option + 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -355,7 +355,7 @@ class OptionsMenu extends TransitionState
         {
             option = FlxMath.wrap(option - 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
             scroll.onComplete = scroll.kill;
         }

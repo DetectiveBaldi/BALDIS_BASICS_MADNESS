@@ -52,7 +52,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
         selectable = false;
 
-        control = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/ControlOptionItem/control")));
+        control = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/ControlOptionItem/control"))));
 
         control.active = false;
 
@@ -93,7 +93,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
                 if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)
                 {
-                    var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                    var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                     scroll.onComplete = scroll.kill;
 
@@ -131,7 +131,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
                     input.enabled = false;
 
-                    var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg("assets/sounds/menus/OptionsMenu/scroll"), false), 0.35);
+                    var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
 
                     scroll.onComplete = scroll.kill;
                 }

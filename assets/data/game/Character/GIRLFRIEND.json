@@ -3,9 +3,9 @@
 
     "format": "sparrow",
     
-    "png": "assets/images/game/Character/GIRLFRIEND",
+    "png": "GIRLFRIEND",
 
-    "xml": "assets/images/game/Character/GIRLFRIEND",
+    "xml": "GIRLFRIEND",
 
     "animations":
     [

@@ -21,13 +21,15 @@ class Note extends FlxSprite
     {
         skin = _skin;
 
+        var pngPath:String = Paths.image(Paths.png('game/notes/Note/${skin.png}'));
+
+        var xmlPath:String = Paths.image(Paths.xml('game/notes/Note/${skin.xml}'));
+
         switch (skin.format ?? "".toLowerCase():String)
         {
-            case "sparrow":
-                frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png(skin.png)), Paths.xml(skin.xml));
-            
-            case "texturepackerxml":
-                frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(Paths.png(skin.png)), Paths.xml(skin.xml));
+            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
+
+            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
         }
 
         for (i in 0 ... DIRECTIONS.length)

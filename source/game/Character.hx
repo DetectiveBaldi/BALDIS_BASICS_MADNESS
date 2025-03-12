@@ -52,11 +52,15 @@ class Character extends FlxSprite
     {
         config = _config;
 
+        var pngPath:String = Paths.image(Paths.png('game/Character/${config.png}'));
+
+        var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.xml}'));
+
         switch (config.format ?? "".toLowerCase():String)
         {
-            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.png(config.png)), Paths.xml(config.xml));
+            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
 
-            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(Paths.png(config.png)), Paths.xml(config.xml));
+            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
         }
 
         antialiasing = config.antialiasing ?? true;

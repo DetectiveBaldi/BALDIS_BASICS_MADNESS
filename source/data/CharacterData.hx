@@ -9,7 +9,7 @@ class CharacterData
 {
     public static function get(path:String):RawCharacterData
     {
-        return Json.parse(Assets.getText(Paths.json('assets/data/game/Character/${path}')));
+        return Json.parse(Assets.getText(Paths.data(Paths.json('game/Character/${path}'))));
     }
 }
 

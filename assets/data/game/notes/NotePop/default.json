@@ -1,9 +1,9 @@
 {
     "format": "sparrow",
 
-    "png": "assets/images/game/notes/NotePop/default",
+    "png": "default",
 
-    "xml": "assets/images/game/notes/NotePop/default",
+    "xml": "default",
 
     "animations":
     [

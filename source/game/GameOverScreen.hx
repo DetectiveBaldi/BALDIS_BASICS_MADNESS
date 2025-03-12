@@ -60,13 +60,13 @@ class GameOverScreen extends MusicSubState
 
         game.gameCameraTarget.setPosition(player.getMidpoint().x, player.getMidpoint().y);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/game/GameOverScreen/tune")), 1.0, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("game/GameOverScreen/tune"))), 1.0, true);
 
-        start = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/sounds/game/GameOverScreen/start"), false));
+        start = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/start")), false));
 
         start.play();
 
-        end = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/sounds/game/GameOverScreen/end"), false));
+        end = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/end")), false));
     }
 
     override function update(elapsed:Float):Void

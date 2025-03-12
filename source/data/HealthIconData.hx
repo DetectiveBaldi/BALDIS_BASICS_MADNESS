@@ -11,7 +11,7 @@ class HealthIconData
 {
     public static function get(path:String):RawHealthIconData
     {
-        return Json.parse(Assets.getText(Paths.json('assets/data/game/HealthIcon/${path}')));
+        return Json.parse(Assets.getText(Paths.data(Paths.json('game/HealthIcon/${path}'))));
     }
 }
 

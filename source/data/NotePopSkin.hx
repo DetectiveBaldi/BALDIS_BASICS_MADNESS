@@ -14,7 +14,7 @@ class NotePopSkin
         if (exists(path))
             return list[path];
 
-        list[path] = Json.parse(Assets.getText(Paths.json('assets/data/game/notes/NotePop/${path}')));
+        list[path] = Json.parse(Assets.getText(Paths.data(Paths.json('game/notes/NotePop/${path}'))));
 
         return list[path];
     }

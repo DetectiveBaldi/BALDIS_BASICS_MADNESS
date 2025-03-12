@@ -351,7 +351,7 @@ class Strumline extends FlxGroup
         if (vocals != null)
             vocals.volume = 0.0;
 
-        var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg('assets/sounds/game/GameState/noteMiss${FlxG.random.int(0, 2)}'), false), 0.15);
+        var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg('game/GameState/noteMiss${FlxG.random.int(0, 2)}')), false), 0.15);
 
         _noteMiss.onComplete = _noteMiss.kill;
     }
@@ -364,7 +364,7 @@ class Strumline extends FlxGroup
 
         if (ghostTapEvent.penalize)
         {
-            var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound(Paths.ogg('assets/sounds/game/GameState/noteMiss${FlxG.random.int(0, 2)}'), false), 0.15);
+            var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg('game/GameState/noteMiss${FlxG.random.int(0, 2)}')), false), 0.15);
 
             _noteMiss.onComplete = _noteMiss.kill;
 

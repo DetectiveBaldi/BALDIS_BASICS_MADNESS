@@ -3,9 +3,9 @@
 
     "format": "sparrow",
     
-    "png": "assets/images/game/Character/BOYFRIEND",
+    "png": "BOYFRIEND",
 
-    "xml": "assets/images/game/Character/BOYFRIEND",
+    "xml": "BOYFRIEND",
 
     "animations":
     [

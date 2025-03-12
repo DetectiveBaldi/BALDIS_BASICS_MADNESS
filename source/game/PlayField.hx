@@ -86,7 +86,7 @@ class PlayField extends FlxGroup
 
         statsText.antialiasing = true;
 
-        statsText.font = Paths.ttf("assets/fonts/VCR OSD Mono");
+        statsText.font = Paths.font(Paths.ttf("VCR OSD Mono"));
 
         statsText.alignment = CENTER;
 
@@ -120,7 +120,7 @@ class PlayField extends FlxGroup
 
         timeText.antialiasing = true;
 
-        timeText.font = Paths.ttf("assets/fonts/VCR OSD Mono");
+        timeText.font = Paths.font(Paths.ttf("VCR OSD Mono"));
 
         timeText.alignment = CENTER;
 

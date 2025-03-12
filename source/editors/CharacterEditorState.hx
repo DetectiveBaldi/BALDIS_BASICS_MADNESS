@@ -136,7 +136,7 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("button", Button).onClick = (ev:MouseEvent) ->
         {
-            var path:String = Paths.json('assets/data/game/Character/${character.config.name}');
+            var path:String = Paths.data(Paths.json('game/Character/${character.config.name}'));
 
             File.saveContent(path, Json.stringify(character.config));
 
@@ -145,13 +145,6 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("_button", Button).onClick = (ev:MouseEvent) ->
         {
-            if (!FileSystem.exists(Paths.json('assets/data/game/Character/${ui.findComponent("textfield", TextField).text}')))
-            {
-                InitState.log.error("The requested file(s) do not exist!");
-
-                return;
-            }
-
             character.config = CharacterData.get('${ui.findComponent("textfield", TextField).text}');
 
             character.screenCenter();
@@ -246,13 +239,6 @@ class CharacterEditorState extends TransitionState
             {
                 InitState.log.error("The requested format and file(s) are in use!");
                 
-                return;
-            }
-
-            if (!FileSystem.exists(Paths.png(ui.findComponent("___textfield", TextField).text)) || !FileSystem.exists(Paths.xml(ui.findComponent("____textfield", TextField).text)))
-            {
-                InitState.log.error("The requested file(s) do not exist!");
-
                 return;
             }
 

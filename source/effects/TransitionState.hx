@@ -61,7 +61,7 @@ class CustomTransition extends FlxSubState
 
         var backdrop:FlxBackdrop = new FlxBackdrop();
 
-        backdrop.loadGraphic(Assets.getGraphic(Paths.png("assets/images/effects/TransitionState/gradient")), true, 16, 16);
+        backdrop.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("effects/TransitionState/gradient"))), true, 16, 16);
 
 		backdrop.animation.add("this", [for (i in 0 ... 7) i], 12, false);
 

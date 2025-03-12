@@ -48,9 +48,9 @@ class ModeSelectScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
 
-        heads = new FlxBackdrop(Assets.getGraphic(Paths.png("assets/images/menus/ModeSelectScreen/head")), XY, 50.0, 50.0);
+        heads = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/ModeSelectScreen/head"))), XY, 50.0, 50.0);
 
         heads.velocity.set(10.0, 10.0);
 
@@ -62,7 +62,7 @@ class ModeSelectScreen extends TransitionState
 
         nameText.color = FlxColor.BLACK;
 
-        nameText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        nameText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         nameText.size = 36;
 
@@ -82,7 +82,7 @@ class ModeSelectScreen extends TransitionState
 
         iconText.color = FlxColor.BLACK;
 
-        iconText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        iconText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         iconText.size = 36;
 
@@ -112,7 +112,7 @@ class ModeSelectScreen extends TransitionState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.png("assets/images/menus/MainMenuScreen/exitButton")), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -182,7 +182,7 @@ class ModeSelectScreen extends TransitionState
 
     public function playMusic():Void
     {
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true, null, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/MainMenuScreen/tune"))), 1.0, true, null, true);
 
         tune.volume = 0.0;
 
@@ -222,7 +222,7 @@ class ModeSelectIcon extends FlxSprite
 
         onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic(Paths.png('assets/images/menus/ModeSelectScreen/${_path}')), true, 128, 192);
+        loadGraphic(Assets.getGraphic(Paths.image(Paths.png('menus/ModeSelectScreen/${_path}'))), true, 128, 192);
 
         animation.add("0", [0], 0.0, false);
 

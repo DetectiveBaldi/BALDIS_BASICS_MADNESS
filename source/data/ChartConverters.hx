@@ -88,12 +88,6 @@ class FunkinConverter
 
         output.opponent = rawMeta.playData.characters.player;
 
-        sys.FileSystem.createDirectory("assets/data/game/FunkinConverter/");
-
-        sys.FileSystem.createDirectory('assets/data/game/FunkinConverter/${output.name}/');
-
-        sys.io.File.saveContent('assets/data/game/FunkinConverter/${output.name}.json', output.toString());
-
         return output;
     }
 }
@@ -169,12 +163,6 @@ class PsychConverter
         output.opponent = raw.player2;
 
         output.player = raw.player1;
-
-        sys.FileSystem.createDirectory("assets/data/game/PsychConverter/");
-
-        sys.FileSystem.createDirectory('assets/data/game/PsychConverter/${output.name}/');
-
-        sys.io.File.saveContent('assets/data/game/PsychConverter/${output.name}.json', output.toString());
 
         return output;
     }

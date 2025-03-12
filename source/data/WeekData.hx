@@ -26,7 +26,7 @@ class WeekData
 
     public static function init():Map<String, RawWeekData>
     {
-        var list:Array<String> = FileSystem.readDirectory("assets/data/game/WeekData/");
+        var list:Array<String> = FileSystem.readDirectory(Paths.data("game/WeekData/"));
 
         for (i in 0 ... list.length)
             get(list[i].split(".")[0]);
@@ -39,7 +39,7 @@ class WeekData
         if (exists(path))
             return raw[path];
 
-        raw[path] = Json.parse(Assets.getText(Paths.json('assets/data/game/WeekData/${path}')));
+        raw[path] = Json.parse(Assets.getText(Paths.data(Paths.json('game/WeekData/${path}'))));
 
         return raw[path];
     }

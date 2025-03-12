@@ -1,7 +1,7 @@
 {
     "format": "sparrow",
 
-    "png": "assets/images/game/notes/Strum/default",
+    "png": "default",
 
-    "xml": "assets/images/game/notes/Strum/default"
+    "xml": "default"
 }

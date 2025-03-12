@@ -19,7 +19,7 @@ class Week1 extends FlxGroup
     {
         super();
 
-        background = new FlxSprite(0, 0, Assets.getGraphic(Paths.png("assets/images/game/stages/Week1/background")));
+        background = new FlxSprite(0, 0, Assets.getGraphic(Paths.image(Paths.png("game/stages/Week1/background"))));
 
         background.active = false;
 
@@ -27,7 +27,7 @@ class Week1 extends FlxGroup
 
         add(background);
 
-        foreground = new FlxSprite(0, 0, Assets.getGraphic(Paths.png("assets/images/game/stages/Week1/foreground")));
+        foreground = new FlxSprite(0, 0, Assets.getGraphic(Paths.image(Paths.png("game/stages/Week1/foreground"))));
 
         foreground.active = false;
 
@@ -41,7 +41,7 @@ class Week1 extends FlxGroup
         
         add(foreground);
 
-        curtains = new FlxSprite(0, 0, Assets.getGraphic(Paths.png("assets/images/game/stages/Week1/curtains")));
+        curtains = new FlxSprite(0, 0, Assets.getGraphic(Paths.image(Paths.png("game/stages/Week1/curtains"))));
 
         curtains.active = false;
 

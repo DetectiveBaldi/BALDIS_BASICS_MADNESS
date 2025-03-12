@@ -38,15 +38,15 @@ class MainMenuScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.png("assets/images/globals/defaultCursor")).bitmap);
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
 
-        pattern = new FlxBackdrop(Assets.getGraphic(Paths.png("assets/images/menus/MainMenuScreen/pattern")));
+        pattern = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/pattern"))));
 
         pattern.velocity.set(10.0, 10.0);
 
         add(pattern);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.png("assets/images/menus/MainMenuScreen/chalkboard")));
+        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/chalkboard"))));
 
         chalkboard.scale.set(2.2, 2.2);
 
@@ -74,7 +74,7 @@ class MainMenuScreen extends TransitionState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.png("assets/images/menus/MainMenuScreen/exitButton")), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -134,7 +134,7 @@ class MainMenuScreen extends TransitionState
 
     public function playMusic():Void
     {
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/menus/MainMenuScreen/tune")), 1.0, true, null, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/MainMenuScreen/tune"))), 1.0, true, null, true);
 
         tune.volume = 0.0;
 
@@ -166,7 +166,7 @@ class MenuText extends FlxText
 
         onClick = new FlxSignal();
 
-        font = Paths.ttf("assets/fonts/Comic Sans MS");
+        font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         size = 42;
 

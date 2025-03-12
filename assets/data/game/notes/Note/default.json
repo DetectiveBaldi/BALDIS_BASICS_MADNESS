@@ -1,7 +1,7 @@
 {
     "format": "sparrow",
 
-    "png": "assets/images/game/notes/Note/default",
+    "png": "default",
 
-    "xml": "assets/images/game/notes/Note/default"
+    "xml": "default"
 }

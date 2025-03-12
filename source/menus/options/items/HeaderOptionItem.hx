@@ -15,9 +15,9 @@ class HeaderOptionItem extends BaseOptionItem
     {
         super(_x, _y, _title, _description);
 
-        gear = new FlxSprite(Assets.getGraphic(Paths.png("assets/images/menus/HeaderOptionItem/gear")));
+        gear = new FlxSprite(Assets.getGraphic(Paths.image(Paths.png("menus/HeaderOptionItem/gear"))));
 
-        // gear.active = false;
+        gear.active = false;
 
         gear.antialiasing = true;
 

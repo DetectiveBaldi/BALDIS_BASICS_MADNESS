@@ -101,7 +101,7 @@ class PauseScreen extends FlxSubState
 
         var pausedText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "PAUSED?!");
 
-        pausedText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        pausedText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         pausedText.size = 48;
 
@@ -123,7 +123,7 @@ class PauseScreen extends FlxSubState
 
         nameText.text = chart.name;
 
-        nameText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        nameText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         nameText.size = 42;
 
@@ -143,7 +143,7 @@ class PauseScreen extends FlxSubState
 
         iconText.text = chart.name;
 
-        iconText.font = Paths.ttf("assets/fonts/Comic Sans MS");
+        iconText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         iconText.size = 42;
 
@@ -188,7 +188,7 @@ class PauseScreen extends FlxSubState
             restartIcon.active = true;
         });
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.ogg("assets/music/game/PauseScreen/tune")), 1.0, true);
+        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("game/PauseScreen/tune"))), 1.0, true);
 
         tune.volume = 0.0;
 
@@ -249,7 +249,7 @@ class PauseScreenIcon extends FlxSprite
 
     public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
     {
-        super(x, y, Assets.getGraphic(Paths.png('assets/images/game/PauseScreen/${_path}')));
+        super(x, y, Assets.getGraphic(Paths.image(Paths.png('game/PauseScreen/${_path}'))));
 
         selected = false;
 
