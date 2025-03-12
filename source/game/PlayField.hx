@@ -236,7 +236,7 @@ class PlayField extends FlxGroup
 
     public function ghostTap(event:GhostTapEvent):Void
     {
-        if (event.penalize)
+        if (!event.ghostTapping)
         {
             playStats.score -= 500;
 

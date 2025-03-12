@@ -292,7 +292,7 @@ class Strumline extends FlxGroup
     {
         var dir:Int = keys[ev.keyCode] ?? -1;
 
-        if (dir == -1)
+        if (!registerInputs || dir == -1)
             return;
 
         keysHeld[dir] = false;
@@ -362,7 +362,7 @@ class Strumline extends FlxGroup
 
         onGhostTap.dispatch(ghostTapEvent);
 
-        if (ghostTapEvent.penalize)
+        if (!ghostTapEvent.ghostTapping)
         {
             var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg('game/GameState/noteMiss${FlxG.random.int(0, 2)}')), false), 0.15);
 
