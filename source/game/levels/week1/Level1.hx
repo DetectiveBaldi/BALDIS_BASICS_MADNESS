@@ -3,6 +3,8 @@ package game.levels.week1;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.animation.FlxAnimation;
+
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 
@@ -52,13 +54,13 @@ class Level1 extends PlayState
 
         if (step == 0.0)
         {
-            tween.tween(gameCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
+            tween.tween(gameCamera, {alpha: 1.0}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
             tween.tween(this, {gameCameraZoom: 0.75}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
             hudCamera.alpha = 0.0;
 
-            tween.tween(hudCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
+            tween.tween(hudCamera, {alpha: 1.0}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
             opponents.visible = false;
 
@@ -110,11 +112,23 @@ class Level1 extends PlayState
 
             var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf1"));
 
+            var anim:FlxAnimation = _plr.animation.getByName("dance");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.001);
+
             _plr.setPosition(798.5, 205.5);
 
             players.add(_plr);
 
             var runLegs:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("run-legs"));
+
+            anim = runLegs.animation.getByName("legs");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.001);
+
+            anim = runLegs.animation.getByName("legs miss");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.001);
 
             runLegs.animation.play("legs", true);
 
@@ -195,12 +209,24 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi0");
 
-                tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                if (beat == 132.0)
                 {
-                    ease: FlxEase.sineIn,
+                    tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
+                    {
+                        ease: FlxEase.sineIn,
 
-                    onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}
-                });
+                        onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}
+                    });  
+                }
+                else
+                {
+                    tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                    {
+                        ease: FlxEase.sineIn,
+
+                        onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}
+                    });
+                }
 
                 opp.animation.play("slap", true);
             }

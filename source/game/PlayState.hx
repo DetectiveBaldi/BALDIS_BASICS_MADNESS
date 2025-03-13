@@ -535,8 +535,11 @@ class PlayState extends MusicState
     }
 
     #if debug
-    public function stepUntil(time:Float):Float
+    public function stepUntil(time:Float):Void
     {
+        if (conductor.step < 0.0)
+            return;
+
         pauseMusic();
 
         var i:Int = chart.notes.length - 1;
@@ -556,8 +559,6 @@ class PlayState extends MusicState
                 FlxG.game.step();
 
         resumeMusic();
-        
-        return time;
     }
     #end
 }
