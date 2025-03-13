@@ -31,8 +31,6 @@ class Sustain extends FlxSprite
             
             animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldTail", Note.DIRECTIONS[i].toLowerCase() + "HoldTail0", 24.0, false);
         }
-
-        antialiasing = true;
     }
 
     override function update(elapsed:Float):Void

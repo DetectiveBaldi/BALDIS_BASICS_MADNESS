@@ -1,3 +1,5 @@
 {
-    "image": "baldi0"
+    "image": "baldi0",
+
+    "antialiasing": false
 }

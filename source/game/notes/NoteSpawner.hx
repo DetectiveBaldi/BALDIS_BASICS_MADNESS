@@ -109,6 +109,8 @@ class NoteSpawner extends FlxBasic
             {
                 var sustain:Sustain = sustains.recycle(Sustain, sustainConstructor);
 
+                sustain.antialiasing = _note.antialiasing;
+
                 sustain.note = _note;
 
                 sustain.animation.play(Note.DIRECTIONS[_note.direction].toLowerCase() + "HoldPiece");
@@ -128,6 +130,8 @@ class NoteSpawner extends FlxBasic
                 _note.sustain = sustain;
 
                 var trail:SustainTrail = trails.recycle(SustainTrail, trailConstructor);
+
+                trail.antialiasing = sustain.antialiasing;
 
                 trail.sustain = sustain;
 

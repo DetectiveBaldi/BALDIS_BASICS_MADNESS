@@ -1,5 +1,7 @@
 {
     "format": "sparrow",
 
-    "image": "default"
+    "image": "default",
+
+    "antialiasing": false
 }
