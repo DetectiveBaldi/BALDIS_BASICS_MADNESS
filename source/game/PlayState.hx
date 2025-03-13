@@ -315,8 +315,8 @@ class PlayState extends MusicState
             pause();
 
         #if debug
-            if (FlxG.keys.justPressed.EIGHT)
-                FlxG.switchState(() -> new editors.CharacterEditorState());
+        if (FlxG.keys.justPressed.EIGHT)
+            FlxG.switchState(() -> new editors.CharacterEditorState());
         #end
     }
 
@@ -326,13 +326,7 @@ class PlayState extends MusicState
 
         if (Type.getClass(subState) == PauseScreen)
         {
-            instrumental.pause();
-
-            mainVocals?.pause();
-
-            opponentVocals?.pause();
-
-            playerVocals?.pause();
+            pauseMusic();
 
             playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = false);
         }
@@ -344,13 +338,7 @@ class PlayState extends MusicState
 
         if (Type.getClass(subState) == PauseScreen)
         {
-            instrumental.resume();
-
-            mainVocals?.resume();
-
-            opponentVocals?.resume();
-
-            playerVocals?.resume();
+            resumeMusic();
 
             playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = true);
         }
@@ -452,6 +440,10 @@ class PlayState extends MusicState
         opponentVocals?.play();
 
         playerVocals?.play();
+
+        #if debug
+            stepUntil(15000.0);
+        #end
     }
 
     public function endSong():Void
@@ -491,7 +483,7 @@ class PlayState extends MusicState
     public function gameOver():Void
     {
         #if debug
-            return;
+        return;
         #end
 
         persistentDraw = false;
@@ -523,4 +515,55 @@ class PlayState extends MusicState
     {
         return players.group.getFirst((player:Character) -> player.config.name == name);
     }
+
+    public function pauseMusic():Void
+    {
+        instrumental.pause();
+
+        mainVocals?.pause();
+
+        opponentVocals?.pause();
+
+        playerVocals?.pause();
+    }
+
+    public function resumeMusic():Void
+    {
+        instrumental.resume();
+
+        mainVocals?.resume();
+
+        opponentVocals?.resume();
+
+        playerVocals?.resume();
+    }
+
+    #if debug
+    public function stepUntil(time:Float):Float
+    {
+        pauseMusic();
+
+        // TODO: Add `game.notes.NoteSpawner` support.
+
+        var i:Int = chart.notes.length - 1;
+
+		while (i >= 0)
+        {
+			var raw:RawNote = chart.notes[i];
+
+			if (raw.time - 166.6 < time)
+                chart.notes.remove(raw);
+
+			--i;
+		}
+
+        while (conductor.time < time)
+            @:privateAccess
+                FlxG.game.step();
+
+        resumeMusic();
+        
+        return time;
+    }
+    #end
 }

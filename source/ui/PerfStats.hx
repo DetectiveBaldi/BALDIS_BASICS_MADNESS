@@ -49,11 +49,11 @@ class PerfStats extends TextField
         var _text:String = 'FPS: ${MathUtil.minInt(FlxG.drawFramerate, timestamps.length)}';
 
         #if debug
-            _text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(openfl.system.System.totalMemoryNumber)}';
+        _text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(openfl.system.System.totalMemoryNumber)}';
 
-            _text += '\nVRAM: ${flixel.util.FlxStringUtil.formatBytes(FlxG.stage.context3D.totalGPUMemory)}';
+        _text += '\nVRAM: ${flixel.util.FlxStringUtil.formatBytes(FlxG.stage.context3D.totalGPUMemory)}';
 
-            _text += '\nMax Texture Size: ${FlxG.bitmap.maxTextureSize}^2px';
+        _text += '\nMax Texture Size: ${FlxG.bitmap.maxTextureSize}^2px';
         #end
 
         if (text != _text)
