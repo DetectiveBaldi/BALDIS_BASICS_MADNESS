@@ -440,10 +440,6 @@ class PlayState extends MusicState
         opponentVocals?.play();
 
         playerVocals?.play();
-
-        #if debug
-            stepUntil(15000.0);
-        #end
     }
 
     public function endSong():Void
@@ -543,18 +539,16 @@ class PlayState extends MusicState
     {
         pauseMusic();
 
-        // TODO: Add `game.notes.NoteSpawner` support.
-
         var i:Int = chart.notes.length - 1;
 
 		while (i >= 0)
         {
 			var raw:RawNote = chart.notes[i];
 
-			if (raw.time - 166.6 < time)
+			if (playField.noteSpawner.noteIndex < i && raw.time - 166.6 < time)
                 chart.notes.remove(raw);
 
-			--i;
+			i--;
 		}
 
         while (conductor.time < time)
