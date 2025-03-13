@@ -30,6 +30,7 @@ import data.LevelData;
 import data.WeekData;
 
 import game.notes.Strumline;
+
 import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
@@ -115,6 +116,22 @@ class PlayState extends MusicState
 
     public var playField:PlayField;
 
+    public var oppStrumline(get, never):Strumline;
+
+    @:noCompletion
+    function get_oppStrumline():Strumline
+    {
+        return playField.strumlines.members[0];
+    }
+
+    public var plrStrumline(get, never):Strumline;
+
+    @:noCompletion
+    function get_plrStrumline():Strumline
+    {
+        return playField.strumlines.members[1];
+    }
+
     public var countdown:Countdown;
 
     override function create():Void
@@ -153,9 +170,12 @@ class PlayState extends MusicState
 
         stage.add(spectators);
 
-        spectator = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.spectator));
+        if (chart.spectator != "")
+        {
+            spectator = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.spectator));
 
-        spectator.skipSing = true;
+            spectator.skipSing = true;
+        }
 
         opponents = new FlxTypedSpriteGroup<Character>();
 
@@ -205,7 +225,8 @@ class PlayState extends MusicState
 
         players.group.memberAdded.add((player:Character) -> player.strumline = playField.playerStrumline);
 
-        spectators.add(spectator);
+        if (spectator != null)
+            spectators.add(spectator);
 
         opponents.add(opponent);
 

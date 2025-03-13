@@ -151,6 +151,12 @@ class CharacterEditorState extends TransitionState
 
             character.dance();
 
+            progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
+
+            healthIcon.config = HealthIconData.get(character.config.healthIcon);
+
+            animationIndex = 0;
+
             refreshMainTab();
 
             refreshAssetsTab();

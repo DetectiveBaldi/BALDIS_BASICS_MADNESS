@@ -7,7 +7,7 @@ import game.PlayState;
 
 class CameraFollowEvent
 {
-    public static function dispatch(game:PlayState, x:Float, y:Float, characterRole:String, duration:Float, ease:String):Void
+    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, characterRole:String, duration:Float, ease:String = "linear"):Void
     {
         switch (characterRole:String)
         {
