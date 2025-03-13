@@ -52,13 +52,13 @@ class Level1 extends PlayState
 
         if (step == 0.0)
         {
-            FlxTween.tween(gameCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
+            tween.tween(gameCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
-            FlxTween.tween(this, {gameCameraZoom: 0.75}, conductor.beatLength * 4.0 * 8.5 * 0.001);
+            tween.tween(this, {gameCameraZoom: 0.75}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
             hudCamera.alpha = 0.0;
 
-            FlxTween.tween(hudCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
+            tween.tween(hudCamera, {alpha: 1}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
             opponents.visible = false;
 
@@ -137,12 +137,12 @@ class Level1 extends PlayState
 
             var _plr:Character = getPlayer("run-legs");
 
-            FlxTween.tween(plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.sineIn, 
+            tween.tween(plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.sineIn, 
                 onUpdate: (tween:FlxTween) -> {_plr.x = plr.x;}});
 
-            FlxTween.tween(plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.sineIn});
+            tween.tween(plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.sineIn});
 
-            FlxTween.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
+            tween.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
         }
 
         if (step == 524.0)
@@ -159,7 +159,7 @@ class Level1 extends PlayState
 
             castedStage.insert(castedStage.members.indexOf(players), sodaSplash);
 
-            FlxTween.tween(sodaSplash, {x: -855.0}, conductor.beatLength * 2.15 * 0.001, {onComplete: (tween:FlxTween) ->
+            tween.tween(sodaSplash, {x: -855.0}, conductor.beatLength * 2.15 * 0.001, {onComplete: (_tween:FlxTween) ->
                 {sodaSplash.active = false; sodaSplash.visible = false;}});
         }
 
@@ -176,12 +176,12 @@ class Level1 extends PlayState
 
             castedStage.hall2.velocity.set(castedStage.hall2.velocity.x *= 1.25, 0.0);
 
-            FlxTween.tween(castedStage.hall2.velocity, {x: castedStage.hall2.velocity.x / 1.25}, conductor.beatLength * 0.001,
+            tween.tween(castedStage.hall2.velocity, {x: castedStage.hall2.velocity.x / 1.25}, conductor.beatLength * 0.001,
                 {ease: FlxEase.sineOut});
 
-            FlxTween.tween(plr.animation, {timeScale: 1.0}, conductor.beatLength * 0.001, {ease: FlxEase.sineOut});
+            tween.tween(plr.animation, {timeScale: 1.0}, conductor.beatLength * 0.001, {ease: FlxEase.sineOut});
 
-            FlxTween.tween(_plr.animation, {timeScale: 1.0}, conductor.beatLength * 0.001, {ease: FlxEase.sineOut});
+            tween.tween(_plr.animation, {timeScale: 1.0}, conductor.beatLength * 0.001, {ease: FlxEase.sineOut});
         }
     }
 
@@ -195,11 +195,11 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi0");
 
-                FlxTween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
                 {
                     ease: FlxEase.sineIn,
 
-                    onComplete: (tween:FlxTween) -> {FlxTween.tween(opp, {x: opp.x - 725.0}, 0.5);}
+                    onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}
                 });
 
                 opp.animation.play("slap", true);

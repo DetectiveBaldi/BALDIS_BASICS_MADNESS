@@ -1,11 +1,11 @@
 package music;
 
-import flixel.FlxSubState;
+import extendable.ResourceSubState;
 
 /**
- * An extended `flixel.FlxSubState` designed to support musical timing events.
+ * An extended `extendable.ResourceSubState` designed to support musical timing events.
  */
-class MusicSubState extends FlxSubState
+class MusicSubState extends ResourceSubState
 {
     public var conductor:Conductor;
 

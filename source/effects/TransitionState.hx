@@ -1,7 +1,6 @@
 package effects;
 
 import flixel.FlxG;
-import flixel.FlxState;
 import flixel.FlxSubState;
 
 import flixel.util.FlxTimer;
@@ -11,9 +10,11 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
+import extendable.ResourceState;
+
 using util.ArrayUtil;
 
-class TransitionState extends FlxState
+class TransitionState extends ResourceState
 {
     public static var skipTransition:Bool = false;
 
