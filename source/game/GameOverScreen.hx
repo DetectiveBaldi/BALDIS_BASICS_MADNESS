@@ -1,29 +1,39 @@
 package game;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
+
+import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 import core.Assets;
 import core.Paths;
 
 import data.CharacterData;
 
-import music.MusicSubState;
+import extendable.ResourceSubState;
 
-class GameOverScreen extends MusicSubState
+import menus.TitleScreen;
+
+class GameOverScreen extends ResourceSubState
 {
     public var game:PlayState;
 
     public var player:Character;
 
-    public var tune:FlxSound;
+    public var dead:FlxSound;
 
-    public var start:FlxSound;
+    public var rollTimer:FlxTimer;
 
-    public var end:FlxSound;
+    public var retryButton:FlxSprite;
+
+    public var canSkip:Bool;
+
+    public var canRetry:Bool;
 
     public function new(_game:PlayState):Void
     {
@@ -36,69 +46,155 @@ class GameOverScreen extends MusicSubState
     {
         super.create();
 
-        conductor.tempo = 100.0;
+        var plr:Character = game.player;
 
-        conductor.time = -conductor.beatLength * 5.0;
+        player = new Character(null, 0.0, 0.0, CharacterData.get("bf-dead0"));
 
-        game.gameCamera.followLerp = 0.0185;
+        player.dance();
 
-        game.players.visible = false;
-
-        var _player:Character = game.player;
-
-        player = new Character(conductor, 0.0, 0.0, CharacterData.get("BOYFRIEND_GAMEOVER"));
-
-        player.strumline = game.playField.playerStrumline;
-
-        player.skipDance = true;
-
-        player.animation.play("start");
-
-        player.setPosition(_player.x, _player.y);
+        player.screenCenter();
 
         add(player);
 
         game.gameCameraTarget.setPosition(player.getMidpoint().x, player.getMidpoint().y);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("game/GameOverScreen/tune"))), 1.0, true);
+        game.gameCamera.snapToTarget();
 
-        start = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/start")), false));
+        dead = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/dead")), false));
 
-        start.play();
+        dead.onComplete = showImages;
 
-        end = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/end")), false));
+        dead.play();
+
+        rollTimer = new FlxTimer(timer);
+
+        retryButton = new FlxSprite(0.0, 0.0);
+
+        retryButton.visible = false;
+
+        retryButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('game/GameOverScreen/retryButton'))), true, 128, 66);
+
+        retryButton.animation.add("0", [0], 0.0, false);
+
+        retryButton.animation.add("1", [1], 0.0, false);
+
+        retryButton.animation.play("0");
+
+        retryButton.scale.set(2.5, 2.5);
+
+        retryButton.updateHitbox();
+
+        retryButton.setPosition((FlxG.width - retryButton.width) * 0.5, FlxG.height - retryButton.height + 50.0);
+
+        add(retryButton);
+
+        canSkip = false;
+
+        canRetry = false;
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
-        if (player.config.danceSteps.contains(player.animation.name))
+        if (canSkip)
         {
-            if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
+            if (FlxG.keys.justPressed.ESCAPE)
+                FlxG.switchState(() -> new TitleScreen());
+
+            if (FlxG.keys.justPressed.ENTER && !rollTimer.finished)
             {
-                FlxG.camera.fade(FlxColor.BLACK, conductor.beatLength * 0.001 * 7.5, false, () -> FlxG.resetState());
+                skipShowcase(true);
 
-                player.skipDance = true;
-
-                player.animation.play("end");
-
-                tune.stop();
-
-                end.play();
+                return;
             }
+        }
+
+        if (canRetry)
+        {
+            if (FlxG.mouse.overlaps(retryButton))
+            {
+                retryButton.animation.play("1");
+
+                if (FlxG.mouse.justPressed)
+                {
+                    tween.tween(retryButton, {alpha: 0.0}, 0.5);
+
+                    canRetry = false;
+
+                    new FlxTimer(timer).start(1.5, (_timer:FlxTimer) -> FlxG.resetState());
+
+                    FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/confirm")), false), 0.5, false, null, true);
+                }
+            }
+            else
+                retryButton.animation.play("0");
         }
     }
 
-    override function beatHit(beat:Int):Void
+    public function showImages():Void
     {
-        super.beatHit(beat);
+        var rollIndex:Int = 0;
 
-        if (beat == 0.0)
+        var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png('game/GameOverScreen/${rollIndex}'))));
+
+        rollSprite.scale.set(2.0, 2.0);
+
+        rollSprite.updateHitbox();
+
+        rollSprite.screenCenter();
+
+        add(rollSprite);
+
+        var rollSound:FlxSound = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollIndex}')), false));
+
+        rollSound.play();
+
+        rollTimer.start(0.125, (_rollTimer:FlxTimer) ->
         {
-            player.skipDance = false;
+            if (rollTimer.loopsLeft == 1)
+            {
+                FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/suspence")), false), 1.0, false, null, true);
 
-            tune.play();
+                rollTimer.time += 0.45;
+            }
+            else
+                if (rollTimer.loopsLeft == 0.0)
+                    skipShowcase(false);
+                else
+                    rollTimer.time += 0.01;
+
+            rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
+
+            rollSprite.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'))));
+
+            rollSprite.updateHitbox();
+
+            rollSound.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : 4}')), false));
+
+            rollSound.play();
+        }, 35);
+
+        canSkip = true;
+    }
+
+    public function skipShowcase(skipTimer:Bool):Void
+    {
+        if (skipTimer)
+        {
+            @:privateAccess
+            {
+                rollTimer._loopsCounter = rollTimer.loops;
+
+                rollTimer._timeCounter = rollTimer.time;
+            }
         }
+
+        retryButton.visible = true;
+
+        canRetry = true;
+
+        var whistle:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/whistle")), false),
+            1.0, false, null, true);
     }
 }
