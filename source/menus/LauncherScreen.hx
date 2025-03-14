@@ -11,9 +11,9 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
-class LauncherScreen extends TransitionState
+class LauncherScreen extends ResourceState
 {
     public var launcher:FlxSprite;
 

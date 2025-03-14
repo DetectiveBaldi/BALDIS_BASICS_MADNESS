@@ -5,11 +5,7 @@ import flixel.FlxSprite;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-import flixel.sound.FlxSound;
-
 import flixel.text.FlxText;
-
-import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
@@ -22,11 +18,11 @@ import core.Paths;
 
 import data.WeekData;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
 import game.PlayState;
 
-class ModeSelectScreen extends TransitionState
+class ModeSelectScreen extends ResourceState
 {
     public var heads:FlxBackdrop;
 
@@ -37,8 +33,6 @@ class ModeSelectScreen extends TransitionState
     public var modeIcons:FlxTypedGroup<ModeSelectIcon>;
 
     public var exitButton:FlxSprite;
-
-    public var tune:FlxSound;
 
     override function create():Void
     {
@@ -128,7 +122,7 @@ class ModeSelectScreen extends TransitionState
 
         add(exitButton);
 
-        playMusic();
+        MainMenuScreen.playMusic();
     }
 
     override function update(elapsed:Float):Void
@@ -164,7 +158,7 @@ class ModeSelectScreen extends TransitionState
             iconText.text = text;
         });
 
-        icon.onClick.add(fadeMusic);
+        icon.onClick.add(MainMenuScreen.fadeMusic);
 
         icon.onClick.add(onClick);
 
@@ -178,29 +172,6 @@ class ModeSelectScreen extends TransitionState
         super.destroy();
 
         FlxG.mouse.visible = false;
-    }
-
-    public function playMusic():Void
-    {
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/MainMenuScreen/tune"))), 1.0, true, null, true);
-
-        tune.volume = 0.0;
-
-        tune.play();
-
-        tune.fadeIn(0.5, 0.0, 1.0);
-    }
-
-    public function fadeMusic():Void
-    {
-        tune.fadeTween.cancel();
-
-        tune.fadeOut(0.5, 0.0, stopMusic);
-    }
-
-    public function stopMusic(tween:FlxTween):Void
-    {
-        tune.stop();
     }
 }
 

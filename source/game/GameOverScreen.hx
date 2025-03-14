@@ -21,8 +21,6 @@ import menus.TitleScreen;
 
 class GameOverScreen extends ResourceSubState
 {
-    public var game:PlayState;
-
     public var player:Character;
 
     public var dead:FlxSound;
@@ -35,13 +33,6 @@ class GameOverScreen extends ResourceSubState
 
     public var canRetry:Bool;
 
-    public function new(_game:PlayState):Void
-    {
-        super();
-
-        game = _game;
-    }
-
     override function create():Void
     {
         super.create();
@@ -53,10 +44,6 @@ class GameOverScreen extends ResourceSubState
         player.screenCenter();
 
         add(player);
-
-        game.gameCameraTarget.setPosition(player.getMidpoint().x, player.getMidpoint().y);
-
-        game.gameCamera.snapToTarget();
 
         dead = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/dead")), false));
 
@@ -152,9 +139,10 @@ class GameOverScreen extends ResourceSubState
         {
             if (rollTimer.loopsLeft == 1)
             {
-                FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/suspence")), false), 1.0, false, null, true);
+                var sequence:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/suspence")), false),
+                    1.0, false, null, true);
 
-                rollTimer.time += 0.45;
+                rollTimer.time = sequence.length * 0.001;
             }
             else
                 if (rollTimer.loopsLeft == 0.0)
@@ -168,7 +156,7 @@ class GameOverScreen extends ResourceSubState
 
             rollSprite.updateHitbox();
 
-            rollSound.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : 4}')), false));
+            rollSound.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : 5}')), false));
 
             rollSound.play();
         }, 35);
@@ -192,7 +180,6 @@ class GameOverScreen extends ResourceSubState
 
         canRetry = true;
 
-        var whistle:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/whistle")), false),
-            1.0, false, null, true);
+        FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/whistle")), false), 1.0, false, null, true);
     }
 }

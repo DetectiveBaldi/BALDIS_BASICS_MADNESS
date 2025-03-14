@@ -29,6 +29,8 @@ import data.HealthIconData;
 import data.LevelData;
 import data.WeekData;
 
+import extendable.ResourceState;
+
 import game.notes.Strumline;
 
 import game.events.CameraFollowEvent;
@@ -38,8 +40,6 @@ import game.events.ScrollSpeedChangeEvent;
 import menus.LauncherScreen;
 import menus.ModeSelectScreen;
 
-import music.MusicState;
-
 import ui.Countdown;
 
 import util.TimedObjectUtil;
@@ -48,7 +48,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class PlayState extends MusicState
+class PlayState extends ResourceState
 {
     public static var week:WeekData;
 
@@ -80,13 +80,24 @@ class PlayState extends MusicState
         return FlxG.camera;
     }
 
+    /**
+     * Characters and stages are drawn on this camera.
+     */
     public var gameCameraTarget:FlxObject;
 
     public var gameCameraZoom:Float;
 
+    /**
+     * Most UI elements are drawn on this camera.
+     */
     public var hudCamera:FlxCamera;
 
     public var hudCameraZoom:Float;
+
+    /**
+     * Elements such as the pause menu and fade transition are drawn on this camera.
+     */
+    public var topCamera:FlxCamera;
 
     public var chart:Chart;
 
@@ -136,6 +147,26 @@ class PlayState extends MusicState
 
     override function create():Void
     {
+        hudCamera = new FlxCamera();
+
+        hudCamera.bgColor.alpha = 0;
+
+        FlxG.cameras.add(hudCamera, false);
+
+        topCamera = new FlxCamera();
+
+        topCamera.bgColor.alpha = 0;
+
+        FlxG.cameras.add(topCamera, false);
+
+        super.create();
+
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+
+        conductor.active = true;
+
         gameCameraTarget = new FlxObject();
 
         add(gameCameraTarget);
@@ -144,19 +175,7 @@ class PlayState extends MusicState
 
         gameCameraZoom = gameCamera.zoom;
 
-        hudCamera = new FlxCamera();
-
-        hudCamera.bgColor.alpha = 0;
-
-        FlxG.cameras.add(hudCamera, false);
-
         hudCameraZoom = hudCamera.zoom;
-        
-        super.create();
-
-        FlxG.mouse.visible = true;
-
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
 
         loadChart();
 
@@ -476,7 +495,11 @@ class PlayState extends MusicState
     {
         persistentDraw = false;
 
-        openSubState(new GameOverScreen(this));
+        gameCameraTarget.screenCenter();
+
+        gameCamera.snapToTarget();
+
+        openSubState(new GameOverScreen());
 
         instrumental.stop();
 

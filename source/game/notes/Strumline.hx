@@ -384,16 +384,21 @@ class Strumline extends FlxGroup
         {
             var character:Character = characters.members[i];
 
-            if (character.skipSing)
+            if (note.kind == "no-animation" || character.skipSing)
                 continue;
 
             character.singTimer = 0.0;
 
-            if (hold && character.animation.name == 'Sing${Note.DIRECTIONS[note.direction]}')
+            var animSuffix:String = "";
+
+            if (note.kind == "alt-animation")
+                animSuffix = "-alt";
+
+            if (hold && character.animation.name == 'Sing${Note.DIRECTIONS[note.direction]}${animSuffix}')
                 continue;
 
-            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}'))
-                character.animation.play('Sing${Note.DIRECTIONS[direction]}', true);
+            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}${animSuffix}'))
+                character.animation.play('Sing${Note.DIRECTIONS[direction]}${animSuffix}', true);
         }
     }
 
@@ -406,13 +411,21 @@ class Strumline extends FlxGroup
         {
             var character:Character = characters.members[i];
 
-            if (character.skipSing)
+            if ((note != null && note.kind == "no-animation") || character.skipSing)
                 continue;
 
             character.singTimer = 0.0;
 
-            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS'))
-                character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS', true);
+            var animSuffix:String = "";
+
+            if (note != null)
+            {
+                if (note.kind == "alt-animation")
+                    animSuffix = "-alt";
+            }
+
+            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}'))
+                character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}', true);
         }
     }
 

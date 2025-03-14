@@ -62,6 +62,8 @@ class Note extends FlxSprite
 
     public var lane:Int;
 
+    public var kind:String;
+
     public var status:NoteStatus;
 
     public var showPop:Bool;
@@ -91,6 +93,8 @@ class Note extends FlxSprite
         length = 0.0;
 
         lane = 0;
+
+        kind = "";
 
         status = IDLING;
 

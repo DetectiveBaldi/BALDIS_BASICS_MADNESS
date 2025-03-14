@@ -74,6 +74,8 @@ class NoteSpawner extends FlxBasic
             _note.length = note.length;
 
             _note.lane = note.lane;
+
+            _note.kind = note.kind;
             
             _note.status = IDLING;
 

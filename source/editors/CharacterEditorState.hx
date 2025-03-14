@@ -46,7 +46,7 @@ import data.AnimationData;
 import data.CharacterData;
 import data.HealthIconData;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
 import game.Character;
 import game.HealthIcon;
@@ -58,7 +58,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class CharacterEditorState extends TransitionState
+class CharacterEditorState extends ResourceState
 {
     public var gameCamera(get, never):FlxCamera;
     
@@ -82,17 +82,17 @@ class CharacterEditorState extends TransitionState
 
     override function create():Void
     {
-        gameCamera.zoom = 0.75;
-
         hudCamera = new FlxCamera();
 
         hudCamera.bgColor.alpha = 0;
 
         FlxG.cameras.add(hudCamera, false);
-        
+
         super.create();
 
         FlxG.mouse.visible = true;
+
+        gameCamera.zoom = 0.75;
 
         var background:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(32, 32, 64, 64, true, 0xFFE7E6E6, 0xFFD9D5D5));
 

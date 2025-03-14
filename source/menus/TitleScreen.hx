@@ -13,12 +13,12 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
 import core.Assets;
 import core.Paths;
 
-class TitleScreen extends TransitionState
+class TitleScreen extends ResourceState
 {
     public var title:FlxSprite;
 

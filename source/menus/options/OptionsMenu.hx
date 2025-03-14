@@ -24,7 +24,7 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
 import menus.options.items.BaseOptionItem;
 import menus.options.items.BoolOptionItem;
@@ -34,7 +34,7 @@ import menus.options.items.NumericOptionItem.IntOptionItem;
 
 using util.ArrayUtil;
 
-class OptionsMenu extends TransitionState
+class OptionsMenu extends ResourceState
 {
     public var nextState:NextState;
 

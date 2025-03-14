@@ -72,7 +72,7 @@ class FunkinConverter
         {
             var note:FunkinNote = notes[i];
 
-            output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l});
+            output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l, kind: note.k});
         }
 
         for (i in 1 ... timeChanges.length)
@@ -122,7 +122,7 @@ class PsychConverter
                     {
                         var note:Array<Dynamic> = section.sectionNotes[j];
 
-                        {time: note[0], direction: note[1], length: note[2]}
+                        {time: note[0], direction: note[1], length: note[2], type: note[3]}
                     }
                 ],
 
@@ -154,7 +154,15 @@ class PsychConverter
             {
                 var note:PsychNote = _section.sectionNotes[j];
 
-                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25), length: MathUtil.maxInt(Math.round(note.length - beatLength * 0.25), 0)});
+                var kind:String = "";
+
+                if (note.type == "Alt Animation")
+                    kind = "alt-animation";
+
+                if (note.type == "No Animation")
+                    kind = "no-animation";
+
+                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25), length: MathUtil.maxInt(Math.round(note.length - beatLength * 0.25), 0), kind: kind});
             }
         }
 
@@ -224,4 +232,6 @@ typedef PsychNote = TimedObject &
     var direction:Int;
 
     var length:Float;
+
+    var type:String;
 };

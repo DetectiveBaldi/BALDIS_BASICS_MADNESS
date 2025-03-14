@@ -102,9 +102,11 @@ typedef RawNote = TimedObject &
 {
     var direction:Int;
 
+    var length:Float;
+
     var lane:Int;
 
-    var length:Float;
+    var kind:String;
 }
 
 typedef RawTimeChange = TimedObject &
