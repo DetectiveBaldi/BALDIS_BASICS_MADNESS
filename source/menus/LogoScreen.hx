@@ -16,9 +16,9 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
-import effects.TransitionState;
+import extendable.ResourceState;
 
-class LogoScreen extends TransitionState
+class LogoScreen extends ResourceState
 {
     public var splash:FlxSprite;
 
