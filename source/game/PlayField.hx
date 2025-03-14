@@ -160,13 +160,13 @@ class PlayField extends FlxGroup
 
         opponentStrumline.removeKeyboardListeners();
 
-        opponentStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - opponentStrumline.strums.width) * 0.5 : 45.0, Options.downscroll ? FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
+        opponentStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - opponentStrumline.strums.width) * 0.5 : 45.0, opponentStrumline.downscroll ? FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(opponentStrumline);
 
         playerStrumline = new Strumline(conductor);
 
-        playerStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - playerStrumline.strums.width) * 0.5 : FlxG.width - playerStrumline.strums.width - 45.0, Options.downscroll ? FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
+        playerStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - playerStrumline.strums.width) * 0.5 : FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ? FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(playerStrumline);
 

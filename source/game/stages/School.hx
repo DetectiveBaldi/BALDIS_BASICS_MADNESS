@@ -17,6 +17,8 @@ class School extends FlxGroup
 
     public var hall2:FlxBackdrop;
 
+    public var hall3:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -28,6 +30,8 @@ class School extends FlxGroup
         hall1 = buildSprite("hall1");
 
         hall2 = buildBackdrop("hall2");
+
+        hall3 = buildSprite("hall3");
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite

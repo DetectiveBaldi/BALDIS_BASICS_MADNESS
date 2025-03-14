@@ -199,14 +199,6 @@ class PlayState extends MusicState
 
         healthBar.onEmptied.add(gameOver);
 
-        healthBar.emptiedSide.color = FlxColor.fromString(opponent.config.healthColor);
-
-        healthBar.filledSide.color = FlxColor.fromString(player.config.healthColor);
-
-        healthBar.opponentIcon.config = HealthIconData.get(opponent.config.healthIcon);
-
-        healthBar.playerIcon.config = HealthIconData.get(player.config.healthIcon);
-
         var opponentStrumline:Strumline = playField.opponentStrumline;
 
         var playerStrumline:Strumline = playField.playerStrumline;
@@ -231,6 +223,10 @@ class PlayState extends MusicState
         opponents.add(opponent);
 
         players.add(player);
+
+        updateHealthBar(opponent.config.name, "opponent");
+
+        updateHealthBar(player.config.name, "player");
 
         countdown = new Countdown(conductor);
         
@@ -504,12 +500,12 @@ class PlayState extends MusicState
 
     public function getOpponent(name:String):Character
     {
-        return opponents.group.getFirst((opponent:Character) -> opponent.config.name == name);
+        return opponents.group.getFirst((_opponent:Character) -> _opponent.config.name == name);
     }
 
     public function getPlayer(name:String):Character
     {
-        return players.group.getFirst((player:Character) -> player.config.name == name);
+        return players.group.getFirst((_player:Character) -> _player.config.name == name);
     }
 
     public function pauseMusic():Void
@@ -532,6 +528,38 @@ class PlayState extends MusicState
         opponentVocals?.resume();
 
         playerVocals?.resume();
+    }
+
+    public function updateHealthBar(character:String, role:String):Void
+    {
+        var _character:Character;
+
+        switch (role:String)
+        {
+            case "spectator":
+                _character = getSpectator(character);
+
+            case "opponent":
+                _character = getOpponent(character);
+
+            default:
+                _character = getPlayer(character);
+        }
+
+        var healthBar:HealthBar = playField.healthBar;
+
+        if (role == "spectator" || role == "opponent")
+        {
+            healthBar.opponentIcon.config = HealthIconData.get(_character.config.healthIcon);
+
+            healthBar.emptiedSide.color = FlxColor.fromString(_character.config.healthColor);
+        }
+        else
+        {
+            healthBar.playerIcon.config = HealthIconData.get(_character.config.healthIcon);
+
+            healthBar.filledSide.color = FlxColor.fromString(_character.config.healthColor);
+        }
     }
 
     #if debug
