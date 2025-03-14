@@ -46,8 +46,6 @@ class GameOverScreen extends ResourceSubState
     {
         super.create();
 
-        var plr:Character = game.player;
-
         player = new Character(null, 0.0, 0.0, CharacterData.get("bf-dead0"));
 
         player.dance();
