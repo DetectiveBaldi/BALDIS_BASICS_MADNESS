@@ -246,7 +246,7 @@ class Level1 extends PlayState
 
             tween.cancelTweensOf(_opp);
 
-            _opp.setPosition(-885.0, -685.0);
+            _opp.setPosition(-985.0, -685.0);
 
             var plr:Character = getPlayer("bf1");
 
@@ -273,7 +273,7 @@ class Level1 extends PlayState
 
             var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bully1"));
 
-            _opp.setPosition(-885.0, -685.0);
+            _opp.setPosition(-985.0, -685.0);
 
             opponents.add(_opp);
         }
