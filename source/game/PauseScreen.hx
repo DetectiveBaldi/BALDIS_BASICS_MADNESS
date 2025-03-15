@@ -213,9 +213,9 @@ class PauseScreen extends FlxSubState
             close();
     }
 
-    override function destroy():Void
+    override function close():Void
     {
-        super.destroy();
+        super.close();
 
         game.gameCamera.filters.remove(blur);
 

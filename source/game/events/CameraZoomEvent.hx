@@ -15,7 +15,8 @@ class CameraZoomEvent
         var _zoom:Float = Reflect.getProperty(game, camera + "TargetZoom");
 
         if (duration > 0.0)
-            FlxTween.num(_zoom, zoom, duration, {ease: Reflect.getProperty(FlxEase, ease)}, (value:Float) -> Reflect.setProperty(game, camera + "TargetZoom", value));
+            FlxTween.num(_zoom, zoom, duration, {ease: Reflect.getProperty(FlxEase, ease)}, 
+                (value:Float) -> Reflect.setProperty(game, camera + "TargetZoom", value));
         else
             Reflect.setProperty(game, camera + "TargetZoom", zoom);
     }

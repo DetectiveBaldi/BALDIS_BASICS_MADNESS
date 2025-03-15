@@ -149,6 +149,14 @@ class Level1 extends PlayState
             plrStrumline.addKeyboardListeners();
         }
 
+        if (step == 464.0)
+        {
+            var temp:FlxSprite = new FlxSprite();
+
+            tween.color(temp, conductor.beatLength * 16.0 * 0.001, FlxColor.WHITE, 0xFFFFB2B2,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temp.color;}});
+        }
+
         if (step == 512.0)
         {
             var plr:Character = getPlayer("bf1");
