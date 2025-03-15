@@ -107,7 +107,7 @@ class GameOverScreen extends ResourceSubState
 
                     canRetry = false;
 
-                    new FlxTimer(timer).start(1.5, (_timer:FlxTimer) -> FlxG.resetState());
+                    new FlxTimer(timer).start(2.5, (_timer:FlxTimer) -> FlxG.resetState());
 
                     FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/confirm")), false), 0.5, false, null, true);
                 }
@@ -137,7 +137,7 @@ class GameOverScreen extends ResourceSubState
 
         rollTimer.start(0.125, (_rollTimer:FlxTimer) ->
         {
-            if (rollTimer.loopsLeft == 1)
+            if (rollTimer.loopsLeft == 1.0)
             {
                 var sequence:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("game/GameOverScreen/suspence")), false),
                     1.0, false, null, true);
@@ -150,13 +150,14 @@ class GameOverScreen extends ResourceSubState
                 else
                     rollTimer.time += 0.01;
 
-            rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
+            if (rollTimer.loopsLeft != 0.0)
+                rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
 
-            rollSprite.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'))));
+            rollSprite.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'))));
 
             rollSprite.updateHitbox();
 
-            rollSound.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollTimer.loopsLeft > 0 ? rollIndex : 5}')), false));
+            rollSound.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : 5.0}')), false));
 
             rollSound.play();
         }, 35);
