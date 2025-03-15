@@ -139,8 +139,6 @@ class CharacterEditorState extends ResourceState
             var path:String = Paths.data(Paths.json('game/Character/${character.config.name}'));
 
             File.saveContent(path, Json.stringify(character.config));
-
-            InitState.log.info("[INFO]", 'Character saved to "${path}".');
         }
 
         ui.findComponent("_button", Button).onClick = (ev:MouseEvent) ->
@@ -259,8 +257,6 @@ class CharacterEditorState extends ResourceState
             character.updateHitbox();
 
             character.screenCenter();
-
-            InitState.log.warning("Some animations might be invalidated! Take a look!");
         }
 
         ui.findComponent("___button", Button).onClick = (ev:MouseEvent) ->
@@ -321,8 +317,6 @@ class CharacterEditorState extends ResourceState
                     Clipboard.generalClipboard.clear();
 
                     Clipboard.generalClipboard.setData(TEXT_FORMAT, Json.stringify(character.config.animations[animationIndex].offset), false);
-
-                    InitState.log.info("[INFO]", "Current animation offset copied to clipboard.");
                 }
 
                 if (FlxG.keys.justPressed.V)
@@ -332,8 +326,6 @@ class CharacterEditorState extends ResourceState
                     var offset:{?x:Float, ?y:Float} = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
 
                     setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
-
-                    InitState.log.info("[INFO]", "Copied offset successfully applied to current animation.");
                 }
             }
 
@@ -414,11 +406,7 @@ class CharacterEditorState extends ResourceState
         character.animation.findByPrefix(frames, ui.findComponent("_______textfield", TextField).text);
         
         if (frames.length <= 0.0)
-        {
-            InitState.log.error("Invalid frames detected!");
-
             return;
-        }
 
         var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text) ?? new Array<Int>();
 
@@ -470,18 +458,12 @@ class CharacterEditorState extends ResourceState
         character.animation.play(animation.name, true);
 
         refreshAnimationsTab();
-
-        InitState.log.info("[INFO]", 'Saved "${animation.name}"!');
     }
 
     public function deleteAnimation():Void
     {
         if (character.config.animations.length == 1.0)
-        {
-            InitState.log.error("You must have at least one animation!");
-
             return;
-        }
 
         var animation:AnimationData = character.config.animations[animationIndex];
 
@@ -497,8 +479,6 @@ class CharacterEditorState extends ResourceState
         character.animation.play(animation.name, true);
 
         refreshAnimationsTab();
-
-        InitState.log.info("[INFO]", 'Deleted "${animation.name}"!');
     }
 
     public function setAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void

@@ -16,17 +16,11 @@ import core.Options;
 
 import data.WeekData;
 
-import plugins.Log;
-
 import ui.PerfStats;
-
-import util.MathUtil;
 
 class InitState extends FlxState
 {
     public var nextState:NextState;
-
-    public static var log:Log;
 
     public static var perfStats:PerfStats;
 
@@ -70,10 +64,6 @@ class InitState extends FlxState
         FlxG.console.autoPause = Options.autoPause;
 
         WeekData.init();
-
-        log = new Log();
-
-        FlxG.plugins.addPlugin(log);
 
         perfStats = new PerfStats(10.0, 5.0);
         
