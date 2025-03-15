@@ -3,6 +3,7 @@ package game;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -26,7 +27,7 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
-import data.Chart;
+import game.PlayState;
 
 import menus.MainMenuScreen;
 
@@ -36,7 +37,7 @@ using util.ArrayUtil;
 
 class PauseScreen extends FlxSubState
 {
-    public var chart:Chart;
+    public var game:PlayState;
 
     public var blur:BlurFilter;
 
@@ -46,24 +47,30 @@ class PauseScreen extends FlxSubState
 
     public var tune:FlxSound;
 
-    public function new(_chart:Chart):Void
+    public function new(_game:PlayState):Void
     {
         super();
 
-        chart = _chart;
+        game = _game;
     }
 
     override function create():Void
     {
         super.create();
 
-        blur = new BlurFilter(5.0, 5.0);
-
-        FlxG.camera.filters ??= new Array<BitmapFilter>();
-
-        FlxG.camera.filters.push(blur);
-
         camera = FlxG.cameras.list.newest();
+
+        blur = new BlurFilter(0.0, 0.0);
+
+        FlxTween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
+
+        game.gameCamera.filters ??= new Array<BitmapFilter>();
+
+        game.hudCamera.filters ??= new Array<BitmapFilter>();
+
+        game.gameCamera.filters.push(blur);
+
+        game.hudCamera.filters.push(blur);
 
         var background:FlxSprite = new FlxSprite();
 
@@ -121,7 +128,7 @@ class PauseScreen extends FlxSubState
 
         nameText.alpha = 0.5;
 
-        nameText.text = chart.name;
+        nameText.text = game.chart.name;
 
         nameText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -140,8 +147,6 @@ class PauseScreen extends FlxSubState
         iconText = new FlxText(0.0, 0.0, FlxG.width, "");
 
         iconText.alpha = 0.5;
-
-        iconText.text = chart.name;
 
         iconText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -212,7 +217,9 @@ class PauseScreen extends FlxSubState
     {
         super.destroy();
 
-        FlxG.camera.filters.remove(blur);
+        game.gameCamera.filters.remove(blur);
+
+        game.hudCamera.filters.remove(blur);
 
         tune.stop();
     }

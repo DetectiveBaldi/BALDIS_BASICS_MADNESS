@@ -246,7 +246,7 @@ class Level1 extends PlayState
 
             tween.cancelTweensOf(_opp);
 
-            _opp.setPosition(-1085.0, -625.0);
+            _opp.setPosition(-1085.0, -685.0);
 
             var plr:Character = getPlayer("bf1");
 
@@ -303,20 +303,12 @@ class Level1 extends PlayState
                 if (beat == 132.0)
                 {
                     tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
-                    {
-                        ease: FlxEase.sineIn,
-
-                        onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}
-                    });  
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
                 }
                 else
                 {
                     tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
-                    {
-                        ease: FlxEase.sineIn,
-
-                        onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}
-                    });
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}});
                 }
 
                 opp.animation.play("slap", true);
@@ -355,7 +347,7 @@ class Level1 extends PlayState
                     strumline.downscroll = !strumline.downscroll;
 
                     tween.tween(strumline.strums, {y: strumline.downscroll ? downY : upY}, conductor.beatLength * 0.001,
-                        {ease: strumline.downscroll ? FlxEase.backOut : FlxEase.backIn});
+                        {ease: FlxEase.backOut});
                 }
             }
         }

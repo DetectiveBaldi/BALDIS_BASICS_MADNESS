@@ -488,7 +488,7 @@ class PlayState extends ResourceState
 
     public function pause():Void
     {
-        openSubState(new PauseScreen(chart));
+        openSubState(new PauseScreen(this));
     }
 
     public function gameOver():Void

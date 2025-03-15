@@ -399,6 +399,11 @@ class Strumline extends FlxGroup
 
             if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}${animSuffix}'))
                 character.animation.play('Sing${Note.DIRECTIONS[direction]}${animSuffix}', true);
+            else
+            {
+                if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}'))
+                    character.animation.play('Sing${Note.DIRECTIONS[direction]}', true);
+            }
         }
     }
 
@@ -426,6 +431,11 @@ class Strumline extends FlxGroup
 
             if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}'))
                 character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}', true);
+            else
+            {
+                if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS'))
+                    character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS', true);
+            }
         }
     }
 
