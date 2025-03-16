@@ -37,6 +37,8 @@ class Level1 extends PlayState
         return cast (stage, School);
     }
 
+    public var temperature:FlxSprite;
+
     override function create():Void
     {
         stage = new School();
@@ -52,6 +54,8 @@ class Level1 extends PlayState
         playField.visible = false;
 
         plrStrumline.removeKeyboardListeners();
+
+        temperature = new FlxSprite();
     }
 
     override function stepHit(step:Int):Void
@@ -71,8 +75,6 @@ class Level1 extends PlayState
         
         if (step == 136.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
-
             castedStage.hall0.visible = false;
 
             castedStage.hall1.visible = true;
@@ -152,8 +154,6 @@ class Level1 extends PlayState
 
         if (step == 464.0)
         {
-            var temperature:FlxSprite = new FlxSprite();
-
             tween.color(temperature, conductor.beatLength * 16.0 * 0.001, FlxColor.WHITE, 0xFFFFB2B2,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
@@ -206,8 +206,6 @@ class Level1 extends PlayState
 
         if (step == 584.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
-
             var plr:Character = getPlayer("bf1");
 
             // TODO: Move this to the chart events list once we are out of the DEMO phase.
@@ -363,22 +361,30 @@ class Level1 extends PlayState
             castedStage.hall4.visible = true;
         }
 
+        if (step == 878.0)
+            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
+
         if (step == 880.0)
         {
-            gameCameraZoom -= 0.25;
+            hudCamera.stopFade();
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true);
 
-            plrStrumline.visible = true;
+            var plr:Character = getPlayer("bf2");
 
-            if (!Options.middlescroll)
-            {
-                tween.tween(oppStrumline.strums, {x: 45.0}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            plr.visible = false;
 
-                var x:Float = FlxG.width - plrStrumline.strums.width - 45.0;
+            var opp:Character = getOpponent("baldi1");
 
-                tween.tween(plrStrumline.strums, {x: x}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-            }
+            opp.setPosition(390.0, 135.0);
+
+            castedStage.hall4.visible = false;
+
+            castedStage.hall5.visible = true;
+
+            var anim:FlxAnimation = castedStage.hall5.animation.getByName("0");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.5 * 0.001);
         }
     }
 
@@ -453,6 +459,20 @@ class Level1 extends PlayState
                 tween.tween(opp.scale, {x: opp.scale.x + 0.3, y: opp.scale.y + 0.3}, conductor.beatLength * 0.275 * 0.001);
 
                 tween.tween(opp, {x: opp.x + 30.0}, conductor.beatLength * 0.275 * 0.001);
+
+                opp.animation.play("slap", true);
+            }
+        }
+
+        if (beat >= 220.0 && beat < 248.0)
+        {
+            if (beat % 2.0 == 0.0)
+            {
+                var opp:Character = getOpponent("baldi1");
+
+                tween.tween(opp.scale, {x: opp.scale.x + 0.65, y: opp.scale.y + 0.65}, conductor.beatLength * 0.25 * 0.001,
+                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: opp.scale.x - 0.65,
+                        y: opp.scale.y - 0.65}, 0.35);}});
 
                 opp.animation.play("slap", true);
             }

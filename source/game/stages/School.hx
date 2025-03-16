@@ -2,6 +2,8 @@ package game.stages;
 
 import flixel.FlxSprite;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+
 import flixel.group.FlxGroup;
 
 import flixel.addons.display.FlxBackdrop;
@@ -21,6 +23,8 @@ class School extends FlxGroup
 
     public var hall4:FlxSprite;
 
+    public var hall5:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -36,6 +40,12 @@ class School extends FlxGroup
         hall3 = buildSprite("hall3");
 
         hall4 = buildSprite("hall4", 0.75, 0.75);
+
+        hall5 = buildAtlasSprite("hall5");
+
+        hall5.animation.addByPrefix("0", "redLongHall run", 24.0);
+
+        hall5.animation.play("0");
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
@@ -43,6 +53,26 @@ class School extends FlxGroup
         var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png('game/stages/School/${path}'))));
 
         sprite.visible = false;
+
+        sprite.scale.set(scaleX, scaleY);
+
+        sprite.updateHitbox();
+
+        sprite.screenCenter();
+
+        add(sprite);
+
+        return sprite;
+    }
+
+    public function buildAtlasSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
+    {
+        var sprite = new FlxSprite(0.0, 0.0);
+
+        sprite.visible = false;
+
+        sprite.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png('game/stages/School/${path}'))),
+            Paths.image(Paths.xml('game/stages/School/${path}')));
 
         sprite.scale.set(scaleX, scaleY);
 
