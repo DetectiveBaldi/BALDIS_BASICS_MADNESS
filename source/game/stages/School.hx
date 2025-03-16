@@ -19,6 +19,8 @@ class School extends FlxGroup
 
     public var hall3:FlxSprite;
 
+    public var hall4:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -32,6 +34,8 @@ class School extends FlxGroup
         hall2 = buildBackdrop("hall2");
 
         hall3 = buildSprite("hall3");
+
+        hall4 = buildSprite("hall4", 0.75, 0.75);
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
@@ -40,7 +44,7 @@ class School extends FlxGroup
 
         sprite.visible = false;
 
-        sprite.scale.set(1.15, 1.15);
+        sprite.scale.set(scaleX, scaleY);
 
         sprite.updateHitbox();
 
@@ -57,7 +61,7 @@ class School extends FlxGroup
 
         backdrop.visible = false;
 
-        backdrop.scale.set(1.15, 1.15);
+        backdrop.scale.set(scaleX, scaleY);
 
         backdrop.updateHitbox();
 

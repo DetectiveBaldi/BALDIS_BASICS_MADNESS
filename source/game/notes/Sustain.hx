@@ -65,17 +65,11 @@ class Sustain extends FlxSprite
         trail.y -= 2.0 * (note.strumline.downscroll ? -1.0 : 1.0);
 
         if (note.status == MISSED)
-        {
             color = 0xFFD3D3D3;
-
-            alpha = 0.5;
-        }
         else
-        {
             color = FlxColor.WHITE;
 
-            alpha = 1.0;
-        }
+        alpha = note.alpha <= 0.0 ? 0.0 : note.status == MISSED ? 0.5 : 1.0;
 
         trail.color = color;
 

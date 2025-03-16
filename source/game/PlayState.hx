@@ -493,6 +493,10 @@ class PlayState extends ResourceState
 
     public function gameOver():Void
     {
+        #if debug
+        return;
+        #end
+        
         persistentDraw = false;
 
         gameCameraTarget.screenCenter();

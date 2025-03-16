@@ -49,6 +49,8 @@ class Level1 extends PlayState
 
         gameCameraZoom = 1.15;
 
+        playField.visible = false;
+
         plrStrumline.removeKeyboardListeners();
     }
 
@@ -62,10 +64,6 @@ class Level1 extends PlayState
 
             tween.tween(this, {gameCameraZoom: 0.75}, conductor.beatLength * 4.0 * 8.5 * 0.001);
 
-            hudCamera.alpha = 0.0;
-
-            tween.tween(hudCamera, {alpha: 1.0}, conductor.beatLength * 4.0 * 8.5 * 0.001);
-
             opponents.visible = false;
 
             players.visible = false;
@@ -73,7 +71,7 @@ class Level1 extends PlayState
         
         if (step == 136.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             castedStage.hall0.visible = false;
 
@@ -94,7 +92,7 @@ class Level1 extends PlayState
 
         if (step == 144.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             castedStage.hall1.visible = false;
 
@@ -146,15 +144,18 @@ class Level1 extends PlayState
 
             _plr.animation.onFrameChange.add(updateLegStatus);
 
-            plrStrumline.addKeyboardListeners();
+            playField.visible = true;
+
+            if (!plrStrumline.automated)
+                plrStrumline.addKeyboardListeners();
         }
 
         if (step == 464.0)
         {
-            var temp:FlxSprite = new FlxSprite();
+            var temperature:FlxSprite = new FlxSprite();
 
-            tween.color(temp, conductor.beatLength * 16.0 * 0.001, FlxColor.WHITE, 0xFFFFB2B2,
-                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temp.color;}});
+            tween.color(temperature, conductor.beatLength * 16.0 * 0.001, FlxColor.WHITE, 0xFFFFB2B2,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
         if (step == 512.0)
@@ -190,11 +191,22 @@ class Level1 extends PlayState
         }
 
         if (step == 528.0)
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+
+            if (!Options.middlescroll)
+            {
+                tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+
+                var x:Float = (FlxG.width - plrStrumline.strums.width) * 0.5;
+
+                tween.tween(plrStrumline.strums, {x: x}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            }
+        }
 
         if (step == 584.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var plr:Character = getPlayer("bf1");
 
@@ -230,7 +242,7 @@ class Level1 extends PlayState
 
         if (step == 592.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             // TODO: Move this to the chart events list once we are out of the DEMO phase.
 
@@ -269,11 +281,16 @@ class Level1 extends PlayState
             __plr.visible = true;
 
             __plr.setPosition(775.0, 75.0);
+
+            oppStrumline.strums.alpha = 1.0;
+
+            if (!Options.middlescroll)
+                plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
         }
 
         if (step == 720.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var opp:Character = getOpponent("bully0");
 
@@ -288,13 +305,80 @@ class Level1 extends PlayState
 
         if (step == 848.0)
         {
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("bully1");
 
             tween.tween(opp, {y: -opp.height / 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.backIn});
 
             tween.tween(opp, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001);
+
+            if (!Options.middlescroll)
+            {
+                tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+
+                var x:Float = (FlxG.width - plrStrumline.strums.width) * 0.5;
+
+                tween.tween(plrStrumline.strums, {x: x}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            }
+        }
+
+        if (step == 864.0)
+        {
+            gameCameraZoom += 0.25;
+
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi1"));
+
+            opp.skipDance = true;
+
+            opp.scale.set(0.8, 0.8);
+
+            opp.setPosition(140.0, 120.0);
+
+            opponents.add(opp);
+
+            var plr:Character = getPlayer("bf0");
+
+            plr.visible = false;
+
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf2"));
+
+            _plr.setPosition(-280.0, 100.0);
+
+            players.add(_plr);
+
+            tween.cancelTweensOf(oppStrumline.strums);
+
+            oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
+
+            oppStrumline.strums.alpha = 1.0;
+
+            if (!Options.middlescroll)
+                plrStrumline.visible = false;
+
+            castedStage.hall3.visible = false;
+
+            castedStage.hall4.visible = true;
+        }
+
+        if (step == 880.0)
+        {
+            gameCameraZoom -= 0.25;
+
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            plrStrumline.visible = true;
+
+            if (!Options.middlescroll)
+            {
+                tween.tween(oppStrumline.strums, {x: 45.0}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                var x:Float = FlxG.width - plrStrumline.strums.width - 45.0;
+
+                tween.tween(plrStrumline.strums, {x: x}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            }
         }
     }
 
@@ -357,6 +441,20 @@ class Level1 extends PlayState
                     tween.tween(strumline.strums, {y: strumline.downscroll ? downY : upY}, conductor.beatLength * 0.001,
                         {ease: FlxEase.backOut});
                 }
+            }
+        }
+
+        if (beat >= 216.0 && beat <= 218.0)
+        {
+            if (beat % 2.0 == 0.0)
+            {
+                var opp:Character = getOpponent("baldi1");
+
+                tween.tween(opp.scale, {x: opp.scale.x + 0.3, y: opp.scale.y + 0.3}, conductor.beatLength * 0.275 * 0.001);
+
+                tween.tween(opp, {x: opp.x + 30.0}, conductor.beatLength * 0.275 * 0.001);
+
+                opp.animation.play("slap", true);
             }
         }
     }

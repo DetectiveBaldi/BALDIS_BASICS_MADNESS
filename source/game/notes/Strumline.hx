@@ -308,9 +308,6 @@ class Strumline extends FlxGroup
 
         onNoteHit.dispatch(noteHitEvent);
 
-        if (note.length > 0.0)
-            resizeSustainNote(note);
-
         note.status = HIT;
 
         note.showPop = noteHitEvent.showPop;
@@ -324,6 +321,9 @@ class Strumline extends FlxGroup
             if (note.showPop)
                 showPop(note);
         }
+
+        if (note.length > 0.0)
+            resizeSustainNote(note);
 
         var strum:Strum = note.strum;
 

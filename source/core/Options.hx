@@ -158,6 +158,22 @@ class Options
         return ghostTapping;
     }
 
+    public static var automatedInputs(get, set):Bool;
+
+    @:noCompletion
+    static function get_automatedInputs():Bool
+    {
+        return FlxG.save.data.options.automatedInputs ??= false;
+    }
+
+    @:noCompletion
+    static function set_automatedInputs(_automatedInputs:Bool):Bool
+    {
+        FlxG.save.data.options.automatedInputs = _automatedInputs;
+
+        return automatedInputs;
+    }
+
     public static var gameModifiers(get, set):Map<String, Dynamic>;
 
     @:noCompletion

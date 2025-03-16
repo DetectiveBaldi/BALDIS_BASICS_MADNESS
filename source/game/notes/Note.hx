@@ -109,12 +109,14 @@ class Note extends FlxSprite
     {
         super.update(elapsed);
 
-        y = strum.y;
-
         x = strum.getMidpoint().x - width * 0.5;
+
+        y = strum.y;
 
         if (status != HIT || length <= 0.0)
             y += (time - strumline.conductor.time) * (strumline.downscroll ? -1 : 1) * strumline.scrollSpeed * 0.45;
+
+        alpha = strumline.strums.alpha;
     }
 
     override function kill():Void

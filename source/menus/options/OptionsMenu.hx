@@ -227,6 +227,8 @@ class OptionsMenu extends ResourceState
 
         addBoolOption("Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
 
+        addBoolOption("Automated Inputs", "If checked, inputs will be processed automatically.", "automatedInputs");
+
         descriptor = new FlxSprite();
 
         descriptor.antialiasing = true;
