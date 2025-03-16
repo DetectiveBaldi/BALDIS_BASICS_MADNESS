@@ -470,10 +470,14 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi1");
 
-                tween.tween(opp.scale, {x: opp.scale.x + 0.65, y: opp.scale.y + 0.65}, conductor.beatLength * 0.25 * 0.001,
-                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: opp.scale.x - 0.65,
-                        y: opp.scale.y - 0.65}, 0.35);}});
+                tween.tween(opp.scale, {x: 2, y: 2}, conductor.beatLength * 0.25 * 0.001,
+                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1,
+                        y: 1}, 0.85);}});
 
+                tween.tween(opp, {y: 150}, conductor.beatLength * 0.25 * 0.001,
+                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
+                        {y: 125}, 0.85);}});
+                
                 opp.animation.play("slap", true);
             }
         }
