@@ -612,7 +612,6 @@ class Level1 extends PlayState
 
             opp.scale.set(0.25, 0.25);
 
-
             opp.setPosition(385.0, 110.0);
 
             castedStage.remove(opponents, true);
@@ -630,6 +629,17 @@ class Level1 extends PlayState
             castedStage.office3.visible = true;
 
             castedStage.office4.visible = true;
+        }
+
+        if (step == 1488.0)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+
+            playField.visible = false;
+
+            playField.strumlines.forEach((strumline:Strumline) -> {strumline.removeKeyboardListeners(); strumline.resetStrums();});
+
+            updateHealthBar("baldi1", "opponent");
         }
 
         if (step == 1496.0)
@@ -737,7 +747,7 @@ class Level1 extends PlayState
                 
                 tween.tween(opp, {x: beat == 388.0 ? opp.x - 365.0 : opp.x + 1.0 * opp.scale.x}, conductor.beatLength * 0.275 * 0.001);
 
-                tween.tween(opp, {y: opp.y + 5}, conductor.beatLength * 0.275 * 0.001);
+                tween.tween(opp, {y: opp.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
 
                 opp.animation.play("slap", true);
             }

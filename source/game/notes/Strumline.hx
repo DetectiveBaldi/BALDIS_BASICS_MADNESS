@@ -302,6 +302,11 @@ class Strumline extends FlxGroup
         strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Static");
     }
 
+    public function resetStrums():Void
+    {
+        strums.forEach((strum:Strum) -> strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Static", true));
+    }
+
     public function noteHit(note:Note):Void
     {
         noteHitEvent.reset(note);
