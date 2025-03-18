@@ -25,6 +25,20 @@ class School extends FlxGroup
 
     public var hall5:FlxSprite;
 
+    public var exit0:FlxSprite;
+
+    public var office0:FlxSprite;
+
+    public var office1:FlxSprite;
+
+    public var office2:FlxSprite;
+
+    public var office3:FlxSprite;
+
+    public var office4:FlxSprite;
+
+    public var office5:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -46,6 +60,24 @@ class School extends FlxGroup
         hall5.animation.addByPrefix("0", "redLongHall run", 24.0);
 
         hall5.animation.play("0");
+        
+        exit0 = buildSprite("exit0", 2.35, 2.35);
+
+        office0 = buildSprite("office0");
+
+        office1 = buildSprite("office1");
+
+        office2 = buildSprite("office2");
+
+        office3 = buildSprite("office3");
+
+        office4 = buildSprite("office4");
+
+        office5 = buildSprite("office5");
+
+        remove(office5, true);
+
+        insert(members.indexOf(office4), office5);
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
