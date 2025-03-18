@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-window.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="window10000" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="window10001" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="window10002" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="window10003" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="window10004" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window10005" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window10006" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window10007" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window10008" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window10009" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="window20000" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="window20001" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="window20002" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="window20003" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="window20004" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="window20005" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="window20006" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="window20007" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="window20008" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="window20009" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="window20010" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="window20011" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="window20012" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="window20013" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="window20014" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="window30000" x="527" y="266" width="256" height="256" frameX="-22" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30001" x="527" y="266" width="256" height="256" frameX="-22" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30002" x="788" y="266" width="256" height="256" frameX="-23" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30003" x="788" y="266" width="256" height="256" frameX="-23" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30004" x="1049" y="266" width="256" height="256" frameX="-21" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30005" x="1049" y="266" width="256" height="256" frameX="-21" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30006" x="1310" y="266" width="256" height="256" frameX="-16" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30007" x="1310" y="266" width="256" height="256" frameX="-16" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30008" x="1571" y="266" width="256" height="256" frameX="-5" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30009" x="1571" y="266" width="256" height="256" frameX="-5" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30010" x="5" y="527" width="256" height="256" frameX="-1" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30011" x="5" y="527" width="256" height="256" frameX="-1" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30012" x="266" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30013" x="266" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window30014" x="266" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="279" frameHeight="256"/>
+	<SubTexture name="window40000" x="527" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40001" x="527" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40002" x="788" y="527" width="256" height="256" frameX="-1" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40003" x="788" y="527" width="256" height="256" frameX="-1" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40004" x="1049" y="527" width="256" height="256" frameX="-6" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40005" x="1049" y="527" width="256" height="256" frameX="-6" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40006" x="1310" y="527" width="256" height="256" frameX="-22" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40007" x="1310" y="527" width="256" height="256" frameX="-22" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40008" x="1571" y="527" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40009" x="1571" y="527" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40010" x="5" y="788" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40011" x="5" y="788" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40012" x="266" y="788" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40013" x="266" y="788" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window40014" x="266" y="788" width="256" height="256" frameX="-27" frameY="0" frameWidth="283" frameHeight="256"/>
+	<SubTexture name="window50000" x="527" y="788" width="256" height="256" frameX="-2" frameY="-19" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50001" x="527" y="788" width="256" height="256" frameX="-2" frameY="-19" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50002" x="788" y="788" width="256" height="256" frameX="-2" frameY="-19" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50003" x="788" y="788" width="256" height="256" frameX="-2" frameY="-19" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50004" x="1049" y="788" width="258" height="258" frameX="-2" frameY="-18" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50005" x="1049" y="788" width="258" height="258" frameX="-2" frameY="-18" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50006" x="1312" y="788" width="266" height="265" frameX="-1" frameY="-15" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50007" x="1312" y="788" width="266" height="265" frameX="-1" frameY="-15" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50008" x="1583" y="788" width="291" height="289" frameX="0" frameY="-3" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50009" x="1583" y="788" width="291" height="289" frameX="0" frameY="-3" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50010" x="5" y="1082" width="298" height="296"/>
+	<SubTexture name="window50011" x="5" y="1082" width="298" height="296"/>
+	<SubTexture name="window50012" x="308" y="1082" width="288" height="287" frameX="0" frameY="-4" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50013" x="308" y="1082" width="288" height="287" frameX="0" frameY="-4" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50014" x="601" y="1082" width="273" height="272" frameX="-1" frameY="-11" frameWidth="298" frameHeight="296"/>
+	<SubTexture name="window50015" x="601" y="1082" width="273" height="272" frameX="-1" frameY="-11" frameWidth="298" frameHeight="296"/>
+</TextureAtlas>

@@ -602,11 +602,16 @@ class Level1 extends PlayState
 
         if (step == 1488.0)
         {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+           
+            gameCameraZoom -= 0.1;
+
             var opp:Character = getOpponent("baldi1");
 
             opp.visible = true;
 
-            opp.scale.set(0.35, 0.35);
+            opp.scale.set(0.25, 0.25);
+
 
             opp.setPosition(385.0, 110.0);
 
@@ -727,12 +732,12 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi1");
 
-                tween.tween(opp.scale, {x: opp.scale.x + opp.scale.x / 0.375, y: opp.scale.y + opp.scale.y / 0.375},
+                tween.tween(opp.scale, {x: opp.scale.x + 0.2, y: opp.scale.y + 0.2},
                     conductor.beatLength * 0.275 * 0.001);
                 
                 tween.tween(opp, {x: beat == 388.0 ? opp.x - 365.0 : opp.x + 1.0 * opp.scale.x}, conductor.beatLength * 0.275 * 0.001);
 
-                tween.tween(opp, {y: opp.y + 10.0 * opp.scale.y}, conductor.beatLength * 0.275 * 0.001);
+                tween.tween(opp, {y: opp.y + 5}, conductor.beatLength * 0.275 * 0.001);
 
                 opp.animation.play("slap", true);
             }
