@@ -56,7 +56,9 @@ class Level1 extends PlayState
 
         playField.visible = false;
 
-        plrStrumline.removeKeyboardListeners();
+        plrStrumline.removeEventListeners();
+
+        plrStrumline.resetStrums();
 
         temperature = new FlxSprite();
     }
@@ -152,7 +154,7 @@ class Level1 extends PlayState
             playField.visible = true;
 
             if (!plrStrumline.automated)
-                plrStrumline.addKeyboardListeners();
+                plrStrumline.addEventListeners();
         }
 
         if (step == 464.0)
@@ -637,7 +639,9 @@ class Level1 extends PlayState
 
             playField.visible = false;
 
-            playField.strumlines.forEach((strumline:Strumline) -> {strumline.removeKeyboardListeners(); strumline.resetStrums();});
+            plrStrumline.removeEventListeners();
+
+            plrStrumline.resetStrums();
 
             updateHealthBar("baldi1", "opponent");
         }

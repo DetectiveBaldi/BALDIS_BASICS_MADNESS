@@ -91,7 +91,7 @@ class Strumline extends FlxGroup
 
         conductor = _conductor;
 
-        addKeyboardListeners();
+        addEventListeners();
 
         keysHeld = [for (i in 0 ... 4) false];
 
@@ -228,7 +228,7 @@ class Strumline extends FlxGroup
     {
         super.destroy();
 
-        removeKeyboardListeners();
+        removeEventListeners();
 
         keysHeld = null;
 
@@ -241,7 +241,7 @@ class Strumline extends FlxGroup
         onGhostTap = cast FlxDestroyUtil.destroy(onGhostTap);
     }
 
-    public function addKeyboardListeners():Void
+    public function addEventListeners():Void
     {
         if (keys != null)
             return;
@@ -258,7 +258,7 @@ class Strumline extends FlxGroup
         ];
     }
 
-    public function removeKeyboardListeners():Void
+    public function removeEventListeners():Void
     {
         if (keys == null)
             return;

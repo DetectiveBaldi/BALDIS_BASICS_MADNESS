@@ -52,7 +52,7 @@ class HealthBar extends ProgressBar
 
         conductor = _conductor;
 
-        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("BOYFRIEND_PIXEL"));
+        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi0"));
 
         opponentIcon.flipX = fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM;
 
@@ -60,7 +60,7 @@ class HealthBar extends ProgressBar
 
         add(opponentIcon);
 
-        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("BOYFRIEND"));
+        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("bf0"));
 
         playerIcon.flipX = !(fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM);
 

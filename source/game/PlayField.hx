@@ -158,7 +158,7 @@ class PlayField extends FlxGroup
 
         opponentStrumline.automated = true;
 
-        opponentStrumline.removeKeyboardListeners();
+        opponentStrumline.removeEventListeners();
 
         opponentStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - opponentStrumline.strums.width) * 0.5 : 45.0, opponentStrumline.downscroll ? FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
 
@@ -170,7 +170,7 @@ class PlayField extends FlxGroup
         {
             playerStrumline.automated = true;
 
-            playerStrumline.removeKeyboardListeners();
+            playerStrumline.removeEventListeners();
         }
 
         playerStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - playerStrumline.strums.width) * 0.5 : FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ? FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);

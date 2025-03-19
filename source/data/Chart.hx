@@ -56,11 +56,11 @@ class Chart
 
         timeChanges = new Array<RawTimeChange>();
 
-        spectator = "GIRLFRIEND";
+        spectator = "";
 
-        opponent = "BOYFRIEND_PIXEL";
+        opponent = "baldi0";
 
-        player = "BOYFRIEND";
+        player = "bf0";
     }
 
     public function toString():String

@@ -98,7 +98,7 @@ class CharacterEditorState extends ResourceState
 
         add(background);
 
-        character = new Character(null, 0.0, 0.0, CharacterData.get("BOYFRIEND"));
+        character = new Character(null, 0.0, 0.0, CharacterData.get("bf0"));
 
         character.screenCenter();
 
