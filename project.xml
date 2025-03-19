@@ -47,15 +47,9 @@
 
 	<set name="BUILD_DIR" value="bin/stable" unless="debug" />
 
-	<assets path="assets/data" />
-
-	<assets path="assets/fonts" />
-
-	<assets path="assets/images" />
-
-	<assets path="assets/music" />
-
-	<assets path="assets/sounds" />
+	<!-- "preload='false'" might be optional, but just in case. -->
+	
+	<assets path="assets" preload="false" />
 
 	<source path="source" />
 

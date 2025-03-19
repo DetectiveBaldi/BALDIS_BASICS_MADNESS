@@ -7,6 +7,9 @@ import openfl.text.TextFormat;
 
 import flixel.FlxG;
 
+import core.Assets;
+import core.Paths;
+
 import util.MathUtil;
 
 class PerfStats extends TextField
@@ -25,9 +28,16 @@ class PerfStats extends TextField
 
         y = _y;
 
+        antiAliasType = ADVANCED;
+
+        defaultTextFormat = new TextFormat(FlxG.assets.getFontUnsafe(Paths.font(Paths.ttf("Comic Sans MS"))).fontName, 
+            16, 0xFFFFFFFF, true);
+
+        embedFonts = true;
+
         selectable = false;
 
-        defaultTextFormat = new TextFormat("Monsterrat", 14, 0xFFFFFFFF, true);
+        sharpness = 400.0;
 
         text = "FPS: 0";
 

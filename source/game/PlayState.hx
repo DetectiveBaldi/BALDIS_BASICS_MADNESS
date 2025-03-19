@@ -460,7 +460,6 @@ class PlayState extends ResourceState
     public function endSong():Void
     {
         // Uh oh! Looks like something malfunctioned... let's head back to `menus.LauncherScreen`!
-
         if (week == null)
             FlxG.switchState(() -> new LauncherScreen());
         else
@@ -505,15 +504,9 @@ class PlayState extends ResourceState
 
         openSubState(new GameOverScreen());
 
-        instrumental.stop();
+        pauseMusic();
 
-        mainVocals?.stop();
-
-        opponentVocals?.stop();
-
-        playerVocals?.stop();
-
-        playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = false);
+        playField.strumlines.forEach((strumline:Strumline) -> strumline.removeEventListeners());
     }
 
     public function getSpectator(name:String):Character
@@ -588,9 +581,9 @@ class PlayState extends ResourceState
     #if debug
     public function stepUntil(time:Float):Void
     {
-        if (conductor.step < 0.0)
+        if (conductor.time < 0.0)
             return;
-
+        
         pauseMusic();
 
         var i:Int = chart.notes.length - 1;

@@ -384,9 +384,7 @@ class Level1 extends PlayState
 
         if (step == 880.0)
         {
-            hudCamera.stopFade();
-
-            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true);
+            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
 
             var plr:Character = getPlayer("bf2");
 
@@ -606,7 +604,7 @@ class Level1 extends PlayState
         {
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
            
-            gameCameraZoom -= 0.1;
+            gameCameraZoom -= 0.15;
 
             var opp:Character = getOpponent("baldi1");
 
@@ -616,6 +614,10 @@ class Level1 extends PlayState
 
             opp.setPosition(385.0, 110.0);
 
+            var _opp:Character = getOpponent("principal0");
+
+            _opp.visible = false;
+
             castedStage.remove(opponents, true);
 
             castedStage.insert(castedStage.members.indexOf(castedStage.office4), opponents);
@@ -623,6 +625,26 @@ class Level1 extends PlayState
             var plr:Character = getPlayer("bf0");
 
             plr.visible = false;
+
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-window"));
+
+            _plr.skipDance = true;
+
+            _plr.skipSing = true;
+
+            _plr.animation.play("window1");
+
+            _plr.setPosition(500.0, 0.0);
+
+            players.add(_plr);
+
+            updateHealthBar("baldi1", "opponent");
+
+            playField.visible = false;
+
+            plrStrumline.removeEventListeners();
+
+            plrStrumline.resetStrums();
 
             castedStage.office1.visible = false;
 
@@ -633,24 +655,49 @@ class Level1 extends PlayState
             castedStage.office4.visible = true;
         }
 
-        if (step == 1488.0)
-        {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
-
-            playField.visible = false;
-
-            plrStrumline.removeEventListeners();
-
-            plrStrumline.resetStrums();
-
-            updateHealthBar("baldi1", "opponent");
-        }
-
         if (step == 1496.0)
         {
             castedStage.office3.visible = false;
 
             castedStage.office5.visible = true;
+        }
+
+        if (step == 1504.0)
+        {
+            var plr:Character = getPlayer("bf-window");
+
+            plr.animation.play("window2");
+        }
+
+        if (step == 1520.0)
+        {
+            var plr:Character = getPlayer("bf-window");
+
+            plr.animation.play("window3");
+        }
+
+        if (step == 1536.0)
+        {
+            var plr:Character = getPlayer("bf-window");
+
+            plr.animation.play("window4");
+        }
+
+        if (step == 1544.0)
+        {
+            var plr:Character = getPlayer("bf-window");
+
+            plr.animation.play("window5");
+
+            tween.tween(plr, {x: gameCamera.viewLeft - plr.width}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.backIn});
+        }
+
+        if (step == 1548.0)
+            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, false);
+
+        if (step == 1552.0)
+        {
+            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
         }
     }
 
