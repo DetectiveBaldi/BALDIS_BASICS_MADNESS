@@ -31,7 +31,11 @@ import data.WeekData;
 
 import extendable.ResourceState;
 
+import game.notes.Note;
 import game.notes.Strumline;
+
+import game.notes.events.GhostTapEvent;
+import game.notes.events.NoteHitEvent;
 
 import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
@@ -214,17 +218,23 @@ class PlayState extends ResourceState
 
         healthBar.onEmptied.add(gameOver);
 
-        var opponentStrumline:Strumline = playField.opponentStrumline;
+        oppStrumline.onNoteHit.add(noteHit); plrStrumline.onNoteHit.add(noteHit);
 
-        var playerStrumline:Strumline = playField.playerStrumline;
+        oppStrumline.onNoteMiss.add(noteMiss); plrStrumline.onNoteMiss.add(noteMiss);
 
-        opponentStrumline.characters = opponents;
+        oppStrumline.onNoteHit.add(oppNoteHit); plrStrumline.onNoteHit.add(plrNoteHit);
 
-        opponentStrumline.vocals = opponentVocals ?? mainVocals;
+        oppStrumline.onNoteMiss.add(oppNoteMiss); plrStrumline.onNoteMiss.add(plrNoteMiss);
 
-        playerStrumline.characters = players;
+        oppStrumline.onGhostTap.add(ghostTap); plrStrumline.onGhostTap.add(ghostTap);
 
-        playerStrumline.vocals = playerVocals ?? mainVocals;
+        oppStrumline.characters = opponents;
+
+        oppStrumline.vocals = opponentVocals ?? mainVocals;
+
+        plrStrumline.characters = players;
+
+        plrStrumline.vocals = playerVocals ?? mainVocals;
 
         spectators.group.memberAdded.add((spectator:Character) -> spectator.strumline = playField.opponentStrumline);
 
@@ -442,6 +452,20 @@ class PlayState extends ResourceState
 
         playerVocals?.play();
     }
+
+    public function noteHit(ev:NoteHitEvent):Void {}
+
+    public function noteMiss(note:Note):Void {}
+
+    public function ghostTap(ev:GhostTapEvent):Void {}
+
+    public function oppNoteHit(ev:NoteHitEvent):Void {}
+
+    public function oppNoteMiss(note:Note):Void {}
+
+    public function plrNoteHit(ev:NoteHitEvent):Void {}
+
+    public function plrNoteMiss(note:Note):Void {}
 
     public function endSong():Void
     {

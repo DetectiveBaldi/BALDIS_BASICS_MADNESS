@@ -336,7 +336,7 @@ class Level1 extends PlayState
 
         if (step == 864.0)
         {
-            gameCameraZoom += 0.25;
+            gameCameraZoom = 1.0;
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
@@ -419,7 +419,7 @@ class Level1 extends PlayState
 
         if (step == 992.0)
         {
-            gameCameraZoom -= 0.25;
+            gameCameraZoom = 0.75;
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
@@ -500,7 +500,7 @@ class Level1 extends PlayState
 
         if (step == 1264.0)
         {
-            gameCameraZoom -= 0.1;
+            gameCameraZoom = 0.65;
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
@@ -606,11 +606,9 @@ class Level1 extends PlayState
 
         if (step == 1488.0)
         {
-            gameCameraZoom += 0.1;
+            gameCameraZoom = 0.6;
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
-           
-            gameCameraZoom -= 0.15;
 
             var opp:Character = getOpponent("baldi1");
 
@@ -703,7 +701,7 @@ class Level1 extends PlayState
 
         if (step == 1552.0)
         {
-            gameCameraZoom -= 0.02;
+            gameCameraZoom = 0.58;
 
             hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
 
@@ -716,10 +714,6 @@ class Level1 extends PlayState
             _plr.setPosition(-50.0, 50.0);
 
             players.add(_plr);
-
-            castedStage.remove(opponents, true);
-
-            castedStage.insert(castedStage.members.indexOf(castedStage.office7), opponents);
 
             castedStage.office4.visible = false;
 
@@ -734,24 +728,30 @@ class Level1 extends PlayState
         {
             var opp:Character = getOpponent("baldi1");
 
+            opp.animation.play("slap");
+
             opp.x = 1680.0;
 
             tween.tween(opp, {x: opp.x - 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+
+            castedStage.remove(opponents, true);
+
+            castedStage.insert(castedStage.members.indexOf(castedStage.office7), opponents);
         }
 
         if (step == 1616.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
-
             var opp:Character = getOpponent("baldi1");
 
             opp.visible = true;
+
+            opp.animation.play("slap");
 
             opp.scale.set(1.75, 1.75);
 
             opp.setPosition(400.0, 155.0);
 
-            tween.tween(opp.scale, {x: 1.95, y: 1.95}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+            tween.tween(opp.scale, {x: 2.5, y: 2.5}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
             var plr:Character = getPlayer("bf3");
 
@@ -782,7 +782,7 @@ class Level1 extends PlayState
 
             plr.setPosition(790.0, -40.0);
 
-            tween.tween(plr, {x: 590}, conductor.beatLength * 0.5 * 0.001);
+            tween.tween(plr, {x: 590.0}, conductor.beatLength * 0.5 * 0.001);
 
             castedStage.remove(players, true);
 
@@ -795,6 +795,57 @@ class Level1 extends PlayState
             castedStage.officeHall2.visible = true;
 
             castedStage.officeHall3.visible = true;
+        }
+
+        if (step == 1632.0)
+        {
+            gameCameraZoom = 1.0;
+
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            var plr:Character = getPlayer("bf-window");
+
+            plr.visible = false;
+
+            var opp:Character = getOpponent("baldi1");
+            
+            opp.scale.set(1.4, 1.4);
+
+            opp.setPosition(390.0, 135.0);
+
+            oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
+
+            if (!Options.middlescroll)
+            {
+                playField.statsText.visible = playField.healthBar.visible = 
+                    playField.timeGauge.visible = playField.timeText.visible = false;
+                
+                oppStrumline.downscroll = !oppStrumline.downscroll;
+
+                tween.tween(oppStrumline.strums, {y: oppStrumline.downscroll ? FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, 
+                    conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
+
+                plrStrumline.visible = true;
+            }
+
+            playField.visible = true;
+
+            if (!plrStrumline.automated)
+                plrStrumline.addEventListeners();
+
+            castedStage.remove(players, true);
+
+            castedStage.add(players);
+
+            castedStage.hall5.visible = true;
+
+            castedStage.officeHall1.visible = false;
+
+            castedStage.officeHall2.visible = false;
+
+            castedStage.officeHall3.visible = false;
         }
     }
 
@@ -866,7 +917,7 @@ class Level1 extends PlayState
             }
         }
 
-        if (beat >= 220.0 && beat < 248.0)
+        if (beat >= 220.0 && beat < 248.0 || beat >= 408.0 && beat < 476.0)
         {
             if (beat % 2.0 == 0.0)
             {
