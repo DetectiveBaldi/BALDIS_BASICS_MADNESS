@@ -39,6 +39,22 @@ class School extends FlxGroup
 
     public var office5:FlxSprite;
 
+    public var office6:FlxSprite;
+
+    public var office7:FlxSprite;
+
+    public var office8:FlxSprite;
+
+    public var office9:FlxSprite;
+
+    public var officeHall0:FlxSprite;
+
+    public var officeHall1:FlxSprite;
+
+    public var officeHall2:FlxSprite;
+
+    public var officeHall3:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -78,6 +94,22 @@ class School extends FlxGroup
         remove(office5, true);
 
         insert(members.indexOf(office4), office5);
+
+        office6 = buildSprite("office6");
+
+        office7 = buildSprite("office7");
+
+        office8 = buildSprite("office8");
+
+        office9 = buildSprite("office9");
+
+        officeHall0 = buildSprite("office-hall0");
+
+        officeHall1 = buildSprite("office-hall1");
+
+        officeHall2 = buildSprite("office-hall2");
+
+        officeHall3 = buildSprite("office-hall3");
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite

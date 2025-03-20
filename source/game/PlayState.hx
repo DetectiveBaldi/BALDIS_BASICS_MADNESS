@@ -72,6 +72,9 @@ class PlayState extends ResourceState
         FlxG.switchState(() -> getCampaignLevel());
     }
 
+    /**
+     * Characters and stages are drawn on this camera.
+     */
     public var gameCamera(get, never):FlxCamera;
     
     @:noCompletion
@@ -80,9 +83,6 @@ class PlayState extends ResourceState
         return FlxG.camera;
     }
 
-    /**
-     * Characters and stages are drawn on this camera.
-     */
     public var gameCameraTarget:FlxObject;
 
     public var gameCameraZoom:Float;
@@ -91,8 +91,6 @@ class PlayState extends ResourceState
      * Most UI elements are drawn on this camera.
      */
     public var hudCamera:FlxCamera;
-
-    public var hudCameraZoom:Float;
 
     /**
      * Elements such as the pause menu and fade transition are drawn on this camera.
@@ -175,8 +173,6 @@ class PlayState extends ResourceState
 
         gameCameraZoom = gameCamera.zoom;
 
-        hudCameraZoom = hudCamera.zoom;
-
         loadChart();
 
         loadSong();
@@ -255,23 +251,9 @@ class PlayState extends ResourceState
 
         countdown.onResume.add(() -> conductor.active = true);
 
-        countdown.onFinish.add(() ->
-        {
-            conductor.time = 0.0;
+        countdown.onFinish.add(startSong);
 
-            countdown.kill();
-
-            startSong();
-        });
-
-        countdown.onSkip.add(() ->
-        {
-            conductor.time = 0.0;
-
-            countdown.kill();
-
-            startSong();
-        });
+        countdown.onSkip.add(startSong);
 
         countdown.start();
 
@@ -284,7 +266,7 @@ class PlayState extends ResourceState
 
         gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
 
-        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, hudCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
+        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
         while (eventIndex < chart.events.length)
         {
@@ -299,7 +281,7 @@ class PlayState extends ResourceState
                     CameraFollowEvent.dispatch(this, event.value.x ?? 0.0, event.value.y ?? 0.0, event.value.characterRole ?? "", event.value.duration ?? -1.0, event.value.ease ?? "linear");
 
                 case "Camera Zoom":
-                    CameraZoomEvent.dispatch(this, event.value.camera, event.value.zoom, event.value.duration, event.value.ease);
+                    CameraZoomEvent.dispatch(this, event.value.zoom, event.value.duration, event.value.ease);
 
                 case "Scroll Speed Change":
                     ScrollSpeedChangeEvent.dispatch(this, event.value.scrollSpeed, event.value.duration, event.value.ease);
@@ -448,6 +430,10 @@ class PlayState extends ResourceState
 
     public function startSong():Void
     {
+        conductor.time = 0.0;
+
+        countdown.kill();
+
         instrumental.play();
 
         mainVocals?.play();
@@ -460,25 +446,26 @@ class PlayState extends ResourceState
     public function endSong():Void
     {
         // Uh oh! Looks like something malfunctioned... let's head back to `menus.LauncherScreen`!
+
         if (week == null)
             FlxG.switchState(() -> new LauncherScreen());
         else
         {
-            /* You completed the week!
-                Or perhaps, you were never truly in a week to begin with.
-                    Either way, you can go back to `menus.ModeSelectScreen` for the time being. */
-
             var i:Int = week.levels.indexOf(level);
 
             if (i + 1.0 >= week.levels.length || !isCampaign)
             {
+                /* You completed the week!
+                    Or perhaps, you were never truly in a week to begin with.
+                        Either way, you can go back to `menus.ModeSelectScreen` for the time being. */
+
                 FlxG.switchState(() -> new ModeSelectScreen());
 
                 return;
             }
 
             // You still have places to be! Let's keep going!
-
+            
             level = week.levels[i + 1];
 
             FlxG.switchState(() -> getCampaignLevel());

@@ -39,11 +39,11 @@ class CameraFollowEvent
 
             game.gameCameraTarget.setPosition(x, y);
 
-            FlxTween.tween(game.gameCamera.scroll, {x: game.gameCameraTarget.x - game.gameCamera.width * 0.5, y: game.gameCameraTarget.y - game.gameCamera.height * 0.5}, duration,
+            game.tween.tween(game.gameCamera.scroll, {x: game.gameCameraTarget.x - game.gameCamera.width * 0.5, y: game.gameCameraTarget.y - game.gameCamera.height * 0.5}, duration,
             {
                 ease: Reflect.getProperty(FlxEase, ease),
 
-                onComplete: (tween:FlxTween) -> game.gameCamera.follow(game.gameCameraTarget, LOCKON, 0.05)
+                onComplete: (_tween:FlxTween) -> game.gameCamera.follow(game.gameCameraTarget, LOCKON, 0.05)
             });
         }
         else

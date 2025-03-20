@@ -19,6 +19,7 @@ import data.CharacterData;
 import game.notes.Strumline;
 
 import game.events.CameraFollowEvent;
+import game.events.CameraZoomEvent;
 
 import game.stages.School;
 
@@ -214,8 +215,8 @@ class Level1 extends PlayState
 
             // TODO: Move this to the chart events list once we are out of the DEMO phase.
 
-            CameraFollowEvent.dispatch(this, plr.getMidpoint().x - gameCameraTarget.width * 0.5, (FlxG.height - gameCameraTarget.height) * 0.5, "", 
-                conductor.beatLength * 2.5 * 0.001, "quartInOut");
+            CameraFollowEvent.dispatch(this, plr.getMidpoint().x - gameCameraTarget.width * 0.5,
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", conductor.beatLength * 2.5 * 0.001, "quartInOut");
 
             var _plr:Character = getPlayer("run-legs");
 
@@ -248,7 +249,8 @@ class Level1 extends PlayState
 
             // TODO: Move this to the chart events list once we are out of the DEMO phase.
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5, (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
 
             gameCamera.snapToTarget();
 
@@ -498,6 +500,8 @@ class Level1 extends PlayState
 
         if (step == 1264.0)
         {
+            gameCameraZoom -= 0.1;
+
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             var opp:Character = getOpponent("baldi0");
@@ -506,11 +510,11 @@ class Level1 extends PlayState
 
             var _opp:Character = getOpponent("principal0");
 
-            _opp.scale.set(1.5, 1.5);
+            _opp.scale.set(1.4, 1.4);
 
             tween.cancelTweensOf(_opp);
 
-            _opp.setPosition(-500.0, 200.0);
+            _opp.setPosition(-350.0, 50.0);
 
             var plr:Character = getPlayer("bf1");
 
@@ -524,9 +528,9 @@ class Level1 extends PlayState
 
             __plr.visible = true;
 
-            __plr.scale.set(2.0, 2.0);
+            __plr.scale.set(2.7, 2.7);
 
-            __plr.setPosition(375.0, 0.0);
+            __plr.setPosition(375.0, 100.0);
 
             updateHealthBar("principal0", "opponent");
 
@@ -602,6 +606,8 @@ class Level1 extends PlayState
 
         if (step == 1488.0)
         {
+            gameCameraZoom += 0.1;
+
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
            
             gameCameraZoom -= 0.15;
@@ -697,7 +703,98 @@ class Level1 extends PlayState
 
         if (step == 1552.0)
         {
+            gameCameraZoom -= 0.02;
+
             hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
+
+            var plr:Character = getPlayer("bf-window");
+
+            plr.visible = false;
+
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf3"));
+
+            _plr.setPosition(-50.0, 50.0);
+
+            players.add(_plr);
+
+            castedStage.remove(opponents, true);
+
+            castedStage.insert(castedStage.members.indexOf(castedStage.office7), opponents);
+
+            castedStage.office4.visible = false;
+
+            castedStage.office5.visible = false;
+
+            castedStage.office6.visible = true;
+
+            castedStage.office7.visible = true;
+        }
+
+        if (step == 1608.0)
+        {
+            var opp:Character = getOpponent("baldi1");
+
+            opp.x = 1680.0;
+
+            tween.tween(opp, {x: opp.x - 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+        }
+
+        if (step == 1616.0)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+
+            var opp:Character = getOpponent("baldi1");
+
+            opp.visible = true;
+
+            opp.scale.set(1.75, 1.75);
+
+            opp.setPosition(400.0, 155.0);
+
+            tween.tween(opp.scale, {x: 1.95, y: 1.95}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+
+            var plr:Character = getPlayer("bf3");
+
+            plr.visible = false;
+
+            castedStage.remove(opponents, true);
+
+            castedStage.add(opponents);
+
+            castedStage.office6.visible = false;
+
+            castedStage.office7.visible = false;
+
+            castedStage.officeHall0.visible = true;
+        }
+
+        if (step == 1624.0)
+        {
+            var plr:Character = getPlayer("bf-window");
+
+            plr.visible = true;
+
+            plr.animation.timeScale = 1.15;
+
+            plr.animation.play("window3");
+
+            plr.scale.set(3.0, 3.0);
+
+            plr.setPosition(790.0, -40.0);
+
+            tween.tween(plr, {x: 590}, conductor.beatLength * 0.5 * 0.001);
+
+            castedStage.remove(players, true);
+
+            castedStage.insert(castedStage.members.indexOf(castedStage.officeHall3), players);
+
+            castedStage.officeHall0.visible = false;
+
+            castedStage.officeHall1.visible = true;
+
+            castedStage.officeHall2.visible = true;
+
+            castedStage.officeHall3.visible = true;
         }
     }
 
@@ -775,11 +872,11 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi1");
 
-                tween.tween(opp.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 0.25 * 0.001,
+                tween.tween(opp.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 0.275 * 0.001,
                     {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
                         y: 1.0}, 0.85);}});
 
-                tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.25 * 0.001,
+                tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
                     {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
                         {y: 125.0}, 0.85);}});
                 

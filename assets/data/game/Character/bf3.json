@@ -1,0 +1,1 @@
+{"animations":[{"indices":[],"prefix":" Idle","offset":{"x":0,"y":0},"looped":false,"flipX":false,"flipY":false,"name":"dance","frameRate":16}],"healthColor":"0x31B0D1","singDuration":8,"image":"bf3","format":"sparrow","danceInterval":2,"healthIcon":"bf0","flipX":false,"flipY":false,"antialiasing":false,"name":"bf3","danceSteps":["dance"],"scale":{"x":4.4,"y":4.4}}
