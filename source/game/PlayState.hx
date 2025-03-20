@@ -218,9 +218,13 @@ class PlayState extends ResourceState
 
         healthBar.onEmptied.add(gameOver);
 
+        oppStrumline.onNoteSpawn.add(noteSpawn); plrStrumline.onNoteSpawn.add(noteSpawn);
+
         oppStrumline.onNoteHit.add(noteHit); plrStrumline.onNoteHit.add(noteHit);
 
         oppStrumline.onNoteMiss.add(noteMiss); plrStrumline.onNoteMiss.add(noteMiss);
+
+        oppStrumline.onNoteSpawn.add(oppNoteSpawn); plrStrumline.onNoteSpawn.add(plrNoteSpawn);
 
         oppStrumline.onNoteHit.add(oppNoteHit); plrStrumline.onNoteHit.add(plrNoteHit);
 
@@ -453,15 +457,21 @@ class PlayState extends ResourceState
         playerVocals?.play();
     }
 
+    public function noteSpawn(note:Note):Void {}
+
     public function noteHit(ev:NoteHitEvent):Void {}
 
     public function noteMiss(note:Note):Void {}
 
     public function ghostTap(ev:GhostTapEvent):Void {}
 
+    public function oppNoteSpawn(note:Note):Void {}
+
     public function oppNoteHit(ev:NoteHitEvent):Void {}
 
     public function oppNoteMiss(note:Note):Void {}
+
+    public function plrNoteSpawn(note:Note):Void {}
 
     public function plrNoteHit(ev:NoteHitEvent):Void {}
 
