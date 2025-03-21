@@ -696,22 +696,23 @@ class Level1 extends PlayState
             tween.tween(plr, {x: gameCamera.viewLeft - plr.width}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.backIn});
         }
 
-        if (step == 1548.0)
-            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, false);
-
         if (step == 1552.0)
         {
             gameCameraZoom = 0.58;
 
-            hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var plr:Character = getPlayer("bf-window");
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf3"));
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-unlock"));
 
-            _plr.setPosition(-50.0, 50.0);
+            _plr.skipDance = true;
+
+            _plr.animation.play("unlock", true);
+
+            _plr.setPosition(600.0, 150.0);
 
             players.add(_plr);
 
@@ -724,6 +725,48 @@ class Level1 extends PlayState
             castedStage.office7.visible = true;
         }
 
+        if (step == 1558.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("check", true);
+        }
+
+        if (step == 1567.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("unlockLoopBack", true);
+        }
+
+        if (step == 1574.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("check", true);
+        }
+
+        if (step == 1583.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("unlockLoopBack", true);
+        }
+
+        if (step == 1590.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("checkScare", true);
+        }
+
+        if (step == 1599.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("unlockScareLoopBack", true);
+        }
+
         if (step == 1608.0)
         {
             var opp:Character = getOpponent("baldi1");
@@ -734,9 +777,20 @@ class Level1 extends PlayState
 
             tween.tween(opp, {x: opp.x - 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("unlock", true);
+
             castedStage.remove(opponents, true);
 
             castedStage.insert(castedStage.members.indexOf(castedStage.office7), opponents);
+        }
+
+        if (step == 1612.0)
+        {
+            var plr:Character = getPlayer("bf-unlock");
+
+            plr.animation.play("unlock", true);
         }
 
         if (step == 1616.0)
@@ -753,7 +807,7 @@ class Level1 extends PlayState
 
             tween.tween(opp.scale, {x: 2.5, y: 2.5}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
-            var plr:Character = getPlayer("bf3");
+            var plr:Character = getPlayer("bf-unlock");
 
             plr.visible = false;
 
