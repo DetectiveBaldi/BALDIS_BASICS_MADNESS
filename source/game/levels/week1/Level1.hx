@@ -154,13 +154,13 @@ class Level1 extends PlayState
 
             playField.visible = true;
 
-            if (!plrStrumline.automated)
+            if (!Options.automatedInputs)
                 plrStrumline.addEventListeners();
         }
 
         if (step == 464.0)
         {
-            tween.color(temperature, conductor.beatLength * 16.0 * 0.001, FlxColor.WHITE, 0xFFFFD8D8,
+            tween.color(temperature, conductor.beatLength * 16.0 * 0.001, temperature.color, 0xFFFFD8D8,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -378,7 +378,8 @@ class Level1 extends PlayState
 
             castedStage.hall4.visible = true;
 
-            temperature.color = gameCamera.color = 0xFFFFBFBF;
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFFBFBF,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
         if (step == 878.0)
@@ -500,7 +501,12 @@ class Level1 extends PlayState
 
         if (step == 1264.0)
         {
-            gameCameraZoom = 0.65;
+            gameCameraZoom = 0.75;
+
+            // TODO: Move this to the chart events list once we are out of the DEMO phase.
+
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 225.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 50.0, "", -1.0);
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
@@ -565,6 +571,9 @@ class Level1 extends PlayState
 
                 timerText.screenCenter();
             }, 45);
+
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFFA5A5,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
         if (step == 1456.0)
@@ -607,6 +616,11 @@ class Level1 extends PlayState
         if (step == 1488.0)
         {
             gameCameraZoom = 0.6;
+
+            // TODO: Move this to the chart events list once we are out of the DEMO phase.
+
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
@@ -657,6 +671,9 @@ class Level1 extends PlayState
             castedStage.office3.visible = true;
 
             castedStage.office4.visible = true;
+
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF8C8C,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
         if (step == 1496.0)
@@ -886,7 +903,7 @@ class Level1 extends PlayState
 
             playField.visible = true;
 
-            if (!plrStrumline.automated)
+            if (!Options.automatedInputs)
                 plrStrumline.addEventListeners();
 
             castedStage.remove(players, true);
@@ -900,7 +917,13 @@ class Level1 extends PlayState
             castedStage.officeHall2.visible = false;
 
             castedStage.officeHall3.visible = false;
+
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF7F7F,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
+
+        if (step == 1760.0)
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
     }
 
     override function beatHit(beat:Int):Void
@@ -930,15 +953,6 @@ class Level1 extends PlayState
 
         if (beat >= 180.0 && beat < 212.0)
         {
-            for (i in 0 ... FlxG.cameras.list.length)
-            {
-                var camera:FlxCamera = FlxG.cameras.list[i];
-
-                camera.angle = beat % 2.0 == 0.0 ? -1.5 : 1.5;
-
-                tween.tween(camera, {angle: 0.0}, conductor.beatLength * 0.85 * 0.001);
-            }
-
             if (beat % 4.0 == 0.0)
             {
                 for (i in 0 ... playField.strumlines.members.length)
@@ -954,6 +968,18 @@ class Level1 extends PlayState
                     tween.tween(strumline.strums, {y: strumline.downscroll ? downY : upY}, conductor.beatLength * 0.001,
                         {ease: FlxEase.backOut});
                 }
+            }
+        }
+
+        if (beat >= 180.0 && beat < 212.0 || beat >= 440.0 && beat < 442.0)
+        {
+            for (i in 0 ... FlxG.cameras.list.length)
+            {
+                var camera:FlxCamera = FlxG.cameras.list[i];
+
+                camera.angle = beat % 2.0 == 0.0 ? -1.5 : 1.5;
+
+                tween.tween(camera, {angle: 0.0}, conductor.beatLength * 0.85 * 0.001);
             }
         }
 
@@ -977,13 +1003,26 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi1");
 
-                tween.tween(opp.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 0.275 * 0.001,
-                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
-                        y: 1.0}, 0.85);}});
+                if (beat == 440.0)
+                {
+                    tween.tween(opp.scale, {x: 2.5, y: 2.5}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
+                            y: 1.0}, 0.85);}});
 
-                tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
-                    {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
-                        {y: 125.0}, 0.85);}});
+                    tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
+                            {y: 125.0}, 0.85);}});
+                }
+                else
+                {
+                    tween.tween(opp.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
+                            y: 1.0}, 0.85);}});
+
+                    tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
+                            {y: 125.0}, 0.85);}});
+                }
                 
                 opp.animation.play("slap", true);
             }

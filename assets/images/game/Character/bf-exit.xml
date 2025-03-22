@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-exit.png">
+	<SubTexture name="bruh0000" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="bruh0001" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="bruh0002" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="bruh0003" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="reach0000" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="reach0001" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="reach0002" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="reach0003" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="reach0004" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="reach0005" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="reach0006" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="reach0007" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="reach0008" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0009" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0010" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0011" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0012" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0013" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reach0014" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="reachIdle0000" x="266" y="527" width="256" height="256"/>
+	<SubTexture name="reachIdle0001" x="266" y="527" width="256" height="256"/>
+</TextureAtlas>
