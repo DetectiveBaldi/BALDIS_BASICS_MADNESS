@@ -923,7 +923,145 @@ class Level1 extends PlayState
         }
 
         if (step == 1760.0)
+           {
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+           }
+    
+        if (step == 1888.0)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            gameCameraZoom = 0.6;
+
+            if (!Options.middlescroll)
+                {
+                    oppStrumline.downscroll = !oppStrumline.downscroll;
+    
+                    playField.statsText.visible = playField.healthBar.visible = 
+                    playField.timeGauge.visible = playField.timeText.visible = true;
+
+                    tween.tween(oppStrumline.strums, {x: 45.0, y: oppStrumline.downscroll ? 
+                        FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, conductor.beatLength * 0.001,
+                            {ease: FlxEase.quartOut});
+    
+                    tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+    
+                    tween.tween(plrStrumline.strums, {x: FlxG.width - plrStrumline.strums.width - 45.0}, conductor.beatLength * 0.001, 
+                        {ease: FlxEase.quartOut});
+                }
+            
+           
+           // castedStage.remove(opponents, true);
+            //castedStage.insert(castedStage.members.indexOf(castedStage.cafeteria1), opponents);
+
+            castedStage.cafeteria0.visible = true;
+            castedStage.cafeteria1.visible = true;
+
+            var opp:Character = getOpponent("baldi1");
+            opp.setPosition(opp.x - 200, opp.y);
+            opp.scale.set(2, 2);
+
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-lock"));
+            _plr.setPosition(500, 135.0);
+            _plr.visible = true;
+            _plr.skipDance = true;
+            _plr.skipSing = true;
+            _plr.animation.play("lock");
+           
+            _plr.animation.onFinish.addOnce((name:String) ->
+            {
+                castedStage.cafeteria1.visible = false;
+                castedStage.cafeteria2.visible = true;
+                
+                opp.animation.play("slap");
+                tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+            });
+            
+            players.add(_plr);
+        }
+    
+        if (step == 1912)
+        {
+            var _plr:Character = getPlayer("bf-lock");
+            _plr.animation.play("check");
+            var opp:Character = getOpponent("baldi1");
+
+            _plr.animation.onFinish.addOnce((name:String) ->
+            {
+                castedStage.cafeteria1.visible = false;
+                castedStage.cafeteria2.visible = true;
+                
+                opp.animation.play("slap");
+                tween.tween(opp, {x: opp.x - 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+            });
+        }
+       
+        if (step == 1920.0)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            castedStage.cafeteria0.visible = false;
+            castedStage.cafeteria2.visible = false;
+            castedStage.cafeteria3.visible = true;
+            
+            var _plr:Character = getPlayer("bf-lock");
+            _plr.visible = false;
+
+            var opp:Character = getOpponent("baldi1");
+            opp.visible = false;
+
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("playtime0"));
+            opp.setPosition(-1100, 200.0);
+            opp.scale.set(1, 1);
+            opponents.add(opp);
+           
+            updateHealthBar("playtime0", "opponent");
+
+            tween.tween(opp, {x: -200}, 1, {ease: FlxEase.quartOut});
+        
+            var plr:Character = getPlayer("bf0");
+            plr.setPosition(700.0, 75.0);
+            plr.visible = true;
+        }
+
+        if (step == 2048)
+        {
+            gameCameraZoom = 1;
+        }
+        
+        if (step == 2052.0)
+        {
+            castedStage.cafeteria3.visible = false;
+            castedStage.cafeteria4.visible = true;
+        
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFD7312E,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
+        }
+    
+        if (step == 2056)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            gameCameraZoom = 0.6;
+        }
+    
+        if (step == 2160)
+        {
+            var opp:Character = getOpponent("baldi0");
+            opp.visible = true;
+            opp.setPosition(-800, 0);
+            opp.skipSing = false;
+
+            //var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
+            //opp.setPosition(500, 200.0);
+            //opp.scale.set(1, 1);
+            //opponents.add(opp);
+
+        }
+   
+        if (step == 2184)
+        {
+            var opp:Character = getOpponent("playtime0");
+            tween.tween(opp, {x: -1100}, 1, {ease: FlxEase.quartIn});
+        }
+
     }
 
     override function beatHit(beat:Int):Void
@@ -997,7 +1135,7 @@ class Level1 extends PlayState
             }
         }
 
-        if (beat >= 220.0 && beat < 248.0 || beat >= 408.0 && beat < 476.0)
+        if (beat >= 220.0 && beat < 248.0 || beat >= 408.0 && beat < 472.0)
         {
             if (beat % 2.0 == 0.0)
             {
@@ -1041,6 +1179,17 @@ class Level1 extends PlayState
 
                 tween.tween(opp, {y: opp.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
 
+                opp.animation.play("slap", true);
+            }
+        }
+    
+        if (beat >= 540.0 && beat <= 552.0)
+        {
+            if (beat % 2.0 == 0.0)
+            {
+                var opp:Character = getOpponent("baldi0");
+                
+                tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
                 opp.animation.play("slap", true);
             }
         }

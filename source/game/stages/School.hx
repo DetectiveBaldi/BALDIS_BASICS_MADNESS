@@ -55,6 +55,16 @@ class School extends FlxGroup
 
     public var officeHall3:FlxSprite;
 
+    public var cafeteria0:FlxSprite;
+
+    public var cafeteria1:FlxSprite;
+
+    public var cafeteria2:FlxSprite;
+
+    public var cafeteria3:FlxSprite;
+
+    public var cafeteria4:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -110,6 +120,16 @@ class School extends FlxGroup
         officeHall2 = buildSprite("office-hall2");
 
         officeHall3 = buildSprite("office-hall3");
+    
+        cafeteria0 = buildSprite("cafeteria0");
+
+        cafeteria1 = buildSprite("cafeteria1");
+
+        cafeteria2 = buildSprite("cafeteria2");
+
+        cafeteria3 = buildSprite("cafeteria3");
+    
+        cafeteria4 = buildSprite("cafeteria4");
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
