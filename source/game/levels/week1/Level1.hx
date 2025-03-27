@@ -1230,6 +1230,8 @@ class Level1 extends PlayState
 
         if (step == 2496)
         {
+            gameCameraZoom = 0.8;
+
             castedStage.hall2.velocity.set(0.0, 0.0);
         
             castedStage.facultyStandard.velocity.x = 0.0;
@@ -1238,12 +1240,86 @@ class Level1 extends PlayState
 
             var opp:Character = getOpponent("gotta-sweep0");
 
-            tween.tween(opp, {x: -1500}, 1,                 
+            tween.tween(opp, {x: -1500}, 0.75,                 
                 {
-                    ease: FlxEase.backIn
+                    ease: FlxEase.backIn,
+                    onComplete: (_tween:FlxTween) -> {opp.visible = false;}
                 });
         
             tween.tween(plr, {x: plr.x + 100}, 0.5);
+        }
+    
+        if (step == 2512)
+        {            
+            var plr:Character = getPlayer("bf0");
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0"));
+            opp.setPosition(1500, 200);
+            opponents.add(opp);
+            
+            castedStage.remove(opponents, true);
+            castedStage.insert(castedStage.members.indexOf(players), opponents);
+
+            updateHealthBar("1st-prize0", "opponent");
+        
+            tween.tween(opp, {x: -1500}, 1,            
+                {
+                    startDelay: 0.75,
+                    ease: FlxEase.quartIn,
+                });
+        
+            tween.tween(plr, {x: -1300}, 0.75,            
+                {
+                    startDelay: 1.5,
+                    ease: FlxEase.quartOut,
+                });
+        }
+
+        if (step == 2528)
+        {
+            gameCameraZoom = 0.7;
+            castedStage.hall2.velocity.set(5560.0, 0.0);
+            castedStage.facultyStandard.velocity.x = 5560.0;
+        }
+
+        if (step == 2532)
+        {
+            var plr:Character = getPlayer("bf0");
+            var opp:Character = getOpponent("1st-prize0");
+
+            tween.tween(opp, {x: 500}, 1);
+        
+            tween.tween(plr, {x: 300}, 1,                 
+                {
+                    onComplete: (_tween:FlxTween) -> {castedStage.hall2.velocity.set(2560.0, 0.0);}
+                });
+        }
+   
+        if (step == 2768)
+        {
+            var plr:Character = getPlayer("bf0");
+            var craftersSprite1:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
+            craftersSprite1.scale.set(1.35, 1.35);
+            craftersSprite1.updateHitbox();
+            craftersSprite1.setPosition(plr.x - 500, plr.y);
+            //add(craftersSprite1);
+        }
+    
+        if (step == 2816)
+        {
+            gameCameraZoom = 0.6;
+            hudCamera.visible = false;
+            var opp:Character = getOpponent("1st-prize0");
+            opp.visible = false;
+           
+            castedStage.hall2.visible = false;
+            castedStage.hall6.visible = true;
+        }
+    
+        if (step == 2832)
+        {
+            hudCamera.visible = true;
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
         }
     }
 
