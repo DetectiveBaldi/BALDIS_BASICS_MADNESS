@@ -55,6 +55,14 @@ class School extends FlxGroup
 
     public var officeHall3:FlxSprite;
 
+    public var cafeteriaHall0:FlxSprite;
+
+    public var cafeteriaHall1:FlxSprite;
+
+    public var cafeteriaHall2:FlxSprite;
+
+    public var cafeteriaHall3:FlxSprite;
+
     public var cafeteria0:FlxSprite;
 
     public var cafeteria1:FlxSprite;
@@ -121,6 +129,14 @@ class School extends FlxGroup
 
         officeHall3 = buildSprite("office-hall3");
     
+        cafeteriaHall0 = buildSprite("cafeteria-hall0");
+
+        cafeteriaHall1 = buildSprite("cafeteria-hall1");
+
+        cafeteriaHall2 = buildSprite("cafeteria-hall2");
+
+        cafeteriaHall3 = buildSprite("cafeteria-hall3");
+
         cafeteria0 = buildSprite("cafeteria0");
 
         cafeteria1 = buildSprite("cafeteria1");
@@ -128,7 +144,7 @@ class School extends FlxGroup
         cafeteria2 = buildSprite("cafeteria2");
 
         cafeteria3 = buildSprite("cafeteria3");
-    
+
         cafeteria4 = buildSprite("cafeteria4");
     }
 
