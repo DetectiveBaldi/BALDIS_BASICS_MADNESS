@@ -1123,19 +1123,127 @@ class Level1 extends PlayState
             var opp:Character = getOpponent("baldi0");
             opp.visible = true;
             opp.setPosition(-800, 0);
-            opp.skipSing = false;
-
-            //var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
-            //opp.setPosition(500, 200.0);
-            //opp.scale.set(1, 1);
-            //opponents.add(opp);
-
+            opp.skipSing = true;
         }
     
+        if (step == 2176)
+        {
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
+            opp.setPosition(1750, -100);
+            opp.skipSing = true;
+            opponents.add(opp);
+            
+            var plr:Character = getPlayer("bf0");
+
+            tween.tween(opp, {x: plr.x -50}, 0.5,                
+                {
+                    startDelay: 0.5,
+                    ease: FlxEase.quartOut,
+                    onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: 1750}, 0.5, {ease: FlxEase.quartIn});}
+                });
+                
+            tween.tween(plr, {x: 1750}, 0.5,
+                {
+                    startDelay: 1,
+                    ease: FlxEase.quartIn
+                });
+        }
+        
         if (step == 2184)
         {
             var opp:Character = getOpponent("playtime0");
-            tween.tween(opp, {x: -1100}, 1, {ease: FlxEase.quartIn});
+            tween.tween(opp, {x: -1100}, 2, 
+                {
+                    ease: FlxEase.quartIn
+                });
+        }
+
+        if (step == 2168)
+        {
+            var opp:Character = getOpponent("baldi0");
+            opp.skipSing = false;
+        }
+        
+        if (step == 2176)
+        {
+            var opp:Character = getOpponent("baldi0");
+            opp.skipSing = true;
+        }
+        
+        if (step == 2192)
+        {
+            tween.tween(gameCamera, {alpha: 0}, 1);
+            tween.tween(this, {gameCameraZoom: 1}, 1);
+        }
+        
+        if (step == 2208)
+        {
+            gameCamera.alpha = 1;
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            gameCameraZoom = 0.6;
+
+            castedStage.cafeteria4.visible = false;
+            castedStage.hall2.visible = true;
+            castedStage.hall2.velocity.set(-10560.0, 0.0);
+
+            var opp:Character = getOpponent("playtime0");
+            opp.visible = false;
+
+            var opp:Character = getOpponent("baldi0");
+            opp.visible = false;
+
+            var opp:Character = getOpponent("gotta-sweep0");
+            opp.setPosition(-1000, -100);
+            updateHealthBar("gotta-sweep0", "opponent");
+            
+            var plr:Character = getPlayer("bf0");
+            plr.setPosition(-1000, 50);
+
+            tween.tween(opp, {x: 100}, 1,                 
+                {
+                    ease: FlxEase.backOut
+                });
+        
+            tween.tween(plr, {x: 300}, 1,                 
+                {
+                    ease: FlxEase.backOut
+                });
+        }
+    
+        if (step == 2232)
+        {
+            gameCameraZoom = 1;
+        }
+    
+        if (step == 2240)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            gameCameraZoom = 0.6;
+        }
+
+        if (step == 2494)
+        {
+            castedStage.facultyStandard.visible = true;
+            castedStage.facultyStandard.velocity.x = -2560.0;
+            castedStage.facultyStandard.x = gameCamera.viewX + gameCamera.viewWidth;
+        }
+
+        if (step == 2496)
+        {
+            castedStage.hall2.velocity.set(0.0, 0.0);
+        
+            castedStage.facultyStandard.velocity.x = 0.0;
+
+            var plr:Character = getPlayer("bf0");
+
+            var opp:Character = getOpponent("gotta-sweep0");
+
+            tween.tween(opp, {x: -1500}, 1,                 
+                {
+                    ease: FlxEase.backIn
+                });
+        
+            tween.tween(plr, {x: plr.x + 100}, 0.5);
         }
     }
 
@@ -1275,11 +1383,11 @@ class Level1 extends PlayState
     
         if (beat >= 540.0 && beat <= 552.0)
         {
-            if (beat % 2.0 == 0.0)
+            if (beat % 2 == 0.0)
             {
                 var opp:Character = getOpponent("baldi0");
                 
-                tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+                tween.tween(opp, {x: opp.x + 300.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
                 opp.animation.play("slap", true);
             }

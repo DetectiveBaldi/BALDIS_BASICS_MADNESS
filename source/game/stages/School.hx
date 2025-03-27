@@ -73,6 +73,8 @@ class School extends FlxGroup
 
     public var cafeteria4:FlxSprite;
 
+    public var facultyStandard:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -146,6 +148,8 @@ class School extends FlxGroup
         cafeteria3 = buildSprite("cafeteria3");
 
         cafeteria4 = buildSprite("cafeteria4");
+    
+        facultyStandard = buildSprite("facultyStandard", 2.35, 2.35);
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
