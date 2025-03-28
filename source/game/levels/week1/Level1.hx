@@ -1,5 +1,8 @@
 package game.levels.week1;
 
+import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
+
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -14,6 +17,10 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import core.Assets;
+import core.Options;
+import core.Paths;
+
 import data.CharacterData;
 
 import game.notes.Strumline;
@@ -23,9 +30,7 @@ import game.events.CameraZoomEvent;
 
 import game.stages.School;
 
-import core.Assets;
-import core.Options;
-import core.Paths;
+import shaders.PixelChunks;
 
 using util.MathUtil;
 
@@ -1250,7 +1255,15 @@ class Level1 extends PlayState
         }
     
         if (step == 2512)
-        {            
+        {
+            var pxChunks:PixelChunks = new PixelChunks();
+
+            pxChunks.data.tileSize.value = [1.0];
+
+            gameCamera.filters ??= new Array<BitmapFilter>();
+
+            gameCamera.filters.push(new ShaderFilter(pxChunks));
+
             var plr:Character = getPlayer("bf0");
             
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0"));
@@ -1273,6 +1286,19 @@ class Level1 extends PlayState
                     startDelay: 1.5,
                     ease: FlxEase.quartOut,
                 });
+        }
+
+        if (step >= 2640.0 && step <= 2656.0)
+        {
+            var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
+
+            var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
+
+            if (step == 2648.0 || step == 2650.0)
+                tween.num(15.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+
+            if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
+                tween.num(15.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
         if (step == 2528)
@@ -1459,13 +1485,25 @@ class Level1 extends PlayState
     
         if (beat >= 540.0 && beat <= 552.0)
         {
-            if (beat % 2 == 0.0)
+            if (beat % 2.0 == 0.0)
             {
                 var opp:Character = getOpponent("baldi0");
                 
                 tween.tween(opp, {x: opp.x + 300.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
                 opp.animation.play("slap", true);
+            }
+        }
+
+        if (beat >= 628 && beat <= 660.0)
+        {
+            if (beat % 2.0 == 1.0)
+            {
+                var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
+
+                var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
+        
+                tween.num(15.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
     }
