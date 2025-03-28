@@ -1295,10 +1295,10 @@ class Level1 extends PlayState
             var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
 
             if (step == 2648.0 || step == 2650.0)
-                tween.num(15.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(10.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
             if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                tween.num(15.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(10.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
         if (step == 2528)
@@ -1503,7 +1503,7 @@ class Level1 extends PlayState
 
                 var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
         
-                tween.num(15.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(10.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
     }
