@@ -586,17 +586,9 @@ class PlayState extends ResourceState
         var healthBar:HealthBar = playField.healthBar;
 
         if (role == "spectator" || role == "opponent")
-        {
             healthBar.opponentIcon.config = HealthIconData.get(_character.config.healthIcon);
-
-            healthBar.emptiedSide.color = FlxColor.fromString(_character.config.healthColor);
-        }
         else
-        {
             healthBar.playerIcon.config = HealthIconData.get(_character.config.healthIcon);
-
-            healthBar.filledSide.color = FlxColor.fromString(_character.config.healthColor);
-        }
     }
 
     #if debug

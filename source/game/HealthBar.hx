@@ -1,14 +1,25 @@
 package game;
 
+import flixel.FlxG;
+import flixel.FlxSprite;
+
+import flixel.group.FlxSpriteGroup;
+
 import flixel.math.FlxMath;
+
+import flixel.util.FlxSignal;
+
+import core.Assets;
+import core.Options;
+import core.Paths;
 
 import data.HealthIconData;
 
 import music.Conductor;
 
-import ui.ProgressBar;
+using util.MathUtil;
 
-class HealthBar extends ProgressBar
+class HealthBar extends FlxSpriteGroup
 {
     public var conductor(default, set):Conductor;
 
@@ -26,19 +37,61 @@ class HealthBar extends ProgressBar
         return conductor;
     }
 
+    public var percent(get, set):Float;
+
     @:noCompletion
-    override function set_fillDirection(_fillDirection:ProgressBarFillDirection):ProgressBarFillDirection
+    function get_percent():Float
     {
-        super.set_fillDirection(_fillDirection);
-
-        if (opponentIcon != null)
-            opponentIcon.flipX = fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM;
-
-        if (playerIcon != null)
-            playerIcon.flipX = !(fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM);
-
-        return fillDirection;
+        return ((value - min) / (max - min)) * 100.0;
     }
+
+    @:noCompletion
+    function set_percent(_percent:Float):Float
+    {
+        value = (range / max) * _percent;
+
+        return percent;
+    }
+
+    public var value(default, set):Float;
+
+    @:noCompletion
+    function set_value(_value:Float):Float
+    {
+        value = FlxMath.bound(_value, min, max);
+
+        if (value == min)
+            onEmptied.dispatch();
+
+        if (value == max)
+            onFilled.dispatch();
+        
+        return value;
+    }
+
+    public var min:Float;
+
+    public var max:Float;
+
+    public var range(get, never):Float;
+    
+    @:noCompletion
+    function get_range():Float
+    {
+        return max - min;
+    }
+
+    public var onEmptied:FlxSignal;
+
+    public var onFilled:FlxSignal;
+
+    public var fillDirection:HealthBarFillDirection;
+
+    public var gradient:FlxSprite;
+
+    public var needle:FlxSprite;
+
+    public var overlay:FlxSprite;
 
     public var opponentIcon:HealthIcon;
 
@@ -46,25 +99,84 @@ class HealthBar extends ProgressBar
 
     public function new(x:Float = 0.0, y:Float = 0.0, _conductor:Conductor):Void
     {
-        super(x, y, 600, 25, 5, RIGHT_TO_LEFT);
-
-        borderSize = 5;
+        super(x, y);
 
         conductor = _conductor;
 
+        @:bypassAccessor
+        value = 50.0;
+
+        min = 0.0;
+
+        max = 100.0;
+
+        onEmptied = new FlxSignal();
+
+        onFilled = new FlxSignal();
+
+        fillDirection = LEFT_TO_RIGHT;
+
+        gradient = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/gradient"))));
+
+        gradient.scale.set(1.3, 1.3);
+
+        gradient.updateHitbox();
+
+        add(gradient);
+
+        needle = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/needle"))));
+
+        needle.flipX = Options.downscroll;
+
+        needle.scale.set(1.3, 1.3);
+
+        needle.updateHitbox();
+
+        add(needle);
+
+        overlay = new FlxSprite(0.0, 0.0);
+
+        overlay.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/overlay"))), true, 452, 126);
+
+        overlay.animation.add("0", [0], 0.0, false);
+
+        overlay.animation.add("1", [1], 0.0, false);
+
+        overlay.animation.add("2", [2], 0.0, false);
+
+        overlay.flipY = Options.downscroll;
+
+        overlay.scale.set(1.3, 1.3);
+
+        overlay.updateHitbox();
+
+        add(overlay);
+
+        gradient.centerTo(overlay);
+
+        gradient.y -= gradient.height * 0.75 * (Options.downscroll ? -1.0 : 1.0);
+
+        needle.centerTo(gradient);
+
         opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi0"));
 
-        opponentIcon.flipX = fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM;
+        opponentIcon.x = overlay.x;
 
-        opponentIcon.setPosition(border.getMidpoint().x - opponentIcon.height * 0.5, border.getMidpoint().y - opponentIcon.height * 0.5);
+        opponentIcon.x -= 10.0 * opponentIcon.scale.x;
+
+        opponentIcon.y = Options.downscroll ? overlay.y + overlay.height - opponentIcon.height : overlay.y;
 
         add(opponentIcon);
 
         playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("bf0"));
 
-        playerIcon.flipX = !(fillDirection == LEFT_TO_RIGHT || fillDirection == TOP_TO_BOTTOM);
+        playerIcon.flipX = true;
 
-        playerIcon.setPosition(border.getMidpoint().x - playerIcon.width * 0.5, border.getMidpoint().y - playerIcon.height * 0.5);
+        playerIcon.x = overlay.x + overlay.width - playerIcon.width;
+
+        playerIcon.x += 10.0 / playerIcon.scale.x;
+
+        playerIcon.y = Options.downscroll ? overlay.y + overlay.height - playerIcon.height : overlay.y;
         
         add(playerIcon);
     }
@@ -73,11 +185,22 @@ class HealthBar extends ProgressBar
     {
         super.update(elapsed);
 
+        if (percent >= 20.0 && percent <= 80.0)
+            overlay.animation.play("0");
+        else
+        {
+            if (percent < 20.0)
+                overlay.animation.play("1");
+
+            if (percent > 80.0)
+                overlay.animation.play("2");
+        }
+
+        if (positionNeedle != null)
+            positionNeedle();
+
         if (scaleIcons != null)
             scaleIcons(elapsed);
-
-        if (positionIcons != null)
-            positionIcons();
     }
 
     override function destroy():Void
@@ -105,37 +228,28 @@ class HealthBar extends ProgressBar
         playerIcon.scale.y = FlxMath.lerp(playerIcon.scale.y, playerIcon.config.scale?.y ?? 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
     }
 
-    public dynamic function positionIcons():Void
+    public dynamic function positionNeedle():Void
     {
-        switch (fillDirection:ProgressBarFillDirection)
+        switch (fillDirection:HealthBarFillDirection)
         {
             case LEFT_TO_RIGHT:
             {
-                opponentIcon.setPosition(border.x + border.width * percent * 0.01 - 16.0, border.getMidpoint().y - opponentIcon.height * 0.5);
-
-                playerIcon.setPosition(border.x + border.width * percent * 0.01 - playerIcon.width + 16.0, border.getMidpoint().y - playerIcon.height * 0.5);
+                needle.setPosition(gradient.x + (gradient.width - needle.width) * percent * 0.01,
+                    gradient.getMidpoint().y - needle.height * 0.5);
             }
             
             case RIGHT_TO_LEFT:
             {
-                opponentIcon.setPosition(border.x + border.width * (100.0 - percent) * 0.01 - opponentIcon.width + 16.0, border.getMidpoint().y - opponentIcon.height * 0.5);
-
-                playerIcon.setPosition(border.x + border.width * (100.0 - percent) * 0.01 - 16.0, border.getMidpoint().y - playerIcon.height * 0.5);
-            }
-
-            case TOP_TO_BOTTOM:
-            {
-                opponentIcon.setPosition(border.getMidpoint().x - opponentIcon.width * 0.5, border.y + border.height * percent * 0.01 - 16.0);
-
-                playerIcon.setPosition(border.getMidpoint().x - playerIcon.width * 0.5, border.y + border.height * percent * 0.01 - playerIcon.height + 16.0);
-            }
-
-            case BOTTOM_TO_TOP:
-            {
-                opponentIcon.setPosition(border.getMidpoint().x - opponentIcon.width * 0.5, border.y + border.height * (100.0 - percent) * 0.01 - opponentIcon.height + 16.0);
-
-                playerIcon.setPosition(border.getMidpoint().x - playerIcon.width * 0.5, border.y + border.height * (100.0 - percent) * 0.01 - 16.0);
+                needle.setPosition(gradient.x + (gradient.width - needle.width) * (100.0 - percent) * 0.01,
+                    gradient.getMidpoint().y - needle.height * 0.5);
             }
         }
     }
+}
+
+enum abstract HealthBarFillDirection(String) from String to String
+{
+    var LEFT_TO_RIGHT:HealthBarFillDirection;
+
+    var RIGHT_TO_LEFT:HealthBarFillDirection;
 }

@@ -98,7 +98,8 @@ class PlayField extends FlxGroup
 
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
-        healthBar.setPosition((FlxG.width - healthBar.border.width) * 0.5, Options.downscroll ? (FlxG.height - healthBar.border.height) - 620.0 : 620.0);
+        healthBar.setPosition((FlxG.width - healthBar.width) * 0.5,
+            Options.downscroll ? 0.0 : FlxG.height - healthBar.height);
 
         add(healthBar);
 
