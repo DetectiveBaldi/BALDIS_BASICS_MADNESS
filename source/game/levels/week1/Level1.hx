@@ -1333,19 +1333,75 @@ class Level1 extends PlayState
     
         if (step == 2816)
         {
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.9;
             hudCamera.visible = false;
+            
+            CameraFollowEvent.dispatch(this, (1000),
+            (400), "", -1.0);
+
+            var plr:Character = getPlayer("bf0");
+            plr.visible = false;
+
             var opp:Character = getOpponent("1st-prize0");
             opp.visible = false;
            
             castedStage.hall2.visible = false;
             castedStage.hall6.visible = true;
+            castedStage.hall7.visible = true;
+
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-teleported"));
+            _plr.skipDance = true;
+            _plr.skipSing = true;
+            _plr.setPosition(550, 100);
+            _plr.animation.play("shock");
+            players.add(_plr);
+       
+            var opp:Character = getOpponent("baldi1");
+            opp.scale.set(0.7, 0.7);
+            opp.updateHitbox();
+            opp.setPosition(1100, 280);
+            opp.visible = true;
+            opp.animation.play("slap");
+            tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+
+            castedStage.remove(opponents, true);
+            castedStage.insert(castedStage.members.indexOf(castedStage.hall7), opponents);
         }
-    
+
+        if (step == 2824)
+        {
+            var _plr:Character = getPlayer("bf-teleported");
+            _plr.animation.play("turn");
+            
+            gameCameraZoom = 1;
+        }
+        
         if (step == 2832)
         {
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
+            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            gameCameraZoom = 0.75;
+
             hudCamera.visible = true;
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+        
+            var _plr:Character = getPlayer("bf-teleported");
+            _plr.visible = false;
+            
+            var opp:Character = getOpponent("baldi1");
+            opp.visible = false;
+
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi2"));
+            opp.setPosition(-845.0, 18.5);
+            opponents.add(opp);
+
+            updateHealthBar("baldi2", "opponent");
+
+            castedStage.hall6.visible = false;
+            castedStage.hall7.visible = false;
+            castedStage.hall2.visible = true;
+            castedStage.hall2.velocity.set(-2560.0, 0.0);
         }
     }
 
@@ -1506,6 +1562,19 @@ class Level1 extends PlayState
                 tween.num(10.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
+    
+        if (beat >= 708.0 && beat < 868.0)
+            {
+                if (beat % 2.0 == 0.0)
+                {
+                    var opp:Character = getOpponent("baldi2");
+                    
+                    tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
+
+                    opp.animation.play("slap", true);
+                }
+            }
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
