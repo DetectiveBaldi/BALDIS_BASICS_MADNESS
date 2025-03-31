@@ -162,7 +162,7 @@ class HealthBar extends FlxSpriteGroup
 
         opponentIcon.x = overlay.x;
 
-        opponentIcon.x -= 10.0 * opponentIcon.scale.x;
+        opponentIcon.x -= 5.0 * opponentIcon.scale.x;
 
         opponentIcon.y = Options.downscroll ? overlay.y + overlay.height - opponentIcon.height : overlay.y;
 
@@ -174,7 +174,7 @@ class HealthBar extends FlxSpriteGroup
 
         playerIcon.x = overlay.x + overlay.width - playerIcon.width;
 
-        playerIcon.x += 10.0 / playerIcon.scale.x;
+        playerIcon.x += 5.0 / playerIcon.scale.x;
 
         playerIcon.y = Options.downscroll ? overlay.y + overlay.height - playerIcon.height : overlay.y;
         
