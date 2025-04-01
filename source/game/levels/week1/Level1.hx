@@ -1235,7 +1235,7 @@ class Level1 extends PlayState
 
         if (step == 2496)
         {
-            gameCameraZoom = 0.8;
+            gameCameraZoom = 1;
 
             castedStage.hall2.velocity.set(0.0, 0.0);
         
@@ -1256,6 +1256,11 @@ class Level1 extends PlayState
     
         if (step == 2512)
         {
+            gameCameraZoom = 0.75;
+            
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+
             var pxChunks:PixelChunks = new PixelChunks();
 
             pxChunks.data.tileSize.value = [1.0];
@@ -1266,28 +1271,98 @@ class Level1 extends PlayState
 
             var plr:Character = getPlayer("bf0");
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0"));
-            opp.setPosition(1500, 200);
-            opponents.add(opp);
+            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-coming"));
+            _opp.skipDance = true;
+            _opp.animation.play("coming");
+            _opp.setPosition(950, -150);
+            opponents.add(_opp);
             
             castedStage.remove(opponents, true);
             castedStage.insert(castedStage.members.indexOf(players), opponents);
 
-            updateHealthBar("1st-prize0", "opponent");
-        
-            tween.tween(opp, {x: -1500}, 1,            
-                {
-                    startDelay: 0.75,
-                    ease: FlxEase.quartIn,
-                });
-        
-            tween.tween(plr, {x: -1300}, 0.75,            
-                {
-                    startDelay: 1.5,
-                    ease: FlxEase.quartOut,
-                });
+            updateHealthBar("1st-prize-coming", "opponent");
         }
 
+        if (step == 2528)
+        {
+            var _opp:Character = getOpponent("1st-prize-coming");
+            _opp.visible = false;
+
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize13"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+        
+        if (step == 2544)
+        {
+            var _opp:Character = getOpponent("1st-prize13");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize14"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+        
+        if (step == 2560)
+        {
+            var _opp:Character = getOpponent("1st-prize14");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize15"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+
+        if (step == 2576)
+        {
+            var _opp:Character = getOpponent("1st-prize15");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+        
+        if (step == 2592)
+        {
+            var _opp:Character = getOpponent("1st-prize0");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize1"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+
+        if (step == 2608)
+        {
+            var _opp:Character = getOpponent("1st-prize1");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize2"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+       
+        if (step == 2624)
+        {
+            var _opp:Character = getOpponent("1st-prize2");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize3"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+
+        if (step == 2640)
+        {
+            var _opp:Character = getOpponent("1st-prize3");
+            _opp.visible = false;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize4"));
+            opp.setPosition(950, -150);
+            opponents.add(opp);
+        }
+       
         if (step >= 2640.0 && step <= 2656.0)
         {
             var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
@@ -1301,20 +1376,40 @@ class Level1 extends PlayState
                 tween.num(10.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
-        if (step == 2528)
+        if (step == 2648)
+            {
+                var plr:Character = getPlayer("bf0");
+                var opp:Character = getOpponent("1st-prize4");
+                
+                tween.tween(opp, {x: -1500}, 1,            
+                    {
+                        ease: FlxEase.quartIn,
+                    });
+                    
+                    tween.tween(plr, {x: -1300}, 0.75,            
+                        {
+                            startDelay: 0.75,
+                            ease: FlxEase.quartOut,
+                        });
+            }
+            
+        if (step == 2656)
         {
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
+            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+           
             gameCameraZoom = 0.7;
             castedStage.hall2.velocity.set(5560.0, 0.0);
             castedStage.facultyStandard.velocity.x = 5560.0;
         }
-
-        if (step == 2532)
+    
+        if (step == 2660)
         {
             var plr:Character = getPlayer("bf0");
-            var opp:Character = getOpponent("1st-prize0");
-
+            var opp:Character = getOpponent("1st-prize4");
+    
             tween.tween(opp, {x: 500}, 1);
-        
+            
             tween.tween(plr, {x: 300}, 1,                 
                 {
                     onComplete: (_tween:FlxTween) -> {castedStage.hall2.velocity.set(2560.0, 0.0);}
@@ -1336,13 +1431,13 @@ class Level1 extends PlayState
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
             
-            CameraFollowEvent.dispatch(this, (1000),
-            (400), "", -1.0);
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
 
-            var opp:Character = getOpponent("1st-prize0");
+            var opp:Character = getOpponent("1st-prize4");
             opp.visible = false;
            
             castedStage.hall2.visible = false;
