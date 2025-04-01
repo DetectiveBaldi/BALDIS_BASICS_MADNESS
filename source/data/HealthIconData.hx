@@ -18,6 +18,4 @@ typedef RawHealthIconData =
     var image:String;
 
     var ?antialiasing:Bool;
-
-    var ?scale:{?x:Float, ?y:Float};
 }

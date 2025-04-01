@@ -313,8 +313,8 @@ class Level1 extends PlayState
 
             opponents.add(_opp);
 
-            playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = false;
+            playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
 
         if (step == 848.0)
@@ -327,8 +327,8 @@ class Level1 extends PlayState
 
             tween.tween(opp, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001);
 
-            playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = true;
+            playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {
@@ -371,8 +371,8 @@ class Level1 extends PlayState
 
             if (!Options.middlescroll)
             {
-                playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = false;
+                playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = false;
                 
                 oppStrumline.strums.alpha = 1.0;
 
@@ -451,8 +451,8 @@ class Level1 extends PlayState
 
             _plr.setPosition(plr.x, plr.y);
 
-            playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = true;
+            playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {
@@ -893,8 +893,8 @@ class Level1 extends PlayState
 
             if (!Options.middlescroll)
             {
-                playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = false;
+                playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = false;
                 
                 oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -1078,8 +1078,8 @@ class Level1 extends PlayState
             castedStage.remove(opponents, true);
             castedStage.add(opponents);
 
-            playField.statsText.visible = playField.healthBar.visible = 
-                    playField.timeGauge.visible = playField.timeText.visible = true;
+            playField.scoreTxt.visible = playField.healthBar.visible = 
+                    playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {

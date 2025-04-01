@@ -20,7 +20,7 @@ class HealthIcon extends FlxSprite
 
         antialiasing = config.antialiasing ?? true;
 
-        scale.set(config.scale?.x ?? 1.0, config.scale?.y ?? 1.0);
+        scale.set(0.8, 0.8);
 
         updateHitbox();
 

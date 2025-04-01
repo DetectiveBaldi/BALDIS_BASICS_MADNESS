@@ -1,6 +1,9 @@
 package game;
 
+import openfl.text.TextFormat;
+
 import flixel.FlxG;
+import flixel.FlxSprite;
 
 import flixel.group.FlxGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -12,9 +15,6 @@ import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
-import flixel.util.FlxStringUtil;
-
-import flixel.addons.display.FlxRadialGauge;
 
 import data.Chart;
 import data.PlayStats;
@@ -25,12 +25,13 @@ import game.notes.events.NoteHitEvent;
 import game.notes.NoteSpawner;
 import game.notes.Strumline;
 
+import core.Assets;
 import core.Options;
 import core.Paths;
 
 import music.Conductor;
 
-import util.StringUtil;
+using util.MathUtil;
 
 class PlayField extends FlxGroup
 {
@@ -42,13 +43,15 @@ class PlayField extends FlxGroup
 
     public var playStats:PlayStats;
 
-    public var statsText:FlxText;
+    public var scoreClip:FlxSprite;
+
+    public var scoreTxt:FlxText;
 
     public var healthBar:HealthBar;
 
-    public var timeGauge:FlxRadialGauge;
+    public var timerClock:FlxSprite;
 
-    public var timeText:FlxText;
+    public var timerNeedle:FlxSprite;
 
     public var scrollSpeed(default, set):Float;
 
@@ -82,19 +85,36 @@ class PlayField extends FlxGroup
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
-        statsText = new FlxText(0.0, 0.0, FlxG.width, "Points: 0 | Misses: 0 | Accuracy: 0.0%", 24);
+        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/clipboard"))));
 
-        statsText.antialiasing = true;
+        scoreClip.flipY = Options.downscroll;
 
-        statsText.font = Paths.font(Paths.ttf("VCR OSD Mono"));
+        scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.75 : FlxG.height - scoreClip.height * 0.75);
 
-        statsText.alignment = CENTER;
+        add(scoreClip);
 
-        statsText.setBorderStyle(OUTLINE, FlxColor.BLACK, 2.2);
+        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "Score: 0\nMisses: 0\nAccuracy: 0%", 18);
 
-        statsText.setPosition((FlxG.width - statsText.width) * 0.5, Options.downscroll ? 25.0 : (FlxG.height - statsText.height) - 25.0);
+        scoreTxt.color = FlxColor.BLACK;
 
-        add(statsText);
+        scoreTxt.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        scoreTxt.alignment = LEFT;
+
+        scoreTxt.textField.antiAliasType = ADVANCED;
+
+        var tf:TextFormat = scoreTxt.textField.defaultTextFormat;
+
+        tf.leading = 5;
+
+        scoreTxt.textField.defaultTextFormat = tf;
+
+        scoreTxt.textField.sharpness = 400.0;
+
+        scoreTxt.setPosition(scoreClip.x + 28.5,
+            Options.downscroll ? scoreClip.y + scoreClip.height - scoreTxt.height - 25.0 : scoreClip.y + 25.0);
+
+        add(scoreTxt);
 
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
@@ -103,33 +123,26 @@ class PlayField extends FlxGroup
 
         add(healthBar);
 
-        timeGauge = new FlxRadialGauge(0.0, 0.0);
+        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/PlayField/timerClock"))));        
 
-        timeGauge.active = false;
+        timerClock.scale.set(0.5, 0.5);
 
-        timeGauge.antialiasing = true;
+        timerClock.updateHitbox();
 
-        timeGauge.amount = 0.0;
+        timerClock.setPosition(FlxG.width - timerClock.width - 25.0, FlxG.height - timerClock.height - 25.0);
+        
+        add(timerClock);
 
-        timeGauge.makeShapeGraphic(CIRCLE, 56, 0, FlxColor.WHITE);
+        timerNeedle = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/PlayField/timerNeedle"))));
 
-        timeGauge.setPosition(45.0, Options.downscroll ? 32.0 : FlxG.height - timeGauge.height - 32.0);
+        timerNeedle.scale.set(0.5, 0.5);
 
-        add(timeGauge);
+        timerNeedle.updateHitbox();
 
-        timeText = new FlxText(0.0, 0.0, FlxG.width, "-:--", 36);
+        timerNeedle.setPosition(timerClock.x + (timerClock.width / 2) - ((timerNeedle.width / 2)), 
+            timerClock.y + (timerClock.height / 2) - ((timerNeedle.height / 4) + 20));
 
-        timeText.antialiasing = true;
-
-        timeText.font = Paths.font(Paths.ttf("VCR OSD Mono"));
-
-        timeText.alignment = CENTER;
-
-        timeText.setBorderStyle(OUTLINE, FlxColor.BLACK, 2.2);
-
-        timeText.setPosition(timeGauge.getMidpoint().x - timeText.width * 0.5, timeGauge.getMidpoint().y - timeText.height * 0.5);
-
-        add(timeText);
+        add(timerNeedle);
 
         strumlines = new FlxTypedGroup<Strumline>();
 
@@ -190,14 +203,10 @@ class PlayField extends FlxGroup
         super.update(elapsed);
 
         if (conductor.time > 0.0)
-        {
-            timeGauge.amount = conductor.time / instrumental.length;
-            
-            timeText.text = FlxStringUtil.formatTime(conductor.time * 0.001);
-        }
+            timerNeedle.angle = (conductor.time / instrumental.length) * 360.0;
     }
 
-    public function updateStatsText():Void
+    public function updateScoreTxt():Void
     {
         var score:Int = playStats.score;
 
@@ -205,7 +214,7 @@ class PlayField extends FlxGroup
 
         var accuracy:Float = playStats.accuracy;
 
-        statsText.text = 'Score: ${score} | Misses: ${misses} | Accuracy: ${StringUtil.appendDecimal(FlxMath.roundDecimal(accuracy, 2))}%';
+        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${FlxMath.roundDecimal(accuracy, 1)}%';
     }
 
     public function noteHit(event:NoteHitEvent):Void
@@ -225,7 +234,7 @@ class PlayField extends FlxGroup
 
             playStats.bonus += rating.bonus;
 
-            updateStatsText();
+            updateScoreTxt();
 
             healthBar.value += rating.health;
         }
@@ -237,7 +246,7 @@ class PlayField extends FlxGroup
 
         playStats.misses++;
 
-        updateStatsText();
+        updateScoreTxt();
 
         healthBar.value -= 1.5;
     }
@@ -250,7 +259,7 @@ class PlayField extends FlxGroup
 
             playStats.misses++;
 
-            updateStatsText();
+            updateScoreTxt();
 
             healthBar.value -= 1.5;
         }

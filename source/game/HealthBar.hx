@@ -160,10 +160,6 @@ class HealthBar extends FlxSpriteGroup
 
         opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi0"));
 
-        opponentIcon.x = overlay.x;
-
-        opponentIcon.x -= 5.0 * opponentIcon.scale.x;
-
         opponentIcon.y = Options.downscroll ? overlay.y + overlay.height - opponentIcon.height : overlay.y;
 
         add(opponentIcon);
@@ -173,8 +169,6 @@ class HealthBar extends FlxSpriteGroup
         playerIcon.flipX = true;
 
         playerIcon.x = overlay.x + overlay.width - playerIcon.width;
-
-        playerIcon.x += 5.0 / playerIcon.scale.x;
 
         playerIcon.y = Options.downscroll ? overlay.y + overlay.height - playerIcon.height : overlay.y;
         
@@ -219,13 +213,13 @@ class HealthBar extends FlxSpriteGroup
 
     public dynamic function scaleIcons(elapsed:Float):Void
     {
-        opponentIcon.scale.x = FlxMath.lerp(opponentIcon.scale.x, opponentIcon.config.scale?.x ?? 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
+        opponentIcon.scale.x = FlxMath.lerp(opponentIcon.scale.x, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
-        opponentIcon.scale.y = FlxMath.lerp(opponentIcon.scale.y, opponentIcon.config.scale?.y ?? 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
+        opponentIcon.scale.y = FlxMath.lerp(opponentIcon.scale.y, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
-        playerIcon.scale.x = FlxMath.lerp(playerIcon.scale.x, playerIcon.config.scale?.x ?? 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
+        playerIcon.scale.x = FlxMath.lerp(playerIcon.scale.x, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
-        playerIcon.scale.y = FlxMath.lerp(playerIcon.scale.y, playerIcon.config.scale?.y ?? 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
+        playerIcon.scale.y = FlxMath.lerp(playerIcon.scale.y, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
     }
 
     public dynamic function positionNeedle():Void
