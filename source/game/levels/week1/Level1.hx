@@ -47,6 +47,11 @@ class Level1 extends PlayState
     }
 
     public var temperature:FlxSprite;
+    
+    public var checkLayer:Bool = true;
+    public var timeInterval = 0.8;
+
+    public var craftersSprite1:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
 
     override function create():Void
     {
@@ -1199,6 +1204,7 @@ class Level1 extends PlayState
 
             var opp:Character = getOpponent("gotta-sweep0");
             opp.setPosition(-1000, -100);
+            opp.skipSing = false;
             updateHealthBar("gotta-sweep0", "opponent");
             
             var plr:Character = getPlayer("bf0");
@@ -1263,7 +1269,7 @@ class Level1 extends PlayState
 
             var pxChunks:PixelChunks = new PixelChunks();
 
-            pxChunks.data.tileSize.value = [1.0];
+            pxChunks.data.tileSize.value = [1];
 
             gameCamera.filters ??= new Array<BitmapFilter>();
 
@@ -1407,7 +1413,7 @@ class Level1 extends PlayState
         {
             var plr:Character = getPlayer("bf0");
             var opp:Character = getOpponent("1st-prize4");
-    
+
             tween.tween(opp, {x: 500}, 1);
             
             tween.tween(plr, {x: 300}, 1,                 
@@ -1418,19 +1424,42 @@ class Level1 extends PlayState
    
         if (step == 2768)
         {
-            var plr:Character = getPlayer("bf0");
-            var craftersSprite1:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
-            craftersSprite1.setPosition(plr.x - 500, plr.y);
-            //add(craftersSprite1);
+            craftersSprite1.setPosition(1500, 100);
+            add(craftersSprite1);
+
+            tween.tween(craftersSprite1, {x: 200}, 0.5,                
+                {
+                    ease: FlxEase.quartOut,
+                    onComplete: (_tween:FlxTween) ->  
+                    {
+                        tween.tween(craftersSprite1, {x: 750}, timeInterval, 
+                            {
+                                ease: FlxEase.quadInOut, 
+                                type: PINGPONG,
+                                onComplete: (_tween:FlxTween) -> {craftersLayerUpdate();}
+                            });
+                    
+                        tween.tween(craftersSprite1.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
+                            {
+                                ease: FlxEase.smootherStepOut, 
+                                type: PINGPONG,
+                                loopDelay: timeInterval / 2
+                            });
+                    }
+                });
         }
-    
+
+        if (step == 2784)
+        {
+            tween.tween(this, {gameCameraZoom: 1.5}, 3);
+        }
+        
         if (step == 2816)
         {
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
-            
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
@@ -1443,6 +1472,9 @@ class Level1 extends PlayState
             castedStage.hall2.visible = false;
             castedStage.hall6.visible = true;
             castedStage.hall7.visible = true;
+
+            craftersSprite1.visible = false;
+            tween.cancelTweensOf(craftersSprite1);
 
             var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-teleported"));
             _plr.skipDance = true;
@@ -1687,6 +1719,27 @@ class Level1 extends PlayState
         {
             if (plr.animation.name.contains("miss"))
                 plr.animation.play("legs", true, false, curFrame);
+        }
+    }
+
+    public function craftersLayerUpdate():Void
+    {
+        if (timeInterval > 0.1)
+        {
+            timeInterval = timeInterval - 0.1;
+        }
+        
+        if (checkLayer == true)
+        {
+            checkLayer = false;        
+            remove(craftersSprite1);
+            castedStage.insert(castedStage.members.indexOf(players), craftersSprite1);
+        }
+        else
+        {
+            checkLayer = true;
+            remove(craftersSprite1);
+            add(craftersSprite1);
         }
     }
 }

@@ -90,7 +90,7 @@ class LauncherScreen extends ResourceState
 
     public function clickDiscordButton():Void
     {
-        FlxG.openURL("https://discord.gg/kxhTqTy2gU");
+        FlxG.openURL("https://x.com/BaldiMadness");
     }
 
     public function clickExitButton():Void
