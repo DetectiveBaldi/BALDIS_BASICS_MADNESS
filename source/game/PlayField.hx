@@ -89,7 +89,7 @@ class PlayField extends FlxGroup
 
         scoreClip.flipY = Options.downscroll;
 
-        scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.75 : FlxG.height - scoreClip.height * 0.75);
+        scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.5 : FlxG.height - scoreClip.height * 0.5);
 
         add(scoreClip);
 
@@ -129,7 +129,7 @@ class PlayField extends FlxGroup
 
         timerClock.updateHitbox();
 
-        timerClock.setPosition(FlxG.width - timerClock.width - 25.0, FlxG.height - timerClock.height - 25.0);
+        timerClock.setPosition(FlxG.width - timerClock.width - 25.0, Options.downscroll ? 25.0 : FlxG.height - timerClock.height - 25.0);
         
         add(timerClock);
 
@@ -139,8 +139,8 @@ class PlayField extends FlxGroup
 
         timerNeedle.updateHitbox();
 
-        timerNeedle.setPosition(timerClock.x + (timerClock.width / 2) - ((timerNeedle.width / 2)), 
-            timerClock.y + (timerClock.height / 2) - ((timerNeedle.height / 4) + 20));
+        timerNeedle.setPosition(timerClock.x + (timerClock.width * 0.5) - ((timerNeedle.width * 0.5)), 
+            timerClock.y + (timerClock.height * 0.5) - ((timerNeedle.height * 0.25) + 20.0));
 
         add(timerNeedle);
 

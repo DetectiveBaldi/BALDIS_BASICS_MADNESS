@@ -1378,10 +1378,10 @@ class Level1 extends PlayState
             var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
 
             if (step == 2648.0 || step == 2650.0)
-                tween.num(3.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
             if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                tween.num(3.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
         if (step == 2648)
@@ -1441,14 +1441,15 @@ class Level1 extends PlayState
                             {
                                 ease: FlxEase.quadInOut, 
                                 type: PINGPONG,
-                                onComplete: (_tween:FlxTween) -> {craftersLayerUpdate();}
+                                onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
                             });
                     
                         tween.tween(craftersSprite1.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
                             {
                                 ease: FlxEase.smootherStepOut, 
                                 type: PINGPONG,
-                                loopDelay: timeInterval / 2
+                                loopDelay: timeInterval / 2,
+                                onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
                             });
                     }
                 });
@@ -1749,7 +1750,7 @@ class Level1 extends PlayState
 
                 var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
         
-                tween.num(3.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
     
@@ -1799,9 +1800,9 @@ class Level1 extends PlayState
 
     public function craftersLayerUpdate():Void
     {
-        if (timeInterval > 0.1)
+        if (timeInterval > 0.35)
         {
-            timeInterval = timeInterval - 0.1;
+            timeInterval = timeInterval - 0.35;
         }
 
         if (checkLayer == true)
