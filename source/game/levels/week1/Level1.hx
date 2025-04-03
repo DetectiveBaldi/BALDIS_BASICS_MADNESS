@@ -1394,11 +1394,11 @@ class Level1 extends PlayState
                         ease: FlxEase.quartIn,
                     });
                     
-                    tween.tween(plr, {x: -1300}, 0.75,            
-                        {
-                            startDelay: 0.75,
-                            ease: FlxEase.quartOut,
-                        });
+                tween.tween(plr, {x: -1300}, 0.75,            
+                    {
+                        startDelay: 0.65,
+                        ease: FlxEase.sineOut,
+                    });
             }
             
         if (step == 2656)
@@ -1557,13 +1557,16 @@ class Level1 extends PlayState
             playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
         
-        if (step == 3469)
+        if (step == 3456)
         {
             gameCameraZoom = 0.75;
-
+            
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
             (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
-
+        }
+       
+        if (step == 3469)
+        {
             castedStage.exit1.visible = true;
             castedStage.exit1.velocity.x = -2560.0;
             castedStage.exit1.x = gameCamera.viewX + gameCamera.viewWidth;
