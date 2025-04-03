@@ -51,12 +51,11 @@ class Level1 extends PlayState
     public var checkLayer:Bool;
     public var timeInterval:Float;
 
-    public var craftersSprite1:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
+    public var craftersSprite1:FlxSprite;
 
     override function create():Void
     {
         stage = new School();
-
         super.create();
 
         gameCamera.alpha = 0.0;
@@ -1427,6 +1426,7 @@ class Level1 extends PlayState
    
         if (step == 2768)
         {
+            craftersSprite1 = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(1500, 100);
@@ -1452,6 +1452,7 @@ class Level1 extends PlayState
                             });
                     }
                 });
+
         }
 
         if (step == 2784)
@@ -1464,6 +1465,7 @@ class Level1 extends PlayState
         
         if (step == 2816)
         {
+            remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
@@ -1797,23 +1799,16 @@ class Level1 extends PlayState
         {
             timeInterval = timeInterval - 0.1;
         }
-        
-        trace("timeInterval");
 
         if (checkLayer == true)
         {
-            trace("layerTrue");
-
             checkLayer = false;        
             remove(craftersSprite1, true);
             castedStage.insert(castedStage.members.indexOf(players), craftersSprite1);
-        }
-        
-        else
+        }else
         {
-            trace("layerFalse");
-
             checkLayer = true;
+
             remove(craftersSprite1, true);
             add(craftersSprite1);
         }
