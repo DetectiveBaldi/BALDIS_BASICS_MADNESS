@@ -1608,12 +1608,12 @@ class Level1 extends PlayState
                 if (beat == 132.0)
                 {
                     tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
+                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
                 }
                 else
                 {
                     tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}});
+                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}});
                 }
 
                 opp.animation.play("slap", true);
@@ -1675,21 +1675,21 @@ class Level1 extends PlayState
                 if (beat == 440.0)
                 {
                     tween.tween(opp.scale, {x: 2.5, y: 2.5}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
-                            y: 1.0}, 0.85);}});
+                        {ease: FlxEase.sineOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 0.9,
+                            y: 0.9}, 0.85);}});
 
                     tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
+                        {ease: FlxEase.sineOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
                             {y: 125.0}, 0.85);}});
                 }
                 else
                 {
                     tween.tween(opp.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 1.0,
-                            y: 1.0}, 0.85);}});
+                        {ease: FlxEase.sineOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp.scale, {x: 0.9,
+                            y: 0.9}, 0.85);}});
 
                     tween.tween(opp, {y: 150.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
+                        {ease: FlxEase.sineOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, 
                             {y: 125.0}, 0.85);}});
                 }
                 
@@ -1720,7 +1720,7 @@ class Level1 extends PlayState
             {
                 var opp:Character = getOpponent("baldi1");
 
-                tween.tween(opp.scale, {x: opp.scale.x + 0.325, y: opp.scale.y + 0.325},
+                tween.tween(opp.scale, {x: opp.scale.x + 0.325, y: opp.scale.y + 0.325}, 
                     conductor.beatLength * 0.275 * 0.001);
 
                 tween.tween(opp, {y: opp.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
