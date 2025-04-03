@@ -1429,10 +1429,10 @@ class Level1 extends PlayState
             craftersSprite1 = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
-            craftersSprite1.setPosition(1500, 100);
+            craftersSprite1.setPosition(-1500, 100);
             add(craftersSprite1);
 
-            tween.tween(craftersSprite1, {x: 200}, 0.5,                
+            tween.tween(craftersSprite1, {x: 300}, 0.5,                
                 {
                     ease: FlxEase.quartOut,
                     onComplete: (_tween:FlxTween) ->  
