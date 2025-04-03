@@ -30,6 +30,8 @@ class School extends FlxGroup
     public var hall7:FlxSprite;
 
     public var exit0:FlxSprite;
+   
+    public var exit1:FlxSprite;
 
     public var office0:FlxSprite;
 
@@ -79,6 +81,8 @@ class School extends FlxGroup
 
     public var facultyStandard:FlxSprite;
 
+    public var baldiOffice:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -106,6 +110,8 @@ class School extends FlxGroup
         hall7 = buildSprite("hall7");
 
         exit0 = buildSprite("exit0", 2.35, 2.35);
+        
+        exit1 = buildSprite("exit1");
 
         office0 = buildSprite("office0");
 
@@ -158,6 +164,8 @@ class School extends FlxGroup
         cafeteria4 = buildSprite("cafeteria4");
     
         facultyStandard = buildSprite("facultyStandard", 2.35, 2.35);
+    
+        baldiOffice = buildSprite("office-baldi0");
     }
 
     public function buildSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite

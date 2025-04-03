@@ -48,8 +48,8 @@ class Level1 extends PlayState
 
     public var temperature:FlxSprite;
     
-    public var checkLayer:Bool = true;
-    public var timeInterval = 0.8;
+    public var checkLayer:Bool;
+    public var timeInterval:Float;
 
     public var craftersSprite1:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/craftersSprite1"))));
 
@@ -72,6 +72,9 @@ class Level1 extends PlayState
         plrStrumline.resetStrums();
 
         temperature = new FlxSprite();
+    
+        checkLayer = true;
+        timeInterval = 0.8;
     }
 
     override function stepHit(step:Int):Void
@@ -318,8 +321,8 @@ class Level1 extends PlayState
 
             opponents.add(_opp);
 
-            playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
 
         if (step == 848.0)
@@ -332,8 +335,8 @@ class Level1 extends PlayState
 
             tween.tween(opp, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001);
 
-            playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {
@@ -376,8 +379,8 @@ class Level1 extends PlayState
 
             if (!Options.middlescroll)
             {
-                playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = false;
+                playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
                 
                 oppStrumline.strums.alpha = 1.0;
 
@@ -456,8 +459,8 @@ class Level1 extends PlayState
 
             _plr.setPosition(plr.x, plr.y);
 
-            playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {
@@ -898,8 +901,8 @@ class Level1 extends PlayState
 
             if (!Options.middlescroll)
             {
-                playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = false;
+                playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
                 
                 oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -1083,8 +1086,8 @@ class Level1 extends PlayState
             castedStage.remove(opponents, true);
             castedStage.add(opponents);
 
-            playField.scoreTxt.visible = playField.healthBar.visible = 
-                    playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             if (!Options.middlescroll)
             {
@@ -1453,7 +1456,10 @@ class Level1 extends PlayState
 
         if (step == 2784)
         {
-            tween.tween(this, {gameCameraZoom: 1.5}, 3);
+            tween.tween(this, {gameCameraZoom: 2}, 3.5,
+                {
+                    ease: FlxEase.backIn
+                });
         }
         
         if (step == 2816)
@@ -1523,12 +1529,63 @@ class Level1 extends PlayState
             opp.setPosition(-845.0, 18.5);
             opponents.add(opp);
 
+            var plr:Character = getPlayer("bf1");
+            plr.visible = true;
+            plr.setPosition(798.5, 205.5);
+
+            var _plr:Character = getPlayer("run-legs");
+            _plr.visible = true;
+            _plr.setPosition(plr.x, plr.y);
+
             updateHealthBar("baldi2", "opponent");
 
             castedStage.hall6.visible = false;
             castedStage.hall7.visible = false;
             castedStage.hall2.visible = true;
             castedStage.hall2.velocity.set(-2560.0, 0.0);
+        }
+    
+        if (step == 3344)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            gameCameraZoom = 0.9;
+        
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
+        }
+        
+        if (step == 3469)
+        {
+            gameCameraZoom = 0.75;
+
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
+            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            castedStage.exit1.visible = true;
+            castedStage.exit1.velocity.x = -2560.0;
+            castedStage.exit1.x = gameCamera.viewX + gameCamera.viewWidth;
+        }
+
+        if (step == 3472)
+        {
+            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            oppStrumline.visible = false;
+            plrStrumline.visible = false;
+
+            castedStage.hall2.visible = false;
+            castedStage.exit1.visible = false;
+            castedStage.baldiOffice.visible = true;
+
+            gameCameraZoom = 1.25;
+            
+            tween.tween(this, {gameCameraZoom: 0.75}, 2);
+            tween.tween(gameCamera, {alpha: 0}, 2);
+        
+            var plr:Character = getPlayer("bf1");
+            plr.visible = false;
+            
+            var _plr:Character = getPlayer("run-legs");
+            _plr.visible = false;
         }
     }
 
@@ -1702,6 +1759,18 @@ class Level1 extends PlayState
                     opp.animation.play("slap", true);
                 }
             }
+    
+        if (beat == 836.0 || beat == 852.0)
+        {
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+        }
+    
+        if (beat == 844.0 || beat == 860.0)
+        {
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 500.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+        }
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
@@ -1729,17 +1798,25 @@ class Level1 extends PlayState
             timeInterval = timeInterval - 0.1;
         }
         
+        trace("timeInterval");
+
         if (checkLayer == true)
         {
+            trace("layerTrue");
+
             checkLayer = false;        
-            remove(craftersSprite1);
+            remove(craftersSprite1, true);
             castedStage.insert(castedStage.members.indexOf(players), craftersSprite1);
         }
+        
         else
         {
+            trace("layerFalse");
+
             checkLayer = true;
-            remove(craftersSprite1);
+            remove(craftersSprite1, true);
             add(craftersSprite1);
         }
+    
     }
 }
