@@ -1528,7 +1528,8 @@ class Level1 extends PlayState
             opp.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi2"));
-            opp.setPosition(-845.0, 18.5);
+            opp.setPosition(-910.0, 18.5);
+            opp.skipDance = true;
             opponents.add(opp);
 
             var plr:Character = getPlayer("bf1");
@@ -1755,8 +1756,8 @@ class Level1 extends PlayState
                 {
                     var opp:Character = getOpponent("baldi2");
                     
-                    tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
+                    tween.tween(opp, {x: opp.x + 810.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 810.0}, 0.35);}});  
 
                     opp.animation.play("slap", true);
                 }
