@@ -1378,10 +1378,10 @@ class Level1 extends PlayState
             var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
 
             if (step == 2648.0 || step == 2650.0)
-                tween.num(10.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(3.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
             if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                tween.num(10.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(3.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
         if (step == 2648)
@@ -1557,7 +1557,7 @@ class Level1 extends PlayState
             playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
         
-        if (step == 3456)
+        if (step == 3464)
         {
             gameCameraZoom = 0.75;
             
@@ -1582,9 +1582,9 @@ class Level1 extends PlayState
             castedStage.exit1.visible = false;
             castedStage.baldiOffice.visible = true;
 
-            gameCameraZoom = 1.25;
+            gameCameraZoom = 1.0;
             
-            tween.tween(this, {gameCameraZoom: 0.75}, 2);
+            tween.tween(this, {gameCameraZoom: 0.8}, 2, {ease:FlxEase.quartIn});
             tween.tween(gameCamera, {alpha: 0}, 2);
         
             var plr:Character = getPlayer("bf1");
@@ -1648,7 +1648,7 @@ class Level1 extends PlayState
 
                 camera.angle = beat % 2.0 == 0.0 ? -1.5 : 1.5;
 
-                tween.tween(camera, {angle: 0.0}, conductor.beatLength * 0.85 * 0.001);
+                tween.tween(camera, {angle: 0.0}, conductor.beatLength * 0.85 * 0.001, {ease:FlxEase.quartOut});
             }
         }
 
@@ -1749,7 +1749,7 @@ class Level1 extends PlayState
 
                 var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
         
-                tween.num(10.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(3.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
     
@@ -1759,8 +1759,8 @@ class Level1 extends PlayState
                 {
                     var opp:Character = getOpponent("baldi2");
                     
-                    tween.tween(opp, {x: opp.x + 810.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.sineIn, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 810.0}, 0.35);}});  
+                    tween.tween(opp, {x: opp.x + 930.0}, conductor.beatLength * 0.275 * 0.001,
+                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 930.0}, 0.35);}});  
 
                     opp.animation.play("slap", true);
                 }
@@ -1768,13 +1768,13 @@ class Level1 extends PlayState
     
         if (beat == 836.0 || beat == 852.0)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 150.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
         }
     
         if (beat == 844.0 || beat == 860.0)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 500.0,
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
         }
     }
