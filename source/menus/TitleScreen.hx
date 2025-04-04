@@ -97,6 +97,26 @@ class TitleScreen extends ResourceState
         tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/TitleScreen/tune"))));
 
         tune.play();
+
+        var demoText:FlxText;
+
+        demoText = new FlxText(0.0, 0.0, FlxG.width, "DEMO");
+
+        demoText.color = FlxColor.BLACK;
+
+        demoText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        demoText.size = 36;
+
+        demoText.alignment = RIGHT;
+
+        demoText.textField.antiAliasType = ADVANCED;
+
+        demoText.textField.sharpness = 400.0;
+
+        demoText.setPosition(title.x + title.width - demoText.width - 130.0, 180.0);
+
+        add(demoText);
     }
 
     override function destroy():Void

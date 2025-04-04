@@ -54,6 +54,8 @@ class Level1 extends PlayState
 
     public var craftersSprite1:FlxSprite;
 
+    public var vignette:FlxSprite;
+
     override function create():Void
     {
         stage = new School();
@@ -1196,7 +1198,6 @@ class Level1 extends PlayState
         if (step == 2208)
         {
             gameCamera.alpha = 1;
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.6;
 
             castedStage.cafeteria4.visible = false;
@@ -1615,6 +1616,7 @@ class Level1 extends PlayState
 
         if (step == 3472)
         {
+            gameCamera.color =  FlxColor.WHITE;
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             oppStrumline.visible = false;
             plrStrumline.visible = false;
@@ -1625,8 +1627,8 @@ class Level1 extends PlayState
 
             gameCameraZoom = 1.0;
             
-            tween.tween(this, {gameCameraZoom: 0.8}, 2, {ease:FlxEase.quartIn});
-            tween.tween(gameCamera, {alpha: 0}, 2);
+            tween.tween(this, {gameCameraZoom: 0.8}, 3.5, {ease:FlxEase.quartIn});
+            tween.tween(gameCamera, {alpha: 0}, 3.5);
         
             var plr:Character = getPlayer("bf1");
             plr.visible = false;
@@ -1806,6 +1808,38 @@ class Level1 extends PlayState
                 opp.animation.play("slap", true);
             }
         }
+
+        if (beat == 772.0)
+        {
+            hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
+
+            vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/vigenette"))));
+            vignette.scale.set(2.7, 2.7);
+            vignette.camera = hudCamera;
+            vignette.screenCenter();
+            vignette.alpha = 0.0;
+
+            add(vignette);
+            tween.tween(vignette, {alpha: 0.5}, 0.5);
+        }
+
+        if (beat == 776.0)
+        {
+            hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
+            tween.tween(vignette, {alpha: 0.3}, 0.5);
+        }
+
+        if (beat == 805.0)
+        {
+            tween.color(temperature, conductor.beatLength * 12.0 * 0.001, temperature.color, 0xFFFF0000,
+                    {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
+            tween.tween(vignette, {alpha: 0.6}, 0.5);
+        }
+
+        if (beat == 836.0)
+        {
+            tween.tween(vignette, {alpha: 1}, 0.5);
+        }
     
         if (beat == 836.0 || beat == 852.0)
         {
@@ -1817,6 +1851,11 @@ class Level1 extends PlayState
         {
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+        }
+
+        if (beat == 868.0)
+        {
+            vignette.destroy();
         }
     }
 
@@ -1857,6 +1896,5 @@ class Level1 extends PlayState
             remove(craftersSprite1, true);
             add(craftersSprite1);
         }
-    
     }
 }

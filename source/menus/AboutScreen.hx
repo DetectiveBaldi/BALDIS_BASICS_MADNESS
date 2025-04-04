@@ -1,0 +1,86 @@
+package menus;
+
+import flixel.FlxG;
+import flixel.FlxSprite;
+
+import flixel.util.FlxColor;
+
+import core.Assets;
+import core.Paths;
+
+import extendable.ResourceState;
+
+class AboutScreen extends ResourceState
+{
+    public var exitButton:FlxSprite;
+
+    public var bg:FlxSprite;
+
+    override function create():Void
+    {
+        super.create();
+
+        FlxG.camera.bgColor = FlxColor.WHITE;
+
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+
+        bg = new FlxSprite();
+
+        bg.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/AboutText"))));
+
+        bg.active = false;
+
+        bg.scale.set(2.0, 2.0);
+
+        bg.updateHitbox();
+
+        bg.setPosition((FlxG.width - bg.width) * 0.5, 0.0);
+
+        add(bg);
+
+        exitButton = new FlxSprite();
+
+        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+
+        exitButton.animation.add("0", [0], 0.0, false);
+
+        exitButton.animation.add("1", [1], 0.0, false);
+
+        exitButton.animation.play("0");
+
+        exitButton.scale.set(2.0, 2.0);
+
+        exitButton.updateHitbox();
+
+        exitButton.setPosition(10.0, 10.0);
+
+        add(exitButton);
+
+        MainMenuScreen.playMusic();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
+        {
+            exitButton.animation.play("1");
+
+            if (FlxG.mouse.justPressed)
+                FlxG.switchState(() -> new MainMenuScreen());
+        }
+        else
+            exitButton.animation.play("0");
+    }
+
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+    }
+}

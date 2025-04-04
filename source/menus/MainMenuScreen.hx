@@ -64,11 +64,13 @@ class MainMenuScreen extends ResourceState
 
         optionsText.setPosition((FlxG.width - optionsText.width) * 0.5, playText.y + playText.height + 50.0);
 
-        var aboutText:MenuText = createText("About", () -> {});
+        var aboutText:MenuText = createText("About", () -> FlxG.switchState(() -> new AboutScreen()));
 
         aboutText.setPosition((FlxG.width - aboutText.width) * 0.5, optionsText.y + optionsText.height + 50.0);
 
-        var creditsText:MenuText = createText("Credits", () -> {});
+        aboutText.onClick.remove(fadeMusic);
+
+        var creditsText:MenuText = createText("Credits", () -> FlxG.switchState(() -> new CreditsScreen()));
 
         creditsText.setPosition((FlxG.width - creditsText.width) * 0.5, aboutText.y + aboutText.height + 50.0);
 

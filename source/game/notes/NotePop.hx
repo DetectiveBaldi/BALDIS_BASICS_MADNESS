@@ -70,7 +70,7 @@ class NotePop extends FlxSprite
 
         animation.onFinish.add((name:String) -> kill());
 
-        scale.set(0.7, 0.7);
+        scale.set(1.1, 1.1);
 
         updateHitbox();
     }
