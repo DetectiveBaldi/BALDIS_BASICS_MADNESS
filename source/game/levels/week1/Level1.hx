@@ -1396,7 +1396,7 @@ class Level1 extends PlayState
                 var plr:Character = getPlayer("bf0");
                 var opp:Character = getOpponent("1st-prize4");
                 
-                tween.tween(opp, {x: -1500}, 1,            
+                tween.tween(opp, {x: -1450}, 1,            
                     {
                         ease: FlxEase.quartIn,
                     });
@@ -1404,7 +1404,7 @@ class Level1 extends PlayState
                 tween.tween(plr, {x: -1300}, 0.75,            
                     {
                         startDelay: 0.65,
-                        ease: FlxEase.sineOut,
+                        ease: FlxEase.quadOut,
                     });
             }
             
@@ -1425,12 +1425,10 @@ class Level1 extends PlayState
             var plr:Character = getPlayer("bf0");
             var opp:Character = getOpponent("1st-prize4");
 
-            tween.tween(opp, {x: 500}, 1);
+            tween.tween(opp, {x: 300}, 1, {ease: FlxEase.quartOut});
             
-            tween.tween(plr, {x: 300}, 1,                 
-                {
-                    onComplete: (_tween:FlxTween) -> {castedStage.hall2.velocity.set(2560.0, 0.0);}
-                });
+            tween.tween(plr, {x: 150}, 1, {ease: FlxEase.quartOut, onComplete: (_tween:FlxTween) -> {castedStage.hall2.velocity.set(2560.0, 0.0);}});
+
         }
    
         if (step == 2768)
@@ -1441,12 +1439,12 @@ class Level1 extends PlayState
             craftersSprite1.setPosition(-1500, 100);
             add(craftersSprite1);
 
-            tween.tween(craftersSprite1, {x: 300}, 0.5,                
+            tween.tween(craftersSprite1, {x: 50}, 0.5,                
                 {
-                    ease: FlxEase.quartOut,
+                ease: FlxEase.quadIn,
                     onComplete: (_tween:FlxTween) ->  
                     {
-                        tween.tween(craftersSprite1, {x: 750}, timeInterval, 
+                        tween.tween(craftersSprite1, {x: 700}, timeInterval, 
                             {
                                 ease: FlxEase.quadInOut, 
                                 type: PINGPONG,
@@ -1462,14 +1460,13 @@ class Level1 extends PlayState
                             });
                     }
                 });
-
         }
 
         if (step == 2784)
         {
-            tween.tween(this, {gameCameraZoom: 2}, 3.5,
+            tween.tween(this, {gameCameraZoom: 2}, 3.9,
                 {
-                    ease: FlxEase.backIn
+                    ease: FlxEase.quartIn
                 });
         }
         
@@ -1812,7 +1809,7 @@ class Level1 extends PlayState
     
         if (beat == 836.0 || beat == 852.0)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 150.0,
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 140.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
         }
     
