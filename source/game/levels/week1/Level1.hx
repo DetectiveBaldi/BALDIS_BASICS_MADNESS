@@ -1438,7 +1438,7 @@ class Level1 extends PlayState
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(-1500, 100);
-            add(craftersSprite1);
+            castedStage.add(craftersSprite1);
 
             tween.tween(craftersSprite1, {x: 50}, 0.5,                
                 {
@@ -1887,14 +1887,14 @@ class Level1 extends PlayState
         if (checkLayer == true)
         {
             checkLayer = false;        
-            remove(craftersSprite1, true);
+            castedStage.remove(craftersSprite1, true);
             castedStage.insert(castedStage.members.indexOf(players), craftersSprite1);
         }else
         {
             checkLayer = true;
 
-            remove(craftersSprite1, true);
-            add(craftersSprite1);
+            castedStage.remove(craftersSprite1, true);
+            castedStage.add(craftersSprite1);
         }
     }
 }
