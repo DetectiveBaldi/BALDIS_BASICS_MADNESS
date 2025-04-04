@@ -126,25 +126,13 @@ class HealthBar extends FlxSpriteGroup
 
         needle = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/needle"))));
 
-        needle.flipX = Options.downscroll;
-
         needle.scale.set(1.3, 1.3);
 
         needle.updateHitbox();
 
         add(needle);
 
-        overlay = new FlxSprite(0.0, 0.0);
-
-        overlay.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/overlay"))), true, 452, 126);
-
-        overlay.animation.add("0", [0], 0.0, false);
-
-        overlay.animation.add("1", [1], 0.0, false);
-
-        overlay.animation.add("2", [2], 0.0, false);
-
-        overlay.flipY = Options.downscroll;
+        overlay = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/HealthBar/overlay"))));
 
         overlay.scale.set(1.3, 1.3);
 
@@ -178,17 +166,6 @@ class HealthBar extends FlxSpriteGroup
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        if (percent >= 20.0 && percent <= 80.0)
-            overlay.animation.play("0");
-        else
-        {
-            if (percent < 20.0)
-                overlay.animation.play("1");
-
-            if (percent > 80.0)
-                overlay.animation.play("2");
-        }
 
         if (positionNeedle != null)
             positionNeedle();

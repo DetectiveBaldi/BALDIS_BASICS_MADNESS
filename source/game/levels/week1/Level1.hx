@@ -59,6 +59,7 @@ class Level1 extends PlayState
     override function create():Void
     {
         stage = new School();
+
         super.create();
 
         gameCamera.alpha = 0.0;
@@ -72,6 +73,12 @@ class Level1 extends PlayState
         plrStrumline.removeEventListeners();
 
         plrStrumline.resetStrums();
+
+        Assets.getGraphic(Paths.image(Paths.png("game/character/bully0")));
+
+        Assets.getGraphic(Paths.image(Paths.png("game/character/bully1")));
+
+        Assets.getGraphic(Paths.image(Paths.png("game/character/playtime0")));
 
         temperature = new FlxSprite();
     
@@ -228,8 +235,6 @@ class Level1 extends PlayState
         {
             var plr:Character = getPlayer("bf1");
 
-            // TODO: Move this to the chart events list once we are out of the DEMO phase.
-
             CameraFollowEvent.dispatch(this, plr.getMidpoint().x - gameCameraTarget.width * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", conductor.beatLength * 2.5 * 0.001, "quartInOut");
 
@@ -261,8 +266,6 @@ class Level1 extends PlayState
         if (step == 592.0)
         {
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
-            // TODO: Move this to the chart events list once we are out of the DEMO phase.
 
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
@@ -518,8 +521,6 @@ class Level1 extends PlayState
         {
             gameCameraZoom = 0.75;
 
-            // TODO: Move this to the chart events list once we are out of the DEMO phase.
-
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 225.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 50.0, "", -1.0);
 
@@ -633,8 +634,6 @@ class Level1 extends PlayState
         if (step == 1488.0)
         {
             gameCameraZoom = 0.6;
-
-            // TODO: Move this to the chart events list once we are out of the DEMO phase.
 
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
@@ -1411,6 +1410,8 @@ class Level1 extends PlayState
             
         if (step == 2656)
         {
+            gameCamera.filters.resize(0);
+
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
 
@@ -1817,8 +1818,7 @@ class Level1 extends PlayState
             vignette.camera = hudCamera;
             vignette.screenCenter();
             vignette.alpha = 0.0;
-
-            add(vignette);
+            insert(0, vignette);
             tween.tween(vignette, {alpha: 0.5}, 0.5);
         }
 
@@ -1881,7 +1881,6 @@ class Level1 extends PlayState
         if (timeInterval > 0.3)
         {
             timeInterval = timeInterval - 0.15;
-            trace(timeInterval);
         }
 
         if (checkLayer == true)
