@@ -1,6 +1,7 @@
 package game.levels.week1;
 
 import openfl.filters.BitmapFilter;
+import openfl.filters.BlurFilter;
 import openfl.filters.ShaderFilter;
 
 import flixel.FlxCamera;
@@ -520,6 +521,8 @@ class Level1 extends PlayState
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 225.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 50.0, "", -1.0);
 
+            gameCamera.snapToTarget();
+
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             var opp:Character = getOpponent("baldi0");
@@ -633,6 +636,8 @@ class Level1 extends PlayState
 
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            gameCamera.snapToTarget();
 
             hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
@@ -1269,6 +1274,8 @@ class Level1 extends PlayState
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
+            gameCamera.snapToTarget();
+
             var pxChunks:PixelChunks = new PixelChunks();
 
             pxChunks.data.tileSize.value = [1];
@@ -1404,7 +1411,9 @@ class Level1 extends PlayState
         if (step == 2656)
         {
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
-            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            gameCamera.snapToTarget();
            
             gameCameraZoom = 0.7;
             castedStage.hall2.velocity.set(5560.0, 0.0);
@@ -1469,8 +1478,11 @@ class Level1 extends PlayState
             remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
+
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+
+            gameCamera.snapToTarget();
 
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
@@ -1515,7 +1527,9 @@ class Level1 extends PlayState
         if (step == 2832)
         {
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
-            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            gameCamera.snapToTarget();
 
             gameCameraZoom = 0.75;
 
@@ -1529,7 +1543,7 @@ class Level1 extends PlayState
             opp.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi2"));
-            opp.setPosition(-910.0, 18.5);
+            opp.setPosition(-885.0, 18.5);
             opp.skipDance = true;
             opponents.add(opp);
 
@@ -1548,6 +1562,33 @@ class Level1 extends PlayState
             castedStage.hall2.visible = true;
             castedStage.hall2.velocity.set(-2560.0, 0.0);
         }
+
+        if (step == 3218.0)
+        {
+            var opp:Character = getOpponent("baldi2");
+
+            opp.animation.play("slap", true);
+
+            tween.tween(opp, {x: opp.x + 325.0}, conductor.beatLength * 0.25 * 0.001,
+                {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x + 725.0},
+                    conductor.beatLength * 0.25 * 0.001, {ease: FlxEase.quadOut});}});
+        }
+
+        if (step == 3219.0)
+        {
+            var opp:Character = getOpponent("baldi2");
+
+            opp.animation.play("slap", true);
+        }
+
+        if (step == 3220.0)
+        {
+            var opp:Character = getOpponent("baldi2");
+
+            tween.completeTweensOf(opp);
+
+            tween.tween(opp, {x: opp.x - 1050.0}, conductor.beatLength * 0.001, {ease: FlxEase.quadIn});
+        }
     
         if (step == 3344)
         {
@@ -1563,7 +1604,9 @@ class Level1 extends PlayState
             gameCameraZoom = 0.75;
             
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
-            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+
+            gameCamera.snapToTarget();
         }
        
         if (step == 3469)
@@ -1609,7 +1652,7 @@ class Level1 extends PlayState
                 if (beat == 132.0)
                 {
                     tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});  
+                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});
                 }
                 else
                 {
@@ -1754,18 +1797,18 @@ class Level1 extends PlayState
             }
         }
     
-        if (beat >= 708.0 && beat < 868.0)
+        if (beat >= 708.0 && beat < 804.0 || beat >= 806.0 && beat < 868.0)
+        {
+            if (beat % 2.0 == 0.0)
             {
-                if (beat % 2.0 == 0.0)
-                {
-                    var opp:Character = getOpponent("baldi2");
-                    
-                    tween.tween(opp, {x: opp.x + 930.0}, conductor.beatLength * 0.275 * 0.001,
-                        {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 930.0}, 0.35);}});  
+                var opp:Character = getOpponent("baldi2");
 
-                    opp.animation.play("slap", true);
-                }
+                tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});
+
+                opp.animation.play("slap", true);
             }
+        }
     
         if (beat == 836.0 || beat == 852.0)
         {
