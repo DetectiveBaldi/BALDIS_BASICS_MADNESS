@@ -76,7 +76,7 @@ class Level1 extends PlayState
         temperature = new FlxSprite();
     
         checkLayer = true;
-        timeInterval = 0.8;
+        timeInterval = 0.75;
     }
 
     override function stepHit(step:Int):Void
@@ -1442,7 +1442,6 @@ class Level1 extends PlayState
 
             tween.tween(craftersSprite1, {x: 50}, 0.5,                
                 {
-                ease: FlxEase.quadIn,
                     onComplete: (_tween:FlxTween) ->  
                     {
                         tween.tween(craftersSprite1, {x: 700}, timeInterval, 
@@ -1879,9 +1878,10 @@ class Level1 extends PlayState
 
     public function craftersLayerUpdate():Void
     {
-        if (timeInterval > 0.35)
+        if (timeInterval > 0.3)
         {
-            timeInterval = timeInterval - 0.35;
+            timeInterval = timeInterval - 0.15;
+            trace(timeInterval);
         }
 
         if (checkLayer == true)
