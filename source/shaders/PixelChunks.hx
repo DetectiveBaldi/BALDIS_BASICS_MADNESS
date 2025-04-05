@@ -9,10 +9,6 @@ class PixelChunks extends FlxShader
     @:glFragmentSource("
         #pragma header
 
-        vec2 iResolution = openfl_TextureSize;
-
-        vec2 fragCoord = openfl_TextureCoordv * openfl_TextureSize;
-
         #define fragColor gl_FragColor
 
         #define texture flixel_texture2D
@@ -21,8 +17,21 @@ class PixelChunks extends FlxShader
 
         uniform float tileSize;
 
+        vec2 fragCoord = openfl_TextureCoordv * openfl_TextureSize;
+
+        vec2 iResolution = openfl_TextureSize;
+
+        vec2 uv = openfl_TextureCoordv.xy;
+
         void main()
         {
+            if (tileSize == 0.0)
+            {
+                fragColor = texture(bitmap, uv);
+
+                return;
+            }
+            
             vec2 _tileSize = vec2(tileSize);
 
             vec2 edgePadding = mod(iResolution.xy * 0.5 - _tileSize * 0.5, _tileSize);

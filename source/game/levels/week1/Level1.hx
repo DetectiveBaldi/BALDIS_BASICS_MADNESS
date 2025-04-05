@@ -1,6 +1,7 @@
 package game.levels.week1;
 
 import openfl.filters.BitmapFilter;
+import openfl.filters.BlurFilter;
 import openfl.filters.ShaderFilter;
 
 import flixel.FlxCamera;
@@ -1275,7 +1276,7 @@ class Level1 extends PlayState
 
             var pxChunks:PixelChunks = new PixelChunks();
 
-            pxChunks.data.tileSize.value = [1];
+            pxChunks.data.tileSize.value = [0.0];
 
             gameCamera.filters ??= new Array<BitmapFilter>();
 
@@ -1293,6 +1294,17 @@ class Level1 extends PlayState
             castedStage.insert(castedStage.members.indexOf(players), opponents);
 
             updateHealthBar("1st-prize-coming", "opponent");
+
+            if (!Options.middlescroll)
+            {
+                var oppStrumlineX:Float = oppStrumline.strums.x;
+
+                var plrStrumlineX:Float = plrStrumline.strums.x;
+
+                tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            }
         }
 
         if (step == 2528)
@@ -1382,10 +1394,10 @@ class Level1 extends PlayState
             var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
 
             if (step == 2648.0 || step == 2650.0)
-                tween.num(5.0, 1.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 0.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
             if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                tween.num(5.0, 1.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 0.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
         }
 
         if (step == 2648)
@@ -1462,14 +1474,24 @@ class Level1 extends PlayState
 
         if (step == 2784)
         {
-            tween.tween(this, {gameCameraZoom: 2}, 3.9,
+            tween.tween(this, {gameCameraZoom: 2}, conductor.beatLength * 8.0 * 0.001,
                 {
                     ease: FlxEase.quartIn
                 });
+
+            var blur:BlurFilter = new BlurFilter(0.0, 0.0, 1);
+
+            gameCamera.filters.push(blur);
+
+            tween.tween(blur, {blurX: 15.0, blurY: 15.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
         }
         
         if (step == 2816)
         {
+            tween.cancelTweensOf(this, ["gameCameraZoom"]);
+
+            gameCamera.filters.resize(0);
+
             remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
@@ -1556,6 +1578,17 @@ class Level1 extends PlayState
             castedStage.hall7.visible = false;
             castedStage.hall2.visible = true;
             castedStage.hall2.velocity.set(-2560.0, 0.0);
+
+            if (!Options.middlescroll)
+            {
+                var oppStrumlineX:Float = oppStrumline.strums.x;
+
+                var plrStrumlineX:Float = plrStrumline.strums.x;
+
+                tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            }
         }
 
         if (step == 3218.0)
@@ -1789,7 +1822,7 @@ class Level1 extends PlayState
 
                 var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
         
-                tween.num(5.0, 1.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                tween.num(5.0, 0.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
     
