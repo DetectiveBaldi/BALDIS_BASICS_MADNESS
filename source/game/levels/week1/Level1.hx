@@ -1,7 +1,6 @@
 package game.levels.week1;
 
 import openfl.filters.BitmapFilter;
-import openfl.filters.BlurFilter;
 import openfl.filters.ShaderFilter;
 
 import flixel.FlxCamera;
@@ -74,11 +73,11 @@ class Level1 extends PlayState
 
         plrStrumline.resetStrums();
 
-        Assets.getGraphic(Paths.image(Paths.png("game/character/bully0")));
+        Assets.getGraphic(Paths.image(Paths.png("game/Character/bully0")));
 
-        Assets.getGraphic(Paths.image(Paths.png("game/character/bully1")));
+        Assets.getGraphic(Paths.image(Paths.png("game/Character/bully1")));
 
-        Assets.getGraphic(Paths.image(Paths.png("game/character/playtime0")));
+        Assets.getGraphic(Paths.image(Paths.png("game/Character/playtime0")));
 
         temperature = new FlxSprite();
     

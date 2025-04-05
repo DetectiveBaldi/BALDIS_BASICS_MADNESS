@@ -171,7 +171,7 @@ class Strumline extends FlxGroup
 
             note.kill();
 
-            if (note.length > 0.0)
+            if (note.sustain != null)
             {
                 sustains.members.remove(note.sustain);
 
