@@ -1,6 +1,7 @@
 package game.notes;
 
 import flixel.FlxBasic;
+import flixel.FlxG;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
@@ -34,6 +35,8 @@ class NoteSpawner extends FlxBasic
         super();
 
         visible = false;
+
+        camera = FlxG.cameras.list.newest();
 
         conductor = _conductor;
         
@@ -99,7 +102,7 @@ class NoteSpawner extends FlxBasic
 
             _note.updateHitbox();
 
-            _note.setPosition(camera.viewMarginRight, 0.0);
+            _note.setPosition(camera.viewRight, 0.0);
 
             notes.add(_note);
 
@@ -123,7 +126,7 @@ class NoteSpawner extends FlxBasic
 
                 sustain.updateHitbox();
 
-                sustain.setPosition(camera.viewMarginRight, 0.0);
+                sustain.setPosition(camera.viewRight, 0.0);
 
                 sustains.add(sustain);
 
@@ -145,7 +148,7 @@ class NoteSpawner extends FlxBasic
 
                 trail.updateHitbox();
 
-                trail.setPosition(camera.viewMarginRight, 0.0);
+                trail.setPosition(camera.viewRight, 0.0);
 
                 trails.add(trail);
 

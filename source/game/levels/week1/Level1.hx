@@ -1273,8 +1273,6 @@ class Level1 extends PlayState
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
-            gameCamera.snapToTarget();
-
             var pxChunks:PixelChunks = new PixelChunks();
 
             pxChunks.data.tileSize.value = [1];
