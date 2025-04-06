@@ -112,4 +112,14 @@
     <SubTexture name="Playtime Messed0008" x="3692" y="1204" width="473" height="585" frameX="-186" frameY="-48" frameWidth="870" frameHeight="694" />
     <SubTexture name="Playtime Messed0009" x="3692" y="1789" width="529" height="577" frameX="-186" frameY="-56" frameWidth="870" frameHeight="694" />
     <SubTexture name="Playtime Messed0010" x="3692" y="602" width="473" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime sad0000" x="5167" y="4107" width="763" height="655" />
+    <SubTexture name="Playtime sad0001" x="5167" y="4107" width="763" height="655" />
+    <SubTexture name="Playtime sad0002" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0003" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0004" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0005" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0006" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0007" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0008" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0009" x="5167" y="4847" width="763" height="655" />
 </TextureAtlas>

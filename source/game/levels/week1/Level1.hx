@@ -1144,6 +1144,12 @@ class Level1 extends PlayState
             opp.skipSing = true;
         }
     
+        if (step == 2168)
+        {
+            var opp:Character = getOpponent("baldi0");
+            opp.skipSing = false;
+        }
+
         if (step == 2176)
         {
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
@@ -1166,6 +1172,12 @@ class Level1 extends PlayState
                     ease: FlxEase.quartIn
                 });
         }
+
+        if (step == 2176)
+        {
+            var opp:Character = getOpponent("baldi0");
+            opp.skipSing = true;
+        }
         
         if (step == 2184)
         {
@@ -1174,18 +1186,9 @@ class Level1 extends PlayState
                 {
                     ease: FlxEase.quartIn
                 });
-        }
 
-        if (step == 2168)
-        {
-            var opp:Character = getOpponent("baldi0");
-            opp.skipSing = false;
-        }
-        
-        if (step == 2176)
-        {
-            var opp:Character = getOpponent("baldi0");
-            opp.skipSing = true;
+            opp.skipDance = true;
+            opp.animation.play("sad");
         }
         
         if (step == 2192)
