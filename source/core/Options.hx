@@ -83,6 +83,38 @@ class Options
         return _persistentCache;
     }
 
+    public static var flashing(get, set):Bool;
+
+    @:noCompletion
+    static function get_flashing():Bool
+    {
+        return FlxG.save.data.options.flashing ??= true;
+    }
+
+    @:noCompletion
+    static function set_flashing(_flashing:Bool):Bool
+    {
+        FlxG.save.data.options.flashing = _flashing;
+
+        return flashing;
+    }
+
+    public static var shaders(get, set):Bool;
+
+    @:noCompletion
+    static function get_shaders():Bool
+    {
+        return FlxG.save.data.options.shaders ??= true;
+    }
+
+    @:noCompletion
+    static function set_shaders(_shaders:Bool):Bool
+    {
+        FlxG.save.data.options.shaders = _shaders;
+
+        return shaders;
+    }
+
     public static var controls(get, set):Map<String, Array<Int>>;
 
     @:noCompletion

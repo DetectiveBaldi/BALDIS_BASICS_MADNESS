@@ -122,7 +122,8 @@ class Level1 extends PlayState
 
         if (step == 144.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             castedStage.hall1.visible = false;
 
@@ -220,7 +221,8 @@ class Level1 extends PlayState
 
         if (step == 528.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             if (!Options.middlescroll)
             {
@@ -265,7 +267,8 @@ class Level1 extends PlayState
 
         if (step == 592.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
@@ -314,7 +317,8 @@ class Level1 extends PlayState
 
         if (step == 720.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var opp:Character = getOpponent("bully0");
 
@@ -332,7 +336,8 @@ class Level1 extends PlayState
 
         if (step == 848.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("bully1");
 
@@ -356,7 +361,8 @@ class Level1 extends PlayState
         {
             gameCameraZoom = 1.0;
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi1"));
 
@@ -440,7 +446,8 @@ class Level1 extends PlayState
         {
             gameCameraZoom = 0.75;
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("baldi0");
 
@@ -526,7 +533,8 @@ class Level1 extends PlayState
 
             gameCamera.snapToTarget();
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             var opp:Character = getOpponent("baldi0");
 
@@ -640,7 +648,8 @@ class Level1 extends PlayState
 
             gameCamera.snapToTarget();
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("baldi1");
 
@@ -735,7 +744,8 @@ class Level1 extends PlayState
         {
             gameCameraZoom = 0.58;
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var plr:Character = getPlayer("bf-window");
 
@@ -890,7 +900,8 @@ class Level1 extends PlayState
         {
             gameCameraZoom = 1.0;
 
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var plr:Character = getPlayer("bf-window");
 
@@ -942,7 +953,8 @@ class Level1 extends PlayState
 
         if (step == 1888.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             gameCameraZoom = 0.8;
 
@@ -1068,7 +1080,8 @@ class Level1 extends PlayState
 
         if (step == 1920.0)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             castedStage.cafeteria0.visible = false;
             castedStage.cafeteria2.visible = false;
             castedStage.cafeteria3.visible = true;
@@ -1132,7 +1145,8 @@ class Level1 extends PlayState
     
         if (step == 2056)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.6;
         }
     
@@ -1238,7 +1252,8 @@ class Level1 extends PlayState
     
         if (step == 2240)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.6;
         }
 
@@ -1277,13 +1292,16 @@ class Level1 extends PlayState
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
-            var pxChunks:PixelChunks = new PixelChunks();
+            if (Options.shaders)
+            {
+                var pxChunks:PixelChunks = new PixelChunks();
 
-            pxChunks.data.tileSize.value = [0.0];
+                pxChunks.data.tileSize.value = [0.0];
 
-            gameCamera.filters ??= new Array<BitmapFilter>();
+                gameCamera.filters ??= new Array<BitmapFilter>();
 
-            gameCamera.filters.push(new ShaderFilter(pxChunks));
+                gameCamera.filters.push(new ShaderFilter(pxChunks));
+            }
 
             var plr:Character = getPlayer("bf0");
             
@@ -1389,18 +1407,21 @@ class Level1 extends PlayState
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
-       
-        if (step >= 2640.0 && step <= 2656.0)
+
+        if (Options.shaders)
         {
-            var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
+            if (step >= 2640.0 && step <= 2656.0)
+            {
+                var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
 
-            var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
+                var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
 
-            if (step == 2648.0 || step == 2650.0)
-                tween.num(5.0, 0.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                if (step == 2648.0 || step == 2650.0)
+                    tween.num(5.0, 0.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
-            if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                tween.num(5.0, 0.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
+                    tween.num(10.0, 0.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+            }
         }
 
         if (step == 2648)
@@ -1422,7 +1443,8 @@ class Level1 extends PlayState
             
         if (step == 2656)
         {
-            gameCamera.filters.resize(0);
+            if (Options.shaders)
+                gameCamera.filters.resize(0);
 
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
@@ -1482,18 +1504,22 @@ class Level1 extends PlayState
                     ease: FlxEase.quartIn
                 });
 
-            var blur:BlurFilter = new BlurFilter(0.0, 0.0, 1);
+            if (Options.shaders)
+            {
+                var blur:BlurFilter = new BlurFilter(0.0, 0.0, 1);
 
-            gameCamera.filters.push(blur);
+                gameCamera.filters.push(blur);
 
-            tween.tween(blur, {blurX: 15.0, blurY: 15.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+                tween.tween(blur, {blurX: 15.0, blurY: 15.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+            }
         }
         
         if (step == 2816)
         {
             tween.cancelTweensOf(this, ["gameCameraZoom"]);
 
-            gameCamera.filters.resize(0);
+            if (Options.shaders)
+                gameCamera.filters.resize(0);
 
             remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
@@ -1554,7 +1580,8 @@ class Level1 extends PlayState
             gameCameraZoom = 0.75;
 
             hudCamera.visible = true;
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
         
             var _plr:Character = getPlayer("bf-teleported");
             _plr.visible = false;
@@ -1623,7 +1650,8 @@ class Level1 extends PlayState
     
         if (step == 3344)
         {
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.9;
         
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
@@ -1650,7 +1678,8 @@ class Level1 extends PlayState
         if (step == 3472)
         {
             gameCamera.color =  FlxColor.WHITE;
-            hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             oppStrumline.visible = false;
             plrStrumline.visible = false;
 
@@ -1817,15 +1846,18 @@ class Level1 extends PlayState
             }
         }
 
-        if (beat >= 628 && beat <= 660.0)
+        if (Options.shaders)
         {
-            if (beat % 2.0 == 1.0)
+            if (beat >= 628 && beat <= 660.0)
             {
-                var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
+                if (beat % 2.0 == 1.0)
+                {
+                    var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
 
-                var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
-        
-                tween.num(5.0, 0.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                    var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
+            
+                    tween.num(5.0, 0.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                }
             }
         }
     
@@ -1844,7 +1876,8 @@ class Level1 extends PlayState
 
         if (beat == 772.0)
         {
-            hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
 
             vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/vigenette"))));
             vignette.scale.set(2.7, 2.7);
@@ -1857,7 +1890,8 @@ class Level1 extends PlayState
 
         if (beat == 776.0)
         {
-            hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
             tween.tween(vignette, {alpha: 0.3}, 0.5);
         }
 

@@ -207,6 +207,12 @@ class OptionsMenu extends ResourceState
 
         addBoolOption("Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on scene switch.", "persistentCache");
 
+        addHeaderOption("Accessibility");
+
+        addBoolOption("Flashing", "If unchecked, screen effects such as flashing are limited.", "flashing");
+
+        addBoolOption("Shaders", "If unchecked, screen effects such as shaders are limited.", "shaders");
+
         addHeaderOption("Controls");
 
         addControlOption("Left Note", "Controls for the first note in the strumline.", "NOTE:LEFT");
