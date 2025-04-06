@@ -362,6 +362,14 @@ class PlayState extends ResourceState
         FlxG.mouse.visible = false;
     }
 
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+        
+        if (beat == 1.0)
+            countdown.kill();
+    }
+
     override function measureHit(measure:Int):Void
     {
         super.measureHit(measure);
@@ -445,8 +453,6 @@ class PlayState extends ResourceState
     public function startSong():Void
     {
         conductor.time = 0.0;
-
-        countdown.kill();
 
         instrumental.play();
 

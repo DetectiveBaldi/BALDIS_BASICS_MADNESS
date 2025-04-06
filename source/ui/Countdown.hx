@@ -63,17 +63,17 @@ class Countdown extends FlxGroup
 
     public var onSkip:FlxSignal;
 
-    public var tweens:FlxTweenManager;
+    public var tween:FlxTweenManager;
 
-    public var sprite:FlxSprite;
+    public var threeSpr:FlxSprite;
 
-    public var three:FlxSound;
+    public var twoSpr:FlxSprite;
 
-    public var two:FlxSound;
+    public var oneSpr:FlxSprite;
 
-    public var one:FlxSound;
+    public var goSpr:FlxSprite;
 
-    public var go:FlxSound;
+    public var countdownSnd:FlxSound;
 
     public function new(_conductor:Conductor):Void
     {
@@ -103,37 +103,29 @@ class Countdown extends FlxGroup
 
         onSkip = new FlxSignal();
 
-        tweens = new FlxTweenManager();
+        tween = new FlxTweenManager();
 
-        add(tweens);
+        add(tween);
 
-        sprite = new FlxSprite().loadGraphic(Assets.getGraphic(Paths.image(Paths.png("ui/Countdown/countdown"))), true, 1000, 500);
+        threeSpr = createCountdownSprite("three");
 
-        sprite.antialiasing = true;
+        threeSpr.setPosition(-threeSpr.width * 0.45, -threeSpr.height);
 
-        sprite.animation.add("ready", [0], 0.0, false);
+        twoSpr = createCountdownSprite("two");
 
-        sprite.animation.add("set", [1], 0.0, false);
+        twoSpr.setPosition(FlxG.width - twoSpr.width * 0.55, -twoSpr.height);
 
-        sprite.animation.add("go", [2], 0.0, false);
+        oneSpr = createCountdownSprite("one");
 
-        sprite.alpha = 0.0;
+        oneSpr.setPosition(-oneSpr.width * 0.45, FlxG.height);
 
-        sprite.scale.set(0.85, 0.85);
+        goSpr = createCountdownSprite("go");
 
-        sprite.updateHitbox();
+        goSpr.scale.set(3.0, 3.0);
 
-        sprite.screenCenter();
+        goSpr.updateHitbox();
 
-        add(sprite);
-
-        three = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/three"))), 0.65);
-
-        two = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/two"))), 0.65);
-
-        one = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/one"))), 0.65);
-
-        go = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/go"))), 0.65);
+        goSpr.setPosition((FlxG.width - goSpr.width) * 0.5, FlxG.height);
     }
 
     override function destroy():Void
@@ -148,37 +140,11 @@ class Countdown extends FlxGroup
 
         onSkip = cast FlxDestroyUtil.destroy(onSkip);
 
-        three.destroy();
-
-        two.destroy();
-
-        one.destroy();
-
-        go.destroy();
+        countdownSnd.destroy();
     }
 
     public function start():Void
     {
-        paused = false;
-
-        tick = 0;
-
-        finished = false;
-
-        skipped = false;
-
-        tweens.forEach((tween:FlxTween) -> tween.cancel());
-
-        sprite.alpha = 0.0;
-
-        three.stop();
-
-        two.stop();
-
-        one.stop();
-
-        go.stop();
-
         started = true;
 
         onStart.dispatch();
@@ -186,18 +152,9 @@ class Countdown extends FlxGroup
 
     public function pause():Void
     {
-        if (!started || paused || finished || skipped)
-            return;
+        tween.active = false;
 
-        tweens.active = false;
-
-        three.pause();
-
-        two.pause();
-
-        one.pause();
-
-        go.pause();
+        countdownSnd.pause();
 
         paused = true;
 
@@ -206,44 +163,13 @@ class Countdown extends FlxGroup
 
     public function resume():Void
     {
-        if (!started || !paused || finished || skipped)
-            return;
+        tween.active = true;
 
-        tweens.active = true;
-
-        three.resume();
-
-        two.resume();
-
-        one.resume();
-
-        go.resume();
+        countdownSnd.resume();
 
         paused = false;
 
         onResume.dispatch();
-    }
-
-    public function skip():Void
-    {
-        if (!started || paused || finished || skipped)
-            return;
-
-        tweens.forEach((tween:FlxTween) -> tween.cancel());
-
-        sprite.alpha = 0.0;
-
-        three.stop();
-
-        two.stop();
-
-        one.stop();
-
-        go.stop();
-
-        skipped = true;
-
-        onSkip.dispatch();
     }
 
     public function beatHit(beat:Int):Void
@@ -254,48 +180,76 @@ class Countdown extends FlxGroup
         switch (tick:Int)
         {
             case 0:
-                three.play();
+            {
+                tween.tween(threeSpr, {y: 0.0}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartOut});
+
+                countdownSnd = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/threeSnd"))), 0.65);
+
+                countdownSnd.play();
+            }
 
             case 1:
             {
-                sprite.animation.play("ready");
+                tween.tween(twoSpr, {y: (FlxG.height - twoSpr.height) * 0.5}, conductor.beatLength * 0.5 * 0.001, 
+                    {ease: FlxEase.quartOut});
 
-                two.play();
+                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/twoSnd"))));
+
+                countdownSnd.play();
             }
 
             case 2:
             {
-                sprite.animation.play("set");
+                tween.tween(oneSpr, {y: FlxG.height - oneSpr.height}, conductor.beatLength * 0.5 * 0.001, 
+                    {ease: FlxEase.quartOut});
 
-                one.play();
+                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/oneSnd"))));
+
+                countdownSnd.play();
             }
 
             case 3:
             {
-                sprite.animation.play("go");
+                tween.tween(threeSpr, {x: -threeSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                go.play();
+                tween.tween(twoSpr, {x: FlxG.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                tween.tween(oneSpr, {x: -oneSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+                tween.tween(goSpr, {y: FlxG.height - goSpr.height * 0.75}, conductor.beatLength * 0.001, 
+                    {ease: FlxEase.quartOut});
+                
+                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/goSnd"))));
+
+                countdownSnd.play();
             }
 
             case 4:
             {
+                tween.tween(goSpr, {y: FlxG.height}, conductor.beatLength * 0.001, 
+                    {ease: FlxEase.quartIn});
+
                 finished = true;
 
                 onFinish.dispatch();
             }
         }
 
-        if (tick > 0.0)
-        {
-            tweens.forEach((tween:FlxTween) -> tween.cancel());
-            
-            sprite.alpha = 1.0;
-            
-            tweens.tween(sprite, {alpha: 0.0}, conductor.beatLength * 0.001, {ease: FlxEase.circInOut});
-        }
-
         tick++;
 
         onTick.dispatch(tick);
+    }
+
+    public function createCountdownSprite(name:String):FlxSprite
+    {
+        var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png('ui/Countdown/${name}Spr'))));
+
+        sprite.scale.set(1.5, 1.5);
+
+        sprite.updateHitbox();
+
+        add(sprite);
+
+        return sprite;
     }
 }
