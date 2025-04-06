@@ -106,7 +106,7 @@ class TitleScreen extends ResourceState
 
         demoText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        demoText.size = 36;
+        demoText.size = 30;
 
         demoText.alignment = RIGHT;
 
@@ -114,7 +114,7 @@ class TitleScreen extends ResourceState
 
         demoText.textField.sharpness = 400.0;
 
-        demoText.setPosition(title.x + title.width - demoText.width - 130.0, 180.0);
+        demoText.setPosition(title.x + title.width - demoText.width - 150.0, 180.0);
 
         add(demoText);
     }
