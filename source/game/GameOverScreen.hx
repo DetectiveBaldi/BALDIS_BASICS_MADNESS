@@ -117,6 +117,13 @@ class GameOverScreen extends ResourceSubState
         }
     }
 
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+    }
+
     public function showImages():Void
     {
         var rollIndex:Int = 0;
@@ -167,6 +174,10 @@ class GameOverScreen extends ResourceSubState
 
     public function skipShowcase(skipTimer:Bool):Void
     {
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+
         if (skipTimer)
         {
             @:privateAccess
