@@ -332,11 +332,7 @@ class PlayState extends ResourceState
         super.openSubState(subState);
 
         if (Type.getClass(subState) == PauseScreen)
-        {
             pauseMusic();
-
-            playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = false);
-        }
     }
 
     override function closeSubState():Void
@@ -344,11 +340,7 @@ class PlayState extends ResourceState
         super.closeSubState();
 
         if (Type.getClass(subState) == PauseScreen)
-        {
             resumeMusic();
-
-            playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = true);
-        }
     }
 
     override function beatHit(beat:Int):Void
@@ -522,7 +514,7 @@ class PlayState extends ResourceState
 
         pauseMusic();
 
-        playField.strumlines.forEach((strumline:Strumline) -> strumline.removeEventListeners());
+        playField.strumlines.forEach((strumline:Strumline) -> strumline.clearKeys());
     }
 
     public function getSpectator(name:String):Character

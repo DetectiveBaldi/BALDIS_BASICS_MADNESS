@@ -34,8 +34,6 @@ class Strumline extends FlxGroup
 
     public var keysHeld:Array<Bool>;
 
-    public var registerInputs:Bool;
-
     public var strums:FlxTypedSpriteGroup<Strum>;
 
     public var spacing(default, set):Float;
@@ -91,11 +89,9 @@ class Strumline extends FlxGroup
 
         conductor = _conductor;
 
-        addEventListeners();
+        getKeys();
 
         keysHeld = [for (i in 0 ... 4) false];
-
-        registerInputs = true;
 
         strums = new FlxTypedSpriteGroup<Strum>();
 
@@ -157,6 +153,8 @@ class Strumline extends FlxGroup
         automated = false;
 
         lastStep = 0;
+
+        trace(keys);
     }
 
     override function update(elapsed:Float):Void
@@ -176,6 +174,36 @@ class Strumline extends FlxGroup
                 sustains.members.remove(note.sustain);
 
                 trails.members.remove(note.sustain.trail);
+            }
+        }
+
+        if (keys != null)
+        {
+            for (k => v in keys)
+            {
+                var dir:Int = v;
+
+                if (FlxG.keys.checkStatus(k, JUST_PRESSED))
+                {
+                    keysHeld[dir] = true;
+
+                    var strum:Strum = strums.members[dir];
+
+                    strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Press");
+
+                    var note:Note = notes.getFirst((_note:Note) -> strum.direction == _note.direction && _note.isHittable());
+
+                    note == null ? ghostTap(strum.direction) : noteHit(note);
+                }
+
+                if (FlxG.keys.checkStatus(k, JUST_RELEASED))
+                {
+                    keysHeld[dir] = false;
+
+                    var strum:Strum = strums.members[dir];
+
+                    strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Static");
+                }
             }
         }
 
@@ -228,7 +256,7 @@ class Strumline extends FlxGroup
     {
         super.destroy();
 
-        removeEventListeners();
+        clearKeys();
 
         keysHeld = null;
 
@@ -241,16 +269,9 @@ class Strumline extends FlxGroup
         onGhostTap = cast FlxDestroyUtil.destroy(onGhostTap);
     }
 
-    public function addEventListeners():Void
+    public function getKeys():Map<Int, Int>
     {
-        if (keys != null)
-            return;
-
-        FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-
-        FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
-
-        keys =
+        return keys =
         [
             for (i in 0 ... Note.DIRECTIONS.length)
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
@@ -258,48 +279,9 @@ class Strumline extends FlxGroup
         ];
     }
 
-    public function removeEventListeners():Void
+    public function clearKeys():Map<Int, Int>
     {
-        if (keys == null)
-            return;
-
-        FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-
-        FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, keyUp);
-
-        keys = null;
-    }
-
-    public function keyDown(ev:KeyboardEvent):Void
-    {
-        var dir:Int = keys[ev.keyCode] ?? -1;
-
-        if (keysHeld[dir] || !registerInputs || dir == -1)
-            return;
-
-        keysHeld[dir] = true;
-
-        var strum:Strum = strums.members[dir];
-
-        strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Press");
-
-        var note:Note = notes.getFirst((_note:Note) -> strum.direction == _note.direction && _note.isHittable());
-
-        note == null ? ghostTap(strum.direction) : noteHit(note);
-    }
-
-    public function keyUp(ev:KeyboardEvent):Void
-    {
-        var dir:Int = keys[ev.keyCode] ?? -1;
-
-        if (!registerInputs || dir == -1)
-            return;
-
-        keysHeld[dir] = false;
-
-        var strum:Strum = strums.members[dir];
-
-        strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Static");
+        return keys = null;
     }
 
     public function resetStrums():Void

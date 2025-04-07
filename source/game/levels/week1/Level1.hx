@@ -70,7 +70,7 @@ class Level1 extends PlayState
 
         playField.visible = false;
 
-        plrStrumline.removeEventListeners();
+        plrStrumline.clearKeys();
 
         plrStrumline.resetStrums();
 
@@ -176,7 +176,7 @@ class Level1 extends PlayState
             playField.visible = true;
 
             if (!Options.automatedInputs)
-                plrStrumline.addEventListeners();
+                plrStrumline.getKeys();
         }
 
         if (step == 464.0)
@@ -676,7 +676,7 @@ class Level1 extends PlayState
 
             playField.visible = false;
 
-            plrStrumline.removeEventListeners();
+            plrStrumline.clearKeys();
 
             plrStrumline.resetStrums();
 
@@ -922,7 +922,7 @@ class Level1 extends PlayState
             playField.visible = true;
 
             if (!Options.automatedInputs)
-                plrStrumline.addEventListeners();
+                plrStrumline.getKeys();
 
             castedStage.remove(players, true);
 
@@ -949,7 +949,7 @@ class Level1 extends PlayState
 
             playField.visible = false;
 
-            plrStrumline.removeEventListeners();
+            plrStrumline.clearKeys();
 
             plrStrumline.resetStrums();
 
@@ -1111,7 +1111,7 @@ class Level1 extends PlayState
             playField.visible = true;
 
             if (!Options.automatedInputs)
-                plrStrumline.addEventListeners();
+                plrStrumline.getKeys();
         
             var plr:Character = getPlayer("bf0");
             plr.setPosition(700.0, 75.0);

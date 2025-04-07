@@ -119,7 +119,7 @@ class PlayField extends FlxGroup
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
         healthBar.setPosition((FlxG.width - healthBar.width) * 0.5,
-            Options.downscroll ? -20.0 : (FlxG.height - healthBar.height) + 20);
+            Options.downscroll ? -20.0 : FlxG.height - healthBar.height + 20.0);
 
         add(healthBar);
 
@@ -172,7 +172,7 @@ class PlayField extends FlxGroup
 
         opponentStrumline.automated = true;
 
-        opponentStrumline.removeEventListeners();
+        opponentStrumline.clearKeys();
 
         opponentStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - opponentStrumline.strums.width) * 0.5 : 45.0, opponentStrumline.downscroll ? FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
 
@@ -184,7 +184,7 @@ class PlayField extends FlxGroup
         {
             playerStrumline.automated = true;
 
-            playerStrumline.removeEventListeners();
+            playerStrumline.clearKeys();
         }
 
         playerStrumline.strums.setPosition(Options.middlescroll ? (FlxG.width - playerStrumline.strums.width) * 0.5 : FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ? FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
