@@ -226,9 +226,9 @@ class PauseScreen extends FlxSubState
             close();
     }
 
-    override function close():Void
+    override function destroy():Void
     {
-        super.close();
+        super.destroy();
 
         FlxG.camera.followLerp = camLerp;
 
