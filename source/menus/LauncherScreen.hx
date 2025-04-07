@@ -19,7 +19,7 @@ class LauncherScreen extends ResourceState
 
     public var playButton:LauncherButton;
 
-    public var discordButton:LauncherButton;
+    public var twitterButton:LauncherButton;
 
     public var exitButton:LauncherButton;
 
@@ -55,13 +55,13 @@ class LauncherScreen extends ResourceState
 
         add(playButton);
 
-        discordButton = new LauncherButton(0.0, 0.0, "discordButton");
+        twitterButton = new LauncherButton(0.0, 0.0, "twitterButton");
 
-        discordButton.onClick.add(() -> playSlapSound(clickDiscordButton));
+        twitterButton.onClick.add(() -> playSlapSound(clickTwitterButton));
 
-        discordButton.setPosition(launcher.getMidpoint().x - discordButton.width * 0.5, launcher.y + launcher.height - discordButton.height - 15.0);
+        twitterButton.setPosition(launcher.getMidpoint().x - twitterButton.width * 0.5, launcher.y + launcher.height - twitterButton.height - 15.0);
 
-        add(discordButton);
+        add(twitterButton);
 
         exitButton = new LauncherButton(0.0, 0.0, "exitButton");
 
@@ -88,7 +88,7 @@ class LauncherScreen extends ResourceState
         FlxG.switchState(() -> new #if debug TitleScreen #else LogoScreen #end ());
     }
 
-    public function clickDiscordButton():Void
+    public function clickTwitterButton():Void
     {
         FlxG.openURL("https://x.com/BaldiMadness");
     }
@@ -102,7 +102,7 @@ class LauncherScreen extends ResourceState
     {
         playButton.onClick.removeAll();
 
-        discordButton.onClick.removeAll();
+        twitterButton.onClick.removeAll();
 
         exitButton.onClick.removeAll();
     }
