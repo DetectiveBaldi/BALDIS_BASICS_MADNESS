@@ -74,9 +74,31 @@ class Level1 extends PlayState
 
         plrStrumline.resetStrums();
 
-        Assets.getGraphic(Paths.image(Paths.png("game/Character/bully0")));
+        cacheCharacterSheet("1st-prize-coming");
 
-        Assets.getGraphic(Paths.image(Paths.png("game/Character/playtime0")));
+        cacheCharacterSheet("1st-prize0");
+
+        cacheCharacterSheet("baldi0");
+
+        cacheCharacterSheet("baldi1");
+
+        cacheCharacterSheet("baldi2");
+
+        cacheCharacterSheet("bf0");
+
+        cacheCharacterSheet("bf1");
+
+        cacheCharacterSheet("bf2");
+
+        cacheCharacterSheet("bully0");
+
+        cacheCharacterSheet("gotta-sweep0");
+
+        cacheCharacterSheet("playtime0");
+
+        cacheCharacterSheet("principal0");
+
+        cacheCharacterSheet("run-legs");
 
         temperature = new FlxSprite();
     

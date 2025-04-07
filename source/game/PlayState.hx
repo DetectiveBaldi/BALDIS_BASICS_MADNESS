@@ -181,6 +181,8 @@ class PlayState extends ResourceState
 
         add(stage);
 
+        cacheCharacterSheet("bf-dead0");
+
         spectators = new FlxTypedSpriteGroup<Character>();
 
         stage.add(spectators);
@@ -530,6 +532,11 @@ class PlayState extends ResourceState
     public function getPlayer(name:String):Character
     {
         return players.group.getFirst((_player:Character) -> _player.config.name == name);
+    }
+
+    public function cacheCharacterSheet(name:String):Void
+    {
+        Assets.getGraphic(Paths.image(Paths.png('game/Character/${name}')));
     }
 
     public function pauseMusic():Void
