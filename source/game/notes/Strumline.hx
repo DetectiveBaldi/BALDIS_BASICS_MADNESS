@@ -153,8 +153,6 @@ class Strumline extends FlxGroup
         automated = false;
 
         lastStep = 0;
-
-        trace(keys);
     }
 
     override function update(elapsed:Float):Void
