@@ -163,10 +163,6 @@ class PlayState extends ResourceState
 
         super.create();
 
-        FlxG.mouse.visible = true;
-
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
-
         conductor.active = true;
 
         gameCameraTarget = new FlxObject();
@@ -353,13 +349,6 @@ class PlayState extends ResourceState
 
             playField.strumlines.forEach((strumline:Strumline) -> strumline.registerInputs = true);
         }
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        FlxG.mouse.visible = false;
     }
 
     override function beatHit(beat:Int):Void

@@ -3,7 +3,6 @@ package game;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
 
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -39,6 +38,10 @@ class PauseScreen extends FlxSubState
 {
     public var game:PlayState;
 
+    public var camLerp:Float;
+
+    public var mouseVis:Bool;
+
     public var blur:BlurFilter;
 
     public var iconText:FlxText;
@@ -59,6 +62,16 @@ class PauseScreen extends FlxSubState
         super.create();
 
         camera = FlxG.cameras.list.newest();
+
+        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+
+        camLerp = FlxG.camera.followLerp;
+
+        mouseVis = FlxG.mouse.visible;
+
+        FlxG.camera.followLerp = 0.0;
+
+        FlxG.mouse.visible = true;
 
         blur = new BlurFilter(0.0, 0.0);
 
@@ -216,6 +229,10 @@ class PauseScreen extends FlxSubState
     override function close():Void
     {
         super.close();
+
+        FlxG.camera.followLerp = camLerp;
+
+        FlxG.mouse.visible = mouseVis;
 
         game.gameCamera.filters.remove(blur);
 
