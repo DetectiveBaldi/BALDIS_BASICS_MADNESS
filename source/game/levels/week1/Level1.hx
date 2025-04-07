@@ -76,8 +76,6 @@ class Level1 extends PlayState
 
         Assets.getGraphic(Paths.image(Paths.png("game/Character/bully0")));
 
-        Assets.getGraphic(Paths.image(Paths.png("game/Character/bully1")));
-
         Assets.getGraphic(Paths.image(Paths.png("game/Character/playtime0")));
 
         temperature = new FlxSprite();
@@ -258,11 +256,11 @@ class Level1 extends PlayState
 
             opp.flipX = true;
 
-            opp.setPosition(2085.0, -685.0);
+            opp.setPosition(2285.0, -555.0);
 
             opponents.add(opp);
 
-            tween.tween(opp, {x: 1685}, conductor.beatLength * 0.5 * 0.001);
+            tween.tween(opp, {x: 1885}, conductor.beatLength * 0.5 * 0.001);
         }
 
         if (step == 592.0)
@@ -291,7 +289,7 @@ class Level1 extends PlayState
 
             tween.cancelTweensOf(_opp);
 
-            _opp.setPosition(-1085.0, -685.0);
+            _opp.setPosition(-685.0, -555.0);
 
             var plr:Character = getPlayer("bf1");
 
@@ -319,19 +317,6 @@ class Level1 extends PlayState
         {
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
-            var opp:Character = getOpponent("bully0");
-
-            opp.visible = false;
-
-            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bully1"));
-
-            _opp.setPosition(-1085.0, -685.0);
-
-            opponents.add(_opp);
-
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
 
         if (step == 848.0)
@@ -339,14 +324,18 @@ class Level1 extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = getOpponent("bully1");
+            var opp:Character = getOpponent("bully0");
+
+            opp.skipDance = true;
+
+            opp.animation.play("spin");
 
             tween.tween(opp, {y: -opp.height / 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.backIn});
 
             tween.tween(opp, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001);
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            tween.tween(opp.animation, {timeScale: 2.5}, conductor.beatLength * 4.0 * 0.001,
+                {ease: FlxEase.backIn});
 
             if (!Options.middlescroll)
             {
@@ -1722,26 +1711,6 @@ class Level1 extends PlayState
                 }
 
                 opp.animation.play("slap", true);
-            }
-        }
-
-        if (beat >= 180.0 && beat < 212.0)
-        {
-            if (beat % 4.0 == 0.0)
-            {
-                for (i in 0 ... playField.strumlines.members.length)
-                {
-                    var strumline:Strumline = playField.strumlines.members[i];
-
-                    var upY:Float = 15.0;
-
-                    var downY:Float = FlxG.height - strumline.strums.height - 15.0;
-
-                    strumline.downscroll = !strumline.downscroll;
-
-                    tween.tween(strumline.strums, {y: strumline.downscroll ? downY : upY}, conductor.beatLength * 0.001,
-                        {ease: FlxEase.backOut});
-                }
             }
         }
 

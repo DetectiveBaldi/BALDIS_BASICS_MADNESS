@@ -126,6 +126,8 @@ class Countdown extends FlxGroup
         goSpr.updateHitbox();
 
         goSpr.setPosition((FlxG.width - goSpr.width) * 0.5, FlxG.height);
+
+        countdownSnd = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/threeSnd"))), 0.65);
     }
 
     override function destroy():Void
@@ -182,8 +184,6 @@ class Countdown extends FlxGroup
             case 0:
             {
                 tween.tween(threeSpr, {y: 0.0}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartOut});
-
-                countdownSnd = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/threeSnd"))), 0.65);
 
                 countdownSnd.play();
             }

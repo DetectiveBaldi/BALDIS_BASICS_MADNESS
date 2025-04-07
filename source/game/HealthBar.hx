@@ -148,7 +148,9 @@ class HealthBar extends FlxSpriteGroup
 
         opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi0"));
 
-        opponentIcon.y = Options.downscroll ? overlay.y + overlay.height - opponentIcon.height : overlay.y;
+        opponentIcon.x = -15.0;
+
+        opponentIcon.y = Options.downscroll ? overlay.y + overlay.height - opponentIcon.height : overlay.y - 15.0;
 
         add(opponentIcon);
 
@@ -156,9 +158,9 @@ class HealthBar extends FlxSpriteGroup
 
         playerIcon.flipX = true;
 
-        playerIcon.x = overlay.x + overlay.width - playerIcon.width;
+        playerIcon.x = overlay.x + overlay.width - playerIcon.width + 15.0;
 
-        playerIcon.y = Options.downscroll ? overlay.y + overlay.height - playerIcon.height : overlay.y;
+        playerIcon.y = Options.downscroll ? overlay.y + overlay.height - playerIcon.height : overlay.y - 15.0;
         
         add(playerIcon);
     }
