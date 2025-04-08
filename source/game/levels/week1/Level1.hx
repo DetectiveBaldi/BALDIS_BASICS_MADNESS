@@ -24,10 +24,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.notes.Strumline;
-
 import game.events.CameraFollowEvent;
-import game.events.CameraZoomEvent;
 
 import game.stages.School;
 

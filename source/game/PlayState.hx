@@ -14,8 +14,6 @@ import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
 
-import flixel.util.FlxColor;
-
 import core.Assets;
 import core.Paths;
 import core.Options;
@@ -508,15 +506,9 @@ class PlayState extends ResourceState
         
         persistentDraw = false;
 
-        gameCameraTarget.screenCenter();
-
-        gameCamera.snapToTarget();
-
         openSubState(new GameOverScreen());
 
         pauseMusic();
-
-        playField.strumlines.forEach((strumline:Strumline) -> strumline.clearKeys());
     }
 
     public function getSpectator(name:String):Character
@@ -595,7 +587,7 @@ class PlayState extends ResourceState
 
         var i:Int = chart.notes.length - 1;
 
-		while (i >= 0)
+		while (i >= 0.0)
         {
 			var raw:RawNote = chart.notes[i];
 

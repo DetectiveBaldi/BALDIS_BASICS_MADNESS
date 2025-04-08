@@ -7,7 +7,6 @@ import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
 
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 import core.Assets;
@@ -18,6 +17,8 @@ import data.CharacterData;
 import extendable.ResourceSubState;
 
 import menus.TitleScreen;
+
+using util.ArrayUtil;
 
 class GameOverScreen extends ResourceSubState
 {
@@ -36,6 +37,10 @@ class GameOverScreen extends ResourceSubState
     override function create():Void
     {
         super.create();
+
+        camera = FlxG.cameras.list.newest();
+
+        camera.zoom = 0.75;
 
         player = new Character(null, 0.0, 0.0, CharacterData.get("bf-dead0"));
 
@@ -97,7 +102,7 @@ class GameOverScreen extends ResourceSubState
 
         if (canRetry)
         {
-            if (FlxG.mouse.overlaps(retryButton))
+            if (FlxG.mouse.overlaps(retryButton, camera))
             {
                 retryButton.animation.play("1");
 

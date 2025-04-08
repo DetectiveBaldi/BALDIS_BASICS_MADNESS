@@ -5,7 +5,6 @@ import openfl.filters.BlurFilter;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
@@ -16,7 +15,6 @@ import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
@@ -26,6 +24,8 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
+import extendable.ResourceSubState;
+
 import game.PlayState;
 
 import menus.MainMenuScreen;
@@ -34,7 +34,7 @@ import menus.options.OptionsMenu;
 
 using util.ArrayUtil;
 
-class PauseScreen extends FlxSubState
+class PauseScreen extends ResourceSubState
 {
     public var game:PlayState;
 
@@ -75,7 +75,7 @@ class PauseScreen extends FlxSubState
 
         blur = new BlurFilter(0.0, 0.0);
 
-        FlxTween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
+        tween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
 
         game.gameCamera.filters ??= new Array<BitmapFilter>();
 
@@ -99,7 +99,7 @@ class PauseScreen extends FlxSubState
         
         add(background);
 
-        FlxTween.tween(background, {alpha: 0.65}, 0.65, {ease: FlxEase.quartIn});
+        tween.tween(background, {alpha: 0.65}, 0.65, {ease: FlxEase.quartIn});
 
         var separator:FlxSprite = new FlxSprite();
 
@@ -117,7 +117,7 @@ class PauseScreen extends FlxSubState
 
         add(separator);
 
-        FlxTween.tween(separator, {alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        tween.tween(separator, {alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var pausedText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "PAUSED?!");
 
@@ -181,19 +181,19 @@ class PauseScreen extends FlxSubState
 
         var resumeIcon:PauseScreenIcon = createIcon("resumeIcon", "Resume", close);
 
-        FlxTween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        tween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> FlxG.switchState(() -> new MainMenuScreen()));
 
-        FlxTween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getCampaignLevel())));
 
-        FlxTween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        tween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getCampaignLevel()));
 
-        FlxTween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        tween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
         FlxTimer.wait(1.0, () ->
         {

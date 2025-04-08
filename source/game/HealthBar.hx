@@ -1,6 +1,5 @@
 package game;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.group.FlxSpriteGroup;
@@ -10,7 +9,6 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSignal;
 
 import core.Assets;
-import core.Options;
 import core.Paths;
 
 import data.HealthIconData;
