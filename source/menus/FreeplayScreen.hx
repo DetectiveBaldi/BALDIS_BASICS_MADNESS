@@ -12,6 +12,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
 import core.Assets;
@@ -88,21 +89,29 @@ class FreeplayScreen extends ResourceState
 
         updatePoster();
 
-        var playButton:ElevatorButton = addButton("Play!", clickPlayButton);
+        var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
+
+        leftButton.setPosition((FlxG.width - leftButton.width) * 0.5 - 225.0, (FlxG.height - leftButton.height) * 0.5);
+
+        var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
+
+        rightButton.setPosition((FlxG.width - rightButton.width) * 0.5 + 225.0, (FlxG.height - rightButton.height) * 0.5);
+
+        var playButton:HeightenedButton = addHeightenedButton("Play!", LARGE, clickPlayButton);
 
         playButton.onClick.remove(MainMenuScreen.fadeMusic);
 
         playButton.setPosition((FlxG.width - playButton.height) * 0.5, FlxG.height - playButton.height + 35.0);
 
-        var exitButton:ElevatorButton = addButton("Exit", clickExitButton);
+        var exitButton:HeightenedButton = addHeightenedButton("Exit", SMALL, clickExitButton);
 
         exitButton.onClick.remove(MainMenuScreen.fadeMusic);
 
-        exitButton.setPosition(playButton.x - exitButton.width - 15.0, FlxG.height - exitButton.height + 35.0);
+        exitButton.setPosition(playButton.x - exitButton.width - 30.0, FlxG.height - exitButton.height + 35.0);
 
-        var infoButton:ElevatorButton = addButton("Info", clickInfoButton);
+        var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
 
-        infoButton.setPosition(playButton.x + exitButton.width + 15.0, FlxG.height - infoButton.height + 35.0);
+        infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
 
         MainMenuScreen.playMusic();
     }
@@ -111,22 +120,7 @@ class FreeplayScreen extends ResourceState
     {
         super.update(elapsed);
 
-        scrollBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.0;
-
-        if (scrollBg.animation.finished)
-        {
-            if (FlxG.keys.justPressed.LEFT)
-                changeSelection(curSelected - 1);
-
-            if (FlxG.keys.justPressed.RIGHT)
-                changeSelection(curSelected + 1);
-
-            if (FlxG.keys.justPressed.HOME)
-                changeSelection(0);
-
-            if (FlxG.keys.justPressed.END)
-                changeSelection(levels.length - 1);
-        }
+        scrollBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
     }
 
     override function destroy():Void
@@ -163,9 +157,36 @@ class FreeplayScreen extends ResourceState
         poster.setPosition((FlxG.width - poster.width) * 0.5, 154.5);
     }
 
-    public function addButton(text:String, onClick:()->Void):ElevatorButton
+    public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
     {
-        var button:ElevatorButton = new ElevatorButton(0.0, 0.0, text);
+        var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+
+        button.onClick.add(onClick);
+
+        add(button);
+
+        return button;
+    }
+
+    public function clickLeftButton():Void
+    {
+        if (!scrollBg.animation.finished)
+            return;
+
+        changeSelection(curSelected - 1);
+    }
+
+    public function clickRightButton():Void
+    {
+        if (!scrollBg.animation.finished)
+            return;
+
+        changeSelection(curSelected + 1);
+    }
+
+    public function addHeightenedButton(text:String, size:ButtonSize, onClick:()->Void):HeightenedButton
+    {
+        var button:HeightenedButton = new HeightenedButton(0.0, 0.0, text, size);
 
         button.onClick.add(MainMenuScreen.fadeMusic);
 
@@ -178,9 +199,6 @@ class FreeplayScreen extends ResourceState
 
     public function clickPlayButton():Void
     {
-        if (!scrollBg.animation.finished)
-            return;
-
         var level:LevelData = levels[curSelected];
 
         var week:WeekData = level.week;
@@ -190,20 +208,62 @@ class FreeplayScreen extends ResourceState
 
     public function clickExitButton():Void
     {
-        if (!scrollBg.animation.finished)
-            return;
-
         FlxG.switchState(() -> new ModeSelectScreen());
     }
 
     public function clickInfoButton():Void
     {
-        if (!scrollBg.animation.finished)
-            return;
+
     }
 }
 
-class ElevatorButton extends FlxSpriteGroup
+class OrientedButton extends FlxSprite
+{
+    public var onClick:FlxSignal;
+
+    public function new(x:Float = 0.0, y:Float = 0.0, orientation:ButtonOrientation):Void
+    {
+        super(x, y);
+
+        loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/OrientedButton/sheet"))), true, 32, 32);
+
+        animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
+
+        animation.add("select", orientation == LEFT ? [2] : [3], 0.0, false);
+
+        animation.play("deselect");
+
+        scale.set(3.0, 3.0);
+
+        updateHitbox();
+
+        onClick = new FlxSignal();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(this, camera))
+        {
+            animation.play("select");
+
+            if (FlxG.mouse.justReleased)
+                onClick.dispatch();
+        }
+        else
+            animation.play("deselect");
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        onClick = cast FlxDestroyUtil.destroy(onClick);
+    }
+}
+
+class HeightenedButton extends FlxSpriteGroup
 {
     public var base:FlxSprite;
 
@@ -211,15 +271,13 @@ class ElevatorButton extends FlxSpriteGroup
 
     public var onClick:FlxSignal;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, text:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, text:String, size:ButtonSize):Void
     {
         super(x, y);
 
-        onClick = new FlxSignal();
-
         base = new FlxSprite();
 
-        base.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/ElevatorButton/base"))), true, 128, 128);
+        base.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/HeightenedButton/base"))), true, 128, 128);
 
         base.animation.add("up", [0], 0.0, false);
 
@@ -227,7 +285,7 @@ class ElevatorButton extends FlxSpriteGroup
 
         base.animation.play("up");
 
-        base.scale.set(2.0, 2.0);
+        base.scale.set(size == LARGE ? 2.0 : 1.75, size == LARGE ? 2.0 : 1.75);
 
         base.updateHitbox();
 
@@ -239,7 +297,7 @@ class ElevatorButton extends FlxSpriteGroup
 
         label.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        label.size = 28;
+        label.size = size == LARGE ? 28 : 24;
 
         label.alignment = CENTER;
 
@@ -247,9 +305,11 @@ class ElevatorButton extends FlxSpriteGroup
 
         label.textField.sharpness = 400.0;
 
-        label.setPosition(base.getMidpoint().x - label.width * 0.5, 40.0);
+        label.setPosition(base.getMidpoint().x - label.width * 0.5, size == LARGE ? 45.0 : 35.0);
 
         add(label);
+
+        onClick = new FlxSignal();
     }
 
     override function update(elapsed:Float):Void
@@ -258,15 +318,36 @@ class ElevatorButton extends FlxSpriteGroup
 
         if (FlxG.mouse.overlaps(this, camera))
         {
-            if (FlxG.mouse.justReleased)
-                onClick.dispatch();
-
             if (FlxG.mouse.pressed)
                 base.animation.play("down");
             else
                 base.animation.play("up");
+
+            if (FlxG.mouse.justReleased)
+                onClick.dispatch();
         }
         else
             base.animation.play("up");
     }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        onClick = cast FlxDestroyUtil.destroy(onClick);
+    }
+}
+
+enum ButtonOrientation
+{
+    LEFT;
+
+    RIGHT;
+}
+
+enum ButtonSize
+{
+    LARGE;
+
+    SMALL;
 }
