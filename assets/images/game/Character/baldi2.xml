@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="baldi2.png">
-	<!-- Created with Adobe Animate version 20.5.0.29329 -->
-	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="down0000" x="5" y="5" width="256" height="256" frameX="0" frameY="-22" frameWidth="256" frameHeight="278"/>
 	<SubTexture name="down0001" x="5" y="5" width="256" height="256" frameX="0" frameY="-22" frameWidth="256" frameHeight="278"/>
 	<SubTexture name="down0002" x="266" y="5" width="256" height="256" frameX="0" frameY="-16" frameWidth="256" frameHeight="278"/>

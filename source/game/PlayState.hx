@@ -60,7 +60,7 @@ class PlayState extends ResourceState
 
     public static function getCampaignLevel():PlayState
     {
-        return Type.createInstance(Type.resolveClass('game.levels.${week.name}.Level${level.id}'), []);
+        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${level.id}'), []);
     }
 
     public static function loadWeek(_week:WeekData, index:Int = 0, _isCampaign:Bool = true):Void
@@ -95,7 +95,7 @@ class PlayState extends ResourceState
     public var hudCamera:FlxCamera;
 
     /**
-     * Elements such as the pause menu and fade transition are drawn on this camera.
+     * Elements such as the pause menu and other sub states are drawn on this camera.
      */
     public var topCamera:FlxCamera;
 
@@ -362,7 +362,7 @@ class PlayState extends ResourceState
 
     public function loadChart():Void
     {
-        chart = ChartConverters.build(Paths.data('game/levels/${week.name}/Level${level.id}'));
+        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${level.id}'));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -413,7 +413,7 @@ class PlayState extends ResourceState
 
     public function loadSong():Void
     {
-        var path:String = Paths.music('game/levels/${week.name}/Level${level.id}/');
+        var path:String = Paths.music('game/levels/week${week.id}/Level${level.id}/');
 
         instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Instrumental')));
 
@@ -466,26 +466,18 @@ class PlayState extends ResourceState
 
     public function endSong():Void
     {
-        // Uh oh! Looks like something malfunctioned... let's head back to `menus.LauncherScreen`!
-
         if (week == null)
             FlxG.switchState(() -> new LauncherScreen());
         else
         {
             var i:Int = week.levels.indexOf(level);
 
-            if (i + 1.0 >= week.levels.length || !isCampaign)
+            if (i == week.levels.length - 1.0 || !isCampaign)
             {
-                /* You completed the week!
-                    Or perhaps, you were never truly in a week to begin with.
-                        Either way, you can go back to `menus.ModeSelectScreen` for the time being. */
-
                 FlxG.switchState(() -> new ModeSelectScreen());
 
                 return;
             }
-
-            // You still have places to be! Let's keep going!
             
             level = week.levels[i + 1];
 

@@ -2,52 +2,46 @@ package data;
 
 import haxe.Json;
 
+import haxe.ds.ArraySort;
+
 import sys.FileSystem;
 
 import core.Assets;
-import core.Paths;
 
 import data.LevelData;
 
 @:structInit
 class WeekData
 {
-    public static var raw:Map<String, RawWeekData> = new Map<String, RawWeekData>();
+    public static var list:Array<WeekData>;
 
-    public static function fromRaw(raw:RawWeekData):WeekData
+    public static function reloadWeeksList():Array<WeekData>
     {
-        var week:WeekData = {name: raw.name, levels: [for (i in 0 ... raw.levels.length) LevelData.fromRaw(raw.levels[i])]}
+        list ??= new Array<WeekData>();
 
-        for (i in 0 ... week.levels.length)
-            week.levels[i].week = week.name;
+        list.resize(0);
 
-        return week;
+        var files:Array<String> = FileSystem.readDirectory("assets/data/game/WeekData/");
+
+        for (i in 0 ... files.length)
+        {
+            var raw:RawWeekData = Json.parse(Assets.getText('assets/data/game/WeekData/${files[i]}'));
+
+            var week:WeekData = {id: raw.id, name: raw.name, levels:
+                [for (i in 0 ... raw.levels.length) LevelData.fromRaw(raw.levels[i])]}
+
+            for (i in 0 ... week.levels.length)
+                week.levels[i].week = week.name;
+
+            list.push(week);
+        }
+
+        ArraySort.sort(list, function (a:WeekData, b:WeekData):Int return a.id - b.id);
+
+        return list;
     }
 
-    public static function init():Map<String, RawWeekData>
-    {
-        var list:Array<String> = FileSystem.readDirectory(Paths.data("game/WeekData/"));
-
-        for (i in 0 ... list.length)
-            get(list[i].split(".")[0]);
-
-        return raw;
-    }
-
-    public static function get(path:String):RawWeekData
-    {
-        if (exists(path))
-            return raw[path];
-
-        raw[path] = Json.parse(Assets.getText(Paths.data(Paths.json('game/WeekData/${path}'))));
-
-        return raw[path];
-    }
-
-    public static function exists(path:String):Bool
-    {
-        return raw.exists(path);
-    }
+    public var id:Int;
 
     public var name:String;
 
@@ -56,6 +50,8 @@ class WeekData
 
 typedef RawWeekData =
 {
+    public var id:Int;
+
     public var name:String;
 
     public var levels:Array<RawLevelData>;

@@ -4,8 +4,6 @@ import flixel.system.FlxAssets.FlxShader;
 
 class PixelChunks extends FlxShader
 {
-    // https://www.shadertoy.com/view/NtSXRm
-    
     @:glFragmentSource("
         #pragma header
 

@@ -227,8 +227,6 @@ class Options
         FlxG.save.data.options ??= {};
     }
 
-    // Used for migrating and adding new controls without needing to reset save data!
-
     public static function getDefaultControl(name:String):Array<Int>
     {
         var defControl:Array<Int> = [];

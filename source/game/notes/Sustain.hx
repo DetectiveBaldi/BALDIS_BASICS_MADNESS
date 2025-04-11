@@ -19,8 +19,6 @@ class Sustain extends FlxSprite
     {
         super(x, y);
 
-        // TODO: Update to support custom note configuration assets.
-
         frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("game/notes/Note/default"))), Paths.image(Paths.xml("game/notes/Note/default")));
 
         for (i in 0 ... Note.DIRECTIONS.length)

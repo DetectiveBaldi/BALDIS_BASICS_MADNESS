@@ -1,4 +1,4 @@
-package game.levels.week1;
+package game.levels.week0;
 
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
@@ -34,7 +34,7 @@ using util.MathUtil;
 
 using StringTools;
 
-class Level1 extends PlayState
+class Level0 extends PlayState
 {
     public var castedStage(get, never):School;
 

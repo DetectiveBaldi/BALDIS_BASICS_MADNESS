@@ -1,7 +1,5 @@
 package data;
 
-// Contains several fields not available in configuration files.
-
 @:structInit
 class LevelData
 {

@@ -63,7 +63,7 @@ class InitState extends FlxState
 
         FlxG.console.autoPause = Options.autoPause;
 
-        WeekData.init();
+        WeekData.reloadWeeksList();
 
         perfStats = new PerfStats(10.0, 5.0);
         

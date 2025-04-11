@@ -100,9 +100,9 @@ class ModeSelectScreen extends ResourceState
 
         text += "\nclear by Baldi and his friends...";
 
-        var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.fromRaw(WeekData.get("week1"))));
+        var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.list[0]));
 
-        storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 42.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
+        storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 56.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
 
         exitButton = new FlxSprite();
 
