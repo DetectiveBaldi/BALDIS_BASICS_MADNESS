@@ -99,8 +99,6 @@ class FreeplayScreen extends ResourceState
 
         var playButton:HeightenedButton = addHeightenedButton("Play!", LARGE, clickPlayButton);
 
-        playButton.onClick.remove(MainMenuScreen.fadeMusic);
-
         playButton.setPosition((FlxG.width - playButton.height) * 0.5, FlxG.height - playButton.height + 35.0);
 
         var exitButton:HeightenedButton = addHeightenedButton("Exit", SMALL, clickExitButton);
