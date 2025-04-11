@@ -60,7 +60,7 @@ class PlayState extends ResourceState
 
     public static function getCampaignLevel():PlayState
     {
-        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${level.id}'), []);
+        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${week.levels.indexOf(level)}'), []);
     }
 
     public static function loadWeek(_week:WeekData, index:Int = 0, _isCampaign:Bool = true):Void
@@ -362,7 +362,7 @@ class PlayState extends ResourceState
 
     public function loadChart():Void
     {
-        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${level.id}'));
+        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${week.levels.indexOf(level)}'));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -413,7 +413,7 @@ class PlayState extends ResourceState
 
     public function loadSong():Void
     {
-        var path:String = Paths.music('game/levels/week${week.id}/Level${level.id}/');
+        var path:String = Paths.music('game/levels/week${week.id}/Level${week.levels.indexOf(level)}/');
 
         instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Instrumental')));
 
