@@ -60,7 +60,7 @@ class PlayState extends ResourceState
 
     public static function getCampaignLevel():PlayState
     {
-        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${week.levels.indexOf(level)}'), []);
+        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${week.getLevelIndex(level)}'), []);
     }
 
     public static function loadWeek(_week:WeekData, index:Int = 0, _isCampaign:Bool = true):Void
@@ -362,7 +362,7 @@ class PlayState extends ResourceState
 
     public function loadChart():Void
     {
-        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${week.levels.indexOf(level)}'));
+        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${week.getLevelIndex(level)}'));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -413,7 +413,7 @@ class PlayState extends ResourceState
 
     public function loadSong():Void
     {
-        var path:String = Paths.music('game/levels/week${week.id}/Level${week.levels.indexOf(level)}/');
+        var path:String = Paths.music('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/');
 
         instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Instrumental')));
 
@@ -470,7 +470,7 @@ class PlayState extends ResourceState
             FlxG.switchState(() -> new LauncherScreen());
         else
         {
-            var i:Int = week.levels.indexOf(level);
+            var i:Int = week.getLevelIndex(level);
 
             if (i == week.levels.length - 1.0 || !isCampaign)
             {

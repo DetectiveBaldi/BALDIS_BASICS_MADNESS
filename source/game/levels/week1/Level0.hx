@@ -1,4 +1,4 @@
-package game.levels.week0;
+package game.levels.week1;
 
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;

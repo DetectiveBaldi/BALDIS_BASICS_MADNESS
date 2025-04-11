@@ -94,15 +94,18 @@ class ModeSelectScreen extends ResourceState
 
         add(modeIcons);
 
-        var text:String = "You've found all 7 notebooks, and";
+        var text:String = "Discover the rest of";
 
-        text += "\nyour only objective now is made";
+        text += "\nBaldi's schoolhouse";
 
-        text += "\nclear by Baldi and his friends...";
+        text += "\ncompanions!";
 
-        var storyIcon:ModeSelectIcon = createIcon("storyIcon", "Rough Escape", text, () -> PlayState.loadWeek(WeekData.list[0]));
+        var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay Mode", text, () -> FlxG.switchState(() -> 
+            new FreeplayScreen()));
 
-        storyIcon.setPosition((FlxG.width - storyIcon.width) * 0.5 + 56.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
+        freeplayIcon.onClick.remove(MainMenuScreen.fadeMusic);
+
+        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) * 0.5 + 56.0, (FlxG.height - freeplayIcon.height) * 0.5 - 100.0);
 
         exitButton = new FlxSprite();
 
