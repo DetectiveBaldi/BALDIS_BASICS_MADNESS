@@ -13,6 +13,8 @@ import core.Paths;
 
 class School extends FlxGroup
 {
+    public var warmWelcomeBg:FlxSprite;
+    
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -86,10 +88,10 @@ class School extends FlxGroup
     public function new():Void
     {
         super();
+        
+        warmWelcomeBg = buildSprite("warmWelcomeBg");
 
         hall0 = buildSprite("hall0");
-
-        hall0.visible = true;
 
         hall1 = buildSprite("hall1");
 

@@ -50,19 +50,30 @@ class Level0 extends PlayState
 
         gameCameraTarget.centerTo();
 
-        gameCameraZoom = 0.8;
-
         plrStrumline.clearKeys();
 
         plrStrumline.resetStrums();
     
         if (!Options.automatedInputs)
             plrStrumline.getKeys();
+    
+        castedStage.warmWelcomeBg.visible = true;
+        
+        players.setPosition(215, 135);
+        opponents.setPosition(435, 35);
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
+    
+        if (step == 128)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            gameCameraZoom = 0.8;
+        }
     }
 
     override function beatHit(beat:Int):Void
