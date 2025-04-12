@@ -39,7 +39,7 @@ import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
 
-import menus.LauncherScreen;
+import menus.FreeplayScreen;
 import menus.ModeSelectScreen;
 
 import ui.Countdown;
@@ -58,6 +58,10 @@ class PlayState extends ResourceState
 
     public static var isCampaign:Bool;
 
+    public static var campaignScore:Int;
+
+    public static var campaignMisses:Int;
+
     public static function getCampaignLevel():PlayState
     {
         return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${week.getLevelIndex(level)}'), []);
@@ -70,6 +74,10 @@ class PlayState extends ResourceState
         level = week.levels[index];
 
         isCampaign = _isCampaign;
+
+        campaignScore = 0;
+
+        campaignMisses = 0;
 
         FlxG.switchState(() -> getCampaignLevel());
     }
@@ -466,23 +474,36 @@ class PlayState extends ResourceState
 
     public function endSong():Void
     {
-        if (week == null)
-            FlxG.switchState(() -> new LauncherScreen());
-        else
+        if (isCampaign)
+        {
+            campaignScore += playField.playStats.score;
+
+            campaignMisses += playField.playStats.misses;
+        }
+
+        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
+            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
+
+        if (isCampaign)
         {
             var i:Int = week.getLevelIndex(level);
 
-            if (i == week.levels.length - 1.0 || !isCampaign)
+            if (i == week.levels.length - 1.0)
             {
+                if (HighScore.isWeekHighScore(week.name, "normal", campaignScore))
+                    HighScore.setWeekScore(week.name, "normal", campaignScore);
+
                 FlxG.switchState(() -> new ModeSelectScreen());
 
                 return;
             }
-            
+
             level = week.levels[i + 1];
 
             FlxG.switchState(() -> getCampaignLevel());
         }
+        else
+            FlxG.switchState(() -> new FreeplayScreen());
     }
 
     public function pause():Void

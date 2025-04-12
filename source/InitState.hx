@@ -16,6 +16,8 @@ import core.Options;
 
 import data.WeekData;
 
+import game.HighScore;
+
 import ui.PerfStats;
 
 class InitState extends FlxState
@@ -64,6 +66,8 @@ class InitState extends FlxState
         FlxG.console.autoPause = Options.autoPause;
 
         WeekData.reloadWeeksList();
+
+        HighScore.init();
 
         perfStats = new PerfStats(10.0, 5.0);
         
