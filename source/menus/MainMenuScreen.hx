@@ -3,8 +3,6 @@ package menus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-import flixel.sound.FlxSound;
-
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxTween;
