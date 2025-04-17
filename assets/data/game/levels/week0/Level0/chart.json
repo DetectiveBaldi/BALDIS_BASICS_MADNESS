@@ -1,5 +1,5 @@
 {
-	"player1": "bf-ww",
+	"player1": "funkin/bf2",
 	"sectionLengths": [],
 	"notes": [
 		{
@@ -1257,7 +1257,7 @@
 			"mustHitSection": true
 		}
 	],
-	"player2": "baldi-ww",
+	"player2": "classic-remastered/baldi0",
 	"gfVersion": "",
 	"events": [],
 	"song": "Warm Welcome",

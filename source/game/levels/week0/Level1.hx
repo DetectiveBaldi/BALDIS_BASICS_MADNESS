@@ -58,11 +58,18 @@ class Level1 extends PlayState
     
         if (!Options.automatedInputs)
             plrStrumline.getKeys();
+    
+        castedStage.revisionBg.visible = true;
+        
+        players.setPosition(215, 135);
+        opponents.setPosition(435, 35);
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
+    
+    
     }
 
     override function beatHit(beat:Int):Void

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="1st-prize0-90.png"><SubTexture name="idle0000" x="535" y="175" width="151" height="172" frameX="-125" frameY="-142" frameWidth="475" frameHeight="475" />
+<SubTexture name="down0000" x="197" y="210" width="178" height="175" frameX="-98" frameY="-145" frameWidth="475" frameHeight="475" />
+<SubTexture name="down0001" x="535" y="0" width="173" height="175" frameX="-103" frameY="-144" frameWidth="475" frameHeight="475" />
+<SubTexture name="left0000" x="0" y="389" width="198" height="171" frameX="-72" frameY="-144" frameWidth="475" frameHeight="475" />
+<SubTexture name="left0001" x="198" y="389" width="184" height="171" frameX="-90" frameY="-144" frameWidth="475" frameHeight="475" />
+<SubTexture name="up0000" x="0" y="0" width="170" height="210" frameX="-115" frameY="-106" frameWidth="475" frameHeight="475" />
+<SubTexture name="up0001" x="170" y="0" width="163" height="192" frameX="-114" frameY="-123" frameWidth="475" frameHeight="475" />
+<SubTexture name="right0000" x="333" y="0" width="202" height="179" frameX="-112" frameY="-138" frameWidth="475" frameHeight="475" />
+<SubTexture name="right0001" x="0" y="210" width="197" height="179" frameX="-112" frameY="-137" frameWidth="475" frameHeight="475" />
+</TextureAtlas>

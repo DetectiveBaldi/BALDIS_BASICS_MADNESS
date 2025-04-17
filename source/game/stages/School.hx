@@ -15,6 +15,8 @@ class School extends FlxGroup
 {
     public var warmWelcomeBg:FlxSprite;
     
+    public var revisionBg:FlxSprite;
+
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -90,6 +92,8 @@ class School extends FlxGroup
         super();
         
         warmWelcomeBg = buildSprite("warmWelcomeBg");
+
+        revisionBg = buildSprite("revisionBg");
 
         hall0 = buildSprite("hall0");
 

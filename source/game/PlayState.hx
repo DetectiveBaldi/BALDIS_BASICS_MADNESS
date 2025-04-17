@@ -187,7 +187,7 @@ class PlayState extends ResourceState
 
         add(stage);
 
-        cacheCharacterSheet("bf-dead0");
+        cacheCharacterSheet("funkin/bf-dead0");
 
         spectators = new FlxTypedSpriteGroup<Character>();
 
