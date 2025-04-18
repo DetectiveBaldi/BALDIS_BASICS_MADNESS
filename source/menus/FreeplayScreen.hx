@@ -130,16 +130,13 @@ class FreeplayScreen extends ResourceState
 
     public function changeSelection(change:Int):Void
     {
-        if (curSelected != change)
-        {
-            scrollBg.visible = true;
-            
-            scrollBg.animation.play("move", false, curSelected > change);
+        scrollBg.visible = true;
+        
+        scrollBg.animation.play("move", false, curSelected > change);
 
-            poster.visible = false;
+        poster.visible = false;
 
-            curSelected = FlxMath.wrap(change, 0, levels.length - 1);
-        }
+        curSelected = FlxMath.wrap(change, 0, levels.length - 1);
     }
 
     public function updatePoster():Void

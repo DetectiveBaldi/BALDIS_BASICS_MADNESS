@@ -27,7 +27,7 @@ class WeekData
         {
             var rawWeek:RawWeekData = Json.parse(Assets.getText('assets/data/game/WeekData/${files[i]}'));
 
-            var week:WeekData = {id: rawWeek.id, name: rawWeek.name, levels: new Array<LevelData>()}
+            var week:WeekData = {id: rawWeek.id, description: rawWeek.description, name: rawWeek.name, levels: new Array<LevelData>()}
 
             for (i in 0 ... rawWeek.levels.length)
             {
@@ -48,6 +48,8 @@ class WeekData
 
     public var name:String;
 
+    public var description:String;
+
     public var levels:Array<LevelData>;
 
     public function getLevelIndex(lv:LevelData):Int
@@ -61,6 +63,8 @@ typedef RawWeekData =
     public var id:Int;
 
     public var name:String;
+
+    public var description:String;
 
     public var levels:Array<RawLevelData>;
 }

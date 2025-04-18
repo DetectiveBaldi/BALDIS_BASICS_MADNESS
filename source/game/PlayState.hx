@@ -40,7 +40,7 @@ import game.events.CameraZoomEvent;
 import game.events.ScrollSpeedChangeEvent;
 
 import menus.FreeplayScreen;
-import menus.ModeSelectScreen;
+import menus.StoryMenuScreen;
 
 import ui.Countdown;
 
@@ -432,7 +432,7 @@ class PlayState extends ResourceState
         else
         {
             if (FileSystem.exists(Paths.ogg('${path}Vocals-Opponent')))
-                opponentVocals = FlxG.sound.load(Paths.ogg('${path}Vocals-Opponent'));
+                opponentVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Opponent')));
 
             if (FileSystem.exists(Paths.ogg('${path}Vocals-Player')))
                 playerVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Player')));
@@ -493,7 +493,7 @@ class PlayState extends ResourceState
                 if (HighScore.isWeekHighScore(week.name, "normal", campaignScore))
                     HighScore.setWeekScore(week.name, "normal", campaignScore);
 
-                FlxG.switchState(() -> new ModeSelectScreen());
+                FlxG.switchState(() -> new StoryMenuScreen());
 
                 return;
             }

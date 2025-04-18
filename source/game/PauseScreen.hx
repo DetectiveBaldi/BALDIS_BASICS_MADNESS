@@ -1,5 +1,7 @@
 package game;
 
+import menus.FreeplayScreen;
+import menus.StoryMenuScreen;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
 
@@ -183,7 +185,13 @@ class PauseScreen extends ResourceSubState
 
         tween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> FlxG.switchState(() -> new MainMenuScreen()));
+        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> 
+        {
+            if (PlayState.isCampaign)
+                FlxG.switchState(() -> new StoryMenuScreen());
+            else
+                FlxG.switchState(() -> new FreeplayScreen());
+        });
 
         tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 

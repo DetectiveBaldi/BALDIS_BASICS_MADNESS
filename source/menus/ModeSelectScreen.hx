@@ -94,7 +94,20 @@ class ModeSelectScreen extends ResourceState
 
         add(modeIcons);
 
-        var text:String = "Discover the rest of";
+        var text:String = "Sing with Baldi and his";
+
+        text += "\nfriends as you explore";
+
+        text += "\nthe schoolhouse!";
+
+        var storyIcon:ModeSelectIcon = createIcon("story-icon", "Story Mode", text, () -> FlxG.switchState(() -> new
+            StoryMenuScreen()));
+
+        storyIcon.onClick.remove(MainMenuScreen.fadeMusic);
+
+        storyIcon.setPosition(365.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
+
+        text = "Discover the rest of";
 
         text += "\nBaldi's schoolhouse";
 
@@ -105,7 +118,7 @@ class ModeSelectScreen extends ResourceState
 
         freeplayIcon.onClick.remove(MainMenuScreen.fadeMusic);
 
-        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) * 0.5 + 56.0, (FlxG.height - freeplayIcon.height) * 0.5 - 100.0);
+        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) - 365.0 + 112.0, (FlxG.height - freeplayIcon.height) * 0.5 - 100.0);
 
         exitButton = new FlxSprite();
 
