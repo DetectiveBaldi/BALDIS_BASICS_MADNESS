@@ -17,6 +17,16 @@ class School extends FlxGroup
     
     public var revisionBg:FlxSprite;
 
+    //this so ugly but temporary trust the vision
+    public var ggcornerBg:FlxSprite;
+    public var ggentranceBg:FlxSprite;
+    public var ggentranceBgAlt:FlxSprite;
+    public var ggentranceBgAlt2:FlxSprite;
+    public var ggentranceBgOverlay:FlxSprite;
+    public var ggfacultyBg:FlxSprite;
+    public var ggfacultyBgAlt:FlxSprite;
+    public var ggfacultyBgOverlay:FlxSprite;
+
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -94,6 +104,17 @@ class School extends FlxGroup
         warmWelcomeBg = buildSprite("warmWelcomeBg");
 
         revisionBg = buildSprite("revisionBg");
+
+        //this is also ugly but trust the vision again
+        ggcornerBg = buildSprite("gg-temp/cornerBg");
+        ggentranceBg = buildSprite("gg-temp/entranceBg");
+        ggentranceBgAlt = buildSprite("gg-temp/entranceBgAlt");
+        ggentranceBgAlt2 = buildSprite("gg-temp/entranceBgAlt2");
+        ggentranceBgOverlay = buildSprite("gg-temp/entranceBgOverlay");
+        ggfacultyBg = buildSprite("gg-temp/facultyBg");
+        ggfacultyBgAlt = buildSprite("gg-temp/facultyBgAlt");
+        ggfacultyBgOverlay = buildSprite("gg-temp/facultyBgOverlay");
+
 
         hall0 = buildSprite("hall0");
 
