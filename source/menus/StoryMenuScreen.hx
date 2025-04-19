@@ -77,7 +77,7 @@ class StoryMenuScreen extends ResourceState
 
         clipboard.updateHitbox();
 
-        clipboard.setPosition(125.0, FlxG.height - clipboard.height * 0.75);
+        clipboard.setPosition(150.0, FlxG.height - clipboard.height * 0.75);
 
         add(clipboard);
 
@@ -173,7 +173,7 @@ class StoryMenuScreen extends ResourceState
 
         chalkboard.updateHitbox();
 
-        chalkboard.setPosition(FlxG.width - chalkboard.width - 125.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
+        chalkboard.setPosition(FlxG.width - chalkboard.width - 150.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
 
         add(chalkboard);
 
