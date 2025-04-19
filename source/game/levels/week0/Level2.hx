@@ -71,7 +71,7 @@ class Level2 extends PlayState
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
-
+        trace(step);
         if (step == 128)
         {
             if (Options.flashing)
@@ -122,9 +122,21 @@ class Level2 extends PlayState
             opp.setPosition(385.0, 115.0);
             opp.scale.set(1.0, 1.0);
         }
-    
-        if (step == 416)
-        {        
+        
+        if (step == 440)
+        {
+            gameCameraZoom = 0.6;
+
+            var plr:Character = getPlayer("bf3");
+            tween.tween(plr, {x: -1500.0}, 1, {ease: FlxEase.quartIn});
+        
+            var opp:Character = getOpponent("baldi-angry1");
+            opp.animation.play("slap");
+            tween.tween(opp, {x: opp.x - 300.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+        }
+        
+        if (step == 448)
+        {
             if (!Options.middlescroll)
                 {
                     var oppStrumlineX:Float = oppStrumline.strums.x;
@@ -135,46 +147,25 @@ class Level2 extends PlayState
     
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
                 }
-        
-            gameCameraZoom = 0.6;
-            
+                        
             castedStage.remove(players, true);
-
+    
             castedStage.ggcornerBg.visible = false;
-            castedStage.ggfacultyBg.visible = true;
+            castedStage.ggfacultyBgAlt.visible = true;
             castedStage.insert(castedStage.members.indexOf(castedStage.ggfacultyBgOverlay), players);
             castedStage.ggfacultyBgOverlay.visible = true;
 
             var plr:Character = getPlayer("bf3");
             plr.visible = false;
-           
-            var opp:Character = getOpponent("baldi-angry1");
-            opp.visible = false;
-        
+            
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
             plr.scale.set(1.75, 1.75);
             plr.setPosition(-100.0, 75.0);
             plr.visible = true;
             players.add(plr);
-        }
 
-        if (step == 438)
-        {
-            gameCameraZoom = 1.5;
-        }
-        
-        if (step == 443)
-        {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 500.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
-            
-            gameCamera.snapToTarget();
-        }
-       
-        if (step == 446)
-        {
-            castedStage.ggfacultyBg.visible = false;
-            castedStage.ggfacultyBgAlt.visible = true;
+            var opp:Character = getOpponent("baldi-angry1");
+            opp.visible = false;
             
             castedStage.remove(opponents, true);
             castedStage.add(opponents);
@@ -187,13 +178,6 @@ class Level2 extends PlayState
         
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
             opp.animation.play("slap", true);
-        }
-    
-        if (step == 456)
-        {
-            gameCameraZoom = 0.8;
-            
-            gameCameraTarget.centerTo();
         }
         
         if (step == 464)
@@ -210,10 +194,15 @@ class Level2 extends PlayState
         if (step == 512)
         {                        
             gameCameraZoom = 0.8;
+           
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 200.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
         }
     
-        if (step == 600)
+        if (step == 632)
         {                        
+            gameCameraTarget.centerTo();
+
             var plr:Character = getPlayer("bf0");
             
             principal = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/principal"))));
@@ -230,6 +219,48 @@ class Level2 extends PlayState
                         plr.visible = false;
                     }
                 });
+        }
+    
+        if (step == 648)
+        {
+            var opp:Character = getOpponent("baldi-angry0");
+            
+            tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
+            opp.animation.play("slap", true);
+        }
+    
+        if (step == 656)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            
+            gameCameraZoom = 0.6;
+
+            castedStage.ggfacultyBg.visible = false;
+            castedStage.ggfacultyBgOverlay.visible = false;
+           
+            castedStage.remove(opponents, true);
+
+            castedStage.remove(players, true);
+            castedStage.add(players);
+
+            castedStage.insert(castedStage.members.indexOf(castedStage.office4), opponents);
+            castedStage.office3.visible = true;
+            castedStage.office4.visible = true;
+            
+            var opp:Character = getOpponent("baldi-angry0");
+            opp.visible = false;
+
+            var plr:Character = getPlayer("bf0");
+            plr.visible = false;
+        
+            var opp:Character = getOpponent("baldi-angry1");
+            opp.visible = true;
+            
+            var plr:Character = getPlayer("bf3");
+            plr.visible = true;
+        
+            plr.setPosition(500.0, 0.0);
         }
     }
     
@@ -252,16 +283,16 @@ class Level2 extends PlayState
                 }
             }
     
-        if (beat >= 80.0 && beat < 104.0)
+        if (beat >= 80.0 && beat < 112.0)
             {
                 if (beat % 4 == 0.0)
                 {
                     var opp:Character = getOpponent("baldi-angry1");
         
-                    tween.tween(opp.scale, {x: opp.scale.x + 0.2, y: opp.scale.y + 0.2}, 
+                    tween.tween(opp.scale, {x: opp.scale.x + 0.225, y: opp.scale.y + 0.225}, 
                         conductor.beatLength * 0.275 * 0.001);
         
-                    tween.tween(opp, {x: opp.x + 30, y: opp.y + 5}, conductor.beatLength * 0.275 * 0.001);
+                    tween.tween(opp, {x: opp.x + 40, y: opp.y + 5}, conductor.beatLength * 0.275 * 0.001);
         
                     opp.animation.play("slap", true);
                 }
