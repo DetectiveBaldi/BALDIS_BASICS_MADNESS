@@ -54,13 +54,13 @@ class Level2 extends PlayState
 
         gameCameraZoom = 0.8;
 
-        castedStage.ggentranceBgAlt2.visible = true;
+        castedStage.entranceA3.visible = true;
 
         players.setPosition(400, 35);
         
         castedStage.remove(opponents, true);
-        castedStage.insert(castedStage.members.indexOf(castedStage.ggentranceBgOverlay), opponents);
-        castedStage.ggentranceBgOverlay.visible = true;
+        castedStage.insert(castedStage.members.indexOf(castedStage.entranceA3_Overlay0), opponents);
+        castedStage.entranceA3_Overlay0.visible = true;
 
         var opp:Character = getOpponent("baldi-angry1");
         opp.scale.set(0.35, 0.35);
@@ -77,16 +77,17 @@ class Level2 extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            castedStage.ggentranceBgAlt2.visible = false;
-            castedStage.ggentranceBgOverlay.visible = false;
+            castedStage.entranceA3.visible = false;
+            castedStage.entranceA3_Overlay0.visible = false;
 
-            castedStage.ggentranceBgAlt.visible = true;
+            castedStage.entranceA3_Alt0.visible = true;
         }
 
         if (step == 144)
         {
-            castedStage.ggentranceBgAlt.visible = false;
-            castedStage.ggentranceBg.visible = true;
+            castedStage.entranceA3_Alt0.visible = false;
+            castedStage.entranceA3.visible = true;
+            castedStage.entranceA3_Overlay0.visible = true;
         }
    
         if (step == 312)
@@ -107,14 +108,15 @@ class Level2 extends PlayState
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
                 }
             
-            castedStage.ggentranceBg.visible = false;
-            castedStage.ggcornerBg.visible = true;
+            castedStage.entranceA3.visible = false;
+            castedStage.entranceA3_Overlay0.visible = false;
+            castedStage.entranceA4.visible = true;
         
             var plr:Character = getPlayer("bf2");
             plr.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));
-            plr.setPosition(-500.0, 0.0);
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf6"));
+            plr.setPosition(-500.0, 100.0);
             players.add(plr);
             plr.visible = true;
 
@@ -127,8 +129,8 @@ class Level2 extends PlayState
         {
             gameCameraZoom = 0.6;
 
-            var plr:Character = getPlayer("bf3");
-            tween.tween(plr, {x: -1500.0}, 1, {ease: FlxEase.quartIn});
+            var plr:Character = getPlayer("bf6");
+            tween.tween(plr, {x: -1500.0}, 0.75, {ease: FlxEase.quartIn});
         
             var opp:Character = getOpponent("baldi-angry1");
             opp.animation.play("slap");
@@ -150,12 +152,12 @@ class Level2 extends PlayState
                         
             castedStage.remove(players, true);
     
-            castedStage.ggcornerBg.visible = false;
+            castedStage.entranceA4.visible = false;
             castedStage.ggfacultyBgAlt.visible = true;
             castedStage.insert(castedStage.members.indexOf(castedStage.ggfacultyBgOverlay), players);
             castedStage.ggfacultyBgOverlay.visible = true;
 
-            var plr:Character = getPlayer("bf3");
+            var plr:Character = getPlayer("bf6");
             plr.visible = false;
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
@@ -234,7 +236,7 @@ class Level2 extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 1;
 
             castedStage.ggfacultyBg.visible = false;
             castedStage.ggfacultyBgOverlay.visible = false;
@@ -244,9 +246,9 @@ class Level2 extends PlayState
             castedStage.remove(players, true);
             castedStage.add(players);
 
-            castedStage.insert(castedStage.members.indexOf(castedStage.office4), opponents);
-            castedStage.office3.visible = true;
-            castedStage.office4.visible = true;
+            castedStage.insert(castedStage.members.indexOf(castedStage.principalOffice0_Overlay0), oppStrumline.strums);
+            castedStage.principalOffice0.visible = true;
+            castedStage.principalOffice0_Overlay0.visible = true;
             
             var opp:Character = getOpponent("baldi-angry0");
             opp.visible = false;
@@ -255,12 +257,11 @@ class Level2 extends PlayState
             plr.visible = false;
         
             var opp:Character = getOpponent("baldi-angry1");
-            opp.visible = true;
+            //opp.visible = true;
             
-            var plr:Character = getPlayer("bf3");
-            plr.visible = true;
-        
-            plr.setPosition(500.0, 0.0);
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));        
+            plr.setPosition(0.0, 0.0);
+            players.add(plr);
         }
     }
     

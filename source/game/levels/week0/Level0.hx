@@ -57,7 +57,7 @@ class Level0 extends PlayState
         if (!Options.automatedInputs)
             plrStrumline.getKeys();
     
-        castedStage.warmWelcomeBg.visible = true;
+        castedStage.entranceA0.visible = true;
         
         players.setPosition(215, 135);
         opponents.setPosition(435, 35);
