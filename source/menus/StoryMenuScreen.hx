@@ -1,12 +1,13 @@
 package menus;
 
-import menus.ModeSelectScreen.ModeSelectIcon;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.math.FlxMath;
 
 import flixel.text.FlxText;
+
+import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 
@@ -22,6 +23,7 @@ import extendable.ResourceState;
 import menus.FreeplayScreen.ButtonOrientation;
 import menus.FreeplayScreen.OrientedButton;
 
+import game.HighScore;
 import game.PlayState;
 
 using util.MathUtil;
@@ -50,6 +52,12 @@ class StoryMenuScreen extends ResourceState
     public var exitButton:FlxSprite;
 
     public var startButton:FlxSprite;
+
+    public var weekScore:Int;
+
+    public var scoreTween:FlxTween;
+
+    public var scoreText:FlxText;
 
     public var curSelected:Int;
 
@@ -213,6 +221,26 @@ class StoryMenuScreen extends ResourceState
 
         add(startButton);
 
+        weekScore = 0;
+
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, "");
+
+        scoreText.color = FlxColor.BLACK;
+
+        scoreText.size = 24;
+
+        scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        scoreText.alignment = RIGHT;
+
+        scoreText.textField.antiAliasType = ADVANCED;
+
+        scoreText.textField.sharpness = 400.0;
+
+        scoreText.setPosition(FlxG.width - scoreText.width, FlxG.height - scoreText.height);
+
+        add(scoreText);
+
         curSelected = 0;
 
         changeSelection(0);
@@ -290,6 +318,11 @@ class StoryMenuScreen extends ResourceState
         text = week.description;
 
         weekDescText.text = text;
+
+        scoreTween?.cancel();
+
+        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, "normal"), 0.35, null, (v:Float) -> {
+            weekScore = Math.floor(v); scoreText.text = 'High Score: ${weekScore}';});
 
         updateWeekPortrait(week);
     }

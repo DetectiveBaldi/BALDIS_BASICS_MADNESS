@@ -57,6 +57,8 @@ class InitState extends FlxState
         
         FlxG.console.registerClass(Options);
 
+        FlxG.console.registerClass(HighScore);
+
         FlxG.plugins.drawOnTop = true;
 
         Assets.init();
