@@ -606,6 +606,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.keys.enabled = true;
 
+        FlxG.inputs.remove(keys);
+
         keys.destroy();
     }
 
