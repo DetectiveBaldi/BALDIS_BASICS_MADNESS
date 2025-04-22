@@ -28,11 +28,11 @@ class CreditsScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         bg = new FlxSprite();
 
-        bg.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/CreditsText"))));
+        bg.loadGraphic(Assets.getGraphic("menus/CreditsText"));
 
         bg.active = false;
 
@@ -46,7 +46,7 @@ class CreditsScreen extends ResourceState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -62,7 +62,7 @@ class CreditsScreen extends ResourceState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/CreditsScreen/Credits"))), 1.0, true);
+        tune = FlxG.sound.load(Assets.getMusic("menus/CreditsScreen/Credits"), 1.0, true);
         tune.play();
     }
 

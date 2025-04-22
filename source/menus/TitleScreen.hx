@@ -38,9 +38,9 @@ class TitleScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
-        title = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/TitleScreen/title"))));
+        title = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/TitleScreen/title"));
 
         title.active = false;
 
@@ -90,11 +90,11 @@ class TitleScreen extends ResourceState
 
         add(studio);
 
-        introSound = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("menus/TitleScreen/introSound"))));
+        introSound = FlxG.sound.load(Assets.getSound("menus/TitleScreen/introSound"));
 
         introSound.play();
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/TitleScreen/tune"))));
+        tune = FlxG.sound.load(Assets.getMusic("menus/TitleScreen/tune"));
 
         tune.play();
 
@@ -133,7 +133,7 @@ class TitleScreen extends ResourceState
 
     public function clickExitButton():Void
     {
-        FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/TitleScreen/exitSound"))), 1.0, false, null, true, () -> Sys.exit(0));
+        FlxG.sound.play(Assets.getSound("menus/TitleScreen/exitSound"), 1.0, false, null, true, () -> Sys.exit(0));
     }
 
     public function clickButton():Void
@@ -154,7 +154,7 @@ class TitleButton extends FlxSprite
 
         onClick = new FlxSignal();
 
-        var _graphic:FlxGraphic = Assets.getGraphic(Paths.image(Paths.png('menus/TitleScreen/${_path}')));
+        var _graphic:FlxGraphic = Assets.getGraphic('menus/TitleScreen/${_path}');
 
         loadGraphic(_graphic, true, Math.floor(_graphic.width * 0.5), 64);
 

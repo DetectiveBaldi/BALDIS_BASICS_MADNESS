@@ -85,7 +85,7 @@ class PlayField extends FlxGroup
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
-        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/clipboard"))));
+        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/clipboard"));
 
         scoreClip.flipY = Options.downscroll;
 
@@ -123,7 +123,7 @@ class PlayField extends FlxGroup
 
         add(healthBar);
 
-        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/PlayField/timerClock"))));        
+        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerClock"));        
 
         timerClock.scale.set(0.5, 0.5);
 
@@ -133,7 +133,7 @@ class PlayField extends FlxGroup
         
         add(timerClock);
 
-        timerNeedle = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("game/PlayField/timerNeedle"))));
+        timerNeedle = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerNeedle"));
 
         timerNeedle.scale.set(0.5, 0.5);
 

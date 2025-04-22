@@ -15,7 +15,8 @@ class SustainTrail extends FlxSprite
     {
         super(x, y);
 
-        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("game/notes/Note/default"))), Paths.image(Paths.xml("game/notes/Note/default")));
+        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/Note/default"), 
+            Paths.image(Paths.xml("game/notes/Note/default")));
 
         for (i in 0 ... Note.DIRECTIONS.length)
         {

@@ -31,9 +31,9 @@ class LauncherScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/retroCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/retroCursor").bitmap);
 
-        launcher = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/LauncherScreen/launcher"))));
+        launcher = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/LauncherScreen/launcher"));
 
         launcher.active = false;
 
@@ -73,14 +73,14 @@ class LauncherScreen extends ResourceState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/LauncherScreen/tune"))));
+        tune = FlxG.sound.load(Assets.getMusic("menus/LauncherScreen/tune"));
 
         tune.play();
     }
 
     public function playSlapSound(onComplete:()->Void):Void
     {
-        FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("globals/slap"))), 1.0, false, null, true, onComplete);
+        FlxG.sound.play(Assets.getSound("globals/slap"), 1.0, false, null, true, onComplete);
     }
 
     public function clickPlayButton():Void
@@ -118,7 +118,7 @@ class LauncherButton extends FlxSprite
 
         onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic(Paths.image(Paths.png('menus/LauncherScreen/${_path}'))), true, 83, 15);
+        loadGraphic(Assets.getGraphic('menus/LauncherScreen/${_path}'), true, 83, 15);
 
         animation.add("0", [0], 0.0, false);
 

@@ -71,7 +71,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         lButton = new FlxSprite();
 
-        lButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/lButton"))), true, 48, 96);
+        lButton.loadGraphic(Assets.getGraphic("menus/OptionsMenu/lButton"), true, 48, 96);
 
         lButton.antialiasing = true;
 
@@ -91,7 +91,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         rButton = new FlxSprite();
 
-        rButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/rButton"))), true, 48, 96);
+        rButton.loadGraphic(Assets.getGraphic("menus/OptionsMenu/rButton"), true, 48, 96);
 
         rButton.antialiasing = true;
 

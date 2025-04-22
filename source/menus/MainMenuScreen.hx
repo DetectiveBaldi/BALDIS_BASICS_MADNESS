@@ -34,15 +34,15 @@ class MainMenuScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
-        pattern = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/pattern"))));
+        pattern = new FlxBackdrop(Assets.getGraphic("menus/MainMenuScreen/pattern"));
 
         pattern.velocity.set(10.0, 10.0);
 
         add(pattern);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/chalkboard"))));
+        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/MainMenuScreen/chalkboard"));
 
         chalkboard.scale.set(2.2, 2.2);
 
@@ -74,7 +74,7 @@ class MainMenuScreen extends ResourceState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -137,7 +137,7 @@ class MainMenuScreen extends ResourceState
         if (FlxG.sound.music != null)
             return;
 
-        FlxG.sound.playMusic(Assets.getSound(Paths.music(Paths.ogg("menus/MainMenuScreen/tune"))));
+        FlxG.sound.playMusic(Assets.getMusic("menus/MainMenuScreen/tune"));
     }
 
     public static function fadeMusic():Void

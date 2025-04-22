@@ -104,7 +104,7 @@ class OptionsMenu extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/background"))));
+        background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/OptionsMenu/background"));
 
         background.active = false;
 
@@ -114,7 +114,7 @@ class OptionsMenu extends ResourceState
 
         add(background);
 
-        backdrop = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/backdrop"))));
+        backdrop = new FlxBackdrop(Assets.getGraphic("menus/OptionsMenu/backdrop"));
 
         backdrop.antialiasing = true;
 
@@ -126,7 +126,7 @@ class OptionsMenu extends ResourceState
 
         add(backdrop);
 
-        gradient = new FlxSprite(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/gradient"))));
+        gradient = new FlxSprite(Assets.getGraphic("menus/OptionsMenu/gradient"));
 
         gradient.active = false;
 
@@ -140,7 +140,8 @@ class OptionsMenu extends ResourceState
 
         cornerCutout.antialiasing = true;
 
-        cornerCutout.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/cornerCutout"))), Paths.image(Paths.xml("menus/OptionsMenu/cornerCutout")));
+        cornerCutout.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/OptionsMenu/cornerCutout"), 
+            Paths.image(Paths.xml("menus/OptionsMenu/cornerCutout")));
 
         cornerCutout.animation.addByPrefix("cornerCutout", "cornerCutout", 12.0);
 
@@ -154,7 +155,7 @@ class OptionsMenu extends ResourceState
 
         add(cornerCutout);
 
-        gear = new FlxSprite(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/gear"))));
+        gear = new FlxSprite(Assets.getGraphic("menus/OptionsMenu/gear"));
 
         gear.active = false;
 
@@ -241,7 +242,8 @@ class OptionsMenu extends ResourceState
 
         descriptor.color = descriptor.color.getDarkened(0.15);
 
-        descriptor.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/OptionsMenu/descriptor"))), Paths.image(Paths.xml("menus/OptionsMenu/descriptor")));
+        descriptor.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/OptionsMenu/descriptor"), 
+            Paths.image(Paths.xml("menus/OptionsMenu/descriptor")));
 
         descriptor.animation.addByPrefix("descriptor", "descriptor", 12.0);
 
@@ -269,7 +271,7 @@ class OptionsMenu extends ResourceState
 
         option = 0;
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/OptionsMenu/tune"))), 0.0, true);
+        tune = FlxG.sound.load(Assets.getMusic("menus/OptionsMenu/tune"), 0.0, true);
 
         tune.fadeIn(1.0, 0.0, 1.0);
 
@@ -284,7 +286,7 @@ class OptionsMenu extends ResourceState
         {
             option = FlxMath.wrap(option + 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -293,7 +295,7 @@ class OptionsMenu extends ResourceState
         {
             option = FlxMath.wrap(option - 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -306,7 +308,7 @@ class OptionsMenu extends ResourceState
             {
                 option = options.members.indexOf(_option);
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -320,7 +322,7 @@ class OptionsMenu extends ResourceState
             {
                 option = options.members.indexOf(_option);
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -332,7 +334,7 @@ class OptionsMenu extends ResourceState
             {
                 option = options.members.length - 1;
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -344,7 +346,7 @@ class OptionsMenu extends ResourceState
             {
                 option = 0;
 
-                var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+                var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
                 scroll.onComplete = scroll.kill;
             }
@@ -354,7 +356,7 @@ class OptionsMenu extends ResourceState
         {
             option = FlxMath.wrap(option + 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
             scroll.onComplete = scroll.kill;
         }
@@ -363,7 +365,7 @@ class OptionsMenu extends ResourceState
         {
             option = FlxMath.wrap(option - 1, 0, options.members.length - 1);
 
-            var scroll:FlxSound = FlxG.sound.play(Assets.getSound(Paths.sound(Paths.ogg("menus/OptionsMenu/scroll")), false), 0.35);
+            var scroll:FlxSound = FlxG.sound.play(Assets.getSound("menus/OptionsMenu/scroll"), 0.35);
 
             scroll.onComplete = scroll.kill;
         }

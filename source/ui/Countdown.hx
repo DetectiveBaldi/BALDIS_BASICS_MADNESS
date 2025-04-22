@@ -127,7 +127,7 @@ class Countdown extends FlxGroup
 
         goSpr.setPosition((FlxG.width - goSpr.width) * 0.5, FlxG.height);
 
-        countdownSnd = FlxG.sound.load(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/threeSnd"))), 0.65);
+        countdownSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/threeSnd"), 0.65);
     }
 
     override function destroy():Void
@@ -193,7 +193,7 @@ class Countdown extends FlxGroup
                 tween.tween(twoSpr, {y: (FlxG.height - twoSpr.height) * 0.5}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
-                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/twoSnd"))));
+                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/twoSnd"));
 
                 countdownSnd.play();
             }
@@ -203,7 +203,7 @@ class Countdown extends FlxGroup
                 tween.tween(oneSpr, {y: FlxG.height - oneSpr.height}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
-                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/oneSnd"))));
+                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/oneSnd"));
 
                 countdownSnd.play();
             }
@@ -219,7 +219,7 @@ class Countdown extends FlxGroup
                 tween.tween(goSpr, {y: FlxG.height - goSpr.height * 0.75}, conductor.beatLength * 0.001, 
                     {ease: FlxEase.quartOut});
                 
-                countdownSnd.loadEmbedded(Assets.getSound(Paths.sound(Paths.ogg("ui/Countdown/goSnd"))));
+                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/goSnd"));
 
                 countdownSnd.play();
             }
@@ -242,7 +242,7 @@ class Countdown extends FlxGroup
 
     public function createCountdownSprite(name:String):FlxSprite
     {
-        var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png('ui/Countdown/${name}Spr'))));
+        var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic('ui/Countdown/${name}Spr'));
 
         sprite.scale.set(1.5, 1.5);
 

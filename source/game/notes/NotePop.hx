@@ -28,7 +28,7 @@ class NotePop extends FlxSprite
     {
         skin = _skin;
 
-        var pngPath:String = Paths.image(Paths.png('game/notes/NotePop/${skin.image}'));
+        var pngPath:String = 'game/notes/NotePop/${skin.image}';
 
         var xmlPath:String = Paths.image(Paths.xml('game/notes/NotePop/${skin.image}'));
 

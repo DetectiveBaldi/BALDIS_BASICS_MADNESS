@@ -42,9 +42,9 @@ class ModeSelectScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
-        heads = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("menus/ModeSelectScreen/head"))), XY, 50.0, 50.0);
+        heads = new FlxBackdrop(Assets.getGraphic("menus/ModeSelectScreen/head"), XY, 50.0, 50.0);
 
         heads.velocity.set(10.0, 10.0);
 
@@ -122,7 +122,7 @@ class ModeSelectScreen extends ResourceState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -209,7 +209,7 @@ class ModeSelectIcon extends FlxSprite
 
         onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic(Paths.image(Paths.png('menus/ModeSelectScreen/${_path}'))), true, 128, 192);
+        loadGraphic(Assets.getGraphic('menus/ModeSelectScreen/${_path}'), true, 128, 192);
 
         animation.add("0", [0], 0.0, false);
 

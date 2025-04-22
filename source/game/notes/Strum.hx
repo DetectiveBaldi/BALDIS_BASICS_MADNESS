@@ -29,7 +29,7 @@ class Strum extends FlxSprite
     {
         skin = _skin;
 
-        var pngPath:String = Paths.image(Paths.png('game/notes/Strum/${skin.image}'));
+        var pngPath:String = 'game/notes/Strum/${skin.image}';
 
         var xmlPath:String = Paths.image(Paths.xml('game/notes/Strum/${skin.image}'));
 

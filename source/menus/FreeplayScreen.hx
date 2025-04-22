@@ -45,14 +45,14 @@ class FreeplayScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         levels = new Array<LevelData>();
 
         for (i in 0 ... WeekData.list.length)
             levels = levels.concat(WeekData.list[i].levels);
 
-        background = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/background"))));
+        background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/background"));
 
         background.scale.set(1.2, 1.2);
 
@@ -64,7 +64,7 @@ class FreeplayScreen extends ResourceState
 
         scrollBg = new FlxSprite();
 
-        scrollBg.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/scroll-bg"))), 
+        scrollBg.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/FreeplayScreen/scroll-bg"), 
             Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg")));
 
         scrollBg.visible = false;
@@ -143,7 +143,7 @@ class FreeplayScreen extends ResourceState
     {
         var level:LevelData = levels[curSelected];
 
-        poster.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('menus/FreeplayScreen/posters/${level.name.setCase(KEBAB)}'))));
+        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(KEBAB)}'));
 
         poster.scale.set(1.6, 1.6);
 
@@ -220,7 +220,7 @@ class OrientedButton extends FlxSprite
     {
         super(x, y);
 
-        loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/OrientedButton/sheet"))), true, 32, 32);
+        loadGraphic(Assets.getGraphic("menus/FreeplayScreen/OrientedButton/sheet"), true, 32, 32);
 
         animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
 
@@ -272,7 +272,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         base = new FlxSprite();
 
-        base.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/FreeplayScreen/HeightenedButton/base"))), true, 128, 128);
+        base.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/HeightenedButton/base"), true, 128, 128);
 
         base.animation.add("up", [0], 0.0, false);
 

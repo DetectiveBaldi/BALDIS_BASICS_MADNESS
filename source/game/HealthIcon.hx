@@ -16,7 +16,7 @@ class HealthIcon extends FlxSprite
     {
         config = _config;
 
-        loadGraphic(Assets.getGraphic(Paths.image(Paths.png('game/HealthIcon/${config.image}'))));
+        loadGraphic(Assets.getGraphic('game/HealthIcon/${config.image}'));
 
         antialiasing = config.antialiasing ?? true;
 

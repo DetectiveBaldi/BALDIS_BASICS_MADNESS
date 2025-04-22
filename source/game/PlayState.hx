@@ -423,19 +423,19 @@ class PlayState extends ResourceState
     {
         var path:String = Paths.music('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/');
 
-        instrumental = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Instrumental')));
+        instrumental = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Instrumental'), true));
 
         instrumental.onComplete = endSong;
 
         if (FileSystem.exists(Paths.ogg('${path}Vocals-Main')))
-            mainVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Main')));
+            mainVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Main'), true));
         else
         {
             if (FileSystem.exists(Paths.ogg('${path}Vocals-Opponent')))
-                opponentVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Opponent')));
+                opponentVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Opponent'), true));
 
             if (FileSystem.exists(Paths.ogg('${path}Vocals-Player')))
-                playerVocals = FlxG.sound.load(Assets.getSound(Paths.ogg('${path}Vocals-Player')));
+                playerVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Player'), true));
         }
     }
 
@@ -541,7 +541,7 @@ class PlayState extends ResourceState
 
     public function cacheCharacterSheet(name:String):Void
     {
-        Assets.getGraphic(Paths.image(Paths.png('game/Character/${name}')));
+        Assets.getGraphic('game/Character/${name}');
     }
 
     public function pauseMusic():Void

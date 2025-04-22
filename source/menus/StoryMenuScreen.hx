@@ -69,9 +69,9 @@ class StoryMenuScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
-        background = new FlxBackdrop(Assets.getGraphic(Paths.image(Paths.png("globals/microphone"))), XY, 32.0, 32.0);
+        background = new FlxBackdrop(Assets.getGraphic("globals/microphone"), XY, 32.0, 32.0);
 
         background.velocity.set(10.0, 10.0);
 
@@ -79,7 +79,7 @@ class StoryMenuScreen extends ResourceState
 
         add(background);
 
-        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/clipboard"))));
+        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/clipboard"));
 
         clipboard.scale.set(1.5, 1.5);
 
@@ -127,7 +127,7 @@ class StoryMenuScreen extends ResourceState
 
         add(songListText);
 
-        weekInfoBoard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/StoryMenuScreen/week-info-board"))));
+        weekInfoBoard = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/StoryMenuScreen/week-info-board"));
 
         weekInfoBoard.scale.set(1.25, 1.25);
 
@@ -175,7 +175,7 @@ class StoryMenuScreen extends ResourceState
 
         add(weekDescText);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/chalkboard"))));
+        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/chalkboard"));
 
         chalkboard.scale.set(1.25, 1.25);
 
@@ -191,7 +191,7 @@ class StoryMenuScreen extends ResourceState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("deselect", [0], 0.0, false);
 
@@ -207,7 +207,7 @@ class StoryMenuScreen extends ResourceState
 
         startButton = new FlxSprite();
 
-        startButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/StoryMenuScreen/start-button"))), true, 256, 128);
+        startButton.loadGraphic(Assets.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
 
         startButton.animation.add("deselect", [0], 0.0, false);
 
@@ -329,7 +329,7 @@ class StoryMenuScreen extends ResourceState
 
     public function updateWeekPortrait(week:WeekData):Void
     {
-        weekPortrait.loadGraphic(Assets.getGraphic(Paths.image(Paths.png('globals/week-portrait-${week.name.setCase(KEBAB)}'))));
+        weekPortrait.loadGraphic(Assets.getGraphic('globals/week-portrait-${week.name.setCase(KEBAB)}'));
 
         weekPortrait.scale.set(1.25, 1.25);
 

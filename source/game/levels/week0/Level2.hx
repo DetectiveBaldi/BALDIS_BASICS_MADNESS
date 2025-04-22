@@ -222,7 +222,7 @@ class Level2 extends PlayState
 
             var plr:Character = getPlayer("bf0");
             
-            principal = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("globals/principal"))));
+            principal = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/principal"));
             principal.scale.set(1.15, 1.15);
             principal.updateHitbox();
             principal.setPosition(1500, 150.0);

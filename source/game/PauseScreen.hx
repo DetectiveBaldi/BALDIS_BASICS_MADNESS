@@ -65,7 +65,7 @@ class PauseScreen extends ResourceSubState
 
         camera = FlxG.cameras.list.newest();
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         camLerp = FlxG.camera.followLerp;
 
@@ -214,7 +214,7 @@ class PauseScreen extends ResourceSubState
             restartIcon.active = true;
         });
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("game/PauseScreen/tune"))), 1.0, true);
+        tune = FlxG.sound.load(Assets.getMusic("game/PauseScreen/tune"), 1.0, true);
 
         tune.volume = 0.0;
 
@@ -281,7 +281,7 @@ class PauseScreenIcon extends FlxSprite
 
     public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
     {
-        super(x, y, Assets.getGraphic(Paths.image(Paths.png('game/PauseScreen/${_path}'))));
+        super(x, y, Assets.getGraphic('game/PauseScreen/${_path}'));
 
         selected = false;
 

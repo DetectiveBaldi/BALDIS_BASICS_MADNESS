@@ -25,7 +25,7 @@ class WarningScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         var _text:String = "";
 
@@ -73,7 +73,7 @@ class WarningScreen extends ResourceState
 
         text.addFormat(colorSwap, 248, 260);
 
-        tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/WarningScreen/tune"))), 1.0, true);
+        tune = FlxG.sound.load(Assets.getMusic("menus/WarningScreen/tune"), 1.0, true);
 
         tune.play();
     }

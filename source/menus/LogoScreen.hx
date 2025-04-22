@@ -32,11 +32,12 @@ class LogoScreen extends ResourceState
 
         FlxG.mouse.visible = false;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         splash = new FlxSprite();
 
-        splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(Paths.image(Paths.png("menus/LogoScreen/splash"))), Paths.image(Paths.xml("menus/LogoScreen/splash")));
+        splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/LogoScreen/splash"), 
+            Paths.image(Paths.xml("menus/LogoScreen/splash")));
 
         splash.animation.addByIndices("formation", "this",  [for (i in 0 ... 29) i ], "", 17.4, false);
 
@@ -52,7 +53,7 @@ class LogoScreen extends ResourceState
 
         add(splash);
 
-        logo = new FlxSprite(0.0, 0.0, Assets.getGraphic(Paths.image(Paths.png("menus/LogoScreen/logo"))));
+        logo = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/LogoScreen/logo"));
 
         logo.active = false;
 
@@ -66,7 +67,7 @@ class LogoScreen extends ResourceState
 
         FlxTimer.wait(0.65, () ->
         {
-            tune = FlxG.sound.load(Assets.getSound(Paths.music(Paths.ogg("menus/LogoScreen/tune"))));
+            tune = FlxG.sound.load(Assets.getMusic("menus/LogoScreen/tune"));
 
             tune.play();
 

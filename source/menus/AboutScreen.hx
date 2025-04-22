@@ -24,11 +24,11 @@ class AboutScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic(Paths.image(Paths.png("globals/defaultCursor"))).bitmap);
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
 
         bg = new FlxSprite();
 
-        bg.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/AboutText"))));
+        bg.loadGraphic(Assets.getGraphic("menus/AboutText"));
 
         bg.active = false;
 
@@ -42,7 +42,7 @@ class AboutScreen extends ResourceState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic(Paths.image(Paths.png("menus/MainMenuScreen/exitButton"))), true, 32, 32);
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 

@@ -1,7 +1,5 @@
 package core;
 
-import haxe.io.Bytes;
-
 import sys.io.File;
 
 import lime.media.AudioBuffer;
@@ -28,7 +26,7 @@ class Assets
 
     public static var sounds:Map<String, Sound>;
 
-    public static var byteSets:Map<String, Bytes>;
+    public static var music:Map<String, Sound>;
 
     public static function init():Void
     {
@@ -44,22 +42,16 @@ class Assets
 
         sounds = new Map<String, Sound>();
 
-        byteSets = new Map<String, Bytes>();
+        music = new Map<String, Sound>();
     }
 
-    /**
-     * Caches a `flixel.graphics.FlxGraphic` and returns it.
-     * If the requested file path already exists in the cache, it will NOT be renewed.
-     * @param path The file path of the graphic you want to cache.
-     * @param gpuCaching Specifies whether this graphic should be uploaded to the GPU to reduce RAM usage.
-     * @return `flixel.graphics.FlxGraphic`
-     */
-    public static function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
+    public static function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
     {
+        path = raw ? path : Paths.image(Paths.png(path));
         if (graphics.exists(path))
             return graphics[path];
 
-        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromBytes(getByteSet(path)));
+        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));
         
         if (Options.gpuCaching && gpuCaching)
             graphic.bitmap.disposeImage();
@@ -71,10 +63,6 @@ class Assets
         return graphics[path];
     }
 
-    /**
-     * Removes the specified graphic from the cache.
-     * @param path The file path of the graphic you want to remove.
-     */
     public static function removeGraphic(path:String):Void
     {
         if (!graphics.exists(path))
@@ -85,112 +73,79 @@ class Assets
         FlxG.bitmap.remove(graphic);
 
         graphics.remove(path);
-
-        removeByteSet(path);
     }
 
-    /**
-     * Clears each item from the graphic cache.
-     */
-    public static function clearGraphics():Void
+    public static function getSound(path:String, raw = false):Sound
     {
-        for (key => value in graphics)
-            removeGraphic(key);
-    }
+        path = raw ? path : Paths.sound(Paths.ogg(path));
 
-    /**
-     * Caches an `openfl.media.Sound` and returns it.
-     * If the requested file path already exists in the cache, it will NOT be renewed.
-     * @param path The file path of the sound you want to cache.
-     * @param soundStreaming Specifies whether this sound should be streamed to reduce RAM usage.
-     * @return `openfl.media.Sound`
-     */
-    public static function getSound(path:String, soundStreaming:Bool = true):Sound
-    {
         if (sounds.exists(path))
             return sounds[path];
 
-        var output:Sound;
-
-        if (Options.soundStreaming && soundStreaming)
-            output = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromBytes(getByteSet(path))));
-        else
-            output = Sound.fromFile(path);
-
-        sounds[path] = output;
+        sounds[path] = Sound.fromFile(path);
 
         return sounds[path];
     }
 
-    /**
-     * Removes the specified sound from the cache.
-     * @param path The file path of the sound you want to remove.
-     */
-    public static function removeSound(path:String):Void
+    public static function getSoundKey(snd:Sound):String
     {
-        if (!sounds.exists(path))
+        for (k => v in sounds)
+            if (snd == v)
+                return k;
+
+        return null;
+    }
+
+    public static function getMusic(path:String, raw:Bool = false, stream:Bool = true):Sound
+    {
+        path = raw ? path : Paths.music(Paths.ogg(path));
+
+        if (music.exists(path))
+            return music[path];
+
+        if (stream)
+            music[path] = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(path)));
+        else
+            music[path] = Sound.fromFile(path);
+
+        return music[path];
+    }
+
+    public static function getMusicKey(mus:Sound):String
+    {
+        for (k => v in music)
+            if (mus == v)
+                return k;
+
+        return null;
+    }
+
+    public static function removeAudio(mus:Bool, path:String):Void
+    {
+        var map:Map<String, Sound> = mus ? music : sounds;
+
+        if (!map.exists(path))
             return;
 
-        var sound:Sound = sounds[path];
-        
-        sound.close();
+        map[path].close();
 
         openfl.utils.Assets.cache.removeSound(path);
 
-        sounds.remove(path);
-
-        removeByteSet(path);
-    }
-
-    /**
-     * Clears each item from the sound cache.
-     */
-    public static function clearSounds():Void
-    {
-        for (key => value in sounds)
-            removeSound(key);
-    }
-
-    public static function getByteSet(path:String):Bytes
-    {
-        if (byteSets.exists(path))
-            return byteSets[path];
-
-        byteSets[path] = File.getBytes(path);
-
-        return byteSets[path];
-    }
-
-    public static function removeByteSet(path:String):Void
-    {
-        if (!byteSets.exists(path))
-            return;
-
-        var byteSet:Bytes = byteSets[path];
-
-        byteSets.remove(path);
-    }
-
-    public static function clearByteSets():Void
-    {
-        for (key => value in byteSets)
-            removeByteSet(key);
+        map.remove(path);
     }
     
     public static function clearCaches():Void
     {
-        clearGraphics();
+        for (k => v in graphics)
+            removeGraphic(k);
 
-        clearSounds();
+        for (k => v in sounds)
+            removeAudio(false, k);
 
-        clearByteSets();
+        for (k => v in music)
+            removeAudio(true, k);
     }
 
-    /**
-     * Gets the content of the specified text file. Then, it is returned.
-     * @param path The file path of the text you want to recieve content from.
-     * @return `String`
-     */
     public static function getText(path:String):String
     {
         return File.getContent(path);

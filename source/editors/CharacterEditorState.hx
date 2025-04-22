@@ -243,7 +243,7 @@ class CharacterEditorState extends ResourceState
 
             character.config.image = ui.findComponent("___textfield", TextField).text;
 
-            var pngPath:String = Paths.image(Paths.png('game/Character/${character.config.image}'));
+            var pngPath:String = 'game/Character/${character.config.image}';
 
             var xmlPath:String = Paths.image(Paths.xml('game/Character/${character.config.image}'));
 
