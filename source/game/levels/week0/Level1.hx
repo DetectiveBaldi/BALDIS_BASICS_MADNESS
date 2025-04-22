@@ -245,7 +245,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.mouse.visible = true;
 
+        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+
         FlxG.keys.enabled = false;
+
+        FlxG.debugger.visible = false;
 
         keys = new FlxKeyboard();
 
