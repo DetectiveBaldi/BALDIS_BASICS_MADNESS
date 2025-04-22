@@ -52,42 +52,53 @@ class Level2 extends PlayState
 
         gameCameraTarget.centerTo();
 
-        gameCameraZoom = 0.8;
-
-        castedStage.entranceA3.visible = true;
-
-        players.setPosition(400, 35);
-        
-        castedStage.remove(opponents, true);
-        castedStage.insert(castedStage.members.indexOf(castedStage.entranceA3_Overlay0), opponents);
-        castedStage.entranceA3_Overlay0.visible = true;
+        var plr:Character = getPlayer("bf5");
+        plr.setPosition(700, 125);
+        plr.visible = false;
 
         var opp:Character = getOpponent("baldi-angry1");
         opp.scale.set(0.35, 0.35);
-        opp.setPosition(375.0, 100.0);
+        opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
+    
+        castedStage.remove(opponents, true);
+        castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay0), opponents);
+        
+        castedStage.entranceA4.visible = true;
+        castedStage.entranceA4_Overlay0.visible = true;
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
         trace(step);
-        if (step == 128)
+        
+        if (step == 56)
         {
-            if (Options.flashing)
-                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-            
-            castedStage.entranceA3.visible = false;
-            castedStage.entranceA3_Overlay0.visible = false;
+            var plr:Character = getPlayer("bf5");
+            plr.visible = true;
+        
+            castedStage.remove(players, true);
+            castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay2), players);
 
-            castedStage.entranceA3_Alt0.visible = true;
+            castedStage.entranceA4.visible = false;
+            castedStage.entranceA4_Alt0.visible = true;
+            castedStage.entranceA4_Overlay2.visible = true;
+        }
+
+        if (step == 124)
+        {      
+            castedStage.entranceA4_Overlay0.visible = false;
+            castedStage.entranceA4_Overlay1.visible = true;
         }
 
         if (step == 144)
         {
-            castedStage.entranceA3_Alt0.visible = false;
-            castedStage.entranceA3.visible = true;
-            castedStage.entranceA3_Overlay0.visible = true;
+            castedStage.remove(opponents, true);
+            castedStage.insert(castedStage.members.indexOf(players), opponents);
+            
+            castedStage.entranceA4_Overlay1.visible = false;
+            castedStage.entranceA4_Overlay0.visible = true;
         }
    
         if (step == 312)
@@ -107,22 +118,29 @@ class Level2 extends PlayState
     
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
                 }
-            
-            castedStage.entranceA3.visible = false;
-            castedStage.entranceA3_Overlay0.visible = false;
-            castedStage.entranceA4.visible = true;
         
-            var plr:Character = getPlayer("bf2");
+            var plr:Character = getPlayer("bf5");
             plr.visible = false;
         
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf6"));
-            plr.setPosition(-500.0, 100.0);
+            plr.setPosition(-100.0, 125.0);
             players.add(plr);
             plr.visible = true;
+
+            castedStage.remove(players, true);
+            castedStage.add(players);
 
             var opp:Character = getOpponent("baldi-angry1");
             opp.setPosition(385.0, 115.0);
             opp.scale.set(1.0, 1.0);
+        
+            castedStage.remove(opponents, true);
+            castedStage.add(opponents);
+
+            castedStage.entranceA4.visible = false;
+            castedStage.entranceA4_Overlay0.visible = false;
+            castedStage.entranceA4_Overlay2.visible = false;
+            castedStage.entranceA5.visible = true;
         }
         
         if (step == 440)
@@ -148,44 +166,41 @@ class Level2 extends PlayState
                     tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
     
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-                }
-                        
-            castedStage.remove(players, true);
-    
-            castedStage.entranceA4.visible = false;
-            castedStage.ggfacultyBgAlt.visible = true;
-            castedStage.insert(castedStage.members.indexOf(castedStage.ggfacultyBgOverlay), players);
-            castedStage.ggfacultyBgOverlay.visible = true;
+                }          
 
             var plr:Character = getPlayer("bf6");
             plr.visible = false;
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
             plr.scale.set(1.75, 1.75);
-            plr.setPosition(-100.0, 75.0);
+            plr.setPosition(450.0, 100.0);
             plr.visible = true;
             players.add(plr);
 
             var opp:Character = getOpponent("baldi-angry1");
             opp.visible = false;
-            
-            castedStage.remove(opponents, true);
-            castedStage.add(opponents);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi-angry0"));
             opp.scale.set(2.0, 2.0);
             opp.setPosition(-600.0, 0.0);
             opp.skipDance = true;
             opponents.add(opp);
-        
+            
+            castedStage.remove(players, true);
+            castedStage.insert(castedStage.members.indexOf(castedStage.ggfaculty0_Overlay0), players);
+
+            castedStage.entranceA5.visible = false;
+            castedStage.ggfaculty0_Alt0.visible = true;
+            castedStage.ggfaculty0_Overlay0.visible = true;
+
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
             opp.animation.play("slap", true);
         }
         
         if (step == 464)
         {                        
-            castedStage.ggfacultyBgAlt.visible = false;
-            castedStage.ggfacultyBg.visible = true;
+            castedStage.ggfaculty0_Alt0.visible = false;
+            castedStage.ggfaculty0.visible = true;
         }
     
         if (step == 504 || step == 507 || step == 510)
@@ -211,7 +226,7 @@ class Level2 extends PlayState
             principal.scale.set(1.15, 1.15);
             principal.updateHitbox();
             principal.setPosition(1500, 150.0);
-            castedStage.insert(castedStage.members.indexOf(castedStage.ggfacultyBgOverlay), principal);
+            castedStage.insert(castedStage.members.indexOf(castedStage.ggfaculty0_Overlay0), principal);
         
             tween.tween(principal, {x: plr.x + 200}, 1,                
                 {
@@ -237,18 +252,6 @@ class Level2 extends PlayState
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             gameCameraZoom = 1;
-
-            castedStage.ggfacultyBg.visible = false;
-            castedStage.ggfacultyBgOverlay.visible = false;
-           
-            castedStage.remove(opponents, true);
-
-            castedStage.remove(players, true);
-            castedStage.add(players);
-
-            castedStage.insert(castedStage.members.indexOf(castedStage.principalOffice0_Overlay0), oppStrumline.strums);
-            castedStage.principalOffice0.visible = true;
-            castedStage.principalOffice0_Overlay0.visible = true;
             
             var opp:Character = getOpponent("baldi-angry0");
             opp.visible = false;
@@ -260,8 +263,47 @@ class Level2 extends PlayState
             //opp.visible = true;
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));        
-            plr.setPosition(0.0, 0.0);
+            plr.setPosition(600.0, 250.0);
             players.add(plr);
+           
+            castedStage.remove(opponents, true);
+            castedStage.insert(castedStage.members.indexOf(castedStage.principalOffice0_Overlay0), opponents);
+
+            castedStage.remove(players, true);
+            castedStage.add(players);
+
+            castedStage.ggfaculty0.visible = false;
+            castedStage.ggfaculty0_Overlay0.visible = false;
+            castedStage.principalOffice0.visible = true;
+            castedStage.principalOffice0_Overlay0.visible = true;
+        }
+    
+        if (step == 912)
+        {
+            gameCameraZoom = 0.2;
+
+            var plr:Character = getPlayer("bf3");
+            plr.visible = false;
+
+            var opp:Character = getOpponent("baldi-angry1");
+            opp.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf7"));
+            plr.setPosition(798.5, 205.5);
+            players.add(plr);
+
+            var opp:Character = getOpponent("baldi-angry0");
+            opp.setPosition(-845.0, 18.5);
+            opp.visible = true;
+            
+            castedStage.remove(opponents, true);
+            castedStage.add(opponents);
+
+            castedStage.principalOffice0.visible = false;
+            castedStage.principalOffice0_Overlay0.visible = false;
+        
+            castedStage.hall2.visible = true;
+            castedStage.hall2.velocity.set(-1560.0, 0.0);
         }
     }
     
@@ -298,5 +340,23 @@ class Level2 extends PlayState
                     opp.animation.play("slap", true);
                 }
             }
+    }
+
+    public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
+    {
+        var plr:Character = getPlayer("run-legs");
+    
+        var curFrame:Int = plr.animation.curAnim.curFrame;
+    
+        if (name.contains("MISS"))
+        {
+            if (!plr.animation.name.contains("miss"))
+                plr.animation.play("legs miss", true, false, curFrame);
+        }
+        else
+        {
+            if (plr.animation.name.contains("miss"))
+                plr.animation.play("legs", true, false, curFrame);
+        }
     }
 }

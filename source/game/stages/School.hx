@@ -13,35 +13,26 @@ import core.Paths;
 
 class School extends FlxGroup
 {
-    public var warmWelcomeBg:FlxSprite;
-    
-    public var revisionBg:FlxSprite;
-
     //this so ugly but temporary trust the vision
-    public var ggcornerBg:FlxSprite;
-    public var ggentranceBg:FlxSprite;
-    public var ggentranceBgAlt:FlxSprite;
-    public var ggentranceBgAlt2:FlxSprite;
-    public var ggentranceBgOverlay:FlxSprite;
-    
     public var entranceA0:FlxSprite;
     public var entranceA1:FlxSprite;
+    public var entranceA1_Overlay0:FlxSprite;
     public var entranceA1_Alt0:FlxSprite;
     public var entranceA2:FlxSprite;
     public var entranceA3:FlxSprite;
-    public var entranceA3_Alt0:FlxSprite;
-    public var entranceA3_Overlay0:FlxSprite;
     public var entranceA4:FlxSprite;
+    public var entranceA4_Alt0:FlxSprite;
+    public var entranceA4_Overlay0:FlxSprite;
+    public var entranceA4_Overlay1:FlxSprite;
+    public var entranceA4_Overlay2:FlxSprite;
+    public var entranceA5:FlxSprite;
 
-    public var ggfacultyBg:FlxSprite;
-    public var ggfacultyBgAlt:FlxSprite;
-    public var ggfacultyBgOverlay:FlxSprite;
+    public var ggfaculty0:FlxSprite;
+    public var ggfaculty0_Alt0:FlxSprite;
+    public var ggfaculty0_Overlay0:FlxSprite;
     public var principalOffice0:FlxSprite;
     public var principalOffice0_Overlay0:FlxSprite;
 
-
-
-    
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -120,16 +111,20 @@ class School extends FlxGroup
         entranceA0 = buildSprite("gg-temp/entrance-a0");
         entranceA1 = buildSprite("gg-temp/entrance-a1");
         entranceA1_Alt0 = buildSprite("gg-temp/entrance-a1-alt0");
+        entranceA1_Overlay0 = buildSprite("gg-temp/entrance-a1-overlay0");
         entranceA2 = buildSprite("gg-temp/entrance-a2");
         entranceA3 = buildSprite("gg-temp/entrance-a3");
-        entranceA3_Alt0 = buildSprite("gg-temp/entrance-a3-alt0");
-        entranceA3_Overlay0 = buildSprite("gg-temp/entrance-a3-overlay0");
         entranceA4 = buildSprite("gg-temp/entrance-a4");
+        entranceA4_Alt0 = buildSprite("gg-temp/entrance-a4-alt0");
+        entranceA4_Overlay0 = buildSprite("gg-temp/entrance-a4-overlay0");
+        entranceA4_Overlay1 = buildSprite("gg-temp/entrance-a4-overlay1");
+        entranceA4_Overlay2 = buildSprite("gg-temp/entrance-a4-overlay2");
+        entranceA5 = buildSprite("gg-temp/entrance-a5");
 
         
-        ggfacultyBg = buildSprite("gg-temp/facultyBg");
-        ggfacultyBgAlt = buildSprite("gg-temp/facultyBgAlt");
-        ggfacultyBgOverlay = buildSprite("gg-temp/facultyBgOverlay");
+        ggfaculty0 = buildSprite("gg-temp/faculty0");
+        ggfaculty0_Alt0 = buildSprite("gg-temp/faculty0-alt0");
+        ggfaculty0_Overlay0 = buildSprite("gg-temp/faculty0-overlay0");
         principalOffice0 = buildSprite("gg-temp/principal-office0");
         principalOffice0_Overlay0 = buildSprite("gg-temp/principal-office0-overlay0");
 
