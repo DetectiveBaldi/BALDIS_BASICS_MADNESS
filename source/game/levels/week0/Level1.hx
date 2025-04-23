@@ -36,6 +36,10 @@ import core.Paths;
 
 import data.AxisData;
 import data.CharacterData;
+import data.LevelData;
+import data.WeekData;
+
+import extendable.ResourceState.CustomTransition;
 
 import game.events.CameraFollowEvent;
 
@@ -178,29 +182,47 @@ class Level1 extends PlayState
             padMinigame.screenCenter();
 
             add(padMinigame);
+
+            persistentUpdate = true;
+
+            openSubState(new CustomTransition(OUT));
         }
 
-        if (step == 1200.0)
+        if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
         {
-            padMinigame.nextProblem(false);
-        }
+            if (step != 1200.0)
+            {
+                padMinigame.skipProblem();
 
-        if (step == 1328.0)
-        {
-            padMinigame.skipProblem();
+                if (padMinigame.loss)
+                {
+                    @:privateAccess
+                        var musKey:String = Assets.getMusicKey(instrumental._sound);
 
-            padMinigame.nextProblem(false);
-        }
+                    var week:WeekData = PlayState.week;
 
-        if (step == 1456.0)
-        {
-            padMinigame.skipProblem();
+                    var level:LevelData = PlayState.level;
 
-            padMinigame.nextProblem(true);
-        }
+                    if (!musKey.contains("Bad-Math"))
+                    {
+                        instrumental.loadEmbedded(Assets.getMusic('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/' +
+                            'Instrumental-Bad-Math'), false, false, endSong);
 
-        if (step == 1584.0)
-            padMinigame.skipProblem();
+                        instrumental.play();
+                    }
+                }
+            }
+
+            if (step != 1584.0)
+                padMinigame.nextProblem(step == 1456.0);
+        } 
+    }
+
+    override function closeSubState():Void
+    {
+        super.closeSubState();
+
+        persistentUpdate = false;
     }
 }
 
@@ -246,11 +268,33 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public var corrupted:Bool;
 
+    public var victory(get, never):Bool;
+
+    @:noCompletion
+    function get_victory():Bool
+        return totalCorrect == totalSolved;
+
+    public var loss(get, never):Bool;
+
+    @:noCompletion
+    function get_loss():Bool
+        return totalCorrect != totalSolved;
+
+    public var fail(get, never):Bool;
+    
+    @:noCompletion
+    function get_fail():Bool
+        return totalCorrect == 0;
+
     public var victoryQuotes:Array<String>;
 
     public var lossQuotes:Array<String>;
 
     public var failQuotes:Array<String>;
+
+    #if FLX_DEBUG
+    public var debugToggleKeys:Array<FlxKey>;
+    #end
 
     public function new(x:Float = 0.0, y:Float = 0.0):Void
     {
@@ -262,7 +306,13 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.keys.enabled = false;
 
+        #if FLX_DEBUG
+        debugToggleKeys = FlxG.debugger.toggleKeys.copy();
+
+        FlxG.debugger.toggleKeys = null;
+
         FlxG.debugger.visible = false;
+        #end
 
         keys = new FlxKeyboard();
 
@@ -329,6 +379,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             var indicat:FlxSprite = new FlxSprite();
 
+            indicat.active = false;
+
             indicat.visible = false;
 
             indicat.loadGraphic(Assets.getGraphic("globals/numpad-indicators"), true, 24, 24);
@@ -360,6 +412,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
             var name:String = btnOrder[i];
 
             var btn:FlxSprite = new FlxSprite();
+
+            btn.active = false;
 
             btn.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("globals/numpad-button-sheet"), 
                 Paths.image(Paths.xml("globals/numpad-button-sheet")));
@@ -550,9 +604,9 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
         else
         {
-            var firstKey:Int = keys.firstJustPressed();
+            var firstJustPressed:Int = keys.firstJustPressed();
 
-            switch (firstKey:Int)
+            switch (firstJustPressed:Int)
             {
                 case FlxKey.BACKSPACE:
                 {
@@ -572,7 +626,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
                 default:
                 {
-                    var str:String = FlxKey.toStringMap[firstKey];
+                    var str:String = FlxKey.toStringMap[firstJustPressed];
 
                     var pars:Null<Int> = parseInt(str);
 
@@ -625,7 +679,15 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.inputs.remove(keys);
 
+        #if FLX_DEBUG
+        FlxG.debugger.toggleKeys = debugToggleKeys;
+        #end
+
         keys.destroy();
+
+        #if FLX_DEBUG
+        debugToggleKeys = null;
+        #end
     }
 
     public function nextProblem(corrupt:Bool):Void
@@ -719,10 +781,10 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public function updateSubmissionText():Void
     {
-        if (!negative)
-            submissionText.text = submission;
-        else
+        if (negative)
             submissionText.text = '-${submission}';
+        else
+            submissionText.text = submission;
     }
 
     public function checkSubmission():Void
@@ -744,10 +806,10 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 answer = Math.floor(val1 / val2);
         }
 
-        var parsedSub:Int = parseInt(submission);
+        var parsSub:Int = parseInt(submission);
 
         if (negative)
-            parsedSub *= -1;
+            parsSub *= -1;
 
         totalSolved++;
 
@@ -755,7 +817,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         indicat.visible = true;
 
-        if (parsedSub == answer)
+        if (parsSub == answer)
         {
             totalCorrect++;
 
@@ -780,7 +842,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         if (corrupted)
         {
-            problemText.text = FlxG.random.getObject(totalCorrect == 0.0 ? failQuotes : lossQuotes);
+            problemText.text = FlxG.random.getObject(totalCorrect == totalSolved ? victoryQuotes :
+                totalCorrect == 0.0 ? failQuotes : lossQuotes);
 
             problemText.size = 32;
 
@@ -829,47 +892,22 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         return switch (str:String)
         {
-            case "+":
-                "Plus";
+            case "+": "Plus";
             
-            case "-":
-                "Minus";
+            case "-": "Minus";
             
-            case "*":
-                "Times";
+            case "*": "Times";
             
-            case "/":
-                "Divided";
+            case "/": "Divided";
 
-            default:
-                "NULL";
+            default: "NULL";
         }
     }
 
     public function parseInt(str:String):Null<Int>
     {
-        var map:Map<String, Int> =
-        [
-            "zero" => 0,
-
-            "one" => 1,
-
-            "two" => 2,
-
-            "three" => 3,
-
-            "four" => 4,
-
-            "five" => 5,
-
-            "six" => 6,
-
-            "seven" => 7,
-
-            "eight" => 8,
-
-            "nine" => 9
-        ];
+        var map:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3,  "four" => 4,
+            "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
 
         return map.exists(str.toLowerCase()) ? map[str.toLowerCase()] : Std.parseInt(str);
     }
