@@ -1,8 +1,6 @@
 package game.levels.week0;
 
 import openfl.filters.BitmapFilter;
-import openfl.filters.BlurFilter;
-import openfl.filters.ShaderFilter;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -49,6 +47,9 @@ class Level0 extends PlayState
         super.create();
 
         gameCameraTarget.centerTo();
+
+        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
     
         castedStage.entranceA0.visible = true;
 
@@ -69,13 +70,17 @@ class Level0 extends PlayState
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
 
             gameCameraZoom = 0.8;
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = true;
         }
 
         if (step == 384)
         {
             gameCameraZoom = 0.95;
 
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             castedStage.entranceA0.color = 0xFF999999;
 
@@ -87,7 +92,8 @@ class Level0 extends PlayState
         {
             gameCameraZoom = 0.8;
 
-            gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            if (Options.flashing)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             castedStage.entranceA0.color = 0xFFFFFFFF;
 
@@ -97,12 +103,15 @@ class Level0 extends PlayState
     
         if (step == 1148)
         {
-            gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
+            if (Options.flashing)
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
         }
 
         if (step == 1152)
         {
-            gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
+
+            if (Options.flashing)
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
 
             gameCameraZoom = 0.7;
 

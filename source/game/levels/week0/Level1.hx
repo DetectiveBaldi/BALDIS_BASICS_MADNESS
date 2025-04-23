@@ -62,6 +62,8 @@ class Level1 extends PlayState
         return cast (stage, School);
     }
 
+    public var temperature:FlxSprite;
+
     public var quarter:FlxSprite;
 
     public var padMinigame:ThinkpadMinigame;
@@ -72,9 +74,19 @@ class Level1 extends PlayState
 
         super.create();
 
-        gameCameraTarget.centerTo();
+        CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
 
-        gameCameraZoom = 0.6;
+        gameCamera.snapToTarget();
+
+        gameCameraZoom = 1;
+
+        temperature = new FlxSprite();
+
+        gameCamera.color = 0xFF000000;
+        temperature.color = 0xFF000000;
+
+        playField.visible = false;
 
         castedStage.entranceA2.visible = true;
         
@@ -91,20 +103,54 @@ class Level1 extends PlayState
         );
 
         var plr:Character = getPlayer("bf3");
-        plr.scale.set(6, 6);
-        plr.setPosition(1100.0, 275.0);
+        plr.scale.set(4.5, 4.5);
+        plr.setPosition(1060.0, 300.0);
 
         var opp:Character = getOpponent("baldi2");
         opp.scale.set(2.3, 2.3);
-        opponents.setPosition(-15.0, 0.0);
+        opp.skipDance = true;
+        opponents.setPosition(-70.0, 30.0);
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
 
-        if (step == 676)
+        if (step == 0)
         {
+            tween.color(temperature, conductor.beatLength * 12.0 * 0.001, temperature.color, 0xFFFFFFFF,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
+        }
+
+        if (step == 128)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 50.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+
+            gameCameraZoom = 0.7;
+
+            playField.visible = true;
+
+            var opp:Character = getOpponent("baldi2");
+            opp.skipDance = false;
+        }
+
+        if (step == 664)
+        {
+            persistentUpdate = true;
+
+            openSubState(new CustomTransition(IN));
+        }
+
+        if (step == 672)
+        {
+            persistentUpdate = true;
+
+            openSubState(new CustomTransition(OUT));
+
             if (!Options.middlescroll)
                 {
                     var oppStrumlineX:Float = oppStrumline.strums.x;
@@ -115,19 +161,20 @@ class Level1 extends PlayState
     
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
                 }
-            
-            if (Options.flashing)
-                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
 
             gameCameraZoom = 0.8;
+
+            tween.cancelTweensOf(this, ["gameCameraZoom"]);
             
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 50, "", -1.0);
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 100.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 50.0, "", -1.0);
+
+            gameCamera.snapToTarget();
 
             castedStage.entranceA2.visible = false;
             castedStage.entranceA3.visible = true;
 
-            quarter.setPosition(1100.0, 450.0);
+            quarter.destroy();
 
             var plr:Character = getPlayer("bf3");
             plr.visible = false;
@@ -136,13 +183,13 @@ class Level1 extends PlayState
             opp.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf1"));
-            plr.scale.set(3.5, 3.5);
-            plr.setPosition(0.0, 275.0);
+            plr.scale.set(3.0, 3.0);
+            plr.setPosition(0.0, 190.0);
             players.add(plr);
         
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi1"));
-            opp.scale.set(4, 4);
-            opp.setPosition(900.0, 125.0);
+            opp.scale.set(3.2, 3.2);
+            opp.setPosition(840.0, 45.0);
             opponents.add(opp);
         }
     
@@ -156,8 +203,6 @@ class Level1 extends PlayState
             gameCameraZoom = 1;
         
             castedStage.entranceA3.visible = false;
-            tween.cancelTweensOf(quarter);
-            quarter.visible = false;
 
             var plr:Character = getPlayer("bf1");
             plr.visible = false;
