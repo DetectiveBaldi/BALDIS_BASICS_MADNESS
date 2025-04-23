@@ -88,15 +88,22 @@ class Level2 extends PlayState
 
         if (step == 124)
         {      
-            castedStage.entranceA4_Overlay0.visible = false;
-            castedStage.entranceA4_Overlay1.visible = true;
-        }
+            var opp:Character = getOpponent("baldi-angry1");
 
-        if (step == 144)
-        {
             castedStage.remove(opponents, true);
             castedStage.insert(castedStage.members.indexOf(players), opponents);
             
+            castedStage.entranceA4_Overlay0.visible = false;
+            castedStage.entranceA4_Overlay1.visible = true;
+        
+            tween.tween(opp.scale, {x: opp.scale.x + 0.25, y: opp.scale.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
+            tween.tween(opp, {y: opp.y + 10}, conductor.beatLength * 0.275 * 0.001);
+            
+            opp.animation.play("slap", true);
+        }
+
+        if (step == 144)
+        {    
             castedStage.entranceA4_Overlay1.visible = false;
             castedStage.entranceA4_Overlay0.visible = true;
         }
@@ -173,7 +180,7 @@ class Level2 extends PlayState
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
             plr.scale.set(1.75, 1.75);
-            plr.setPosition(450.0, 100.0);
+            plr.setPosition(450.0, 125.0);
             plr.visible = true;
             players.add(plr);
 
@@ -311,16 +318,14 @@ class Level2 extends PlayState
     {
         super.beatHit(beat);
     
-        if (beat >= 0.0 && beat < 34.0)
+        if (beat >= 0.0 && beat < 30.0)
             {
                 if (beat % 4.0 == 0.0)
                 {
                     var opp:Character = getOpponent("baldi-angry1");
     
-                    tween.tween(opp.scale, {x: opp.scale.x + 0.125, y: opp.scale.y + 0.125}, 
-                        conductor.beatLength * 0.275 * 0.001);
-    
-                    tween.tween(opp, {y: opp.y + 2.5}, conductor.beatLength * 0.275 * 0.001);
+                    tween.tween(opp.scale, {x: opp.scale.x + 0.1, y: opp.scale.y + 0.1}, conductor.beatLength * 0.275 * 0.001);
+                    tween.tween(opp, {y: opp.y + 2.25}, conductor.beatLength * 0.275 * 0.001);
     
                     opp.animation.play("slap", true);
                 }

@@ -70,23 +70,29 @@ class Level1 extends PlayState
 
         gameCameraTarget.centerTo();
 
-        gameCameraZoom = 1;
-    
-        CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
-            (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+        gameCameraZoom = 0.6;
 
-        gameCamera.snapToTarget();
-
-        castedStage.entranceA1.visible = true;
+        castedStage.entranceA2.visible = true;
         
         quarter = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/quarter"));
+        quarter.scale.set(2, 2);
         quarter.setPosition(15.0, 350.0);
-        add(quarter);
+        castedStage.insert(castedStage.members.indexOf(opponents), quarter);
 
-        tween.tween(quarter, {y: quarter.y - 50}, 0.75, {ease: FlxEase.sineInOut, type: PINGPONG});
+        tween.tween(quarter, {y: quarter.y - 50}, 0.75, 
+            {
+                ease: FlxEase.sineInOut, 
+                type: PINGPONG
+            }
+        );
 
-        players.setPosition(125.0, 175.0);
-        opponents.setPosition(75.0, 250.0);
+        var plr:Character = getPlayer("bf3");
+        plr.scale.set(6, 6);
+        plr.setPosition(1100.0, 275.0);
+
+        var opp:Character = getOpponent("baldi2");
+        opp.scale.set(2.3, 2.3);
+        opponents.setPosition(-15.0, 0.0);
     }
 
     override function stepHit(step:Int):Void
@@ -106,27 +112,34 @@ class Level1 extends PlayState
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
                 }
             
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
+
             gameCameraZoom = 0.8;
             
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 200.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5 + 50, "", -1.0);
 
-            castedStage.entranceA1.visible = false;
-            castedStage.entranceA2.visible = true;
+            castedStage.entranceA2.visible = false;
+            castedStage.entranceA3.visible = true;
 
-            quarter.scale.set(2, 2);
-            quarter.setPosition(1200.0, 350.0);
+            quarter.setPosition(1100.0, 450.0);
 
             var plr:Character = getPlayer("bf3");
             plr.visible = false;
         
-            var opp:Character = getOpponent("baldi1");
+            var opp:Character = getOpponent("baldi2");
             opp.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf1"));
-            plr.scale.set(4, 4);
-            plr.setPosition(-100.0, 50.0);
+            plr.scale.set(3.5, 3.5);
+            plr.setPosition(0.0, 275.0);
             players.add(plr);
+        
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi1"));
+            opp.scale.set(4, 4);
+            opp.setPosition(900.0, 125.0);
+            opponents.add(opp);
         }
     
         if (step == 1184)
@@ -138,7 +151,7 @@ class Level1 extends PlayState
 
             gameCameraZoom = 1;
         
-            castedStage.entranceA2.visible = false;
+            castedStage.entranceA3.visible = false;
             tween.cancelTweensOf(quarter);
             quarter.visible = false;
 
