@@ -317,13 +317,13 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     @:noCompletion
     function get_victory():Bool
-        return totalCorrect == totalSolved;
+        return problemIndex == totalCorrect;
 
     public var loss(get, never):Bool;
 
     @:noCompletion
     function get_loss():Bool
-        return totalCorrect != totalSolved;
+        return problemIndex != totalCorrect;
 
     public var fail(get, never):Bool;
     
@@ -807,6 +807,30 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
     }
 
+    public function skipProblem():Void
+    {
+        sndQueue.flushQueue(true);
+
+        if (problemIndex == totalSolved)
+            return;
+
+        if (baldi.animation.name != "frown")
+            baldi.animation.play("frown");
+
+        var indicat:FlxSprite = indicators[problemIndex - 1];
+
+        indicat.visible = true;
+
+        indicat.animation.play("incorrect");
+
+        totalSolved++;
+
+        clearSubmission();
+
+        if (corrupted)
+            showQuote();
+    }
+
     public function updateSubmission(num:Int):Void
     {
         if (num >= 0.0)
@@ -886,17 +910,15 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
 
         if (corrupted)
-        {
-            problemText.text = FlxG.random.getObject(totalCorrect == totalSolved ? victoryQuotes :
-                totalCorrect == 0.0 ? failQuotes : lossQuotes);
-
-            problemText.size = 32;
-
-            questionText.text = "";
-        }
+            showQuote();
         else
             questionText.text = '${val1}${op1}${val2}=${answer}';
 
+        clearSubmission();
+    }
+
+    public function clearSubmission():Void
+    {
         val1 = 0;
 
         val2 = 0;
@@ -909,28 +931,16 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         submission = "";
 
-        submissionText.text = "";
+        updateSubmissionText();
     }
 
-    public function skipProblem():Void
+    public function showQuote():Void
     {
-        sndQueue.flushQueue(true);
+        problemText.text = FlxG.random.getObject(victory ? victoryQuotes : fail ? failQuotes : lossQuotes);
 
-        if (problemIndex == totalSolved)
-            return;
+        problemText.size = 32;
 
-        if (baldi.animation.name != "frown")
-            baldi.animation.play("frown");
-
-        var indicat:FlxSprite = indicators[problemIndex - 1];
-
-        indicat.visible = true;
-
-        indicat.animation.play("incorrect");
-
-        totalSolved++;
-
-        negative = false;
+        questionText.text = "";
     }
 
     public function extendOp(str:String):String

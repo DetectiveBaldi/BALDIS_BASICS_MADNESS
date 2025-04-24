@@ -59,7 +59,7 @@ class StoryMenuScreen extends ResourceState
 
     public var scoreText:FlxText;
 
-    public var curSelected:Int;
+    public static var curSelected:Int = 0;
 
     override function create():Void
     {
@@ -241,9 +241,7 @@ class StoryMenuScreen extends ResourceState
 
         add(scoreText);
 
-        curSelected = 0;
-
-        changeSelection(0);
+        changeSelection(curSelected);
 
         var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
 

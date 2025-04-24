@@ -37,7 +37,7 @@ class FreeplayScreen extends ResourceState
 
     public var poster:FlxSprite;
 
-    public var curSelected:Int;
+    public static var curSelected:Int = 0;
 
     override function create():Void
     {
@@ -84,8 +84,6 @@ class FreeplayScreen extends ResourceState
         poster = new FlxSprite();
 
         add(poster);
-
-        curSelected = 0;
 
         updatePoster();
 
