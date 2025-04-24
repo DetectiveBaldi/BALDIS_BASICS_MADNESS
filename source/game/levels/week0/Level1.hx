@@ -112,6 +112,29 @@ class Level1 extends PlayState
         opponents.setPosition(-70.0, 30.0);
     }
 
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        @:privateAccess
+            var musKey:String = Assets.getMusicKey(instrumental._sound);
+
+        if (musKey.contains("Bad-Math"))
+            return;
+
+        if (padMinigame?.loss)
+        {
+            var week:WeekData = PlayState.week;
+
+            var level:LevelData = PlayState.level;
+            
+            instrumental.loadEmbedded(Assets.getMusic('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/' +
+                'Instrumental-Bad-Math'), false, false, endSong);
+
+            instrumental.play();
+        }
+    }
+
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
@@ -236,38 +259,11 @@ class Level1 extends PlayState
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
         {
             if (step != 1200.0)
-            {
                 padMinigame.skipProblem();
-
-                if (padMinigame.loss)
-                {
-                    @:privateAccess
-                        var musKey:String = Assets.getMusicKey(instrumental._sound);
-
-                    var week:WeekData = PlayState.week;
-
-                    var level:LevelData = PlayState.level;
-
-                    if (!musKey.contains("Bad-Math"))
-                    {
-                        instrumental.loadEmbedded(Assets.getMusic('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/' +
-                            'Instrumental-Bad-Math'), false, false, endSong);
-
-                        instrumental.play();
-                    }
-                }
-            }
 
             if (step != 1584.0)
                 padMinigame.nextProblem(step == 1456.0);
         } 
-    }
-
-    override function closeSubState():Void
-    {
-        super.closeSubState();
-
-        persistentUpdate = false;
     }
 }
 

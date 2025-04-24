@@ -255,10 +255,26 @@ class Level2 extends PlayState
     
         if (step == 656)
         {
+            gameCameraTarget.x -= 150.0;
+
+            gameCamera.snapToTarget();
+            
+            gameCameraZoom = 1.2;
+
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-            
-            gameCameraZoom = 1;
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            if (!Options.middlescroll)
+            {
+                oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
+
+                oppStrumline.strums.alpha = 0.0;
+
+                plrStrumline.strums.x = (FlxG.width - plrStrumline.strums.width) * 0.5;
+            }
             
             var opp:Character = getOpponent("baldi-angry0");
             opp.visible = false;
@@ -267,10 +283,10 @@ class Level2 extends PlayState
             plr.visible = false;
         
             var opp:Character = getOpponent("baldi-angry1");
-            //opp.visible = true;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));        
-            plr.setPosition(600.0, 250.0);
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));
+            plr.scale.set(2.0, 2.0);      
+            plr.setPosition(250.0, 200.0);
             players.add(plr);
            
             castedStage.remove(opponents, true);
@@ -284,10 +300,41 @@ class Level2 extends PlayState
             castedStage.principalOffice0.visible = true;
             castedStage.principalOffice0_Overlay0.visible = true;
         }
+
+        if (step == 896.0)
+        {
+            gameCameraZoom = 1.0;
+
+            var opp:Character = getOpponent("baldi-angry1");
+
+            opp.visible = true;
+
+            opp.scale.set(1.45, 1.45);
+
+            opp.setPosition(105.0, 145.0);
+
+            tween.tween(opp, {x: opp.x + 50.0, y: opp.y + 10.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
+        }
     
         if (step == 912)
         {
-            gameCameraZoom = 0.2;
+            gameCameraTarget.centerTo();
+
+            gameCamera.snapToTarget();
+
+            gameCameraZoom = 0.75;
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            if (!Options.middlescroll)
+            {
+                oppStrumline.strums.x = 45.0;
+
+                oppStrumline.strums.alpha = 1.0;
+
+                plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
+            }
 
             var plr:Character = getPlayer("bf3");
             plr.visible = false;
@@ -296,12 +343,42 @@ class Level2 extends PlayState
             opp.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf7"));
+
+            var anim:FlxAnimation = plr.animation.getByName("dance");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 2.0 * 0.001);
+
             plr.setPosition(798.5, 205.5);
+
             players.add(plr);
 
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/walk-legs"));
+
+            anim = _plr.animation.getByName("legs");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 2.0 * 0.001);
+
+            anim = _plr.animation.getByName("legs miss");
+
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 2.0 * 0.001);
+
+            _plr.animation.play("legs", true);
+
+            _plr.skipDance = true;
+
+            _plr.skipSing = true;
+
+            _plr.setPosition(plr.x, plr.y);
+
+            players.insert(players.members.indexOf(plr), _plr);
+
+            plr.animation.onFrameChange.add(updateLegStatus);
+
             var opp:Character = getOpponent("baldi-angry0");
-            opp.setPosition(-845.0, 18.5);
             opp.visible = true;
+            opp.skipDance = true;
+            opp.scale.set(3.0, 3.0);
+            opp.setPosition(-845.0, 18.5);
             
             castedStage.remove(opponents, true);
             castedStage.add(opponents);
@@ -345,11 +422,22 @@ class Level2 extends PlayState
                     opp.animation.play("slap", true);
                 }
             }
+        
+        if (beat >= 228.0 && beat < 292.0)
+        {
+            if (beat % 2.0 == 0.0)
+            {
+                var opp:Character = getOpponent("baldi-angry0");
+                
+                tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}});
+            }
+        }
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
     {
-        var plr:Character = getPlayer("run-legs");
+        var plr:Character = getPlayer("walk-legs");
     
         var curFrame:Int = plr.animation.curAnim.curFrame;
     
