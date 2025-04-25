@@ -283,8 +283,6 @@ class Level2 extends PlayState
 
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
-        
-            var opp:Character = getOpponent("baldi-angry1");
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));
             plr.scale.set(2.0, 2.0);      
@@ -307,15 +305,15 @@ class Level2 extends PlayState
         {
             gameCameraZoom = 1.0;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi-angry3"));
 
-            opp.visible = true;
+            opp.scale.set(1.5, 1.5);
 
-            opp.scale.set(1.45, 1.45);
+            opp.setPosition(-50.0, -50.0);
 
-            opp.setPosition(105.0, 145.0);
+            opponents.add(opp);
 
-            tween.tween(opp, {x: opp.x + 50.0, y: opp.y + 10.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
+            tween.tween(opp, {x: opp.x + 65.0, y: opp.y + 15.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
         }
     
         if (step == 912)
@@ -344,7 +342,7 @@ class Level2 extends PlayState
             var plr:Character = getPlayer("bf3");
             plr.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-angry3");
             opp.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf7"));
