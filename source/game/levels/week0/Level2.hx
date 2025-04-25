@@ -456,7 +456,7 @@ class Level2 extends PlayState
         {
             var opp:Character = getOpponent("baldi-angry0");
 
-            tween.tween(opp, {x: -opp.width * 1.5}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
+            tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
             var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/gotta-sweep0"));
 
@@ -467,7 +467,7 @@ class Level2 extends PlayState
             opponents.add(_opp);
 
             tween.tween(_opp, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
-                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 1.5}, 0.5, {ease: FlxEase.quartIn});}});
+                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 1.85}, 0.5, {ease: FlxEase.quartIn});}});
         }
     }
     
