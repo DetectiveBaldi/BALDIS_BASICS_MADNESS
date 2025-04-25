@@ -33,6 +33,8 @@ class School extends FlxGroup
     public var principalOffice0:FlxSprite;
     public var principalOffice0_Overlay0:FlxSprite;
 
+    public var phoneHall0:FlxSprite;
+
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -127,6 +129,8 @@ class School extends FlxGroup
         ggfaculty0_Overlay0 = buildSprite("gg-temp/faculty0-overlay0");
         principalOffice0 = buildSprite("gg-temp/principal-office0");
         principalOffice0_Overlay0 = buildSprite("gg-temp/principal-office0-overlay0");
+
+        phoneHall0 = buildSprite("gg-temp/phone-hall0");
 
         hall0 = buildSprite("hall0");
 

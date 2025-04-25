@@ -56,6 +56,8 @@ class Character extends FlxSprite
 
         var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.image}'));
 
+        trace(pngPath, xmlPath);
+
         switch (config.format ?? "".toLowerCase():String)
         {
             case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);

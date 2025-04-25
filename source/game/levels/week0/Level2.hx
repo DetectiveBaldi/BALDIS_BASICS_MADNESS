@@ -60,6 +60,8 @@ class Level2 extends PlayState
         opp.scale.set(0.35, 0.35);
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
+
+        cacheCharacterSheet("classic-remastered/gotta-sweep0");
     
         castedStage.remove(opponents, true);
         castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay0), opponents);
@@ -324,6 +326,9 @@ class Level2 extends PlayState
 
             gameCameraZoom = 0.75;
 
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
@@ -389,6 +394,83 @@ class Level2 extends PlayState
             castedStage.hall2.visible = true;
             castedStage.hall2.velocity.set(-1560.0, 0.0);
         }
+
+        if (step == 1152.0)
+        {
+            var plr:Character = getPlayer("bf7");
+
+            var _plr:Character = getPlayer("walk-legs");
+
+            tween.tween(plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.sineIn, 
+                onUpdate: (tween:FlxTween) -> {_plr.x = plr.x;}});
+
+            tween.tween(plr.animation, {timeScale: 1.25}, conductor.beatLength * 0.001, {ease: FlxEase.sineIn});
+
+            tween.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
+        }
+
+        if (step == 1168.0)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            gameCameraZoom = 1.0;
+
+            var plr:Character = getPlayer("bf7");
+
+            plr.visible = false;
+
+            var _plr:Character = getPlayer("walk-legs");
+
+            _plr.visible = false;
+
+            var __plr:Character = getPlayer("bf0");
+
+            __plr.visible = true;
+
+            __plr.scale.set(2.5, 2.5);
+
+            __plr.setPosition(520.0, 155.0);
+
+            gameCameraTarget.centerTo(__plr);
+
+            gameCameraTarget.y -= 150.0;
+
+            gameCamera.snapToTarget();
+
+            castedStage.phoneHall0.visible = true;
+
+            castedStage.hall2.visible = false;
+        }
+
+        if (step == 1264.0)
+        {
+            gameCameraTarget.centerTo();
+
+            gameCameraZoom = 0.75;
+
+            var opp:Character = getOpponent("baldi-angry0");
+
+            tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001);
+        }
+
+        if (step == 1268.0)
+        {
+            var opp:Character = getOpponent("baldi-angry0");
+
+            tween.tween(opp, {x: -opp.width * 1.5}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
+
+            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/gotta-sweep0"));
+
+            _opp.skipSing = true;
+
+            _opp.setPosition(-_opp.width, -100.0);
+
+            opponents.add(_opp);
+
+            tween.tween(_opp, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
+                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 1.5}, 0.5, {ease: FlxEase.quartIn});}});
+        }
     }
     
     override function beatHit(beat:Int):Void
@@ -425,7 +507,7 @@ class Level2 extends PlayState
         
         if (beat >= 228.0 && beat < 292.0)
         {
-            if (beat % 2.0 == 0.0)
+            if (beat % 4.0 == 0.0)
             {
                 var opp:Character = getOpponent("baldi-angry0");
                 
