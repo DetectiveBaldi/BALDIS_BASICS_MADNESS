@@ -1,8 +1,6 @@
 package game.levels.week0;
 
 import openfl.filters.BitmapFilter;
-import openfl.filters.BlurFilter;
-import openfl.filters.ShaderFilter;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -42,6 +40,8 @@ class Level2 extends PlayState
         return cast (stage, School);
     }
 
+    public var temperature:FlxSprite;
+
     public var principal:FlxSprite;
 
     override function create():Void
@@ -50,10 +50,14 @@ class Level2 extends PlayState
 
         super.create();
 
+        gameCameraZoom = 1;
+
         gameCameraTarget.centerTo();
 
+        temperature = new FlxSprite();
+
         var plr:Character = getPlayer("bf5");
-        plr.setPosition(700, 125);
+        plr.setPosition(900, 125);
         plr.visible = false;
 
         var opp:Character = getOpponent("baldi-angry1");
@@ -68,17 +72,20 @@ class Level2 extends PlayState
         
         castedStage.entranceA4.visible = true;
         castedStage.entranceA4_Overlay0.visible = true;
+
+        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
-        trace(step);
         
         if (step == 56)
         {
             var plr:Character = getPlayer("bf5");
             plr.visible = true;
+            tween.tween(plr, {x: plr.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
         
             castedStage.remove(players, true);
             castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay2), players);
@@ -104,6 +111,18 @@ class Level2 extends PlayState
             opp.animation.play("slap", true);
         }
 
+        if (step == 128)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            var opp:Character = getOpponent("baldi-angry1");
+            opp.skipDance = false;
+        }
+
         if (step == 144)
         {    
             castedStage.entranceA4_Overlay1.visible = false;
@@ -112,20 +131,38 @@ class Level2 extends PlayState
    
         if (step == 312)
         {
-            gameCameraZoom = 1;
+            gameCamera.color = 0xFFC6C6C6;
+
+            temperature.color = 0xFFC6C6C6;
+
+            gameCameraZoom = 1.1;
         }
         
         if (step == 320)
         {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            gameCamera.color = 0xFFA8A8A8;
+
+            temperature.color = 0xFFA8A8A8;
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            gameCameraTarget.x -= 180.0;
+
+            gameCamera.snapToTarget();
+
             if (!Options.middlescroll)
                 {
                     var oppStrumlineX:Float = oppStrumline.strums.x;
     
                     var plrStrumlineX:Float = plrStrumline.strums.x;
     
-                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
     
-                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
                 }
         
             var plr:Character = getPlayer("bf5");
@@ -140,8 +177,9 @@ class Level2 extends PlayState
             castedStage.add(players);
 
             var opp:Character = getOpponent("baldi-angry1");
-            opp.setPosition(385.0, 115.0);
-            opp.scale.set(1.0, 1.0);
+            opp.setPosition(375.0, 120.0);
+            opp.scale.set(0.9, 0.9);
+            opp.color = 0xFF000000;
         
             castedStage.remove(opponents, true);
             castedStage.add(opponents);
@@ -150,11 +188,25 @@ class Level2 extends PlayState
             castedStage.entranceA4_Overlay0.visible = false;
             castedStage.entranceA4_Overlay2.visible = false;
             castedStage.entranceA5.visible = true;
+            castedStage.entranceA5.color = 0xFF050505;
         }
-        
+
+        if (step == 432)
+        {
+            var opp:Character = getOpponent("baldi-angry1");
+            tween.color(opp, conductor.beatLength * 3.0 * 0.001, opp.color, 0xFFFFFFFF,
+                {onUpdate: (_tween:FlxTween) -> {opp.color;}});
+        }
+
         if (step == 440)
         {
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.7;
+
+            tween.color(temperature, conductor.beatLength * 1.0 * 0.001, temperature.color, 0xFFFFFFFF,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
+
+            tween.color(castedStage.entranceA5, conductor.beatLength * 1.0 * 0.001, castedStage.entranceA5.color, 0xFFFFFFFF,
+                {onUpdate: (_tween:FlxTween) -> {castedStage.entranceA5.color;}});
 
             var plr:Character = getPlayer("bf6");
             tween.tween(plr, {x: -1500.0}, 0.75, {ease: FlxEase.quartIn});
@@ -166,15 +218,21 @@ class Level2 extends PlayState
         
         if (step == 448)
         {
+            gameCameraZoom = 1;
+            gameCameraTarget.x -= 150.0;
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
             if (!Options.middlescroll)
                 {
                     var oppStrumlineX:Float = oppStrumline.strums.x;
     
                     var plrStrumlineX:Float = plrStrumline.strums.x;
     
-                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
     
-                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
                 }          
 
             var plr:Character = getPlayer("bf6");
@@ -182,7 +240,7 @@ class Level2 extends PlayState
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
             plr.scale.set(1.75, 1.75);
-            plr.setPosition(450.0, 125.0);
+            plr.setPosition(950.0, 125.0);
             plr.visible = true;
             players.add(plr);
 
@@ -207,14 +265,26 @@ class Level2 extends PlayState
         }
         
         if (step == 464)
-        {                        
+        {                   
             castedStage.ggfaculty0_Alt0.visible = false;
             castedStage.ggfaculty0.visible = true;
+        }
+
+        if (step == 480 || step == 528 || step == 560 || step == 592)
+        {                        
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+        }
+
+        if (step == 512 || step == 544 || step == 576)
+        {                        
+            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
+                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
         }
     
         if (step == 504 || step == 507 || step == 510)
         {                        
-            gameCameraZoom += 0.25;
+            gameCameraZoom += 0.1;
         }
     
         if (step == 512)
@@ -224,17 +294,20 @@ class Level2 extends PlayState
             CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 200.0,
                 (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
         }
-    
-        if (step == 632)
-        {                        
-            gameCameraTarget.centerTo();
 
+        if (step == 624)
+        {
+            gameCameraTarget.centerTo();
+        }
+
+        if (step == 632)
+        {                       
             var plr:Character = getPlayer("bf0");
             
             principal = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/principal"));
             principal.scale.set(1.15, 1.15);
             principal.updateHitbox();
-            principal.setPosition(1500, 150.0);
+            principal.setPosition(2500, 150.0);
             castedStage.insert(castedStage.members.indexOf(castedStage.ggfaculty0_Overlay0), principal);
         
             tween.tween(principal, {x: plr.x + 200}, 1,                
@@ -261,7 +334,7 @@ class Level2 extends PlayState
 
             gameCamera.snapToTarget();
             
-            gameCameraZoom = 1.2;
+            gameCameraZoom = 1.4;
 
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -286,7 +359,7 @@ class Level2 extends PlayState
             
             var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));
             plr.scale.set(2.0, 2.0);      
-            plr.setPosition(250.0, 200.0);
+            plr.setPosition(350.0, 200.0);
             players.add(plr);
            
             castedStage.remove(opponents, true);
@@ -303,7 +376,7 @@ class Level2 extends PlayState
 
         if (step == 896.0)
         {
-            gameCameraZoom = 1.0;
+            gameCameraZoom = 1.3;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi-angry3"));
 
@@ -314,6 +387,10 @@ class Level2 extends PlayState
             opponents.add(opp);
 
             tween.tween(opp, {x: opp.x + 65.0, y: opp.y + 15.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
+
+            var plr:Character = getPlayer("bf3");
+
+            tween.tween(plr, {x: plr.x + 400.0, y: plr.y + 100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     
         if (step == 912)
@@ -322,7 +399,7 @@ class Level2 extends PlayState
 
             gameCamera.snapToTarget();
 
-            gameCameraZoom = 0.75;
+            gameCameraZoom = 0.8;
 
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -393,6 +470,11 @@ class Level2 extends PlayState
             castedStage.hall2.velocity.set(-1560.0, 0.0);
         }
 
+        if (step == 1040.0)
+        {
+            gameCameraZoom = 0.75;
+        }
+
         if (step == 1152.0)
         {
             var plr:Character = getPlayer("bf7");
@@ -410,7 +492,7 @@ class Level2 extends PlayState
         if (step == 1168.0)
         {
             if (Options.flashing)
-                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             gameCameraZoom = 1.0;
 
@@ -432,7 +514,7 @@ class Level2 extends PlayState
 
             gameCameraTarget.centerTo(__plr);
 
-            gameCameraTarget.y -= 150.0;
+            gameCameraTarget.y -= 70.0;
 
             gameCamera.snapToTarget();
 
@@ -456,7 +538,7 @@ class Level2 extends PlayState
         {
             var opp:Character = getOpponent("baldi-angry0");
 
-            tween.tween(opp, {x: -opp.width * 1.5}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
+            tween.tween(opp, {x: -opp.width * 2}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
             var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/gotta-sweep0"));
 
@@ -467,7 +549,19 @@ class Level2 extends PlayState
             opponents.add(_opp);
 
             tween.tween(_opp, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
-                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 1.5}, 0.5, {ease: FlxEase.quartIn});}});
+                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 2}, 0.5, {ease: FlxEase.quartIn});}});
+        }
+
+        if (step == 1296.0)
+        {
+            if (Options.flashing)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            tween.color(temperature, conductor.beatLength * 7.0 * 0.001, temperature.color, 0xFF000000,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
     }
     
