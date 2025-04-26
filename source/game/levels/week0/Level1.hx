@@ -342,6 +342,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public var failQuotes:Array<String>;
 
+    public var mouseVis:Bool;
+
     #if FLX_DEBUG
     public var debugToggleKeys:Array<FlxKey>;
     #end
@@ -349,6 +351,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
     public function new(x:Float = 0.0, y:Float = 0.0):Void
     {
         super(x, y);
+
+        mouseVis = FlxG.mouse.visible;
 
         FlxG.mouse.visible = true;
 
@@ -726,6 +730,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
     override function destroy():Void
     {
         super.destroy();
+
+        FlxG.mouse.visible = mouseVis;
 
         FlxG.keys.enabled = true;
 
