@@ -466,6 +466,7 @@ class Level2 extends PlayState
             castedStage.principalOffice0.visible = false;
             castedStage.principalOffice0_Overlay0.visible = false;
         
+            castedStage.hall2.active = true;
             castedStage.hall2.visible = true;
             castedStage.hall2.velocity.set(-1560.0, 0.0);
         }

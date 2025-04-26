@@ -21,9 +21,6 @@ class Chart
         return chart;
     }
 
-    /**
-     * A unique `String` identifier for `this` `Chart`. Used in several areas of the application.
-     */
     public var name:String;
 
     public var tempo:Float;
@@ -41,6 +38,8 @@ class Chart
     public var opponent:String;
 
     public var player:String;
+
+    public var credits:CreditsData;
 
     public function new():Void
     {
@@ -61,6 +60,8 @@ class Chart
         opponent = "baldi0";
 
         player = "bf0";
+
+        credits = {composers: "", artists: "", programmers: "", charters: "", step: 0}
     }
 
     public function toString():String

@@ -215,6 +215,8 @@ class School extends FlxGroup
     {
         var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic('game/stages/School/${path}'));
 
+        sprite.active = false;
+
         sprite.visible = false;
 
         sprite.scale.set(scaleX, scaleY);
@@ -230,7 +232,9 @@ class School extends FlxGroup
 
     public function buildAtlasSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
     {
-        var sprite = new FlxSprite(0.0, 0.0);
+        var sprite = new FlxSprite();
+
+        sprite.active = false;
 
         sprite.visible = false;
 
@@ -251,6 +255,8 @@ class School extends FlxGroup
     public function buildBackdrop(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
     {
         var backdrop:FlxBackdrop = new FlxBackdrop(Assets.getGraphic('game/stages/School/${path}'), X);
+
+        backdrop.active = false;
 
         backdrop.visible = false;
 

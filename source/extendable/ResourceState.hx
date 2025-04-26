@@ -109,15 +109,9 @@ class CustomTransition extends FlxSubState
 
         camera = FlxG.cameras.list.newest();
 
-        var backdrop:FlxBackdrop = new FlxBackdrop();
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade);
 
-        backdrop.loadGraphic(Assets.getGraphic("extendable/ResourceState/gradient"), true, 16, 16);
-
-		backdrop.animation.add("this", [for (i in 0 ... 7) i], 12, false);
-
-		backdrop.animation.play("this", true, fade == IN);
-
-		add(backdrop);
+        add(spr);
 
         FlxTimer.wait(0.5, () ->
         {
@@ -134,6 +128,26 @@ class CustomTransition extends FlxSubState
         super.destroy();
 
         onComplete = null;
+    }
+}
+
+class CustomTransitionSprite extends FlxBackdrop
+{
+    public var fade:CustomTransitionFade;
+
+    public function new(fade:CustomTransitionFade):Void
+    {
+        super();
+
+        camera = FlxG.cameras.list.newest();
+
+        this.fade = fade;
+
+        loadGraphic(Assets.getGraphic("extendable/ResourceState/gradient"), true, 16, 16);
+
+		animation.add("fade", [0, 1, 2, 3, 4, 5, 6], 12, false);
+
+		animation.play("fade", true, fade == IN);
     }
 }
 

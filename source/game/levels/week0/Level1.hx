@@ -9,7 +9,6 @@ import openfl.text.TextFormat;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -39,7 +38,7 @@ import data.CharacterData;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.ResourceState.CustomTransition;
+import extendable.ResourceState.CustomTransitionSprite;
 
 import game.events.CameraFollowEvent;
 
@@ -122,7 +121,7 @@ class Level1 extends PlayState
         if (musKey.contains("Bad-Math"))
             return;
 
-        if (padMinigame?.loss)
+        if (padMinigame?.loss && padMinigame.problemIndex != 3.0)
         {
             var week:WeekData = PlayState.week;
 
@@ -163,16 +162,20 @@ class Level1 extends PlayState
 
         if (step == 664)
         {
-            persistentUpdate = true;
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(IN);
 
-            openSubState(new CustomTransition(IN));
+            spr.animation.onFinish.add((name:String) -> spr.visible = false);
+
+            add(spr);
         }
 
         if (step == 672)
         {
-            persistentUpdate = true;
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(OUT);
 
-            openSubState(new CustomTransition(OUT));
+            spr.animation.onFinish.add((name:String) -> spr.visible = false);
+
+            add(spr);
 
             if (!Options.middlescroll)
                 {
@@ -253,7 +256,11 @@ class Level1 extends PlayState
 
             persistentUpdate = true;
 
-            openSubState(new CustomTransition(OUT));
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(OUT);
+
+            spr.animation.onFinish.add((name:String) -> spr.visible = false);
+
+            add(spr);
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
@@ -295,6 +302,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public var totalCorrect:Int;
 
+    public var totalIncorrect:Int;
+
     public var totalSolved:Int;
 
     public var val1:Int;
@@ -313,19 +322,19 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     @:noCompletion
     function get_victory():Bool
-        return problemIndex == totalCorrect;
+        return totalIncorrect == 0.0;
 
     public var loss(get, never):Bool;
 
     @:noCompletion
     function get_loss():Bool
-        return problemIndex != totalCorrect;
+        return totalIncorrect != 0.0;
 
     public var fail(get, never):Bool;
     
     @:noCompletion
     function get_fail():Bool
-        return totalCorrect == 0;
+        return totalIncorrect == 3.0;
 
     public var victoryQuotes:Array<String>;
 
@@ -621,6 +630,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         totalCorrect = 0;
 
+        totalIncorrect = 0;
+
         totalSolved = 0;
 
         negative = false;
@@ -819,6 +830,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         indicat.animation.play("incorrect");
 
+        totalIncorrect++;
+
         totalSolved++;
 
         clearSubmission();
@@ -903,6 +916,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 baldi.animation.play("frown");
             
             indicat.animation.play("incorrect");
+
+            totalIncorrect++;
         }
 
         if (corrupted)

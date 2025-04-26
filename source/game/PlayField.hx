@@ -53,6 +53,8 @@ class PlayField extends FlxGroup
 
     public var timerNeedle:FlxSprite;
 
+    public var creditsPop:CreditsPopup;
+
     public var scrollSpeed(default, set):Float;
 
     @:noCompletion
@@ -79,6 +81,8 @@ class PlayField extends FlxGroup
 
         conductor = _conductor;
 
+        conductor.onStepHit.add(stepHit);
+
         chart = _chart;
 
         instrumental = _instrumental;
@@ -86,6 +90,8 @@ class PlayField extends FlxGroup
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
         scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/clipboard"));
+
+        scoreClip.active = false;
 
         scoreClip.flipY = Options.downscroll;
 
@@ -123,7 +129,9 @@ class PlayField extends FlxGroup
 
         add(healthBar);
 
-        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerClock"));        
+        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerClock"));
+        
+        timerClock.active = false;
 
         timerClock.scale.set(0.5, 0.5);
 
@@ -135,6 +143,8 @@ class PlayField extends FlxGroup
 
         timerNeedle = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerNeedle"));
 
+        timerNeedle.active = false;
+
         timerNeedle.scale.set(0.5, 0.5);
 
         timerNeedle.updateHitbox();
@@ -143,6 +153,10 @@ class PlayField extends FlxGroup
             timerClock.y + (timerClock.height * 0.5) - ((timerNeedle.height * 0.25) + 20.0));
 
         add(timerNeedle);
+
+        creditsPop = new CreditsPopup(0.0, 0.0, chart.credits);
+
+        add(creditsPop);
 
         strumlines = new FlxTypedGroup<Strumline>();
 
@@ -204,6 +218,19 @@ class PlayField extends FlxGroup
 
         if (conductor.time > 0.0)
             timerNeedle.angle = (conductor.time / instrumental.length) * 360.0;
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        conductor?.onStepHit?.remove(stepHit);
+    }
+
+    public function stepHit(step:Int):Void
+    {
+        if (creditsPop?.data?.step ?? 0.0 == step)
+            creditsPop.popUp();
     }
 
     public function updateScoreTxt():Void
