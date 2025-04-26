@@ -121,7 +121,7 @@ class Level1 extends PlayState
         if (musKey.contains("Bad-Math"))
             return;
 
-        if (padMinigame?.loss && padMinigame.problemIndex != 3.0)
+        if (padMinigame?.loss && padMinigame?.totalSolved != 3.0)
         {
             var week:WeekData = PlayState.week;
 
@@ -304,7 +304,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public var totalIncorrect:Int;
 
-    public var totalSolved:Int;
+    public var totalSolved(get, never):Int;
+
+    @:noCompletion
+    function get_totalSolved():Int
+        return totalCorrect + totalIncorrect;
 
     public var val1:Int;
 
@@ -636,8 +640,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         totalIncorrect = 0;
 
-        totalSolved = 0;
-
         negative = false;
 
         corrupted = false;
@@ -838,8 +840,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         totalIncorrect++;
 
-        totalSolved++;
-
         clearSubmission();
 
         if (corrupted)
@@ -894,8 +894,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         if (negative)
             parsSub *= -1;
-
-        totalSolved++;
 
         var indicat:FlxSprite = indicators[problemIndex - 1];
 
