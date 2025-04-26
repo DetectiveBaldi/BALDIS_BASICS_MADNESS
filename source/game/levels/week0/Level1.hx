@@ -121,7 +121,7 @@ class Level1 extends PlayState
         if (musKey.contains("Bad-Math"))
             return;
 
-        if (padMinigame?.loss && padMinigame?.totalSolved != 3.0)
+        if (padMinigame?.loss)
         {
             var week:WeekData = PlayState.week;
 
