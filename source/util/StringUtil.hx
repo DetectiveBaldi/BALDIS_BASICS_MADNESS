@@ -43,6 +43,15 @@ class StringUtil
             }
         }
     }
+    
+    public static function reverse(str:String, delimiter:String, join:String):String
+    {
+        var splt:Array<String> = str.split(delimiter);
+
+        splt.reverse();
+
+        return splt.join(join);
+    }
 }
 
 enum StringCase

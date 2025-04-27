@@ -7,7 +7,6 @@ import openfl.text.TextFormat;
 
 import flixel.FlxG;
 
-import core.Assets;
 import core.Paths;
 
 import util.MathUtil;

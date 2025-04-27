@@ -35,6 +35,7 @@ import core.Paths;
 import music.Conductor;
 
 using util.MathUtil;
+using util.StringUtil;
 
 class PlayField extends FlxGroup
 {
@@ -107,11 +108,11 @@ class PlayField extends FlxGroup
 
         scoreClip.flipY = Options.downscroll;
 
-        scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.5 : FlxG.height - scoreClip.height * 0.5);
+        scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.35 : FlxG.height - scoreClip.height * 0.65);
 
         add(scoreClip);
 
-        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "Score: 0\nMisses: 0\nAccuracy: 0%", 18);
+        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A", 18);
 
         scoreTxt.color = FlxColor.BLACK;
 
@@ -133,6 +134,9 @@ class PlayField extends FlxGroup
             Options.downscroll ? scoreClip.y + scoreClip.height - scoreTxt.height - 25.0 : scoreClip.y + 25.0);
 
         add(scoreTxt);
+
+        if (Options.downscroll)
+            scoreTxt.text = scoreTxt.text.reverse("\n", "\n");
 
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
@@ -253,7 +257,12 @@ class PlayField extends FlxGroup
 
         var accuracy:Float = playStats.accuracy;
 
-        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${FlxMath.roundDecimal(accuracy, 1)}%';
+        var grade:String = playStats.grade;
+
+        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${FlxMath.roundDecimal(accuracy, 1)}%\nGrade: ${grade}';
+
+        if (Options.downscroll)
+            scoreTxt.text = scoreTxt.text.reverse("\n", "\n");
     }
 
     public function noteHit(event:NoteHitEvent):Void
