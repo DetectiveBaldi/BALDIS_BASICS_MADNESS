@@ -43,6 +43,8 @@ class CreditsPopup extends FlxSpriteGroup
         this.credits = credits;
 
         screen = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/CreditsPopup/screen"));
+        
+        screen.active = false;
 
         add(screen);
 
@@ -72,10 +74,10 @@ class CreditsPopup extends FlxSpriteGroup
         tween.tween(this, {y: Options.downscroll ? 0.0 : FlxG.height - height}, 1.25, 
             {ease: FlxEase.quartOut});
 
-        new FlxTimer(timer).start(2.0, (tim:FlxTimer) ->
+        new FlxTimer(timer).start(2.0, (tmr:FlxTimer) ->
         {
             tween.tween(this, {y: Options.downscroll ? -height : FlxG.height}, 2.0, 
-               {ease: FlxEase.quartIn});
+               {ease: FlxEase.quartIn, onComplete: (twn:FlxTween) -> kill()});
 
             tween.flicker(label, 2.0, 0.5);
 
