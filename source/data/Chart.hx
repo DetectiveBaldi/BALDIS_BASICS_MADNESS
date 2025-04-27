@@ -18,6 +18,8 @@ class Chart
 
         chart.spectator = raw.spectator; chart.opponent = raw.opponent; chart.player = raw.player;
 
+        chart.credits = raw.credits;
+
         return chart;
     }
 
@@ -61,7 +63,7 @@ class Chart
 
         player = "bf0";
 
-        credits = {composers: "", artists: "", programmers: "", charters: "", step: 0}
+        credits = {composer: "", step: 0}
     }
 
     public function toString():String
@@ -90,6 +92,8 @@ typedef RawChart =
     var opponent:String;
 
     var player:String;
+
+    var credits:CreditsData;
 }
 
 typedef RawEvent = TimedObject &
@@ -115,4 +119,11 @@ typedef RawTimeChange = TimedObject &
     var tempo:Float;
 
     var step:Float;
+}
+
+typedef CreditsData =
+{
+    public var composer:String;
+
+    public var ?step:Int;
 }

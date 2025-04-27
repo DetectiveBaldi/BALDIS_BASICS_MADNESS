@@ -14,7 +14,10 @@ import flixel.sound.FlxSound;
 
 import flixel.text.FlxText;
 
+import flixel.tweens.FlxTween;
+
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 import data.Chart;
 import data.PlayStats;
@@ -35,6 +38,10 @@ using util.MathUtil;
 
 class PlayField extends FlxGroup
 {
+    public var tween:FlxTweenManager;
+
+    public var timer:FlxTimerManager;
+
     public var conductor:Conductor;
 
     public var chart:Chart;
@@ -75,9 +82,14 @@ class PlayField extends FlxGroup
 
     public var noteSpawner:NoteSpawner;
 
-    public function new(_conductor:Conductor, _chart:Chart, _instrumental:FlxSound):Void
+    public function new(?tween:FlxTweenManager, ?timer:FlxTimerManager, _conductor:Conductor, 
+        _chart:Chart, _instrumental:FlxSound):Void
     {
         super();
+
+        this.tween = tween ?? FlxTween.globalManager;
+
+        this.timer = timer ?? FlxTimer.globalManager;
 
         conductor = _conductor;
 
@@ -154,7 +166,7 @@ class PlayField extends FlxGroup
 
         add(timerNeedle);
 
-        creditsPop = new CreditsPopup(0.0, 0.0, chart.credits);
+        creditsPop = new CreditsPopup(0.0, 0.0, tween, timer, chart.credits);
 
         add(creditsPop);
 
@@ -229,7 +241,7 @@ class PlayField extends FlxGroup
 
     public function stepHit(step:Int):Void
     {
-        if (creditsPop?.data?.step ?? 0.0 == step)
+        if (creditsPop.credits.step ?? 0.0 == step)
             creditsPop.popUp();
     }
 

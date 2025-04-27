@@ -212,7 +212,7 @@ class PlayState extends ResourceState
 
         player = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.player));
 
-        playField = new PlayField(conductor, chart, instrumental);
+        playField = new PlayField(tween, timer, conductor, chart, instrumental);
 
         playField.camera = hudCamera;
 

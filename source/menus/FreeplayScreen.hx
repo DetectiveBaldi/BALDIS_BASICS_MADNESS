@@ -220,9 +220,9 @@ class OrientedButton extends FlxSprite
 
         loadGraphic(Assets.getGraphic("menus/FreeplayScreen/OrientedButton/sheet"), true, 32, 32);
 
-        animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
+        animation.add("deselect", orientation ? [0] : [1], 0.0, false);
 
-        animation.add("select", orientation == LEFT ? [2] : [3], 0.0, false);
+        animation.add("select", orientation ? [2] : [3], 0.0, false);
 
         animation.play("deselect");
 
@@ -278,7 +278,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         base.animation.play("up");
 
-        base.scale.set(size == LARGE ? 2.0 : 1.75, size == LARGE ? 2.0 : 1.75);
+        base.scale.set(size ? 2.0 : 1.75, size ? 2.0 : 1.75);
 
         base.updateHitbox();
 
@@ -290,7 +290,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         label.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        label.size = size == LARGE ? 28 : 24;
+        label.size = size ? 28 : 24;
 
         label.alignment = CENTER;
 
@@ -331,16 +331,16 @@ class HeightenedButton extends FlxSpriteGroup
     }
 }
 
-enum ButtonOrientation
+enum abstract ButtonOrientation(Bool) from Bool to Bool
 {
-    LEFT;
+    var LEFT:Bool = true;
 
-    RIGHT;
+    var RIGHT:Bool = false;
 }
 
-enum ButtonSize
+enum abstract ButtonSize(Bool) from Bool to Bool
 {
-    LARGE;
+    var LARGE:Bool = true;
 
-    SMALL;
+    var SMALL:Bool = false;
 }

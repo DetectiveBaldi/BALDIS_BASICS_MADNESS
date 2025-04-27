@@ -37,7 +37,7 @@ class ChartConverters
             var rawChart:Dynamic = Json.parse(Assets.getText(Paths.json(rawChartPath)));
 
             if (Reflect.hasField(rawChart, "format"))
-                return PsychConverter.build(rawChartPath);
+                return PsychConverter.build(rawChartPath.substring(0, rawChartPath.length - 6));
             else
                 return Chart.fromRaw(Json.parse(Assets.getText(Paths.json(rawChartPath))));
         }
@@ -88,6 +88,8 @@ class FunkinConverter
 
         output.opponent = rawMeta.playData.characters.player;
 
+        output.credits = {composer: rawMeta.artist, step: 0}
+
         return output;
     }
 }
@@ -98,7 +100,7 @@ class PsychConverter
     {
         var output:Chart = new Chart();
 
-        var raw:Dynamic = Json.parse(Assets.getText(Paths.json(path)));
+        var raw:Dynamic = Json.parse(Assets.getText(Paths.json('${path}/chart')));
 
         output.name = raw.song;
 
@@ -171,6 +173,17 @@ class PsychConverter
         output.opponent = raw.player2;
 
         output.player = raw.player1;
+
+        var credits:String = Assets.getText(Paths.txt('${path}/credits'));
+
+        var splt:Array<String> = credits.split("|");
+
+        var composer:String = splt.oldest((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
+
+        var step:Null<Int> = splt.length > 1.0 ? Std.parseInt(splt.oldest((str:String) -> str.toLowerCase().contains("step"))
+            .split("=")[1]) : null;
+
+        output.credits = {composer: composer, step: step}
 
         return output;
     }
