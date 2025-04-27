@@ -73,7 +73,13 @@ class Countdown extends FlxGroup
 
     public var goSpr:FlxSprite;
 
-    public var countdownSnd:FlxSound;
+    public var threeSnd:FlxSound;
+
+    public var twoSnd:FlxSound;
+
+    public var oneSnd:FlxSound;
+
+    public var goSnd:FlxSound;
 
     public function new(_conductor:Conductor):Void
     {
@@ -127,7 +133,13 @@ class Countdown extends FlxGroup
 
         goSpr.setPosition((FlxG.width - goSpr.width) * 0.5, FlxG.height);
 
-        countdownSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/threeSnd"), 0.65);
+        threeSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/threeSnd"), 0.65);
+
+        twoSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/twoSnd"), 0.65);
+
+        oneSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/oneSnd"), 0.65);
+
+        goSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/goSnd"), 0.65);
     }
 
     override function destroy():Void
@@ -142,7 +154,13 @@ class Countdown extends FlxGroup
 
         onSkip = cast FlxDestroyUtil.destroy(onSkip);
 
-        countdownSnd.destroy();
+        threeSnd.destroy();
+
+        twoSnd.destroy();
+
+        oneSnd.destroy();
+
+        goSnd.destroy();
     }
 
     public function start():Void
@@ -156,7 +174,13 @@ class Countdown extends FlxGroup
     {
         tween.active = false;
 
-        countdownSnd.pause();
+        threeSnd.pause();
+
+        twoSnd.pause();
+
+        oneSnd.pause();
+
+        goSnd.pause();
 
         paused = true;
 
@@ -167,7 +191,13 @@ class Countdown extends FlxGroup
     {
         tween.active = true;
 
-        countdownSnd.resume();
+        threeSnd.resume();
+
+        twoSnd.resume();
+
+        oneSnd.resume();
+
+        goSnd.resume();
 
         paused = false;
 
@@ -185,7 +215,7 @@ class Countdown extends FlxGroup
             {
                 tween.tween(threeSpr, {y: 0.0}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartOut});
 
-                countdownSnd.play();
+                threeSnd.play();
             }
 
             case 1:
@@ -193,9 +223,7 @@ class Countdown extends FlxGroup
                 tween.tween(twoSpr, {y: (FlxG.height - twoSpr.height) * 0.5}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
-                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/twoSnd"));
-
-                countdownSnd.play();
+                twoSnd.play();
             }
 
             case 2:
@@ -203,9 +231,7 @@ class Countdown extends FlxGroup
                 tween.tween(oneSpr, {y: FlxG.height - oneSpr.height}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
-                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/oneSnd"));
-
-                countdownSnd.play();
+                oneSnd.play();
             }
 
             case 3:
@@ -219,9 +245,7 @@ class Countdown extends FlxGroup
                 tween.tween(goSpr, {y: FlxG.height - goSpr.height * 0.75}, conductor.beatLength * 0.001, 
                     {ease: FlxEase.quartOut});
                 
-                countdownSnd.loadEmbedded(Assets.getSound("ui/Countdown/goSnd"));
-
-                countdownSnd.play();
+                goSnd.play();
             }
 
             case 4:
