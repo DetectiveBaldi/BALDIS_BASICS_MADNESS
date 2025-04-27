@@ -479,13 +479,7 @@ class PlayState extends ResourceState
             campaignScore += playField.playStats.score;
 
             campaignMisses += playField.playStats.misses;
-        }
 
-        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
-            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
-
-        if (isCampaign)
-        {
             var i:Int = week.getLevelIndex(level);
 
             if (i == week.levels.length - 1.0)
@@ -504,6 +498,15 @@ class PlayState extends ResourceState
         }
         else
             FlxG.switchState(() -> new FreeplayScreen());
+
+        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
+            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
+
+        mainVocals?.stop();
+
+        opponentVocals?.stop();
+
+        playerVocals?.stop();
     }
 
     public function pause():Void
