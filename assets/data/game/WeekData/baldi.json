@@ -1,9 +1,0 @@
-{
-    "id": 0,
-    
-    "name": "Baldi",
-
-    "description": "You get a very suspicious note from your friend, asking you to get their \"noteboos\" from a school you've never heard of before.\nWhat could go wrong?",
-
-    "levels": [{"name": "Warm Welcome"}, {"name": "Revision"}, {"name": "Gain Ground"}]
-}

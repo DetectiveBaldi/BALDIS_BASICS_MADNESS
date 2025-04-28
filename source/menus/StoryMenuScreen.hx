@@ -276,7 +276,7 @@ class StoryMenuScreen extends ResourceState
             {
                 MainMenuScreen.fadeMusic();
 
-                PlayState.loadWeek(WeekData.list[curSelected], 0, true);
+                PlayState.loadWeek(WeekData.list[curSelected]);
             }
         }
         else

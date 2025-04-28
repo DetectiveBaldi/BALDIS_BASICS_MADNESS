@@ -1,4 +1,4 @@
-package game.levels.week0;
+package game.levels.baldiw;
 
 import openfl.filters.BitmapFilter;
 
@@ -30,7 +30,7 @@ using util.MathUtil;
 
 using StringTools;
 
-class Level2 extends PlayState
+class GainGL extends PlayState
 {
     public var castedStage(get, never):School;
 

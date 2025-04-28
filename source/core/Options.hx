@@ -122,15 +122,15 @@ class Options
     {
         return FlxG.save.data.options.controls ??= 
         [
-            "NOTE:LEFT" => getDefaultControl("NOTE:LEFT"),
+            "NOTE:LEFT" => [65, 37],
 
-            "NOTE:DOWN" => getDefaultControl("NOTE:DOWN"),
+            "NOTE:DOWN" => [83, 40],
             
-            "NOTE:UP" => getDefaultControl("NOTE:UP"),
+            "NOTE:UP" => [87, 38],
             
-            "NOTE:RIGHT" => getDefaultControl("NOTE:RIGHT"),
+            "NOTE:RIGHT" => [68, 39],
             
-            "UI:PAUSE" => getDefaultControl("UI:PAUSE")
+            "UI:PAUSE" => [13, 27]
         ];
     }
 
@@ -206,49 +206,8 @@ class Options
         return automatedInputs;
     }
 
-    public static var gameModifiers(get, set):Map<String, Dynamic>;
-
-    @:noCompletion
-    static function get_gameModifiers():Map<String, Dynamic>
-    {
-        return FlxG.save.data.options.gameModifiers ??= new Map<String, Dynamic>();
-    }
-
-    @:noCompletion
-    static function set_gameModifiers(_gameModifiers:Map<String, Dynamic>):Map<String, Dynamic>
-    {
-        FlxG.save.data.options.gameModifiers = _gameModifiers;
-
-        return gameModifiers;
-    }
-
     public static function init():Void
     {
         FlxG.save.data.options ??= {};
-    }
-
-    public static function getDefaultControl(name:String):Array<Int>
-    {
-        var defControl:Array<Int> = [];
-
-        switch (name:String)
-        {
-            case "NOTE:LEFT":
-                defControl = [65, 37];
-
-            case "NOTE:DOWN":
-                defControl = [83, 40];
-
-            case "NOTE:UP":
-                defControl = [87, 38];
-
-            case "NOTE:RIGHT":
-                defControl = [68, 39];
-
-            case "UI:PAUSE":
-                defControl = [13, 27];
-        }
-
-        return defControl;
     }
 }

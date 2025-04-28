@@ -2,6 +2,12 @@ package util;
 
 class ArrayUtil
 {
+    public static function pushMultiple<T>(arr:Array<T>, ...vals:T):Void
+    {
+        for (i in 0 ... vals.length)
+            arr.push(vals[i]);
+    }
+
     public static function oldest<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
         var output:T = null;

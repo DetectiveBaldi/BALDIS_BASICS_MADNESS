@@ -62,24 +62,52 @@ class PlayState extends ResourceState
 
     public static var campaignMisses:Int;
 
-    public static function getCampaignLevel():PlayState
+    public static function getLevelPath(?level:LevelData, sep:String = "/"):String
     {
-        return Type.createInstance(Type.resolveClass('game.levels.week${week.id}.Level${week.getLevelIndex(level)}'), []);
+        level ??= PlayState.level;
+
+        var path:String = 'game/levels';
+
+        path += '/${level.week?.sanitize() ?? ""}';
+
+        path += '/${level.sanitize()}';
+
+        return sep == "/" ? path : path.replace("/", sep);
     }
 
-    public static function loadWeek(_week:WeekData, index:Int = 0, _isCampaign:Bool = true):Void
+    public static function getLevelClass(?level:LevelData):PlayState
     {
-        week = _week;
+        return Type.createInstance(Type.resolveClass(getLevelPath(level ??= PlayState.level, ".")), []);
+    }
 
-        level = week.levels[index];
+    public static function loadWeek(week:WeekData):Void
+    {
+        PlayState.week = week;
 
-        isCampaign = _isCampaign;
+        level = week.levels[0];
+
+        isCampaign = true;
 
         campaignScore = 0;
 
         campaignMisses = 0;
 
-        FlxG.switchState(() -> getCampaignLevel());
+        FlxG.switchState(() -> getLevelClass());
+    }
+
+    public static function loadSingle(level:LevelData):Void
+    {
+        week = null;
+
+        PlayState.level = level;
+
+        isCampaign = false;
+
+        campaignScore = 0;
+
+        campaignMisses = 0;
+
+        FlxG.switchState(() -> getLevelClass());
     }
 
     /**
@@ -370,39 +398,9 @@ class PlayState extends ResourceState
 
     public function loadChart():Void
     {
-        chart = ChartConverters.build(Paths.data('game/levels/week${week.id}/Level${week.getLevelIndex(level)}'));
+        chart = ChartConverters.build(Paths.data(getLevelPath()));
 
         TimedObjectUtil.sort(chart.notes);
-
-        if (Options.gameModifiers["shuffle"])
-        {
-            var shuffledDirections:Array<Int> = new Array<Int>();
-
-            for (i in 0 ... 4)
-                shuffledDirections.push(FlxG.random.int(0, 4 - 1, shuffledDirections));
-
-            for (i in 0 ... chart.notes.length)
-            {
-                var note:RawNote = chart.notes[i];
-
-                note.direction = shuffledDirections[note.direction];
-            }
-        }
-
-        if (Options.gameModifiers["mirror"])
-        {
-            var mirroredDirections:Array<Int> = new Array<Int>();
-
-            for (i in 0 ... 4)
-                mirroredDirections.insert(0, i);
-
-            for (i in 0 ... chart.notes.length)
-            {
-                var note:RawNote = chart.notes[i];
-
-                note.direction = mirroredDirections[note.direction];
-            }
-        }
 
         TimedObjectUtil.sort(chart.events);
 
@@ -421,7 +419,7 @@ class PlayState extends ResourceState
 
     public function loadSong():Void
     {
-        var path:String = Paths.music('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/');
+        var path:String = Paths.music('${getLevelPath()}/');
 
         instrumental = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Instrumental'), true));
 
@@ -480,7 +478,7 @@ class PlayState extends ResourceState
 
             campaignMisses += playField.playStats.misses;
 
-            var i:Int = week.getLevelIndex(level);
+            var i:Int = week.levels.indexOf(level);
 
             if (i == week.levels.length - 1.0)
             {
@@ -494,7 +492,7 @@ class PlayState extends ResourceState
 
             level = week.levels[i + 1];
 
-            FlxG.switchState(() -> getCampaignLevel());
+            FlxG.switchState(() -> getLevelClass());
         }
         else
             FlxG.switchState(() -> new FreeplayScreen());

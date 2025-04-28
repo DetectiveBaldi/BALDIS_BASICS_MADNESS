@@ -14,7 +14,7 @@ import flixel.util.typeLimit.NextState;
 import core.Assets;
 import core.Options;
 
-import data.WeekData;
+import data.Playlist;
 
 import game.HighScore;
 
@@ -67,7 +67,7 @@ class InitState extends FlxState
 
         FlxG.console.autoPause = Options.autoPause;
 
-        WeekData.reloadWeeksList();
+        Playlist.init();
 
         HighScore.init();
 

@@ -265,14 +265,14 @@ class PlayField extends FlxGroup
 
         var misses:Int = playStats.misses;
 
-        var accuracy:Float = playStats.accuracy;
+        var accuracy:Float = FlxMath.roundDecimal(playStats.accuracy, 1);
 
         var grade:String = playStats.grade;
 
-        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${FlxMath.roundDecimal(accuracy, 1)}%\nGrade: ${grade}';
+        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${accuracy}%\nGrade: ${grade}';
 
         if (Options.downscroll)
-            scoreTxt.text = scoreTxt.text.reverse("\n", "\n");
+            scoreTxt.text = 'Grade: ${grade}\nAccuracy: ${accuracy}\nMisses: ${misses}\nScore: ${score}';
     }
 
     public function noteHit(event:NoteHitEvent):Void
@@ -330,9 +330,9 @@ class PlayField extends FlxGroup
         healthBar.value -= 10.0 * ev.elapsed;
     }
 
-    public function ghostTap(event:GhostTapEvent):Void
+    public function ghostTap(ev:GhostTapEvent):Void
     {
-        if (!event.ghostTapping)
+        if (!ev.ghostTapping)
         {
             playStats.score -= 500;
 

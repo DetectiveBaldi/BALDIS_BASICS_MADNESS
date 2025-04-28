@@ -24,13 +24,12 @@ import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 
 import core.Assets;
+import core.Options;
 import core.Paths;
 
 import extendable.ResourceSubState;
 
 import game.PlayState;
-
-import menus.MainMenuScreen;
 
 import menus.options.OptionsMenu;
 
@@ -75,17 +74,20 @@ class PauseScreen extends ResourceSubState
 
         FlxG.mouse.visible = true;
 
-        blur = new BlurFilter(0.0, 0.0);
+        if (Options.shaders)
+        {
+            blur = new BlurFilter(0.0, 0.0);
 
-        tween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
+            tween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
 
-        game.gameCamera.filters ??= new Array<BitmapFilter>();
+            game.gameCamera.filters ??= new Array<BitmapFilter>();
 
-        game.hudCamera.filters ??= new Array<BitmapFilter>();
+            game.hudCamera.filters ??= new Array<BitmapFilter>();
 
-        game.gameCamera.filters.push(blur);
+            game.gameCamera.filters.push(blur);
 
-        game.hudCamera.filters.push(blur);
+            game.hudCamera.filters.push(blur);
+        }
 
         var background:FlxSprite = new FlxSprite();
 
@@ -195,11 +197,11 @@ class PauseScreen extends ResourceSubState
 
         tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getCampaignLevel())));
+        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getLevelClass())));
 
         tween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getCampaignLevel()));
+        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getLevelClass()));
 
         tween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
@@ -242,9 +244,12 @@ class PauseScreen extends ResourceSubState
 
         FlxG.mouse.visible = mouseVis;
 
-        game.gameCamera.filters.remove(blur);
+        if (Options.shaders)
+        {
+            game.gameCamera.filters.remove(blur);
 
-        game.hudCamera.filters.remove(blur);
+            game.hudCamera.filters.remove(blur);
+        }
 
         tune.stop();
     }

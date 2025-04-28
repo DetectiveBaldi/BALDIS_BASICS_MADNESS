@@ -1,4 +1,4 @@
-package game.levels.week0;
+package game.levels.baldiw;
 
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
@@ -51,7 +51,7 @@ using util.MathUtil;
 
 using StringTools;
 
-class Level1 extends PlayState
+class RevisionL extends PlayState
 {
     public var castedStage(get, never):School;
 
@@ -90,11 +90,12 @@ class Level1 extends PlayState
         castedStage.entranceA2.visible = true;
         
         quarter = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/quarter"));
+        quarter.active = false;
         quarter.scale.set(2, 2);
         quarter.setPosition(15.0, 350.0);
         castedStage.insert(castedStage.members.indexOf(opponents), quarter);
 
-        tween.tween(quarter, {y: quarter.y - 50}, 0.75, 
+        tween.tween(quarter, {y: quarter.y - 50}, conductor.beatLength * 4.0 * 0.001, 
             {
                 ease: FlxEase.sineInOut, 
                 type: PINGPONG
@@ -123,12 +124,8 @@ class Level1 extends PlayState
 
         if (padMinigame?.loss)
         {
-            var week:WeekData = PlayState.week;
-
-            var level:LevelData = PlayState.level;
-            
-            instrumental.loadEmbedded(Assets.getMusic('game/levels/week${week.id}/Level${week.getLevelIndex(level)}/' +
-                'Instrumental-Bad-Math'), false, false, endSong);
+            instrumental.loadEmbedded(Assets.getMusic('${PlayState.getLevelPath()}/Instrumental-Bad-Math'), 
+                false, false, endSong);
 
             instrumental.play();
         }

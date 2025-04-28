@@ -51,6 +51,9 @@ class FreeplayScreen extends ResourceState
 
         for (i in 0 ... WeekData.list.length)
             levels = levels.concat(WeekData.list[i].levels);
+    
+        for (i in 0 ... LevelData.list.length)
+            levels.push(LevelData.list[i]);
 
         background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/background"));
 
@@ -192,11 +195,7 @@ class FreeplayScreen extends ResourceState
 
     public function clickPlayButton():Void
     {
-        var level:LevelData = levels[curSelected];
-
-        var week:WeekData = level.week;
-
-        PlayState.loadWeek(week, week.getLevelIndex(level), false);
+        PlayState.loadSingle(levels[curSelected]);
     }
 
     public function clickExitButton():Void
