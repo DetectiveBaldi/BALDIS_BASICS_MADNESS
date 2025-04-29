@@ -11,15 +11,22 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 
 import flixel.FlxG;
+import flixel.FlxState;
 
 import flixel.graphics.FlxGraphic;
+
+import flixel.sound.FlxSound;
 
 import core.Options;
 
 using StringTools;
 
+using util.ArrayUtil;
+
 class Assets
 {
+    public static var lastState:Class<FlxState>;
+
     public static var graphics:Map<String, FlxGraphic>;
 
     public static var sounds:Map<String, Sound>;
@@ -33,6 +40,10 @@ class Assets
         sounds = new Map<String, Sound>();
 
         music = new Map<String, Sound>();
+
+        FlxG.signals.preStateSwitch.add(() -> lastState = Type.getClass(FlxG.state) );
+
+        FlxG.signals.preStateCreate.add((nxt:FlxState) -> { if (lastState != Type.getClass(nxt)) clearCaches(); });
     }
 
     public static function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
@@ -61,6 +72,9 @@ class Assets
             return;
 
         var graphic:FlxGraphic = graphics[path];
+
+        if (graphic.useCount > 0.0)
+            return;
 
         FlxG.bitmap.remove(graphic);
 
@@ -121,7 +135,14 @@ class Assets
         if (!map.exists(path))
             return;
 
-        map[path].close();
+        var aud:Sound = map[path];
+
+        @:privateAccess
+        if (FlxG.sound.defaultMusicGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null ||
+                FlxG.sound.list.members.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null)
+                    return;
+
+        aud.close();
 
         openfl.utils.Assets.cache.removeSound(path);
 

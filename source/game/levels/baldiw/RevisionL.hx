@@ -512,10 +512,10 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         sndQueue = new SoundQueue();
 
-        sndQueue.onNextSnd.add(() ->
+        sndQueue.onUpdate.add((sound:FlxSound) ->
         {
             @:privateAccess
-                var soundKey:String = Assets.getSoundKey(sndQueue.list[0]._sound);
+                var soundKey:String = Assets.getSoundKey(sound._sound);
             
             soundKey = soundKey.substring(0, soundKey.length - 4);
 
@@ -739,6 +739,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
         #end
 
         keys.destroy();
+
+        sndQueue.destroy();
 
         #if FLX_DEBUG
         debugToggleKeys = null;

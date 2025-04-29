@@ -1,49 +1,35 @@
 package sound;
 
-import flixel.FlxBasic;
-
 import flixel.sound.FlxSound;
 
-import flixel.util.FlxSignal;
+import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxSignal.FlxTypedSignal;
 
-class SoundQueue extends FlxBasic
+class SoundQueue
 {
     public var list:Array<FlxSound>;
 
-    public var onNextSnd:FlxSignal;
+    public var onUpdate:FlxTypedSignal<FlxSound->Void>;
     
     public function new():Void
     {
-        super();
-
-        visible = false;
-
         list = new Array<FlxSound>();
 
-        onNextSnd = new FlxSignal();
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        flushQueue(true);
-
-        list = null;
+        onUpdate = new FlxTypedSignal<FlxSound->Void>();
     }
 
     public function addToQueue(sound:FlxSound):Void
-    {       
-        list.push(sound);
-
-        if (list.length == 1.0)
+    {
+        if (list.length == 0.0)
         {
             sound.onComplete = queueNext;
 
             sound.play();
 
-            onNextSnd.dispatch();
+            onUpdate.dispatch(sound);
         }
+
+        list.push(sound);
     }
 
     public function pause():Void
@@ -99,6 +85,15 @@ class SoundQueue extends FlxBasic
 
         nxt.play(true);
 
-        onNextSnd.dispatch();
+        onUpdate.dispatch(nxt);
+    }
+
+    public function destroy():Void
+    {
+        flushQueue(true);
+
+        list = null;
+
+        onUpdate = cast FlxDestroyUtil.destroy(onUpdate);
     }
 }
