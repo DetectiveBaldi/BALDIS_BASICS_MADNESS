@@ -34,6 +34,6 @@ class Rating
                 return rating;
         }
 
-        return list.newest();
+        return list.last();
     }
 }

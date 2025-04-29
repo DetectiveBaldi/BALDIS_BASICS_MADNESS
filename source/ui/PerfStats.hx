@@ -55,17 +55,17 @@ class PerfStats extends TextField
         while (timestamps[0] < now - 1.0)
             timestamps.shift();
 
-        var _text:String = 'FPS: ${MathUtil.minInt(FlxG.drawFramerate, timestamps.length)}';
+        var tx:String = 'FPS: ${MathUtil.minInt(FlxG.drawFramerate, timestamps.length)}';
 
         #if debug
-        _text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(openfl.system.System.totalMemoryNumber)}';
+        tx += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(openfl.system.System.totalMemoryNumber)}';
 
-        _text += '\nVRAM: ${flixel.util.FlxStringUtil.formatBytes(FlxG.stage.context3D.totalGPUMemory)}';
+        tx += '\nVRAM: ${flixel.util.FlxStringUtil.formatBytes(FlxG.stage.context3D.totalGPUMemory)}';
 
-        _text += '\nMax Texture Size: ${FlxG.bitmap.maxTextureSize}^2px';
+        tx += '\nMax Texture Size: ${FlxG.bitmap.maxTextureSize}^2px';
         #end
 
-        if (text != _text)
-            text = _text;
+        if (text != tx)
+            text = tx;
     }
 }

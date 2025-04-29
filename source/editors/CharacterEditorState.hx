@@ -104,7 +104,7 @@ class CharacterEditorState extends ResourceState
 
         add(character);
 
-        animationIndex = character.config.animations.indexOf(character.config.animations.oldest((animation:AnimationData) -> character.animation.name == animation.name));
+        animationIndex = character.config.animations.indexOf(character.config.animations.first((animation:AnimationData) -> character.animation.name == animation.name));
 
         ui = ComponentBuilder.fromFile("assets/data/editors/CharacterEditorState/ui.xml");
 
@@ -410,7 +410,7 @@ class CharacterEditorState extends ResourceState
 
         var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text) ?? new Array<Int>();
 
-        var animation:AnimationData = character.config.animations.oldest((animation:AnimationData) -> ui.findComponent("______textfield", TextField).text == animation.name);
+        var animation:AnimationData = character.config.animations.first((animation:AnimationData) -> ui.findComponent("______textfield", TextField).text == animation.name);
 
         if (animation == null)
         {

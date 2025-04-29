@@ -24,9 +24,9 @@ class ChartConverters
 
         if (FileSystem.exists(Paths.json(rawMetaPath)))
         {
-            var rawChartPath:String = (path.endsWith("/") ? path : '${path}/') + FileSystem.readDirectory(path).oldest((_path:String) -> _path.startsWith("chart")).replace(".json", "");
+            var rawChartPath:String = (path.endsWith("/") ? path : '${path}/') + FileSystem.readDirectory(path).first((_path:String) -> _path.startsWith("chart")).replace(".json", "");
 
-            var diff:String = rawChartPath.contains("-") ? rawChartPath.split("-").newest() : "normal";
+            var diff:String = rawChartPath.contains("-") ? rawChartPath.split("-").last() : "normal";
 
             return FunkinConverter.build(rawChartPath, rawMetaPath, diff);
         }
@@ -178,9 +178,9 @@ class PsychConverter
 
         var splt:Array<String> = credits.split("|");
 
-        var composer:String = splt.oldest((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
+        var composer:String = splt.first((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
 
-        var step:Null<Int> = splt.length > 1.0 ? Std.parseInt(splt.oldest((str:String) -> str.toLowerCase().contains("step"))
+        var step:Null<Int> = splt.length > 1.0 ? Std.parseInt(splt.first((str:String) -> str.toLowerCase().contains("step"))
             .split("=")[1]) : null;
 
         output.credits = {composer: composer, step: step}

@@ -530,7 +530,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             if (soundKey.contains("Praise"))
             {
-                var splt:String = soundKey.split("_").newest();
+                var splt:String = soundKey.split("_").last();
 
                 baldi.animation.play(splt.toLowerCase(), true);
 

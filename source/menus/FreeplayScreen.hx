@@ -144,7 +144,7 @@ class FreeplayScreen extends ResourceState
     {
         var level:LevelData = levels[curSelected];
 
-        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(KEBAB)}'));
+        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(" ", KEBAB)}'));
 
         poster.scale.set(1.6, 1.6);
 

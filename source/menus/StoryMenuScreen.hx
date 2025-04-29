@@ -31,6 +31,8 @@ using util.StringUtil;
 
 class StoryMenuScreen extends ResourceState
 {
+    public var weeks:Array<WeekData>;
+
     public var background:FlxSprite;
 
     public var clipboard:FlxSprite;
@@ -64,6 +66,11 @@ class StoryMenuScreen extends ResourceState
     override function create():Void
     {
         super.create();
+
+        weeks = new Array<WeekData>();
+
+        for (i in 0 ... WeekData.list.length)
+            weeks.push(WeekData.list[i]);
 
         FlxG.camera.bgColor = FlxColor.WHITE;
 
@@ -276,7 +283,7 @@ class StoryMenuScreen extends ResourceState
             {
                 MainMenuScreen.fadeMusic();
 
-                PlayState.loadWeek(WeekData.list[curSelected]);
+                PlayState.loadWeek(weeks[curSelected]);
             }
         }
         else
@@ -292,9 +299,9 @@ class StoryMenuScreen extends ResourceState
 
     public function changeSelection(change:Int):Void
     {
-        curSelected = FlxMath.wrap(change, 0, WeekData.list.length - 1);
+        curSelected = FlxMath.wrap(change, 0, weeks.length - 1);
 
-        var week:WeekData = WeekData.list[curSelected];
+        var week:WeekData = weeks[curSelected];
 
         var text:String = "";
 
@@ -327,7 +334,7 @@ class StoryMenuScreen extends ResourceState
 
     public function updateWeekPortrait(week:WeekData):Void
     {
-        weekPortrait.loadGraphic(Assets.getGraphic('globals/week-portrait-${week.name.setCase(KEBAB)}'));
+        weekPortrait.loadGraphic(Assets.getGraphic('globals/week-portrait-${week.name.setCase(" ", KEBAB)}'));
 
         weekPortrait.scale.set(1.25, 1.25);
 

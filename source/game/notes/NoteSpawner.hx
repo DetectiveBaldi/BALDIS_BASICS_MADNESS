@@ -36,7 +36,7 @@ class NoteSpawner extends FlxBasic
 
         visible = false;
 
-        camera = FlxG.cameras.list.newest();
+        camera = FlxG.cameras.list.last();
 
         conductor = _conductor;
         

@@ -30,18 +30,18 @@ class PixelChunks extends FlxShader
                 return;
             }
             
-            vec2 _tileSize = vec2(tileSize);
+            vec2 tileVec = vec2(tileSize);
 
-            vec2 edgePadding = mod(iResolution.xy * 0.5 - _tileSize * 0.5, _tileSize);
+            vec2 edgePadding = mod(iResolution.xy * 0.5 - tileVec * 0.5, tileVec);
 
-            vec2 tileIndex = ceil((fragCoord - edgePadding) / _tileSize);
+            vec2 tileIndex = ceil((fragCoord - edgePadding) / tileVec);
 
-            fragColor = texture(iChannel0, (edgePadding + tileIndex * _tileSize - _tileSize * 0.5) / iResolution.xy);
+            fragColor = texture(iChannel0, (edgePadding + tileIndex * tileVec - tileVec * 0.5) / iResolution.xy);
         }
     ")
 
     public function new():Void
     {
-       super();
+        super();
     }
 }

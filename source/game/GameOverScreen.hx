@@ -39,7 +39,7 @@ class GameOverScreen extends ResourceSubState
     {
         super.create();
 
-        camera = FlxG.cameras.list.newest();
+        camera = FlxG.cameras.list.last();
 
         camera.zoom = 0.75;
 

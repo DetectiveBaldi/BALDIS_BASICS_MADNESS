@@ -393,7 +393,7 @@ class OptionsMenu extends ResourceState
 
     public function addBoolOption(title:String, description:String, option:String):BoolOptionItem
     {
-        var newest:BaseOptionItem = options.members.newest();
+        var newest:BaseOptionItem = options.members.last();
 
         var bool:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, description, option);
 
@@ -406,7 +406,7 @@ class OptionsMenu extends ResourceState
 
     public function addControlOption(title:String, description:String, option:String):ControlOptionItem
     {
-        var newest:BaseOptionItem = options.members.newest();
+        var newest:BaseOptionItem = options.members.last();
 
         var control:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, description, option);
 
@@ -419,7 +419,7 @@ class OptionsMenu extends ResourceState
 
     public function addHeaderOption(title:String):HeaderOptionItem
     {
-        var newest:BaseOptionItem = options.members.newest();
+        var newest:BaseOptionItem = options.members.last();
 
         var header:HeaderOptionItem = new HeaderOptionItem(0.0, 0.0, title, "");
 
@@ -432,7 +432,7 @@ class OptionsMenu extends ResourceState
 
     public function addIntOption(title:String, description:String, option:String, min:Int, max:Int, step:Int):IntOptionItem
     {
-        var newest:BaseOptionItem = options.members.newest();
+        var newest:BaseOptionItem = options.members.last();
 
         var int:IntOptionItem = new IntOptionItem(0.0, 0.0, title, description, option, min, max, step);
 

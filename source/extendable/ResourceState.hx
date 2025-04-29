@@ -107,7 +107,7 @@ class CustomTransition extends FlxSubState
     {
         super.create();
 
-        camera = FlxG.cameras.list.newest();
+        camera = FlxG.cameras.list.last();
 
         var spr:CustomTransitionSprite = new CustomTransitionSprite(fade);
 
@@ -139,7 +139,7 @@ class CustomTransitionSprite extends FlxBackdrop
     {
         super();
 
-        camera = FlxG.cameras.list.newest();
+        camera = FlxG.cameras.list.last();
 
         this.fade = fade;
 

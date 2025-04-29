@@ -2,67 +2,67 @@ package util;
 
 class ArrayUtil
 {
-    public static function pushMultiple<T>(arr:Array<T>, ...vals:T):Void
+    public static function pushMany<T>(arr:Array<T>, ...xyz:T):Void
     {
-        for (i in 0 ... vals.length)
-            arr.push(vals[i]);
+        for (i in 0 ... xyz.length)
+            arr.push(xyz[i]);
     }
 
-    public static function oldest<T>(arr:Array<T>, func:(T)->Bool = null):T
+    public static function first<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
-        var output:T = null;
+        var result:T = null;
 
         if (arr.length == 0.0)
-            return output;
+            return result;
 
         if (func == null)
-            output = arr[0];
+            result = arr[0];
         else
         {
             for (i in 0 ... arr.length)
             {
-                var t:T = arr[i];
+                var field:T = arr[i];
 
-                if (func(t))
+                if (func(field))
                 {
-                    output = t;
+                    result = field;
 
                     break;
                 }
             }
         }
 
-        return output;
+        return result;
     }
 
-    public static function newest<T>(arr:Array<T>, func:(T)->Bool = null):T
+    public static function last<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
-        var output:T = null;
+        var result:T = null;
 
         if (arr.length == 0.0)
-            return output;
+            return result;
 
         if (func == null)
-            output = arr[arr.length - 1];
+            result = arr[arr.length - 1];
         else
         {
-            var i:Int = arr.length - 1;
+            var index:Int = arr.length - 1;
 
-            while (i >= 0.0)
+            while (index >= 0.0)
             {
-                var t:T = arr[i];
+                var field:T = arr[index];
 
-                if (func(t))
+                if (func(field))
                 {
-                    output = t;
+                    result = field;
 
                     break;
                 }
 
-                i--;
+                index--;
             }
         }
 
-        return output;
+        return result;
     }
 }
