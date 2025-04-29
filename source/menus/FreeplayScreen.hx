@@ -94,6 +94,8 @@ class FreeplayScreen extends ResourceState
 
         tv = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/tv"));
 
+        tv.active = false;
+
         tv.scale.set(2.25, 2.25);
 
         tv.updateHitbox();
@@ -120,11 +122,15 @@ class FreeplayScreen extends ResourceState
 
         tvPortrait = new FlxSprite(0.0, 0.0);
 
+        tvPortrait.active = false;
+
         add(tvPortrait);
 
         updateTvPortrait();
 
         poster = new FlxSprite();
+
+        poster.active = false;
 
         add(poster);
 
@@ -334,6 +340,8 @@ class HeightenedButton extends FlxSpriteGroup
         base = new FlxSprite();
 
         base.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/HeightenedButton/base"), true, 128, 128);
+
+        base.active = false;
 
         base.animation.add("up", [0], 0.0, false);
 
