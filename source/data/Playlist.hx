@@ -13,7 +13,7 @@ class Playlist
         week.description += "from a school you've never heard of before.\nWhat could go wrong?";
 
         week.levels.pushMany(new LevelData(week, "Warm Welcome"), new LevelData(week, "Revision"), 
-            new LevelData(week, "Gain Ground"));
+            new LevelData(week, "Gain Ground"), new LevelData(week, "Beginnings"));
 
         WeekData.list.push(week);
 
