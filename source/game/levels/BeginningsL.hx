@@ -1,4 +1,4 @@
-package game.levels.baldiw;
+package game.levels;
 
 import openfl.filters.BitmapFilter;
 

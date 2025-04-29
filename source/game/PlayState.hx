@@ -66,9 +66,10 @@ class PlayState extends ResourceState
     {
         level ??= PlayState.level;
 
-        var path:String = 'game/levels';
+        var path:String = "game/levels";
 
-        path += '/${level.week?.sanitize() ?? ""}';
+        if (level.week != null)
+            path += '/${level.week.sanitize()}';
 
         path += '/${level.sanitize()}';
 
