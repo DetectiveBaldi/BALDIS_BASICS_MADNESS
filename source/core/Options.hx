@@ -66,22 +66,6 @@ class Options
 
         return soundStreaming;
     }
-    
-    public static var persistentCache(get, set):Bool;
-
-    @:noCompletion
-    static function get_persistentCache():Bool
-    {
-        return FlxG.save.data.options.persistentCache ??= true;
-    }
-    
-    @:noCompletion
-    static function set_persistentCache(_persistentCache:Bool):Bool
-    {
-        FlxG.save.data.options.persistentCache = _persistentCache;
-
-        return _persistentCache;
-    }
 
     public static var flashing(get, set):Bool;
 

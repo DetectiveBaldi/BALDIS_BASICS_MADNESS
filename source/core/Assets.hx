@@ -20,8 +20,6 @@ using StringTools;
 
 class Assets
 {
-    public static var persistentCache:Bool;
-
     public static var graphics:Map<String, FlxGraphic>;
 
     public static var sounds:Map<String, Sound>;
@@ -30,14 +28,6 @@ class Assets
 
     public static function init():Void
     {
-        persistentCache = Options.persistentCache;
-        
-        FlxG.signals.preStateSwitch.add(() -> 
-        {
-            if (!persistentCache)
-                clearCaches();
-        });
-
         graphics = new Map<String, FlxGraphic>();
 
         sounds = new Map<String, Sound>();
@@ -47,7 +37,9 @@ class Assets
 
     public static function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
     {
-        path = raw ? path : Paths.image(Paths.png(path));
+        if (!raw)
+            path = Paths.image(Paths.png(path));
+
         if (graphics.exists(path))
             return graphics[path];
 
@@ -77,7 +69,8 @@ class Assets
 
     public static function getSound(path:String, raw = false):Sound
     {
-        path = raw ? path : Paths.sound(Paths.ogg(path));
+        if (!raw)
+            path = Paths.sound(Paths.ogg(path));
 
         if (sounds.exists(path))
             return sounds[path];
@@ -98,7 +91,8 @@ class Assets
 
     public static function getMusic(path:String, raw:Bool = false, stream:Bool = true):Sound
     {
-        path = raw ? path : Paths.music(Paths.ogg(path));
+        if (!raw)
+            path = Paths.music(Paths.ogg(path));
 
         if (music.exists(path))
             return music[path];

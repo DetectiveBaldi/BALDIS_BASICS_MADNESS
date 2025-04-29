@@ -205,9 +205,7 @@ class OptionsMenu extends ResourceState
         addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed from RAM\nwhere applicable (requires restarting the application).", "gpuCaching");
 
         addBoolOption("Sound Streaming", "If checked, audio is loaded progressively\nwhere applicable (requires restarting the application).", "soundStreaming");
-
-        addBoolOption("Persistent Cache", "If unchecked, the graphic and sound caches will be\ninvalidated on scene switch.", "persistentCache");
-
+        
         addHeaderOption("Accessibility");
 
         addBoolOption("Flashing", "If unchecked, screen effects such as flashing are limited.", "flashing");

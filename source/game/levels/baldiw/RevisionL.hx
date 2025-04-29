@@ -251,8 +251,6 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            persistentUpdate = true;
-
             var spr:CustomTransitionSprite = new CustomTransitionSprite(OUT);
 
             spr.animation.onFinish.add((name:String) -> spr.visible = false);
