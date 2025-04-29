@@ -25,6 +25,7 @@ import extendable.ResourceState;
 
 import game.PlayState;
 
+using util.MathUtil;
 using util.StringUtil;
 
 class FreeplayScreen extends ResourceState
@@ -34,6 +35,12 @@ class FreeplayScreen extends ResourceState
     public var background:FlxSprite;
 
     public var scrollBg:FlxSprite;
+
+    public var tv:FlxSprite;
+
+    public var tvStatic:FlxSprite;
+
+    public var tvPortrait:FlxSprite;
 
     public var poster:FlxSprite;
 
@@ -74,7 +81,8 @@ class FreeplayScreen extends ResourceState
 
         scrollBg.animation.addByPrefix("move", "move", 12.0, false);
 
-        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; updatePoster(); });
+        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; updateTvPortrait(); poster.visible = true; 
+            updatePoster(); });
 
         scrollBg.scale.set(1.2, 1.2);
 
@@ -83,6 +91,38 @@ class FreeplayScreen extends ResourceState
         scrollBg.screenCenter();
 
         add(scrollBg);
+
+        tv = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/tv"));
+
+        tv.scale.set(2.25, 2.25);
+
+        tv.updateHitbox();
+
+        tv.x = FlxG.width - tv.width;
+
+        add(tv);
+
+        tvStatic = new FlxSprite(0.0, 0.0);
+
+        tvStatic.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/tv-static"), true, 128, 128);
+
+        tvStatic.animation.add("static", [0, 1], 18.0);
+
+        tvStatic.animation.play("static");
+
+        tvStatic.scale.set(2.25, 2.25);
+
+        tvStatic.updateHitbox();
+
+        tvStatic.centerTo(tv);
+
+        add(tvStatic);
+
+        tvPortrait = new FlxSprite(0.0, 0.0);
+
+        add(tvPortrait);
+
+        updateTvPortrait();
 
         poster = new FlxSprite();
 
@@ -135,9 +175,33 @@ class FreeplayScreen extends ResourceState
         
         scrollBg.animation.play("move", false, curSelected > change);
 
+        tvStatic.visible = true;
+
+        tvPortrait.visible = false;
+
         poster.visible = false;
 
         curSelected = FlxMath.wrap(change, 0, levels.length - 1);
+    }
+
+    public function updateTvPortrait():Void
+    {
+        var level:LevelData = levels[curSelected];
+
+        if (level.week != null)
+        {
+            tvStatic.visible = false;
+
+            tvPortrait.visible = true;
+
+            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${level.week.name.toLowerCase()}'));
+
+            tvPortrait.scale.set(2.25, 2.25);
+
+            tvPortrait.updateHitbox();
+
+            tvPortrait.centerTo(tvStatic);
+        }
     }
 
     public function updatePoster():Void

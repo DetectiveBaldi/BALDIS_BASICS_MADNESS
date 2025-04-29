@@ -16,10 +16,12 @@ class StringUtil
                 {
                     var s:String = splt[i];
 
+                    s = s.substring(0, 1);
+
                     if (i == 0)
-                        splt[i] = s.substring(0, 1).toLowerCase();
+                        splt[i] = s.toLowerCase();
                     else
-                        splt[i] = s.substring(0, 1).toUpperCase();
+                        splt[i] = s.toUpperCase();
 
                     splt[i] += s.substring(1, s.length + 1);
                 }
