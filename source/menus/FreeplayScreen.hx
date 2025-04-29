@@ -81,8 +81,7 @@ class FreeplayScreen extends ResourceState
 
         scrollBg.animation.addByPrefix("move", "move", 12.0, false);
 
-        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; updateTvPortrait(); poster.visible = true; 
-            updatePoster(); });
+        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; updatePoster(); });
 
         scrollBg.scale.set(1.2, 1.2);
 
@@ -124,7 +123,7 @@ class FreeplayScreen extends ResourceState
 
         tvPortrait.active = false;
 
-        add(tvPortrait);
+        insert(members.indexOf(tvStatic), tvPortrait);
 
         updateTvPortrait();
 
@@ -177,17 +176,19 @@ class FreeplayScreen extends ResourceState
 
     public function changeSelection(change:Int):Void
     {
+        curSelected = FlxMath.wrap(curSelected + change, 0, levels.length - 1);
+
         scrollBg.visible = true;
-        
-        scrollBg.animation.play("move", false, curSelected > change);
 
-        tvStatic.visible = true;
+        scrollBg.animation.play("move", false, change <= 0.0);
 
-        tvPortrait.visible = false;
+        tween.cancelTweensOf(tvStatic, ["alpha"]);
+
+        tvStatic.alpha = 1.0;
 
         poster.visible = false;
 
-        curSelected = FlxMath.wrap(change, 0, levels.length - 1);
+        updateTvPortrait();
     }
 
     public function updateTvPortrait():Void
@@ -196,7 +197,7 @@ class FreeplayScreen extends ResourceState
 
         if (level.week != null)
         {
-            tvStatic.visible = false;
+            tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
             tvPortrait.visible = true;
 
@@ -239,7 +240,7 @@ class FreeplayScreen extends ResourceState
         if (!scrollBg.animation.finished)
             return;
 
-        changeSelection(curSelected - 1);
+        changeSelection(-1);
     }
 
     public function clickRightButton():Void
@@ -247,7 +248,7 @@ class FreeplayScreen extends ResourceState
         if (!scrollBg.animation.finished)
             return;
 
-        changeSelection(curSelected + 1);
+        changeSelection(1);
     }
 
     public function addHeightenedButton(text:String, size:ButtonSize, onClick:()->Void):HeightenedButton
