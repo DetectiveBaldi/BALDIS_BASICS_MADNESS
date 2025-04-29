@@ -1,7 +1,5 @@
 package game;
 
-import menus.FreeplayScreen;
-import menus.StoryMenuScreen;
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
 
@@ -31,6 +29,8 @@ import extendable.ResourceSubState;
 
 import game.PlayState;
 
+import menus.FreeplayScreen;
+import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
 using util.ArrayUtil;
@@ -43,7 +43,7 @@ class PauseScreen extends ResourceSubState
 
     public var mouseVis:Bool;
 
-    public var blur:BlurFilter;
+    public static var blur:BlurFilter;
 
     public var iconText:FlxText;
 
@@ -76,9 +76,15 @@ class PauseScreen extends ResourceSubState
 
         if (Options.shaders)
         {
-            blur = new BlurFilter(0.0, 0.0);
+            blur ??= new BlurFilter(0.0, 0.0, 0);
 
-            tween.tween(blur, {blurX: 5.0, blurY: 5.0}, 0.65, {ease: FlxEase.quartIn});
+            blur.blurX = 0.0;
+
+            blur.blurY = 0.0;
+
+            blur.quality = 0;
+
+            tween.tween(blur, {blurX: 5.0, blurY: 5.0, quality: 1}, 0.65, {ease: FlxEase.quartIn});
 
             game.gameCamera.filters ??= new Array<BitmapFilter>();
 
@@ -246,9 +252,11 @@ class PauseScreen extends ResourceSubState
 
         if (Options.shaders)
         {
-            game.gameCamera.filters.remove(blur);
+            blur.blurX = 0.0;
 
-            game.hudCamera.filters.remove(blur);
+            blur.blurY = 0.0;
+
+            blur.quality = 0;
         }
 
         tune.stop();
