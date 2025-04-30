@@ -73,8 +73,8 @@ class RevisionL extends PlayState
 
         super.create();
 
-        CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+        CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 300.0,
+            gameCameraTarget.getCenterY(), "", -1.0);
 
         gameCamera.snapToTarget();
 
@@ -146,8 +146,8 @@ class RevisionL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 50.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 50.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
 
             gameCameraZoom = 0.7;
 
@@ -189,8 +189,8 @@ class RevisionL extends PlayState
 
             tween.cancelTweensOf(this, ["gameCameraZoom"]);
             
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 100.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 50.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 100.0,
+                gameCameraTarget.getCenterY() + 50.0, "", -1.0);
 
             gameCamera.snapToTarget();
 

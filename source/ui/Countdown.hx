@@ -8,7 +8,6 @@ import flixel.group.FlxGroup;
 import flixel.sound.FlxSound;
 
 import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.FlxTweenManager;
 
 import flixel.util.FlxDestroyUtil;
@@ -16,13 +15,11 @@ import flixel.util.FlxSignal;
 import flixel.util.FlxSignal.FlxTypedSignal;
 
 import core.Assets;
-import core.Paths;
 
 import music.Conductor;
 
-/**
- * A `flixel.group.FlxGroup` representing the countdown you see in `game.PlayState`.
- */
+using util.MathUtil;
+
 class Countdown extends FlxGroup
 {
     public var conductor(default, set):Conductor;
@@ -131,7 +128,7 @@ class Countdown extends FlxGroup
 
         goSpr.updateHitbox();
 
-        goSpr.setPosition((FlxG.width - goSpr.width) * 0.5, FlxG.height);
+        goSpr.setPosition(goSpr.getCenterX(), FlxG.height);
 
         threeSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/threeSnd"), 0.65);
 
@@ -220,7 +217,7 @@ class Countdown extends FlxGroup
 
             case 1:
             {
-                tween.tween(twoSpr, {y: (FlxG.height - twoSpr.height) * 0.5}, conductor.beatLength * 0.5 * 0.001, 
+                tween.tween(twoSpr, {y: twoSpr.getCenterY()}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
                 twoSnd.play();

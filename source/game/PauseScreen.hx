@@ -34,6 +34,7 @@ import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
 using util.ArrayUtil;
+using util.MathUtil;
 
 class PauseScreen extends ResourceSubState
 {
@@ -143,7 +144,7 @@ class PauseScreen extends ResourceSubState
 
         pausedText.textField.sharpness = 400.0;
 
-        pausedText.setPosition((FlxG.width - pausedText.width) * 0.5, (FlxG.height - pausedText.height) * 0.5 - 250.0);
+        pausedText.setPosition(pausedText.getCenterX(), pausedText.getCenterY() - 250.0);
 
         add(pausedText);
 
@@ -163,7 +164,7 @@ class PauseScreen extends ResourceSubState
 
         nameText.textField.sharpness = 400.0;
 
-        nameText.setPosition((FlxG.width - nameText.width) * 0.5, (FlxG.height - nameText.height) * 0.5 + 150.0);
+        nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 150.0);
 
         add(nameText);
 
@@ -181,7 +182,7 @@ class PauseScreen extends ResourceSubState
 
         iconText.textField.sharpness = 400.0;
 
-        iconText.setPosition((FlxG.width - iconText.width) * 0.5, (FlxG.height - iconText.height) * 0.5 - 150.0);
+        iconText.setPosition(iconText.getCenterX(), iconText.getCenterY() - 150.0);
 
         add(iconText);
 
@@ -276,7 +277,7 @@ class PauseScreen extends ResourceSubState
 
         icon.onClick.add(onClick);
 
-        icon.setPosition(-icon.width, (FlxG.height - icon.height) * 0.5);
+        icon.setPosition(-icon.width, icon.getCenterY());
 
         pauseIcons.add(icon);
 

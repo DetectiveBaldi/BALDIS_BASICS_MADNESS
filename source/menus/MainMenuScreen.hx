@@ -20,6 +20,8 @@ import extendable.ResourceState;
 
 import menus.options.OptionsMenu;
 
+using util.MathUtil;
+
 class MainMenuScreen extends ResourceState
 {
     public var pattern:FlxBackdrop;
@@ -56,21 +58,21 @@ class MainMenuScreen extends ResourceState
 
         playText.onClick.remove(fadeMusic);
 
-        playText.setPosition((FlxG.width - playText.width) * 0.5, chalkboard.y + 185.0);
+        playText.setPosition(playText.getCenterX(), chalkboard.y + 185.0);
 
         var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> new MainMenuScreen())));
 
-        optionsText.setPosition((FlxG.width - optionsText.width) * 0.5, playText.y + playText.height + 50.0);
+        optionsText.setPosition(optionsText.getCenterX(), playText.y + playText.height + 50.0);
 
         var aboutText:MenuText = createText("About", () -> FlxG.switchState(() -> new AboutScreen()));
 
-        aboutText.setPosition((FlxG.width - aboutText.width) * 0.5, optionsText.y + optionsText.height + 50.0);
+        aboutText.setPosition(aboutText.getCenterX(), optionsText.y + optionsText.height + 50.0);
 
         aboutText.onClick.remove(fadeMusic);
 
         var creditsText:MenuText = createText("Credits", () -> FlxG.switchState(() -> new CreditsScreen()));
 
-        creditsText.setPosition((FlxG.width - creditsText.width) * 0.5, aboutText.y + aboutText.height + 50.0);
+        creditsText.setPosition(creditsText.getCenterX(), aboutText.y + aboutText.height + 50.0);
 
         exitButton = new FlxSprite();
 

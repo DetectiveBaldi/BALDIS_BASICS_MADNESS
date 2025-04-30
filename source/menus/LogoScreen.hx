@@ -18,6 +18,8 @@ import core.Paths;
 
 import extendable.ResourceState;
 
+using util.MathUtil;
+
 class LogoScreen extends ResourceState
 {
     public var splash:FlxSprite;
@@ -61,7 +63,7 @@ class LogoScreen extends ResourceState
 
         logo.updateHitbox();
 
-        logo.setPosition((FlxG.width - logo.width) * 0.5, -logo.height);
+        logo.setPosition(logo.getCenterX(), -logo.height);
 
         add(logo);
 
@@ -77,7 +79,7 @@ class LogoScreen extends ResourceState
 
                 FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
 
-                FlxTween.tween(logo, {y: (FlxG.height - logo.height) * 0.5 - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                FlxTween.tween(logo, {y: logo.getCenterY() - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
             });
 
             FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));

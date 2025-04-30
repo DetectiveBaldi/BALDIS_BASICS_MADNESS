@@ -272,14 +272,14 @@ class GainGL extends PlayState
 
         if (step == 480 || step == 528 || step == 560 || step == 592)
         {                        
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 300.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 300.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
         }
 
         if (step == 512 || step == 544 || step == 576)
         {                        
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 300.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 300.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
         }
     
         if (step == 504 || step == 507 || step == 510)
@@ -291,8 +291,8 @@ class GainGL extends PlayState
         {                        
             gameCameraZoom = 0.8;
            
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 200.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 200.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
         }
 
         if (step == 624)
@@ -344,11 +344,11 @@ class GainGL extends PlayState
 
             if (!Options.middlescroll)
             {
-                oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
+                oppStrumline.strums.x = oppStrumline.strums.getCenterX();
 
                 oppStrumline.strums.alpha = 0.0;
 
-                plrStrumline.strums.x = (FlxG.width - plrStrumline.strums.width) * 0.5;
+                plrStrumline.strums.x = plrStrumline.strums.getCenterX();
             }
             
             var opp:Character = getOpponent("baldi-angry0");

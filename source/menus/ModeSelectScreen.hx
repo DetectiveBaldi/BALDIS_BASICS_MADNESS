@@ -16,11 +16,9 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
-import data.WeekData;
-
 import extendable.ResourceState;
 
-import game.PlayState;
+using util.MathUtil;
 
 class ModeSelectScreen extends ResourceState
 {
@@ -68,7 +66,7 @@ class ModeSelectScreen extends ResourceState
 
         nameText.textField.sharpness = 400.0;
 
-        nameText.setPosition((FlxG.width - nameText.width) * 0.5, (FlxG.height - nameText.height) * 0.5 + 150.0);
+        nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 150.0);
 
         add(nameText);
 
@@ -86,7 +84,7 @@ class ModeSelectScreen extends ResourceState
 
         iconText.textField.sharpness = 400.0;
 
-        iconText.setPosition((FlxG.width - iconText.width) * 0.5, nameText.y + nameText.height);
+        iconText.setPosition(iconText.getCenterX(), nameText.y + nameText.height);
 
         add(iconText);
 
@@ -105,7 +103,7 @@ class ModeSelectScreen extends ResourceState
 
         storyIcon.onClick.remove(MainMenuScreen.fadeMusic);
 
-        storyIcon.setPosition(365.0, (FlxG.height - storyIcon.height) * 0.5 - 100.0);
+        storyIcon.setPosition(365.0, storyIcon.getCenterY() - 100.0);
 
         text = "Discover the rest of";
 
@@ -118,7 +116,7 @@ class ModeSelectScreen extends ResourceState
 
         freeplayIcon.onClick.remove(MainMenuScreen.fadeMusic);
 
-        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) - 365.0 + 112.0, (FlxG.height - freeplayIcon.height) * 0.5 - 100.0);
+        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) - 365.0 + 112.0, freeplayIcon.getCenterY() - 100.0);
 
         exitButton = new FlxSprite();
 

@@ -10,7 +10,6 @@ import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 
 import core.Assets;
-import core.Paths;
 
 import data.CharacterData;
 
@@ -20,6 +19,7 @@ import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
 
 using util.ArrayUtil;
+using util.MathUtil;
 
 class GameOverScreen extends ResourceSubState
 {
@@ -75,7 +75,7 @@ class GameOverScreen extends ResourceSubState
 
         retryButton.updateHitbox();
 
-        retryButton.setPosition((FlxG.width - retryButton.width) * 0.5, FlxG.height - retryButton.height + 50.0);
+        retryButton.setPosition(retryButton.getCenterX(), FlxG.height - retryButton.height + 50.0);
 
         add(retryButton);
 

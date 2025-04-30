@@ -133,15 +133,15 @@ class FreeplayScreen extends ResourceState
 
         var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
 
-        leftButton.setPosition((FlxG.width - leftButton.width) * 0.5 - 225.0, (FlxG.height - leftButton.height) * 0.5);
+        leftButton.setPosition(leftButton.getCenterX() - 225.0, leftButton.getCenterY());
 
         var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
 
-        rightButton.setPosition((FlxG.width - rightButton.width) * 0.5 + 225.0, (FlxG.height - rightButton.height) * 0.5);
+        rightButton.setPosition(rightButton.getCenterX() + 225.0, rightButton.getCenterY());
 
         var playButton:HeightenedButton = addHeightenedButton("Play!", LARGE, clickPlayButton);
 
-        playButton.setPosition((FlxG.width - playButton.height) * 0.5, FlxG.height - playButton.height + 35.0);
+        playButton.setPosition(playButton.getCenterX(), FlxG.height - playButton.height + 35.0);
 
         var exitButton:HeightenedButton = addHeightenedButton("Exit", SMALL, clickExitButton);
 
@@ -219,7 +219,7 @@ class FreeplayScreen extends ResourceState
 
         poster.updateHitbox();
 
-        poster.setPosition((FlxG.width - poster.width) * 0.5, 154.5);
+        poster.setPosition(poster.getCenterX(), 154.5);
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton

@@ -224,7 +224,7 @@ class StoryMenuScreen extends ResourceState
 
         startButton.updateHitbox();
 
-        startButton.setPosition(chalkboard.getMidpoint().x - startButton.width * 0.5, (FlxG.height - startButton.height) * 0.5 + 150.0);
+        startButton.setPosition(chalkboard.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 150.0);
 
         add(startButton);
 

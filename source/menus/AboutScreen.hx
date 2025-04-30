@@ -6,9 +6,10 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
 import core.Assets;
-import core.Paths;
 
 import extendable.ResourceState;
+
+using util.MathUtil;
 
 class AboutScreen extends ResourceState
 {
@@ -36,7 +37,7 @@ class AboutScreen extends ResourceState
 
         bg.updateHitbox();
 
-        bg.setPosition((FlxG.width - bg.width) * 0.5, 0.0);
+        bg.setPosition(bg.getCenterX(), 0.0);
 
         add(bg);
 

@@ -18,6 +18,8 @@ import extendable.ResourceState;
 import core.Assets;
 import core.Paths;
 
+using util.MathUtil;
+
 class TitleScreen extends ResourceState
 {
     public var title:FlxSprite;
@@ -48,7 +50,7 @@ class TitleScreen extends ResourceState
 
         title.updateHitbox();
 
-        title.setPosition((FlxG.width - title.width) * 0.5, 0.0);
+        title.setPosition(title.getCenterX(), 0.0);
 
         add(title);
 

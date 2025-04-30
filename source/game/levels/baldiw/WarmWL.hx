@@ -136,14 +136,14 @@ class WarmWL extends PlayState
 
         if (step == 1152)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 + 100.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 100.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
         }
     
         if (step == 1280)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5 - 100.0,
-                (FlxG.height - gameCameraTarget.height) * 0.5 + 0.0, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 100.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
         }
 
         if (step == 1408)
@@ -153,8 +153,8 @@ class WarmWL extends PlayState
 
             castedStage.entranceA1.color = 0xFFFFFFFF;
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - gameCameraTarget.width) * 0.5,
-                (FlxG.height - gameCameraTarget.height) * 0.5, "", -1.0);
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX(),
+                gameCameraTarget.getCenterY(), "", -1.0);
 
             gameCamera.snapToTarget();
 
