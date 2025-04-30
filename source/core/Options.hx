@@ -192,6 +192,14 @@ class Options
 
     public static function init():Void
     {
-        FlxG.save.data.options ??= {};
+        FlxG.save.data.options ??= {}
+    }
+
+    public static function validate():Void
+    {
+        var options:Dynamic = FlxG.save.data.options;
+
+        if (Reflect.hasField(options, "persistentCache"))
+            Reflect.deleteField(options, "persistentCache");
     }
 }

@@ -47,6 +47,8 @@ class InitState extends FlxState
 
         Options.init();
 
+        Options.validate();
+
         FlxG.updateFramerate = Options.frameRate;
 
         FlxG.drawFramerate = Options.frameRate;
