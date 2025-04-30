@@ -172,6 +172,10 @@ class HealthBar extends FlxSpriteGroup
         if (positionNeedle != null)
             positionNeedle();
 
+        playerIcon.animation.curAnim.curFrame = (percent < 20.0) ? 1 : 0;
+        
+        opponentIcon.animation.curAnim.curFrame = (percent > 80.0) ? 1 : 0;
+
         if (scaleIcons != null)
             scaleIcons(elapsed);
     }

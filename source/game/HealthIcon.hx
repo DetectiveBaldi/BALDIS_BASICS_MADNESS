@@ -16,9 +16,13 @@ class HealthIcon extends FlxSprite
     {
         config = _config;
 
-        loadGraphic(Assets.getGraphic('game/HealthIcon/${config.image}'));
-
         antialiasing = config.antialiasing ?? true;
+
+        loadGraphic(Assets.getGraphic('game/HealthIcon/${config.image}'), true, 150, 150);
+
+        animation.add("icon", [0, 1], 0.0, false);
+
+        animation.play("icon");
 
         return config;
     }
