@@ -38,9 +38,9 @@ class FreeplayScreen extends ResourceState
 
     public var tv:FlxSprite;
 
-    public var tvStatic:FlxSprite;
-
     public var tvPortrait:FlxSprite;
+
+    public var tvStatic:FlxSprite;
 
     public var poster:FlxSprite;
 
@@ -81,7 +81,7 @@ class FreeplayScreen extends ResourceState
 
         scrollBg.animation.addByPrefix("move", "move", 12.0, false);
 
-        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; updatePoster(); });
+        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; });
 
         scrollBg.scale.set(1.2, 1.2);
 
@@ -103,6 +103,14 @@ class FreeplayScreen extends ResourceState
 
         add(tv);
 
+        tvPortrait = new FlxSprite(0.0, 0.0);
+
+        tvPortrait.active = false;
+
+        add(tvPortrait);
+
+        updateTvPortrait();
+
         tvStatic = new FlxSprite(0.0, 0.0);
 
         tvStatic.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/tv-static"), true, 128, 128);
@@ -115,17 +123,11 @@ class FreeplayScreen extends ResourceState
 
         tvStatic.updateHitbox();
 
-        tvStatic.centerTo(tv);
+        tvStatic.centerTo(tvPortrait);
 
         add(tvStatic);
 
-        tvPortrait = new FlxSprite(0.0, 0.0);
-
-        tvPortrait.active = false;
-
-        insert(members.indexOf(tvStatic), tvPortrait);
-
-        updateTvPortrait();
+        tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
         poster = new FlxSprite();
 
@@ -178,42 +180,43 @@ class FreeplayScreen extends ResourceState
     {
         curSelected = FlxMath.wrap(curSelected + change, 0, levels.length - 1);
 
+        var level:LevelData = levels[curSelected];
+
         scrollBg.visible = true;
 
         scrollBg.animation.play("move", false, change <= 0.0);
+
+        updateTvPortrait(level);
 
         tween.cancelTweensOf(tvStatic, ["alpha"]);
 
         tvStatic.alpha = 1.0;
 
-        poster.visible = false;
-
-        updateTvPortrait();
-    }
-
-    public function updateTvPortrait():Void
-    {
-        var level:LevelData = levels[curSelected];
-
         if (level.week != null)
-        {
             tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
-            tvPortrait.visible = true;
+        poster.visible = false;
 
-            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${level.week.name.toLowerCase()}'));
-
-            tvPortrait.scale.set(2.25, 2.25);
-
-            tvPortrait.updateHitbox();
-
-            tvPortrait.centerTo(tvStatic);
-        }
+        updatePoster(level);
     }
 
-    public function updatePoster():Void
+    public function updateTvPortrait(?level:LevelData):Void
     {
-        var level:LevelData = levels[curSelected];
+        level ??= levels[curSelected];
+
+        tvPortrait.loadGraphic(level.week == null ? "flixel/images/logo/default.png" : Assets.getGraphic
+            ('menus/FreeplayScreen/portraits/${level.week.name.toLowerCase()}'));
+
+        tvPortrait.scale.set(2.25, 2.25);
+
+        tvPortrait.updateHitbox();
+
+        tvPortrait.centerTo(tv);
+    }
+
+    public function updatePoster(?level:LevelData):Void
+    {
+        level ??= levels[curSelected];
 
         poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(" ", KEBAB)}'));
 
