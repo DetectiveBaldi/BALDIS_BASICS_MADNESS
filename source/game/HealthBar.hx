@@ -189,9 +189,9 @@ class HealthBar extends FlxSpriteGroup
 
     public function beatHit(beat:Int):Void
     {
-        opponentIcon.scale *= 1.35 + -0.35 * (value / max);
+        opponentIcon.scale *= 1.35 - 0.3 * (value / max);
 
-        playerIcon.scale *= 1.0 + 0.35 * (value / max);
+        playerIcon.scale *= 1.05 + 0.3 * (value / max);
     }
 
     public dynamic function scaleIcons(elapsed:Float):Void
