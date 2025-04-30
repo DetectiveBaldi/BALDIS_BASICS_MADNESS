@@ -109,8 +109,6 @@ class FreeplayScreen extends ResourceState
 
         add(tvPortrait);
 
-        updateTvPortrait();
-
         tvStatic = new FlxSprite(0.0, 0.0);
 
         tvStatic.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/tv-static"), true, 128, 128);
@@ -123,19 +121,15 @@ class FreeplayScreen extends ResourceState
 
         tvStatic.updateHitbox();
 
-        tvStatic.centerTo(tvPortrait);
+        tvStatic.centerTo(tv);
 
         add(tvStatic);
-
-        tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
         poster = new FlxSprite();
 
         poster.active = false;
 
         add(poster);
-
-        updatePoster();
 
         var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
 
@@ -158,6 +152,8 @@ class FreeplayScreen extends ResourceState
         var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
 
         infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
+
+        changeSelection(0);
 
         MainMenuScreen.playMusic();
     }
@@ -182,9 +178,14 @@ class FreeplayScreen extends ResourceState
 
         var level:LevelData = levels[curSelected];
 
-        scrollBg.visible = true;
+        if (change != 0.0)
+        {
+            scrollBg.visible = true;
 
-        scrollBg.animation.play("move", false, change <= 0.0);
+            scrollBg.animation.play("move", false, change < 0.0);
+
+            poster.visible = false;
+        }
 
         updateTvPortrait(level);
 
@@ -195,15 +196,11 @@ class FreeplayScreen extends ResourceState
         if (level.week != null)
             tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
-        poster.visible = false;
-
         updatePoster(level);
     }
 
-    public function updateTvPortrait(?level:LevelData):Void
+    public function updateTvPortrait(level:LevelData):Void
     {
-        level ??= levels[curSelected];
-
         tvPortrait.loadGraphic(level.week == null ? "flixel/images/logo/default.png" : Assets.getGraphic
             ('menus/FreeplayScreen/portraits/${level.week.name.toLowerCase()}'));
 
@@ -214,10 +211,8 @@ class FreeplayScreen extends ResourceState
         tvPortrait.centerTo(tv);
     }
 
-    public function updatePoster(?level:LevelData):Void
+    public function updatePoster(level:LevelData):Void
     {
-        level ??= levels[curSelected];
-
         poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(" ", KEBAB)}'));
 
         poster.scale.set(1.6, 1.6);
