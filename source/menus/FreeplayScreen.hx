@@ -23,6 +23,7 @@ import data.WeekData;
 
 import extendable.ResourceState;
 
+import game.HighScore;
 import game.PlayState;
 
 using util.MathUtil;
@@ -193,7 +194,9 @@ class FreeplayScreen extends ResourceState
 
         tvStatic.alpha = 1.0;
 
-        if (level.week != null)
+        var week:WeekData = level.week;
+
+        if (week != null && HighScore.getWeekScore(week.name, "normal") != 0.0)
             tween.tween(tvStatic, {alpha: 0.0}, 0.5);
 
         updatePoster(level);
@@ -201,8 +204,17 @@ class FreeplayScreen extends ResourceState
 
     public function updateTvPortrait(level:LevelData):Void
     {
-        tvPortrait.loadGraphic(level.week == null ? "flixel/images/logo/default.png" : Assets.getGraphic
-            ('menus/FreeplayScreen/portraits/${level.week.name.toLowerCase()}'));
+        var path:String = "unknown";
+
+        var week:WeekData = level.week;
+
+        if (week != null)
+        {
+            if (HighScore.getWeekScore(week.name, "normal") != 0.0)
+                path = week.name.toLowerCase();
+        }
+
+        tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${path}'));
 
         tvPortrait.scale.set(2.25, 2.25);
 
@@ -213,7 +225,22 @@ class FreeplayScreen extends ResourceState
 
     public function updatePoster(level:LevelData):Void
     {
-        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${level.name.setCase(" ", KEBAB)}'));
+        var week:WeekData = level.week;
+
+        var path:String = '${level.name.setCase(" ", KEBAB)}';
+
+        if (week == null)
+        {
+            if (HighScore.getLevelScore(level.name, "normal") == 0.0)
+                path = "level-score-needed";
+        }
+        else
+        {
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0)
+                path = "week-score-needed";
+        }
+
+        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${path}'));
 
         poster.scale.set(1.6, 1.6);
 
@@ -253,8 +280,6 @@ class FreeplayScreen extends ResourceState
     {
         var button:HeightenedButton = new HeightenedButton(0.0, 0.0, text, size);
 
-        button.onClick.add(MainMenuScreen.fadeMusic);
-
         button.onClick.add(onClick);
 
         add(button);
@@ -264,12 +289,27 @@ class FreeplayScreen extends ResourceState
 
     public function clickPlayButton():Void
     {
+        var level:LevelData = levels[curSelected];
+
+        var week:WeekData = level.week;
+
+        if (week == null)
+            if (HighScore.getLevelScore(level.name, "normal") == 0.0)
+                return;
+        else
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0)
+                return;
+
+        MainMenuScreen.fadeMusic();
+
         PlayState.loadSingle(levels[curSelected]);
     }
 
     public function clickExitButton():Void
     {
         FlxG.switchState(() -> new ModeSelectScreen());
+
+        MainMenuScreen.fadeMusic();
     }
 
     public function clickInfoButton():Void
