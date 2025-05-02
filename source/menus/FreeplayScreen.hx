@@ -188,16 +188,11 @@ class FreeplayScreen extends ResourceState
             poster.visible = false;
         }
 
-        var graph:flixel.graphics.FlxGraphic = tvPortrait.graphic;
-
         updateTvPortrait(level);
 
         updatePoster(level);
 
         tween.completeTweensOf(tvStatic, ["alpha"]);
-
-        if (tvPortrait.graphic == graph)
-            return;
 
         tvStatic.alpha = 1.0;
 
