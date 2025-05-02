@@ -13,28 +13,6 @@ import core.Paths;
 
 class School extends FlxGroup
 {
-    //this so ugly but temporary trust the vision
-    public var entranceA0:FlxSprite;
-    public var entranceA1:FlxSprite;
-    public var entranceA1_Overlay0:FlxSprite;
-    public var entranceA1_Alt0:FlxSprite;
-    public var entranceA2:FlxSprite;
-    public var entranceA3:FlxSprite;
-    public var entranceA4:FlxSprite;
-    public var entranceA4_Alt0:FlxSprite;
-    public var entranceA4_Overlay0:FlxSprite;
-    public var entranceA4_Overlay1:FlxSprite;
-    public var entranceA4_Overlay2:FlxSprite;
-    public var entranceA5:FlxSprite;
-
-    public var ggfaculty0:FlxSprite;
-    public var ggfaculty0_Alt0:FlxSprite;
-    public var ggfaculty0_Overlay0:FlxSprite;
-    public var principalOffice0:FlxSprite;
-    public var principalOffice0_Overlay0:FlxSprite;
-
-    public var phoneHall0:FlxSprite;
-
     public var hall0:FlxSprite;
 
     public var hall1:FlxSprite;
@@ -108,29 +86,6 @@ class School extends FlxGroup
     public function new():Void
     {
         super();
-
-        //this is also ugly but trust the vision again
-        entranceA0 = buildSprite("gg-temp/entrance-a0");
-        entranceA1 = buildSprite("gg-temp/entrance-a1");
-        entranceA1_Alt0 = buildSprite("gg-temp/entrance-a1-alt0");
-        entranceA1_Overlay0 = buildSprite("gg-temp/entrance-a1-overlay0");
-        entranceA2 = buildSprite("gg-temp/entrance-a2");
-        entranceA3 = buildSprite("gg-temp/entrance-a3");
-        entranceA4 = buildSprite("gg-temp/entrance-a4");
-        entranceA4_Alt0 = buildSprite("gg-temp/entrance-a4-alt0");
-        entranceA4_Overlay0 = buildSprite("gg-temp/entrance-a4-overlay0");
-        entranceA4_Overlay1 = buildSprite("gg-temp/entrance-a4-overlay1");
-        entranceA4_Overlay2 = buildSprite("gg-temp/entrance-a4-overlay2");
-        entranceA5 = buildSprite("gg-temp/entrance-a5");
-
-        
-        ggfaculty0 = buildSprite("gg-temp/faculty0");
-        ggfaculty0_Alt0 = buildSprite("gg-temp/faculty0-alt0");
-        ggfaculty0_Overlay0 = buildSprite("gg-temp/faculty0-overlay0");
-        principalOffice0 = buildSprite("gg-temp/principal-office0");
-        principalOffice0_Overlay0 = buildSprite("gg-temp/principal-office0-overlay0");
-
-        phoneHall0 = buildSprite("gg-temp/phone-hall0");
 
         hall0 = buildSprite("hall0");
 

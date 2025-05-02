@@ -24,7 +24,7 @@ import data.CharacterData;
 
 import game.events.CameraFollowEvent;
 
-import game.stages.School;
+import game.stages.baldiw.GainGS;
 
 using util.MathUtil;
 
@@ -32,13 +32,7 @@ using StringTools;
 
 class GainGL extends PlayState
 {
-    public var castedStage(get, never):School;
-
-    @:noCompletion
-    function get_castedStage():School
-    {
-        return cast (stage, School);
-    }
+    public var gainGS:GainGS;
 
     public var temperature:FlxSprite;
 
@@ -46,7 +40,9 @@ class GainGL extends PlayState
 
     override function create():Void
     {
-        stage = new School();
+        stage = new GainGS();
+
+        gainGS = cast (stage, GainGS);
 
         super.create();
 
@@ -67,11 +63,11 @@ class GainGL extends PlayState
 
         cacheCharacterSheet("classic-remastered/gotta-sweep0");
     
-        castedStage.remove(opponents, true);
-        castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay0), opponents);
+        gainGS.remove(opponents, true);
+        gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
         
-        castedStage.entranceA4.visible = true;
-        castedStage.entranceA4_Overlay0.visible = true;
+        gainGS.entranceA4.visible = true;
+        gainGS.entranceA4_Overlay0.visible = true;
 
         playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -87,23 +83,23 @@ class GainGL extends PlayState
             plr.visible = true;
             tween.tween(plr, {x: plr.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
         
-            castedStage.remove(players, true);
-            castedStage.insert(castedStage.members.indexOf(castedStage.entranceA4_Overlay2), players);
+            gainGS.remove(players, true);
+            gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay2), players);
 
-            castedStage.entranceA4.visible = false;
-            castedStage.entranceA4_Alt0.visible = true;
-            castedStage.entranceA4_Overlay2.visible = true;
+            gainGS.entranceA4.visible = false;
+            gainGS.entranceA4_Alt0.visible = true;
+            gainGS.entranceA4_Overlay2.visible = true;
         }
 
         if (step == 124)
         {      
             var opp:Character = getOpponent("baldi-angry1");
 
-            castedStage.remove(opponents, true);
-            castedStage.insert(castedStage.members.indexOf(players), opponents);
+            gainGS.remove(opponents, true);
+            gainGS.insert(gainGS.members.indexOf(players), opponents);
             
-            castedStage.entranceA4_Overlay0.visible = false;
-            castedStage.entranceA4_Overlay1.visible = true;
+            gainGS.entranceA4_Overlay0.visible = false;
+            gainGS.entranceA4_Overlay1.visible = true;
         
             tween.tween(opp.scale, {x: opp.scale.x + 0.25, y: opp.scale.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
             tween.tween(opp, {y: opp.y + 10}, conductor.beatLength * 0.275 * 0.001);
@@ -125,8 +121,8 @@ class GainGL extends PlayState
 
         if (step == 144)
         {    
-            castedStage.entranceA4_Overlay1.visible = false;
-            castedStage.entranceA4_Overlay0.visible = true;
+            gainGS.entranceA4_Overlay1.visible = false;
+            gainGS.entranceA4_Overlay0.visible = true;
         }
    
         if (step == 312)
@@ -173,22 +169,22 @@ class GainGL extends PlayState
             players.add(plr);
             plr.visible = true;
 
-            castedStage.remove(players, true);
-            castedStage.add(players);
+            gainGS.remove(players, true);
+            gainGS.add(players);
 
             var opp:Character = getOpponent("baldi-angry1");
             opp.setPosition(375.0, 120.0);
             opp.scale.set(0.9, 0.9);
             opp.color = 0xFF000000;
         
-            castedStage.remove(opponents, true);
-            castedStage.add(opponents);
+            gainGS.remove(opponents, true);
+            gainGS.add(opponents);
 
-            castedStage.entranceA4.visible = false;
-            castedStage.entranceA4_Overlay0.visible = false;
-            castedStage.entranceA4_Overlay2.visible = false;
-            castedStage.entranceA5.visible = true;
-            castedStage.entranceA5.color = 0xFF050505;
+            gainGS.entranceA4.visible = false;
+            gainGS.entranceA4_Overlay0.visible = false;
+            gainGS.entranceA4_Overlay2.visible = false;
+            gainGS.entranceA5.visible = true;
+            gainGS.entranceA5.color = 0xFF050505;
         }
 
         if (step == 432)
@@ -205,8 +201,8 @@ class GainGL extends PlayState
             tween.color(temperature, conductor.beatLength * 1.0 * 0.001, temperature.color, 0xFFFFFFFF,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
 
-            tween.color(castedStage.entranceA5, conductor.beatLength * 1.0 * 0.001, castedStage.entranceA5.color, 0xFFFFFFFF,
-                {onUpdate: (_tween:FlxTween) -> {castedStage.entranceA5.color;}});
+            tween.color(gainGS.entranceA5, conductor.beatLength * 1.0 * 0.001, gainGS.entranceA5.color, 0xFFFFFFFF,
+                {onUpdate: (_tween:FlxTween) -> {gainGS.entranceA5.color;}});
 
             var plr:Character = getPlayer("bf6");
             tween.tween(plr, {x: -1500.0}, 0.75, {ease: FlxEase.quartIn});
@@ -253,12 +249,12 @@ class GainGL extends PlayState
             opp.skipDance = true;
             opponents.add(opp);
             
-            castedStage.remove(players, true);
-            castedStage.insert(castedStage.members.indexOf(castedStage.ggfaculty0_Overlay0), players);
+            gainGS.remove(players, true);
+            gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), players);
 
-            castedStage.entranceA5.visible = false;
-            castedStage.ggfaculty0_Alt0.visible = true;
-            castedStage.ggfaculty0_Overlay0.visible = true;
+            gainGS.entranceA5.visible = false;
+            gainGS.ggfaculty0_Alt0.visible = true;
+            gainGS.ggfaculty0_Overlay0.visible = true;
 
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
             opp.animation.play("slap", true);
@@ -266,8 +262,8 @@ class GainGL extends PlayState
         
         if (step == 464)
         {                   
-            castedStage.ggfaculty0_Alt0.visible = false;
-            castedStage.ggfaculty0.visible = true;
+            gainGS.ggfaculty0_Alt0.visible = false;
+            gainGS.ggfaculty0.visible = true;
         }
 
         if (step == 480 || step == 528 || step == 560 || step == 592)
@@ -308,7 +304,7 @@ class GainGL extends PlayState
             principal.scale.set(1.15, 1.15);
             principal.updateHitbox();
             principal.setPosition(2500, 150.0);
-            castedStage.insert(castedStage.members.indexOf(castedStage.ggfaculty0_Overlay0), principal);
+            gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), principal);
         
             tween.tween(principal, {x: plr.x + 200}, 1,                
                 {
@@ -362,16 +358,16 @@ class GainGL extends PlayState
             plr.setPosition(350.0, 200.0);
             players.add(plr);
            
-            castedStage.remove(opponents, true);
-            castedStage.insert(castedStage.members.indexOf(castedStage.principalOffice0_Overlay0), opponents);
+            gainGS.remove(opponents, true);
+            gainGS.insert(gainGS.members.indexOf(gainGS.principalOffice0_Overlay0), opponents);
 
-            castedStage.remove(players, true);
-            castedStage.add(players);
+            gainGS.remove(players, true);
+            gainGS.add(players);
 
-            castedStage.ggfaculty0.visible = false;
-            castedStage.ggfaculty0_Overlay0.visible = false;
-            castedStage.principalOffice0.visible = true;
-            castedStage.principalOffice0_Overlay0.visible = true;
+            gainGS.ggfaculty0.visible = false;
+            gainGS.ggfaculty0_Overlay0.visible = false;
+            gainGS.principalOffice0.visible = true;
+            gainGS.principalOffice0_Overlay0.visible = true;
         }
 
         if (step == 896.0)
@@ -460,15 +456,15 @@ class GainGL extends PlayState
             opp.scale.set(3.0, 3.0);
             opp.setPosition(-845.0, 18.5);
             
-            castedStage.remove(opponents, true);
-            castedStage.add(opponents);
+            gainGS.remove(opponents, true);
+            gainGS.add(opponents);
 
-            castedStage.principalOffice0.visible = false;
-            castedStage.principalOffice0_Overlay0.visible = false;
+            gainGS.principalOffice0.visible = false;
+            gainGS.principalOffice0_Overlay0.visible = false;
         
-            castedStage.hall2.active = true;
-            castedStage.hall2.visible = true;
-            castedStage.hall2.velocity.set(-1560.0, 0.0);
+            gainGS.scrollingHall0.active = true;
+            gainGS.scrollingHall0.visible = true;
+            gainGS.scrollingHall0.velocity.set(-1560.0, 0.0);
         }
 
         if (step == 1040.0)
@@ -519,9 +515,9 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            castedStage.phoneHall0.visible = true;
+            gainGS.scrollingHall0.visible = false;
 
-            castedStage.hall2.visible = false;
+            gainGS.phoneHall0.visible = true;
         }
 
         if (step == 1264.0)

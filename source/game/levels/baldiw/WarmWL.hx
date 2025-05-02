@@ -24,7 +24,7 @@ import data.CharacterData;
 
 import game.events.CameraFollowEvent;
 
-import game.stages.School;
+import game.stages.baldiw.WarmWS;
 
 using util.MathUtil;
 
@@ -32,17 +32,13 @@ using StringTools;
 
 class WarmWL extends PlayState
 {
-    public var castedStage(get, never):School;
-
-    @:noCompletion
-    function get_castedStage():School
-    {
-        return cast (stage, School);
-    }
+    public var warmWS:WarmWS;
 
     override function create():Void
     {
-        stage = new School();
+        stage = new WarmWS();
+
+        warmWS = cast (stage, WarmWS);
 
         super.create();
 
@@ -51,7 +47,7 @@ class WarmWL extends PlayState
         playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
     
-        castedStage.entranceA0.visible = true;
+        warmWS.entranceA0.visible = true;
 
         var plr:Character = getPlayer("bf2");
         plr.visible = false;
@@ -82,7 +78,7 @@ class WarmWL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            castedStage.entranceA0.color = 0xFF999999;
+            warmWS.entranceA0.color = 0xFF999999;
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -95,7 +91,7 @@ class WarmWL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            castedStage.entranceA0.color = 0xFFFFFFFF;
+            warmWS.entranceA0.color = 0xFFFFFFFF;
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
@@ -129,9 +125,9 @@ class WarmWL extends PlayState
             opp.setPosition(-550.0, -150.0);
             opponents.add(opp);
         
-            castedStage.entranceA0.visible = false;
-            castedStage.entranceA1.visible = true;
-            castedStage.entranceA1.color = 0xFF999999;
+            warmWS.entranceA0.visible = false;
+            warmWS.entranceA1.visible = true;
+            warmWS.entranceA1.color = 0xFF999999;
         }
 
         if (step == 1152)
@@ -151,7 +147,7 @@ class WarmWL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            castedStage.entranceA1.color = 0xFFFFFFFF;
+            warmWS.entranceA1.color = 0xFFFFFFFF;
 
             CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX(),
                 gameCameraTarget.getCenterY(), "", -1.0);
@@ -180,8 +176,8 @@ class WarmWL extends PlayState
             var plrAnim:Character = getPlayer("bf-anim-door");
             plrAnim.animation.play("outro3");
             
-            castedStage.entranceA1.visible = false;
-            castedStage.entranceA1_Alt0.visible = true;
+            warmWS.entranceA1.visible = false;
+            warmWS.entranceA1_Alt0.visible = true;
 
             tween.tween(plrAnim, {x: plrAnim.x - 40.0}, 1.3,
                 {
@@ -198,9 +194,9 @@ class WarmWL extends PlayState
         {            
             var plrAnim:Character = getPlayer("bf-anim-door");
             
-            castedStage.remove(players, true);
-            castedStage.insert(castedStage.members.indexOf(castedStage.entranceA1_Overlay0), players);
-            castedStage.entranceA1_Overlay0.visible = true;
+            warmWS.remove(players, true);
+            warmWS.insert(warmWS.members.indexOf(warmWS.entranceA1_Overlay0), players);
+            warmWS.entranceA1_Overlay0.visible = true;
         }
     }
 }

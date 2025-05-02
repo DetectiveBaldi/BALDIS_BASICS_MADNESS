@@ -24,7 +24,7 @@ import data.CharacterData;
 
 import game.events.CameraFollowEvent;
 
-import game.stages.Mystery;
+import game.stages.BeginningsS;
 
 using util.MathUtil;
 
@@ -32,17 +32,13 @@ using StringTools;
 
 class BeginningsL extends PlayState
 {
-    public var castedStage(get, never):Mystery;
-
-    @:noCompletion
-    function get_castedStage():Mystery
-    {
-        return cast (stage, Mystery);
-    }
+    public var beginningsS:BeginningsS;
 
     override function create():Void
     {
-        stage = new Mystery();
+        stage = new BeginningsS();
+
+        beginningsS = cast (stage, BeginningsS);
 
         super.create();
 
@@ -53,12 +49,12 @@ class BeginningsL extends PlayState
 
         gameCameraZoom = 0.8;
 
-        castedStage.testRoom.visible = true;
+        beginningsS.testRoom.visible = true;
         
         var spectator:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("mystery/placeface-anim-spectate"));
         spectator.scale.set(1, 1);
         spectator.setPosition(125.0, -235.0);
-        castedStage.insert(castedStage.members.indexOf(opponents), spectator);
+        beginningsS.insert(beginningsS.members.indexOf(opponents), spectator);
 
         players.scale.set(2, 2);
         players.setPosition(750, 100);

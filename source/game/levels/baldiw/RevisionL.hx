@@ -42,7 +42,7 @@ import extendable.ResourceState.CustomTransitionSprite;
 
 import game.events.CameraFollowEvent;
 
-import game.stages.School;
+import game.stages.baldiw.RevisionS;
 
 import sound.SoundQueue;
 
@@ -53,13 +53,7 @@ using StringTools;
 
 class RevisionL extends PlayState
 {
-    public var castedStage(get, never):School;
-
-    @:noCompletion
-    function get_castedStage():School
-    {
-        return cast (stage, School);
-    }
+    public var revisionS:RevisionS;
 
     public var temperature:FlxSprite;
 
@@ -69,7 +63,9 @@ class RevisionL extends PlayState
 
     override function create():Void
     {
-        stage = new School();
+        stage = new RevisionS();
+
+        revisionS = cast (stage, RevisionS);
 
         super.create();
 
@@ -87,13 +83,13 @@ class RevisionL extends PlayState
 
         playField.visible = false;
 
-        castedStage.entranceA2.visible = true;
+        revisionS.entranceA2.visible = true;
         
         quarter = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/quarter"));
         quarter.active = false;
         quarter.scale.set(2, 2);
         quarter.setPosition(15.0, 350.0);
-        castedStage.insert(castedStage.members.indexOf(opponents), quarter);
+        revisionS.insert(revisionS.members.indexOf(opponents), quarter);
 
         tween.tween(quarter, {y: quarter.y - 50}, conductor.beatLength * 4.0 * 0.001, 
             {
@@ -194,8 +190,8 @@ class RevisionL extends PlayState
 
             gameCamera.snapToTarget();
 
-            castedStage.entranceA2.visible = false;
-            castedStage.entranceA3.visible = true;
+            revisionS.entranceA2.visible = false;
+            revisionS.entranceA3.visible = true;
 
             quarter.destroy();
 
@@ -225,7 +221,7 @@ class RevisionL extends PlayState
 
             gameCameraZoom = 1;
         
-            castedStage.entranceA3.visible = false;
+            revisionS.entranceA3.visible = false;
 
             var plr:Character = getPlayer("bf1");
             plr.visible = false;
@@ -243,7 +239,7 @@ class RevisionL extends PlayState
 
             padBack.screenCenter();
 
-            castedStage.insert(castedStage.members.indexOf(opponents), padBack);
+            revisionS.insert(revisionS.members.indexOf(opponents), padBack);
     
             padMinigame = new ThinkpadMinigame();
 
