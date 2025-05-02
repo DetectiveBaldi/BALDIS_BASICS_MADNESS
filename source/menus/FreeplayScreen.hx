@@ -188,9 +188,16 @@ class FreeplayScreen extends ResourceState
             poster.visible = false;
         }
 
+        var graph:flixel.graphics.FlxGraphic = tvPortrait.graphic;
+
         updateTvPortrait(level);
 
-        tween.cancelTweensOf(tvStatic, ["alpha"]);
+        updatePoster(level);
+
+        tween.completeTweensOf(tvStatic, ["alpha"]);
+
+        if (tvPortrait.graphic == graph)
+            return;
 
         tvStatic.alpha = 1.0;
 
@@ -198,8 +205,6 @@ class FreeplayScreen extends ResourceState
 
         if (week != null && HighScore.getWeekScore(week.name, "normal") != 0.0)
             tween.tween(tvStatic, {alpha: 0.0}, 0.5);
-
-        updatePoster(level);
     }
 
     public function updateTvPortrait(level:LevelData):Void
