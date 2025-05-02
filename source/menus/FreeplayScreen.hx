@@ -192,7 +192,7 @@ class FreeplayScreen extends ResourceState
 
         updatePoster(level);
 
-        tween.completeTweensOf(tvStatic, ["alpha"]);
+        tween.cancelTweensOf(tvStatic, ["alpha"]);
 
         tvStatic.alpha = 1.0;
 
