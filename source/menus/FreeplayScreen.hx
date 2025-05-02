@@ -294,11 +294,15 @@ class FreeplayScreen extends ResourceState
         var week:WeekData = level.week;
 
         if (week == null)
+        {
             if (HighScore.getLevelScore(level.name, "normal") == 0.0)
                 return;
+        }
         else
+        {
             if (HighScore.getWeekScore(week.name, "normal") == 0.0)
                 return;
+        }
 
         MainMenuScreen.fadeMusic();
 
