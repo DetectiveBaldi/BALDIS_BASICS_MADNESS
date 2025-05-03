@@ -42,7 +42,7 @@ class BeginningsL extends PlayState
 
         super.create();
 
-        CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 200.0,
+        CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
             gameCameraTarget.getCenterY(), "", -1.0);
 
         gameCamera.snapToTarget();
@@ -56,8 +56,8 @@ class BeginningsL extends PlayState
         spectator.setPosition(125.0, -235.0);
         beginningsS.insert(beginningsS.members.indexOf(opponents), spectator);
 
-        players.scale.set(2, 2);
-        players.setPosition(750, 100);
+        players.scale.set(1.75, 1.75);
+        players.setPosition(650, -25);
 
         opponents.scale.set(1.5, 1.5);
         opponents.setPosition(-200, -150);
@@ -67,12 +67,17 @@ class BeginningsL extends PlayState
     {
         super.stepHit(step);
 
-        if (step == 16)
+        if (step == 16 || step == 19 || step == 22)
         {
-            gameCameraZoom = 1;
-
+            gameCameraZoom += 0.1;
+           
             var opp:Character = getOpponent("placeface0");
             opp.skipDance = true;
+        }
+        
+        if (step == 18)
+        {
+            var opp:Character = getOpponent("placeface0");
             opp.animation.play("elephant");
         }
     
@@ -92,9 +97,26 @@ class BeginningsL extends PlayState
             gameCameraZoom = 1;
         }
     
+        if (step == 416)
+        {
+            tween.tween(this, {gameCameraZoom: 0.8}, 0.25,
+                {
+                    ease: FlxEase.backIn
+                }
+            );
+        }
+        
+        if (step == 420)
+        {
+            if (Options.flashing)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            
+            gameCameraZoom = 1;
+        }
+       
         if (step == 464)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 400.0,
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 100.0,
                 gameCameraTarget.getCenterY(), "", -1.0);
         }
    
@@ -104,17 +126,30 @@ class BeginningsL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 400.0,
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
                 gameCameraTarget.getCenterY(), "", -1.0);
         }
     
         if (step == 544)
         {
+            gameCameraTarget.centerTo();
+            
             gameCameraZoom = 0.6;
         }
     
+        if (step == 800)
+        {
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 250.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
+           
+            gameCameraZoom = 1.25;
+        }
+        
         if (step == 816)
         {
+            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
+                gameCameraTarget.getCenterY(), "", -1.0);
+            
             gameCameraZoom = 0.8;
         }
     }

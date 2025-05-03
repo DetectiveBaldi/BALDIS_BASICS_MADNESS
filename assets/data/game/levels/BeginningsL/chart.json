@@ -1,5 +1,5 @@
 {
-	"player1": "funkin/bf0",
+	"player1": "funkin/bf9",
 	"sectionLengths": [],
 	"notes": [
 		{
@@ -1096,6 +1096,6 @@
 	"needsVoices": true,
 	"sections": 0,
 	"bpm": 150,
-	"speed": 2.5,
+	"speed": 3,
 	"format": "psych_v1_convert"
 }
