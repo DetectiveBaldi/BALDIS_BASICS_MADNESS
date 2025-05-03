@@ -44,4 +44,29 @@ class PlayStats
 
         return "F";
     }
+
+    public static function concat(...stats:PlayStats):PlayStats
+    {
+        var result:PlayStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
+
+        for (i in 0 ... stats.length)
+        {
+            var stat:PlayStats = stats[i];
+
+            result.score += stat.score;
+
+            result.hits += stat.hits;
+
+            result.misses += stat.misses;
+
+            result.bonus += stat.bonus;
+        }
+
+        return result;
+    }
+
+    public function copy():PlayStats
+    {
+        return {score: score, hits: hits, misses: misses, bonus: bonus}
+    }
 }

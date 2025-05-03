@@ -94,15 +94,6 @@ class Assets
         return sounds[path];
     }
 
-    public static function getSoundKey(snd:Sound):String
-    {
-        for (k => v in sounds)
-            if (snd == v)
-                return k;
-
-        return null;
-    }
-
     public static function getMusic(path:String, raw:Bool = false, stream:Bool = true):Sound
     {
         if (!raw)
@@ -119,10 +110,12 @@ class Assets
         return music[path];
     }
 
-    public static function getMusicKey(mus:Sound):String
+    public static function getAudioPath(mus:Bool, aud:Sound):String
     {
-        for (k => v in music)
-            if (mus == v)
+        var map:Map<String, Sound> = mus ? music : sounds;
+
+        for (k => v in map)
+            if (aud == v)
                 return k;
 
         return null;
@@ -138,7 +131,7 @@ class Assets
         var aud:Sound = map[path];
 
         @:privateAccess
-        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null)
+        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud) != null)
                 return;
 
         aud.close();

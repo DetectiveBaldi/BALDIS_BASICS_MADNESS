@@ -27,6 +27,8 @@ import data.HealthIconData;
 import data.LevelData;
 import data.WeekData;
 
+import data.PlayStats;
+
 import extendable.ResourceState;
 
 import game.notes.Note;
@@ -58,9 +60,7 @@ class PlayState extends ResourceState
 
     public static var isCampaign:Bool;
 
-    public static var campaignScore:Int;
-
-    public static var campaignMisses:Int;
+    public static var campaignStats:Map<String, PlayStats>;
 
     public static function getLevelPath(?level:LevelData, sep:String = "/"):String
     {
@@ -89,9 +89,7 @@ class PlayState extends ResourceState
 
         isCampaign = true;
 
-        campaignScore = 0;
-
-        campaignMisses = 0;
+        campaignStats = new Map<String, PlayStats>();
 
         FlxG.switchState(() -> getLevelClass());
     }
@@ -104,9 +102,7 @@ class PlayState extends ResourceState
 
         isCampaign = false;
 
-        campaignScore = 0;
-
-        campaignMisses = 0;
+        campaignStats = null;
 
         FlxG.switchState(() -> getLevelClass());
     }
@@ -475,16 +471,16 @@ class PlayState extends ResourceState
     {
         if (isCampaign)
         {
-            campaignScore += playField.playStats.score;
-
-            campaignMisses += playField.playStats.misses;
+            campaignStats[level.name] = playField.playStats.copy();
 
             var i:Int = week.levels.indexOf(level);
 
             if (i == week.levels.length - 1.0)
             {
-                if (HighScore.isWeekHighScore(week.name, "normal", campaignScore))
-                    HighScore.setWeekScore(week.name, "normal", campaignScore);
+                var concat:PlayStats = PlayStats.concat(for (k => v in campaignStats) v);
+
+                if (HighScore.isWeekHighScore(week.name, "normal", concat.score))
+                    HighScore.setWeekScore(week.name, "normal", concat.score);
 
                 FlxG.switchState(() -> new StoryMenuScreen());
 

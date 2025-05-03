@@ -1744,6 +1744,6 @@
 	"needsVoices": true,
 	"stage": "stage",
 	"bpm": 125,
-	"speed": 3,
+	"speed": 2.5,
 	"format": "psych_v1"
 }

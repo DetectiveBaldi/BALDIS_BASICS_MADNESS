@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSubState;
 
+import flixel.animation.FlxAnimation;
+
 import flixel.tweens.FlxTween.FlxTweenManager;
 
 import flixel.util.FlxTimer;
@@ -109,7 +111,7 @@ class CustomTransition extends FlxSubState
 
         camera = FlxG.cameras.list.last();
 
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade);
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade, 0.5);
 
         add(spr);
 
@@ -135,17 +137,25 @@ class CustomTransitionSprite extends FlxBackdrop
 {
     public var fade:CustomTransitionFade;
 
-    public function new(fade:CustomTransitionFade):Void
+    public var duration:Float;
+
+    public function new(fad:CustomTransitionFade, durat:Float):Void
     {
         super();
 
         camera = FlxG.cameras.list.last();
 
-        this.fade = fade;
+        fade = fad;
+
+        duration = durat;
 
         loadGraphic(Assets.getGraphic("extendable/ResourceState/gradient"), true, 16, 16);
 
 		animation.add("fade", [0, 1, 2, 3, 4, 5, 6], 12, false);
+
+        var anim:FlxAnimation = animation.getByName("fade");
+
+        anim.frameRate = anim.numFrames / duration;
 
 		animation.play("fade", true, fade == IN);
     }

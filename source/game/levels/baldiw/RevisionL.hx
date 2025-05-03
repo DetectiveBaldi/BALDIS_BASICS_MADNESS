@@ -10,6 +10,8 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.animation.FlxAnimation;
+
 import flixel.graphics.frames.FlxAtlasFrames;
 
 import flixel.group.FlxSpriteGroup;
@@ -38,6 +40,7 @@ import data.CharacterData;
 import data.LevelData;
 import data.WeekData;
 
+import extendable.ResourceState.CustomTransitionFade;
 import extendable.ResourceState.CustomTransitionSprite;
 
 import game.events.CameraFollowEvent;
@@ -113,9 +116,9 @@ class RevisionL extends PlayState
         super.update(elapsed);
 
         @:privateAccess
-            var musKey:String = Assets.getMusicKey(instrumental._sound);
+            var musPath:String = Assets.getAudioPath(true, instrumental._sound);
 
-        if (musKey.contains("Bad-Math"))
+        if (musPath.contains("Bad-Math"))
             return;
 
         if (padMinigame?.loss)
@@ -154,21 +157,11 @@ class RevisionL extends PlayState
         }
 
         if (step == 664)
-        {
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(IN);
-
-            spr.animation.onFinish.add((name:String) -> spr.visible = false);
-
-            add(spr);
-        }
+            var spr:CustomTransitionSprite = getTransitionSpr(IN);
 
         if (step == 672)
         {
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(OUT);
-
-            spr.animation.onFinish.add((name:String) -> spr.visible = false);
-
-            add(spr);
+            var spr:CustomTransitionSprite = getTransitionSpr(OUT);
 
             if (!Options.middlescroll)
                 {
@@ -247,11 +240,7 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(OUT);
-
-            spr.animation.onFinish.add((name:String) -> spr.visible = false);
-
-            add(spr);
+            var spr:CustomTransitionSprite = getTransitionSpr(OUT);
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
@@ -262,6 +251,17 @@ class RevisionL extends PlayState
             if (step != 1584.0)
                 padMinigame.nextProblem(step == 1456.0);
         } 
+    }
+
+    public function getTransitionSpr(fade:CustomTransitionFade):CustomTransitionSprite
+    {
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade, conductor.beatLength * 2.0 * 0.001);
+
+        spr.animation.onFinish.add((name:String) -> spr.kill());
+
+        add(spr);
+
+        return spr;
     }
 }
 
@@ -511,55 +511,55 @@ class ThinkpadMinigame extends FlxSpriteGroup
         sndQueue.onUpdate.add((sound:FlxSound) ->
         {
             @:privateAccess
-                var soundKey:String = Assets.getSoundKey(sound._sound);
+                var sndPath:String = Assets.getAudioPath(false, sound._sound);
             
-            soundKey = soundKey.substring(0, soundKey.length - 4);
+            sndPath = sndPath.substring(0, sndPath.length - 4);
 
-            if (soundKey.contains("Buzz"))
+            if (sndPath.contains("Buzz"))
             {
                 baldi.animation.play("buzz", true);
 
                 return;
             }
 
-            if (soundKey.contains("Praise"))
+            if (sndPath.contains("Praise"))
             {
-                var splt:String = soundKey.split("_").last();
+                var splt:String = sndPath.split("_").last();
 
                 baldi.animation.play(splt.toLowerCase(), true);
 
                 return;
             }
 
-            if (soundKey.contains("Problem"))
+            if (sndPath.contains("Problem"))
             {
                 baldi.animation.play("problem", true);
 
                 return;
             }
 
-            if (soundKey.contains("Divided"))
+            if (sndPath.contains("Divided"))
             {
                 baldi.animation.play("divided", true);
 
                 return;
             }
 
-            if (soundKey.contains("Minus") || soundKey.contains("Equals"))
+            if (sndPath.contains("Minus") || sndPath.contains("Equals"))
             {
                 baldi.animation.play("minus-equals", true);
 
                 return;
             }
 
-            if (soundKey.contains("0"))
+            if (sndPath.contains("0"))
             {
                 baldi.animation.play("zero", true);
 
                 return;
             }
 
-            if (soundKey.contains("7"))
+            if (sndPath.contains("7"))
             {
                 baldi.animation.play("seven", true);
 

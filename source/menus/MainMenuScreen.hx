@@ -143,7 +143,7 @@ class MainMenuScreen extends ResourceState
         if (tune != null)
             return;
 
-        tune = FlxG.sound.load(Assets.getMusic("menus/MainMenuScreen/tune"));
+        tune = FlxG.sound.load(Assets.getMusic("menus/MainMenuScreen/tune"), 1.0, true);
 
         tune.persist = true;
 
