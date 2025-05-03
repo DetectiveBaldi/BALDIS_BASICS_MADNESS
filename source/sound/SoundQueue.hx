@@ -18,11 +18,11 @@ class SoundQueue
         onUpdate = new FlxTypedSignal<FlxSound->Void>();
     }
 
-    public function addToQueue(sound:FlxSound):Void
+    public function queue(sound:FlxSound):Void
     {
         if (list.length == 0.0)
         {
-            sound.onComplete = queueNext;
+            sound.onComplete = update;
 
             sound.play();
 
@@ -30,6 +30,19 @@ class SoundQueue
         }
 
         list.push(sound);
+    }
+
+    public function remove(sound:FlxSound):Void
+    {
+        if (!list.contains(sound))
+            return;
+
+        var index:Int = list.indexOf(sound);
+
+        if (index == 0.0)
+            update();
+        else
+            list.remove(sound);
     }
 
     public function pause():Void
@@ -48,7 +61,7 @@ class SoundQueue
         list[0].resume();
     }
 
-    public function flushQueue(stopCurrent:Bool):Void
+    public function clearQueue(stopCurrent:Bool):Void
     {
         if (list.length == 0.0)
             return;
@@ -65,7 +78,7 @@ class SoundQueue
         list.resize(0);
     }
 
-    public function queueNext():Void
+    public function update():Void
     {
         if (list.length == 0.0)
             return;
@@ -81,7 +94,7 @@ class SoundQueue
 
         var nxt:FlxSound = list[0];
 
-        nxt.onComplete = queueNext;
+        nxt.onComplete = update;
 
         nxt.play(true);
 
@@ -90,7 +103,7 @@ class SoundQueue
 
     public function destroy():Void
     {
-        flushQueue(true);
+        clearQueue(true);
 
         list = null;
 

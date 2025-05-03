@@ -788,36 +788,36 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         if (totalCorrect == totalSolved)
         {
-            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_Problem${problemIndex}')));
+            sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_Problem${problemIndex}')));
 
             if (corrupt)
             {
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}Short')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op2)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op2)}Short')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
             }
             else
             {
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${val1}')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val1}')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${val2}')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val2}')));
             }
 
-            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_Equals')));
+            sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_Equals')));
         }
     }
 
     public function skipProblem():Void
     {
-        sndQueue.flushQueue(true);
+        sndQueue.clearQueue(true);
 
         if (problemIndex == totalSolved)
             return;
@@ -898,16 +898,16 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             if (totalCorrect == totalSolved)
             {
-                sndQueue.flushQueue(true);
+                sndQueue.clearQueue(true);
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Praise" + FlxG.random.int(1, 3))));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Praise" + FlxG.random.int(1, 3))));
             }
 
             indicat.animation.play("correct");
         }
         else
         {
-            sndQueue.flushQueue(true);
+            sndQueue.clearQueue(true);
 
             if (baldi.animation.name != "frown")
                 baldi.animation.play("frown");
