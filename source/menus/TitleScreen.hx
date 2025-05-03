@@ -100,9 +100,7 @@ class TitleScreen extends ResourceState
 
         tune.play();
 
-        var demoText:FlxText;
-
-        demoText = new FlxText(0.0, 0.0, FlxG.width, "DEMO");
+        var demoText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "DEMO");
 
         demoText.color = FlxColor.BLACK;
 
@@ -116,7 +114,7 @@ class TitleScreen extends ResourceState
 
         demoText.textField.sharpness = 400.0;
 
-        demoText.setPosition(title.x + title.width - demoText.width - 150.0, 180.0);
+        demoText.setPosition(title.x + title.width - demoText.width - 125.0, 180.0);
 
         add(demoText);
     }
