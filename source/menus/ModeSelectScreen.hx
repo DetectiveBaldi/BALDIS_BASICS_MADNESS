@@ -40,7 +40,7 @@ class ModeSelectScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         heads = new FlxBackdrop(Assets.getGraphic("menus/ModeSelectScreen/head"), XY, 50.0, 50.0);
 
@@ -101,7 +101,7 @@ class ModeSelectScreen extends ResourceState
         var storyIcon:ModeSelectIcon = createIcon("story-icon", "Story Mode", text, () -> FlxG.switchState(() -> new
             StoryMenuScreen()));
 
-        storyIcon.onClick.remove(MainMenuScreen.fadeMusic);
+        storyIcon.onClick.remove(MainMenuScreen.fadeTune);
 
         storyIcon.setPosition(365.0, storyIcon.getCenterY() - 100.0);
 
@@ -114,7 +114,7 @@ class ModeSelectScreen extends ResourceState
         var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay Mode", text, () -> FlxG.switchState(() -> 
             new FreeplayScreen()));
 
-        freeplayIcon.onClick.remove(MainMenuScreen.fadeMusic);
+        freeplayIcon.onClick.remove(MainMenuScreen.fadeTune);
 
         freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) - 365.0 + 112.0, freeplayIcon.getCenterY() - 100.0);
 
@@ -136,7 +136,7 @@ class ModeSelectScreen extends ResourceState
 
         add(exitButton);
 
-        MainMenuScreen.playMusic();
+        MainMenuScreen.playTune();
     }
 
     override function update(elapsed:Float):Void
@@ -172,7 +172,7 @@ class ModeSelectScreen extends ResourceState
             iconText.text = text;
         });
 
-        icon.onClick.add(MainMenuScreen.fadeMusic);
+        icon.onClick.add(MainMenuScreen.fadeTune);
 
         icon.onClick.add(onClick);
 

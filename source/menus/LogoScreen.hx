@@ -34,7 +34,7 @@ class LogoScreen extends ResourceState
 
         FlxG.mouse.visible = false;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         splash = new FlxSprite();
 

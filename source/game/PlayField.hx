@@ -104,7 +104,7 @@ class PlayField extends FlxGroup
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
-        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/clipboard"));
+        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/clipboard"));
 
         scoreClip.active = false;
 

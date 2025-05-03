@@ -222,7 +222,7 @@ class Level0 extends PlayState
         {
             var plr:Character = getPlayer("bf1");
 
-            var sodaSplash:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/sodaSplash"));
+            var sodaSplash:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/sodaSplash"));
 
             sodaSplash.scale.set(11.5, 11.5);
 
@@ -1477,7 +1477,7 @@ class Level0 extends PlayState
    
         if (step == 2768)
         {
-            craftersSprite1 = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/craftersSprite1"));
+            craftersSprite1 = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/craftersSprite1"));
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(-1500, 100);
@@ -1867,7 +1867,7 @@ class Level0 extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
 
-            vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/vigenette"));
+            vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/vigenette"));
             vignette.scale.set(2.7, 2.7);
             vignette.camera = hudCamera;
             vignette.screenCenter();

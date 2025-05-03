@@ -40,7 +40,7 @@ class TitleScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         title = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/TitleScreen/title"));
 

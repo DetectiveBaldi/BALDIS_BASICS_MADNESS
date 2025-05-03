@@ -53,7 +53,7 @@ class FreeplayScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         levels = new Array<LevelData>();
 
@@ -146,7 +146,7 @@ class FreeplayScreen extends ResourceState
 
         var exitButton:HeightenedButton = addHeightenedButton("Exit", SMALL, clickExitButton);
 
-        exitButton.onClick.remove(MainMenuScreen.fadeMusic);
+        exitButton.onClick.remove(MainMenuScreen.fadeTune);
 
         exitButton.setPosition(playButton.x - exitButton.width - 30.0, FlxG.height - exitButton.height + 35.0);
 
@@ -156,7 +156,7 @@ class FreeplayScreen extends ResourceState
 
         changeSelection(0);
 
-        MainMenuScreen.playMusic();
+        MainMenuScreen.playTune();
     }
 
     override function update(elapsed:Float):Void
@@ -304,7 +304,7 @@ class FreeplayScreen extends ResourceState
                 return;
         }
 
-        MainMenuScreen.fadeMusic();
+        MainMenuScreen.fadeTune();
 
         PlayState.loadSingle(levels[curSelected]);
     }
@@ -313,7 +313,7 @@ class FreeplayScreen extends ResourceState
     {
         FlxG.switchState(() -> new ModeSelectScreen());
 
-        MainMenuScreen.fadeMusic();
+        MainMenuScreen.fadeTune();
     }
 
     public function clickInfoButton():Void

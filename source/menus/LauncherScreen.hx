@@ -31,7 +31,7 @@ class LauncherScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/retroCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-launcher").bitmap);
 
         launcher = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/LauncherScreen/launcher"));
 
@@ -80,7 +80,7 @@ class LauncherScreen extends ResourceState
 
     public function playSlapSound(onComplete:()->Void):Void
     {
-        FlxG.sound.play(Assets.getSound("globals/slap"), 1.0, false, null, true, onComplete);
+        FlxG.sound.play(Assets.getSound("shared/slap"), 1.0, false, null, true, onComplete);
     }
 
     public function clickPlayButton():Void

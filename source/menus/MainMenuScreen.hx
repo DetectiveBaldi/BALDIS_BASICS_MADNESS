@@ -3,6 +3,8 @@ package menus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.sound.FlxSound;
+
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxTween;
@@ -24,6 +26,8 @@ using util.MathUtil;
 
 class MainMenuScreen extends ResourceState
 {
+    public static var tune:FlxSound;
+
     public var pattern:FlxBackdrop;
 
     public var chalkboard:FlxSprite;
@@ -36,7 +40,9 @@ class MainMenuScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+
+        playTune();
 
         pattern = new FlxBackdrop(Assets.getGraphic("menus/MainMenuScreen/pattern"));
 
@@ -56,7 +62,7 @@ class MainMenuScreen extends ResourceState
 
         var playText:MenuText = createText("Play!", () -> FlxG.switchState(() -> new ModeSelectScreen()));
 
-        playText.onClick.remove(fadeMusic);
+        playText.onClick.remove(fadeTune);
 
         playText.setPosition(playText.getCenterX(), chalkboard.y + 185.0);
 
@@ -68,7 +74,7 @@ class MainMenuScreen extends ResourceState
 
         aboutText.setPosition(aboutText.getCenterX(), optionsText.y + optionsText.height + 50.0);
 
-        aboutText.onClick.remove(fadeMusic);
+        aboutText.onClick.remove(fadeTune);
 
         var creditsText:MenuText = createText("Credits", () -> FlxG.switchState(() -> new CreditsScreen()));
 
@@ -91,8 +97,6 @@ class MainMenuScreen extends ResourceState
         exitButton.setPosition(10.0, 10.0);
 
         add(exitButton);
-
-        playMusic();
     }
 
     override function update(elapsed:Float):Void
@@ -105,7 +109,7 @@ class MainMenuScreen extends ResourceState
 
             if (FlxG.mouse.justPressed)
             {
-                fadeMusic();
+                fadeTune();
 
                 FlxG.switchState(() -> new TitleScreen());
             }
@@ -125,7 +129,7 @@ class MainMenuScreen extends ResourceState
     {
         var text:MenuText = new MenuText(0.0, 0.0, text);
 
-        text.onClick.add(fadeMusic);
+        text.onClick.add(fadeTune);
 
         text.onClick.add(onClick);
 
@@ -134,24 +138,28 @@ class MainMenuScreen extends ResourceState
         return text;
     }
 
-    public static function playMusic():Void
+    public static function playTune():Void
     {
-        if (FlxG.sound.music != null)
+        if (tune != null)
             return;
 
-        FlxG.sound.playMusic(Assets.getMusic("menus/MainMenuScreen/tune"));
+        tune = FlxG.sound.load(Assets.getMusic("menus/MainMenuScreen/tune"));
+
+        tune.persist = true;
+
+        tune.play();
     }
 
-    public static function fadeMusic():Void
+    public static function fadeTune():Void
     {
-        FlxG.sound.music.fadeOut(0.25, 0.0, stopMusic);
+        tune.fadeOut(0.25, 0.0, stopTune);
     }
 
-    public static function stopMusic(tween:FlxTween):Void
+    public static function stopTune(tween:FlxTween):Void
     {
-        FlxG.sound.music.stop();
+        tune.stop();
 
-        FlxG.sound.music = null;
+        tune = null;
     }
 }
 

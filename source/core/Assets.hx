@@ -138,9 +138,8 @@ class Assets
         var aud:Sound = map[path];
 
         @:privateAccess
-        if (FlxG.sound.defaultMusicGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null ||
-                FlxG.sound.list.members.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null)
-                    return;
+        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud ) != null)
+                return;
 
         aud.close();
 

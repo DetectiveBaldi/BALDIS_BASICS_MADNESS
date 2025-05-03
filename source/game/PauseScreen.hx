@@ -65,7 +65,7 @@ class PauseScreen extends ResourceSubState
 
         camera = FlxG.cameras.list.last();
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         camLerp = FlxG.camera.followLerp;
 

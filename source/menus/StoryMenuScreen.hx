@@ -76,9 +76,9 @@ class StoryMenuScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        background = new FlxBackdrop(Assets.getGraphic("globals/microphone"), XY, 32.0, 32.0);
+        background = new FlxBackdrop(Assets.getGraphic("shared/microphone"), XY, 32.0, 32.0);
 
         background.velocity.set(10.0, 10.0);
 
@@ -86,7 +86,7 @@ class StoryMenuScreen extends ResourceState
 
         add(background);
 
-        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/clipboard"));
+        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/clipboard"));
 
         clipboard.scale.set(1.5, 1.5);
 
@@ -182,7 +182,7 @@ class StoryMenuScreen extends ResourceState
 
         add(weekDescText);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/chalkboard"));
+        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/chalkboard"));
 
         chalkboard.scale.set(1.25, 1.25);
 
@@ -258,7 +258,7 @@ class StoryMenuScreen extends ResourceState
 
         rightButton.setPosition(chalkboard.x + chalkboard.width - 65.0, chalkboard.getMidpoint().y - rightButton.height * 0.5);
 
-        MainMenuScreen.playMusic();
+        MainMenuScreen.playTune();
     }
 
     override function update(elapsed:Float):Void
@@ -281,7 +281,7 @@ class StoryMenuScreen extends ResourceState
 
             if (FlxG.mouse.justReleased)
             {
-                MainMenuScreen.fadeMusic();
+                MainMenuScreen.fadeTune();
 
                 PlayState.loadWeek(weeks[curSelected]);
             }
@@ -334,7 +334,7 @@ class StoryMenuScreen extends ResourceState
 
     public function updateWeekPortrait(week:WeekData):Void
     {
-        weekPortrait.loadGraphic(Assets.getGraphic('globals/week-portrait-${week.name.setCase(" ", KEBAB)}'));
+        weekPortrait.loadGraphic(Assets.getGraphic('shared/week-portrait-${week.name.setCase(" ", KEBAB)}'));
 
         weekPortrait.scale.set(1.25, 1.25);
 

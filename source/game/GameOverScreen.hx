@@ -182,7 +182,7 @@ class GameOverScreen extends ResourceSubState
     {
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         if (skipTimer)
         {

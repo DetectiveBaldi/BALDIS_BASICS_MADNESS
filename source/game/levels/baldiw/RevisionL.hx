@@ -85,7 +85,7 @@ class RevisionL extends PlayState
 
         revisionS.entranceA2.visible = true;
         
-        quarter = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/quarter"));
+        quarter = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/quarter"));
         quarter.active = false;
         quarter.scale.set(2, 2);
         quarter.setPosition(15.0, 350.0);
@@ -229,7 +229,7 @@ class RevisionL extends PlayState
             var opp:Character = getOpponent("baldi1");
             opp.visible = false;
 
-            var padBack:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/thinkpad-background"));
+            var padBack:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/thinkpad-background"));
 
             padBack.active = false;
 
@@ -351,7 +351,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         FlxG.keys.enabled = false;
 
@@ -369,8 +369,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         baldi = new FlxSprite();
 
-        baldi.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("globals/baldi-thinkpad"), 
-            Paths.image(Paths.xml("globals/baldi-thinkpad")));
+        baldi.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("shared/baldi-thinkpad"), 
+            Paths.image(Paths.xml("shared/baldi-thinkpad")));
         
         baldi.animation.addByPrefix("idle", "idle", 24.0, false);
         
@@ -401,7 +401,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         add(baldi);
 
-        pad = new FlxSprite(0.0, 0.0, Assets.getGraphic("globals/thinkpad"));
+        pad = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/thinkpad"));
 
         pad.active = false;
 
@@ -432,7 +432,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             indicat.visible = false;
 
-            indicat.loadGraphic(Assets.getGraphic("globals/numpad-indicators"), true, 24, 24);
+            indicat.loadGraphic(Assets.getGraphic("shared/numpad-indicators"), true, 24, 24);
 
             indicat.animation.add("correct", [0], 0.0, false);
 
@@ -464,8 +464,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             btn.active = false;
 
-            btn.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("globals/numpad-button-sheet"), 
-                Paths.image(Paths.xml("globals/numpad-button-sheet")));
+            btn.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("shared/numpad-button-sheet"), 
+                Paths.image(Paths.xml("shared/numpad-button-sheet")));
 
             btn.animation.addByPrefix("deselected", '${name.toLowerCase()}-deselected', 0.0, false);
 
@@ -488,7 +488,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         okButton = new FlxSprite();
 
-        okButton.loadGraphic(Assets.getGraphic("globals/numpad-ok-button"), true, 64, 64);
+        okButton.loadGraphic(Assets.getGraphic("shared/numpad-ok-button"), true, 64, 64);
 
         okButton.animation.add("deselected", [0], 0.0, false);
 
@@ -788,30 +788,30 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         if (totalCorrect == totalSolved)
         {
-            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_Problem${problemIndex}')));
+            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_Problem${problemIndex}')));
 
             if (corrupt)
             {
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("globals/BAL_Buzz")));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_${extendOp(op1)}Short')));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}Short')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("globals/BAL_Buzz")));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_${extendOp(op2)}Short')));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op2)}Short')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("globals/BAL_Buzz")));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
             }
             else
             {
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_${val1}')));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${val1}')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_${extendOp(op1)}')));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}')));
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_${val2}')));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_${val2}')));
             }
 
-            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('globals/BAL_Equals')));
+            sndQueue.addToQueue(FlxG.sound.load(Assets.getSound('shared/BAL_Equals')));
         }
     }
 
@@ -900,7 +900,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
             {
                 sndQueue.flushQueue(true);
 
-                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("globals/BAL_Praise" + FlxG.random.int(1, 3))));
+                sndQueue.addToQueue(FlxG.sound.load(Assets.getSound("shared/BAL_Praise" + FlxG.random.int(1, 3))));
             }
 
             indicat.animation.play("correct");

@@ -25,7 +25,7 @@ class AboutScreen extends ResourceState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("globals/defaultCursor").bitmap);
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
         bg = new FlxSprite();
 
@@ -59,7 +59,7 @@ class AboutScreen extends ResourceState
 
         add(exitButton);
 
-        MainMenuScreen.playMusic();
+        MainMenuScreen.playTune();
     }
 
     override function update(elapsed:Float):Void
