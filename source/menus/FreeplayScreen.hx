@@ -312,8 +312,6 @@ class FreeplayScreen extends ResourceState
     public function clickExitButton():Void
     {
         FlxG.switchState(() -> new ModeSelectScreen());
-
-        MainMenuScreen.fadeTune();
     }
 
     public function clickInfoButton():Void
