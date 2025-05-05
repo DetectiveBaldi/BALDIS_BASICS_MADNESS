@@ -58,9 +58,15 @@ class PlayState extends ResourceState
 
     public static var level:LevelData;
 
-    public static var isCampaign:Bool;
+    public static var isWeek(get, never):Bool;
 
-    public static var campaignStats:Map<String, PlayStats>;
+    @:noCompletion
+    static function get_isWeek():Bool
+    {
+        return week != null;
+    }
+
+    public static var weekStats:Map<String, PlayStats>;
 
     public static function getLevelPath(?level:LevelData, sep:String = "/"):String
     {
@@ -87,9 +93,7 @@ class PlayState extends ResourceState
 
         level = week.levels[0];
 
-        isCampaign = true;
-
-        campaignStats = new Map<String, PlayStats>();
+        weekStats = new Map<String, PlayStats>();
 
         FlxG.switchState(() -> getLevelClass());
     }
@@ -100,9 +104,7 @@ class PlayState extends ResourceState
 
         PlayState.level = level;
 
-        isCampaign = false;
-
-        campaignStats = null;
+        weekStats = null;
 
         FlxG.switchState(() -> getLevelClass());
     }
@@ -212,7 +214,7 @@ class PlayState extends ResourceState
 
         add(stage);
 
-        cacheCharacterSheet("funkin/bf-dead0");
+        Assets.getGraphic("funkin/bf-dead0");
 
         spectators = new FlxTypedSpriteGroup<Character>();
 
@@ -469,18 +471,20 @@ class PlayState extends ResourceState
 
     public function endSong():Void
     {
-        if (isCampaign)
+        if (isWeek)
         {
-            campaignStats[level.name] = playField.playStats.copy();
+            weekStats[level.name] = playField.playStats.copy();
 
             var i:Int = week.levels.indexOf(level);
 
             if (i == week.levels.length - 1.0)
             {
-                var concat:PlayStats = PlayStats.concat(for (k => v in campaignStats) v);
+                var totalStats:PlayStats = PlayStats.empty();
 
-                if (HighScore.isWeekHighScore(week.name, "normal", concat.score))
-                    HighScore.setWeekScore(week.name, "normal", concat.score);
+                totalStats = totalStats.concat(for (k => v in weekStats) v);
+
+                if (HighScore.isWeekHighScore(week.name, "normal", totalStats.score))
+                    HighScore.setWeekScore(week.name, "normal", totalStats.score);
 
                 FlxG.switchState(() -> new StoryMenuScreen());
 
@@ -529,17 +533,12 @@ class PlayState extends ResourceState
 
     public function getOpponent(name:String):Character
     {
-        return opponents.group.getFirst((_opponent:Character) -> _opponent.config.name == name);
+        return opponents.group.getFirst((opponent:Character) -> opponent.config.name == name);
     }
 
     public function getPlayer(name:String):Character
     {
-        return players.group.getFirst((_player:Character) -> _player.config.name == name);
-    }
-
-    public function cacheCharacterSheet(name:String):Void
-    {
-        Assets.getGraphic('game/Character/${name}');
+        return players.group.getFirst((player:Character) -> player.config.name == name);
     }
 
     public function pauseMusic():Void

@@ -91,7 +91,7 @@ class GameOverScreen extends ResourceSubState
         if (canSkip)
         {
             if (FlxG.keys.justPressed.ESCAPE)
-                FlxG.switchState(PlayState.isCampaign ? () -> new StoryMenuScreen() : () -> new FreeplayScreen());
+                FlxG.switchState(PlayState.isWeek ? () -> new StoryMenuScreen() : () -> new FreeplayScreen());
 
             if (FlxG.keys.justPressed.ENTER && !rollTimer.finished)
             {

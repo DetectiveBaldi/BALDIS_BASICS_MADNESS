@@ -196,7 +196,7 @@ class PauseScreen extends ResourceSubState
 
         var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> 
         {
-            if (PlayState.isCampaign)
+            if (PlayState.isWeek)
                 FlxG.switchState(() -> new StoryMenuScreen());
             else
                 FlxG.switchState(() -> new FreeplayScreen());

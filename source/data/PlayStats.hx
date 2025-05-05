@@ -3,6 +3,11 @@ package data;
 @:structInit
 class PlayStats
 {
+    public static function empty():PlayStats
+    {
+        return {score: 0, hits: 0, misses: 0, bonus: 0.0}
+    }
+    
     public var score:Int;
 
     public var hits:Int;
@@ -45,9 +50,9 @@ class PlayStats
         return "F";
     }
 
-    public static function concat(...stats:PlayStats):PlayStats
+    public function concat(...stats:PlayStats):PlayStats
     {
-        var result:PlayStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
+        var result:PlayStats = copy();
 
         for (i in 0 ... stats.length)
         {

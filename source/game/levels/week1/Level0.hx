@@ -71,31 +71,31 @@ class Level0 extends PlayState
 
         plrStrumline.resetStrums();
 
-        cacheCharacterSheet("1st-prize-coming");
+        Assets.getGraphic("1st-prize-coming");
 
-        cacheCharacterSheet("1st-prize0");
+        Assets.getGraphic("1st-prize0");
 
-        cacheCharacterSheet("baldi0");
+        Assets.getGraphic("baldi0");
 
-        cacheCharacterSheet("baldi1");
+        Assets.getGraphic("baldi1");
 
-        cacheCharacterSheet("baldi2");
+        Assets.getGraphic("baldi2");
 
-        cacheCharacterSheet("bf0");
+        Assets.getGraphic("bf0");
 
-        cacheCharacterSheet("bf1");
+        Assets.getGraphic("bf1");
 
-        cacheCharacterSheet("bf2");
+        Assets.getGraphic("bf2");
 
-        cacheCharacterSheet("bully0");
+        Assets.getGraphic("bully0");
 
-        cacheCharacterSheet("gotta-sweep0");
+        Assets.getGraphic("gotta-sweep0");
 
-        cacheCharacterSheet("playtime0");
+        Assets.getGraphic("playtime0");
 
-        cacheCharacterSheet("principal0");
+        Assets.getGraphic("principal0");
 
-        cacheCharacterSheet("run-legs");
+        Assets.getGraphic("run-legs");
 
         temperature = new FlxSprite();
     

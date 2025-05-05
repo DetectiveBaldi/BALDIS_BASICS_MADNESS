@@ -61,7 +61,7 @@ class GainGL extends PlayState
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
 
-        cacheCharacterSheet("classic-remastered/gotta-sweep0");
+        Assets.getGraphic("classic-remastered/gotta-sweep0");
     
         gainGS.remove(opponents, true);
         gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
