@@ -194,12 +194,12 @@ class RevisionL extends PlayState
             var opp:Character = getOpponent("baldi2");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf1"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf1"));
             plr.scale.set(3.0, 3.0);
             plr.setPosition(0.0, 190.0);
             players.add(plr);
         
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi1"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi1"));
             opp.scale.set(3.2, 3.2);
             opp.setPosition(840.0, 45.0);
             opponents.add(opp);

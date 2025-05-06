@@ -214,7 +214,7 @@ class PlayState extends ResourceState
 
         add(stage);
 
-        Assets.getGraphic("funkin/bf-dead0");
+        Assets.getGraphic("game/Character/bf-dead0");
 
         spectators = new FlxTypedSpriteGroup<Character>();
 

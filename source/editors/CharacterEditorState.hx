@@ -2,11 +2,9 @@ package editors;
 
 import haxe.Json;
 
-import sys.FileSystem;
-
-import sys.io.File;
-
 import openfl.desktop.Clipboard;
+
+import openfl.net.FileReference;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -92,13 +90,15 @@ class CharacterEditorState extends ResourceState
 
         FlxG.mouse.visible = true;
 
+        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+
         gameCamera.zoom = 0.75;
 
         var background:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(32, 32, 64, 64, true, 0xFFE7E6E6, 0xFFD9D5D5));
 
         add(background);
 
-        character = new Character(null, 0.0, 0.0, CharacterData.get("funkin/bf0"));
+        character = new Character(null, 0.0, 0.0, CharacterData.get("bf0"));
 
         character.screenCenter();
 
@@ -136,9 +136,13 @@ class CharacterEditorState extends ResourceState
 
         ui.findComponent("button", Button).onClick = (ev:MouseEvent) ->
         {
-            var path:String = Paths.data(Paths.json('game/Character/${character.config.name}'));
+            var path:String = Sys.getCwd().replace("/", "\\");
 
-            File.saveContent(path, Json.stringify(character.config));
+            path += Paths.data(Paths.json('game\\Character\\${character.config.name}')).replace("/", "\\");
+
+            var fileRef:FileReference = new FileReference();
+
+            fileRef.save(Json.stringify(character.config), path);
         }
 
         ui.findComponent("_button", Button).onClick = (ev:MouseEvent) ->

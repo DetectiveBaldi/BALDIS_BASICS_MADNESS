@@ -39,6 +39,8 @@
 
 	<haxelib name="haxeui-flixel" />
 
+	<haxedef name="haxeui_flixel_no_custom_cursors" />
+
 	<haxelib name="haxeui-core" />
 
 	<!-- _____________________________ Path Settings ____________________________ -->

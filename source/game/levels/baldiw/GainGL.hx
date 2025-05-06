@@ -61,7 +61,7 @@ class GainGL extends PlayState
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
 
-        Assets.getGraphic("classic-remastered/gotta-sweep0");
+        Assets.getGraphic("gotta-sweep0");
     
         gainGS.remove(opponents, true);
         gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
@@ -164,7 +164,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf5");
             plr.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf6"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf6"));
             plr.setPosition(-100.0, 125.0);
             players.add(plr);
             plr.visible = true;
@@ -234,7 +234,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf6");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf0"));
             plr.scale.set(1.75, 1.75);
             plr.setPosition(950.0, 125.0);
             plr.visible = true;
@@ -243,7 +243,7 @@ class GainGL extends PlayState
             var opp:Character = getOpponent("baldi-angry1");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi-angry0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry0"));
             opp.scale.set(2.0, 2.0);
             opp.setPosition(-600.0, 0.0);
             opp.skipDance = true;
@@ -353,7 +353,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf3"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf3"));
             plr.scale.set(2.0, 2.0);      
             plr.setPosition(350.0, 200.0);
             players.add(plr);
@@ -374,7 +374,7 @@ class GainGL extends PlayState
         {
             gameCameraZoom = 1.3;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi-angry3"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry3"));
 
             opp.scale.set(1.5, 1.5);
 
@@ -418,7 +418,7 @@ class GainGL extends PlayState
             var opp:Character = getOpponent("baldi-angry3");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf7"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf7"));
 
             var anim:FlxAnimation = plr.animation.getByName("dance");
 
@@ -428,7 +428,7 @@ class GainGL extends PlayState
 
             players.add(plr);
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/walk-legs"));
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("walk-legs"));
 
             anim = _plr.animation.getByName("legs");
 
@@ -537,7 +537,7 @@ class GainGL extends PlayState
 
             tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/gotta-sweep0"));
+            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
 
             _opp.skipSing = true;
 

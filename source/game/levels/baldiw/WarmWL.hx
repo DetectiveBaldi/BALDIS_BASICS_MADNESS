@@ -117,11 +117,11 @@ class WarmWL extends PlayState
             var opp:Character = getOpponent("baldi0");
             opp.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf0"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf0"));
             plr.setPosition(400.0, 0.0);
             players.add(plr);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("classic-remastered/baldi2"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi2"));
             opp.setPosition(-550.0, -150.0);
             opponents.add(opp);
         
@@ -157,7 +157,7 @@ class WarmWL extends PlayState
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
 
-            var plrAnim:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("funkin/bf-anim-door"));
+            var plrAnim:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-anim-door"));
             plrAnim.setPosition(400.0, 0.0);
             plrAnim.skipDance = true;
             plrAnim.skipSing = true;

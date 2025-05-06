@@ -114,7 +114,7 @@ class TitleScreen extends ResourceState
 
         demoText.textField.sharpness = 400.0;
 
-        demoText.setPosition(title.x + title.width - demoText.width - 125.0, 180.0);
+        demoText.setPosition(title.x + title.width - demoText.width - 135.0, 180.0);
 
         add(demoText);
     }

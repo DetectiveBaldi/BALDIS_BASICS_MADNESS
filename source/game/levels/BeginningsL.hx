@@ -51,7 +51,7 @@ class BeginningsL extends PlayState
 
         beginningsS.testRoom.visible = true;
         
-        var spectator:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("mystery/placeface-anim-spectate"));
+        var spectator:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("placeface-anim-spectate"));
         spectator.scale.set(1, 1);
         spectator.setPosition(125.0, -235.0);
         beginningsS.insert(beginningsS.members.indexOf(opponents), spectator);

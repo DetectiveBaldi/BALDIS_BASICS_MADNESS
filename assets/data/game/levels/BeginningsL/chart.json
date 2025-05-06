@@ -1,5 +1,5 @@
 {
-	"player1": "funkin/bf9",
+	"player1": "bf9",
 	"sectionLengths": [],
 	"notes": [
 		{
@@ -1088,7 +1088,7 @@
 			"mustHitSection": false
 		}
 	],
-	"player2": "mystery/placeface0",
+	"player2": "placeface0",
 	"gfVersion": "",
 	"events": [],
 	"song": "Beginnings",

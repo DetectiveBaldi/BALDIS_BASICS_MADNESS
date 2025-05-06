@@ -1,5 +1,5 @@
 {
-	"player1": "funkin/bf3",
+	"player1": "bf3",
 	"gfVersion": "",
 	"notes": [
 		{
@@ -1379,7 +1379,7 @@
 		}
 	],
 	"events": [],
-	"player2": "classic-remastered/baldi2",
+	"player2": "baldi2",
 	"offset": 0,
 	"song": "Revision",
 	"needsVoices": true,
