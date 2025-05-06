@@ -160,7 +160,7 @@ class RevisionL extends PlayState
         {
             var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN);
 
-            spr.animation.onFinish.add((name:String) -> kill());
+            spr.animation.onFinish.add((name:String) -> spr.kill());
 
             add(spr);
         }
@@ -169,7 +169,7 @@ class RevisionL extends PlayState
         {
             var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
 
-            spr.animation.onFinish.add((name:String) -> kill());
+            spr.animation.onFinish.add((name:String) -> spr.kill());
 
             add(spr);
 
@@ -252,7 +252,7 @@ class RevisionL extends PlayState
 
             var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
 
-            spr.animation.onFinish.add((name:String) -> kill());
+            spr.animation.onFinish.add((name:String) -> spr.kill());
 
             add(spr);
         }
