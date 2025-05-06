@@ -59,7 +59,7 @@ class ResourceState extends FlxState
         add(conductor);
 
         if (!skipTransition)
-            openSubState(new CustomTransition(OUT));
+            openSubState(new CustomTransition(OUT, null));
     }
 
     override function startOutro(onOutroComplete:()->Void):Void
@@ -96,13 +96,13 @@ class CustomTransition extends FlxSubState
     
     public var onComplete:()->Void;
 
-    public function new(_fade:CustomTransitionFade, _onComplete:()->Void = null):Void
+    public function new(fad:CustomTransitionFade, onCompl:()->Void):Void
     {
         super();
 
-        fade = _fade;
+        fade = fad;
 
-        onComplete = _onComplete;
+        onComplete = onCompl;
     }
 
     override function create():Void
@@ -111,7 +111,7 @@ class CustomTransition extends FlxSubState
 
         camera = FlxG.cameras.list.last();
 
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade, 0.5);
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(0.5, fade);
 
         add(spr);
 
@@ -124,30 +124,23 @@ class CustomTransition extends FlxSubState
                 onComplete();
         });
     }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        onComplete = null;
-    }
 }
 
 class CustomTransitionSprite extends FlxBackdrop
 {
-    public var fade:CustomTransitionFade;
-
     public var duration:Float;
 
-    public function new(fad:CustomTransitionFade, durat:Float):Void
+    public var fade:CustomTransitionFade;
+
+    public function new(durat:Float, fad:CustomTransitionFade):Void
     {
         super();
 
         camera = FlxG.cameras.list.last();
 
-        fade = fad;
-
         duration = durat;
+
+        fade = fad;
 
         loadGraphic(Assets.getGraphic("extendable/ResourceState/gradient"), true, 16, 16);
 

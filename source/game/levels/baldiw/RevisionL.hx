@@ -157,11 +157,21 @@ class RevisionL extends PlayState
         }
 
         if (step == 664)
-            var spr:CustomTransitionSprite = getTransitionSpr(IN);
+        {
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN);
+
+            spr.animation.onFinish.add((name:String) -> kill());
+
+            add(spr);
+        }
 
         if (step == 672)
         {
-            var spr:CustomTransitionSprite = getTransitionSpr(OUT);
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+
+            spr.animation.onFinish.add((name:String) -> kill());
+
+            add(spr);
 
             if (!Options.middlescroll)
                 {
@@ -240,7 +250,11 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            var spr:CustomTransitionSprite = getTransitionSpr(OUT);
+            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+
+            spr.animation.onFinish.add((name:String) -> kill());
+
+            add(spr);
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
@@ -251,17 +265,6 @@ class RevisionL extends PlayState
             if (step != 1584.0)
                 padMinigame.nextProblem(step == 1456.0);
         } 
-    }
-
-    public function getTransitionSpr(fade:CustomTransitionFade):CustomTransitionSprite
-    {
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(fade, conductor.beatLength * 2.0 * 0.001);
-
-        spr.animation.onFinish.add((name:String) -> spr.kill());
-
-        add(spr);
-
-        return spr;
     }
 }
 
