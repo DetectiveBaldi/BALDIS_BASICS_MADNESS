@@ -797,11 +797,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
             {
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op1)}Short')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op2)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op2)}Short')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
             }
@@ -809,7 +809,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
             {
                 sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val1}')));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${extendOp(op1)}')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op1)}')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val2}')));
             }
@@ -954,7 +954,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
         questionText.text = "";
     }
 
-    public function extendOp(str:String):String
+    public function opToString(str:String):String
     {
         return switch (str:String)
         {
@@ -966,7 +966,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
             
             case "/": "Divided";
 
-            default: "NULL";
+            default: "Null";
         }
     }
 
