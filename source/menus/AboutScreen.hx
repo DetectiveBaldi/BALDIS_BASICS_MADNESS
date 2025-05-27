@@ -7,11 +7,11 @@ import flixel.util.FlxColor;
 
 import core.Assets;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 using util.MathUtil;
 
-class AboutScreen extends ResourceState
+class AboutScreen extends CustomState
 {
     public var exitButton:FlxSprite;
 

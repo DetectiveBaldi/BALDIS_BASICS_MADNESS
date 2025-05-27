@@ -13,7 +13,7 @@ import core.Assets;
 
 import data.CharacterData;
 
-import extendable.ResourceSubState;
+import extendable.CustomSubState;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
@@ -21,7 +21,7 @@ import menus.StoryMenuScreen;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class GameOverScreen extends ResourceSubState
+class GameOverScreen extends CustomSubState
 {
     public var player:Character;
 

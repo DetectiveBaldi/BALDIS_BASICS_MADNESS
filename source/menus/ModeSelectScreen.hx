@@ -16,11 +16,11 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 using util.MathUtil;
 
-class ModeSelectScreen extends ResourceState
+class ModeSelectScreen extends CustomState
 {
     public var heads:FlxBackdrop;
 

@@ -1,21 +1,21 @@
 package extendable;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
 
 import flixel.animation.FlxAnimation;
 
-import flixel.tweens.FlxTween.FlxTweenManager;
+import flixel.group.FlxGroup;
 
-import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween.FlxTweenManager;
 
 import flixel.util.FlxTimer.FlxTimerManager;
 
 import flixel.addons.display.FlxBackdrop;
 
 import core.Assets;
-import core.Paths;
 
 import music.Conductor;
 
@@ -24,10 +24,8 @@ using util.ArrayUtil;
 /**
  * An extended `flixel.FlxState` with a few additional resources.
  */
-class ResourceState extends FlxState
+class CustomState extends FlxState
 {
-    public static var skipTransition:Bool = false;
-
     public var tween:FlxTweenManager;
 
     public var timer:FlxTimerManager;
@@ -58,19 +56,11 @@ class ResourceState extends FlxState
 
         add(conductor);
 
-        if (!skipTransition)
-            openSubState(new CustomTransition(OUT, null));
+        openSubState(new CustomTransition(OUT, null));
     }
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
-        if (skipTransition)
-        {
-            super.startOutro(onOutroComplete);
-
-            return;
-        }
-
         openSubState(new CustomTransition(IN, onOutroComplete));
     }
 
@@ -94,15 +84,15 @@ class CustomTransition extends FlxSubState
 {
     public var fade:CustomTransitionFade;
     
-    public var onComplete:()->Void;
+    public var onFinish:()->Void;
 
-    public function new(fad:CustomTransitionFade, onCompl:()->Void):Void
+    public function new(fad:CustomTransitionFade, onFinis:()->Void):Void
     {
         super();
 
         fade = fad;
 
-        onComplete = onCompl;
+        onFinish = onFinis;
     }
 
     override function create():Void
@@ -111,28 +101,36 @@ class CustomTransition extends FlxSubState
 
         camera = FlxG.cameras.list.last();
 
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(0.5, fade);
-
-        add(spr);
-
-        FlxTimer.wait(0.5, () ->
+        var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this, 0.5, fade, () ->
         {
             if (fade == OUT)
                 close();
 
-            if (onComplete != null)
-                onComplete();
+            if (onFinish != null)
+                onFinish();
         });
     }
 }
 
 class CustomTransitionSprite extends FlxBackdrop
 {
+    public static function addToParent(parent:FlxGroup, duration:Float, fade:CustomTransitionFade,
+        onFinish:()->Void):CustomTransitionSprite
+    {
+        var sprite:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, onFinish);
+
+        parent.add(sprite);
+
+        return sprite;
+    }
+
     public var duration:Float;
 
     public var fade:CustomTransitionFade;
 
-    public function new(durat:Float, fad:CustomTransitionFade):Void
+    public var onFinish:()->Void;
+
+    public function new(durat:Float, fad:CustomTransitionFade, onFinis:()->Void):Void
     {
         super();
 
@@ -142,7 +140,11 @@ class CustomTransitionSprite extends FlxBackdrop
 
         fade = fad;
 
-        loadGraphic(Assets.getGraphic("extendable/ResourceState/gradient"), true, 16, 16);
+        onFinish = onFinis;
+
+        loadGraphic(Assets.getGraphic("extendable/CustomState/gradient"), true, 16, 16);
+
+        animation.onFinish.add((name:String) -> if (onFinish != null) onFinish());
 
 		animation.add("fade", [0, 1, 2, 3, 4, 5, 6], 12, false);
 

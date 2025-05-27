@@ -16,11 +16,11 @@ import flixel.util.FlxTimer;
 import core.Assets;
 import core.Paths;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 using util.MathUtil;
 
-class LogoScreen extends ResourceState
+class LogoScreen extends CustomState
 {
     public var splash:FlxSprite;
 

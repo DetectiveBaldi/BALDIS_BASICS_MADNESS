@@ -18,7 +18,7 @@ import core.Paths;
 
 import data.WeekData;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import menus.FreeplayScreen.ButtonOrientation;
 import menus.FreeplayScreen.OrientedButton;
@@ -29,7 +29,7 @@ import game.PlayState;
 using util.MathUtil;
 using util.StringUtil;
 
-class StoryMenuScreen extends ResourceState
+class StoryMenuScreen extends CustomState
 {
     public var weeks:Array<WeekData>;
 

@@ -11,7 +11,7 @@ import music.Conductor;
 /**
  * An extended `flixel.FlxSubState` with a few additional resources.
  */
-class ResourceSubState extends FlxSubState
+class CustomSubState extends FlxSubState
 {
     public var tween:FlxTweenManager;
 

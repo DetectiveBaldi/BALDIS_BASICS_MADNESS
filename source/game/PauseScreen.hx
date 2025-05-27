@@ -25,7 +25,7 @@ import core.Assets;
 import core.Options;
 import core.Paths;
 
-import extendable.ResourceSubState;
+import extendable.CustomSubState;
 
 import game.PlayState;
 
@@ -36,7 +36,7 @@ import menus.options.OptionsMenu;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class PauseScreen extends ResourceSubState
+class PauseScreen extends CustomSubState
 {
     public var game:PlayState;
 

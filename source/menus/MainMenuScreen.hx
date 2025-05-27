@@ -18,13 +18,13 @@ import flixel.addons.display.FlxBackdrop;
 import core.Assets;
 import core.Paths;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import menus.options.OptionsMenu;
 
 using util.MathUtil;
 
-class MainMenuScreen extends ResourceState
+class MainMenuScreen extends CustomState
 {
     public static var tune:FlxSound;
 

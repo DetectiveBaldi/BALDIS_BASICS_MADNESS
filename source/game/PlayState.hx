@@ -29,7 +29,7 @@ import data.WeekData;
 
 import data.PlayStats;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import game.notes.Note;
 import game.notes.Strumline;
@@ -52,7 +52,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class PlayState extends ResourceState
+class PlayState extends CustomState
 {
     public static var week:WeekData;
 

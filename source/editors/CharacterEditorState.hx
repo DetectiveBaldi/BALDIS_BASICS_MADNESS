@@ -44,7 +44,7 @@ import data.AnimationData;
 import data.CharacterData;
 import data.HealthIconData;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import game.Character;
 import game.HealthIcon;
@@ -56,7 +56,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class CharacterEditorState extends ResourceState
+class CharacterEditorState extends CustomState
 {
     public var gameCamera(get, never):FlxCamera;
     

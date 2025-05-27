@@ -21,7 +21,7 @@ import core.Paths;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import game.HighScore;
 import game.PlayState;
@@ -29,7 +29,7 @@ import game.PlayState;
 using util.MathUtil;
 using util.StringUtil;
 
-class FreeplayScreen extends ResourceState
+class FreeplayScreen extends CustomState
 {
     public var levels:Array<LevelData>;
 

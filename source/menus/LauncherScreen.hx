@@ -11,9 +11,9 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
-class LauncherScreen extends ResourceState
+class LauncherScreen extends CustomState
 {
     public var launcher:FlxSprite;
 

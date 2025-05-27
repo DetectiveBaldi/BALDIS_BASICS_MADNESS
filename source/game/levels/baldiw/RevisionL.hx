@@ -1,16 +1,8 @@
 package game.levels.baldiw;
 
-import openfl.filters.BitmapFilter;
-import openfl.filters.BlurFilter;
-import openfl.filters.ShaderFilter;
-
-import openfl.text.TextFormat;
-
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
-
-import flixel.animation.FlxAnimation;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -40,8 +32,8 @@ import data.CharacterData;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.ResourceState.CustomTransitionFade;
-import extendable.ResourceState.CustomTransitionSprite;
+import extendable.CustomState.CustomTransitionFade;
+import extendable.CustomState.CustomTransitionSprite;
 
 import game.events.CameraFollowEvent;
 
@@ -158,20 +150,18 @@ class RevisionL extends PlayState
 
         if (step == 664)
         {
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN);
+            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
+                conductor.beatLength * 2.0 * 0.001, IN, null);
 
-            spr.animation.onFinish.add((name:String) -> spr.kill());
-
-            add(spr);
+            spr.onFinish = spr.kill;
         }
 
         if (step == 672)
         {
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
+                conductor.beatLength * 2.0 * 0.001, OUT, null);
 
-            spr.animation.onFinish.add((name:String) -> spr.kill());
-
-            add(spr);
+            spr.onFinish = spr.kill;
 
             if (!Options.middlescroll)
                 {
@@ -250,11 +240,10 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            var spr:CustomTransitionSprite = new CustomTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
+                conductor.beatLength * 2.0 * 0.001, OUT, null);
 
-            spr.animation.onFinish.add((name:String) -> spr.kill());
-
-            add(spr);
+            spr.onFinish = spr.kill;
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)

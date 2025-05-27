@@ -7,13 +7,13 @@ import flixel.util.FlxColor;
 
 import core.Assets;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import flixel.sound.FlxSound;
 
 using util.MathUtil;
 
-class CreditsScreen extends ResourceState
+class CreditsScreen extends CustomState
 {
     public var exitButton:FlxSprite;
 

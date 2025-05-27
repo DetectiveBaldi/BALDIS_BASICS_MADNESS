@@ -13,14 +13,14 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import extendable.ResourceState;
+import extendable.CustomState;
 
 import core.Assets;
 import core.Paths;
 
 using util.MathUtil;
 
-class TitleScreen extends ResourceState
+class TitleScreen extends CustomState
 {
     public var title:FlxSprite;
 
