@@ -190,7 +190,7 @@ class PauseScreen extends CustomSubState
 
         add(pauseIcons);
 
-        var resumeIcon:PauseScreenIcon = createIcon("resumeIcon", "Resume", close);
+        var resumeIcon:PauseScreenIcon = createIcon("resumeIcon", "Resume", game.resume);
 
         tween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
@@ -274,6 +274,8 @@ class PauseScreen extends CustomSubState
         icon.alpha = 0.0;
 
         icon.onSelect.add(() -> iconText.text = text);
+
+        icon.onClick.add(close);
 
         icon.onClick.add(onClick);
 

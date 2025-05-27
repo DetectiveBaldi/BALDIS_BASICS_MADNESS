@@ -362,22 +362,6 @@ class PlayState extends CustomState
         #end
     }
 
-    override function openSubState(subState:FlxSubState):Void
-    {
-        super.openSubState(subState);
-
-        if (Type.getClass(subState) == PauseScreen)
-            pauseMusic();
-    }
-
-    override function closeSubState():Void
-    {
-        super.closeSubState();
-
-        if (Type.getClass(subState) == PauseScreen)
-            resumeMusic();
-    }
-
     override function beatHit(beat:Int):Void
     {
         super.beatHit(beat);
@@ -510,7 +494,16 @@ class PlayState extends CustomState
 
     public function pause():Void
     {
+        persistentUpdate = false;
+
         openSubState(new PauseScreen(this));
+
+        pauseMusic();
+    }
+
+    public function resume():Void
+    {
+        resumeMusic();
     }
 
     public function gameOver():Void
@@ -518,6 +511,8 @@ class PlayState extends CustomState
         #if debug
         return;
         #end
+
+        persistentUpdate = false;
         
         persistentDraw = false;
 

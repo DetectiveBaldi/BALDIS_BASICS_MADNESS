@@ -1,6 +1,5 @@
 package game.levels.baldiw;
 
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -150,18 +149,12 @@ class RevisionL extends PlayState
 
         if (step == 664)
         {
-            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
-                conductor.beatLength * 2.0 * 0.001, IN, null);
-
-            spr.onFinish = spr.kill;
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN);
         }
 
         if (step == 672)
         {
-            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
-                conductor.beatLength * 2.0 * 0.001, OUT, null);
-
-            spr.onFinish = spr.kill;
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
 
             if (!Options.middlescroll)
                 {
@@ -240,10 +233,7 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this,
-                conductor.beatLength * 2.0 * 0.001, OUT, null);
-
-            spr.onFinish = spr.kill;
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)

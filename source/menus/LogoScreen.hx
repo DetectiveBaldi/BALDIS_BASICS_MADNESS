@@ -45,8 +45,6 @@ class LogoScreen extends CustomState
 
         splash.animation.addByIndices("spin", "this",  [for (i in 29 ... 45) i ], "", 12.0, false);
 
-        splash.animation.play("formation");
-
         splash.scale.set(1.5, 1.5);
 
         splash.updateHitbox();
@@ -67,22 +65,27 @@ class LogoScreen extends CustomState
 
         add(logo);
 
-        FlxTimer.wait(0.65, () ->
+        FlxTimer.wait(0.5, () ->
         {
-            tune = FlxG.sound.load(Assets.getMusic("menus/LogoScreen/tune"));
+            splash.animation.play("formation");
 
-            tune.play();
-
-            FlxTimer.wait(2.65, () -> 
+            FlxTimer.wait(0.15, () ->
             {
-                splash.animation.play("spin");
+                tune = FlxG.sound.load(Assets.getMusic("menus/LogoScreen/tune"));
 
-                FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
+                tune.play();
 
-                FlxTween.tween(logo, {y: logo.getCenterY() - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                FlxTimer.wait(2.65, () -> 
+                {
+                    splash.animation.play("spin");
+
+                    FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
+
+                    FlxTween.tween(logo, {y: logo.getCenterY() - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                });
+
+                FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
             });
-
-            FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
         });
     }
 }

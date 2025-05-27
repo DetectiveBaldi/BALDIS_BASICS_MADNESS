@@ -7,8 +7,6 @@ import flixel.FlxSubState;
 
 import flixel.animation.FlxAnimation;
 
-import flixel.group.FlxGroup;
-
 import flixel.tweens.FlxTween.FlxTweenManager;
 
 import flixel.util.FlxTimer.FlxTimerManager;
@@ -36,6 +34,8 @@ class CustomState extends FlxState
     {
         super.create();
 
+        persistentUpdate = true;
+
         tween = new FlxTweenManager();
 
         add(tween);
@@ -56,12 +56,23 @@ class CustomState extends FlxState
 
         add(conductor);
 
-        openSubState(new CustomTransition(OUT, null));
+        openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
     }
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
         openSubState(new CustomTransition(IN, onOutroComplete));
+    }
+
+    public function getTransitionSprite(duration:Float, fade:CustomTransitionFade):FlxSprite
+    {
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, null);
+        
+        spr.onFinish = spr.kill;
+
+        add(spr);
+
+        return spr;
     }
 
     public function stepHit(step:Int):Void
@@ -101,29 +112,21 @@ class CustomTransition extends FlxSubState
 
         camera = FlxG.cameras.list.last();
 
-        var spr:CustomTransitionSprite = CustomTransitionSprite.addToParent(this, 0.5, fade, () ->
-        {
-            if (fade == OUT)
-                close();
+        getTransitionSprite();
+    }
 
-            if (onFinish != null)
-                onFinish();
-        });
+    public function getTransitionSprite():FlxSprite
+    {
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(0.5, fade, onFinish);
+
+        add(spr);
+
+        return spr;
     }
 }
 
 class CustomTransitionSprite extends FlxBackdrop
 {
-    public static function addToParent(parent:FlxGroup, duration:Float, fade:CustomTransitionFade,
-        onFinish:()->Void):CustomTransitionSprite
-    {
-        var sprite:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, onFinish);
-
-        parent.add(sprite);
-
-        return sprite;
-    }
-
     public var duration:Float;
 
     public var fade:CustomTransitionFade;
