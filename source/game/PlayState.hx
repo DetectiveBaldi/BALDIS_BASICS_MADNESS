@@ -39,7 +39,6 @@ import game.notes.events.NoteHitEvent;
 
 import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
-import game.events.ScrollSpeedChangeEvent;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
@@ -120,7 +119,9 @@ class PlayState extends CustomState
         return FlxG.camera;
     }
 
-    public var gameCameraTarget:FlxObject;
+    public var cameraPoint:FlxObject;
+
+    public var lockCameraPoint:Bool;
 
     public var gameCameraZoom:Float;
 
@@ -198,11 +199,13 @@ class PlayState extends CustomState
 
         conductor.active = true;
 
-        gameCameraTarget = new FlxObject();
+        cameraPoint = new FlxObject();
 
-        add(gameCameraTarget);
+        add(cameraPoint);
 
-        gameCamera.follow(gameCameraTarget, LOCKON, 0.05);
+        gameCamera.follow(cameraPoint, LOCKON, 0.05);
+
+        lockCameraPoint = false;
 
         gameCameraZoom = gameCamera.zoom;
 
@@ -320,19 +323,7 @@ class PlayState extends CustomState
             if (conductor.time < event.time)
                 break;
 
-            switch (event.name:String)
-            {
-                case "Camera Follow":
-                    CameraFollowEvent.dispatch(this, event.value.x ?? 0.0, event.value.y ?? 0.0, event.value.characterRole ?? "", event.value.duration ?? -1.0, event.value.ease ?? "linear");
-
-                case "Camera Zoom":
-                    CameraZoomEvent.dispatch(this, event.value.zoom, event.value.duration, event.value.ease);
-
-                case "Scroll Speed Change":
-                    ScrollSpeedChangeEvent.dispatch(this, event.value.scrollSpeed, event.value.duration, event.value.ease);
-            }
-
-            eventIndex++;
+            onEvent(event);
         }
 
         if (countdown.finished || countdown.skipped)
@@ -452,6 +443,25 @@ class PlayState extends CustomState
     public function plrNoteHit(ev:NoteHitEvent):Void {}
 
     public function plrNoteMiss(note:Note):Void {}
+
+    public function onEvent(ev:RawEvent):Void
+    {
+        var val:Dynamic = ev.value;
+
+        switch (ev.name:String)
+        {
+            case "Camera Follow":
+            {
+                if (!lockCameraPoint)
+                    CameraFollowEvent.dispatch(this, val.x, val.y, val.charType, val.duration, val.ease);
+            }
+
+            case "Camera Zoom":
+                CameraZoomEvent.dispatch(this, val.zoom, val.duration, val.ease);
+        }
+
+        eventIndex++;
+    }
 
     public function endSong():Void
     {

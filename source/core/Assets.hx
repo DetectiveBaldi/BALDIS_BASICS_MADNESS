@@ -43,10 +43,10 @@ class Assets
 
         FlxG.signals.preStateSwitch.add(() -> lastState = Type.getClass(FlxG.state) );
 
-        FlxG.signals.preStateCreate.add((nxt:FlxState) -> { if (lastState != Type.getClass(nxt)) clearCaches(); });
+        FlxG.signals.preStateCreate.add((next:FlxState) -> { if (lastState != Type.getClass(next)) clearCaches(); });
     }
 
-    public static function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
+    public static overload extern inline function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
     {
         if (!raw)
             path = Paths.image(Paths.png(path));
@@ -55,15 +55,22 @@ class Assets
             return graphics[path];
 
         var graphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));
+
+        getGraphic(graphic, gpuCaching);
+
+        graphics[path] = graphic;
         
+        return graphic;
+    }
+
+    public static overload extern inline function getGraphic(graphic:FlxGraphic, gpuCaching:Bool = true):FlxGraphic
+    {
         if (Options.gpuCaching && gpuCaching)
             graphic.bitmap.disposeImage();
 
         graphic.persist = true;
 
-        graphics[path] = graphic;
-
-        return graphics[path];
+        return graphic;
     }
 
     public static function removeGraphic(path:String):Void

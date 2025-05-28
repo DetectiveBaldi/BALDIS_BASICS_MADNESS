@@ -42,7 +42,7 @@ class WarmWL extends PlayState
 
         super.create();
 
-        gameCameraTarget.centerTo();
+        cameraPoint.centerTo();
 
         playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -132,14 +132,14 @@ class WarmWL extends PlayState
 
         if (step == 1152)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 100.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
     
         if (step == 1280)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 100.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
 
         if (step == 1408)
@@ -149,8 +149,8 @@ class WarmWL extends PlayState
 
             warmWS.entranceA1.color = 0xFFFFFFFF;
 
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX(),
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX(),
+                cameraPoint.getCenterY(), "", -1.0);
 
             gameCamera.snapToTarget();
 

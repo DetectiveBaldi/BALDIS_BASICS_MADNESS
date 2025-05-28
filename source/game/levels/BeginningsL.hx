@@ -42,8 +42,8 @@ class BeginningsL extends PlayState
 
         super.create();
 
-        CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
-            gameCameraTarget.getCenterY(), "", -1.0);
+        CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
+            cameraPoint.getCenterY(), "", -1.0);
 
         gameCamera.snapToTarget();
 
@@ -116,8 +116,8 @@ class BeginningsL extends PlayState
        
         if (step == 464)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 100.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
    
        
@@ -126,29 +126,29 @@ class BeginningsL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
     
         if (step == 544)
         {
-            gameCameraTarget.centerTo();
+            cameraPoint.centerTo();
             
             gameCameraZoom = 0.6;
         }
     
         if (step == 800)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 250.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 250.0,
+                cameraPoint.getCenterY(), "", -1.0);
            
             gameCameraZoom = 1.25;
         }
         
         if (step == 816)
         {
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 150.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
+                cameraPoint.getCenterY(), "", -1.0);
             
             gameCameraZoom = 0.8;
         }

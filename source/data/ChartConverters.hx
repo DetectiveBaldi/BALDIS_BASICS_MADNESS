@@ -112,6 +112,8 @@ class PsychConverter
 
         var tempo:Float = output.tempo;
 
+        var character:String = "";
+
         for (i in 0 ... raw.notes.length)
         {
             var section:Dynamic = raw.notes[i];
@@ -138,6 +140,16 @@ class PsychConverter
             };
 
             TimedObjectUtil.sort(_section.sectionNotes);
+
+            var newCharacter:String = _section.mustHitSection ? "player" : "opponent";
+
+            if (character != newCharacter)
+            {
+                output.events.push({time: time, name: "Camera Follow", value: {x: 0.0, y: 0.0, charType: newCharacter,
+                    duration: 0.0, ease: "linear"}});
+
+                character = newCharacter;
+            }
 
             var beatLength:Float = (60.0 / tempo * 1000.0);
 

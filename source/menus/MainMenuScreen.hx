@@ -116,6 +116,15 @@ class MainMenuScreen extends CustomState
         }
         else
             exitButton.animation.play("0");
+
+        #if debug
+        if (FlxG.keys.justPressed.EIGHT)
+        {
+            fadeTune();
+            
+            FlxG.switchState(() -> new editors.CharacterEditorState());
+        }
+        #end
     }
 
     override function destroy():Void

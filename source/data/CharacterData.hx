@@ -1,5 +1,6 @@
 package data;
 
+import data.AxisData;
 import haxe.Json;
 
 import core.Assets;
@@ -36,6 +37,8 @@ typedef RawCharacterData =
     var ?danceInterval:Float;
 
     var ?singDuration:Float;
+
+    var cameraPoint:AxisData<Float>;
 
     var healthIcon:String;
 

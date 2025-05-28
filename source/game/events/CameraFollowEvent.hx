@@ -7,46 +7,34 @@ import game.PlayState;
 
 class CameraFollowEvent
 {
-    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, characterRole:String, duration:Float, ease:String = "linear"):Void
+    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, charType:String, duration:Float,
+        ease:String = "linear"):Void
     {
-        switch (characterRole:String)
+        charType ??= "";
+
+        if (charType.length > 0.0)
         {
-            case "spectator":
-            {
-                x = game.spectator.getMidpoint().x;
+            var char:Character = Reflect.getProperty(game, charType);
 
-                y = game.spectator.getMidpoint().y;
-            }
+            x = char.getMidpoint().x + char.config.cameraPoint.x;
 
-            case "opponent":
-            {
-                x = game.opponent.getMidpoint().x;
-
-                y = game.opponent.getMidpoint().y;
-            }
-
-            case "player":
-            {
-                x = game.player.getMidpoint().x;
-
-                y = game.player.getMidpoint().y;
-            }
+            y = char.getMidpoint().y + char.config.cameraPoint.y;
         }
 
         if (duration > 0.0)
         {
             game.gameCamera.follow(null, LOCKON, 0.05);
 
-            game.gameCameraTarget.setPosition(x, y);
+            game.cameraPoint.setPosition(x, y);
 
-            game.tween.tween(game.gameCamera.scroll, {x: game.gameCameraTarget.x - game.gameCamera.width * 0.5, y: game.gameCameraTarget.y - game.gameCamera.height * 0.5}, duration,
+            game.tween.tween(game.gameCamera.scroll, {x: game.cameraPoint.x - game.gameCamera.width * 0.5, y: game.cameraPoint.y - game.gameCamera.height * 0.5}, duration,
             {
                 ease: Reflect.getProperty(FlxEase, ease),
 
-                onComplete: (_tween:FlxTween) -> game.gameCamera.follow(game.gameCameraTarget, LOCKON, 0.05)
+                onComplete: (_tween:FlxTween) -> game.gameCamera.follow(game.cameraPoint, LOCKON, 0.05)
             });
         }
         else
-            game.gameCameraTarget.setPosition(x, y);
+            game.cameraPoint.setPosition(x, y);
     }
 }

@@ -8,11 +8,14 @@ import openfl.net.FileReference;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxSprite;
 
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxStringUtil;
@@ -41,6 +44,7 @@ import core.Assets;
 import core.Paths;
 
 import data.AnimationData;
+import data.AxisData;
 import data.CharacterData;
 import data.HealthIconData;
 
@@ -55,6 +59,7 @@ import ui.ProgressBar;
 using StringTools;
 
 using util.ArrayUtil;
+using util.MathUtil;
 
 class CharacterEditorState extends CustomState
 {
@@ -71,6 +76,8 @@ class CharacterEditorState extends CustomState
     public var character:Character;
 
     public var animationIndex:Int;
+
+    public var cameraPointPointer:FlxSprite;
 
     public var progBar:ProgressBar;
 
@@ -105,6 +112,16 @@ class CharacterEditorState extends CustomState
         add(character);
 
         animationIndex = character.config.animations.indexOf(character.config.animations.first((animation:AnimationData) -> character.animation.name == animation.name));
+
+        cameraPointPointer = new FlxSprite(0.0, 0.0, Assets.getGraphic(FlxGraphic.fromClass(PointerGraphic)));
+
+        cameraPointPointer.scale.set(3.0, 3.0);
+
+        cameraPointPointer.updateHitbox();
+
+        add(cameraPointPointer);
+
+        resetCameraPoint();
 
         ui = ComponentBuilder.fromFile("assets/data/editors/CharacterEditorState/ui.xml");
 
@@ -152,6 +169,8 @@ class CharacterEditorState extends CustomState
             character.screenCenter();
 
             character.dance();
+
+            resetCameraPoint();
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
@@ -313,6 +332,18 @@ class CharacterEditorState extends CustomState
 
                 refreshAnimationsTab();
             }
+
+            if (FlxG.keys.justPressed.I)
+                updateCameraPoint(0.0, FlxG.keys.pressed.SHIFT ? -10.0 : -1.0);
+
+            if (FlxG.keys.justPressed.J)
+                updateCameraPoint(FlxG.keys.pressed.SHIFT ? -10.0 : -1.0, 0.0);
+
+            if (FlxG.keys.justPressed.K)
+                updateCameraPoint(0.0, FlxG.keys.pressed.SHIFT ? 10.0 : 1.0);
+
+            if (FlxG.keys.justPressed.L)
+                updateCameraPoint(FlxG.keys.pressed.SHIFT ? 10.0 : 1.0, 0.0);
 
             if (FlxG.keys.pressed.CONTROL)
             {
@@ -502,4 +533,40 @@ class CharacterEditorState extends CustomState
 
         setAnimationOffset(animation, (animation.offset.x ?? 0.0) + x, (animation.offset.y ?? 0.0) + y);
     }
+
+    public function updateCameraPoint(x:Float = 0.0, y:Float = 0.0):Void
+    {
+        cameraPointPointer.x += x;
+
+        cameraPointPointer.y += y;
+
+        updateCameraPos();
+
+        character.config.cameraPoint.x += x;
+
+        character.config.cameraPoint.y += y;
+    }
+
+    public function resetCameraPoint():Void
+    {
+        var point:AxisData<Float> = character.config.cameraPoint;
+
+        var middle:FlxPoint = character.getMidpoint();
+
+        cameraPointPointer.setPosition(middle.x + point.x, middle.y + point.y);
+
+        middle.put();
+
+        updateCameraPos();
+    }
+
+    public function updateCameraPos():Void
+    {
+        FlxG.camera.scroll.x = cameraPointPointer.x - FlxG.camera.width * 0.5;
+
+        FlxG.camera.scroll.y = cameraPointPointer.y - FlxG.camera.height * 0.5;
+    }
 }
+
+@:bitmap("assets/images/debugger/cursorCross.png")
+class PointerGraphic extends openfl.display.BitmapData {}

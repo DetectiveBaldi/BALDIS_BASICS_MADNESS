@@ -48,7 +48,7 @@ class GainGL extends PlayState
 
         gameCameraZoom = 1;
 
-        gameCameraTarget.centerTo();
+        cameraPoint.centerTo();
 
         temperature = new FlxSprite();
 
@@ -146,7 +146,7 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            gameCameraTarget.x -= 180.0;
+            cameraPoint.x -= 180.0;
 
             gameCamera.snapToTarget();
 
@@ -215,7 +215,7 @@ class GainGL extends PlayState
         if (step == 448)
         {
             gameCameraZoom = 1;
-            gameCameraTarget.x -= 150.0;
+            cameraPoint.x -= 150.0;
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
@@ -268,14 +268,14 @@ class GainGL extends PlayState
 
         if (step == 480 || step == 528 || step == 560 || step == 592)
         {                        
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() + 300.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 300.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
 
         if (step == 512 || step == 544 || step == 576)
         {                        
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 300.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 300.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
     
         if (step == 504 || step == 507 || step == 510)
@@ -287,13 +287,13 @@ class GainGL extends PlayState
         {                        
             gameCameraZoom = 0.8;
            
-            CameraFollowEvent.dispatch(this, gameCameraTarget.getCenterX() - 200.0,
-                gameCameraTarget.getCenterY(), "", -1.0);
+            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 200.0,
+                cameraPoint.getCenterY(), "", -1.0);
         }
 
         if (step == 624)
         {
-            gameCameraTarget.centerTo();
+            cameraPoint.centerTo();
         }
 
         if (step == 632)
@@ -326,7 +326,7 @@ class GainGL extends PlayState
     
         if (step == 656)
         {
-            gameCameraTarget.x -= 150.0;
+            cameraPoint.x -= 150.0;
 
             gameCamera.snapToTarget();
             
@@ -391,7 +391,7 @@ class GainGL extends PlayState
     
         if (step == 912)
         {
-            gameCameraTarget.centerTo();
+            cameraPoint.centerTo();
 
             gameCamera.snapToTarget();
 
@@ -509,9 +509,9 @@ class GainGL extends PlayState
 
             __plr.setPosition(520.0, 155.0);
 
-            gameCameraTarget.centerTo(__plr);
+            cameraPoint.centerTo(__plr);
 
-            gameCameraTarget.y -= 70.0;
+            cameraPoint.y -= 70.0;
 
             gameCamera.snapToTarget();
 
@@ -522,7 +522,7 @@ class GainGL extends PlayState
 
         if (step == 1264.0)
         {
-            gameCameraTarget.centerTo();
+            cameraPoint.centerTo();
 
             gameCameraZoom = 0.75;
 
