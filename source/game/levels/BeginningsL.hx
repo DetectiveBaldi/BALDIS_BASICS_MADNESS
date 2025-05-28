@@ -40,44 +40,47 @@ class BeginningsL extends PlayState
 
         beginningsS = cast (stage, BeginningsS);
 
+        beginningsS.testRoom.visible = true;
+
         super.create();
 
-        CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
-            cameraPoint.getCenterY(), "", -1.0);
+        cameraPoint.centerTo();
 
         gameCamera.snapToTarget();
 
-        gameCameraZoom = 0.8;
+        gameCameraZoom = 1.0;
 
-        beginningsS.testRoom.visible = true;
-        
-        var spectator:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("placeface-anim-spectate"));
-        spectator.scale.set(1, 1);
-        spectator.setPosition(125.0, -235.0);
-        beginningsS.insert(beginningsS.members.indexOf(opponents), spectator);
+        spectator.scale.set(1.0, 1.0);
 
-        players.scale.set(1.75, 1.75);
-        players.setPosition(650, -25);
+        spectator.setPosition(425.0, 110.0);
 
-        opponents.scale.set(1.5, 1.5);
-        opponents.setPosition(-200, -150);
+        opponent.scale.set(1.5, 1.5);
+
+        opponent.setPosition(-185.0, -150);
+
+        player.scale.set(1.75, 1.75);
+
+        player.setPosition(beginningsS.testRoom.x + beginningsS.testRoom.width - player.width, -25.0);
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
 
-        if (step == 16 || step == 19 || step == 22)
+        if (step == 16.0 || step == 19.0 || step == 22.0)
+            gameCameraZoom += 0.05;
+
+        if (step == 16.0)
         {
-            gameCameraZoom += 0.1;
-           
             var opp:Character = getOpponent("placeface0");
+            
             opp.skipDance = true;
         }
         
-        if (step == 18)
+        if (step == 18.0)
         {
             var opp:Character = getOpponent("placeface0");
+
             opp.animation.play("elephant");
         }
     
