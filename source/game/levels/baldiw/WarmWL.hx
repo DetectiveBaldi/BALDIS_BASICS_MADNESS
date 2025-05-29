@@ -50,6 +50,7 @@ class WarmWL extends PlayState
         warmWS.entranceA0.visible = true;
 
         var plr:Character = getPlayer("bf2");
+        plr.setPosition(-20, -280);
         plr.visible = false;
         
         players.setPosition(215, 165);
@@ -156,6 +157,9 @@ class WarmWL extends PlayState
 
             var plr:Character = getPlayer("bf0");
             plr.visible = false;
+
+            var opp:Character = getOpponent("baldi2");
+            opp.skipDance = true;
 
             var plrAnim:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-anim-door"));
             plrAnim.setPosition(400.0, 0.0);

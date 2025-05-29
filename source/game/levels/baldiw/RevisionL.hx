@@ -68,6 +68,8 @@ class RevisionL extends PlayState
 
         gameCamera.snapToTarget();
 
+        lockCameraPoint = true;
+
         gameCameraZoom = 1;
 
         temperature = new FlxSprite();
