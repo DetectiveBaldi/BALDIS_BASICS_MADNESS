@@ -1,7 +1,5 @@
 package game.notes;
 
-import openfl.events.KeyboardEvent;
-
 import flixel.FlxG;
 
 import flixel.group.FlxGroup;
@@ -15,7 +13,6 @@ import flixel.util.FlxSignal.FlxTypedSignal;
 
 import core.Assets;
 import core.Options;
-import core.Paths;
 
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
@@ -27,6 +24,7 @@ import music.Conductor;
 using StringTools;
 
 using util.ArrayUtil;
+using util.MathUtil;
 
 class Strumline extends FlxGroup
 {
@@ -67,7 +65,7 @@ class Strumline extends FlxGroup
 
     public var onNoteMiss:FlxTypedSignal<(note:Note)->Void>;
 
-    public var notePops:FlxTypedGroup<NotePop>;
+    public var noteSplashes:FlxTypedGroup<NoteSplash>;
 
     public var onSustainHold:FlxTypedSignal<(event:SustainHoldEvent)->Void>;
 
@@ -156,9 +154,9 @@ class Strumline extends FlxGroup
 
         sustainMissEvent = new SustainMissEvent();
 
-        notePops = new FlxTypedGroup<NotePop>();
+        noteSplashes = new FlxTypedGroup<NoteSplash>();
 
-        add(notePops);
+        add(noteSplashes);
 
         onGhostTap = new FlxTypedSignal<(event:GhostTapEvent)->Void>();
 
@@ -322,7 +320,7 @@ class Strumline extends FlxGroup
 
         note.status = HIT;
 
-        note.showPop = noteHitEvent.showPop;
+        note.playSplash = noteHitEvent.playSplash;
 
         if (note.length > 0.0)
             note.visible = false;
@@ -330,8 +328,8 @@ class Strumline extends FlxGroup
         {
             notesPendingRemoval.push(note);
 
-            if (note.showPop)
-                showPop(note);
+            if (note.playSplash)
+                playSplash(note);
         }
 
         if (note.length > 0.0)
@@ -368,13 +366,13 @@ class Strumline extends FlxGroup
         _noteMiss.onComplete = _noteMiss.kill;
     }
 
-    public function showPop(note:Note):Void
+    public function playSplash(note:Note):Void
     {
-        var pop:NotePop = notePops.recycle(NotePop, () -> new NotePop());
+        var splash:NoteSplash = noteSplashes.recycle(NoteSplash, () -> new NoteSplash());
 
-        pop.pop(note.strum.direction, note.length > 0.0);
+        splash.play(note.strum.direction, note.length > 0.0);
 
-        pop.setPosition(note.strum.getMidpoint().x - pop.width * 0.5, note.strum.getMidpoint().y - pop.height * 0.5);
+        splash.centerTo(note.strum);
     }
 
     public function isHolding(note:Note):Bool
@@ -428,8 +426,8 @@ class Strumline extends FlxGroup
         {
             if (keysHeld[note.direction])
             {
-                if (note.showPop)
-                    showPop(note);
+                if (note.playSplash)
+                    playSplash(note);
             }
             else
             {

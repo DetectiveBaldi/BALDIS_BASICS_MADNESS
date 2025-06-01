@@ -214,7 +214,10 @@ class FreeplayScreen extends CustomState
                 path = week.name.toLowerCase();
         }
 
-        tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${path}'));
+        if (path == "unknown")
+            tvPortrait.makeGraphic(1, 1, FlxColor.TRANSPARENT);
+        else
+            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${path}'));
 
         tvPortrait.scale.set(2.25, 2.25);
 

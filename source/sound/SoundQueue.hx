@@ -83,22 +83,22 @@ class SoundQueue
         if (list.length == 0.0)
             return;
 
-        var lst:FlxSound = list[0];
+        var last:FlxSound = list[0];
 
-        lst.onComplete = null;
+        last.onComplete = null;
 
         list.shift();
 
         if (list.length == 0.0)
             return;
 
-        var nxt:FlxSound = list[0];
+        var next:FlxSound = list[0];
 
-        nxt.onComplete = update;
+        next.onComplete = update;
 
-        nxt.play(true);
+        next.play(true);
 
-        onUpdate.dispatch(nxt);
+        onUpdate.dispatch(next);
     }
 
     public function destroy():Void

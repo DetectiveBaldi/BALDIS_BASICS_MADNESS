@@ -7,44 +7,9 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import core.Assets;
 import core.Paths;
 
-import data.NoteSkin;
-import data.NoteSkin.RawNoteSkin;
-
 class Note extends FlxSprite
 {
     public static final DIRECTIONS:Array<String> = ["LEFT", "DOWN", "UP", "RIGHT"];
-
-    public var skin(default, set):RawNoteSkin;
-
-    @:noCompletion
-    function set_skin(_skin:RawNoteSkin):RawNoteSkin
-    {
-        skin = _skin;
-
-        var pngPath:String = 'game/notes/Note/${skin.image}';
-
-        var xmlPath:String = Paths.image(Paths.xml('game/notes/Note/${skin.image}'));
-
-        switch (skin.format ?? "".toLowerCase():String)
-        {
-            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
-
-            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
-        }
-
-        for (i in 0 ... DIRECTIONS.length)
-        {
-            animation.addByPrefix(DIRECTIONS[i].toLowerCase(), DIRECTIONS[i].toLowerCase() + "0", 24.0, false);
-
-            animation.addByPrefix(DIRECTIONS[i].toLowerCase() + "HoldPiece", DIRECTIONS[i].toLowerCase() + "HoldPiece0", 24.0, false);
-            
-            animation.addByPrefix(DIRECTIONS[i].toLowerCase() + "HoldTail", DIRECTIONS[i].toLowerCase() + "HoldTail0", 24.0, false);
-        }
-
-        antialiasing = _skin.antialiasing ?? true;
-
-        return skin;
-    }
 
     public var time:Float;
 
@@ -66,7 +31,7 @@ class Note extends FlxSprite
 
     public var status:NoteStatus;
 
-    public var showPop:Bool;
+    public var playSplash:Bool;
 
     public var finishedHold:Bool;
 
@@ -82,7 +47,17 @@ class Note extends FlxSprite
     {
         super(x, y);
 
-        skin = NoteSkin.get("default");
+        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/Note/default"),
+            Paths.image(Paths.xml("game/notes/Note/default")));
+
+        for (i in 0 ... DIRECTIONS.length)
+        {
+            animation.addByPrefix(DIRECTIONS[i].toLowerCase(), DIRECTIONS[i].toLowerCase() + "0", 24.0, false);
+
+            animation.addByPrefix(DIRECTIONS[i].toLowerCase() + "HoldPiece", DIRECTIONS[i].toLowerCase() + "HoldPiece0", 24.0, false);
+            
+            animation.addByPrefix(DIRECTIONS[i].toLowerCase() + "HoldTail", DIRECTIONS[i].toLowerCase() + "HoldTail0", 24.0, false);
+        }
 
         antialiasing = true;
 
@@ -98,7 +73,7 @@ class Note extends FlxSprite
 
         status = IDLING;
 
-        showPop = false;
+        playSplash = false;
 
         finishedHold = false;
 

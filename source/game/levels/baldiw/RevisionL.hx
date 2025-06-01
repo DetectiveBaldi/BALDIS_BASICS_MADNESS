@@ -151,12 +151,12 @@ class RevisionL extends PlayState
 
         if (step == 664)
         {
-            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN);
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN, null);
         }
 
         if (step == 672)
         {
-            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT, null);
 
             if (!Options.middlescroll)
                 {
@@ -235,7 +235,7 @@ class RevisionL extends PlayState
 
             add(padMinigame);
 
-            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT);
+            getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT, null);
         }
 
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)

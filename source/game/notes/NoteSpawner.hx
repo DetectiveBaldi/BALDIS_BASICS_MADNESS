@@ -82,7 +82,7 @@ class NoteSpawner extends FlxBasic
             
             _note.status = IDLING;
 
-            _note.showPop = false;
+            _note.playSplash = false;
 
             _note.finishedHold = false;
 

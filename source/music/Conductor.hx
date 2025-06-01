@@ -13,29 +13,11 @@ import data.Chart.RawTimeChange;
  */
 class Conductor extends FlxBasic
 {
-    public var step(get, never):Int;
+    public var step:Int;
 
-    @:noCompletion
-    function get_step():Int
-    {
-        return Math.floor(((time - timeChange.time) / stepLength) + timeChange.step);
-    }
+    public var beat:Int;
 
-    public var beat(get, never):Int;
-
-    @:noCompletion
-    function get_beat():Int
-    {
-        return Math.floor(step * 0.25);
-    }
-
-    public var measure(get, never):Int;
-
-    @:noCompletion
-    function get_measure():Int
-    {
-        return Math.floor(beat * 0.25);
-    }
+    public var measure:Int;
 
     public var onStepHit:FlxTypedSignal<(step:Int)->Void>;
 
@@ -73,6 +55,12 @@ class Conductor extends FlxBasic
 
         visible = false;
 
+        step = 0;
+
+        beat = 0;
+
+        measure = 0;
+
         onStepHit = new FlxTypedSignal<(step:Int)->Void>();
 
         onBeatHit = new FlxTypedSignal<(beat:Int)->Void>();
@@ -92,11 +80,11 @@ class Conductor extends FlxBasic
     {
         super.update(elapsed);
         
-        var _step:Int = step;
+        var lastStep:Int = step;
 
-        var _beat:Int = beat;
+        var lastBeat:Int = beat;
 
-        var _measure:Int = measure;
+        var lastMeasure:Int = measure;
 
         time += elapsed * 1000.0;
 
@@ -104,24 +92,24 @@ class Conductor extends FlxBasic
 
         while (i >= 0)
         {
-            var _timeChange = timeChanges[i];
+            var newTimeChange:RawTimeChange = timeChanges[i];
             
-            if (time < _timeChange.time)
+            if (time < newTimeChange.time)
             {
                 i--;
 
                 continue;
             }
 
-            if (tempo != _timeChange.tempo)
+            if (tempo != newTimeChange.tempo)
             {
-                var _time:Float = timeChange.time;
+                var lastTime:Float = timeChange.time;
 
-                timeChange.time = _timeChange.time;
+                timeChange.time = newTimeChange.time;
 
-                timeChange.tempo = _timeChange.tempo;
+                timeChange.tempo = newTimeChange.tempo;
 
-                timeChange.step += (timeChange.time - _time) / stepLength;
+                timeChange.step += (timeChange.time - lastTime) / stepLength;
 
                 tempo = timeChange.tempo;
             }
@@ -129,13 +117,19 @@ class Conductor extends FlxBasic
             break;
         }
 
-        if (step != _step)
+        step = Math.floor(((time - timeChange.time) / stepLength) + timeChange.step);
+
+        beat = Math.floor(step * 0.25);
+
+        measure = Math.floor(beat * 0.25);
+
+        if (step != lastStep)
             onStepHit.dispatch(step);
 
-        if (beat != _beat)
+        if (beat != lastBeat)
             onBeatHit.dispatch(beat);
 
-        if (measure != _measure)
+        if (measure != lastMeasure)
             onMeasureHit.dispatch(measure);
     }
 
@@ -152,20 +146,5 @@ class Conductor extends FlxBasic
         timeChange = null;
 
         timeChanges = null;
-    }
-
-    public function getTimeChange(_tempo:Float, _time:Float):RawTimeChange
-    {
-        var timeChange:RawTimeChange = {tempo: _tempo, time: 0.0, step: 0.0};
-
-        for (i in 0 ... timeChanges.length)
-        {
-            var _timeChange:RawTimeChange = timeChanges[i];
-
-            if (_time >= _timeChange.time)
-                timeChange = _timeChange;
-        }
-
-        return timeChange;
     }
 }

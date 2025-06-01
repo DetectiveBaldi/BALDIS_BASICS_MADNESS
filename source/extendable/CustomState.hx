@@ -9,6 +9,8 @@ import flixel.animation.FlxAnimation;
 
 import flixel.tweens.FlxTween.FlxTweenManager;
 
+import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxSignal;
 import flixel.util.FlxTimer.FlxTimerManager;
 
 import flixel.addons.display.FlxBackdrop;
@@ -61,14 +63,16 @@ class CustomState extends FlxState
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
+        persistentUpdate = false;
+
         openSubState(new CustomTransition(IN, onOutroComplete));
     }
 
-    public function getTransitionSprite(duration:Float, fade:CustomTransitionFade):FlxSprite
+    public function getTransitionSprite(duration:Float, fade:CustomTransitionFade, onFinish:()->Void):FlxSprite
     {
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, null);
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, onFinish);
         
-        spr.onFinish = spr.kill;
+        spr.onFinish.add(spr.kill);
 
         add(spr);
 
@@ -131,7 +135,7 @@ class CustomTransitionSprite extends FlxBackdrop
 
     public var fade:CustomTransitionFade;
 
-    public var onFinish:()->Void;
+    public var onFinish:FlxSignal;
 
     public function new(durat:Float, fad:CustomTransitionFade, onFinis:()->Void):Void
     {
@@ -143,11 +147,13 @@ class CustomTransitionSprite extends FlxBackdrop
 
         fade = fad;
 
-        onFinish = onFinis;
+        onFinish = new FlxSignal();
+
+        onFinish.add(onFinis);
 
         loadGraphic(Assets.getGraphic("extendable/CustomState/gradient"), true, 16, 16);
 
-        animation.onFinish.add((name:String) -> if (onFinish != null) onFinish());
+        animation.onFinish.add((name:String) -> onFinish.dispatch());
 
 		animation.add("fade", [0, 1, 2, 3, 4, 5, 6], 12, false);
 
@@ -156,6 +162,13 @@ class CustomTransitionSprite extends FlxBackdrop
         anim.frameRate = anim.numFrames / duration;
 
 		animation.play("fade", true, fade == IN);
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        onFinish = cast FlxDestroyUtil.destroy(onFinish);
     }
 }
 

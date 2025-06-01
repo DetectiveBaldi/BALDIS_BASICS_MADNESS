@@ -285,7 +285,7 @@ class PlayField extends FlxGroup
         var rating:Rating = Rating.fromTiming(Math.abs(event.note.time - conductor.time));
 
         if (rating != ratings[0])
-            event.showPop = false;
+            event.playSplash = false;
 
         if (!event.note.strumline.automated)
         {
