@@ -9,7 +9,7 @@ class FocusCamPointEvent
 {
     public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, duration:Float, ease:String = "linear"):Void
     {
-        if (game.cameraLock == AUTOMATIC || game.cameraLock == STRICT)
+        if (game.cameraLock == MANUAL || game.cameraLock == STRICT)
             return;
 
         game.cameraTarget = "POINT";
