@@ -5,21 +5,14 @@ import flixel.tweens.FlxTween;
 
 import game.PlayState;
 
-class CameraFollowEvent
+class FocusCamPointEvent
 {
-    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, charType:String, duration:Float,
-        ease:String = "linear"):Void
+    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, duration:Float, ease:String = "linear"):Void
     {
-        charType ??= "";
+        if (game.cameraLock == AUTOMATIC || game.cameraLock == STRICT)
+            return;
 
-        if (charType.length > 0.0)
-        {
-            var char:Character = Reflect.getProperty(game, charType);
-
-            x = char.getMidpoint().x + char.config.cameraPoint.x;
-
-            y = char.getMidpoint().y + char.config.cameraPoint.y;
-        }
+        game.cameraTarget = "POINT";
 
         if (duration > 0.0)
         {

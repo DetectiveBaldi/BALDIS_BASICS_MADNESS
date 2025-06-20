@@ -22,7 +22,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.CameraFollowEvent;
+import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.WarmWS;
 
@@ -133,14 +133,14 @@ class WarmWL extends PlayState
 
         if (step == 1152)
         {
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
+                cameraPoint.getCenterY(), -1.0);
         }
     
         if (step == 1280)
         {
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
+                cameraPoint.getCenterY(), -1.0);
         }
 
         if (step == 1408)
@@ -150,8 +150,8 @@ class WarmWL extends PlayState
 
             warmWS.entranceA1.color = 0xFFFFFFFF;
 
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX(),
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX(),
+                cameraPoint.getCenterY(), -1.0);
 
             gameCamera.snapToTarget();
 

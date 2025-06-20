@@ -22,7 +22,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.CameraFollowEvent;
+import game.events.FocusCamPointEvent;
 
 import game.stages.BeginningsS;
 
@@ -119,8 +119,8 @@ class BeginningsL extends PlayState
        
         if (step == 464)
         {
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
+                cameraPoint.getCenterY(),-1.0);
         }
    
        
@@ -129,8 +129,8 @@ class BeginningsL extends PlayState
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
+                cameraPoint.getCenterY(), -1.0);
         }
     
         if (step == 544)
@@ -142,16 +142,16 @@ class BeginningsL extends PlayState
     
         if (step == 800)
         {
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 250.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 250.0,
+                cameraPoint.getCenterY(), -1.0);
            
             gameCameraZoom = 1.25;
         }
         
         if (step == 816)
         {
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
+                cameraPoint.getCenterY(), -1.0);
             
             gameCameraZoom = 0.8;
         }

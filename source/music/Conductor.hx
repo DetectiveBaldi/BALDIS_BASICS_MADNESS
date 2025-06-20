@@ -13,11 +13,53 @@ import data.Chart.RawTimeChange;
  */
 class Conductor extends FlxBasic
 {
-    public var step:Int;
+    public var preciseStep(get, never):Float;
 
-    public var beat:Int;
+    @:noCompletion
+    function get_preciseStep():Float
+    {
+        return (time - timeChange.time) / stepLength + timeChange.step;
+    }
 
-    public var measure:Int;
+    public var preciseBeat(get, never):Float;
+
+    @:noCompletion
+    function get_preciseBeat():Float
+    {
+        return preciseStep * 0.25;
+    }
+
+    public var preciseMeasure(get, never):Float;
+
+    @:noCompletion
+    function get_preciseMeasure():Float
+    {
+        return preciseBeat * 0.25;
+    }
+
+    public var step(get, never):Int;
+
+    @:noCompletion
+    function get_step():Int
+    {
+        return Math.floor(preciseStep);
+    }
+
+    public var beat(get, never):Int;
+
+    @:noCompletion
+    function get_beat():Int
+    {
+        return Math.floor(preciseBeat);
+    }
+
+    public var measure(get, never):Int;
+
+    @:noCompletion
+    function get_measure():Int
+    {
+        return Math.floor(preciseMeasure);
+    }
 
     public var onStepHit:FlxTypedSignal<(step:Int)->Void>;
 
@@ -55,12 +97,6 @@ class Conductor extends FlxBasic
 
         visible = false;
 
-        step = 0;
-
-        beat = 0;
-
-        measure = 0;
-
         onStepHit = new FlxTypedSignal<(step:Int)->Void>();
 
         onBeatHit = new FlxTypedSignal<(beat:Int)->Void>();
@@ -92,7 +128,7 @@ class Conductor extends FlxBasic
 
         while (i >= 0)
         {
-            var newTimeChange:RawTimeChange = timeChanges[i];
+            var newTimeChange = timeChanges[i];
             
             if (time < newTimeChange.time)
             {
@@ -116,12 +152,6 @@ class Conductor extends FlxBasic
             
             break;
         }
-
-        step = Math.floor(((time - timeChange.time) / stepLength) + timeChange.step);
-
-        beat = Math.floor(step * 0.25);
-
-        measure = Math.floor(beat * 0.25);
 
         if (step != lastStep)
             onStepHit.dispatch(step);

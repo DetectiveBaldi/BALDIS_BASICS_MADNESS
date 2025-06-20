@@ -22,7 +22,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.CameraFollowEvent;
+import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.GainGS;
 
@@ -50,6 +50,8 @@ class GainGL extends PlayState
 
         cameraPoint.centerTo();
 
+        cameraLock = AUTOMATIC;
+
         temperature = new FlxSprite();
 
         var plr:Character = getPlayer("bf5");
@@ -61,7 +63,7 @@ class GainGL extends PlayState
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
 
-        Assets.getGraphic("gotta-sweep0");
+        Assets.getGraphic("game/Character/gotta-sweep0");
     
         gainGS.remove(opponents, true);
         gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
@@ -268,14 +270,14 @@ class GainGL extends PlayState
 
         if (step == 480 || step == 528 || step == 560 || step == 592)
         {                        
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 300.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 300.0,
+                cameraPoint.getCenterY(), -1.0);
         }
 
         if (step == 512 || step == 544 || step == 576)
         {                        
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 300.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 300.0,
+                cameraPoint.getCenterY(), -1.0);
         }
     
         if (step == 504 || step == 507 || step == 510)
@@ -287,8 +289,8 @@ class GainGL extends PlayState
         {                        
             gameCameraZoom = 0.8;
            
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 200.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 200.0,
+                cameraPoint.getCenterY(), -1.0);
         }
 
         if (step == 624)

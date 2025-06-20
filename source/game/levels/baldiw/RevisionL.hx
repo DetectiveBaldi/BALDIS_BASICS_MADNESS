@@ -34,7 +34,7 @@ import data.WeekData;
 import extendable.CustomState.CustomTransitionFade;
 import extendable.CustomState.CustomTransitionSprite;
 
-import game.events.CameraFollowEvent;
+import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.RevisionS;
 
@@ -63,12 +63,11 @@ class RevisionL extends PlayState
 
         super.create();
 
-        CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() - 300.0,
-            cameraPoint.getCenterY(), "", -1.0);
+        FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 300.0, cameraPoint.getCenterY(), -1.0);
 
         gameCamera.snapToTarget();
 
-        lockCameraPoint = true;
+        cameraLock = AUTOMATIC;
 
         gameCameraZoom = 1;
 
@@ -138,8 +137,8 @@ class RevisionL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 50.0,
-                cameraPoint.getCenterY(), "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 50.0,
+                cameraPoint.getCenterY(), -1.0);
 
             gameCameraZoom = 0.7;
 
@@ -173,8 +172,8 @@ class RevisionL extends PlayState
 
             tween.cancelTweensOf(this, ["gameCameraZoom"]);
             
-            CameraFollowEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
-                cameraPoint.getCenterY() + 50.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
+                cameraPoint.getCenterY() + 50.0, -1.0);
 
             gameCamera.snapToTarget();
 

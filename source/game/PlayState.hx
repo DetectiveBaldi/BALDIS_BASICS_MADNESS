@@ -37,8 +37,9 @@ import game.notes.Strumline;
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
 
-import game.events.CameraFollowEvent;
 import game.events.CameraZoomEvent;
+import game.events.FocusCamCharEvent;
+import game.events.FocusCamPointEvent;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
@@ -121,7 +122,9 @@ class PlayState extends CustomState
 
     public var cameraPoint:FlxObject;
 
-    public var lockCameraPoint:Bool;
+    public var cameraTarget:String;
+
+    public var cameraLock:CameraLockMode;
 
     public var gameCameraZoom:Float;
 
@@ -205,7 +208,9 @@ class PlayState extends CustomState
 
         gameCamera.follow(cameraPoint, LOCKON, 0.05);
 
-        lockCameraPoint = false;
+        cameraTarget = "POINT";
+
+        cameraLock = NONE;
 
         gameCameraZoom = gameCamera.zoom;
 
@@ -450,14 +455,14 @@ class PlayState extends CustomState
 
         switch (ev.name:String)
         {
-            case "Camera Follow":
-            {
-                if (!lockCameraPoint)
-                    CameraFollowEvent.dispatch(this, val.x, val.y, val.charType, val.duration, val.ease);
-            }
-
-            case "Camera Zoom":
+            case "CameraZoom":
                 CameraZoomEvent.dispatch(this, val.zoom, val.duration, val.ease);
+
+            case "FocusCamChar":
+                FocusCamCharEvent.dispatch(this, val.charType, val.duration, val.ease);
+
+            case "FocusCamPoint":
+                FocusCamPointEvent.dispatch(this, val.x, val.y, val.duration, val.ease);
         }
 
         eventIndex++;
@@ -619,4 +624,27 @@ class PlayState extends CustomState
         resumeMusic();
     }
     #end
+}
+
+enum CameraLockMode
+{
+    /**
+     * No camera events are restricted.
+     */
+    NONE;
+
+    /**
+     * `FocusCamCharEvent` events are restricted.
+     */
+    AUTOMATIC;
+
+    /**
+     * `FocusCamPointEvent` events are restricted.
+     */
+    MANUAL;
+
+    /**
+     * All camera events are restricted.
+     */
+    STRICT;
 }

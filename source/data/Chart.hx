@@ -10,15 +10,14 @@ class Chart
     {
         var chart:Chart = new Chart();
 
-        chart.name = raw.name;
+        var fields:Array<String> = Reflect.fields(raw);
 
-        chart.tempo = raw.tempo; chart.scrollSpeed = raw.scrollSpeed;
+        for (i in 0 ... fields.length)
+        {
+            var field:String = fields[i];
 
-        chart.notes = raw.notes; chart.events = raw.events; chart.timeChanges = raw.timeChanges;
-
-        chart.spectator = raw.spectator; chart.opponent = raw.opponent; chart.player = raw.player;
-
-        chart.credits = raw.credits;
+            Reflect.setProperty(chart, field, Reflect.field(raw, field));
+        }
 
         return chart;
     }
@@ -64,12 +63,6 @@ class Chart
         player = "bf0";
 
         credits = {composer: "", step: 0}
-    }
-
-    public function toString():String
-    {
-        return Json.stringify({name: name, tempo: tempo, scrollSpeed: scrollSpeed, notes: notes, events: events,
-            timeChanges: timeChanges, spectator: spectator, opponent: opponent, player: player});
     }
 }
 

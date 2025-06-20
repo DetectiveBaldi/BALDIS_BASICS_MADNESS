@@ -24,7 +24,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.CameraFollowEvent;
+import game.events.FocusCamPointEvent;
 
 import game.stages.School;
 
@@ -254,8 +254,8 @@ class Level0 extends PlayState
         {
             var plr:Character = getPlayer("bf1");
 
-            CameraFollowEvent.dispatch(this, plr.getMidpoint().x - cameraPoint.width * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", conductor.beatLength * 2.5 * 0.001, "quartInOut");
+            FocusCamPointEvent.dispatch(this, plr.getMidpoint().x - cameraPoint.width * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, conductor.beatLength * 2.5 * 0.001, "quartInOut");
 
             var _plr:Character = getPlayer("run-legs");
 
@@ -287,8 +287,8 @@ class Level0 extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, -1.0);
 
             gameCamera.snapToTarget();
 
@@ -536,8 +536,8 @@ class Level0 extends PlayState
         {
             gameCameraZoom = 0.75;
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 225.0,
-                (FlxG.height - cameraPoint.height) * 0.5 + 50.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 225.0,
+                (FlxG.height - cameraPoint.height) * 0.5 + 50.0, -1.0);
 
             gameCamera.snapToTarget();
 
@@ -651,8 +651,8 @@ class Level0 extends PlayState
         {
             gameCameraZoom = 0.6;
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, -1.0);
 
             gameCamera.snapToTarget();
 
@@ -1297,8 +1297,8 @@ class Level0 extends PlayState
         {
             gameCameraZoom = 0.75;
             
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 300.0,
-                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 300.0,
+                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, -1.0);
 
             if (Options.shaders)
             {
@@ -1454,8 +1454,8 @@ class Level0 extends PlayState
             if (Options.shaders)
                 gameCamera.filters.resize(0);
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, -1.0);
 
             gameCamera.snapToTarget();
            
@@ -1533,8 +1533,8 @@ class Level0 extends PlayState
             gameCameraZoom = 0.9;
             hudCamera.visible = false;
 
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 200.0,
-                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 200.0,
+                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, -1.0);
 
             gameCamera.snapToTarget();
 
@@ -1580,8 +1580,8 @@ class Level0 extends PlayState
         
         if (step == 2832)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, -1.0);
 
             gameCamera.snapToTarget();
 
@@ -1670,8 +1670,8 @@ class Level0 extends PlayState
         {
             gameCameraZoom = 0.75;
             
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, -1.0);
 
             gameCamera.snapToTarget();
         }
@@ -1897,14 +1897,14 @@ class Level0 extends PlayState
     
         if (beat == 836.0 || beat == 852.0)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 140.0,
-                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 140.0,
+                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, -1.0);
         }
     
         if (beat == 844.0 || beat == 860.0)
         {
-            CameraFollowEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 300.0,
-                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, "", -1.0);
+            FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 300.0,
+                (FlxG.height - cameraPoint.height) * 0.5 + 0.0, -1.0);
         }
 
         if (beat == 868.0)
