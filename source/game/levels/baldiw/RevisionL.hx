@@ -115,7 +115,7 @@ class RevisionL extends PlayState
         if (musPath.contains("Bad-Math"))
             return;
 
-        if (padMinigame?.loss)
+        if (padMinigame?.loss && padMinigame?.problemIndex != 3.0)
         {
             instrumental.loadEmbedded(Assets.getMusic('${PlayState.getLevelPath()}/Instrumental-Bad-Math'), 
                 false, false, endSong);
@@ -662,7 +662,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 {
                     var str:String = FlxKey.toStringMap[firstJustPressed];
 
-                    var pars:Null<Int> = parseInt(str);
+                    var pars:Int = parseInt(str);
 
                     if (pars != null)
                         updateSubmission(pars);
@@ -967,11 +967,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
     }
 
-    public function parseInt(str:String):Null<Int>
+    public function parseInt(str:String):Int
     {
-        var map:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3,  "four" => 4,
+        var lookup:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4,
             "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
 
-        return map.exists(str.toLowerCase()) ? map[str.toLowerCase()] : Std.parseInt(str);
+        return lookup.exists(str.toLowerCase()) ? lookup[str.toLowerCase()] : -1;
     }
 }
