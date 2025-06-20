@@ -105,7 +105,7 @@ class Note extends FlxSprite
 
     public function isHittable():Bool
     {
-        return status == IDLING && ((strumline.automated && time <= strumline.conductor.time) || (!strumline.automated && Math.abs(time - strumline.conductor.time) <= 166.6));
+        return status == IDLING && ((strumline.botplay && time <= strumline.conductor.time) || (!strumline.botplay && Math.abs(time - strumline.conductor.time) <= 166.6));
     }
 }
 

@@ -194,7 +194,7 @@ class Level0 extends PlayState
 
             playField.visible = true;
 
-            if (!Options.automatedInputs)
+            if (!Options.botplay)
                 plrStrumline.getKeys();
         }
 
@@ -940,7 +940,7 @@ class Level0 extends PlayState
 
             playField.visible = true;
 
-            if (!Options.automatedInputs)
+            if (!Options.botplay)
                 plrStrumline.getKeys();
 
             castedStage.remove(players, true);
@@ -1129,7 +1129,7 @@ class Level0 extends PlayState
 
             playField.visible = true;
 
-            if (!Options.automatedInputs)
+            if (!Options.botplay)
                 plrStrumline.getKeys();
         
             var plr:Character = getPlayer("bf0");

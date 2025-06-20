@@ -210,7 +210,7 @@ class PlayField extends FlxGroup
 
         opponentStrumline.visible = !Options.middlescroll;
 
-        opponentStrumline.automated = true;
+        opponentStrumline.botplay = true;
 
         opponentStrumline.clearKeys();
 
@@ -221,9 +221,9 @@ class PlayField extends FlxGroup
 
         playerStrumline = new Strumline(conductor);
 
-        if (Options.automatedInputs)
+        if (Options.botplay)
         {
-            playerStrumline.automated = true;
+            playerStrumline.botplay = true;
 
             playerStrumline.clearKeys();
         }
@@ -287,7 +287,7 @@ class PlayField extends FlxGroup
         if (rating != ratings[0])
             event.playSplash = false;
 
-        if (!event.note.strumline.automated)
+        if (!event.note.strumline.botplay)
         {
             playStats.score += 500 - Math.ceil(Math.abs(event.note.time - conductor.time));
 
@@ -314,7 +314,7 @@ class PlayField extends FlxGroup
 
     public function sustainHold(ev:SustainHoldEvent):Void
     {
-        if (ev.note.strumline.automated)
+        if (ev.note.strumline.botplay)
             return;
 
         playStats.score += Math.floor(250.0 * ev.elapsed);

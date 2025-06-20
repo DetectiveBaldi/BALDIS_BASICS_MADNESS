@@ -174,20 +174,20 @@ class Options
         return ghostTapping;
     }
 
-    public static var automatedInputs(get, set):Bool;
+    public static var botplay(get, set):Bool;
 
     @:noCompletion
-    static function get_automatedInputs():Bool
+    static function get_botplay():Bool
     {
-        return FlxG.save.data.options.automatedInputs ??= false;
+        return FlxG.save.data.options.botplay ??= false;
     }
 
     @:noCompletion
-    static function set_automatedInputs(_automatedInputs:Bool):Bool
+    static function set_botplay(_botplay:Bool):Bool
     {
-        FlxG.save.data.options.automatedInputs = _automatedInputs;
+        FlxG.save.data.options.botplay = _botplay;
 
-        return automatedInputs;
+        return botplay;
     }
 
     public static function init():Void
@@ -195,11 +195,18 @@ class Options
         FlxG.save.data.options ??= {}
     }
 
-    public static function validate():Void
+    public static function purgeInvalid():Void
     {
         var options:Dynamic = FlxG.save.data.options;
 
         if (Reflect.hasField(options, "persistentCache"))
             Reflect.deleteField(options, "persistentCache");
+
+        if (Reflect.hasField(options, "automatedInputs"))
+        {
+            botplay = Reflect.field(options, "automatedInputs");
+            
+            Reflect.deleteField(options, "automatedInputs");
+        }
     }
 }

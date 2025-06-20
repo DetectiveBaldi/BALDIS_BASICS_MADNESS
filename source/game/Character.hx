@@ -151,7 +151,7 @@ class Character extends FlxSprite
 
         if (conductor != null && strumline != null)
         {
-            if (FlxG.keys.anyJustPressed(keys) && !strumline.automated)
+            if (FlxG.keys.anyJustPressed(keys) && !strumline.botplay)
                 singTimer = 0.0;
 
             if ((animation.name ?? "").startsWith("Sing"))
@@ -163,7 +163,7 @@ class Character extends FlxSprite
                 if ((animation.name ?? "").endsWith("MISS"))
                     requiredTime *= FlxG.random.float(1.35, 1.85);
 
-                if (singTimer >= requiredTime && (!FlxG.keys.anyPressed(keys) || strumline.automated))
+                if (singTimer >= requiredTime && (!FlxG.keys.anyPressed(keys) || strumline.botplay))
                 {
                     singTimer = 0.0;
                     

@@ -83,7 +83,7 @@ class Strumline extends FlxGroup
 
     public var downscroll:Bool;
 
-    public var automated:Bool;
+    public var botplay:Bool;
 
     public var characters:FlxTypedSpriteGroup<Character>;
 
@@ -166,7 +166,7 @@ class Strumline extends FlxGroup
 
         downscroll = Options.downscroll;
 
-        automated = false;
+        botplay = false;
 
         lastStep = 0;
     }
@@ -225,12 +225,12 @@ class Strumline extends FlxGroup
         {
             var note:Note = notes.members[i];
 
-            if (automated && note.isHittable())
+            if (botplay && note.isHittable())
                 noteHit(note);
 
             var isLate:Bool = conductor.time > note.time + 166.6;
 
-            if (!automated && note.status == IDLING && isLate)
+            if (!botplay && note.status == IDLING && isLate)
                 noteMiss(note, false);
 
             var isExpired:Bool = conductor.time > (note.time + note.length + (166.6 / scrollSpeed));
@@ -377,7 +377,7 @@ class Strumline extends FlxGroup
 
     public function isHolding(note:Note):Bool
     {
-        return note.status != MISSED && (automated || keysHeld[note.direction] || (note.status == HIT && conductor.time >= note.time + note.length));
+        return note.status != MISSED && (botplay || keysHeld[note.direction] || (note.status == HIT && conductor.time >= note.time + note.length));
     }
 
     public function holdSustainNote(note:Note, sustain:Sustain, elapsed:Float):Void
@@ -422,7 +422,7 @@ class Strumline extends FlxGroup
         if (note.status == HIT)
             notesPendingRemoval.push(note);
 
-        if (!automated)
+        if (!botplay)
         {
             if (keysHeld[note.direction])
             {

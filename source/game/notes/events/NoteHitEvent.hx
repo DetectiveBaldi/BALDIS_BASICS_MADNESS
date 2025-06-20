@@ -15,6 +15,6 @@ class NoteHitEvent
     {
         note = _note;
 
-        playSplash = !note.strumline.automated;
+        playSplash = !note.strumline.botplay;
     }
 }
