@@ -50,7 +50,7 @@ class GainGL extends PlayState
 
         cameraPoint.centerTo();
 
-        cameraLock = AUTOMATIC;
+        cameraLock = MANUAL;
 
         temperature = new FlxSprite();
 

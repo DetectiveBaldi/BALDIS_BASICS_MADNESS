@@ -210,7 +210,7 @@ class PlayState extends CustomState
 
         cameraTarget = "POINT";
 
-        cameraLock = NONE;
+        cameraLock = LOOSE;
 
         gameCameraZoom = gameCamera.zoom;
 
@@ -631,17 +631,17 @@ enum CameraLockMode
     /**
      * No camera events are restricted.
      */
-    NONE;
+    LOOSE;
 
     /**
      * `FocusCamCharEvent` events are restricted.
      */
-    AUTOMATIC;
+    MANUAL;
 
     /**
      * `FocusCamPointEvent` events are restricted.
      */
-    MANUAL;
+    AUTOMATIC;
 
     /**
      * All camera events are restricted.

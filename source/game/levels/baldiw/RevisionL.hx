@@ -38,6 +38,8 @@ import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.RevisionS;
 
+import game.levels.BeginningsL;
+
 import sound.SoundQueue;
 
 using util.ArrayUtil;
@@ -67,7 +69,7 @@ class RevisionL extends PlayState
 
         gameCamera.snapToTarget();
 
-        cameraLock = AUTOMATIC;
+        cameraLock = MANUAL;
 
         gameCameraZoom = 1;
 
@@ -849,6 +851,21 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public function checkSubmission():Void
     {
+        if (submission == "31718")
+        {
+            PlayState.loadSingle(LevelData.list[0]);
+
+            problemText.text = "THIS IS WHERE IT ALL BEGAN";
+
+            questionText.text = "";
+
+            sndQueue.clearQueue(true);
+
+            baldi.animation.play("idle");
+
+            return;
+        }
+
         var answer:Int = -1;
 
         switch (op1:String)
