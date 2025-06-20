@@ -11,6 +11,7 @@ import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 
 import flixel.sound.FlxSound;
 
@@ -292,9 +293,9 @@ class PlayState extends CustomState
 
         players.add(player);
 
-        updateHealthBar(opponent.config.name, "opponent");
+        updateHealthBar("opponent");
 
-        updateHealthBar(player.config.name, "player");
+        updateHealthBar("player");
 
         countdown = new Countdown(conductor);
         
@@ -375,6 +376,34 @@ class PlayState extends CustomState
         hudCamera.zoom += 0.015;
     }
 
+    #if debug
+    public function stepUntil(time:Float):Void
+    {
+        if (conductor.time < 0.0)
+            return;
+        
+        pauseMusic();
+
+        var i:Int = chart.notes.length - 1;
+
+		while (i >= 0.0)
+        {
+			var raw:RawNote = chart.notes[i];
+
+			if (playField.noteSpawner.noteIndex < i && raw.time - 166.6 < time)
+                chart.notes.remove(raw);
+
+			i--;
+		}
+
+        while (conductor.time < time)
+            @:privateAccess
+                FlxG.game.step();
+
+        resumeMusic();
+    }
+    #end
+
     public function loadChart():Void
     {
         chart = ChartConverters.build(Paths.data(getLevelPath()));
@@ -394,6 +423,25 @@ class PlayState extends CustomState
         conductor.time = -conductor.beatLength * 5.0;
 
         eventIndex = 0;
+    }
+
+    public function onEvent(ev:RawEvent):Void
+    {
+        var val:Dynamic = ev.value;
+
+        switch (ev.name:String)
+        {
+            case "CameraZoom":
+                CameraZoomEvent.dispatch(this, val.zoom, val.duration, val.ease);
+
+            case "FocusCamChar":
+                FocusCamCharEvent.dispatch(this, val.charType, val.duration, val.ease);
+
+            case "FocusCamPoint":
+                FocusCamPointEvent.dispatch(this, val.x, val.y, val.duration, val.ease);
+        }
+
+        eventIndex++;
     }
 
     public function loadSong():Void
@@ -427,45 +475,6 @@ class PlayState extends CustomState
         opponentVocals?.play();
 
         playerVocals?.play();
-    }
-
-    public function noteSpawn(note:Note):Void {}
-
-    public function noteHit(ev:NoteHitEvent):Void {}
-
-    public function noteMiss(note:Note):Void {}
-
-    public function ghostTap(ev:GhostTapEvent):Void {}
-
-    public function oppNoteSpawn(note:Note):Void {}
-
-    public function oppNoteHit(ev:NoteHitEvent):Void {}
-
-    public function oppNoteMiss(note:Note):Void {}
-
-    public function plrNoteSpawn(note:Note):Void {}
-
-    public function plrNoteHit(ev:NoteHitEvent):Void {}
-
-    public function plrNoteMiss(note:Note):Void {}
-
-    public function onEvent(ev:RawEvent):Void
-    {
-        var val:Dynamic = ev.value;
-
-        switch (ev.name:String)
-        {
-            case "CameraZoom":
-                CameraZoomEvent.dispatch(this, val.zoom, val.duration, val.ease);
-
-            case "FocusCamChar":
-                FocusCamCharEvent.dispatch(this, val.charType, val.duration, val.ease);
-
-            case "FocusCamPoint":
-                FocusCamPointEvent.dispatch(this, val.x, val.y, val.duration, val.ease);
-        }
-
-        eventIndex++;
     }
 
     public function endSong():Void
@@ -507,6 +516,62 @@ class PlayState extends CustomState
         playerVocals?.stop();
     }
 
+    public function getSpectator(name:String):Character
+    {
+        return spectators.group.getFirst((spectator:Character) -> spectator.config.name == name);
+    }
+
+    public function getOpponent(name:String):Character
+    {
+        return opponents.group.getFirst((opponent:Character) -> opponent.config.name == name);
+    }
+
+    public function getPlayer(name:String):Character
+    {
+        return players.group.getFirst((player:Character) -> player.config.name == name);
+    }
+
+    public function updateHealthBar(charType:String):Void
+    {
+        var character:Character = Reflect.getProperty(this, charType);
+
+        var healthBar:HealthBar = playField.healthBar;
+
+        if (charType == "spectator" || charType == "opponent")
+            healthBar.opponentIcon.config = HealthIconData.get(character.config.healthIcon);
+        else
+            healthBar.playerIcon.config = HealthIconData.get(character.config.healthIcon);
+    }
+
+    public function setCamStartPos():Void
+    {
+        var ev:RawEvent = chart.events.first((e:RawEvent) -> e.name == "FocusCamChar");
+
+        FocusCamCharEvent.dispatch(this, "opponent", -1.0);
+
+        gameCamera.snapToTarget();
+    }
+
+    public function noteSpawn(note:Note):Void {}
+
+    public function noteHit(ev:NoteHitEvent):Void {}
+
+    public function noteMiss(note:Note):Void {}
+
+    public function ghostTap(ev:GhostTapEvent):Void {}
+
+    public function oppNoteSpawn(note:Note):Void {}
+
+    public function oppNoteHit(ev:NoteHitEvent):Void {}
+
+    public function oppNoteMiss(note:Note):Void {}
+
+    public function plrNoteSpawn(note:Note):Void {}
+
+    public function plrNoteHit(ev:NoteHitEvent):Void {}
+
+    public function plrNoteMiss(note:Note):Void {}
+
     public function pause():Void
     {
         persistentUpdate = false;
@@ -536,21 +601,6 @@ class PlayState extends CustomState
         pauseMusic();
     }
 
-    public function getSpectator(name:String):Character
-    {
-        return spectators.group.getFirst((spectator:Character) -> spectator.config.name == name);
-    }
-
-    public function getOpponent(name:String):Character
-    {
-        return opponents.group.getFirst((opponent:Character) -> opponent.config.name == name);
-    }
-
-    public function getPlayer(name:String):Character
-    {
-        return players.group.getFirst((player:Character) -> player.config.name == name);
-    }
-
     public function pauseMusic():Void
     {
         instrumental.pause();
@@ -572,58 +622,6 @@ class PlayState extends CustomState
 
         playerVocals?.resume();
     }
-
-    public function updateHealthBar(character:String, role:String):Void
-    {
-        var _character:Character;
-
-        switch (role:String)
-        {
-            case "spectator":
-                _character = getSpectator(character);
-
-            case "opponent":
-                _character = getOpponent(character);
-
-            default:
-                _character = getPlayer(character);
-        }
-
-        var healthBar:HealthBar = playField.healthBar;
-
-        if (role == "spectator" || role == "opponent")
-            healthBar.opponentIcon.config = HealthIconData.get(_character.config.healthIcon);
-        else
-            healthBar.playerIcon.config = HealthIconData.get(_character.config.healthIcon);
-    }
-
-    #if debug
-    public function stepUntil(time:Float):Void
-    {
-        if (conductor.time < 0.0)
-            return;
-        
-        pauseMusic();
-
-        var i:Int = chart.notes.length - 1;
-
-		while (i >= 0.0)
-        {
-			var raw:RawNote = chart.notes[i];
-
-			if (playField.noteSpawner.noteIndex < i && raw.time - 166.6 < time)
-                chart.notes.remove(raw);
-
-			i--;
-		}
-
-        while (conductor.time < time)
-            @:privateAccess
-                FlxG.game.step();
-
-        resumeMusic();
-    }
-    #end
 }
 
 enum CameraLockMode

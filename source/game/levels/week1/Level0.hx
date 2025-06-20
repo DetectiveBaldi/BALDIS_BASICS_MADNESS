@@ -292,7 +292,7 @@ class Level0 extends PlayState
 
             gameCamera.snapToTarget();
 
-            updateHealthBar("bully0", "opponent");
+            updateHealthBar("opponent");
 
             castedStage.hall2.visible = false;
 
@@ -392,7 +392,7 @@ class Level0 extends PlayState
 
             players.add(_plr);
 
-            updateHealthBar("baldi1", "opponent");
+            updateHealthBar("opponent");
 
             oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
 
@@ -572,7 +572,7 @@ class Level0 extends PlayState
 
             __plr.setPosition(375.0, 100.0);
 
-            updateHealthBar("principal0", "opponent");
+            updateHealthBar("opponent");
 
             castedStage.hall2.visible = false;
 
@@ -691,7 +691,7 @@ class Level0 extends PlayState
 
             players.add(_plr);
 
-            updateHealthBar("baldi1", "opponent");
+            updateHealthBar("opponent");
 
             playField.visible = false;
 
@@ -1105,7 +1105,7 @@ class Level0 extends PlayState
             opp.scale.set(1, 1);
             opponents.add(opp);
             
-            updateHealthBar("playtime0", "opponent");
+            updateHealthBar("opponent");
 
             tween.tween(opp, {x: -200}, 1, {ease: FlxEase.quartOut});
 
@@ -1237,7 +1237,7 @@ class Level0 extends PlayState
             var opp:Character = getOpponent("gotta-sweep0");
             opp.setPosition(-1000, -100);
             opp.skipSing = false;
-            updateHealthBar("gotta-sweep0", "opponent");
+            updateHealthBar("opponent");
             
             var plr:Character = getPlayer("bf0");
             plr.setPosition(-1000, 50);
@@ -1322,7 +1322,7 @@ class Level0 extends PlayState
             castedStage.remove(opponents, true);
             castedStage.insert(castedStage.members.indexOf(players), opponents);
 
-            updateHealthBar("1st-prize-coming", "opponent");
+            updateHealthBar("opponent");
 
             if (!Options.middlescroll)
             {
@@ -1610,7 +1610,7 @@ class Level0 extends PlayState
             _plr.visible = true;
             _plr.setPosition(plr.x, plr.y);
 
-            updateHealthBar("baldi2", "opponent");
+            updateHealthBar("opponent");
 
             castedStage.hall6.visible = false;
             castedStage.hall7.visible = false;

@@ -1,27 +1,14 @@
 package game.levels.baldiw;
 
-import openfl.filters.BitmapFilter;
-
-import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxSprite;
-
-import flixel.animation.FlxAnimation;
-
-import flixel.text.FlxText;
-
 import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 
-import core.Assets;
 import core.Options;
-import core.Paths;
 
 import data.CharacterData;
 
+import game.events.FocusCamCharEvent;
 import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.WarmWS;
@@ -42,8 +29,6 @@ class WarmWL extends PlayState
 
         super.create();
 
-        cameraPoint.centerTo();
-
         playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
     
@@ -55,6 +40,8 @@ class WarmWL extends PlayState
         
         players.setPosition(215, 165);
         opponents.setPosition(345, 180);
+
+        setCamStartPos();
     }
 
     override function stepHit(step:Int):Void

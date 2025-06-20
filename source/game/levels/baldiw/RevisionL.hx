@@ -664,7 +664,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
                     var pars:Int = parseInt(str);
 
-                    if (pars != null)
+                    if (pars != -1)
                         updateSubmission(pars);
                 }
             }

@@ -134,6 +134,8 @@ class PsychConverter
 
                 mustHitSection: section.mustHitSection,
 
+                gfSection: section.gfSection,
+
                 changeBPM: section.changeBPM,
 
                 bpm: section.bpm
@@ -142,6 +144,9 @@ class PsychConverter
             TimedObjectUtil.sort(_section.sectionNotes);
 
             var newCharacter:String = _section.mustHitSection ? "player" : "opponent";
+
+            if (_section.gfSection)
+                newCharacter = "spectator";
 
             if (character != newCharacter)
             {
@@ -237,6 +242,8 @@ typedef PsychSection =
     var sectionBeats:Float;
 
     var mustHitSection:Bool;
+
+    var gfSection:Bool;
 
     var changeBPM:Bool;
 
