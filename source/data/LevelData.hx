@@ -9,11 +9,15 @@ class LevelData
 
     public var name:String;
 
-    public function new(week:WeekData, name:String):Void
+    public var secret:Bool;
+
+    public function new(week:WeekData, name:String, secret:Bool):Void
     {
         this.week = week;
 
         this.name = name;
+
+        this.secret = secret;
     }
 
     public function sanitize():String

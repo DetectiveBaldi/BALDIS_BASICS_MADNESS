@@ -12,13 +12,11 @@ class Playlist
 
         week.description += "from a school you've never heard of before.\nWhat could go wrong?";
 
-        week.levels.pushMany(new LevelData(week, "Warm Welcome"), new LevelData(week, "Revision"), 
-            new LevelData(week, "Gain Ground"));
+        week.levels.pushMany(new LevelData(week, "Warm Welcome", false), new LevelData(week, "Revision", false), 
+            new LevelData(week, "Gain Ground", false));
 
         WeekData.list.push(week);
 
-        LevelData.list.push(new LevelData(null, "Rough Escape"));
-
-        LevelData.list.push(new LevelData(null, "Beginnings"));
+        LevelData.list.push(new LevelData(null, "Beginnings", true));
     }
 }

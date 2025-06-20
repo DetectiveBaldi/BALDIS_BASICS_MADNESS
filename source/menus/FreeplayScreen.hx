@@ -61,7 +61,14 @@ class FreeplayScreen extends CustomState
             levels = levels.concat(WeekData.list[i].levels);
     
         for (i in 0 ... LevelData.list.length)
-            levels.push(LevelData.list[i]);
+        {
+            var level:LevelData = LevelData.list[i];
+
+            if (level.secret && HighScore.getLevelScore(level.name, "normal") == 0.0)
+                continue;
+
+            levels.push(level);
+        }
 
         background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/background"));
 
@@ -150,9 +157,9 @@ class FreeplayScreen extends CustomState
 
         exitButton.setPosition(playButton.x - exitButton.width - 30.0, FlxG.height - exitButton.height + 35.0);
 
-        var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
+        // var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
 
-        infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
+        // infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
 
         changeSelection(0);
 
@@ -295,13 +302,8 @@ class FreeplayScreen extends CustomState
         var level:LevelData = levels[curSelected];
 
         var week:WeekData = level.week;
-
-        if (week == null)
-        {
-            if (HighScore.getLevelScore(level.name, "normal") == 0.0)
-                return;
-        }
-        else
+        
+        if (week != null)
         {
             if (HighScore.getWeekScore(week.name, "normal") == 0.0)
                 return;
