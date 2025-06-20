@@ -7,11 +7,12 @@ import game.PlayState;
 
 class FocusCamPointEvent
 {
-    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, duration:Float, ease:String = "linear"):Void
+    public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, duration:Float, ease:String = "linear",
+        force:Bool = false):Void
     {
         game.cameraTarget = "POINT";
 
-        if (game.cameraLock == AUTOMATIC || game.cameraLock == STRICT)
+        if ((game.cameraLock == AUTOMATIC || game.cameraLock == STRICT) && !force)
             return;
 
         if (duration > 0.0)

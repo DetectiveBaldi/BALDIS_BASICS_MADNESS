@@ -547,7 +547,7 @@ class PlayState extends CustomState
     {
         var ev:RawEvent = chart.events.first((e:RawEvent) -> e.name == "FocusCamChar");
 
-        FocusCamCharEvent.dispatch(this, "opponent", -1.0);
+        FocusCamCharEvent.dispatch(this, ev.value.charType, -1.0);
 
         gameCamera.snapToTarget();
     }

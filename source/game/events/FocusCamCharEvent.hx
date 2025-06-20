@@ -4,9 +4,10 @@ import game.PlayState;
 
 class FocusCamCharEvent
 {
-    public static function dispatch(game:PlayState, charType:String, duration:Float, ease:String = "linear"):Void
+    public static function dispatch(game:PlayState, charType:String, duration:Float, ease:String = "linear",
+        force:Bool = false):Void
     {
-        if (game.cameraLock == MANUAL || game.cameraLock == STRICT)
+        if ((game.cameraLock == MANUAL || game.cameraLock == STRICT) && !force)
         {
             game.cameraTarget = charType.toUpperCase();
             
@@ -19,7 +20,7 @@ class FocusCamCharEvent
 
         var y:Float = char.getMidpoint().y + char.config.cameraPoint.y;
 
-        FocusCamPointEvent.dispatch(game, x, y, duration, ease);
+        FocusCamPointEvent.dispatch(game, x, y, duration, ease, true);
 
         game.cameraTarget = charType.toUpperCase();
     }

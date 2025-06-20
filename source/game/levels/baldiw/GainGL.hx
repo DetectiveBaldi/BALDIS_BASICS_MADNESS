@@ -22,6 +22,7 @@ import core.Paths;
 
 import data.CharacterData;
 
+import game.events.FocusCamCharEvent;
 import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.GainGS;
@@ -217,7 +218,6 @@ class GainGL extends PlayState
         if (step == 448)
         {
             gameCameraZoom = 1;
-            cameraPoint.x -= 150.0;
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
@@ -242,6 +242,8 @@ class GainGL extends PlayState
             plr.visible = true;
             players.add(plr);
 
+            player = plr;
+
             var opp:Character = getOpponent("baldi-angry1");
             opp.visible = false;
 
@@ -250,6 +252,8 @@ class GainGL extends PlayState
             opp.setPosition(-600.0, 0.0);
             opp.skipDance = true;
             opponents.add(opp);
+
+            opponent = opp;
             
             gainGS.remove(players, true);
             gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), players);
@@ -257,6 +261,12 @@ class GainGL extends PlayState
             gainGS.entranceA5.visible = false;
             gainGS.ggfaculty0_Alt0.visible = true;
             gainGS.ggfaculty0_Overlay0.visible = true;
+
+            opp.x += 200.0;
+
+            FocusCamCharEvent.dispatch(this, "opponent", -1.0, "linear", true);
+
+            opp.x -= 200.0;
 
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
             opp.animation.play("slap", true);
@@ -268,17 +278,8 @@ class GainGL extends PlayState
             gainGS.ggfaculty0.visible = true;
         }
 
-        if (step == 480 || step == 528 || step == 560 || step == 592)
-        {                        
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 300.0,
-                cameraPoint.getCenterY(), -1.0);
-        }
-
-        if (step == 512 || step == 544 || step == 576)
-        {                        
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 300.0,
-                cameraPoint.getCenterY(), -1.0);
-        }
+        if (step == 480.0)
+            cameraLock = AUTOMATIC;
     
         if (step == 504 || step == 507 || step == 510)
         {                        
@@ -288,13 +289,12 @@ class GainGL extends PlayState
         if (step == 512)
         {                        
             gameCameraZoom = 0.8;
-           
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 200.0,
-                cameraPoint.getCenterY(), -1.0);
         }
 
         if (step == 624)
         {
+            cameraLock = MANUAL;
+
             cameraPoint.centerTo();
         }
 
@@ -380,15 +380,13 @@ class GainGL extends PlayState
 
             opp.scale.set(1.5, 1.5);
 
-            opp.setPosition(-50.0, -50.0);
+            opp.setPosition(100.0, -50.0);
 
             opponents.add(opp);
 
-            tween.tween(opp, {x: opp.x + 65.0, y: opp.y + 15.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
+            tween.tween(opp, {x: opp.x - 75.0, y: opp.y + 15.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
 
             var plr:Character = getPlayer("bf3");
-
-            tween.tween(plr, {x: plr.x + 400.0, y: plr.y + 100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     
         if (step == 912)
