@@ -117,42 +117,24 @@ class BeginningsL extends PlayState
             gameCameraZoom = 1;
         }
        
-        if (step == 464)
-        {
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
-                cameraPoint.getCenterY(),-1.0);
-        }
-   
-       
         if (step == 480)
         {
             if (Options.flashing)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-            
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
-                cameraPoint.getCenterY(), -1.0);
         }
     
         if (step == 544)
         {
-            cameraPoint.centerTo();
-            
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.8;
         }
     
         if (step == 800)
         {
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 250.0,
-                cameraPoint.getCenterY(), -1.0);
-           
-            gameCameraZoom = 1.25;
+            gameCameraZoom = 1.15;
         }
         
         if (step == 816)
         {
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 150.0,
-                cameraPoint.getCenterY(), -1.0);
-            
             gameCameraZoom = 0.8;
         }
     }

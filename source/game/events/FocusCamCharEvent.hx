@@ -7,7 +7,11 @@ class FocusCamCharEvent
     public static function dispatch(game:PlayState, charType:String, duration:Float, ease:String = "linear"):Void
     {
         if (game.cameraLock == MANUAL || game.cameraLock == STRICT)
+        {
+            game.cameraTarget = charType.toUpperCase();
+            
             return;
+        }
 
         var char:Character = Reflect.getProperty(game, charType);
 
