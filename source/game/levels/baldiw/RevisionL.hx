@@ -853,7 +853,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         if (submission == "31718")
         {
-            PlayState.loadSingle(LevelData.list[0]);
+            PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
 
             problemText.text = "THIS IS WHERE IT ALL BEGAN";
 
