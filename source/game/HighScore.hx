@@ -37,14 +37,14 @@ class HighScore
     {
         var level:LevelScore = levels[name] ??= getBlankLevel();
 
-        return score > level.difficulties[diff];
+        return score > (level.difficulties[diff] ??= 0);
     }
 
     public static function getLevelScore(name:String, diff:String):Int
     {
         var level:LevelScore = levels[name] ??= getBlankLevel();
 
-        return level.difficulties[diff];
+        return level.difficulties[diff] ??= 0;
     }
 
     public static function setLevelScore(name:String, diff:String, score:Int):Void
@@ -58,14 +58,14 @@ class HighScore
     {
         var week:WeekScore = weeks[name] ??= getBlankWeek();
 
-        return score > week.difficulties[diff];
+        return score > (week.difficulties[diff] ??= 0);
     }
 
     public static function getWeekScore(name:String, diff:String):Int
     {
         var week:WeekScore = weeks[name] ??= getBlankWeek();
 
-        return week.difficulties[diff];
+        return week.difficulties[diff] ??= 0;
     }
 
     public static function setWeekScore(name:String, diff:String, score:Int):Void
