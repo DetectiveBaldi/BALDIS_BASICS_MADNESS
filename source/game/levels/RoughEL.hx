@@ -53,6 +53,10 @@ class RoughEL extends PlayState
 
     public var vignette:FlxSprite;
 
+    public var pxChunks:PixelChunks;
+
+    public var pxContainer:ShaderFilter;
+
     override function create():Void
     {
         stage = new RoughES();
@@ -1315,13 +1319,15 @@ class RoughEL extends PlayState
 
             if (Options.shaders)
             {
-                var pxChunks:PixelChunks = new PixelChunks();
+                pxChunks = new PixelChunks();
 
                 pxChunks.data.tileSize.value = [0.0];
 
+                pxContainer = new ShaderFilter(pxChunks);
+
                 gameCamera.filters ??= new Array<BitmapFilter>();
 
-                gameCamera.filters.push(new ShaderFilter(pxChunks));
+                gameCamera.filters.push(pxContainer);
             }
             
             var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-anim-coming"));
@@ -1433,10 +1439,6 @@ class RoughEL extends PlayState
         {
             if (step >= 2640.0 && step <= 2656.0)
             {
-                var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
-
-                var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
-
                 if (step == 2648.0 || step == 2650.0)
                     tween.num(5.0, 0.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
@@ -1854,13 +1856,7 @@ class RoughEL extends PlayState
             if (beat >= 628 && beat <= 660.0)
             {
                 if (beat % 2.0 == 1.0)
-                {
-                    var filter:ShaderFilter = cast (gameCamera.filters[0], ShaderFilter);
-
-                    var pxChunks:PixelChunks = cast (filter.shader, PixelChunks);
-            
                     tween.num(5.0, 0.0, conductor.beatLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
-                }
             }
         }
     
