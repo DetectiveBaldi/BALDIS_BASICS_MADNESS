@@ -85,7 +85,7 @@ class PauseScreen extends CustomSubState
 
             blur.quality = 0;
 
-            tween.tween(blur, {blurX: 5.0, blurY: 5.0, quality: 1}, 0.65, {ease: FlxEase.quartIn});
+            tween.tween(blur, {blurX: 3.0, blurY: 3.0, quality: 1}, 0.65, {ease: FlxEase.quartIn});
 
             game.gameCamera.filters ??= new Array<BitmapFilter>();
 

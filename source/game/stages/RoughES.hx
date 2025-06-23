@@ -117,6 +117,8 @@ class RoughES extends Stage
         
         exit1 = sprite("exit1");
 
+        exit1.active = true;
+
         office0 = sprite("office0");
 
         office1 = sprite("office1");
@@ -168,6 +170,8 @@ class RoughES extends Stage
         cafeteria4 = sprite("cafeteria4");
     
         facultyStandard = sprite("facultyStandard", 2.35, 2.35);
+
+        facultyStandard.active = true;
     
         baldiOffice = sprite("office-baldi0");
     }
