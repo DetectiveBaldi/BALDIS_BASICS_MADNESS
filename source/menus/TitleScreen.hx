@@ -99,24 +99,6 @@ class TitleScreen extends CustomState
         tune = FlxG.sound.load(Assets.getMusic("menus/TitleScreen/tune"));
 
         tune.play();
-
-        var demoText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "DEMO");
-
-        demoText.color = FlxColor.BLACK;
-
-        demoText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        demoText.size = 30;
-
-        demoText.alignment = RIGHT;
-
-        demoText.textField.antiAliasType = ADVANCED;
-
-        demoText.textField.sharpness = 400.0;
-
-        demoText.setPosition(title.x + title.width - demoText.width - 135.0, 180.0);
-
-        add(demoText);
     }
 
     override function destroy():Void

@@ -479,6 +479,9 @@ class PlayState extends CustomState
 
     public function endSong():Void
     {
+        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
+            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
+
         if (isWeek)
         {
             weekStats[level.name] = playField.playStats.copy();
@@ -495,19 +498,16 @@ class PlayState extends CustomState
                     HighScore.setWeekScore(week.name, "normal", totalStats.score);
 
                 FlxG.switchState(() -> new StoryMenuScreen());
-
-                return;
             }
+            else
+            {
+                level = week.levels[i + 1];
 
-            level = week.levels[i + 1];
-
-            FlxG.switchState(() -> getLevelClass());
+                FlxG.switchState(() -> getLevelClass());
+            }
         }
         else
             FlxG.switchState(() -> new FreeplayScreen());
-
-        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
-            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
 
         mainVocals?.stop();
 

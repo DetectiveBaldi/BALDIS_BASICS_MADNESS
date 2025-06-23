@@ -17,6 +17,8 @@ class Playlist
 
         WeekData.list.push(week);
 
+        LevelData.list.push(new LevelData(null, "Rough Escape", false));
+
         LevelData.list.push(new LevelData(null, "Beginnings", true));
     }
 }
