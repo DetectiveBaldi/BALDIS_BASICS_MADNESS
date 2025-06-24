@@ -56,6 +56,14 @@ class StringUtil
 
         return splt.join(join);
     }
+
+    public static function parseInt(str:String):Int
+    {
+        var lookup:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4,
+            "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
+
+        return lookup.exists(str.toLowerCase()) ? lookup[str.toLowerCase()] : Std.parseInt(str) ?? -1;
+    }
 }
 
 enum StringCase

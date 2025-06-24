@@ -29,21 +29,16 @@ import core.Paths;
 import data.AxisData;
 import data.CharacterData;
 import data.LevelData;
-import data.WeekData;
-
-import extendable.CustomState.CustomTransitionFade;
-import extendable.CustomState.CustomTransitionSprite;
 
 import game.events.FocusCamPointEvent;
 
 import game.stages.baldiw.RevisionS;
 
-import game.levels.BeginningsL;
-
 import sound.SoundQueue;
 
 using util.ArrayUtil;
 using util.MathUtil;
+using util.StringUtil;
 
 using StringTools;
 
@@ -660,13 +655,14 @@ class ThinkpadMinigame extends FlxSpriteGroup
                     updateSubmission(-1);
                 
                 case FlxKey.ENTER:
-                    checkSubmission();
+                    if (submission != "")
+                        checkSubmission();
 
                 default:
                 {
                     var str:String = FlxKey.toStringMap[firstJustPressed];
 
-                    var pars:Int = parseInt(str);
+                    var pars:Int = str.parseInt();
 
                     if (pars != -1)
                         updateSubmission(pars);
@@ -694,14 +690,16 @@ class ThinkpadMinigame extends FlxSpriteGroup
                                 updateSubmission(-1);
                             
                             case "OK":
-                                checkSubmission();
+                                if (submission != "")
+                                    checkSubmission();
                             
                             default:
-                                updateSubmission(parseInt(k.toLowerCase()));
+                                updateSubmission(k.toLowerCase().parseInt());
                         }
                     }
                     
-                    v.animation.play("selected");
+                    if (k != "OK" || submission != "")
+                        v.animation.play("selected");
                 }
                 else
                     v.animation.play("deselected");
@@ -783,11 +781,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
             {
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op1)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${lengthenOp(op1)}Short')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op2)}Short')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${lengthenOp(op2)}Short')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound("shared/BAL_Buzz")));
             }
@@ -795,7 +793,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
             {
                 sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val1}')));
 
-                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${opToString(op1)}')));
+                sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${lengthenOp(op1)}')));
 
                 sndQueue.queue(FlxG.sound.load(Assets.getSound('shared/BAL_${val2}')));
             }
@@ -870,34 +868,41 @@ class ThinkpadMinigame extends FlxSpriteGroup
             return;
         }
 
-        var answer:Int = -1;
+        questionText.text = '${val1}${op1}${val2}';
 
-        switch (op1:String)
-        {
-            case "+":
-                answer = val1 + val2;
-            
-            case "-":
-                answer = val1 - val2;
+        var parsSub:Int = submission.parseInt();
 
-            case "*":
-                answer = val1 * val2;
-            
-            case "/":
-                answer = Math.floor(val1 / val2);
-        }
-
-        var parsSub:Int = parseInt(submission);
+        var multiplier:Int = 1;
 
         if (negative)
-            parsSub *= -1;
+            multiplier *= -1;
+
+        var answer:Int = switch (op1:String)
+        {
+            case "+":
+                val1 + val2;
+            
+            case "-":
+                val1 - val2;
+
+            case "*":
+                val1 * val2;
+            
+            case "/":
+                Math.floor(val1 / val2);
+
+            default:
+                throw "Unrecognized pattern.";
+        }
 
         var indicat:FlxSprite = indicators[problemIndex - 1];
 
         indicat.visible = true;
 
-        if (parsSub == answer)
+        if (parsSub * multiplier == answer)
         {
+            questionText.text += '=${answer}';
+
             totalCorrect++;
 
             if (totalCorrect == totalSolved)
@@ -911,20 +916,20 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
         else
         {
-            sndQueue.clearQueue(true);
+            questionText.text += '≠${submission}';
 
             if (baldi.animation.name != "frown")
                 baldi.animation.play("frown");
-            
-            indicat.animation.play("incorrect");
+
+            sndQueue.clearQueue(true);
 
             totalIncorrect++;
+
+            indicat.animation.play("incorrect");
         }
 
         if (corrupted)
             showQuote();
-        else
-            questionText.text = '${val1}${op1}${val2}=${answer}';
 
         clearSubmission();
     }
@@ -955,9 +960,9 @@ class ThinkpadMinigame extends FlxSpriteGroup
         questionText.text = "";
     }
 
-    public function opToString(str:String):String
+    public function lengthenOp(op:String):String
     {
-        return switch (str:String)
+        return switch (op:String)
         {
             case "+": "Plus";
             
@@ -967,15 +972,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
             
             case "/": "Divided";
 
-            default: "Null";
+            default:
+                throw "Unrecognized pattern.";
         }
-    }
-
-    public function parseInt(str:String):Int
-    {
-        var lookup:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4,
-            "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
-
-        return lookup.exists(str.toLowerCase()) ? lookup[str.toLowerCase()] : Std.parseInt(str) ?? -1;
     }
 }
