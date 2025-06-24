@@ -46,7 +46,6 @@ import core.Paths;
 import data.AnimationData;
 import data.AxisData;
 import data.CharacterData;
-import data.HealthIconData;
 
 import extendable.CustomState;
 
@@ -139,7 +138,7 @@ class CharacterEditorState extends CustomState
 
         progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-        healthIcon = new HealthIcon(0.0, 0.0, HealthIconData.get(character.config.healthIcon));
+        healthIcon = new HealthIcon(0.0, 0.0, character.config.healthIcon);
 
         healthIcon.camera = hudCamera;
 
@@ -174,7 +173,7 @@ class CharacterEditorState extends CustomState
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-            healthIcon.config = HealthIconData.get(character.config.healthIcon);
+            healthIcon.character = character.config.healthIcon;
 
             animationIndex = 0;
 
@@ -286,7 +285,7 @@ class CharacterEditorState extends CustomState
         {
             character.config.healthIcon = ui.findComponent("____textfield", TextField).text;
 
-            healthIcon.config = HealthIconData.get(character.config.healthIcon);
+            healthIcon.character = character.config.healthIcon;
 
             character.config.healthColor = ui.findComponent("_____textfield", TextField).text;
 

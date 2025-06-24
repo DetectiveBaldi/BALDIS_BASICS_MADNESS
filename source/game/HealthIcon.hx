@@ -5,34 +5,30 @@ import flixel.FlxSprite;
 import core.Assets;
 import core.Paths;
 
-import data.HealthIconData.RawHealthIconData;
-
 class HealthIcon extends FlxSprite
 {
-    public var config(default, set):RawHealthIconData;
+    public var character(default, set):String;
 
     @:noCompletion
-    function set_config(_config:RawHealthIconData):RawHealthIconData
+    function set_character(_character:String):String
     {
-        config = _config;
+        character = _character;
 
-        antialiasing = config.antialiasing ?? true;
-
-        loadGraphic(Assets.getGraphic('game/HealthIcon/${config.image}'), true, 150, 150);
+        loadGraphic(Assets.getGraphic('game/HealthIcon/${character}'), true, 150, 150);
 
         animation.add("icon", [0, 1], 0.0, false);
 
         animation.play("icon");
 
-        return config;
+        return character;
     }
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _config:RawHealthIconData):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, _character:String):Void
     {
         super(x, y);
 
         active = false;
 
-        config = _config;
+        character = _character;
     }
 }

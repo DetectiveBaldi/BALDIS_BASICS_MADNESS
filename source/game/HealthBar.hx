@@ -11,8 +11,6 @@ import flixel.util.FlxSignal;
 import core.Assets;
 import core.Paths;
 
-import data.HealthIconData;
-
 import music.Conductor;
 
 using util.MathUtil;
@@ -144,7 +142,7 @@ class HealthBar extends FlxSpriteGroup
 
         needle.centerTo(gradient);
 
-        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi"));
+        opponentIcon = new HealthIcon(0.0, 0.0, "baldi");
 
         opponentIcon.centerTo(overlay);
 
@@ -152,7 +150,7 @@ class HealthBar extends FlxSpriteGroup
 
         add(opponentIcon);
 
-        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("bf"));
+        playerIcon = new HealthIcon(0.0, 0.0, "bf");
 
         playerIcon.flipX = true;
 

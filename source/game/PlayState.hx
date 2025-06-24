@@ -24,7 +24,6 @@ import data.Chart;
 import data.Chart.RawEvent;
 import data.Chart.RawNote;
 import data.ChartConverters;
-import data.HealthIconData;
 import data.LevelData;
 import data.WeekData;
 
@@ -538,9 +537,9 @@ class PlayState extends CustomState
         var healthBar:HealthBar = playField.healthBar;
 
         if (charType == "spectator" || charType == "opponent")
-            healthBar.opponentIcon.config = HealthIconData.get(character.config.healthIcon);
+            healthBar.opponentIcon.character = character.config.healthIcon;
         else
-            healthBar.playerIcon.config = HealthIconData.get(character.config.healthIcon);
+            healthBar.playerIcon.character = character.config.healthIcon;
     }
 
     public function setCamStartPos():Void
