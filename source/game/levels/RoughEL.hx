@@ -79,27 +79,27 @@ class RoughEL extends PlayState
 
         Assets.getGraphic("game/Character/1st-prize-anim-coming");
 
-        Assets.getGraphic("game/Character/1st-prize0-0");
+        Assets.getGraphic("game/Character/1st-prize-0");
 
-        Assets.getGraphic("game/Character/baldi-angry0");
+        Assets.getGraphic("game/Character/baldi-mad");
 
-        Assets.getGraphic("game/Character/baldi-angry1");
+        Assets.getGraphic("game/Character/baldi-mad-face-front");
 
-        Assets.getGraphic("game/Character/baldi-angry2");
+        Assets.getGraphic("game/Character/baldi-furious");
 
-        Assets.getGraphic("game/Character/bf0");
+        Assets.getGraphic("game/Character/bf-face-left");
 
-        Assets.getGraphic("game/Character/bf8");
+        Assets.getGraphic("game/Character/bf-running");
 
-        Assets.getGraphic("game/Character/bf6");
+        Assets.getGraphic("game/Character/bf-clutching-wall");
 
-        Assets.getGraphic("game/Character/bully0");
+        Assets.getGraphic("game/Character/bully");
 
-        Assets.getGraphic("game/Character/gotta-sweep0");
+        Assets.getGraphic("game/Character/gotta-sweep");
 
-        Assets.getGraphic("game/Character/playtime0");
+        Assets.getGraphic("game/Character/playtime");
 
-        Assets.getGraphic("game/Character/principal0");
+        Assets.getGraphic("game/Character/principal");
 
         Assets.getGraphic("game/Character/run-legs");
 
@@ -132,7 +132,7 @@ class RoughEL extends PlayState
 
             players.visible = true;
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
             plr.skipDance = true;
 
@@ -156,17 +156,17 @@ class RoughEL extends PlayState
 
             opponents.visible = true;
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             opp.skipDance = true;
 
             opp.setPosition(-845.0, 18.5);
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf8"));
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-running"));
 
             var anim:FlxAnimation = _plr.animation.getByName("dance");
 
@@ -212,7 +212,7 @@ class RoughEL extends PlayState
 
         if (step == 512.0)
         {
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             var _plr:Character = getPlayer("run-legs");
 
@@ -226,7 +226,7 @@ class RoughEL extends PlayState
 
         if (step == 524.0)
         {
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             var sodaSplash:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/sodaSplash"));
 
@@ -258,7 +258,7 @@ class RoughEL extends PlayState
 
         if (step == 580.0)
         {
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             FocusCamPointEvent.dispatch(this, plr.getMidpoint().x - cameraPoint.width * 0.5,
                 (FlxG.height - cameraPoint.height) * 0.5, conductor.beatLength * 2.5 * 0.001, "quartInOut");
@@ -277,7 +277,7 @@ class RoughEL extends PlayState
 
         if (step == 590.0)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bully0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bully"));
 
             opp.flipX = true;
 
@@ -302,11 +302,11 @@ class RoughEL extends PlayState
 
             roughES.hall3.visible = true;
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             opp.visible = false;
 
-            var _opp:Character = getOpponent("bully0");
+            var _opp:Character = getOpponent("bully");
 
             _opp.flipX = false;
 
@@ -318,7 +318,7 @@ class RoughEL extends PlayState
 
             updateHealthBar("opponent");
 
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             plr.visible = false;
 
@@ -326,7 +326,7 @@ class RoughEL extends PlayState
 
             _plr.visible = false;
 
-            var __plr:Character = getPlayer("bf0");
+            var __plr:Character = getPlayer("bf-face-left");
 
             __plr.visible = true;
 
@@ -349,7 +349,7 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = getOpponent("bully0");
+            var opp:Character = getOpponent("bully");
 
             opp.skipDance = true;
 
@@ -378,7 +378,7 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry1"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad-face-front"));
 
             opp.skipDance = true;
 
@@ -388,11 +388,11 @@ class RoughEL extends PlayState
 
             opponents.add(opp);
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf6"));
+            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-clutching-wall"));
 
             _plr.setPosition(-280.0, 125.0);
 
@@ -429,11 +429,11 @@ class RoughEL extends PlayState
         {
             hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
 
-            var plr:Character = getPlayer("bf6");
+            var plr:Character = getPlayer("bf-clutching-wall");
 
             plr.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.setPosition(390.0, 135.0);
 
@@ -465,17 +465,17 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             opp.visible = true;
 
             opp.setPosition(-845.0, 18.5);
 
-            var _opp:Character = getOpponent("baldi-angry1");
+            var _opp:Character = getOpponent("baldi-mad-face-front");
 
             _opp.visible = false;
 
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             plr.visible = true;
 
@@ -517,7 +517,7 @@ class RoughEL extends PlayState
 
         if (step == 1240.0)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("principal0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("principal"));
 
             opp.setPosition(-862.5, 22.5);
 
@@ -526,16 +526,16 @@ class RoughEL extends PlayState
 
         if (step == 1248.0)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             opp.skipSing = true;
         }
 
         if (step == 1256.0)
         {
-            var opp:Character = getOpponent("principal0");
+            var opp:Character = getOpponent("principal");
 
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             tween.tween(opp, {x: plr.x - 115.0}, conductor.beatLength * 2.0 * 0.001);
         }
@@ -552,11 +552,11 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             opp.visible = false;
 
-            var _opp:Character = getOpponent("principal0");
+            var _opp:Character = getOpponent("principal");
 
             _opp.scale.set(1.4, 1.4);
 
@@ -564,7 +564,7 @@ class RoughEL extends PlayState
 
             _opp.setPosition(-350.0, 50.0);
 
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
 
             plr.visible = false;
 
@@ -572,7 +572,7 @@ class RoughEL extends PlayState
 
             _plr.visible = false;
 
-            var __plr:Character = getPlayer("bf0");
+            var __plr:Character = getPlayer("bf-face-left");
 
             __plr.visible = true;
 
@@ -622,7 +622,7 @@ class RoughEL extends PlayState
 
         if (step == 1456.0)
         {
-            var opp:Character = getOpponent("principal0");
+            var opp:Character = getOpponent("principal");
 
             tween.tween(opp, {x: 60.0, y: -3.5}, conductor.beatLength * 2.5 * 0.001);
 
@@ -639,7 +639,7 @@ class RoughEL extends PlayState
 
         if (step == 1466.0)
         {
-            var opp:Character = getOpponent("principal0");
+            var opp:Character = getOpponent("principal");
 
             if (FlxG.random.bool())
                 tween.tween(opp, {x: -opp.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
@@ -669,7 +669,7 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.visible = true;
 
@@ -677,7 +677,7 @@ class RoughEL extends PlayState
 
             opp.setPosition(385.0, 110.0);
 
-            var _opp:Character = getOpponent("principal0");
+            var _opp:Character = getOpponent("principal");
 
             _opp.visible = false;
 
@@ -685,7 +685,7 @@ class RoughEL extends PlayState
 
             roughES.insert(roughES.members.indexOf(roughES.office4), opponents);
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
             plr.visible = false;
 
@@ -834,7 +834,7 @@ class RoughEL extends PlayState
 
         if (step == 1608.0)
         {
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.animation.play("slap");
 
@@ -860,7 +860,7 @@ class RoughEL extends PlayState
 
         if (step == 1616.0)
         {
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.visible = true;
 
@@ -927,7 +927,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             
             opp.scale.set(1.4, 1.4);
 
@@ -1025,7 +1025,7 @@ class RoughEL extends PlayState
 
             hudCamera.stopFade();
 
-            var opponent:Character = getOpponent("baldi-angry1");
+            var opponent:Character = getOpponent("baldi-mad-face-front");
 
             opponent.scale.set(1.95, 1.95);
 
@@ -1093,7 +1093,7 @@ class RoughEL extends PlayState
 
         if (step == 1916.0)
         {
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             tween.tween(opp, {x: opp.x + 275.0}, conductor.beatLength * 0.275 * 0.001);
         }
@@ -1109,10 +1109,10 @@ class RoughEL extends PlayState
             var _plr:Character = getPlayer("bf-anim-lock");
             _plr.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("playtime0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("playtime"));
             opp.setPosition(-1100, 220.0);
             opp.scale.set(1, 1);
             opponents.add(opp);
@@ -1146,7 +1146,7 @@ class RoughEL extends PlayState
             if (!Options.botplay)
                 plrStrumline.getKeys();
         
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
             plr.setPosition(785.0, 170.0);
             plr.visible = true;
         }
@@ -1174,7 +1174,7 @@ class RoughEL extends PlayState
     
         if (step == 2160)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.visible = true;
             opp.setPosition(-800, 0);
             opp.skipSing = true;
@@ -1182,18 +1182,18 @@ class RoughEL extends PlayState
     
         if (step == 2168)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.skipSing = false;
         }
 
         if (step == 2176)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep"));
             opp.setPosition(1750, -100);
             opp.skipSing = true;
             opponents.add(opp);
             
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
             tween.tween(opp, {x: plr.x -50}, 0.5,                
                 {
@@ -1211,13 +1211,13 @@ class RoughEL extends PlayState
 
         if (step == 2176)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.skipSing = true;
         }
         
         if (step == 2184)
         {
-            var opp:Character = getOpponent("playtime0");
+            var opp:Character = getOpponent("playtime");
             tween.tween(opp, {x: -1100}, 2, 
                 {
                     ease: FlxEase.quartIn
@@ -1242,13 +1242,13 @@ class RoughEL extends PlayState
             roughES.hall2.visible = true;
             roughES.hall2.velocity.set(-10560.0, 0.0);
 
-            var opp:Character = getOpponent("playtime0");
+            var opp:Character = getOpponent("playtime");
             opp.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.visible = false;
 
-            var opp:Character = getOpponent("gotta-sweep0");
+            var opp:Character = getOpponent("gotta-sweep");
             opp.setPosition(-1000, -100);
             opp.skipSing = false;
 
@@ -1256,7 +1256,7 @@ class RoughEL extends PlayState
 
             updateHealthBar("opponent");
             
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
             plr.setPosition(-1000.0, 170.0);
 
             tween.tween(opp, {x: 100}, 1,                 
@@ -1297,9 +1297,9 @@ class RoughEL extends PlayState
         
             roughES.facultyStandard.velocity.x = 0.0;
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
 
-            var opp:Character = getOpponent("gotta-sweep0");
+            var opp:Character = getOpponent("gotta-sweep");
 
             tween.tween(opp, {x: -1500}, 0.75,                 
                 {
@@ -1360,77 +1360,77 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-anim-coming");
             _opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-292-5"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-292-5"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
         
         if (step == 2544)
         {
-            var _opp:Character = getOpponent("1st-prize0-292-5");
+            var _opp:Character = getOpponent("1st-prize-292-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-315"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-315"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
         
         if (step == 2560)
         {
-            var _opp:Character = getOpponent("1st-prize0-315");
+            var _opp:Character = getOpponent("1st-prize-315");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-337-5"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-337-5"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
 
         if (step == 2576)
         {
-            var _opp:Character = getOpponent("1st-prize0-337-5");
+            var _opp:Character = getOpponent("1st-prize-337-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-0"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
         
         if (step == 2592)
         {
-            var _opp:Character = getOpponent("1st-prize0-0");
+            var _opp:Character = getOpponent("1st-prize-0");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-22-5"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-22-5"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
 
         if (step == 2608)
         {
-            var _opp:Character = getOpponent("1st-prize0-22-5");
+            var _opp:Character = getOpponent("1st-prize-22-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-45"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-45"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
        
         if (step == 2624)
         {
-            var _opp:Character = getOpponent("1st-prize0-45");
+            var _opp:Character = getOpponent("1st-prize-45");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-67-5"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-67-5"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
 
         if (step == 2640)
         {
-            var _opp:Character = getOpponent("1st-prize0-67-5");
+            var _opp:Character = getOpponent("1st-prize-67-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize0-90"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("1st-prize-90"));
             opp.setPosition(950, -150);
             opponents.add(opp);
         }
@@ -1449,8 +1449,8 @@ class RoughEL extends PlayState
 
         if (step == 2648)
             {
-                var plr:Character = getPlayer("bf0");
-                var opp:Character = getOpponent("1st-prize0-90");
+                var plr:Character = getPlayer("bf-face-left");
+                var opp:Character = getOpponent("1st-prize-90");
                 
                 tween.tween(opp, {x: -1450}, 1,            
                     {
@@ -1481,8 +1481,8 @@ class RoughEL extends PlayState
     
         if (step == 2660)
         {
-            var plr:Character = getPlayer("bf0");
-            var opp:Character = getOpponent("1st-prize0-90");
+            var plr:Character = getPlayer("bf-face-left");
+            var opp:Character = getOpponent("1st-prize-90");
 
             tween.tween(opp, {x: 300}, 1, {ease: FlxEase.quartOut});
             
@@ -1553,10 +1553,10 @@ class RoughEL extends PlayState
 
             gameCamera.snapToTarget();
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
             plr.visible = false;
 
-            var opp:Character = getOpponent("1st-prize0-90");
+            var opp:Character = getOpponent("1st-prize-90");
             opp.visible = false;
            
             roughES.hall2.visible = false;
@@ -1573,7 +1573,7 @@ class RoughEL extends PlayState
             _plr.animation.play("shock");
             players.add(_plr);
        
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.scale.set(0.7, 0.7);
             opp.updateHitbox();
             opp.setPosition(1100, 280);
@@ -1609,15 +1609,15 @@ class RoughEL extends PlayState
             var _plr:Character = getPlayer("bf-anim-teleported");
             _plr.visible = false;
             
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry2"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-furious"));
             opp.setPosition(-885.0, 18.5);
             opp.skipDance = true;
             opponents.add(opp);
 
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
             plr.visible = true;
             plr.setPosition(798.5, 205.5);
 
@@ -1648,7 +1648,7 @@ class RoughEL extends PlayState
 
         if (step == 3218.0)
         {
-            var opp:Character = getOpponent("baldi-angry2");
+            var opp:Character = getOpponent("baldi-furious");
 
             opp.animation.play("slap", true);
 
@@ -1659,14 +1659,14 @@ class RoughEL extends PlayState
 
         if (step == 3219.0)
         {
-            var opp:Character = getOpponent("baldi-angry2");
+            var opp:Character = getOpponent("baldi-furious");
 
             opp.animation.play("slap", true);
         }
 
         if (step == 3220.0)
         {
-            var opp:Character = getOpponent("baldi-angry2");
+            var opp:Character = getOpponent("baldi-furious");
 
             tween.completeTweensOf(opp);
 
@@ -1717,7 +1717,7 @@ class RoughEL extends PlayState
             tween.tween(this, {gameCameraZoom: 0.8}, 3.5, {ease:FlxEase.quartIn});
             tween.tween(gameCamera, {alpha: 0}, 3.5);
         
-            var plr:Character = getPlayer("bf8");
+            var plr:Character = getPlayer("bf-running");
             plr.visible = false;
             
             var _plr:Character = getPlayer("run-legs");
@@ -1733,7 +1733,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry0");
+                var opp:Character = getOpponent("baldi-mad");
 
                 if (beat == 132.0)
                 {
@@ -1766,7 +1766,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry1");
+                var opp:Character = getOpponent("baldi-mad-face-front");
 
                 tween.tween(opp.scale, {x: opp.scale.x + 0.3, y: opp.scale.y + 0.3}, conductor.beatLength * 0.275 * 0.001);
 
@@ -1780,7 +1780,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry1");
+                var opp:Character = getOpponent("baldi-mad-face-front");
 
                 if (beat == 440.0)
                 {
@@ -1811,7 +1811,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry1");
+                var opp:Character = getOpponent("baldi-mad-face-front");
 
                 tween.tween(opp.scale, {x: opp.scale.x + 0.2, y: opp.scale.y + 0.2},
                     conductor.beatLength * 0.275 * 0.001);
@@ -1828,7 +1828,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry1");
+                var opp:Character = getOpponent("baldi-mad-face-front");
 
                 tween.tween(opp.scale, {x: opp.scale.x + 0.325, y: opp.scale.y + 0.325}, 
                     conductor.beatLength * 0.275 * 0.001);
@@ -1843,7 +1843,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry0");
+                var opp:Character = getOpponent("baldi-mad");
                 
                 tween.tween(opp, {x: opp.x + 300.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
@@ -1864,7 +1864,7 @@ class RoughEL extends PlayState
         {
             if (beat % 2.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry2");
+                var opp:Character = getOpponent("baldi-furious");
 
                 tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
                     {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});

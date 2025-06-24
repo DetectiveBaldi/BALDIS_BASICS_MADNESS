@@ -173,6 +173,6 @@ class RoughES extends Stage
 
         facultyStandard.active = true;
     
-        baldiOffice = sprite("office-baldi0");
+        baldiOffice = sprite("office-baldi-face-front");
     }
 }

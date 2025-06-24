@@ -72,14 +72,14 @@ class BeginningsL extends PlayState
 
         if (step == 16.0)
         {
-            var opp:Character = getOpponent("placeface0");
+            var opp:Character = getOpponent("placeface");
             
             opp.skipDance = true;
         }
         
         if (step == 18.0)
         {
-            var opp:Character = getOpponent("placeface0");
+            var opp:Character = getOpponent("placeface");
 
             opp.animation.play("elephant");
         }
@@ -91,7 +91,7 @@ class BeginningsL extends PlayState
             
             gameCameraZoom = 0.8;
             
-            var opp:Character = getOpponent("placeface0");
+            var opp:Character = getOpponent("placeface");
             opp.skipDance = false;
         }
     

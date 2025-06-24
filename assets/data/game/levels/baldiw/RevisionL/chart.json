@@ -1,5 +1,5 @@
 {
-	"player1": "bf3",
+	"player1": "bf-face-back-left",
 	"gfVersion": "",
 	"notes": [
 		{
@@ -1379,7 +1379,7 @@
 		}
 	],
 	"events": [],
-	"player2": "baldi2",
+	"player2": "baldi-face-right",
 	"offset": 0,
 	"song": "Revision",
 	"needsVoices": true,

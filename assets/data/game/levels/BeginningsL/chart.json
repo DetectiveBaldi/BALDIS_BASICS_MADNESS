@@ -1,5 +1,5 @@
 {
-	"player1": "bf9",
+	"player1": "bf-placeholder",
 	"sectionLengths": [],
 	"notes": [
 		{
@@ -1088,7 +1088,7 @@
 			"mustHitSection": false
 		}
 	],
-	"player2": "placeface0",
+	"player2": "placeface",
 	"gfVersion": "placeface-anim-spectate",
 	"events": [],
 	"song": "Beginnings",

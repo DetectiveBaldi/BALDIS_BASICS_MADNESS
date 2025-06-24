@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="playtime.png">
+    <SubTexture name="Playtime danceLeft0000" x="4803" y="570" width="510" height="569" frameX="-92" frameY="-25" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0001" x="2580" y="3191" width="618" height="594" frameX="-92" frameY="0" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0002" x="4417" y="4381" width="633" height="562" frameX="-84" frameY="-32" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0003" x="4803" y="1696" width="512" height="556" frameX="-79" frameY="-38" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0004" x="4803" y="0" width="562" height="570" frameX="-79" frameY="-24" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0005" x="5365" y="2199" width="537" height="525" frameX="-79" frameY="-69" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0006" x="1903" y="4381" width="585" height="565" frameX="-35" frameY="-29" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceLeft0007" x="2488" y="4381" width="583" height="563" frameX="-79" frameY="-31" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0000" x="635" y="4381" width="610" height="568" frameX="-76" frameY="-27" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0001" x="5365" y="1107" width="510" height="546" frameX="-77" frameY="-48" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0002" x="0" y="4381" width="635" height="569" frameX="-52" frameY="-25" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0003" x="4803" y="1696" width="512" height="556" frameX="-79" frameY="-38" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0004" x="4803" y="0" width="562" height="570" frameX="-79" frameY="-24" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0005" x="5365" y="2199" width="537" height="525" frameX="-79" frameY="-69" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0006" x="1903" y="4381" width="585" height="565" frameX="-35" frameY="-29" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime danceRight0007" x="2488" y="4381" width="583" height="563" frameX="-79" frameY="-31" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Left0000" x="0" y="1317" width="679" height="639" frameX="0" frameY="-22" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Left0001" x="0" y="0" width="734" height="661" frameX="-133" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Left0002" x="618" y="3191" width="686" height="598" frameX="-180" frameY="-63" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Left0003" x="628" y="661" width="665" height="655" frameX="-157" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Left0004" x="0" y="661" width="628" height="656" frameX="-160" frameY="-5" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Left0005" x="1894" y="0" width="756" height="654" frameX="-113" frameY="-7" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime LLoop0000" x="734" y="0" width="556" height="661" frameX="-232" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime LLoop0001" x="1290" y="0" width="604" height="661" frameX="-211" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime LLoop0002" x="1894" y="654" width="592" height="649" frameX="-206" frameY="-12" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Right0000" x="1170" y="4950" width="617" height="538" frameX="-92" frameY="-76" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Right0001" x="2760" y="3791" width="648" height="581" frameX="-40" frameY="-34" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Right0002" x="589" y="4950" width="581" height="550" frameX="-86" frameY="-66" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Right0003" x="2114" y="3791" width="646" height="583" frameX="-22" frameY="-33" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Right0004" x="1245" y="4381" width="658" height="567" frameX="-7" frameY="-49" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Right0005" x="3997" y="3791" width="589" height="575" frameX="-76" frameY="-41" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime RLoop0000" x="3408" y="3791" width="589" height="578" frameX="-76" frameY="-38" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime RLoop0001" x="0" y="4950" width="589" height="552" frameX="-76" frameY="-64" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime RLoop0002" x="3071" y="4381" width="596" height="563" frameX="-76" frameY="-53" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Up0000" x="1446" y="3791" width="668" height="584" frameX="-63" frameY="-8" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Up0001" x="3667" y="4381" width="750" height="563" frameX="0" frameY="-27" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Up0002" x="2341" y="2582" width="679" height="605" frameX="-12" frameY="-14" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Up0003" x="0" y="3791" width="669" height="590" frameX="-21" frameY="-51" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime ULoop0000" x="1304" y="3191" width="685" height="596" frameX="-78" frameY="-47" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime ULoop0001" x="1989" y="3191" width="591" height="596" frameX="-99" frameY="-47" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime ULoop0002" x="0" y="1956" width="591" height="626" frameX="-99" frameY="-17" frameWidth="763" frameHeight="655" />
+    <SubTexture name="Playtime Down0000" x="5365" y="2724" width="556" height="524" frameX="-178" frameY="-102" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Down0001" x="669" y="3791" width="777" height="586" frameX="-32" frameY="-40" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Down0002" x="4226" y="2362" width="541" height="589" frameX="-172" frameY="-36" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Down0003" x="2650" y="0" width="552" height="618" frameX="-177" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime DLoop0000" x="591" y="1956" width="556" height="625" frameX="-177" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime DLoop0001" x="4226" y="592" width="556" height="590" frameX="-177" frameY="-35" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime DLoop0002" x="1147" y="1956" width="556" height="625" frameX="-177" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0000" x="4803" y="2252" width="512" height="556" frameX="-186" frameY="-77" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0001" x="908" y="2582" width="483" height="608" frameX="-186" frameY="-25" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0002" x="4226" y="1182" width="474" height="590" frameX="-186" frameY="-43" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0003" x="4803" y="2252" width="512" height="556" frameX="-186" frameY="-77" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0004" x="1391" y="2582" width="481" height="608" frameX="-159" frameY="-25" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0005" x="4226" y="1772" width="483" height="590" frameX="-186" frameY="-43" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0006" x="0" y="2582" width="454" height="609" frameX="-186" frameY="-24" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0007" x="4803" y="1139" width="511" height="557" frameX="-174" frameY="-76" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0008" x="5365" y="0" width="565" height="554" frameX="-174" frameY="-79" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0009" x="4803" y="1139" width="511" height="557" frameX="-174" frameY="-76" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0010" x="2650" y="1849" width="493" height="611" frameX="-184" frameY="-22" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0011" x="3198" y="3191" width="550" height="594" frameX="-190" frameY="-39" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0012" x="679" y="1317" width="612" height="633" frameX="-186" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0013" x="1291" y="1317" width="693" height="629" frameX="-69" frameY="-4" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0014" x="1703" y="1956" width="464" height="624" frameX="-186" frameY="-9" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0015" x="2167" y="1956" width="456" height="621" frameX="-186" frameY="-12" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0016" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0017" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0018" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0019" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0020" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0021" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0022" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0023" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0024" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0025" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0026" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0027" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0028" x="2650" y="618" width="456" height="616" frameX="-186" frameY="-17" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Play0029" x="1984" y="1317" width="552" height="627" frameX="-90" frameY="-6" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0000" x="4803" y="2808" width="512" height="556" frameX="-186" frameY="-77" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0001" x="3692" y="2366" width="454" height="574" frameX="-186" frameY="-59" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0002" x="1293" y="661" width="473" height="633" frameX="-186" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0003" x="1293" y="661" width="473" height="633" frameX="-186" frameY="0" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0004" x="454" y="2582" width="454" height="609" frameX="-186" frameY="-24" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0005" x="3202" y="0" width="490" height="603" frameX="-186" frameY="-30" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0006" x="1872" y="2582" width="469" height="608" frameX="-186" frameY="-25" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0007" x="3692" y="0" width="534" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0008" x="3202" y="0" width="490" height="603" frameX="-186" frameY="-30" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0009" x="1872" y="2582" width="469" height="608" frameX="-186" frameY="-25" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0010" x="3692" y="0" width="534" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0011" x="3202" y="0" width="490" height="603" frameX="-186" frameY="-30" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0012" x="1872" y="2582" width="469" height="608" frameX="-186" frameY="-25" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Oops0013" x="3692" y="0" width="534" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0000" x="4803" y="3364" width="512" height="556" frameX="-186" frameY="-77" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0001" x="5365" y="1653" width="461" height="546" frameX="-186" frameY="-87" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0002" x="2650" y="1234" width="461" height="615" frameX="-186" frameY="-18" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0003" x="4226" y="2951" width="531" height="587" frameX="-186" frameY="-46" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0004" x="0" y="3191" width="618" height="600" frameX="-186" frameY="-33" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0005" x="4226" y="2951" width="531" height="587" frameX="-186" frameY="-46" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0006" x="0" y="3191" width="618" height="600" frameX="-186" frameY="-33" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0007" x="4226" y="2951" width="531" height="587" frameX="-186" frameY="-46" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime You0008" x="0" y="3191" width="618" height="600" frameX="-186" frameY="-33" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0000" x="5365" y="554" width="512" height="553" frameX="-186" frameY="-80" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0001" x="4226" y="0" width="577" height="592" frameX="-186" frameY="-41" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0002" x="3692" y="1204" width="473" height="585" frameX="-186" frameY="-48" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0003" x="3692" y="1789" width="529" height="577" frameX="-186" frameY="-56" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0004" x="3692" y="602" width="473" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0005" x="3692" y="1204" width="473" height="585" frameX="-186" frameY="-48" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0006" x="3692" y="1789" width="529" height="577" frameX="-186" frameY="-56" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0007" x="3692" y="602" width="473" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0008" x="3692" y="1204" width="473" height="585" frameX="-186" frameY="-48" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0009" x="3692" y="1789" width="529" height="577" frameX="-186" frameY="-56" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime Messed0010" x="3692" y="602" width="473" height="602" frameX="-186" frameY="-31" frameWidth="870" frameHeight="694" />
+    <SubTexture name="Playtime sad0000" x="5167" y="4107" width="763" height="655" />
+    <SubTexture name="Playtime sad0001" x="5167" y="4107" width="763" height="655" />
+    <SubTexture name="Playtime sad0002" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0003" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0004" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0005" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0006" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0007" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0008" x="5167" y="4847" width="763" height="655" />
+    <SubTexture name="Playtime sad0009" x="5167" y="4847" width="763" height="655" />
+</TextureAtlas>

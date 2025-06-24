@@ -55,16 +55,16 @@ class GainGL extends PlayState
 
         temperature = new FlxSprite();
 
-        var plr:Character = getPlayer("bf5");
+        var plr:Character = getPlayer("bf-peaking");
         plr.setPosition(900, 125);
         plr.visible = false;
 
-        var opp:Character = getOpponent("baldi-angry1");
+        var opp:Character = getOpponent("baldi-mad-face-front");
         opp.scale.set(0.35, 0.35);
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
 
-        Assets.getGraphic("game/Character/gotta-sweep0");
+        Assets.getGraphic("game/Character/gotta-sweep");
     
         gainGS.remove(opponents, true);
         gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
@@ -82,7 +82,7 @@ class GainGL extends PlayState
         
         if (step == 56)
         {
-            var plr:Character = getPlayer("bf5");
+            var plr:Character = getPlayer("bf-peaking");
             plr.visible = true;
             tween.tween(plr, {x: plr.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
         
@@ -96,7 +96,7 @@ class GainGL extends PlayState
 
         if (step == 124)
         {      
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
 
             gainGS.remove(opponents, true);
             gainGS.insert(gainGS.members.indexOf(players), opponents);
@@ -118,7 +118,7 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.skipDance = false;
         }
 
@@ -164,10 +164,10 @@ class GainGL extends PlayState
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
                 }
         
-            var plr:Character = getPlayer("bf5");
+            var plr:Character = getPlayer("bf-peaking");
             plr.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf6"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-clutching-wall"));
             plr.setPosition(-100.0, 125.0);
             players.add(plr);
             plr.visible = true;
@@ -175,7 +175,7 @@ class GainGL extends PlayState
             gainGS.remove(players, true);
             gainGS.add(players);
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.setPosition(375.0, 120.0);
             opp.scale.set(0.9, 0.9);
             opp.color = 0xFF000000;
@@ -192,7 +192,7 @@ class GainGL extends PlayState
 
         if (step == 432)
         {
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             tween.color(opp, conductor.beatLength * 3.0 * 0.001, opp.color, 0xFFFFFFFF,
                 {onUpdate: (_tween:FlxTween) -> {opp.color;}});
         }
@@ -207,10 +207,10 @@ class GainGL extends PlayState
             tween.color(gainGS.entranceA5, conductor.beatLength * 1.0 * 0.001, gainGS.entranceA5.color, 0xFFFFFFFF,
                 {onUpdate: (_tween:FlxTween) -> {gainGS.entranceA5.color;}});
 
-            var plr:Character = getPlayer("bf6");
+            var plr:Character = getPlayer("bf-clutching-wall");
             tween.tween(plr, {x: -1500.0}, 0.75, {ease: FlxEase.quartIn});
         
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.animation.play("slap");
             tween.tween(opp, {x: opp.x - 300.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
         }
@@ -233,10 +233,10 @@ class GainGL extends PlayState
                     tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
                 }          
 
-            var plr:Character = getPlayer("bf6");
+            var plr:Character = getPlayer("bf-clutching-wall");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf0"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-left"));
             plr.scale.set(1.75, 1.75);
             plr.setPosition(950.0, 125.0);
             plr.visible = true;
@@ -244,10 +244,10 @@ class GainGL extends PlayState
 
             player = plr;
 
-            var opp:Character = getOpponent("baldi-angry1");
+            var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry0"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad"));
             opp.scale.set(2.0, 2.0);
             opp.setPosition(-600.0, 0.0);
             opp.skipDance = true;
@@ -300,7 +300,7 @@ class GainGL extends PlayState
 
         if (step == 632)
         {                       
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
             
             principal = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/principal"));
             principal.scale.set(1.15, 1.15);
@@ -320,7 +320,7 @@ class GainGL extends PlayState
     
         if (step == 648)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
             opp.animation.play("slap", true);
@@ -349,13 +349,13 @@ class GainGL extends PlayState
                 plrStrumline.strums.x = plrStrumline.strums.getCenterX();
             }
             
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.visible = false;
 
-            var plr:Character = getPlayer("bf0");
+            var plr:Character = getPlayer("bf-face-left");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf3"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-back-left"));
             plr.scale.set(2.0, 2.0);      
             plr.setPosition(350.0, 200.0);
             players.add(plr);
@@ -376,7 +376,7 @@ class GainGL extends PlayState
         {
             gameCameraZoom = 1.3;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-angry3"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad-angled"));
 
             opp.scale.set(1.5, 1.5);
 
@@ -386,7 +386,7 @@ class GainGL extends PlayState
 
             tween.tween(opp, {x: opp.x - 75.0, y: opp.y + 15.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.quadOut});
 
-            var plr:Character = getPlayer("bf3");
+            var plr:Character = getPlayer("bf-face-back-left");
         }
     
         if (step == 912)
@@ -412,13 +412,13 @@ class GainGL extends PlayState
                 plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
             }
 
-            var plr:Character = getPlayer("bf3");
+            var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
 
-            var opp:Character = getOpponent("baldi-angry3");
+            var opp:Character = getOpponent("baldi-mad-angled");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf7"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-walking"));
 
             var anim:FlxAnimation = plr.animation.getByName("dance");
 
@@ -450,7 +450,7 @@ class GainGL extends PlayState
 
             plr.animation.onFrameChange.add(updateLegStatus);
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
             opp.visible = true;
             opp.skipDance = true;
             opp.scale.set(3.0, 3.0);
@@ -474,7 +474,7 @@ class GainGL extends PlayState
 
         if (step == 1152.0)
         {
-            var plr:Character = getPlayer("bf7");
+            var plr:Character = getPlayer("bf-walking");
 
             var _plr:Character = getPlayer("walk-legs");
 
@@ -493,7 +493,7 @@ class GainGL extends PlayState
 
             gameCameraZoom = 1.0;
 
-            var plr:Character = getPlayer("bf7");
+            var plr:Character = getPlayer("bf-walking");
 
             plr.visible = false;
 
@@ -501,7 +501,7 @@ class GainGL extends PlayState
 
             _plr.visible = false;
 
-            var __plr:Character = getPlayer("bf0");
+            var __plr:Character = getPlayer("bf-face-left");
 
             __plr.visible = true;
 
@@ -526,18 +526,18 @@ class GainGL extends PlayState
 
             gameCameraZoom = 0.75;
 
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001);
         }
 
         if (step == 1268.0)
         {
-            var opp:Character = getOpponent("baldi-angry0");
+            var opp:Character = getOpponent("baldi-mad");
 
             tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep0"));
+            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep"));
 
             _opp.skipSing = true;
 
@@ -570,7 +570,7 @@ class GainGL extends PlayState
             {
                 if (beat % 4.0 == 0.0)
                 {
-                    var opp:Character = getOpponent("baldi-angry1");
+                    var opp:Character = getOpponent("baldi-mad-face-front");
     
                     tween.tween(opp.scale, {x: opp.scale.x + 0.1, y: opp.scale.y + 0.1}, conductor.beatLength * 0.275 * 0.001);
                     tween.tween(opp, {y: opp.y + 2.25}, conductor.beatLength * 0.275 * 0.001);
@@ -583,7 +583,7 @@ class GainGL extends PlayState
             {
                 if (beat % 4 == 0.0)
                 {
-                    var opp:Character = getOpponent("baldi-angry1");
+                    var opp:Character = getOpponent("baldi-mad-face-front");
         
                     tween.tween(opp.scale, {x: opp.scale.x + 0.225, y: opp.scale.y + 0.225}, 
                         conductor.beatLength * 0.275 * 0.001);
@@ -598,7 +598,7 @@ class GainGL extends PlayState
         {
             if (beat % 4.0 == 0.0)
             {
-                var opp:Character = getOpponent("baldi-angry0");
+                var opp:Character = getOpponent("baldi-mad");
                 
                 tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
                     {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.5);}});

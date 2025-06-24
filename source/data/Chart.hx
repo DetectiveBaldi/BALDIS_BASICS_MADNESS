@@ -58,9 +58,9 @@ class Chart
 
         spectator = "";
 
-        opponent = "baldi0";
+        opponent = "baldi-face-front";
 
-        player = "bf0";
+        player = "bf-face-left";
 
         credits = {composer: "", step: 0}
     }

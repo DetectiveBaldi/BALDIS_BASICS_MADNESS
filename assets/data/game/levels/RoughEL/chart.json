@@ -1,5 +1,5 @@
 {
-	"player1": "bf0",
+	"player1": "bf-face-left",
 	"gfVersion": "",
 	"notes": [
 		{
@@ -4466,7 +4466,7 @@
 		}
 	],
 	"events": [],
-	"player2": "baldi-angry0",
+	"player2": "baldi-mad",
 	"offset": 0,
 	"song": "Rough Escape",
 	"needsVoices": true,

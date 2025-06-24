@@ -95,11 +95,11 @@ class RevisionL extends PlayState
             }
         );
 
-        var plr:Character = getPlayer("bf3");
+        var plr:Character = getPlayer("bf-face-back-left");
         plr.scale.set(4.5, 4.5);
         plr.setPosition(1060.0, 300.0);
 
-        var opp:Character = getOpponent("baldi2");
+        var opp:Character = getOpponent("baldi-face-right");
         opp.scale.set(2.3, 2.3);
         opp.skipDance = true;
         opponents.setPosition(-70.0, 30.0);
@@ -146,7 +146,7 @@ class RevisionL extends PlayState
 
             playField.visible = true;
 
-            var opp:Character = getOpponent("baldi2");
+            var opp:Character = getOpponent("baldi-face-right");
             opp.skipDance = false;
         }
 
@@ -184,21 +184,25 @@ class RevisionL extends PlayState
 
             quarter.destroy();
 
-            var plr:Character = getPlayer("bf3");
+            var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
         
-            var opp:Character = getOpponent("baldi2");
+            var opp:Character = getOpponent("baldi-face-right");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf1"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-right"));
             plr.scale.set(3.0, 3.0);
             plr.setPosition(0.0, 190.0);
             players.add(plr);
         
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi1"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-face-left"));
             opp.scale.set(3.2, 3.2);
             opp.setPosition(840.0, 45.0);
             opponents.add(opp);
+
+            opponent = opp;
+
+            updateHealthBar("opponent");
         }
     
         if (step == 1184)
@@ -212,10 +216,10 @@ class RevisionL extends PlayState
         
             revisionS.entranceA3.visible = false;
 
-            var plr:Character = getPlayer("bf1");
+            var plr:Character = getPlayer("bf-face-right");
             plr.visible = false;
 
-            var opp:Character = getOpponent("baldi1");
+            var opp:Character = getOpponent("baldi-face-left");
             opp.visible = false;
 
             var padBack:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/thinkpad-background"));

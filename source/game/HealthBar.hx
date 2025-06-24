@@ -144,7 +144,7 @@ class HealthBar extends FlxSpriteGroup
 
         needle.centerTo(gradient);
 
-        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi0"));
+        opponentIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("baldi"));
 
         opponentIcon.centerTo(overlay);
 
@@ -152,7 +152,7 @@ class HealthBar extends FlxSpriteGroup
 
         add(opponentIcon);
 
-        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("bf0"));
+        playerIcon = new HealthIcon(0.0, 0.0, HealthIconData.get("bf"));
 
         playerIcon.flipX = true;
 

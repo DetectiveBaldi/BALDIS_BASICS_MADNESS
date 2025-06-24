@@ -105,7 +105,7 @@ class CharacterEditorState extends CustomState
 
         add(background);
 
-        character = new Character(null, 0.0, 0.0, CharacterData.get("bf0"));
+        character = new Character(null, 0.0, 0.0, CharacterData.get("bf-face-left"));
 
         character.screenCenter();
 
