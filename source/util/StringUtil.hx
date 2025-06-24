@@ -4,13 +4,13 @@ using StringTools;
 
 class StringUtil
 {
-    public static function setCase(str:String, ?delimiter:String, strCase:StringCase):String
+    public static function setCase(str:String, delimiter:String = " ", strCase:StringCase):String
     {
         switch (strCase:StringCase)
         {
             case CAMEL:
             {
-                var splt:Array<String> = str.split(delimiter ??= " ");
+                var splt:Array<String> = str.split(delimiter);
 
                 for (i in 0 ... splt.length)
                 {
@@ -30,11 +30,11 @@ class StringUtil
             }
 
             case KEBAB:
-                return str.toLowerCase().replace(delimiter ??= " ", "-");
+                return str.toLowerCase().replace(delimiter, "-");
 
             case PASCAL:
             {
-                var splt:Array<String> = str.split(delimiter ??= " ");
+                var splt:Array<String> = str.split(delimiter);
 
                 for (i in 0 ... splt.length)
                 {
