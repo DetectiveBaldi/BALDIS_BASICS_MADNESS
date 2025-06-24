@@ -153,16 +153,13 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            if (!Options.middlescroll)
-                {
-                    var oppStrumlineX:Float = oppStrumline.strums.x;
-    
-                    var plrStrumlineX:Float = plrStrumline.strums.x;
-    
-                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-    
-                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-                }
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
         
             var plr:Character = getPlayer("bf-peaking");
             plr.visible = false;
@@ -222,16 +219,13 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
-            if (!Options.middlescroll)
-                {
-                    var oppStrumlineX:Float = oppStrumline.strums.x;
-    
-                    var plrStrumlineX:Float = plrStrumline.strums.x;
-    
-                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-    
-                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-                }          
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});        
 
             var plr:Character = getPlayer("bf-clutching-wall");
             plr.visible = false;
@@ -340,14 +334,11 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            if (!Options.middlescroll)
-            {
-                oppStrumline.strums.x = oppStrumline.strums.getCenterX();
+            oppStrumline.strums.x = oppStrumline.strums.getCenterX();
 
-                oppStrumline.strums.alpha = 0.0;
+            oppStrumline.strums.alpha = 0.0;
 
-                plrStrumline.strums.x = plrStrumline.strums.getCenterX();
-            }
+            plrStrumline.strums.x = plrStrumline.strums.getCenterX();
             
             var opp:Character = getOpponent("baldi-mad");
             opp.visible = false;
@@ -402,15 +393,12 @@ class GainGL extends PlayState
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
+            
+            oppStrumline.strums.x = 45.0;
 
-            if (!Options.middlescroll)
-            {
-                oppStrumline.strums.x = 45.0;
+            oppStrumline.strums.alpha = 1.0;
 
-                oppStrumline.strums.alpha = 1.0;
-
-                plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
-            }
+            plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
 
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;

@@ -154,16 +154,13 @@ class RevisionL extends PlayState
         {
             getTransitionSprite(conductor.beatLength * 2.0 * 0.001, OUT, null);
 
-            if (!Options.middlescroll)
-                {
-                    var oppStrumlineX:Float = oppStrumline.strums.x;
-    
-                    var plrStrumlineX:Float = plrStrumline.strums.x;
-    
-                    tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-    
-                    tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-                }
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             gameCameraZoom = 0.8;
 

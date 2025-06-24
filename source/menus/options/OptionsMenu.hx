@@ -228,8 +228,6 @@ class OptionsMenu extends CustomState
 
         addBoolOption("Downscroll", "If checked, flips the strumlines' vertical position.", "downscroll");
 
-        addBoolOption("Middlescroll", "If checked, centers the playable strumline and\nhides the opponent's.", "middlescroll");
-
         addBoolOption("Ghost Tapping", "If unchecked, pressing an input with no notes\non screen will cause damage.", "ghostTapping");
 
         addBoolOption("Botplay", "If checked, inputs will be processed automatically.", "botplay");

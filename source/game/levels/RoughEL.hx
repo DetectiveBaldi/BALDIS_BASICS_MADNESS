@@ -247,13 +247,10 @@ class RoughEL extends PlayState
             if (Options.flashing)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            if (!Options.middlescroll)
-            {
-                tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
-                tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
-                    {ease: FlxEase.quartOut});
-            }
+            tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
+                {ease: FlxEase.quartOut});
         }
 
         if (step == 580.0)
@@ -330,12 +327,9 @@ class RoughEL extends PlayState
 
             __plr.visible = true;
 
-            if (!Options.middlescroll)
-            {
-                tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
 
-                plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
-            }
+            plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
         }
 
         if (step == 720.0)
@@ -362,13 +356,10 @@ class RoughEL extends PlayState
             tween.tween(opp.animation, {timeScale: 2.5}, conductor.beatLength * 4.0 * 0.001,
                 {ease: FlxEase.backIn});
 
-            if (!Options.middlescroll)
-            {
-                tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
-                tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
-                    {ease: FlxEase.quartOut});
-            }
+            tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
+                {ease: FlxEase.quartOut});
         }
 
         if (step == 864.0)
@@ -404,15 +395,12 @@ class RoughEL extends PlayState
 
             oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
 
-            if (!Options.middlescroll)
-            {
-                playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
-                
-                oppStrumline.strums.alpha = 1.0;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            
+            oppStrumline.strums.alpha = 1.0;
 
-                plrStrumline.visible = false;
-            }
+            plrStrumline.visible = false;
 
             roughES.hall3.visible = false;
 
@@ -437,17 +425,14 @@ class RoughEL extends PlayState
 
             opp.setPosition(390.0, 135.0);
 
-            if (!Options.middlescroll)
-            {
-                oppStrumline.downscroll = !oppStrumline.downscroll;
+            oppStrumline.downscroll = !oppStrumline.downscroll;
 
-                tween.tween(oppStrumline.strums, {y: oppStrumline.downscroll ? FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, 
-                    conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(oppStrumline.strums, {y: oppStrumline.downscroll ? FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, 
+                conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
 
-                plrStrumline.visible = true;
-            }
+            plrStrumline.visible = true;
 
             roughES.hall4.visible = false;
 
@@ -490,19 +475,16 @@ class RoughEL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
 
-            if (!Options.middlescroll)
-            {
-                oppStrumline.downscroll = !oppStrumline.downscroll;
+            oppStrumline.downscroll = !oppStrumline.downscroll;
 
-                tween.tween(oppStrumline.strums, {x: 45.0, y: oppStrumline.downscroll ? 
-                    FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, conductor.beatLength * 0.001,
-                        {ease: FlxEase.quartOut});
-
-                tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
-
-                tween.tween(plrStrumline.strums, {x: FlxG.width - plrStrumline.strums.width - 45.0}, conductor.beatLength * 0.001, 
+            tween.tween(oppStrumline.strums, {x: 45.0, y: oppStrumline.downscroll ? 
+                FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, conductor.beatLength * 0.001,
                     {ease: FlxEase.quartOut});
-            }
+
+            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+
+            tween.tween(plrStrumline.strums, {x: FlxG.width - plrStrumline.strums.width - 45.0}, conductor.beatLength * 0.001, 
+                {ease: FlxEase.quartOut});
 
             roughES.hall2.visible = true;
 
@@ -628,13 +610,10 @@ class RoughEL extends PlayState
 
             tween.tween(opp.scale, {x: 0.515, y: 0.515}, conductor.beatLength * 2.5 * 0.001);
 
-            if (!Options.middlescroll)
-            {
-                tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
-                tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
-                    {ease: FlxEase.quartOut});
-            }
+            tween.tween(plrStrumline.strums, {x: (FlxG.width - plrStrumline.strums.width) * 0.5}, conductor.beatLength * 0.001, 
+                {ease: FlxEase.quartOut});
         }
 
         if (step == 1466.0)
@@ -935,20 +914,17 @@ class RoughEL extends PlayState
 
             oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
 
-            if (!Options.middlescroll)
-            {
-                playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
-                
-                oppStrumline.downscroll = !oppStrumline.downscroll;
+            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            
+            oppStrumline.downscroll = !oppStrumline.downscroll;
 
-                tween.tween(oppStrumline.strums, {y: oppStrumline.downscroll ? FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, 
-                    conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(oppStrumline.strums, {y: oppStrumline.downscroll ? FlxG.height - oppStrumline.strums.height - 15.0 : 15.0}, 
+                conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
 
-                plrStrumline.visible = true;
-            }
+            plrStrumline.visible = true;
 
             playField.visible = true;
 
@@ -1129,17 +1105,14 @@ class RoughEL extends PlayState
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
 
-            if (!Options.middlescroll)
-            {
-                oppStrumline.downscroll = !oppStrumline.downscroll;
+            oppStrumline.downscroll = !oppStrumline.downscroll;
 
-                oppStrumline.strums.setPosition(45.0, oppStrumline.downscroll ? 
-                    FlxG.height - oppStrumline.strums.height - 15.0 : 15.0);
+            oppStrumline.strums.setPosition(45.0, oppStrumline.downscroll ? 
+                FlxG.height - oppStrumline.strums.height - 15.0 : 15.0);
 
-                oppStrumline.strums.alpha = 1.0;
+            oppStrumline.strums.alpha = 1.0;
 
-                plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
-            }
+            plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
 
             playField.visible = true;
 
@@ -1343,16 +1316,13 @@ class RoughEL extends PlayState
 
             updateHealthBar("opponent");
 
-            if (!Options.middlescroll)
-            {
-                var oppStrumlineX:Float = oppStrumline.strums.x;
+            var oppStrumlineX:Float = oppStrumline.strums.x;
 
-                var plrStrumlineX:Float = plrStrumline.strums.x;
+            var plrStrumlineX:Float = plrStrumline.strums.x;
 
-                tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-            }
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 2528)
@@ -1634,16 +1604,13 @@ class RoughEL extends PlayState
             roughES.hall2.visible = true;
             roughES.hall2.velocity.set(-2560.0, 0.0);
 
-            if (!Options.middlescroll)
-            {
-                var oppStrumlineX:Float = oppStrumline.strums.x;
+            var oppStrumlineX:Float = oppStrumline.strums.x;
 
-                var plrStrumlineX:Float = plrStrumline.strums.x;
+            var plrStrumlineX:Float = plrStrumline.strums.x;
 
-                tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-            }
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 3218.0)

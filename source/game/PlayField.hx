@@ -208,14 +208,12 @@ class PlayField extends FlxGroup
 
         opponentStrumline = new Strumline(conductor);
 
-        opponentStrumline.visible = !Options.middlescroll;
-
         opponentStrumline.botplay = true;
 
         opponentStrumline.clearKeys();
 
-        opponentStrumline.strums.setPosition(Options.middlescroll ? opponentStrumline.strums.getCenterX() : 45.0, 
-            opponentStrumline.downscroll ? FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
+        opponentStrumline.strums.setPosition(45.0,opponentStrumline.downscroll ?
+            FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(opponentStrumline);
 
@@ -228,9 +226,8 @@ class PlayField extends FlxGroup
             playerStrumline.clearKeys();
         }
 
-        playerStrumline.strums.setPosition(Options.middlescroll ? playerStrumline.strums.getCenterX() : 
-            FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ? FlxG.height - 
-                playerStrumline.strums.height - 15.0 : 15.0);
+        playerStrumline.strums.setPosition(FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ?
+            FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(playerStrumline);
 

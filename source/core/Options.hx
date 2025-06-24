@@ -142,22 +142,6 @@ class Options
         return downscroll;
     }
 
-    public static var middlescroll(get, set):Bool;
-
-    @:noCompletion
-    static function get_middlescroll():Bool
-    {
-        return FlxG.save.data.options.middlescroll ??= false;
-    }
-
-    @:noCompletion
-    static function set_middlescroll(_middlescroll:Bool):Bool
-    {
-        FlxG.save.data.options.middlescroll = _middlescroll;
-
-        return middlescroll;
-    }
-
     public static var ghostTapping(get, set):Bool;
 
     @:noCompletion
@@ -201,6 +185,9 @@ class Options
 
         if (Reflect.hasField(options, "persistentCache"))
             Reflect.deleteField(options, "persistentCache");
+
+        if (Reflect.hasField(options, "middlescroll"))
+            Reflect.deleteField(options, "middlescroll");
 
         if (Reflect.hasField(options, "automatedInputs"))
         {
