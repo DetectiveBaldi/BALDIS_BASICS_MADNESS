@@ -269,10 +269,10 @@ class PlayField extends FlxGroup
 
         var grade:String = playStats.grade;
 
-        scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${accuracy}%\nGrade: ${grade}';
-
         if (Options.downscroll)
-            scoreTxt.text = 'Grade: ${grade}\nAccuracy: ${accuracy}\nMisses: ${misses}\nScore: ${score}';
+            scoreTxt.text = 'Grade: ${grade}\nAccuracy: ${accuracy}%\nMisses: ${misses}\nScore: ${score}';
+        else
+            scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${accuracy}%\nGrade: ${grade}';
     }
 
     public function noteHit(event:NoteHitEvent):Void
