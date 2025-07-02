@@ -72,17 +72,17 @@ class StoryMenuScreen extends CustomState
         for (i in 0 ... WeekData.list.length)
             weeks.push(WeekData.list[i]);
 
-        FlxG.camera.bgColor = FlxColor.WHITE;
-
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        background = new FlxBackdrop(Assets.getGraphic("shared/microphone"), XY, 32.0, 32.0);
+        background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
-        background.velocity.set(10.0, 10.0);
+        background.scale.set(960.0, FlxG.height);
 
-        background.alpha = 0.35;
+        background.updateHitbox();
+
+        background.screenCenter();
 
         add(background);
 
@@ -92,7 +92,7 @@ class StoryMenuScreen extends CustomState
 
         clipboard.updateHitbox();
 
-        clipboard.setPosition(150.0, FlxG.height - clipboard.height * 0.75);
+        clipboard.setPosition(165.0, FlxG.height - clipboard.height * 0.75);
 
         add(clipboard);
 
@@ -188,7 +188,7 @@ class StoryMenuScreen extends CustomState
 
         chalkboard.updateHitbox();
 
-        chalkboard.setPosition(FlxG.width - chalkboard.width - 150.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
+        chalkboard.setPosition(FlxG.width - chalkboard.width - 175.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
 
         add(chalkboard);
 
@@ -208,7 +208,7 @@ class StoryMenuScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(10.0, 10.0);
+        exitButton.setPosition(FlxG.width - exitButton.width - 165.0, 5.0);
 
         add(exitButton);
 
@@ -244,7 +244,7 @@ class StoryMenuScreen extends CustomState
 
         scoreText.textField.sharpness = 400.0;
 
-        scoreText.setPosition(FlxG.width - scoreText.width, FlxG.height - scoreText.height);
+        scoreText.setPosition(FlxG.width - scoreText.width - 160.0, FlxG.height - scoreText.height);
 
         add(scoreText);
 
@@ -252,11 +252,11 @@ class StoryMenuScreen extends CustomState
 
         var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
 
-        leftButton.setPosition(chalkboard.x - leftButton.width + 65.0, chalkboard.getMidpoint().y - leftButton.height * 0.5);
+        leftButton.setPosition(chalkboard.x - leftButton.width + 85.0, chalkboard.getMidpoint().y - leftButton.height * 0.5);
 
         var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
 
-        rightButton.setPosition(chalkboard.x + chalkboard.width - 65.0, chalkboard.getMidpoint().y - rightButton.height * 0.5);
+        rightButton.setPosition(chalkboard.x + chalkboard.width - 85.0, chalkboard.getMidpoint().y - rightButton.height * 0.5);
 
         MainMenuScreen.playTune();
     }

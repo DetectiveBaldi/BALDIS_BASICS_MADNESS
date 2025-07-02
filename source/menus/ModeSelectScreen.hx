@@ -22,7 +22,7 @@ using util.MathUtil;
 
 class ModeSelectScreen extends CustomState
 {
-    public var heads:FlxBackdrop;
+    public var background:FlxSprite;
 
     public var nameText:FlxText;
 
@@ -36,19 +36,19 @@ class ModeSelectScreen extends CustomState
     {
         super.create();
 
-        FlxG.camera.bgColor = FlxColor.WHITE;
-
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        heads = new FlxBackdrop(Assets.getGraphic("menus/ModeSelectScreen/head"), XY, 50.0, 50.0);
+        background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
-        heads.velocity.set(10.0, 10.0);
+        background.scale.set(960.0, FlxG.height);
 
-        heads.alpha = 0.5;
+        background.updateHitbox();
 
-        add(heads);
+        background.screenCenter();
+
+        add(background);
 
         nameText = new FlxText(0.0, 0.0, FlxG.width, "");
 
@@ -132,7 +132,7 @@ class ModeSelectScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(10.0, 10.0);
+        exitButton.setPosition(165.0, 5.0);
 
         add(exitButton);
 

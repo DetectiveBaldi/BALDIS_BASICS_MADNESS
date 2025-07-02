@@ -29,8 +29,6 @@ class BaseOptionItem extends FlxSpriteGroup
 
     public var description:String;
 
-    public var background:FlxSprite;
-
     public var titleText:FlxText;
 
     public function new(x:Float = 0.0, y:Float = 0.0, _title:String, _description:String):Void
@@ -42,30 +40,17 @@ class BaseOptionItem extends FlxSpriteGroup
 
         description = _description;
 
-        background = new FlxSprite();
-
-        background.antialiasing = true;
-
-        background.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/BaseOptionItem/background"), 
-            Paths.image(Paths.xml("menus/BaseOptionItem/background")));
-
-        background.animation.addByPrefix("background", "background", 12.0);
-
-        background.animation.play("background");
-
-        add(background);
-
-        titleText = new FlxText(0.0, 0.0, background.width, title, 48);
-
-        titleText.antialiasing = true;
+        titleText = new FlxText(0.0, 0.0, 0.0, title, 42);
 
         titleText.color = FlxColor.BLACK;
 
-        titleText.font = Paths.font(Paths.ttf("Ubuntu Regular"));
+        titleText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        titleText.textField.antiAliasType = ADVANCED;
+
+        titleText.textField.sharpness = 400.0;
 
         titleText.alignment = CENTER;
-
-        titleText.setPosition(background.getMidpoint().x - titleText.width * 0.5, background.getMidpoint().y - titleText.height * 0.5);
 
         add(titleText);
     }

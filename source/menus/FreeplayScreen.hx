@@ -8,6 +8,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 
 import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 
 import flixel.text.FlxText;
 
@@ -72,9 +73,11 @@ class FreeplayScreen extends CustomState
 
         background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/background"));
 
-        background.scale.set(1.2, 1.2);
+        background.setGraphicSize(FlxG.width, FlxG.height);
 
         background.updateHitbox();
+
+        background.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
 
         background.screenCenter();
 
@@ -82,18 +85,20 @@ class FreeplayScreen extends CustomState
 
         scrollBg = new FlxSprite();
 
+        scrollBg.visible = false;
+
         scrollBg.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/FreeplayScreen/scroll-bg"), 
             Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg")));
-
-        scrollBg.visible = false;
 
         scrollBg.animation.addByPrefix("move", "move", 12.0, false);
 
         scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; });
 
-        scrollBg.scale.set(1.2, 1.2);
+        scrollBg.setGraphicSize(FlxG.width, FlxG.height);
 
         scrollBg.updateHitbox();
+
+        scrollBg.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
 
         scrollBg.screenCenter();
 
@@ -107,7 +112,7 @@ class FreeplayScreen extends CustomState
 
         tv.updateHitbox();
 
-        tv.x = FlxG.width - tv.width;
+        tv.x = FlxG.width - tv.width - 160.0;
 
         add(tv);
 
@@ -252,11 +257,11 @@ class FreeplayScreen extends CustomState
 
         poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${path}'));
 
-        poster.scale.set(1.6, 1.6);
+        poster.setGraphicSize(350.0, 350.0);
 
         poster.updateHitbox();
 
-        poster.setPosition(poster.getCenterX(), 154.5);
+        poster.screenCenter();
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton

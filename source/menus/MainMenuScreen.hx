@@ -28,7 +28,7 @@ class MainMenuScreen extends CustomState
 {
     public static var tune:FlxSound;
 
-    public var pattern:FlxBackdrop;
+    public var background:FlxSprite;
 
     public var chalkboard:FlxSprite;
 
@@ -44,11 +44,15 @@ class MainMenuScreen extends CustomState
 
         playTune();
 
-        pattern = new FlxBackdrop(Assets.getGraphic("menus/MainMenuScreen/pattern"));
+        background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
-        pattern.velocity.set(10.0, 10.0);
+        background.scale.set(960.0, FlxG.height);
 
-        add(pattern);
+        background.updateHitbox();
+
+        background.screenCenter();
+
+        add(background);
 
         chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/MainMenuScreen/chalkboard"));
 
@@ -94,7 +98,7 @@ class MainMenuScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(10.0, 10.0);
+        exitButton.setPosition(165.0, 5.0);
 
         add(exitButton);
     }

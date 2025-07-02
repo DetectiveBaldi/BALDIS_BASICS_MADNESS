@@ -75,7 +75,7 @@ class InitState extends FlxState
 
         perfStats = new PerfStats(10.0, 5.0);
         
-        FlxG.game.addChildAt(perfStats, FlxG.game.getChildIndex(@:privateAccess FlxG.game._inputContainer) + 1);
+        FlxG.game.addChild(perfStats);
 
         FlxG.switchState(nextState);
     }

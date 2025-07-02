@@ -1,17 +1,18 @@
 package menus.options.items;
 
 import flixel.FlxG;
-
 import flixel.FlxSprite;
 
-import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.util.FlxColor;
 
-import core.Paths;
 import core.Assets;
+import core.Paths;
+
+using util.MathUtil;
 
 class BoolOptionItem extends VariableOptionItem<Bool>
 {
-    public var selectable:Bool;
+    public var checkContainer:FlxSprite;
 
     public var checkbox:FlxSprite;
 
@@ -19,22 +20,29 @@ class BoolOptionItem extends VariableOptionItem<Bool>
     {
         super(_x, _y, _title, _description, _option);
 
-        selectable = false;
+        checkContainer = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/options/items/BoolOptionItem/checkContainer"));
 
-        checkbox = new FlxSprite();
+        checkContainer.scale.set(3.0, 3.0);
 
-        checkbox.antialiasing = true;
+        checkContainer.updateHitbox();
 
-        checkbox.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/BoolOptionItem/checkbox"), 
-            Paths.image(Paths.xml("menus/BoolOptionItem/checkbox")));
+        checkContainer.setPosition(titleText.x + titleText.width + 16.0, checkContainer.getCenterY(titleText));
 
-        checkbox.animation.addByIndices("check", "checkbox", [0, 1, 2, 3, 4, 5, 6], "", 24.0, false);
+        add(checkContainer);
 
-        checkbox.animation.addByIndices("uncheck", "checkbox", [6, 5, 4, 3, 2, 1, 0], "", 24.0, false);
+        checkbox = new FlxSprite().loadGraphic(Assets.getGraphic("shared/numpad-indicators"), true, 24, 24);
 
-        checkbox.animation.play(value ? "check" : "uncheck");
+        checkbox.visible = value;
 
-        checkbox.setPosition(-125.0, background.height - checkbox.height - 10.0);
+        checkbox.animation.add("check", [0], 0.0, true);
+
+        checkbox.scale.set(2.5, 2.5);
+
+        checkbox.updateHitbox();
+
+        checkbox.offset.set(-22.0, -6.0);
+
+        checkbox.centerTo(checkContainer);
 
         add(checkbox);
     }
@@ -42,12 +50,19 @@ class BoolOptionItem extends VariableOptionItem<Bool>
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-        
-        if ((FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed) && selectable)
-        {
-            value = !value;
 
-            checkbox.animation.play(value ? "check" : "uncheck");
+        if (FlxG.mouse.overlaps(this, camera))
+        {
+            titleText.underline = true;
+
+            if (FlxG.mouse.justPressed)
+            {
+                value = !value;
+
+                checkbox.visible = value;
+            }
         }
+        else
+            titleText.underline = false;
     }
 }
