@@ -112,7 +112,7 @@ class GainGL extends PlayState
 
         if (step == 128)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
@@ -139,7 +139,7 @@ class GainGL extends PlayState
         
         if (step == 320)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             gameCamera.color = 0xFFA8A8A8;
@@ -328,7 +328,7 @@ class GainGL extends PlayState
             
             gameCameraZoom = 1.4;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
@@ -388,7 +388,7 @@ class GainGL extends PlayState
 
             gameCameraZoom = 0.8;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
@@ -476,7 +476,7 @@ class GainGL extends PlayState
 
         if (step == 1168.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             gameCameraZoom = 1.0;
@@ -539,7 +539,7 @@ class GainGL extends PlayState
 
         if (step == 1296.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =

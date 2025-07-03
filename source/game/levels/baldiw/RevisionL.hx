@@ -131,7 +131,7 @@ class RevisionL extends PlayState
 
         if (step == 128)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 50.0,

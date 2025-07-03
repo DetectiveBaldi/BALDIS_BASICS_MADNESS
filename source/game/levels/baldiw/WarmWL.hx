@@ -50,7 +50,7 @@ class WarmWL extends PlayState
 
         if (step == 128)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
 
             gameCameraZoom = 0.8;
@@ -63,7 +63,7 @@ class WarmWL extends PlayState
         {
             gameCameraZoom = 0.95;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             warmWS.entranceA0.color = 0xFF999999;
@@ -76,7 +76,7 @@ class WarmWL extends PlayState
         {
             gameCameraZoom = 0.8;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             warmWS.entranceA0.color = 0xFFFFFFFF;
@@ -87,14 +87,14 @@ class WarmWL extends PlayState
     
         if (step == 1148)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
         }
 
         if (step == 1152)
         {
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.001, true, null, true);
 
             gameCameraZoom = 0.7;
@@ -132,7 +132,7 @@ class WarmWL extends PlayState
 
         if (step == 1408)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             warmWS.entranceA1.color = 0xFFFFFFFF;

@@ -55,7 +55,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
         {
             titleText.underline = true;
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
             {
                 value = !value;
 

@@ -145,7 +145,7 @@ class RoughEL extends PlayState
 
         if (step == 144.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             roughES.hall1.visible = false;
@@ -244,7 +244,7 @@ class RoughEL extends PlayState
 
         if (step == 528.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
@@ -287,7 +287,7 @@ class RoughEL extends PlayState
 
         if (step == 592.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             FocusCamPointEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5,
@@ -334,13 +334,13 @@ class RoughEL extends PlayState
 
         if (step == 720.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
 
         if (step == 848.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("bully");
@@ -366,7 +366,7 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 1.0;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad-face-front"));
@@ -447,7 +447,7 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 0.75;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("baldi-mad");
@@ -531,7 +531,7 @@ class RoughEL extends PlayState
 
             gameCamera.snapToTarget();
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             var opp:Character = getOpponent("baldi-mad");
@@ -645,7 +645,7 @@ class RoughEL extends PlayState
 
             gameCamera.snapToTarget();
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var opp:Character = getOpponent("baldi-mad-face-front");
@@ -743,7 +743,7 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 0.58;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             var plr:Character = getPlayer("bf-anim-window");
@@ -899,7 +899,7 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 1.0;
 
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var plr:Character = getPlayer("bf-anim-window");
@@ -949,7 +949,7 @@ class RoughEL extends PlayState
 
         if (step == 1888.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
             gameCameraZoom = 0.8;
@@ -1076,7 +1076,7 @@ class RoughEL extends PlayState
 
         if (step == 1920.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             roughES.cafeteria0.visible = false;
             roughES.cafeteria2.visible = false;
@@ -1140,7 +1140,7 @@ class RoughEL extends PlayState
     
         if (step == 2056)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.6;
         }
@@ -1250,7 +1250,7 @@ class RoughEL extends PlayState
     
         if (step == 2240)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.6;
         }
@@ -1573,7 +1573,7 @@ class RoughEL extends PlayState
             gameCameraZoom = 0.75;
 
             hudCamera.visible = true;
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
         
             var _plr:Character = getPlayer("bf-anim-teleported");
@@ -1642,7 +1642,7 @@ class RoughEL extends PlayState
     
         if (step == 3344)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.9;
         
@@ -1670,7 +1670,7 @@ class RoughEL extends PlayState
         if (step == 3472)
         {
             gameCamera.color =  FlxColor.WHITE;
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             oppStrumline.visible = false;
             plrStrumline.visible = false;
@@ -1842,7 +1842,7 @@ class RoughEL extends PlayState
 
         if (beat == 772.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
 
             vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/vigenette"));
@@ -1856,7 +1856,7 @@ class RoughEL extends PlayState
 
         if (beat == 776.0)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
             tween.tween(vignette, {alpha: 0.3}, 0.5);
         }

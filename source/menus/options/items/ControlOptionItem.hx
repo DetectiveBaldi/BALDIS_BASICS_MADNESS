@@ -131,7 +131,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
             {
                 titleText.underline = true;
 
-                if (FlxG.mouse.justPressed)
+                if (FlxG.mouse.justReleased)
                     selected = true;
             }
             else

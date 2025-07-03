@@ -30,13 +30,13 @@ class GeneralOptionsCat extends BaseOptionsCat
 
         bool.setPosition(285.0, 525.0);
 
-        bool = addBoolOption("Flashing", "If unchecked, screen effects\nsuch as flashing are limited.", "flashing");
+        bool = addBoolOption("Flashing Lights", "If unchecked, limits the use\nof screen flashing effects.", "flashingLights");
 
-        bool.setPosition(685.0, 150.0);
+        bool.setPosition(625.0, 150.0);
 
-        bool = addBoolOption("Shaders", "If unchecked, screen effects\nsuch as shaders are limited.", "shaders");
+        bool = addBoolOption("Shaders", "If unchecked, shaders and screen\nfilters are disabled.", "shaders");
 
-        bool.setPosition(685.0, 225.0);
+        bool.setPosition(625.0, 225.0);
 
         var int:IntOptionItem = addIntOption("Frame Rate", "How often the game ticks each second.", "frameRate", 30, 240, 30, 8);
 

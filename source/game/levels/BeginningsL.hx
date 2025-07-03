@@ -86,7 +86,7 @@ class BeginningsL extends PlayState
     
         if (step == 32)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             gameCameraZoom = 0.8;
@@ -111,7 +111,7 @@ class BeginningsL extends PlayState
         
         if (step == 420)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             gameCameraZoom = 1;
@@ -119,7 +119,7 @@ class BeginningsL extends PlayState
        
         if (step == 480)
         {
-            if (Options.flashing)
+            if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
     

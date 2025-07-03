@@ -69,20 +69,20 @@ class Options
         return soundStreaming;
     }
 
-    public static var flashing(get, set):Bool;
+    public static var flashingLights(get, set):Bool;
 
     @:noCompletion
-    static function get_flashing():Bool
+    static function get_flashingLights():Bool
     {
-        return FlxG.save.data.options.flashing ??= true;
+        return FlxG.save.data.options.flashingLights ??= true;
     }
 
     @:noCompletion
-    static function set_flashing(_flashing:Bool):Bool
+    static function set_flashingLights(_flashingLights:Bool):Bool
     {
-        FlxG.save.data.options.flashing = _flashing;
+        FlxG.save.data.options.flashingLights = _flashingLights;
 
-        return flashing;
+        return flashingLights;
     }
 
     public static var shaders(get, set):Bool;
@@ -196,6 +196,13 @@ class Options
 
         if (Reflect.hasField(options, "persistentCache"))
             Reflect.deleteField(options, "persistentCache");
+
+        if (Reflect.hasField(options, "flashing"))
+        {
+            Reflect.setField(options, "flashingLights", Reflect.field(options, "flashing"));
+
+            Reflect.deleteField(options, "flashing");
+        }
 
         if (Reflect.hasField(options, "middlescroll"))
             Reflect.deleteField(options, "middlescroll");
