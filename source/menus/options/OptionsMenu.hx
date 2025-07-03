@@ -25,6 +25,7 @@ import menus.FreeplayScreen.OrientedButton;
 import menus.options.categories.GeneralOptionsCat;
 import menus.options.categories.BaseOptionsCat;
 import menus.options.categories.ControlsCat;
+import menus.options.categories.GameplayOptionsCat;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -90,13 +91,17 @@ class OptionsMenu extends CustomState
 
         add(optionCategories);
 
-        var generalCat:GeneralOptionsCat = new GeneralOptionsCat();
+        var generalOptCat:GeneralOptionsCat = new GeneralOptionsCat();
 
-        optionCategories.add(generalCat);
+        optionCategories.add(generalOptCat);
 
         var controlsCat:ControlsCat = new ControlsCat();
         
         optionCategories.add(controlsCat);
+
+        var gameplayOptCat:GameplayOptionsCat = new GameplayOptionsCat();
+
+        optionCategories.add(gameplayOptCat);
 
         categoryIndex = 0;
 
@@ -118,9 +123,7 @@ class OptionsMenu extends CustomState
 
         goRightButton = addOrientedButton(RIGHT, () ->
         {
-            categoryIndex = FlxMath.wrap(categoryIndex + 1, 0, optionCategories.length - 1);
-
-            setCategory();
+            setCategory(categoryIndex, categoryIndex = FlxMath.wrap(categoryIndex + 1, 0, optionCategories.length - 1));
         });
 
         goRightButton.scale.set(2.0, 2.0);
@@ -134,7 +137,7 @@ class OptionsMenu extends CustomState
 
         add(tooltip);
 
-        setCategory();
+        setCategory(0, 0);
 
         exitButton = new FlxSprite();
 
@@ -177,9 +180,14 @@ class OptionsMenu extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function setCategory():Void
+    public function setCategory(oldIndex:Int, newIndex:Int):Void
     {
-        var newCategory:BaseOptionsCat = optionCategories.members[categoryIndex];
+        var oldCategory:BaseOptionsCat = optionCategories.members[oldIndex];
+
+        for (i in 0 ... oldCategory.members.length)
+            oldCategory.members[i].cancelTouch();
+
+        var newCategory:BaseOptionsCat = optionCategories.members[newIndex];
 
         for (i in 0 ... optionCategories.members.length)
         {

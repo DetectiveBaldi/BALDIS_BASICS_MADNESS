@@ -49,4 +49,12 @@ class BaseOptionItem extends FlxSpriteGroup
 
         add(titleText);
     }
+
+    /**
+     * To be implemented by extending classes.
+     */
+    public function cancelTouch():Void
+    {
+        
+    }
 }

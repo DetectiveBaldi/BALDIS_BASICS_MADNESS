@@ -63,17 +63,14 @@ class OptionsTooltip extends FlxSpriteGroup
 
         for (i in 0 ... options.members.length)
         {
-            var option:FlxBasic = options.members[i];
-
-            if (!(option is BaseOptionItem))
-                continue;
+            var option:BaseOptionItem = options.members[i];
 
             if (FlxG.mouse.overlaps(option))
             {
                 if (lastHover == option)
-                    break;
+                    continue;
 
-                lastHover = cast option;
+                lastHover = option;
 
                 updateTooltip(lastHover);
 
