@@ -1,16 +1,11 @@
 package menus.options.items;
 
-import flixel.FlxSprite;
-
-import flixel.graphics.frames.FlxAtlasFrames;
-
 import flixel.group.FlxSpriteGroup;
 
 import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
 import core.Paths;
 
 class BaseOptionItem extends FlxSpriteGroup
@@ -42,7 +37,7 @@ class BaseOptionItem extends FlxSpriteGroup
 
         titleText = new FlxText(0.0, 0.0, 0.0, title, 42);
 
-        titleText.color = FlxColor.BLACK;
+        titleText.color = FlxColor.WHITE;
 
         titleText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 

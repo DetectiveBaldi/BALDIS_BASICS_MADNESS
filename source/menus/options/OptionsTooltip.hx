@@ -2,6 +2,7 @@ package menus.options;
 
 import openfl.geom.Rectangle;
 
+import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -27,7 +28,7 @@ class OptionsTooltip extends FlxSpriteGroup
 
     public var panel:FlxSprite;
 
-    public var text:FlxText;
+    public var descText:FlxText;
 
     public function new(_options:BaseOptionsCat):Void
     {
@@ -39,19 +40,19 @@ class OptionsTooltip extends FlxSpriteGroup
 
         add(panel);
 
-        text = new FlxText(0.0, 0.0, 0.0, "", 24);
+        descText = new FlxText(0.0, 0.0, 0.0, "", 24);
 
-        text.color = FlxColor.BLACK;
+        descText.color = FlxColor.BLACK;
 
-        text.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        descText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        text.textField.antiAliasType = ADVANCED;
+        descText.textField.antiAliasType = ADVANCED;
 
-        text.textField.sharpness = 400.0;
+        descText.textField.sharpness = 400.0;
 
-        text.alignment = CENTER;
+        descText.alignment = CENTER;
 
-        add(text);
+        add(descText);
     }
 
     override function update(elapsed:Float):Void
@@ -62,16 +63,19 @@ class OptionsTooltip extends FlxSpriteGroup
 
         for (i in 0 ... options.members.length)
         {
-            var option:BaseOptionItem = options.members[i];
+            var option:FlxBasic = options.members[i];
+
+            if (!(option is BaseOptionItem))
+                continue;
 
             if (FlxG.mouse.overlaps(option))
             {
                 if (lastHover == option)
                     break;
 
-                lastHover = option;
+                lastHover = cast option;
 
-                updateTooltip(option);
+                updateTooltip(lastHover);
 
                 break;
             }
@@ -81,13 +85,13 @@ class OptionsTooltip extends FlxSpriteGroup
     public function updateTooltip(option:BaseOptionItem = null):Void
     {
         if (option == null)
-            text.text = "Unrecognized option.";
+            descText.text = "Unrecognized option.";
         else
-            text.text = option.description;
+            descText.text = option.description;
 
-        var panelWidth:Int = Math.floor(text.width) + 32;
+        var panelWidth:Int = Math.floor(descText.width) + 32;
 
-        var panelHeight:Int = Math.floor(text.height) + 8;
+        var panelHeight:Int = Math.floor(descText.height) + 8;
 
         var rectWidth:Int = panelWidth - 8;
 
@@ -97,6 +101,6 @@ class OptionsTooltip extends FlxSpriteGroup
 
         panel.pixels.fillRect(new Rectangle(4, 4, rectWidth, rectHeight), 0xFFFFFFFF);
 
-        text.centerTo(panel);
+        descText.centerTo(panel);
     }
 }

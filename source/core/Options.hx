@@ -2,6 +2,8 @@ package core;
 
 import flixel.FlxG;
 
+import flixel.math.FlxMath;
+
 class Options
 {
     public static var autoPause(get, set):Bool;
@@ -182,6 +184,15 @@ class Options
     public static function purgeInvalid():Void
     {
         var options:Dynamic = FlxG.save.data.options;
+
+        if (Reflect.hasField(options, "frameRate"))
+        {
+            var newVal:Int = Reflect.field(options, "frameRate");
+
+            newVal = Math.round(newVal / 30.0) * 30;
+
+            Reflect.setField(options, "frameRate", FlxMath.bound(newVal, 30, 240));
+        }
 
         if (Reflect.hasField(options, "persistentCache"))
             Reflect.deleteField(options, "persistentCache");

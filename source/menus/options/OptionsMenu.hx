@@ -1,10 +1,13 @@
 package menus.options;
 
 import core.Options;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+
+import flixel.math.FlxMath;
 
 import flixel.text.FlxText;
 
@@ -17,8 +20,11 @@ import core.Paths;
 
 import extendable.CustomState;
 
+import menus.FreeplayScreen.ButtonOrientation;
+import menus.FreeplayScreen.OrientedButton;
+import menus.options.categories.GeneralOptionsCat;
 import menus.options.categories.BaseOptionsCat;
-import menus.options.categories.WindowOptionsCat;
+import menus.options.categories.ControlsCat;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -29,7 +35,7 @@ class OptionsMenu extends CustomState
 
     public var background:FlxSprite;
 
-    public var clipboard:FlxSprite;
+    public var chalkboard:FlxSprite;
 
     public var optionCategories:FlxTypedGroup<BaseOptionsCat>;
 
@@ -37,11 +43,11 @@ class OptionsMenu extends CustomState
 
     public var categoryLabel:FlxText;
 
-    public var goLeftButton:FlxSprite;
-
     public var goRightButton:FlxSprite;
 
     public var tooltip:OptionsTooltip;
+
+    public var exitButton:FlxSprite;
 
     public function new(_nextState:NextState):Void
     {
@@ -70,29 +76,33 @@ class OptionsMenu extends CustomState
 
         add(background);
 
-        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/clipboard"));
+        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/chalkboard"));
 
-        clipboard.scale.set(3.5, 3.5);
+        chalkboard.scale.set(2.25, 2.25);
 
-        clipboard.updateHitbox();
+        chalkboard.updateHitbox();
 
-        clipboard.x = clipboard.getCenterX();
+        chalkboard.screenCenter();
 
-        add(clipboard);
+        add(chalkboard);
 
         optionCategories = new FlxTypedGroup<BaseOptionsCat>();
 
         add(optionCategories);
 
-        var windowCat:WindowOptionsCat = new WindowOptionsCat();
+        var generalCat:GeneralOptionsCat = new GeneralOptionsCat();
 
-        optionCategories.add(windowCat);
+        optionCategories.add(generalCat);
+
+        var controlsCat:ControlsCat = new ControlsCat();
+        
+        optionCategories.add(controlsCat);
 
         categoryIndex = 0;
 
-        categoryLabel = new FlxText(0.0, 0.0, "", 42);
+        categoryLabel = new FlxText(0.0, 0.0, 0.0, "", 36);
 
-        categoryLabel.color = FlxColor.BLACK;
+        categoryLabel.color = FlxColor.WHITE;
 
         categoryLabel.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -100,15 +110,64 @@ class OptionsMenu extends CustomState
 
         categoryLabel.textField.sharpness = 400.0;
 
-        categoryLabel.alignment = CENTER;
+        categoryLabel.alignment = LEFT;
+
+        categoryLabel.setPosition(chalkboard.x + 165.0, chalkboard.y + 150.0);
 
         add(categoryLabel);
+
+        goRightButton = addOrientedButton(RIGHT, () ->
+        {
+            categoryIndex = FlxMath.wrap(categoryIndex + 1, 0, optionCategories.length - 1);
+
+            setCategory();
+        });
+
+        goRightButton.scale.set(2.0, 2.0);
+
+        goRightButton.updateHitbox();
+
+        goRightButton.setPosition(chalkboard.x + chalkboard.width - goRightButton.width - 150.0,
+            chalkboard.y + chalkboard.height - goRightButton.height - 150.0);
 
         tooltip = new OptionsTooltip(null);
 
         add(tooltip);
 
         setCategory();
+
+        exitButton = new FlxSprite();
+
+        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+
+        exitButton.animation.add("0", [0], 0.0, false);
+
+        exitButton.animation.add("1", [1], 0.0, false);
+
+        exitButton.animation.play("0");
+
+        exitButton.scale.set(2.0, 2.0);
+
+        exitButton.updateHitbox();
+
+        exitButton.setPosition(165.0, 5.0);
+
+        add(exitButton);
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
+        {
+            exitButton.animation.play("1");
+
+            if (FlxG.mouse.justPressed)
+                FlxG.switchState(() -> new MainMenuScreen());
+        }
+        else
+            exitButton.animation.play("0");
     }
 
     override function destroy():Void
@@ -135,8 +194,17 @@ class OptionsMenu extends CustomState
 
         categoryLabel.text = newCategory.name;
 
-        categoryLabel.setPosition(categoryLabel.getCenterX(clipboard), 160.0);
-
         tooltip.options = newCategory;
+    }
+
+    public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
+    {
+        var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+
+        button.onClick.add(onClick);
+
+        add(button);
+
+        return button;
     }
 }

@@ -79,4 +79,20 @@ class InitState extends FlxState
 
         FlxG.switchState(nextState);
     }
+
+    public static function setFrameRateCap(value:Int):Void
+    {
+        if (value > FlxG.updateFramerate)
+        {
+            FlxG.updateFramerate = value;
+
+            FlxG.drawFramerate = value;
+        }
+        else
+        {
+            FlxG.drawFramerate = value;
+
+            FlxG.updateFramerate = value;
+        }
+    }
 }

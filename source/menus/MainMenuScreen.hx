@@ -72,6 +72,8 @@ class MainMenuScreen extends CustomState
 
         var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> new MainMenuScreen())));
 
+        optionsText.onClick.remove(fadeTune);
+
         optionsText.setPosition(optionsText.getCenterX(), playText.y + playText.height + 50.0);
 
         var aboutText:MenuText = createText("About", () -> FlxG.switchState(() -> new AboutScreen()));
