@@ -167,7 +167,7 @@ class OptionsMenu extends CustomState
             exitButton.animation.play("1");
 
             if (FlxG.mouse.justPressed)
-                FlxG.switchState(() -> new MainMenuScreen());
+                FlxG.switchState(nextState);
         }
         else
             exitButton.animation.play("0");
