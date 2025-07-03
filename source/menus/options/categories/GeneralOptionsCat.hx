@@ -20,9 +20,9 @@ class GeneralOptionsCat extends BaseOptionsCat
             FlxG.console.autoPause = value;
         });
 
-        bool.setPosition(285.0, 250.0);
+        bool.setPosition(285.0, 185.0);
 
-        bool = addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed\nfrom RAM where applicable", "gpuCaching");
+        bool = addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed\nfrom RAM where applicable.", "gpuCaching");
 
         bool.setPosition(285.0, 450.0);
 
@@ -32,11 +32,11 @@ class GeneralOptionsCat extends BaseOptionsCat
 
         bool = addBoolOption("Flashing Lights", "If unchecked, limits the use\nof screen flashing effects.", "flashingLights");
 
-        bool.setPosition(625.0, 150.0);
+        bool.setPosition(625.0, 185.0);
 
         bool = addBoolOption("Shaders", "If unchecked, shaders and screen\nfilters are disabled.", "shaders");
 
-        bool.setPosition(625.0, 225.0);
+        bool.setPosition(625.0, 260.0);
 
         var int:IntOptionItem = addIntOption("Frame Rate", "How often the game ticks each second.", "frameRate", 30, 240, 30, 8);
 

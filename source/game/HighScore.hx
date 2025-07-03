@@ -2,6 +2,9 @@ package game;
 
 import flixel.FlxG;
 
+/**
+ * TODO: Move to `FlxG.save.data.highScores` and revamp format.
+ */
 class HighScore
 {
     public static var weeks(get, never):Map<String, WeekScore>;
