@@ -20,7 +20,13 @@ class GeneralOptionsCat extends BaseOptionsCat
             FlxG.console.autoPause = value;
         });
 
-        bool.setPosition(285.0, 185.0);
+        bool.setPosition(285.0, 260.0);
+
+        var int:IntOptionItem = addIntOption("Frame Rate", "How often the game ticks each second.", "frameRate", 30, 240, 30, 8);
+
+        int.onUpdate.add(InitState.setFrameRateCap);
+
+        int.setPosition(285.0, 335.0);
 
         bool = addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed\nfrom RAM where applicable.", "gpuCaching");
 
@@ -37,14 +43,5 @@ class GeneralOptionsCat extends BaseOptionsCat
         bool = addBoolOption("Shaders", "If unchecked, shaders and screen\nfilters are disabled.", "shaders");
 
         bool.setPosition(625.0, 260.0);
-
-        var int:IntOptionItem = addIntOption("Frame Rate", "How often the game ticks each second.", "frameRate", 30, 240, 30, 8);
-
-        int.onUpdate.add((value:Int) ->
-        {
-            InitState.setFrameRateCap(value);
-        });
-
-        int.setPosition(285.0, 350.0);
     }
 }
