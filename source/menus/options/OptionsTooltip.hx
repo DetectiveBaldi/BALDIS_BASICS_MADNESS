@@ -57,9 +57,7 @@ class OptionsTooltip extends FlxSpriteGroup
 
     override function update(elapsed:Float):Void
     {
-        visible = FlxG.mouse.overlaps(options);
-
-        setPosition(FlxG.mouse.x + FlxG.mouse.cursor.width * 0.5 - width * 0.5, FlxG.mouse.y - height - 25.0);
+        super.update(elapsed);
 
         for (i in 0 ... options.members.length)
         {
@@ -68,7 +66,7 @@ class OptionsTooltip extends FlxSpriteGroup
             if (FlxG.mouse.overlaps(option))
             {
                 if (lastHover == option)
-                    continue;
+                    break;
 
                 lastHover = option;
 
@@ -77,6 +75,10 @@ class OptionsTooltip extends FlxSpriteGroup
                 break;
             }
         }
+        
+        visible = FlxG.mouse.overlaps(options);
+
+        setPosition(FlxG.mouse.x + FlxG.mouse.cursor.width * 0.5 - width * 0.5, FlxG.mouse.y - height - 25.0);
     }
 
     public function updateTooltip(option:BaseOptionItem = null):Void
