@@ -50,6 +50,11 @@ class PlayStats
         return "F";
     }
 
+    public function isEmpty():Bool
+    {
+        return score == 0 && hits == 0 && misses == 0 && bonus == 0.0;
+    }
+
     public function concat(...stats:PlayStats):PlayStats
     {
         var result:PlayStats = copy();

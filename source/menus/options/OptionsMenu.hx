@@ -91,17 +91,17 @@ class OptionsMenu extends CustomState
 
         add(optionCategories);
 
-        var generalOptCat:GeneralOptionsCat = new GeneralOptionsCat();
+        var optCat:BaseOptionsCat = new GeneralOptionsCat();
 
-        optionCategories.add(generalOptCat);
+        optionCategories.add(optCat);
 
-        var controlsCat:ControlsCat = new ControlsCat();
+        optCat = new ControlsCat();
         
-        optionCategories.add(controlsCat);
+        optionCategories.add(optCat);
 
-        var gameplayOptCat:GameplayOptionsCat = new GameplayOptionsCat();
+        optCat = new GameplayOptionsCat();
 
-        optionCategories.add(gameplayOptCat);
+        optionCategories.add(optCat);
 
         categoryIndex = 0;
 

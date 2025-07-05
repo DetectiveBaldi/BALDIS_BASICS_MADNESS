@@ -114,7 +114,7 @@ class PlayField extends FlxGroup
 
         add(scoreClip);
 
-        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A", 18);
+        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "", 18);
 
         scoreTxt.color = FlxColor.BLACK;
 
@@ -132,13 +132,9 @@ class PlayField extends FlxGroup
 
         scoreTxt.textField.sharpness = 400.0;
 
-        scoreTxt.setPosition(scoreClip.x + 28.5,
-            Options.downscroll ? scoreClip.y + scoreClip.height - scoreTxt.height - 25.0 : scoreClip.y + 25.0);
-
         add(scoreTxt);
 
-        if (Options.downscroll)
-            scoreTxt.text = scoreTxt.text.reverse("\n", "\n");
+        updateScoreTxt();
 
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
@@ -261,6 +257,19 @@ class PlayField extends FlxGroup
 
     public function updateScoreTxt():Void
     {
+        if (playStats.isEmpty())
+        {
+            if (Options.downscroll)
+                scoreTxt.text = "Grade: N/A\nAccuracy: 0%\nMisses: 0\nScore: 0";
+            else
+                scoreTxt.text = "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A";
+
+            scoreTxt.setPosition(scoreClip.x + 28.5, Options.downscroll ? scoreClip.y + scoreClip.height -
+                scoreTxt.height - 25.0 : scoreClip.y + 25.0);
+
+            return;
+        }
+
         var score:Int = playStats.score;
 
         var misses:Int = playStats.misses;
