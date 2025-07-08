@@ -6,17 +6,17 @@ import util.TimedObjectUtil.TimedObject;
 
 class Chart
 {
-    public static function fromRaw(raw:RawChart):Chart
+    public static function parse(schema:ChartSchema):Chart
     {
         var chart:Chart = new Chart();
 
-        var fields:Array<String> = Reflect.fields(raw);
+        var fields:Array<String> = Reflect.fields(schema);
 
         for (i in 0 ... fields.length)
         {
             var field:String = fields[i];
 
-            Reflect.setProperty(chart, field, Reflect.field(raw, field));
+            Reflect.setProperty(chart, field, Reflect.field(schema, field));
         }
 
         return chart;
@@ -28,11 +28,11 @@ class Chart
 
     public var scrollSpeed:Float;
 
-    public var notes:Array<RawNote>;
+    public var notes:Array<NoteSchema>;
 
-    public var events:Array<RawEvent>;
+    public var events:Array<EventSchema>;
 
-    public var timeChanges:Array<RawTimeChange>;
+    public var timeChanges:Array<TimeChangeSchema>;
 
     public var spectator:String;
 
@@ -50,11 +50,11 @@ class Chart
 
         scrollSpeed = 1.6;
 
-        notes = new Array<RawNote>();
+        notes = new Array<NoteSchema>();
 
-        events = new Array<RawEvent>();
+        events = new Array<EventSchema>();
 
-        timeChanges = new Array<RawTimeChange>();
+        timeChanges = new Array<TimeChangeSchema>();
 
         spectator = "";
 
@@ -66,7 +66,7 @@ class Chart
     }
 }
 
-typedef RawChart =
+typedef ChartSchema =
 {
     var name:String;
 
@@ -74,11 +74,11 @@ typedef RawChart =
 
     var scrollSpeed:Float;
 
-    var notes:Array<RawNote>;
+    var notes:Array<ChartSchema>;
 
-    var events:Array<RawEvent>;
+    var events:Array<EventSchema>;
 
-    var timeChanges:Array<RawTimeChange>;
+    var timeChanges:Array<TimeChangeSchema>;
 
     var spectator:String;
 
@@ -89,14 +89,14 @@ typedef RawChart =
     var credits:CreditsData;
 }
 
-typedef RawEvent = TimedObject &
+typedef EventSchema = TimedObject &
 {
     var name:String;
 
     var value:Dynamic;
 }
 
-typedef RawNote = TimedObject &
+typedef NoteSchema = TimedObject &
 {
     var direction:Int;
 
@@ -107,7 +107,7 @@ typedef RawNote = TimedObject &
     var kind:String;
 }
 
-typedef RawTimeChange = TimedObject &
+typedef TimeChangeSchema = TimedObject &
 {
     var tempo:Float;
 

@@ -222,9 +222,9 @@ class HealthBar extends FlxSpriteGroup
     }
 }
 
-enum abstract HealthBarFillDirection(String) from String to String
+enum HealthBarFillDirection
 {
-    var LEFT_TO_RIGHT:HealthBarFillDirection;
+    LEFT_TO_RIGHT;
 
-    var RIGHT_TO_LEFT:HealthBarFillDirection;
+    RIGHT_TO_LEFT;
 }

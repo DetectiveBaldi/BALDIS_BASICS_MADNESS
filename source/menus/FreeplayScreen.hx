@@ -56,6 +56,8 @@ class FreeplayScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
+        mouseRect = FlxRect.get(160.0, 0.0, FlxG.width - FlxG.mouse.cursorContainer.width - 160.0, FlxG.height);
+
         levels = new Array<LevelData>();
 
         for (i in 0 ... WeekData.list.length)
@@ -340,9 +342,9 @@ class OrientedButton extends FlxSprite
 
         loadGraphic(Assets.getGraphic("menus/FreeplayScreen/OrientedButton/sheet"), true, 32, 32);
 
-        animation.add("deselect", orientation ? [0] : [1], 0.0, false);
+        animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
 
-        animation.add("select", orientation ? [2] : [3], 0.0, false);
+        animation.add("select", orientation == LEFT ? [2] : [3], 0.0, false);
 
         animation.play("deselect");
 
@@ -400,7 +402,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         base.animation.play("up");
 
-        base.scale.set(size ? 2.0 : 1.75, size ? 2.0 : 1.75);
+        base.scale.set(size == LARGE ? 2.0 : 1.75, size == LARGE ? 2.0 : 1.75);
 
         base.updateHitbox();
 
@@ -412,7 +414,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         label.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        label.size = size ? 28 : 24;
+        label.size = size == LARGE ? 28 : 24;
 
         label.alignment = CENTER;
 
@@ -453,16 +455,16 @@ class HeightenedButton extends FlxSpriteGroup
     }
 }
 
-enum abstract ButtonOrientation(Bool) from Bool to Bool
+enum ButtonOrientation
 {
-    var LEFT:Bool = true;
+    LEFT;
 
-    var RIGHT:Bool = false;
+    RIGHT;
 }
 
-enum abstract ButtonSize(Bool) from Bool to Bool
+enum ButtonSize
 {
-    var LARGE:Bool = true;
+    LARGE;
 
-    var SMALL:Bool = false;
+    SMALL;
 }

@@ -6,7 +6,7 @@ import flixel.util.FlxDestroyUtil;
 
 import flixel.util.FlxSignal.FlxTypedSignal;
 
-import data.Chart.RawTimeChange;
+import data.Chart.TimeChangeSchema;
 
 /**
  * A class which handles musical timing events throughout the game. It is the heart of `game.PlayState`.
@@ -87,9 +87,9 @@ class Conductor extends FlxBasic
 
     public var time:Float;
 
-    public var timeChange:RawTimeChange;
+    public var timeChange:TimeChangeSchema;
 
-    public var timeChanges:Array<RawTimeChange>;
+    public var timeChanges:Array<TimeChangeSchema>;
 
     public function new():Void
     {
@@ -109,7 +109,7 @@ class Conductor extends FlxBasic
 
         timeChange = {time: 0.0, tempo: 100.0, step: 0.0};
 
-        timeChanges = new Array<RawTimeChange>();
+        timeChanges = new Array<TimeChangeSchema>();
     }
 
     override function update(elapsed:Float):Void

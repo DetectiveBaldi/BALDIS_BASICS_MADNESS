@@ -13,12 +13,7 @@ class GeneralOptionsCat extends BaseOptionsCat
 
         var bool:BoolOptionItem = addBoolOption("Auto Pause", "If checked, the game will freeze when\nwindow focus is lost.", "autoPause");
 
-        bool.onUpdate.add((value:Bool) -> 
-        {
-            FlxG.autoPause = value;
-
-            FlxG.console.autoPause = value;
-        });
+        bool.onUpdate.add(InitState.setAutoPause);
 
         bool.setPosition(285.0, 275.0);
 

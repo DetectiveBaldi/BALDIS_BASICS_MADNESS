@@ -21,9 +21,9 @@ import core.Options;
 
 import data.CharacterData;
 import data.Chart;
-import data.Chart.RawEvent;
-import data.Chart.RawNote;
-import data.ChartConverters;
+import data.Chart.EventSchema;
+import data.Chart.NoteSchema;
+import data.ChartLoader;
 import data.LevelData;
 import data.WeekData;
 
@@ -323,7 +323,7 @@ class PlayState extends CustomState
 
         while (eventIndex < chart.events.length)
         {
-            var event:RawEvent = chart.events[eventIndex];
+            var event:EventSchema = chart.events[eventIndex];
 
             if (conductor.time < event.time)
                 break;
@@ -387,7 +387,7 @@ class PlayState extends CustomState
 
 		while (i >= 0.0)
         {
-			var raw:RawNote = chart.notes[i];
+			var raw:NoteSchema = chart.notes[i];
 
 			if (playField.noteSpawner.noteIndex < i && raw.time - 166.6 < time)
                 chart.notes.remove(raw);
@@ -405,7 +405,7 @@ class PlayState extends CustomState
 
     public function loadChart():Void
     {
-        chart = ChartConverters.build(Paths.data(getLevelPath()));
+        chart = ChartLoader.parse(Paths.data(getLevelPath()));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -424,7 +424,7 @@ class PlayState extends CustomState
         eventIndex = 0;
     }
 
-    public function onEvent(ev:RawEvent):Void
+    public function onEvent(ev:EventSchema):Void
     {
         var val:Dynamic = ev.value;
 
@@ -544,7 +544,7 @@ class PlayState extends CustomState
 
     public function setCamStartPos():Void
     {
-        var ev:RawEvent = chart.events.first((e:RawEvent) -> e.name == "FocusCamChar");
+        var ev:EventSchema = chart.events.first((e:EventSchema) -> e.name == "FocusCamChar");
 
         FocusCamCharEvent.dispatch(this, ev.value.charType, -1.0);
 

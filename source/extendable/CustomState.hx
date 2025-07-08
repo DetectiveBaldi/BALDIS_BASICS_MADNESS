@@ -1,11 +1,15 @@
 package extendable;
 
+import openfl.display.Sprite;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
 
 import flixel.animation.FlxAnimation;
+
+import flixel.math.FlxRect;
 
 import flixel.tweens.FlxTween.FlxTweenManager;
 
@@ -26,6 +30,8 @@ using util.ArrayUtil;
  */
 class CustomState extends FlxState
 {
+    public var mouseRect:FlxRect;
+
     public var tween:FlxTweenManager;
 
     public var timer:FlxTimerManager;
@@ -37,6 +43,10 @@ class CustomState extends FlxState
         super.create();
 
         persistentUpdate = true;
+
+        mouseRect = FlxRect.get();
+
+        FlxG.stage.window.onMouseMove.add(updateMouseRect);
 
         tween = new FlxTweenManager();
 
@@ -61,6 +71,13 @@ class CustomState extends FlxState
         openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
     }
 
+    override function destroy():Void
+    {
+        mouseRect.put();
+
+        FlxG.stage.window.onMouseMove.remove(updateMouseRect);
+    }
+
     override function startOutro(onOutroComplete:()->Void):Void
     {
         persistentUpdate = false;
@@ -77,6 +94,38 @@ class CustomState extends FlxState
         add(spr);
 
         return spr;
+    }
+
+    public function updateMouseRect(x:Float, y:Float):Void
+    {
+        var mouseX:Int = Math.floor(x);
+
+        var mouseY:Int = Math.floor(y);
+
+        if (!mouseRect.isEmpty)
+        {
+            // Thanks Arcadia.
+            
+            var left:Int = Math.floor(mouseRect.left * FlxG.scaleMode.scale.x);
+
+            var top:Int = Math.floor(mouseRect.top * FlxG.scaleMode.scale.y);
+
+            var bottom:Int = Math.floor((mouseRect.bottom - mouseRect.y) * FlxG.scaleMode.scale.y);
+
+            var right:Int = Math.floor((mouseRect.right - mouseRect.x) * FlxG.scaleMode.scale.x);
+
+            if (mouseX < left)
+                FlxG.stage.window.warpMouse(left, mouseY);
+
+            if (mouseY < top)
+                FlxG.stage.window.warpMouse(mouseX, top);
+
+            if (mouseY > bottom)
+                FlxG.stage.window.warpMouse(mouseX, bottom);
+
+            if (mouseX > right)
+                FlxG.stage.window.warpMouse(right, mouseY);
+        }
     }
 
     public function stepHit(step:Int):Void

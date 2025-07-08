@@ -251,13 +251,13 @@ class ProgressBarSideSprite extends FlxSprite
     }
 }
 
-enum abstract ProgressBarFillDirection(String) from String to String
+enum ProgressBarFillDirection
 {
-    var LEFT_TO_RIGHT:ProgressBarFillDirection;
+    LEFT_TO_RIGHT;
 
-    var RIGHT_TO_LEFT:ProgressBarFillDirection;
+    RIGHT_TO_LEFT;
 
-    var TOP_TO_BOTTOM:ProgressBarFillDirection;
+    TOP_TO_BOTTOM;
 
-    var BOTTOM_TO_TOP:ProgressBarFillDirection;
+    BOTTOM_TO_TOP;
 }

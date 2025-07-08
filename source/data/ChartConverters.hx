@@ -2,51 +2,22 @@ package data;
 
 import haxe.Json;
 
-import sys.FileSystem;
+import haxe.ds.ArraySort;
 
 import core.Assets;
 import core.Paths;
 
 import util.MathUtil;
 import util.TimedObjectUtil;
-import util.TimedObjectUtil.RawTimedObject;
 import util.TimedObjectUtil.TimedObject;
 
 using StringTools;
 
 using util.ArrayUtil;
 
-class ChartConverters
-{
-    public static function build(path:String):Chart
-    {
-        var rawMetaPath:String = path + (path.endsWith("/") ? "meta" : "/meta");
-
-        if (FileSystem.exists(Paths.json(rawMetaPath)))
-        {
-            var rawChartPath:String = (path.endsWith("/") ? path : '${path}/') + FileSystem.readDirectory(path).first((_path:String) -> _path.startsWith("chart")).replace(".json", "");
-
-            var diff:String = rawChartPath.contains("-") ? rawChartPath.split("-").last() : "normal";
-
-            return FunkinConverter.build(rawChartPath, rawMetaPath, diff);
-        }
-        else
-        {
-            var rawChartPath:String = path + (path.endsWith("/") ? "chart" : "/chart");
-
-            var rawChart:Dynamic = Json.parse(Assets.getText(Paths.json(rawChartPath)));
-
-            if (Reflect.hasField(rawChart, "format"))
-                return PsychConverter.build(rawChartPath.substring(0, rawChartPath.length - 6));
-            else
-                return Chart.fromRaw(Json.parse(Assets.getText(Paths.json(rawChartPath))));
-        }
-    }
-}
-
 class FunkinConverter
 {
-    public static function build(chartPath:String, metaPath:String, diff:String):Chart
+    public static function parse(chartPath:String, metaPath:String, diff:String):Chart
     {
         var output:Chart = new Chart();
 
@@ -54,13 +25,13 @@ class FunkinConverter
 
         var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, diff);
 
-        TimedObjectUtil.sortRaw(notes);
+        sortTimedObjects(notes);
 
         var rawMeta:Dynamic = Json.parse(Assets.getText(Paths.json(metaPath)));
 
         var timeChanges:Array<FunkinTimeChange> = rawMeta.timeChanges;
 
-        TimedObjectUtil.sortRaw(timeChanges);
+        sortTimedObjects(timeChanges);
 
         output.name = rawMeta.songName;
 
@@ -92,11 +63,18 @@ class FunkinConverter
 
         return output;
     }
+    
+    public static function sortTimedObjects(arr:Array<FunkinTimedObject>):Array<FunkinTimedObject>
+    {
+        ArraySort.sort(arr, (a:FunkinTimedObject, b:FunkinTimedObject) -> Std.int(a.t - b.t));
+        
+        return arr;
+    }
 }
 
 class PsychConverter
 {
-    public static function build(path:String):Chart
+    public static function parse(path:String):Chart
     {
         var output:Chart = new Chart();
 
@@ -206,14 +184,19 @@ class PsychConverter
     }
 }
 
-typedef FunkinEvent = RawTimedObject &
+typedef FunkinTimedObject =
+{
+    var t:Float;
+}
+
+typedef FunkinEvent = FunkinTimedObject &
 {
     var e:String;
 
     var v:Dynamic;
 };
 
-typedef FunkinNote = RawTimedObject &
+typedef FunkinNote = FunkinTimedObject &
 {
     var d:Int;
 
@@ -222,7 +205,7 @@ typedef FunkinNote = RawTimedObject &
     var k:String;
 };
 
-typedef FunkinTimeChange = RawTimedObject &
+typedef FunkinTimeChange = FunkinTimedObject &
 {
     var b:Float;
 

@@ -4,24 +4,12 @@ import haxe.ds.ArraySort;
 
 class TimedObjectUtil
 {
-    public static function sortRaw<T:RawTimedObject>(arr:Array<T>):Array<T>
+    public static function sort(arr:Array<TimedObject>):Array<TimedObject>
     {
-        ArraySort.sort(arr, (a:T, b:T) -> Std.int(a.t - b.t));
-        
-        return arr;
-    }
-
-    public static function sort<T:TimedObject>(arr:Array<T>):Array<T>
-    {
-        ArraySort.sort(arr, (a:T, b:T) -> Std.int(a.time - b.time));
+        ArraySort.sort(arr, (a:TimedObject, b:TimedObject) -> Std.int(a.time - b.time));
 
         return arr;
     }
-}
-
-typedef RawTimedObject =
-{
-    var t:Float;
 }
 
 typedef TimedObject =

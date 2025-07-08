@@ -6,7 +6,6 @@ import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 import data.Chart;
-import data.Chart.RawNote;
 
 import music.Conductor;
 
@@ -59,7 +58,7 @@ class NoteSpawner extends FlxBasic
 
         while (noteIndex < chart.notes.length)
         {
-            var note:RawNote = chart.notes[noteIndex];
+            var note:NoteSchema = chart.notes[noteIndex];
 
             var strumline:Strumline = strumlines.members[note.lane];
 

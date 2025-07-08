@@ -2,10 +2,10 @@ package util;
 
 class ArrayUtil
 {
-    public static function pushMany<T>(arr:Array<T>, ...xyz:T):Void
+    public static function pushMany<T>(arr:Array<T>, ...entries:T):Void
     {
-        for (i in 0 ... xyz.length)
-            arr.push(xyz[i]);
+        for (i in 0 ... entries.length)
+            arr.push(entries[i]);
     }
 
     public static function first<T>(arr:Array<T>, func:(T)->Bool = null):T

@@ -49,9 +49,7 @@ class InitState extends FlxState
 
         Options.purgeInvalid();
 
-        FlxG.updateFramerate = Options.frameRate;
-
-        FlxG.drawFramerate = Options.frameRate;
+        setFrameRateCap(Options.frameRate);
 
         FlxG.mouse.visible = false;
 
@@ -65,9 +63,7 @@ class InitState extends FlxState
 
         Assets.init();
 
-        FlxG.autoPause = Options.autoPause;
-
-        FlxG.console.autoPause = Options.autoPause;
+        setAutoPause(Options.autoPause);
 
         Playlist.init();
 
@@ -80,19 +76,26 @@ class InitState extends FlxState
         FlxG.switchState(nextState);
     }
 
-    public static function setFrameRateCap(value:Int):Void
+    public static function setAutoPause(autoPause:Bool):Void
     {
-        if (value > FlxG.updateFramerate)
-        {
-            FlxG.updateFramerate = value;
+        FlxG.autoPause = autoPause;
 
-            FlxG.drawFramerate = value;
+        FlxG.console.autoPause = autoPause;
+    }
+
+    public static function setFrameRateCap(frameRate:Int):Void
+    {
+        if (frameRate > FlxG.updateFramerate)
+        {
+            FlxG.updateFramerate = frameRate;
+
+            FlxG.drawFramerate = frameRate;
         }
         else
         {
-            FlxG.drawFramerate = value;
+            FlxG.drawFramerate = frameRate;
 
-            FlxG.updateFramerate = value;
+            FlxG.updateFramerate = frameRate;
         }
     }
 }
