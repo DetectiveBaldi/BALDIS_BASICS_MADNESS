@@ -56,7 +56,7 @@ class FreeplayScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        mouseRect = FlxRect.get(160.0, 0.0, FlxG.width - FlxG.mouse.cursorContainer.width - 160.0, FlxG.height);
+        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
 
         levels = new Array<LevelData>();
 

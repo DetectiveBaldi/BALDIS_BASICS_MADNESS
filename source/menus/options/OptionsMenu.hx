@@ -6,7 +6,6 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 import flixel.math.FlxMath;
-import flixel.math.FlxRect;
 
 import flixel.text.FlxText;
 
@@ -66,7 +65,7 @@ class OptionsMenu extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        mouseRect = FlxRect.get(160.0, 0.0, FlxG.width - FlxG.mouse.cursorContainer.width - 160.0, FlxG.height);
+        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 

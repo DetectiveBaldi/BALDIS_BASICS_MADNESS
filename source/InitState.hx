@@ -18,11 +18,15 @@ import data.Playlist;
 
 import game.HighScore;
 
+import plugins.MouseRectPlugin;
+
 import ui.PerfStats;
 
 class InitState extends FlxState
 {
     public var nextState:NextState;
+
+    public static var mouseRectPlugin:MouseRectPlugin;
 
     public static var perfStats:PerfStats;
 
@@ -68,6 +72,10 @@ class InitState extends FlxState
         Playlist.init();
 
         HighScore.init();
+
+        mouseRectPlugin = new MouseRectPlugin();
+
+        FlxG.plugins.addPlugin(mouseRectPlugin);
 
         perfStats = new PerfStats(10.0, 5.0);
         

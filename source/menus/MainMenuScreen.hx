@@ -3,8 +3,6 @@ package menus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-import flixel.math.FlxRect;
-
 import flixel.sound.FlxSound;
 
 import flixel.text.FlxText;
@@ -46,7 +44,7 @@ class MainMenuScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        mouseRect = FlxRect.get(160.0, 0.0, FlxG.width - FlxG.mouse.cursorContainer.width - 160.0, FlxG.height);
+        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
