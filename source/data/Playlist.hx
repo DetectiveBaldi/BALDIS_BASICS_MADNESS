@@ -17,6 +17,15 @@ class Playlist
         
         WeekData.list.push(week);
 
+
+        var weekBladder:WeekData = {name: "Bladder", nameSuffix: "'s Week", description: ""}
+
+        weekBladder.levels.pushMany({week: weekBladder, name: "Walls"}, {week: weekBladder, name: "Lookalike"});
+        
+        WeekData.list.push(weekBladder);
+
+
+
         LevelData.list.push({week : null, name: "Rough Escape"});
 
         var level:LevelData = {week: null, name: "Beginnings"}
