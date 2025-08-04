@@ -222,26 +222,27 @@ class FreeplayScreen extends CustomState
 
         var week:WeekData = level.week;
 
-        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay))
-            tween.tween(tvStatic, {alpha: 0.0}, 0.5);
+        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay &&
+                week.hasTvPortrait))
+                    tween.tween(tvStatic, {alpha: 0.0}, 0.5);
     }
 
     public function updateTvPortrait(level:LevelData):Void
     {
-        var path:String = "unknown";
+        var portraitStr:String = "unknown";
 
         var week:WeekData = level.week;
 
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay)
-                path = week.name.toLowerCase();
+            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay && week.hasTvPortrait)
+                portraitStr = week.name.toLowerCase();
         }
 
-        if (path == "unknown")
+        if (portraitStr == "unknown")
             tvPortrait.makeGraphic(1, 1, FlxColor.TRANSPARENT);
         else
-            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${path}'));
+            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${portraitStr}'));
 
         tvPortrait.scale.set(2.25, 2.25);
 

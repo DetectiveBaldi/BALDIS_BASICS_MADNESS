@@ -29,6 +29,8 @@ class WeekData
 
     public var showInFreeplayMenu:Bool;
 
+    public var hasTvPortrait:Bool;
+
     public function new(name:String, nameSuffix:String, description:String):Void
     {
         this.name = name;
@@ -44,6 +46,8 @@ class WeekData
         showInStoryMenu = true;
 
         showInFreeplayMenu = true;
+
+        hasTvPortrait = true;
     }
 
     public function getPackPath():String
