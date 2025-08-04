@@ -69,7 +69,14 @@ class StoryMenuScreen extends CustomState
         weeks = new Array<WeekData>();
 
         for (i in 0 ... WeekData.list.length)
-            weeks.push(WeekData.list[i]);
+        {
+            var week:WeekData = WeekData.list[i];
+
+            if (!week.showInStoryMenu)
+                continue;
+
+            weeks.push(week);
+        }
 
         FlxG.mouse.visible = true;
 
@@ -282,9 +289,14 @@ class StoryMenuScreen extends CustomState
 
             if (FlxG.mouse.justReleased)
             {
+                var weekToLoad:WeekData = weeks[curSelected];
+
+                if (HighScore.getWeekScore(weekToLoad.name, "normal") == 0.0 && weekToLoad.requiresScoreToPlay)
+                    return;
+
                 MainMenuScreen.fadeTune();
 
-                PlayState.loadWeek(weeks[curSelected]);
+                PlayState.loadWeek(weekToLoad);
             }
         }
         else

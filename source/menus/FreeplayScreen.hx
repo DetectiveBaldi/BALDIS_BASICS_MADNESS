@@ -64,13 +64,20 @@ class FreeplayScreen extends CustomState
         levels = new Array<LevelData>();
 
         for (i in 0 ... WeekData.list.length)
+        {
+            var week:WeekData = WeekData.list[i];
+
+            if (!week.showInFreeplayMenu)
+                continue;
+
             levels = levels.concat(WeekData.list[i].levels);
+        }
     
         for (i in 0 ... LevelData.list.length)
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.secret && HighScore.getLevelScore(level.name, "normal") == 0.0)
+            if (level.hiddenWithoutScore && HighScore.getLevelScore(level.name, "normal") == 0.0)
                 continue;
 
             levels.push(level);
@@ -215,7 +222,7 @@ class FreeplayScreen extends CustomState
 
         var week:WeekData = level.week;
 
-        if (week != null && HighScore.getWeekScore(week.name, "normal") != 0.0)
+        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay))
             tween.tween(tvStatic, {alpha: 0.0}, 0.5);
     }
 
@@ -227,7 +234,7 @@ class FreeplayScreen extends CustomState
 
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") != 0.0)
+            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay)
                 path = week.name.toLowerCase();
         }
 
@@ -256,7 +263,7 @@ class FreeplayScreen extends CustomState
         }
         else
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0)
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && week.requiresScoreToPlay)
                 path = "week-score-needed";
         }
 
@@ -315,7 +322,7 @@ class FreeplayScreen extends CustomState
         
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0)
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && week.requiresScoreToPlay)
                 return;
         }
 

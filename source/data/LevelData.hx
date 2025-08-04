@@ -9,15 +9,15 @@ class LevelData
 
     public var name:String;
 
-    public var secret:Bool;
+    public var hiddenWithoutScore:Bool;
 
-    public function new(week:WeekData, name:String, secret:Bool):Void
+    public function new(week:WeekData, name:String):Void
     {
         this.week = week;
 
         this.name = name;
 
-        this.secret = secret;
+        hiddenWithoutScore = false;
     }
 
     public function getClsPath():String
