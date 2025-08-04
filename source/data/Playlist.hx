@@ -6,7 +6,7 @@ class Playlist
 {
     public static function init():Void
     {
-        var week:WeekData = {name: "Baldi", description: "", levels: new Array<LevelData>()}
+        var week:WeekData = {name: "Baldi", nameSuffix: "'s Week", description: "", levels: new Array<LevelData>()}
 
         week.description += 'You get a very suspicious note from your friend, asking you to get their "noteboos" ';
 

@@ -46,10 +46,9 @@ class Assets
         FlxG.signals.preStateCreate.add((next:FlxState) -> { if (lastState != Type.getClass(next)) clearCaches(); });
     }
 
-    public static overload extern inline function getGraphic(path:String, raw = false, gpuCaching:Bool = true):FlxGraphic
+    public static overload extern inline function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
     {
-        if (!raw)
-            path = Paths.image(Paths.png(path));
+        path = Paths.image(Paths.png(path));
 
         if (graphics.exists(path))
             return graphics[path];
@@ -88,10 +87,9 @@ class Assets
         graphics.remove(path);
     }
 
-    public static function getSound(path:String, raw = false):Sound
+    public static function getSound(path:String):Sound
     {
-        if (!raw)
-            path = Paths.sound(Paths.ogg(path));
+        path = Paths.sound(Paths.ogg(path));
 
         if (sounds.exists(path))
             return sounds[path];
@@ -101,10 +99,9 @@ class Assets
         return sounds[path];
     }
 
-    public static function getMusic(path:String, raw:Bool = false, stream:Bool = true):Sound
+    public static function getMusic(path:String, stream:Bool = true):Sound
     {
-        if (!raw)
-            path = Paths.music(Paths.ogg(path));
+        path = Paths.music(Paths.ogg(path));
 
         if (music.exists(path))
             return music[path];

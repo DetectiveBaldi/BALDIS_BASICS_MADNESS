@@ -17,26 +17,27 @@ class ChartLoader
 {
     public static function parse(path:String):Chart
     {
-        var rawMetaPath:String = path + (path.endsWith("/") ? "meta" : "/meta");
+        var metaPath:String = path + (path.endsWith("/") ? "meta" : "/meta");
 
-        if (FileSystem.exists(Paths.json(rawMetaPath)))
+        if (FileSystem.exists(Paths.json(metaPath)))
         {
-            var rawChartPath:String = (path.endsWith("/") ? path : '${path}/') + FileSystem.readDirectory(path).first((_path:String) -> _path.startsWith("chart")).replace(".json", "");
+            var chartPath:String = (path.endsWith("/") ? path : '${path}/') +
+                FileSystem.readDirectory(path).first((pat:String) -> pat.startsWith("chart")).replace(".json", "");
 
-            var diff:String = rawChartPath.contains("-") ? rawChartPath.split("-").last() : "normal";
+            var difficulty:String = chartPath.contains("-") ? chartPath.split("-").last() : "normal";
 
-            return FunkinConverter.parse(rawChartPath, rawMetaPath, diff);
+            return FunkinConverter.parse(chartPath, metaPath, difficulty);
         }
         else
         {
-            var rawChartPath:String = path + (path.endsWith("/") ? "chart" : "/chart");
+            var chartPath:String = path + (path.endsWith("/") ? "chart" : "/chart");
 
-            var rawChart:Dynamic = Json.parse(Assets.getText(Paths.json(rawChartPath)));
+            var chart:Dynamic = Json.parse(Assets.getText(Paths.json(chartPath)));
 
-            if (Reflect.hasField(rawChart, "format"))
-                return PsychConverter.parse(rawChartPath.substring(0, rawChartPath.length - 6));
+            if (Reflect.hasField(chart, "format"))
+                return PsychConverter.parse(chartPath.substring(0, chartPath.length - 6));
             else
-                return Chart.parse(Json.parse(Assets.getText(Paths.json(rawChartPath))));
+                return chart;
         }
     }
 }

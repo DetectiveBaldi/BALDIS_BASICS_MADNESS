@@ -68,23 +68,25 @@ class PlayState extends CustomState
 
     public static var weekStats:Map<String, PlayStats>;
 
-    public static function getLevelPath(?level:LevelData, sep:String = "/"):String
+    public static function getClsPathFromLevel(level:LevelData = null, sep:String = "/"):String
     {
         level ??= PlayState.level;
 
         var path:String = "game/levels";
 
         if (level.week != null)
-            path += '/${level.week.sanitize()}';
+            path += '/${level.week.getPackPath()}';
 
-        path += '/${level.sanitize()}';
+        path += '/${level.getClsPath()}';
 
         return sep == "/" ? path : path.replace("/", sep);
     }
 
-    public static function getLevelClass(?level:LevelData):PlayState
+    public static function getClsFromLevel(level:LevelData = null):PlayState
     {
-        return Type.createInstance(Type.resolveClass(getLevelPath(level ??= PlayState.level, ".")), []);
+        level ??= PlayState.level;
+
+        return Type.createInstance(Type.resolveClass(getClsPathFromLevel(level, ".")), []);
     }
 
     public static function loadWeek(week:WeekData):Void
@@ -95,7 +97,7 @@ class PlayState extends CustomState
 
         weekStats = new Map<String, PlayStats>();
 
-        FlxG.switchState(() -> getLevelClass());
+        FlxG.switchState(() -> getClsFromLevel());
     }
 
     public static function loadSingle(level:LevelData):Void
@@ -106,7 +108,7 @@ class PlayState extends CustomState
 
         weekStats = null;
 
-        FlxG.switchState(() -> getLevelClass());
+        FlxG.switchState(() -> getClsFromLevel());
     }
 
     /**
@@ -210,7 +212,7 @@ class PlayState extends CustomState
 
         cameraTarget = "POINT";
 
-        cameraLock = LOOSE;
+        cameraLock = DEFAULT;
 
         gameCameraZoom = gameCamera.zoom;
 
@@ -354,7 +356,7 @@ class PlayState extends CustomState
 
         #if debug
         if (FlxG.keys.justPressed.EIGHT)
-            FlxG.switchState(() -> new editors.CharacterEditorState());
+            FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClsFromLevel()));
         #end
     }
 
@@ -375,37 +377,9 @@ class PlayState extends CustomState
         hudCamera.zoom += 0.015;
     }
 
-    #if debug
-    public function stepUntil(time:Float):Void
-    {
-        if (conductor.time < 0.0)
-            return;
-        
-        pauseMusic();
-
-        var i:Int = chart.notes.length - 1;
-
-		while (i >= 0.0)
-        {
-			var raw:NoteSchema = chart.notes[i];
-
-			if (playField.noteSpawner.noteIndex < i && raw.time - 166.6 < time)
-                chart.notes.remove(raw);
-
-			i--;
-		}
-
-        while (conductor.time < time)
-            @:privateAccess
-                FlxG.game.step();
-
-        resumeMusic();
-    }
-    #end
-
     public function loadChart():Void
     {
-        chart = ChartLoader.parse(Paths.data(getLevelPath()));
+        chart = ChartLoader.parse(Paths.data(PlayState.getClsPathFromLevel()));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -445,21 +419,29 @@ class PlayState extends CustomState
 
     public function loadSong():Void
     {
-        var path:String = Paths.music('${getLevelPath()}/');
+        var songPath:String = '${PlayState.getClsPathFromLevel()}/';
 
-        instrumental = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Instrumental'), true));
+        var pathSuffix:String = "Instrumental";
+
+        instrumental = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
 
         instrumental.onComplete = endSong;
 
-        if (FileSystem.exists(Paths.ogg('${path}Vocals-Main')))
-            mainVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Main'), true));
+        pathSuffix = "Vocals-Main";
+
+        if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+            mainVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
         else
         {
-            if (FileSystem.exists(Paths.ogg('${path}Vocals-Opponent')))
-                opponentVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Opponent'), true));
+            pathSuffix = "Vocals-Opponent";
 
-            if (FileSystem.exists(Paths.ogg('${path}Vocals-Player')))
-                playerVocals = FlxG.sound.load(Assets.getMusic(Paths.ogg('${path}Vocals-Player'), true));
+            if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+                opponentVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
+
+            pathSuffix = "Vocals-Player";
+
+            if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+                playerVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
         }
     }
 
@@ -502,7 +484,7 @@ class PlayState extends CustomState
             {
                 level = week.levels[i + 1];
 
-                FlxG.switchState(() -> getLevelClass());
+                FlxG.switchState(() -> PlayState.getClsFromLevel());
             }
         }
         else
@@ -513,6 +495,37 @@ class PlayState extends CustomState
         opponentVocals?.stop();
 
         playerVocals?.stop();
+    }
+
+    public function clearNotesBefore(time:Float):Void
+    {
+        var noteIndex:Int = chart.notes.length - 1;
+
+        while (noteIndex >= 0.0)
+        {
+            var noteSchema:NoteSchema = chart.notes[noteIndex];
+
+            if (noteSchema.time < time)
+                chart.notes.remove(noteSchema);
+
+            noteIndex--;
+        }
+    }
+
+    public function forwardTime(newTime:Float):Void
+    {
+        if (!countdown.finished && !countdown.skipped)
+            return;
+
+        clearNotesBefore(newTime);
+
+        pauseMusic();
+
+        while (conductor.time < newTime)
+            @:privateAccess
+                FlxG.game.step();
+
+        resumeMusic();
     }
 
     public function getSpectator(name:String):Character
@@ -537,9 +550,9 @@ class PlayState extends CustomState
         var healthBar:HealthBar = playField.healthBar;
 
         if (charType == "spectator" || charType == "opponent")
-            healthBar.opponentIcon.character = character.config.healthIcon;
+            healthBar.opponentIcon.load(character.config.healthIcon);
         else
-            healthBar.playerIcon.character = character.config.healthIcon;
+            healthBar.playerIcon.load(character.config.healthIcon);
     }
 
     public function setCamStartPos():Void
@@ -628,20 +641,20 @@ enum CameraLockMode
     /**
      * No camera events are restricted.
      */
-    LOOSE;
+    DEFAULT;
 
     /**
-     * `FocusCamCharEvent` events are restricted.
+     * Camera movement is limited to the use of `FocusCamChar` events.
      */
-    MANUAL;
+    FOCUS_CAM_CHAR;
 
     /**
-     * `FocusCamPointEvent` events are restricted.
+     * Camera movement is limited to the use of `FocusCamPoint` events.
      */
-    AUTOMATIC;
+    FOCUS_CAM_POINT;
 
     /**
      * All camera events are restricted.
      */
-    STRICT;
+    NONE;
 }

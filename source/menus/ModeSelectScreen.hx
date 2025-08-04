@@ -40,7 +40,7 @@ class ModeSelectScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 

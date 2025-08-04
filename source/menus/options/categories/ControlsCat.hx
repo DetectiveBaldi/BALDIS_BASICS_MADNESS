@@ -23,5 +23,9 @@ class ControlsCat extends BaseOptionsCat
         control = addControlOption("Right Note", "Controls for the fourth note in the strumline.", "NOTE:RIGHT");
 
         control.setPosition(285.0, 395.0);
+
+        control = addControlOption("Pause", "Controls for entering the pause menu.", "UI:PAUSE");
+
+        control.setPosition(285.0, 500.0);
     }
 }

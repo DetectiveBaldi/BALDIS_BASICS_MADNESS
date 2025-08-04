@@ -3,7 +3,7 @@ package game;
 import flixel.FlxG;
 
 /**
- * TODO: Move to `FlxG.save.data.highScores` and revamp format.
+ * TODO: Move to `FlxG.save.data.highScores` and update format.
  */
 class HighScore
 {

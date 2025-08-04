@@ -47,22 +47,18 @@ class StringUtil
             }
         }
     }
-    
-    public static function reverse(str:String, delimiter:String, join:String):String
-    {
-        var splt:Array<String> = str.split(delimiter);
-
-        splt.reverse();
-
-        return splt.join(join);
-    }
 
     public static function parseInt(str:String):Int
     {
-        var lookup:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4,
-            "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
+        str = str.toLowerCase();
 
-        return lookup.exists(str.toLowerCase()) ? lookup[str.toLowerCase()] : Std.parseInt(str) ?? -1;
+        var constantTen:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
+            "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
+        
+        if (constantTen.exists(str))
+            return constantTen[str];
+
+        return Std.parseInt(str) ?? -1;
     }
 }
 

@@ -20,11 +20,10 @@ import data.WeekData;
 
 import extendable.CustomState;
 
-import menus.FreeplayScreen.ButtonOrientation;
-import menus.FreeplayScreen.OrientedButton;
-
 import game.HighScore;
 import game.PlayState;
+
+import ui.OrientedButton;
 
 using util.MathUtil;
 using util.StringUtil;
@@ -76,7 +75,7 @@ class StoryMenuScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
@@ -313,12 +312,8 @@ class StoryMenuScreen extends CustomState
         songListText.text = text;
 
         text = week.name;
-
-        if (text == "Baldi")
-            text += "'s Week";
-
-        if (text == "Classic")
-            text += " Week";
+        
+        text += week.nameSuffix;
 
         weekNameText.text = text;
 

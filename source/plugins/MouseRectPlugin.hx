@@ -3,14 +3,20 @@ package plugins;
 import flixel.FlxBasic;
 import flixel.FlxG;
 
-import flixel.math.FlxRect;
-
+/**
+ * TODO: Support more resolutions? Potentially using: 
+ * `cursorContainer.x = Math.max(Math.min(FlxG.game.mouseX, Std.int(FlxG.width * FlxG.scaleMode.scale.x) - cursorContainer.width), 0);`
+ * `cursorContainer.y = Math.max(Math.min(FlxG.game.mouseY, Std.int(FlxG.height * FlxG.scaleMode.scale.y) - cursorContainer.height), 0);`
+ */
 class MouseRectPlugin extends FlxBasic
 {
-    /**
-     * The mouse position is limited to the boundaries of this `FlxRect`.
-     */
-    public var mouseRect:FlxRect;
+    public var left:Float;
+
+    public var right:Float;
+
+    public var top:Float;
+
+    public var bottom:Float;
 
     public function new():Void
     {
@@ -19,8 +25,6 @@ class MouseRectPlugin extends FlxBasic
         active = false;
 
         visible = false;
-
-        mouseRect = FlxRect.get();
 
         FlxG.stage.window.onMouseMove.add(updateMouseRect);
 
@@ -34,46 +38,59 @@ class MouseRectPlugin extends FlxBasic
         FlxG.stage.window.onMouseMove.remove(updateMouseRect);
         
         FlxG.signals.preStateSwitch.remove(resetMouseRect);
-
-        mouseRect.put();
     }
 
     public function updateMouseRect(x:Float, y:Float):Void
     {
+        if (FlxG.debugger.visible)
+            return;
+        
         var mouseX:Int = Math.floor(x);
 
         var mouseY:Int = Math.floor(y);
+        
+        var newLeft:Int = Math.floor(left * FlxG.scaleMode.scale.x);
 
-        if (!mouseRect.isEmpty)
-        {
-            // Thanks Arcadia.
-            
-            var left:Int = Math.floor(mouseRect.left * FlxG.scaleMode.scale.x);
+        var newRight:Int = Math.floor(right * FlxG.scaleMode.scale.x -
+            FlxG.mouse.cursor.width);
 
-            var top:Int = Math.floor(mouseRect.top * FlxG.scaleMode.scale.y);
+        var newTop:Int = Math.floor(top * FlxG.scaleMode.scale.y);
 
-            var bottom:Int = Math.floor((mouseRect.bottom - mouseRect.y) * FlxG.scaleMode.scale.y -
-                FlxG.mouse.cursorContainer.height);
+        var newBottom:Int = Math.floor(bottom * FlxG.scaleMode.scale.y -
+            FlxG.mouse.cursor.height);
 
-            var right:Int = Math.floor((mouseRect.right - mouseRect.x) * FlxG.scaleMode.scale.x -
-                FlxG.mouse.cursorContainer.width);
+        if (mouseX < newLeft)
+            FlxG.stage.window.warpMouse(newLeft, mouseY);
 
-            if (mouseX < left)
-                FlxG.stage.window.warpMouse(left, mouseY);
+        if (mouseX > newRight)
+            FlxG.stage.window.warpMouse(newRight, mouseY);
 
-            if (mouseY < top)
-                FlxG.stage.window.warpMouse(mouseX, top);
+        if (mouseY < newTop)
+            FlxG.stage.window.warpMouse(mouseX, newTop);
 
-            if (mouseY > bottom)
-                FlxG.stage.window.warpMouse(mouseX, bottom);
+        if (mouseY > newBottom)
+            FlxG.stage.window.warpMouse(mouseX, newBottom);
+    }
 
-            if (mouseX > right)
-                FlxG.stage.window.warpMouse(right, mouseY);
-        }
+    public function setMouseRect(newLeft:Float = 0.0, newRight:Float = 0.0, newTop:Float = 0.0, newBottom:Float = 0.0):Void
+    {
+        left = newLeft;
+
+        right = newRight;
+
+        top = newTop;
+
+        bottom = newBottom;
     }
 
     public function resetMouseRect():Void
     {
-        mouseRect.set(0.0, 0.0, 0.0, 0.0);
+        left = 0.0;
+
+        right = FlxG.width;
+
+        top = 0.0;
+
+        bottom = FlxG.height;
     }
 }

@@ -17,7 +17,7 @@ class NoteSpawner extends FlxBasic
 {
     public var conductor:Conductor;
 
-    public var chart:Chart;
+    public var noteData:Array<NoteSchema>;
 
     public var strumlines:FlxTypedGroup<Strumline>;
 
@@ -29,7 +29,7 @@ class NoteSpawner extends FlxBasic
 
     public var noteIndex:Int;
 
-    public function new(_conductor:Conductor, _chart:Chart, _strumlines:FlxTypedGroup<Strumline>):Void
+    public function new(_conductor:Conductor, _noteData:Array<NoteSchema>, _strumlines:FlxTypedGroup<Strumline>):Void
     {
         super();
 
@@ -39,7 +39,7 @@ class NoteSpawner extends FlxBasic
 
         conductor = _conductor;
         
-        chart = _chart;
+        noteData = _noteData;
 
         strumlines = _strumlines;
 
@@ -56,72 +56,72 @@ class NoteSpawner extends FlxBasic
     {
         super.update(elapsed);
 
-        while (noteIndex < chart.notes.length)
+        while (noteIndex < noteData.length)
         {
-            var note:NoteSchema = chart.notes[noteIndex];
+            var noteSchema:NoteSchema = noteData[noteIndex];
 
-            var strumline:Strumline = strumlines.members[note.lane];
+            var strumline:Strumline = strumlines.members[noteSchema.lane];
 
-            if (note.time - conductor.time > 1500.0 / strumline.scrollSpeed)
+            if (noteSchema.time - conductor.time > 1500.0 / strumline.scrollSpeed)
                 break;
 
-            var _note:Note = notes.recycle(Note, noteConstructor);
+            var note:Note = notes.recycle(Note, createNote);
 
-            _note.visible = true;
+            note.visible = true;
         
-            _note.time = note.time;
+            note.time = noteSchema.time;
 
-            _note.direction = note.direction;
+            note.direction = noteSchema.direction;
 
-            _note.length = note.length;
+            note.length = noteSchema.length;
 
-            _note.lane = note.lane;
+            note.lane = noteSchema.lane;
 
-            _note.kind = note.kind;
+            note.kind = noteSchema.kind;
             
-            _note.status = IDLING;
+            note.status = IDLING;
 
-            _note.playSplash = false;
+            note.playSplash = false;
 
-            _note.finishedHold = false;
+            note.finishedHold = false;
 
-            _note.unholdTime = 0.0;
+            note.unholdTime = 0.0;
 
-            _note.sustain = null;
+            note.sustain = null;
 
-            _note.strumline = strumline;
+            note.strumline = strumline;
 
-            _note.strum = strumline.strums.members[_note.direction];
+            note.strum = strumline.strums.members[note.direction];
 
-            _note.animation.play(Note.DIRECTIONS[_note.direction].toLowerCase());
+            note.animation.play(Note.DIRECTIONS[note.direction].toLowerCase());
 
-            _note.flipY = false;
+            note.flipY = false;
 
-            _note.scale.set(0.7, 0.7);
+            note.scale.set(0.7, 0.7);
 
-            _note.updateHitbox();
+            note.updateHitbox();
 
-            _note.setPosition(camera.viewRight, 0.0);
+            note.setPosition(camera.viewRight, 0.0);
 
-            notes.add(_note);
+            notes.add(note);
 
-            strumline.notes.add(_note);
+            strumline.notes.add(note);
 
-            strumline.onNoteSpawn.dispatch(_note);
+            strumline.onNoteSpawn.dispatch(note);
 
-            if (note.length > 0.0)
+            if (noteSchema.length > 0.0)
             {
-                var sustain:Sustain = sustains.recycle(Sustain, sustainConstructor);
+                var sustain:Sustain = sustains.recycle(Sustain, createSustain);
 
-                sustain.antialiasing = _note.antialiasing;
+                sustain.antialiasing = note.antialiasing;
 
-                sustain.note = _note;
+                sustain.note = note;
 
-                sustain.animation.play(Note.DIRECTIONS[_note.direction].toLowerCase() + "HoldPiece");
+                sustain.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "HoldPiece");
 
                 sustain.flipY = strumline.downscroll;
 
-                sustain.setGraphicSize(sustain.frameWidth * 0.7, _note.length * strumline.scrollSpeed * 0.45);
+                sustain.setGraphicSize(sustain.frameWidth * 0.7, note.length * strumline.scrollSpeed * 0.45);
 
                 sustain.updateHitbox();
 
@@ -131,15 +131,15 @@ class NoteSpawner extends FlxBasic
 
                 strumline.sustains.add(sustain);
 
-                _note.sustain = sustain;
+                note.sustain = sustain;
 
-                var trail:SustainTrail = trails.recycle(SustainTrail, trailConstructor);
+                var trail:SustainTrail = trails.recycle(SustainTrail, createTrail);
 
                 trail.antialiasing = sustain.antialiasing;
 
                 trail.sustain = sustain;
 
-                trail.animation.play(Note.DIRECTIONS[_note.direction].toLowerCase() + "HoldTail");
+                trail.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "HoldTail");
 
                 trail.flipY = strumline.downscroll;
 
@@ -160,17 +160,17 @@ class NoteSpawner extends FlxBasic
         }
     }
 
-    public function noteConstructor():Note
+    public function createNote():Note
     {
         return new Note();
     }
 
-    public function sustainConstructor():Sustain
+    public function createSustain():Sustain
     {
         return new Sustain();
     }
 
-    public function trailConstructor():SustainTrail
+    public function createTrail():SustainTrail
     {
         return new SustainTrail();
     }

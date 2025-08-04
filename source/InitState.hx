@@ -20,15 +20,11 @@ import game.HighScore;
 
 import plugins.MouseRectPlugin;
 
-import ui.PerfStats;
-
 class InitState extends FlxState
 {
     public var nextState:NextState;
 
     public static var mouseRectPlugin:MouseRectPlugin;
-
-    public static var perfStats:PerfStats;
 
     public function new(_nextState:NextState):Void
     {
@@ -77,10 +73,6 @@ class InitState extends FlxState
 
         FlxG.plugins.addPlugin(mouseRectPlugin);
 
-        perfStats = new PerfStats(10.0, 5.0);
-        
-        FlxG.game.addChild(perfStats);
-
         FlxG.switchState(nextState);
     }
 
@@ -105,5 +97,10 @@ class InitState extends FlxState
 
             FlxG.updateFramerate = frameRate;
         }
+    }
+
+    public static function setMouseRect(left:Float = 0.0, right:Float = 0.0, top:Float = 0.0, bottom:Float = 0.0):Void
+    {
+        mouseRectPlugin.setMouseRect(left, right, top, bottom);
     }
 }

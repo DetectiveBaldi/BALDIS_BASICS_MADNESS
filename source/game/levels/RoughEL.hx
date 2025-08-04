@@ -67,7 +67,7 @@ class RoughEL extends PlayState
 
         cameraPoint.centerTo();
 
-        cameraLock = MANUAL;
+        cameraLock = FOCUS_CAM_POINT;
 
         gameCameraZoom = 1.15;
 

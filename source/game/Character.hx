@@ -23,6 +23,8 @@ import music.Conductor;
 
 using StringTools;
 
+using util.ArrayUtil;
+
 class Character extends FlxSprite
 {
     public var conductor(default, set):Conductor;
@@ -45,75 +47,15 @@ class Character extends FlxSprite
 
     public var keys:Array<Int>;
     
-    public var config(default, set):RawCharacterData;
-
-    @:noCompletion
-    function set_config(_config:RawCharacterData):RawCharacterData
-    {
-        config = _config;
-
-        var pngPath:String = 'game/Character/${config.image}';
-
-        var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.image}'));
-        
-        switch (config.format ?? "".toLowerCase():String)
-        {
-            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
-
-            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
-        }
-
-        antialiasing = config.antialiasing ?? true;
-
-        scale.set(config.scale?.x ?? 1.0, config.scale?.y ?? 1.0);
-
-        updateHitbox();
-
-        flipX = config.flipX ?? false;
-
-        flipY = config.flipY ?? false;
-
-        for (i in 0 ... config.animations.length)
-        {
-            var _animation:AnimationData = config.animations[i];
-
-            _animation.frameRate ??= 24.0;
-
-            _animation.looped ??= false;
-
-            _animation.flipX ??= false;
-
-            _animation.flipY ??= false;
-
-            if (animation.exists(_animation.name))
-                throw "Invalid animation name!";
-
-            if (_animation.indices.length > 0)
-                animation.addByIndices(_animation.name, _animation.prefix, _animation.indices, "", _animation.frameRate, _animation.looped, _animation.flipX, _animation.flipY);
-            else
-                animation.addByPrefix(_animation.name, _animation.prefix, _animation.frameRate, _animation.looped, _animation.flipX, _animation.flipY);
-        }
-
-        danceSteps = config.danceSteps;
-
-        danceStep = 0;
-
-        danceInterval = config.danceInterval ?? 2.0;
-
-        singDuration = config.singDuration ?? 8.0;
-
-        singTimer = 0.0;
-
-        return config;
-    }
+    public var config:RawCharacterData;
 
     public var danceSteps:Array<String>;
-
-    public var danceStep:Int;
 
     public var danceInterval:Float;
 
     public var singDuration:Float;
+
+    public var danceIndex:Int;
 
     public var skipDance:Bool;
 
@@ -134,7 +76,9 @@ class Character extends FlxSprite
                     Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
         ];
         
-        config = _config;
+        loadConfig(_config);
+
+        danceIndex = 0;
 
         skipDance = false;
 
@@ -190,15 +134,68 @@ class Character extends FlxSprite
     {
         var output:FlxPoint = super.getScreenPosition(result, camera);
 
-        for (i in 0 ... config.animations.length)
-        {
-            var _animation:AnimationData = config.animations[i];
-            
-            if (animation.name ?? "" == _animation.name)
-                output.add(_animation.offset?.x ?? 0.0, _animation.offset?.y ?? 0.0);
-        }
+        var animData:AnimationData = config.animations.first((anim:AnimationData) -> animation.name ?? "" == anim.name);
+
+        if (animData != null)
+            output.add(animData.offset?.x ?? 0.0, animData.offset?.y ?? 0.0);
 
         return output;
+    }
+
+    public function loadConfig(newConfig:RawCharacterData):RawCharacterData
+    {
+        config = newConfig;
+
+        var pngPath:String = 'game/Character/${config.image}';
+
+        var xmlPath:String = Paths.image(Paths.xml('game/Character/${config.image}'));
+        
+        switch (config.format ?? "".toLowerCase():String)
+        {
+            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
+
+            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
+        }
+
+        antialiasing = config.antialiasing ?? true;
+
+        scale.set(config.scale?.x ?? 1.0, config.scale?.y ?? 1.0);
+
+        updateHitbox();
+
+        flipX = config.flipX ?? false;
+
+        flipY = config.flipY ?? false;
+
+        for (i in 0 ... config.animations.length)
+        {
+            var animData:AnimationData = config.animations[i];
+
+            animData.frameRate ??= 24.0;
+
+            animData.looped ??= false;
+
+            animData.flipX ??= false;
+
+            animData.flipY ??= false;
+
+            if (animData.indices != null)
+                animation.addByIndices(animData.name, animData.prefix, animData.indices, "", animData.frameRate,
+                    animData.looped, animData.flipX, animData.flipY);
+            else
+                animation.addByPrefix(animData.name, animData.prefix, animData.frameRate, animData.looped,
+                    animData.flipX, animData.flipY);
+        }
+
+        danceSteps = config.danceSteps;
+
+        danceInterval = config.danceInterval ?? 2.0;
+
+        singDuration = config.singDuration ?? 8.0;
+
+        singTimer = 0.0;
+
+        return config;
     }
 
     public function beatHit(beat:Int):Void
@@ -209,16 +206,11 @@ class Character extends FlxSprite
 
     public function dance(force:Bool = false):Void
     {
-        if (skipDance)
-            return;
-        
-        if (!force && (animation.name ?? "").startsWith("Sing"))
+        if (skipDance || (animation.name ?? "").startsWith("Sing") && !force)
             return;
 
-        var i:Int = danceSteps.indexOf(animation.name);
+        danceIndex = FlxMath.wrap(danceIndex + 1, 0, danceSteps.length - 1);
 
-        i = FlxMath.wrap(i + 1, 0, danceSteps.length - 1);
-
-        animation.play(danceSteps[i], force);
+        animation.play(danceSteps[danceIndex], force);
     }
 }

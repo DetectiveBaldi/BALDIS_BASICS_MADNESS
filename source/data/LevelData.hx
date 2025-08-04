@@ -20,7 +20,7 @@ class LevelData
         this.secret = secret;
     }
 
-    public function sanitize():String
+    public function getClsPath():String
     {
         var splt:Array<String> = name.split(" ");
 

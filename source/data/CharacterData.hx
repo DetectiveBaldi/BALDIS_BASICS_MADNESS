@@ -24,7 +24,7 @@ typedef RawCharacterData =
 
     var ?antialiasing:Bool;
 
-    var ?scale:{?x:Float, ?y:Float};
+    var ?scale:AxisData<Float>;
 
     var ?flipX:Bool;
 

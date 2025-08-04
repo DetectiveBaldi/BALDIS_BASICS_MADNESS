@@ -231,21 +231,15 @@ class ProgressBar extends FlxSpriteGroup
                 filledSide.clipRect.y = filledSide.height - filledSide.clipRect.height;
             }
         }
-
-        emptiedSide.clipRect = emptiedSide.clipRect;
-
-        filledSide.clipRect = filledSide.clipRect;
     }
 }
 
 class ProgressBarSideSprite extends FlxSprite
 {
     @:noCompletion
-    override function set_clipRect(_clipRect:FlxRect):FlxRect
+    override function set_clipRect(clip:FlxRect):FlxRect
     {
-        clipRect = _clipRect;
-
-        frame = frames?.frames[animation.frameIndex];
+        clipRect = clip;
 
         return clipRect;
     }

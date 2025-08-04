@@ -18,12 +18,12 @@ import core.Paths;
 
 import extendable.CustomState;
 
-import menus.FreeplayScreen.ButtonOrientation;
-import menus.FreeplayScreen.OrientedButton;
 import menus.options.categories.GeneralOptionsCat;
 import menus.options.categories.BaseOptionsCat;
 import menus.options.categories.ControlsCat;
 import menus.options.categories.GameplayOptionsCat;
+
+import ui.OrientedButton;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -31,6 +31,8 @@ using util.MathUtil;
 class OptionsMenu extends CustomState
 {
     public var nextState:NextState;
+
+    public var fadeTuneOnExit:Bool;
 
     public var background:FlxSprite;
 
@@ -48,11 +50,13 @@ class OptionsMenu extends CustomState
 
     public var exitButton:FlxSprite;
 
-    public function new(_nextState:NextState):Void
+    public function new(_nextState:NextState, _fadeTuneOnExit:Bool = true):Void
     {
         super();
 
         nextState = _nextState;
+
+        fadeTuneOnExit = _fadeTuneOnExit;
     }
 
     override function create():Void
@@ -65,7 +69,7 @@ class OptionsMenu extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
@@ -156,6 +160,8 @@ class OptionsMenu extends CustomState
         exitButton.setPosition(165.0, 5.0);
 
         add(exitButton);
+
+        MainMenuScreen.playTune();
     }
 
     override function update(elapsed:Float):Void
@@ -167,7 +173,12 @@ class OptionsMenu extends CustomState
             exitButton.animation.play("1");
 
             if (FlxG.mouse.justPressed)
+            {
                 FlxG.switchState(nextState);
+
+                if (fadeTuneOnExit)
+                    MainMenuScreen.fadeTune();
+            }
         }
         else
             exitButton.animation.play("0");

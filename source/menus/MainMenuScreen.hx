@@ -44,7 +44,7 @@ class MainMenuScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
@@ -72,7 +72,7 @@ class MainMenuScreen extends CustomState
 
         playText.setPosition(playText.getCenterX(), chalkboard.y + 185.0);
 
-        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> new MainMenuScreen())));
+        var optionsText:MenuText = createText("Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> new MainMenuScreen(), false)));
 
         optionsText.onClick.remove(fadeTune);
 
@@ -130,7 +130,7 @@ class MainMenuScreen extends CustomState
         {
             fadeTune();
             
-            FlxG.switchState(() -> new editors.CharacterEditorState());
+            FlxG.switchState(() -> new editors.CharacterEditorState(() -> new MainMenuScreen()));
         }
         #end
     }

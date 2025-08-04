@@ -6,35 +6,34 @@ import flixel.util.FlxDestroyUtil;
 
 import flixel.util.FlxSignal.FlxTypedSignal;
 
-import data.Chart.TimeChangeSchema;
+import data.Chart.TimeChange;
 
-/**
- * A class which handles musical timing events throughout the game. It is the heart of `game.PlayState`.
- */
+using util.ArrayUtil;
+
 class Conductor extends FlxBasic
 {
-    public var preciseStep(get, never):Float;
+    public var decStep(get, never):Float;
 
     @:noCompletion
-    function get_preciseStep():Float
+    function get_decStep():Float
     {
         return (time - timeChange.time) / stepLength + timeChange.step;
     }
 
-    public var preciseBeat(get, never):Float;
+    public var decBeat(get, never):Float;
 
     @:noCompletion
-    function get_preciseBeat():Float
+    function get_decBeat():Float
     {
-        return preciseStep * 0.25;
+        return decStep * 0.25;
     }
 
-    public var preciseMeasure(get, never):Float;
+    public var decMeasure(get, never):Float;
 
     @:noCompletion
-    function get_preciseMeasure():Float
+    function get_decMeasure():Float
     {
-        return preciseBeat * 0.25;
+        return decBeat * 0.25;
     }
 
     public var step(get, never):Int;
@@ -42,7 +41,7 @@ class Conductor extends FlxBasic
     @:noCompletion
     function get_step():Int
     {
-        return Math.floor(preciseStep);
+        return Math.floor(decStep);
     }
 
     public var beat(get, never):Int;
@@ -50,7 +49,7 @@ class Conductor extends FlxBasic
     @:noCompletion
     function get_beat():Int
     {
-        return Math.floor(preciseBeat);
+        return Math.floor(decBeat);
     }
 
     public var measure(get, never):Int;
@@ -58,7 +57,7 @@ class Conductor extends FlxBasic
     @:noCompletion
     function get_measure():Int
     {
-        return Math.floor(preciseMeasure);
+        return Math.floor(decMeasure);
     }
 
     public var onStepHit:FlxTypedSignal<(step:Int)->Void>;
@@ -87,9 +86,9 @@ class Conductor extends FlxBasic
 
     public var time:Float;
 
-    public var timeChange:TimeChangeSchema;
+    public var timeChange:TimeChange;
 
-    public var timeChanges:Array<TimeChangeSchema>;
+    public var timeChanges:Array<TimeChange>;
 
     public function new():Void
     {
@@ -109,7 +108,7 @@ class Conductor extends FlxBasic
 
         timeChange = {time: 0.0, tempo: 100.0, step: 0.0};
 
-        timeChanges = new Array<TimeChangeSchema>();
+        timeChanges = new Array<TimeChange>();
     }
 
     override function update(elapsed:Float):Void
@@ -124,33 +123,27 @@ class Conductor extends FlxBasic
 
         time += elapsed * 1000.0;
 
-        var i:Int = timeChanges.length - 1;
-
-        while (i >= 0)
+        if (timeChanges.length > 0.0)
         {
-            var newTimeChange = timeChanges[i];
-            
-            if (time < newTimeChange.time)
+            var newTimeChange:TimeChange = timeChanges.last((timeCh:TimeChange) -> time >= timeCh.time);
+
+            if (newTimeChange != null)
             {
-                i--;
+                var newTempo:Float = newTimeChange.tempo;
 
-                continue;
+                if (tempo != newTempo)
+                {
+                    var lastTime:Float = timeChange.time;
+
+                    timeChange.time = newTimeChange.time;
+
+                    timeChange.tempo = newTempo;
+
+                    timeChange.step += (timeChange.time - lastTime) / stepLength;
+
+                    tempo = timeChange.tempo;
+                }
             }
-
-            if (tempo != newTimeChange.tempo)
-            {
-                var lastTime:Float = timeChange.time;
-
-                timeChange.time = newTimeChange.time;
-
-                timeChange.tempo = newTimeChange.tempo;
-
-                timeChange.step += (timeChange.time - lastTime) / stepLength;
-
-                tempo = timeChange.tempo;
-            }
-            
-            break;
         }
 
         if (step != lastStep)

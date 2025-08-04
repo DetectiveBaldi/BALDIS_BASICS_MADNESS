@@ -51,7 +51,7 @@ class GainGL extends PlayState
 
         cameraPoint.centerTo();
 
-        cameraLock = MANUAL;
+        cameraLock = FOCUS_CAM_POINT;
 
         temperature = new FlxSprite();
 
@@ -273,7 +273,7 @@ class GainGL extends PlayState
         }
 
         if (step == 480.0)
-            cameraLock = AUTOMATIC;
+            cameraLock = FOCUS_CAM_CHAR;
     
         if (step == 504 || step == 507 || step == 510)
         {                        
@@ -287,7 +287,7 @@ class GainGL extends PlayState
 
         if (step == 624)
         {
-            cameraLock = MANUAL;
+            cameraLock = FOCUS_CAM_POINT;
 
             cameraPoint.centerTo();
         }

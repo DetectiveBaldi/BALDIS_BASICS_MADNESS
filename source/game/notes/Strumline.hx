@@ -126,15 +126,21 @@ class Strumline extends FlxGroup
 
         notes = new FlxTypedGroup<Note>();
 
+        notes.active = false;
+
         add(notes);
 
         notesPendingRemoval = new Array<Note>();
 
         sustains = new FlxTypedGroup<Sustain>();
 
+        sustains.active = false;
+
         insert(members.indexOf(notes), sustains);
 
         trails = new FlxTypedGroup<SustainTrail>();
+
+        trails.active = false;
 
         insert(members.indexOf(sustains), trails);
 
@@ -207,7 +213,10 @@ class Strumline extends FlxGroup
 
                     var note:Note = notes.getFirst((_note:Note) -> strum.direction == _note.direction && _note.isHittable());
 
-                    note == null ? ghostTap(strum.direction) : noteHit(note);
+                    if (note == null)
+                        ghostTap(strum.direction);
+                    else
+                        noteHit(note);
                 }
 
                 if (FlxG.keys.checkStatus(k, JUST_RELEASED))
@@ -228,12 +237,12 @@ class Strumline extends FlxGroup
             if (botplay && note.isHittable())
                 noteHit(note);
 
-            var isLate:Bool = conductor.time > note.time + 166.6;
+            var isLate:Bool = conductor.time > note.time + note.latestTiming;
 
             if (!botplay && note.status == IDLING && isLate)
                 noteMiss(note, false);
 
-            var isExpired:Bool = conductor.time > (note.time + note.length + (166.6 / scrollSpeed));
+            var isExpired:Bool = conductor.time > (note.time + note.length + (note.latestTiming / scrollSpeed));
 
             if (isLate && isExpired)
                 notesPendingRemoval.push(note);
@@ -244,8 +253,7 @@ class Strumline extends FlxGroup
                 {
                     holdSustainNote(note, note.sustain, elapsed);
 
-                    if (note.unholdTime > 0.0)
-                        note.unholdTime = Math.max(0.0, note.unholdTime - elapsed * 1000.0);
+                    note.unholdTime = Math.max(0.0, note.unholdTime - elapsed * 1000.0);
                 }
                 else
                 {
@@ -258,7 +266,7 @@ class Strumline extends FlxGroup
                     {
                         note.unholdTime += elapsed * 1000.0;
 
-                        if (note.unholdTime > 166.6)
+                        if (note.unholdTime > note.latestTiming)
                             noteMiss(note, true);
                     }
                 }
@@ -267,6 +275,15 @@ class Strumline extends FlxGroup
                     finishSustainNote(note);
             }
         }
+
+        /**
+         * TODO: It seems like this fixes rendering bugs. However I need confirmation and if so, I want to figure out why.
+        */
+        notes.update(elapsed);
+
+        sustains.update(elapsed);
+
+        trails.update(elapsed);
 
         lastStep = conductor.step;
     }
@@ -302,9 +319,9 @@ class Strumline extends FlxGroup
         ];
     }
 
-    public function clearKeys():Map<Int, Int>
+    public function clearKeys():Void
     {
-        return keys = null;
+        keys = null;
     }
 
     public function resetStrums():Void
@@ -341,7 +358,7 @@ class Strumline extends FlxGroup
         
         strum.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "Confirm", true);
 
-        singCharacters(note, note.direction, false);
+        playCharSingAnims(note, note.direction, false);
 
         if (vocals != null)
             vocals.volume = 1.0;
@@ -356,7 +373,7 @@ class Strumline extends FlxGroup
 
         note.status = MISSED;
 
-        missCharacters(note, note.direction);
+        playCharMissAnims(note, note.direction);
 
         if (vocals != null)
             vocals.volume = 0.0;
@@ -399,7 +416,7 @@ class Strumline extends FlxGroup
             if (vocals != null)
                 vocals.volume = 1.0;
 
-            singCharacters(note, note.direction, true);
+            playCharSingAnims(note, note.direction, true);
         }
     }
 
@@ -455,14 +472,14 @@ class Strumline extends FlxGroup
 
             _noteMiss.onComplete = _noteMiss.kill;
 
-            missCharacters(null, direction);
+            playCharMissAnims(null, direction);
 
             if (vocals != null)
                 vocals.volume = 0.0;
         }
     }
 
-    public function singCharacters(note:Note, direction:Int, hold:Bool):Void
+    public function playCharSingAnims(note:Note, direction:Int, hold:Bool):Void
     {
         if (characters == null)
             return;
@@ -481,20 +498,26 @@ class Strumline extends FlxGroup
             if (note.kind == "alt-animation")
                 animSuffix = "-alt";
 
-            if (hold && character.animation.name == 'Sing${Note.DIRECTIONS[note.direction]}${animSuffix}')
+            var translatedDir:String = Note.DIRECTIONS[note.direction];
+
+            if (hold && character.animation.name.contains(translatedDir))
                 continue;
 
-            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}${animSuffix}'))
-                character.animation.play('Sing${Note.DIRECTIONS[direction]}${animSuffix}', true);
+            var animToPlay:String = 'Sing${translatedDir}${animSuffix}';
+
+            if (character.animation.exists(animToPlay))
+                character.animation.play(animToPlay, true);
             else
             {
-                if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}'))
-                    character.animation.play('Sing${Note.DIRECTIONS[direction]}', true);
+                animToPlay = 'Sing${translatedDir}';
+
+                if (character.animation.exists(animToPlay))
+                    character.animation.play(animToPlay, true);
             }
         }
     }
 
-    public function missCharacters(note:Note, direction:Int):Void
+    public function playCharMissAnims(note:Note, direction:Int):Void
     {
         if (characters == null)
             return;
@@ -516,12 +539,18 @@ class Strumline extends FlxGroup
                     animSuffix = "-alt";
             }
 
-            if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}'))
-                character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS${animSuffix}', true);
+            var translatedDir:String = Note.DIRECTIONS[note.direction];
+
+            var animToPlay:String = 'Sing${translatedDir}MISS${animSuffix}';
+
+            if (character.animation.exists(animToPlay))
+                character.animation.play(animToPlay, true);
             else
             {
-                if (character.animation.exists('Sing${Note.DIRECTIONS[direction]}MISS'))
-                    character.animation.play('Sing${Note.DIRECTIONS[direction]}MISS', true);
+                animToPlay = 'Sing${translatedDir}MISS';
+
+                if (character.animation.exists(animToPlay))
+                    character.animation.play(animToPlay, true);
             }
         }
     }

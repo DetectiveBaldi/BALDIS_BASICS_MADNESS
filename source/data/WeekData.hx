@@ -17,11 +17,13 @@ class WeekData
 
     public var name:String;
 
+    public var nameSuffix:String;
+
     public var description:String;
 
     public var levels:Array<LevelData>;
 
-    public function sanitize():String
+    public function getPackPath():String
     {
         return '${name.split(" ").join("").toLowerCase()}w';
     }

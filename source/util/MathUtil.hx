@@ -10,31 +10,31 @@ import flixel.util.FlxAxes;
 
 class MathUtil
 {
-    public static function minInt(...ints:Int):Int
+    public static function minInt(...values:Int):Int
     {
         var output:Int = FlxMath.MAX_VALUE_INT;
 
-        for (i in 0 ... ints.length)
+        for (i in 0 ... values.length)
         {
-            var int:Int = ints[i];
+            var value:Int = values[i];
 
-            if (int < output)
-                output = int;
+            if (value < output)
+                output = value;
         }
 
         return output;
     }
 
-    public static function maxInt(...ints:Int):Int
+    public static function maxInt(...values:Int):Int
     {
         var output:Int = FlxMath.MIN_VALUE_INT;
 
-        for (i in 0 ... ints.length)
+        for (i in 0 ... values.length)
         {
-            var int:Int = ints[i];
+            var value:Int = values[i];
 
-            if (int > output)
-                output = int;
+            if (value > output)
+                output = value;
         }
 
         return output;

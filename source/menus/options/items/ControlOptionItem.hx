@@ -57,8 +57,6 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
         controlsText.alignment = CENTER;
 
-        controlsText.x + titleText.x + 5.0;
-
         add(controlsText);
 
         controlIndex = 0;

@@ -204,11 +204,11 @@ class PauseScreen extends CustomSubState
 
         tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getLevelClass())));
+        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClsFromLevel())));
 
         tween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 
-        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getLevelClass()));
+        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getClsFromLevel()));
 
         tween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
 

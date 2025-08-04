@@ -77,13 +77,13 @@ class PlayField extends FlxGroup
         return scrollSpeed;
     }
 
+    public var noteSpawner:NoteSpawner;
+
     public var strumlines:FlxTypedGroup<Strumline>;
 
     public var opponentStrumline:Strumline;
 
     public var playerStrumline:Strumline;
-
-    public var noteSpawner:NoteSpawner;
 
     public function new(?tween:FlxTweenManager, ?timer:FlxTimerManager, _conductor:Conductor, 
         _chart:Chart, _instrumental:FlxSound):Void
@@ -172,6 +172,10 @@ class PlayField extends FlxGroup
 
         add(creditsPop);
 
+        noteSpawner = new NoteSpawner(conductor, chart.notes, null);
+
+        add(noteSpawner);
+
         strumlines = new FlxTypedGroup<Strumline>();
 
         strumlines.memberAdded.add((strumline:Strumline) ->
@@ -202,6 +206,8 @@ class PlayField extends FlxGroup
 
         add(strumlines);
 
+        noteSpawner.strumlines = strumlines;
+
         opponentStrumline = new Strumline(conductor);
 
         opponentStrumline.botplay = true;
@@ -228,10 +234,6 @@ class PlayField extends FlxGroup
         strumlines.add(playerStrumline);
 
         scrollSpeed = chart.scrollSpeed;
-
-        noteSpawner = new NoteSpawner(conductor, chart, strumlines);
-
-        add(noteSpawner);
     }
 
     override function update(elapsed:Float):Void
@@ -286,11 +288,9 @@ class PlayField extends FlxGroup
 
     public function noteHit(event:NoteHitEvent):Void
     {
-        var ratings:Array<Rating> = Rating.list;
-
         var rating:Rating = Rating.fromTiming(Math.abs(event.note.time - conductor.time));
 
-        if (rating != ratings[0])
+        if (rating != Rating.list[0])
             event.playSplash = false;
 
         if (!event.note.strumline.botplay)

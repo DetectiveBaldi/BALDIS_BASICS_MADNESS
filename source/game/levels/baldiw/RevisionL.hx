@@ -64,7 +64,7 @@ class RevisionL extends PlayState
 
         gameCamera.snapToTarget();
 
-        cameraLock = MANUAL;
+        cameraLock = FOCUS_CAM_POINT;
 
         gameCameraZoom = 1;
 
@@ -112,7 +112,7 @@ class RevisionL extends PlayState
 
         if (padMinigame?.loss)
         {
-            instrumental.loadEmbedded(Assets.getMusic('${PlayState.getLevelPath()}/Instrumental-Bad-Math'), 
+            instrumental.loadEmbedded(Assets.getMusic('${PlayState.getClsPathFromLevel()})}/Instrumental-Bad-Math'), 
                 false, false, endSong);
 
             instrumental.play();

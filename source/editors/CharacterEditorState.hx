@@ -1,5 +1,6 @@
 package editors;
 
+import haxe.Exception;
 import haxe.Json;
 
 import openfl.desktop.Clipboard;
@@ -19,6 +20,7 @@ import flixel.math.FlxPoint;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxStringUtil;
+import flixel.util.typeLimit.NextState;
 
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
@@ -62,6 +64,8 @@ using util.MathUtil;
 
 class CharacterEditorState extends CustomState
 {
+    public var nextState:NextState;
+
     public var gameCamera(get, never):FlxCamera;
     
     @:noCompletion
@@ -83,6 +87,13 @@ class CharacterEditorState extends CustomState
     public var healthIcon:HealthIcon;
 
     public var ui:Box;
+
+    public function new(nextState:NextState):Void
+    {
+        super();
+
+        this.nextState = nextState;
+    }
 
     override function create():Void
     {
@@ -173,7 +184,7 @@ class CharacterEditorState extends CustomState
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-            healthIcon.character = character.config.healthIcon;
+            healthIcon.load(character.config.healthIcon);
 
             animationIndex = 0;
 
@@ -240,7 +251,7 @@ class CharacterEditorState extends CustomState
 
             character.danceSteps = ui.findComponent("_textfield", TextField).text.split(",");
 
-            character.danceStep = 0;
+            character.danceIndex = 0;
         };
 
         ui.findComponent("__number-stepper", NumberStepper).onChange = (ev:UIEvent) ->
@@ -285,7 +296,7 @@ class CharacterEditorState extends CustomState
         {
             character.config.healthIcon = ui.findComponent("____textfield", TextField).text;
 
-            healthIcon.character = character.config.healthIcon;
+            healthIcon.load(character.config.healthIcon);
 
             character.config.healthColor = ui.findComponent("_____textfield", TextField).text;
 
@@ -357,14 +368,21 @@ class CharacterEditorState extends CustomState
                 {
                     var animation:AnimationData = character.config.animations[animationIndex];
 
-                    var offset:{?x:Float, ?y:Float} = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
+                    try
+                    {
+                        var offset:AxisData<Float> = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
 
-                    setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
+                        setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
+                    }
+                    catch (e:Exception)
+                    {
+                        
+                    }
                 }
             }
 
             if (FlxG.keys.justPressed.ESCAPE)
-                FlxG.switchState(() -> PlayState.getLevelClass());
+                FlxG.switchState(nextState);
         }
     }
 
@@ -417,9 +435,15 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_______textfield", TextField).text = animation.prefix;
 
-        ui.findComponent("textarea", TextArea).text = animation.indices.toString();
+        var indicesText:String = animation.indices?.toString() ?? "";
 
-        ui.findComponent("textarea", TextArea).text = ui.findComponent("textarea", TextArea).text.substring(1, ui.findComponent("textarea", TextArea).text.length - 1);
+        ui.findComponent("textarea", TextArea).text = indicesText;
+
+        if (indicesText != "")
+        {
+            ui.findComponent("textarea", TextArea).text = ui.findComponent("textarea", TextArea).text.substring(1,
+                ui.findComponent("textarea", TextArea).text.length - 1);
+        }
 
         ui.findComponent("____number-stepper", NumberStepper).value = animation.frameRate ?? 24.0;
 
@@ -439,10 +463,10 @@ class CharacterEditorState extends CustomState
         @:privateAccess
         character.animation.findByPrefix(frames, ui.findComponent("_______textfield", TextField).text);
         
-        if (frames.length <= 0.0)
+        if (frames.length == 0.0)
             return;
 
-        var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text) ?? new Array<Int>();
+        var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text);
 
         var animation:AnimationData = character.config.animations.first((animation:AnimationData) -> ui.findComponent("______textfield", TextField).text == animation.name);
 
@@ -484,10 +508,12 @@ class CharacterEditorState extends CustomState
             animation.flipY = ui.findComponent("_____checkbox", CheckBox).value;
         }
         
-        if (animation.indices.length > 0.0)
-            character.animation.addByIndices(animation.name, animation.prefix, animation.indices, "", animation.frameRate, animation.looped, animation.flipX, animation.flipY);
+        if (animation.indices != null)
+            character.animation.addByIndices(animation.name, animation.prefix, animation.indices, "", animation.frameRate,
+                animation.looped, animation.flipX, animation.flipY);
         else
-            character.animation.addByPrefix(animation.name, animation.prefix, animation.frameRate, animation.looped, animation.flipX, animation.flipY);
+            character.animation.addByPrefix(animation.name, animation.prefix, animation.frameRate, animation.looped,
+                animation.flipX, animation.flipY);
 
         character.animation.play(animation.name, true);
 

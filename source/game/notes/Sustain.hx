@@ -1,14 +1,20 @@
 package game.notes;
 
+import flixel.FlxCamera;
 import flixel.FlxSprite;
 
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.frames.FlxFrame;
 
 import flixel.util.FlxColor;
 
 import core.Assets;
 import core.Paths;
 
+/**
+ * TODO: Patch sustain clipping when note is not held.
+ * TODO: Replace coloring during misses with an alpha decrease.
+ */
 class Sustain extends FlxSprite
 {
     public var note:Note;
@@ -19,17 +25,10 @@ class Sustain extends FlxSprite
     {
         super(x, y);
 
-        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/Note/default"),
-            Paths.image(Paths.xml("game/notes/Note/default")));
+        frames = Note.NOTE_FRAMES;
 
         for (i in 0 ... Note.DIRECTIONS.length)
-        {
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase(), Note.DIRECTIONS[i].toLowerCase() + "0", 24.0, false);
-
             animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldPiece", Note.DIRECTIONS[i].toLowerCase() + "HoldPiece0", 24.0, false);
-            
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldTail", Note.DIRECTIONS[i].toLowerCase() + "HoldTail0", 24.0, false);
-        }
     }
 
     override function update(elapsed:Float):Void
@@ -41,9 +40,9 @@ class Sustain extends FlxSprite
         if (note.status == HIT)
             length -= note.strumline.conductor.time - note.time;
 
-        var _height:Float = Math.max(length * 0.45 * note.strumline.scrollSpeed, 0.0);
+        var sustainHeight:Float = Math.max(length * 0.45 * note.strumline.scrollSpeed, 0.0);
 
-        setGraphicSize(frameWidth * 0.7, _height);
+        setGraphicSize(frameWidth * 0.7, sustainHeight);
 
         updateHitbox();
 
@@ -52,21 +51,16 @@ class Sustain extends FlxSprite
         y = note.y + note.height * 0.5;
 
         if (note.strumline.downscroll)
-            y -= _height;
+            y -= sustainHeight;
 
         trail.x = getMidpoint().x - trail.width * 0.5;
 
-        trail.y = y + _height;
+        trail.y = y + sustainHeight;
 
         if (note.strumline.downscroll)
-            trail.y -= _height + trail.height;
+            trail.y -= sustainHeight + trail.height;
 
         trail.y -= 2.0 * (note.strumline.downscroll ? -1.0 : 1.0);
-
-        if (note.status == MISSED)
-            color = 0xFFB3B3B3;
-        else
-            color = FlxColor.WHITE;
 
         alpha = note.alpha;
 

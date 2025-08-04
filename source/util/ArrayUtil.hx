@@ -2,10 +2,10 @@ package util;
 
 class ArrayUtil
 {
-    public static function pushMany<T>(arr:Array<T>, ...entries:T):Void
+    public static function pushMany<T>(arr:Array<T>, ...values:T):Void
     {
-        for (i in 0 ... entries.length)
-            arr.push(entries[i]);
+        for (i in 0 ... values.length)
+            arr.push(values[i]);
     }
 
     public static function first<T>(arr:Array<T>, func:(T)->Bool = null):T
@@ -21,11 +21,11 @@ class ArrayUtil
         {
             for (i in 0 ... arr.length)
             {
-                var field:T = arr[i];
+                var value:T = arr[i];
 
-                if (func(field))
+                if (func(value))
                 {
-                    result = field;
+                    result = value;
 
                     break;
                 }
@@ -50,11 +50,11 @@ class ArrayUtil
 
             while (index >= 0.0)
             {
-                var field:T = arr[index];
+                var value:T = arr[index];
 
-                if (func(field))
+                if (func(value))
                 {
-                    result = field;
+                    result = value;
 
                     break;
                 }

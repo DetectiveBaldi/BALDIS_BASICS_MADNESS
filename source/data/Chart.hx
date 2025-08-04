@@ -32,7 +32,7 @@ class Chart
 
     public var events:Array<EventSchema>;
 
-    public var timeChanges:Array<TimeChangeSchema>;
+    public var timeChanges:Array<TimeChange>;
 
     public var spectator:String;
 
@@ -54,7 +54,7 @@ class Chart
 
         events = new Array<EventSchema>();
 
-        timeChanges = new Array<TimeChangeSchema>();
+        timeChanges = new Array<TimeChange>();
 
         spectator = "";
 
@@ -78,7 +78,7 @@ typedef ChartSchema =
 
     var events:Array<EventSchema>;
 
-    var timeChanges:Array<TimeChangeSchema>;
+    var timeChanges:Array<TimeChange>;
 
     var spectator:String;
 
@@ -107,7 +107,7 @@ typedef NoteSchema = TimedObject &
     var kind:String;
 }
 
-typedef TimeChangeSchema = TimedObject &
+typedef TimeChange = TimedObject &
 {
     var tempo:Float;
 

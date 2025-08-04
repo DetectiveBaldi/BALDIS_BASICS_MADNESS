@@ -37,9 +37,9 @@ class SoundQueue
         if (!list.contains(sound))
             return;
 
-        var index:Int = list.indexOf(sound);
+        var isPlaying:Bool = list.indexOf(sound) == 0.0;
 
-        if (index == 0.0)
+        if (isPlaying)
             update();
         else
             list.remove(sound);
@@ -68,11 +68,11 @@ class SoundQueue
 
         if (stopCurrent)
         {
-            var snd:FlxSound = list[0];
+            var soundToStop:FlxSound = list[0];
 
-            snd.stop();
+            soundToStop.stop();
 
-            snd.onComplete = null;
+            soundToStop.onComplete = null;
         }
 
         list.resize(0);
@@ -83,22 +83,22 @@ class SoundQueue
         if (list.length == 0.0)
             return;
 
-        var last:FlxSound = list[0];
+        var lastSound:FlxSound = list[0];
 
-        last.onComplete = null;
+        lastSound.onComplete = null;
 
         list.shift();
 
         if (list.length == 0.0)
             return;
 
-        var next:FlxSound = list[0];
+        var newSound:FlxSound = list[0];
 
-        next.onComplete = update;
+        newSound.onComplete = update;
 
-        next.play(true);
+        newSound.play(true);
 
-        onUpdate.dispatch(next);
+        onUpdate.dispatch(newSound);
     }
 
     public function destroy():Void

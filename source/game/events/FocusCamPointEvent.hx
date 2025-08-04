@@ -8,11 +8,11 @@ import game.PlayState;
 class FocusCamPointEvent
 {
     public static function dispatch(game:PlayState, x:Float = 0.0, y:Float = 0.0, duration:Float, ease:String = "linear",
-        force:Bool = false):Void
+        skipCameraLock:Bool = false):Void
     {
         game.cameraTarget = "POINT";
 
-        if ((game.cameraLock == AUTOMATIC || game.cameraLock == STRICT) && !force)
+        if ((game.cameraLock == FOCUS_CAM_CHAR || game.cameraLock == NONE) && !skipCameraLock)
             return;
 
         if (duration > 0.0)

@@ -23,9 +23,6 @@ import music.Conductor;
 
 using util.ArrayUtil;
 
-/**
- * An extended `flixel.FlxState` with a few additional resources.
- */
 class CustomState extends FlxState
 {
     public var tween:FlxTweenManager;

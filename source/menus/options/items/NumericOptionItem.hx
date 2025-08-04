@@ -1,21 +1,14 @@
 package menus.options.items;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.group.FlxSpriteGroup;
 
 import flixel.math.FlxMath;
 
-import flixel.text.FlxText;
-
-import flixel.util.FlxColor;
-
 import core.Assets;
-import core.Paths;
 
-import menus.FreeplayScreen.ButtonOrientation;
-import menus.FreeplayScreen.OrientedButton;
+import ui.OrientedButton;
 
 using util.MathUtil;
 

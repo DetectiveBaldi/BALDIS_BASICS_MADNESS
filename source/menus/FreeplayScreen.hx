@@ -27,6 +27,9 @@ import extendable.CustomState;
 import game.HighScore;
 import game.PlayState;
 
+import ui.HeightenedButton;
+import ui.OrientedButton;
+
 using util.MathUtil;
 using util.StringUtil;
 
@@ -56,7 +59,7 @@ class FreeplayScreen extends CustomState
 
         FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
 
-        InitState.mouseRectPlugin.mouseRect.set(160.0, 0.0, FlxG.width - 160.0, FlxG.height);
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         levels = new Array<LevelData>();
 
@@ -326,145 +329,10 @@ class FreeplayScreen extends CustomState
         FlxG.switchState(() -> new ModeSelectScreen());
     }
 
+    /*
     public function clickInfoButton():Void
     {
 
     }
-}
-
-class OrientedButton extends FlxSprite
-{
-    public var onClick:FlxSignal;
-
-    public function new(x:Float = 0.0, y:Float = 0.0, orientation:ButtonOrientation):Void
-    {
-        super(x, y);
-
-        loadGraphic(Assets.getGraphic("menus/FreeplayScreen/OrientedButton/sheet"), true, 32, 32);
-
-        animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
-
-        animation.add("select", orientation == LEFT ? [2] : [3], 0.0, false);
-
-        animation.play("deselect");
-
-        scale.set(3.0, 3.0);
-
-        updateHitbox();
-
-        onClick = new FlxSignal();
-    }
-
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(this, camera))
-        {
-            animation.play("select");
-
-            if (FlxG.mouse.justReleased)
-                onClick.dispatch();
-        }
-        else
-            animation.play("deselect");
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        onClick = cast FlxDestroyUtil.destroy(onClick);
-    }
-}
-
-class HeightenedButton extends FlxSpriteGroup
-{
-    public var base:FlxSprite;
-
-    public var label:FlxText;
-
-    public var onClick:FlxSignal;
-
-    public function new(x:Float = 0.0, y:Float = 0.0, text:String, size:ButtonSize):Void
-    {
-        super(x, y);
-
-        base = new FlxSprite();
-
-        base.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/HeightenedButton/base"), true, 128, 128);
-
-        base.active = false;
-
-        base.animation.add("up", [0], 0.0, false);
-
-        base.animation.add("down", [1], 0.0, false);
-
-        base.animation.play("up");
-
-        base.scale.set(size == LARGE ? 2.0 : 1.75, size == LARGE ? 2.0 : 1.75);
-
-        base.updateHitbox();
-
-        add(base);
-
-        label = new FlxText(0.0, 0.0, base.width, text);
-
-        label.color = FlxColor.BLACK;
-
-        label.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        label.size = size == LARGE ? 28 : 24;
-
-        label.alignment = CENTER;
-
-        label.textField.antiAliasType = ADVANCED;
-
-        label.textField.sharpness = 400.0;
-
-        label.setPosition(base.getMidpoint().x - label.width * 0.5, size == LARGE ? 45.0 : 35.0);
-
-        add(label);
-
-        onClick = new FlxSignal();
-    }
-
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(this, camera))
-        {
-            if (FlxG.mouse.pressed)
-                base.animation.play("down");
-            else
-                base.animation.play("up");
-
-            if (FlxG.mouse.justReleased)
-                onClick.dispatch();
-        }
-        else
-            base.animation.play("up");
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        onClick = cast FlxDestroyUtil.destroy(onClick);
-    }
-}
-
-enum ButtonOrientation
-{
-    LEFT;
-
-    RIGHT;
-}
-
-enum ButtonSize
-{
-    LARGE;
-
-    SMALL;
+    */
 }
