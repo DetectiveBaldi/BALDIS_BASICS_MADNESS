@@ -18,6 +18,15 @@ class Playlist
         
         WeekData.list.push(week);
 
+        // Freeplay
+        week = {name: "Freeplay", nameSuffix: "'s Week", description: ""}
+
+        week.levels.pushMany({week: week, name: "Scribble"}, {week: week, name: "Setback"});
+
+        week.hasTvPortrait = false;
+        
+        WeekData.list.push(week);
+
         // Bladder
         week = {name: "Bladder", nameSuffix: "'s Week", description: ""}
 
