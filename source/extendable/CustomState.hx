@@ -47,15 +47,11 @@ class CustomState extends FlxState
 
         conductor = new Conductor();
 
-        conductor.active = false;
-
         conductor.onStepHit.add(stepHit);
 
         conductor.onBeatHit.add(beatHit);
         
         conductor.onMeasureHit.add(measureHit);
-
-        add(conductor);
 
         openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
     }

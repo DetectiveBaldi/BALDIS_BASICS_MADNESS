@@ -1,4 +1,4 @@
-package game.stages.freeplayw;
+package game.stages;
 
 import flixel.FlxSprite;
 

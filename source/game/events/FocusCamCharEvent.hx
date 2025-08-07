@@ -7,7 +7,9 @@ class FocusCamCharEvent
     public static function dispatch(game:PlayState, charType:String, duration:Float, ease:String = "linear",
         skipCameraLock:Bool = false):Void
     {
-        game.cameraTarget = charType.toUpperCase();
+        game.cameraTarget = "CHARACTER";
+
+        game.focusedCharacter = charType.toUpperCase();
 
         if ((game.cameraLock == FOCUS_CAM_POINT || game.cameraLock == NONE) && !skipCameraLock)
             return;

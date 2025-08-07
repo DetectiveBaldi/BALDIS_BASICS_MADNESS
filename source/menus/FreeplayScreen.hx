@@ -77,7 +77,7 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (#if debug true #else level.hiddenWithoutScore #end && HighScore.getLevelScore(level.name, "normal") == 0.0)
+            if (#if debug false #else level.hiddenWithoutScore #end && HighScore.getLevelScore(level.name, "normal") == 0.0)
                 continue;
 
             levels.push(level);
@@ -261,7 +261,7 @@ class FreeplayScreen extends CustomState
 
         if (week == null)
         {
-            if (HighScore.getLevelScore(level.name, "normal") == 0.0)
+            if (HighScore.getLevelScore(level.name, "normal") == 0.0 #if debug && false #end)
                 path = "level-score-needed";
         }
         else

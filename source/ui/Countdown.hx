@@ -254,6 +254,9 @@ class Countdown extends FlxGroup
 
                 onFinish.dispatch();
             }
+
+            case 5:
+                kill();
         }
 
         tick++;

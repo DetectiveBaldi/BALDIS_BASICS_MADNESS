@@ -126,6 +126,11 @@ class PlayState extends CustomState
 
     public var cameraTarget:String;
 
+    /**
+     * A more specific form of `cameraTarget`
+     */
+    public var focusedCharacter:String;
+
     public var cameraLock:CameraLockMode;
 
     public var gameCameraZoom:Float;
@@ -202,8 +207,6 @@ class PlayState extends CustomState
 
         super.create();
 
-        conductor.active = true;
-
         cameraPoint = new FlxObject();
 
         add(cameraPoint);
@@ -211,6 +214,8 @@ class PlayState extends CustomState
         gameCamera.follow(cameraPoint, LOCKON, 0.05);
 
         cameraTarget = "POINT";
+
+        focusedCharacter = "";
 
         cameraLock = DEFAULT;
 
@@ -302,10 +307,6 @@ class PlayState extends CustomState
         
         countdown.camera = hudCamera;
 
-        countdown.onPause.add(() -> conductor.active = false);
-
-        countdown.onResume.add(() -> conductor.active = true);
-
         countdown.onFinish.add(startSong);
 
         countdown.onSkip.add(startSong);
@@ -319,19 +320,27 @@ class PlayState extends CustomState
     {
         super.update(elapsed);
 
-        gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
+        // Calculate new time here, we need to dispatch song events for dispatching step, beat, and measure updates.
+        var timeToUpdateTo:Float = conductor.time + 1000.0 * elapsed;
 
-        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
-
+        // Update events before conductor.
         while (eventIndex < chart.events.length)
         {
             var event:EventSchema = chart.events[eventIndex];
 
-            if (conductor.time < event.time)
+            if (timeToUpdateTo < event.time)
                 break;
 
             onEvent(event);
         }
+        
+        // Update the conductor now.
+        if (countdown.active && !countdown.paused)
+            conductor.update(timeToUpdateTo);
+        
+        gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
+
+        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
         if (countdown.finished || countdown.skipped)
         {
@@ -358,14 +367,6 @@ class PlayState extends CustomState
         if (FlxG.keys.justPressed.EIGHT)
             FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClsFromLevel()));
         #end
-    }
-
-    override function beatHit(beat:Int):Void
-    {
-        super.beatHit(beat);
-        
-        if (beat == 1.0)
-            countdown.kill();
     }
 
     override function measureHit(measure:Int):Void

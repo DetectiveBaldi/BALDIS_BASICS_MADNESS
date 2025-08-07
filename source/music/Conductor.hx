@@ -10,7 +10,7 @@ import data.Chart.TimeChange;
 
 using util.ArrayUtil;
 
-class Conductor extends FlxBasic
+class Conductor
 {
     public var decStep(get, never):Float;
 
@@ -92,10 +92,6 @@ class Conductor extends FlxBasic
 
     public function new():Void
     {
-        super();
-
-        visible = false;
-
         onStepHit = new FlxTypedSignal<(step:Int)->Void>();
 
         onBeatHit = new FlxTypedSignal<(beat:Int)->Void>();
@@ -111,17 +107,15 @@ class Conductor extends FlxBasic
         timeChanges = new Array<TimeChange>();
     }
 
-    override function update(elapsed:Float):Void
+    public function update(newTime:Float):Void
     {
-        super.update(elapsed);
-        
         var lastStep:Int = step;
 
         var lastBeat:Int = beat;
 
         var lastMeasure:Int = measure;
 
-        time += elapsed * 1000.0;
+        time = newTime;
 
         if (timeChanges.length > 0.0)
         {
@@ -156,10 +150,8 @@ class Conductor extends FlxBasic
             onMeasureHit.dispatch(measure);
     }
 
-    override function destroy():Void
+    public function destroy():Void
     {
-        super.destroy();
-
         onStepHit = cast FlxDestroyUtil.destroy(onStepHit);
 
         onBeatHit = cast FlxDestroyUtil.destroy(onBeatHit);
