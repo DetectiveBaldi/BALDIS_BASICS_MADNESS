@@ -2,6 +2,7 @@ package menus;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -48,6 +49,8 @@ class FreeplayScreen extends CustomState
     public var tvStatic:FlxSprite;
 
     public var poster:FlxSprite;
+
+    public var clipboard:FlxSprite;
 
     public static var curSelected:Int = 0;
 
@@ -174,9 +177,9 @@ class FreeplayScreen extends CustomState
 
         exitButton.setPosition(playButton.x - exitButton.width - 30.0, FlxG.height - exitButton.height + 35.0);
 
-        // var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
+        var infoButton:HeightenedButton = addHeightenedButton("Info", SMALL, clickInfoButton);
 
-        // infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
+        infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
 
         changeSelection(0);
 
@@ -339,10 +342,117 @@ class FreeplayScreen extends CustomState
         FlxG.switchState(() -> new ModeSelectScreen());
     }
 
-    /*
     public function clickInfoButton():Void
     {
-
+        openSubState(new InfoButtonSubState(levels[curSelected]));
     }
-    */
+}
+
+class InfoButtonSubState extends FlxSubState
+{
+    public var clipboard:FlxSprite;
+
+    public var exitButton:FlxSprite;
+
+    public var scoreText:FlxText;
+
+    public var level:LevelData;
+
+    public function new(level:LevelData):Void
+    {
+        super();
+
+        this.level = level;
+    }
+
+    override function create():Void
+    {
+        super.create();
+
+        clipboard = new FlxSprite();
+
+        clipboard.visible = true;
+
+        clipboard.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/clipboard-InfoFlip"), 
+            Paths.image(Paths.xml("menus/FreeplayScreen/clipboard-InfoFlip")));
+
+        clipboard.animation.addByPrefix("flip", "flip", 24.0, false);
+
+        clipboard.animation.play("flip");
+
+        clipboard.animation.onFinish.addOnce((name:String) -> buildUI());
+
+        clipboard.setGraphicSize(960, 720);
+
+        clipboard.updateHitbox();
+
+        clipboard.screenCenter();
+
+        add(clipboard);
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (exitButton != null)
+            return
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
+        {
+            exitButton.animation.play("1");
+
+            if (FlxG.mouse.justPressed)
+            {
+                clipboard.animation.play("flip", false, true);
+
+                scoreText.visible = false;
+
+                exitButton.visible = false;
+
+                clipboard.animation.onFinish.add((name:String) -> close());
+            }
+        }
+        else
+            exitButton.animation.play("0");
+    }
+
+    public function buildUI()
+    {
+        exitButton = new FlxSprite();
+
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+
+        exitButton.animation.add("0", [0], 0.0, false);
+
+        exitButton.animation.add("1", [1], 0.0, false);
+
+        exitButton.animation.play("0");
+
+        exitButton.scale.set(2.0, 2.0);
+
+        exitButton.updateHitbox();
+
+        exitButton.setPosition(165.0, 5.0);
+
+        add(exitButton);
+
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal")));
+
+        scoreText.color = FlxColor.BLACK;
+
+        scoreText.size = 64;
+
+        scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        scoreText.alignment = CENTER;
+
+        scoreText.textField.antiAliasType = ADVANCED;
+
+        scoreText.textField.sharpness = 400.0;
+
+        scoreText.screenCenter();
+
+        add(scoreText);
+    }
 }

@@ -100,7 +100,7 @@ class StoryMenuScreen extends CustomState
 
         clipboard.updateHitbox();
 
-        clipboard.setPosition(165.0, FlxG.height - clipboard.height * 0.75);
+        clipboard.setPosition(210.0, FlxG.height - clipboard.height * 0.75);
 
         add(clipboard);
 
@@ -144,11 +144,11 @@ class StoryMenuScreen extends CustomState
 
         weekInfoBoard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/StoryMenuScreen/week-info-board"));
 
-        weekInfoBoard.scale.set(1.25, 1.25);
+        weekInfoBoard.scale.set(1.15, 1.15);
 
         weekInfoBoard.updateHitbox();
 
-        weekInfoBoard.setPosition(165.0, 15.0);
+        weekInfoBoard.setPosition(210.0, 45.0);
         
         add(weekInfoBoard);
 
@@ -176,7 +176,7 @@ class StoryMenuScreen extends CustomState
 
         weekDescText.color = FlxColor.BLACK;
 
-        weekDescText.size = 24;
+        weekDescText.size = 22;
 
         weekDescText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -196,7 +196,7 @@ class StoryMenuScreen extends CustomState
 
         chalkboard.updateHitbox();
 
-        chalkboard.setPosition(FlxG.width - chalkboard.width - 175.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
+        chalkboard.setPosition(FlxG.width - chalkboard.width - 165.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
 
         add(chalkboard);
 
@@ -216,7 +216,7 @@ class StoryMenuScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(FlxG.width - exitButton.width - 165.0, 5.0);
+        exitButton.setPosition(165.0, 5.0);
 
         add(exitButton);
 
