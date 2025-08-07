@@ -42,7 +42,7 @@ class WallsL extends PlayState
         opponent.setPosition(280, -25);
         opponent.visible = false;
     
-        gameCameraZoom = 1.5;
+        gameCameraZoom = 1.4;
 
         setCamStartPos();
     
@@ -82,6 +82,9 @@ class WallsL extends PlayState
 
         if (step == 16)
         {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            
             playField.visible = true;
         
             gameCameraZoom = 1.3;
@@ -97,7 +100,7 @@ class WallsL extends PlayState
 
         if (step == 556 || step == 620) 
         {
-            gameCameraZoom = 1.5;
+            gameCameraZoom = 1.35;
         }
 
         if (step == 784)
@@ -172,7 +175,10 @@ class WallsL extends PlayState
 
         if (step == 1680)
         {
-            gameCameraZoom = 1.5;
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+           
+            gameCameraZoom = 1.4;
         }
     }
 }
