@@ -17,73 +17,87 @@ using StringTools;
 
 class Stage extends FlxGroup
 {
+    public var filesPath:String;
+
     public function new():Void
     {
         super();
+
+        filesPath = getFilesPath();
     }
 
-    public function sprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
+    public function getFilesPath():String
     {
-        if (!path.startsWith("game"))
-            path = '${Type.getClassName(Type.getClass(this)).replace(".", "/")}/${path}';
-
-        var spr:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(path));
-
-        spr.active = false;
-
-        spr.visible = false;
-
-        spr.scale.set(scaleX, scaleY);
-
-        spr.updateHitbox();
-
-        spr.screenCenter();
-
-        add(spr);
-
-        return spr;
+        return '${Type.getClassName(Type.getClass(this)).replace(".", "/")}/';
     }
 
-    public function atlasSprite(path:String, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
+    public function getSprite(file:String, prependFilesPath:Bool = true, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
     {
-        if (!path.startsWith("game"))
-            path = '${Type.getClassName(Type.getClass(this)).replace(".", "/")}/${path}';
+        if (prependFilesPath)
+            file = filesPath + file;
 
-        var spr = new FlxSprite();
+        var newSprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(file));
 
-        spr.active = false;
+        newSprite.active = false;
 
-        spr.visible = false;
+        newSprite.visible = false;
 
-        spr.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(path), Paths.image(Paths.xml(path)));
+        newSprite.scale.set(scaleX, scaleY);
 
-        spr.scale.set(scaleX, scaleY);
+        newSprite.updateHitbox();
 
-        spr.updateHitbox();
+        newSprite.screenCenter();
 
-        spr.screenCenter();
+        add(newSprite);
 
-        add(spr);
-
-        return spr;
+        return newSprite;
     }
 
-    public function backdrop(path:String, axes:FlxAxes = XY, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
+    public function getAtlasSprite(file:String, prependFilesPath:Bool = true,
+        scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
     {
-        var back:FlxBackdrop = new FlxBackdrop(Assets.getGraphic(path), axes);
+        if (prependFilesPath)
+            file = filesPath + file;
 
-        back.active = false;
+        var newSprite = new FlxSprite();
 
-        back.visible = false;
+        newSprite.active = false;
 
-        back.scale.set(scaleX, scaleY);
+        newSprite.visible = false;
 
-        back.updateHitbox();
+        newSprite.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(file), Paths.image(Paths.xml(file)));
 
-        back.screenCenter();
+        newSprite.scale.set(scaleX, scaleY);
 
-        add(back);
+        newSprite.updateHitbox();
 
-        return back;
+        newSprite.screenCenter();
+
+        add(newSprite);
+
+        return newSprite;
+    }
+
+    public function getBackdrop(file:String, prependFilesPath:Bool = true, axes:FlxAxes = XY,
+        scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
+    {
+        if (prependFilesPath)
+            file = filesPath + file;
+
+        var getBackdrop:FlxBackdrop = new FlxBackdrop(Assets.getGraphic(file), axes);
+
+        getBackdrop.active = false;
+
+        getBackdrop.visible = false;
+
+        getBackdrop.scale.set(scaleX, scaleY);
+
+        getBackdrop.updateHitbox();
+
+        getBackdrop.screenCenter();
+
+        add(getBackdrop);
+
+        return getBackdrop;
     }
 }

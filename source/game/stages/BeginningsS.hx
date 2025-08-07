@@ -10,6 +10,6 @@ class BeginningsS extends Stage
     {
         super();
 
-        testRoom = sprite("test-room");
+        testRoom = getSprite("test-room");
     }
 }

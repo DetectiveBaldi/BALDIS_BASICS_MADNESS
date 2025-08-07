@@ -10,23 +10,23 @@ class StringUtil
         {
             case CAMEL:
             {
-                var splt:Array<String> = str.split(delimiter);
+                var split:Array<String> = str.split(delimiter);
 
-                for (i in 0 ... splt.length)
+                for (i in 0 ... split.length)
                 {
-                    var s:String = splt[i];
+                    var s:String = split[i];
 
                     s = s.substring(0, 1);
 
                     if (i == 0)
-                        splt[i] = s.toLowerCase();
+                        split[i] = s.toLowerCase();
                     else
-                        splt[i] = s.toUpperCase();
+                        split[i] = s.toUpperCase();
 
-                    splt[i] += s.substring(1, s.length + 1);
+                    split[i] += s.substring(1, s.length + 1);
                 }
 
-                return splt.join("");
+                return split.join("");
             }
 
             case KEBAB:
@@ -34,16 +34,16 @@ class StringUtil
 
             case PASCAL:
             {
-                var splt:Array<String> = str.split(delimiter);
+                var split:Array<String> = str.split(delimiter);
 
-                for (i in 0 ... splt.length)
+                for (i in 0 ... split.length)
                 {
-                    var s:String = splt[i];
+                    var s:String = split[i];
 
-                    splt[i] = s.substring(0, 1).toUpperCase() + s.substring(1, s.length + 1);
+                    split[i] = s.substring(0, 1).toUpperCase() + s.substring(1, s.length + 1);
                 }
 
-                return splt.join("");
+                return split.join("");
             }
         }
     }
@@ -52,11 +52,11 @@ class StringUtil
     {
         str = str.toLowerCase();
 
-        var constantTen:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
+        var constants:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
             "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
         
-        if (constantTen.exists(str))
-            return constantTen[str];
+        if (constants.exists(str))
+            return constants[str];
 
         return Std.parseInt(str) ?? -1;
     }

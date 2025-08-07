@@ -12,8 +12,8 @@ class LookalikeS extends Stage
     {
         super();
 
-        room3 = sprite("secret-room3");
+        room3 = getSprite("secret-room3");
 
-        room3_Alt0 = sprite("secret-room3-alt0");
+        room3_Alt0 = getSprite("secret-room3-alt0");
     }
 }

@@ -1,4 +1,4 @@
-package menus.options.categories;
+package menus.options.pages;
 
 import flixel.FlxG;
 
@@ -9,7 +9,7 @@ import menus.options.items.BoolOptionItem;
 import menus.options.items.ControlOptionItem;
 import menus.options.items.NumericOptionItem;
 
-class BaseOptionsCat extends FlxTypedGroup<BaseOptionItem>
+class BaseOptionsPage extends FlxTypedGroup<BaseOptionItem>
 {
     public var name:String;
 

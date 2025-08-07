@@ -16,12 +16,12 @@ class WarmWS extends Stage
     {
         super();
 
-        entranceA0 = sprite("entrance-a0");
+        entranceA0 = getSprite("entrance-a0");
 
-        entranceA1 = sprite("entrance-a1");
+        entranceA1 = getSprite("entrance-a1");
 
-        entranceA1_Alt0 = sprite("entrance-a1-alt0");
+        entranceA1_Alt0 = getSprite("entrance-a1-alt0");
 
-        entranceA1_Overlay0 = sprite("entrance-a1-overlay0");
+        entranceA1_Overlay0 = getSprite("entrance-a1-overlay0");
     }
 }

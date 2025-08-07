@@ -12,8 +12,8 @@ class RevisionS extends Stage
     {
         super();
 
-        entranceA2 = sprite("entrance-a2");
+        entranceA2 = getSprite("entrance-a2");
 
-        entranceA3 = sprite("entrance-a3");
+        entranceA3 = getSprite("entrance-a3");
     }   
 }

@@ -1,8 +1,8 @@
-package menus.options.categories;
+package menus.options.pages;
 
 import menus.options.items.ControlOptionItem;
 
-class ControlsCat extends BaseOptionsCat
+class ControlsPage extends BaseOptionsPage
 {
     public function new():Void
     {

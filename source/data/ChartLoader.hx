@@ -15,27 +15,37 @@ using util.ArrayUtil;
 
 class ChartLoader
 {
-    public static function parse(path:String):Chart
+    public static function readPath(path:String):Chart
     {
-        var metaPath:String = path + (path.endsWith("/") ? "meta" : "/meta");
+        var metaFilePath:String = '${path}/meta.json';
 
-        if (FileSystem.exists(Paths.json(metaPath)))
+        if (FileSystem.exists(metaFilePath))
         {
-            var chartPath:String = (path.endsWith("/") ? path : '${path}/') +
-                FileSystem.readDirectory(path).first((pat:String) -> pat.startsWith("chart")).replace(".json", "");
+            var filesList:Array<String> = FileSystem.readDirectory(path);
 
-            var difficulty:String = chartPath.contains("-") ? chartPath.split("-").last() : "normal";
+            var chartFile:String = filesList.first((file:String) -> file.startsWith("chart"));
 
-            return FunkinConverter.parse(chartPath, metaPath, difficulty);
+            var chartFilePath:String = '${path}/' + chartFile;
+
+            var difficulty:String = "normal";
+
+            if (chartFilePath.contains("-"))
+            {
+                var split:Array<String> = chartFilePath.split("-");
+
+                difficulty = split.last();
+            }
+
+            return FunkinConverter.parse(chartFilePath, metaFilePath, difficulty);
         }
         else
         {
-            var chartPath:String = path + (path.endsWith("/") ? "chart" : "/chart");
+            var chartFilePath:String = '${path}/chart.json';
 
-            var chart:Dynamic = Json.parse(Assets.getText(Paths.json(chartPath)));
+            var chart:Dynamic = Json.parse(Assets.getText(chartFilePath));
 
             if (Reflect.hasField(chart, "format"))
-                return PsychConverter.parse(chartPath.substring(0, chartPath.length - 6));
+                return PsychConverter.parse(chartFilePath, '${path}/credits.txt');
             else
                 return chart;
         }

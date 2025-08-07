@@ -18,13 +18,13 @@ import core.Assets;
 import core.Paths;
 
 import menus.options.items.BaseOptionItem;
-import menus.options.categories.BaseOptionsCat;
+import menus.options.pages.BaseOptionsPage;
 
 using util.MathUtil;
 
 class OptionsTooltip extends FlxSpriteGroup
 {
-    public var options:BaseOptionsCat;
+    public var options:BaseOptionsPage;
 
     public var lastHover:BaseOptionItem;
 
@@ -32,7 +32,7 @@ class OptionsTooltip extends FlxSpriteGroup
 
     public var descText:FlxText;
 
-    public function new(_options:BaseOptionsCat):Void
+    public function new(_options:BaseOptionsPage):Void
     {
         super();
 

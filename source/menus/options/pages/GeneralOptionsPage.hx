@@ -1,11 +1,11 @@
-package menus.options.categories;
+package menus.options.pages;
 
 import flixel.FlxG;
 
 import menus.options.items.BoolOptionItem;
 import menus.options.items.NumericOptionItem.IntOptionItem;
 
-class GeneralOptionsCat extends BaseOptionsCat
+class GeneralOptionsPage extends BaseOptionsPage
 {
     public function new():Void
     {

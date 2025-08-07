@@ -379,7 +379,7 @@ class PlayState extends CustomState
 
     public function loadChart():Void
     {
-        chart = ChartLoader.parse(Paths.data(PlayState.getClsPathFromLevel()));
+        chart = ChartLoader.readPath(Paths.data(PlayState.getClsPathFromLevel()));
 
         TimedObjectUtil.sort(chart.notes);
 

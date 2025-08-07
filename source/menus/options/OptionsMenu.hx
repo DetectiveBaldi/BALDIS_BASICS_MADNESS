@@ -18,10 +18,10 @@ import core.Paths;
 
 import extendable.CustomState;
 
-import menus.options.categories.GeneralOptionsCat;
-import menus.options.categories.BaseOptionsCat;
-import menus.options.categories.ControlsCat;
-import menus.options.categories.GameplayOptionsCat;
+import menus.options.pages.GeneralOptionsPage;
+import menus.options.pages.BaseOptionsPage;
+import menus.options.pages.ControlsPage;
+import menus.options.pages.GameplayOptionsPage;
 
 import ui.OrientedButton;
 
@@ -38,11 +38,11 @@ class OptionsMenu extends CustomState
 
     public var chalkboard:FlxSprite;
 
-    public var optionCategories:FlxTypedGroup<BaseOptionsCat>;
+    public var optionPages:FlxTypedGroup<BaseOptionsPage>;
 
-    public var categoryIndex:Int;
+    public var pageIndex:Int;
 
-    public var categoryLabel:FlxText;
+    public var pageLabel:FlxText;
 
     public var goRightButton:FlxSprite;
 
@@ -91,43 +91,43 @@ class OptionsMenu extends CustomState
 
         add(chalkboard);
 
-        optionCategories = new FlxTypedGroup<BaseOptionsCat>();
+        optionPages = new FlxTypedGroup<BaseOptionsPage>();
 
-        add(optionCategories);
+        add(optionPages);
 
-        var optCat:BaseOptionsCat = new GeneralOptionsCat();
+        var optionPage:BaseOptionsPage = new GeneralOptionsPage();
 
-        optionCategories.add(optCat);
+        optionPages.add(optionPage);
 
-        optCat = new ControlsCat();
+        optionPage = new ControlsPage();
         
-        optionCategories.add(optCat);
+        optionPages.add(optionPage);
 
-        optCat = new GameplayOptionsCat();
+        optionPage = new GameplayOptionsPage();
 
-        optionCategories.add(optCat);
+        optionPages.add(optionPage);
 
-        categoryIndex = 0;
+        pageIndex = 0;
 
-        categoryLabel = new FlxText(0.0, 0.0, 0.0, "", 36);
+        pageLabel = new FlxText(0.0, 0.0, 0.0, "", 36);
 
-        categoryLabel.color = FlxColor.WHITE;
+        pageLabel.color = FlxColor.WHITE;
 
-        categoryLabel.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        pageLabel.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        categoryLabel.textField.antiAliasType = ADVANCED;
+        pageLabel.textField.antiAliasType = ADVANCED;
 
-        categoryLabel.textField.sharpness = 400.0;
+        pageLabel.textField.sharpness = 400.0;
 
-        categoryLabel.alignment = LEFT;
+        pageLabel.alignment = LEFT;
 
-        categoryLabel.setPosition(chalkboard.x + 165.0, chalkboard.y + 150.0);
+        pageLabel.setPosition(chalkboard.x + 165.0, chalkboard.y + 150.0);
 
-        add(categoryLabel);
+        add(pageLabel);
 
         goRightButton = addOrientedButton(RIGHT, () ->
         {
-            setCategory(categoryIndex, categoryIndex = FlxMath.wrap(categoryIndex + 1, 0, optionCategories.length - 1));
+            setPage(pageIndex, pageIndex = FlxMath.wrap(pageIndex + 1, 0, optionPages.length - 1));
         });
 
         goRightButton.scale.set(2.0, 2.0);
@@ -141,7 +141,7 @@ class OptionsMenu extends CustomState
 
         add(tooltip);
 
-        setCategory(0, 0);
+        setPage(0, 0);
 
         exitButton = new FlxSprite();
 
@@ -191,29 +191,29 @@ class OptionsMenu extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function setCategory(oldIndex:Int, newIndex:Int):Void
+    public function setPage(oldIndex:Int, newIndex:Int):Void
     {
-        var oldCategory:BaseOptionsCat = optionCategories.members[oldIndex];
+        var oldPage:BaseOptionsPage = optionPages.members[oldIndex];
 
-        for (i in 0 ... oldCategory.members.length)
-            oldCategory.members[i].cancelTouch();
+        for (i in 0 ... oldPage.members.length)
+            oldPage.members[i].cancelTouch();
 
-        var newCategory:BaseOptionsCat = optionCategories.members[newIndex];
+        var newPage:BaseOptionsPage = optionPages.members[newIndex];
 
-        for (i in 0 ... optionCategories.members.length)
+        for (i in 0 ... optionPages.members.length)
         {
-            var category:BaseOptionsCat = optionCategories.members[i];
+            var page:BaseOptionsPage = optionPages.members[i];
 
-            var enabled:Bool = newCategory == category;
+            var enabled:Bool = newPage == page;
 
-            category.active = enabled;
+            page.active = enabled;
 
-            category.visible = enabled;
+            page.visible = enabled;
         }
 
-        categoryLabel.text = newCategory.name;
+        pageLabel.text = newPage.name;
 
-        tooltip.options = newCategory;
+        tooltip.options = newPage;
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton

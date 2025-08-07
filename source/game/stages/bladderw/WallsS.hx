@@ -18,14 +18,14 @@ class WallsS extends Stage
     {
         super();
 
-        room0 = sprite("secret-room0");
+        room0 = getSprite("secret-room0");
 
-        room0_Alt0 = sprite("secret-room0-alt0");
+        room0_Alt0 = getSprite("secret-room0-alt0");
 
-        room0_Overlay0 = sprite("secret-room0-overlay0");
+        room0_Overlay0 = getSprite("secret-room0-overlay0");
     
-        room1 = sprite("secret-room1");
+        room1 = getSprite("secret-room1");
         
-        room1_Overlay0 = sprite("secret-room1-overlay0");
+        room1_Overlay0 = getSprite("secret-room1-overlay0");
     }
 }

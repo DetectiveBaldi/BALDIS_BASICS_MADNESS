@@ -21,13 +21,13 @@ class FunkinConverter
     {
         var output:Chart = new Chart();
 
-        var rawChart:Dynamic = Json.parse(Assets.getText(Paths.json(chartPath)));
+        var rawChart:Dynamic = Json.parse(Assets.getText(chartPath));
 
         var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, diff);
 
         sortTimedObjects(notes);
 
-        var rawMeta:Dynamic = Json.parse(Assets.getText(Paths.json(metaPath)));
+        var rawMeta:Dynamic = Json.parse(Assets.getText(metaPath));
 
         var timeChanges:Array<FunkinTimeChange> = rawMeta.timeChanges;
 
@@ -72,13 +72,14 @@ class FunkinConverter
     }
 }
 
+// TODO: Migrate credits .txt to .json.
 class PsychConverter
 {
-    public static function parse(path:String):Chart
+    public static function parse(chartPath:String, creditsPath:String):Chart
     {
         var output:Chart = new Chart();
 
-        var raw:Dynamic = Json.parse(Assets.getText(Paths.json('${path}/chart')));
+        var raw:Dynamic = Json.parse(Assets.getText(chartPath));
 
         output.name = raw.song;
 
@@ -169,13 +170,13 @@ class PsychConverter
 
         output.player = raw.player1;
 
-        var credits:String = Assets.getText(Paths.txt('${path}/credits'));
+        var credits:String = Assets.getText(creditsPath);
 
-        var splt:Array<String> = credits.split("|");
+        var split:Array<String> = credits.split("|");
 
-        var composer:String = splt.first((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
+        var composer:String = split.first((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
 
-        var step:Null<Int> = splt.length > 1.0 ? Std.parseInt(splt.first((str:String) -> str.toLowerCase().contains("step"))
+        var step:Null<Int> = split.length > 1.0 ? Std.parseInt(split.first((str:String) -> str.toLowerCase().contains("step"))
             .split("=")[1]) : null;
 
         output.credits = {composer: composer, step: step}

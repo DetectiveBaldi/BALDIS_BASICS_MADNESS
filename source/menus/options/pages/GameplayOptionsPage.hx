@@ -1,8 +1,8 @@
-package menus.options.categories;
+package menus.options.pages;
 
 import menus.options.items.BoolOptionItem;
 
-class GameplayOptionsCat extends BaseOptionsCat
+class GameplayOptionsPage extends BaseOptionsPage
 {
     public function new():Void
     {
