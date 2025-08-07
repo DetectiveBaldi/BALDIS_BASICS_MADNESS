@@ -16,7 +16,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-import core.Assets;
 import core.Options;
 import core.Paths;
 

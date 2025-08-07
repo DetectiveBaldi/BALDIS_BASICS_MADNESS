@@ -13,7 +13,6 @@ import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
 import core.Options;
 import core.Paths;
 

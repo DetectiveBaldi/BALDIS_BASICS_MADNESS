@@ -4,7 +4,7 @@ import haxe.Json;
 
 import haxe.ds.ArraySort;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import util.MathUtil;
@@ -21,13 +21,13 @@ class FunkinConverter
     {
         var output:Chart = new Chart();
 
-        var rawChart:Dynamic = Json.parse(Assets.getText(chartPath));
+        var rawChart:Dynamic = Json.parse(AssetCache.getText(chartPath));
 
         var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, diff);
 
         sortTimedObjects(notes);
 
-        var rawMeta:Dynamic = Json.parse(Assets.getText(metaPath));
+        var rawMeta:Dynamic = Json.parse(AssetCache.getText(metaPath));
 
         var timeChanges:Array<FunkinTimeChange> = rawMeta.timeChanges;
 
@@ -79,7 +79,7 @@ class PsychConverter
     {
         var output:Chart = new Chart();
 
-        var raw:Dynamic = Json.parse(Assets.getText(chartPath));
+        var raw:Dynamic = Json.parse(AssetCache.getText(chartPath));
 
         output.name = raw.song;
 
@@ -170,7 +170,7 @@ class PsychConverter
 
         output.player = raw.player1;
 
-        var credits:String = Assets.getText(creditsPath);
+        var credits:String = AssetCache.getText(creditsPath);
 
         var split:Array<String> = credits.split("|");
 

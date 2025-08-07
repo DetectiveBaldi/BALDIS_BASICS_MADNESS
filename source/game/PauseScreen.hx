@@ -21,7 +21,7 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -65,7 +65,7 @@ class PauseScreen extends CustomSubState
 
         camera = FlxG.cameras.list.last();
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         camLerp = FlxG.camera.followLerp;
 
@@ -223,7 +223,7 @@ class PauseScreen extends CustomSubState
             restartIcon.active = true;
         });
 
-        tune = FlxG.sound.load(Assets.getMusic("game/PauseScreen/tune"), 1.0, true);
+        tune = FlxG.sound.load(AssetCache.getMusic("game/PauseScreen/tune"), 1.0, true);
 
         tune.volume = 0.0;
 
@@ -297,7 +297,7 @@ class PauseScreenIcon extends FlxSprite
 
     public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
     {
-        super(x, y, Assets.getGraphic('game/PauseScreen/${_path}'));
+        super(x, y, AssetCache.getGraphic('game/PauseScreen/${_path}'));
 
         selected = false;
 

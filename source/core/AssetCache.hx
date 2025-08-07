@@ -10,6 +10,8 @@ import openfl.display.BitmapData;
 
 import openfl.media.Sound;
 
+import openfl.Assets;
+
 import flixel.FlxG;
 import flixel.FlxState;
 
@@ -23,7 +25,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
-class Assets
+class AssetCache
 {
     public static var lastState:Class<FlxState>;
 
@@ -43,7 +45,7 @@ class Assets
 
         FlxG.signals.preStateSwitch.add(() -> lastState = Type.getClass(FlxG.state) );
 
-        FlxG.signals.preStateCreate.add((next:FlxState) -> { if (lastState != Type.getClass(next)) clearCaches(); });
+        FlxG.signals.preStateCreate.add((next:FlxState) -> { if (lastState != Type.getClass(next)) clearAll(); });
     }
 
     public static overload extern inline function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
@@ -55,20 +57,13 @@ class Assets
 
         var graphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));
 
-        getGraphic(graphic, gpuCaching);
-
-        graphics[path] = graphic;
-        
-        return graphic;
-    }
-
-    public static overload extern inline function getGraphic(graphic:FlxGraphic, gpuCaching:Bool = true):FlxGraphic
-    {
         if (Options.gpuCaching && gpuCaching)
             graphic.bitmap.disposeImage();
 
         graphic.persist = true;
 
+        graphics[path] = graphic;
+        
         return graphic;
     }
 
@@ -140,12 +135,17 @@ class Assets
 
         aud.close();
 
-        openfl.utils.Assets.cache.removeSound(path);
+        Assets.cache.removeSound(path);
 
         map.remove(path);
     }
-    
-    public static function clearCaches():Void
+
+    public static function getText(path:String):String
+    {
+        return File.getContent(path);
+    }
+
+    public static function clearAll():Void
     {
         for (k => v in graphics)
             removeGraphic(k);
@@ -155,10 +155,5 @@ class Assets
 
         for (k => v in music)
             removeAudio(true, k);
-    }
-
-    public static function getText(path:String):String
-    {
-        return File.getContent(path);
     }
 }

@@ -17,7 +17,7 @@ import flixel.util.FlxTimer.FlxTimerManager;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
+import core.AssetCache;
 
 import music.Conductor;
 
@@ -150,7 +150,7 @@ class CustomTransitionSprite extends FlxBackdrop
 
         onFinish.add(onFinis);
 
-        loadGraphic(Assets.getGraphic("extendable/CustomState/gradient"), true, 16, 16);
+        loadGraphic(AssetCache.getGraphic("extendable/CustomState/gradient"), true, 16, 16);
 
         animation.onFinish.add((name:String) -> onFinish.dispatch());
 

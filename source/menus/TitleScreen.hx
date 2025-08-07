@@ -15,7 +15,7 @@ import flixel.util.FlxSignal;
 
 import extendable.CustomState;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 using util.MathUtil;
@@ -40,11 +40,11 @@ class TitleScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
         
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
-        title = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/TitleScreen/title"));
+        title = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/TitleScreen/title"));
 
         title.active = false;
 
@@ -94,11 +94,11 @@ class TitleScreen extends CustomState
 
         add(studio);
 
-        introSound = FlxG.sound.load(Assets.getSound("menus/TitleScreen/introSound"));
+        introSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/introSound"));
 
         introSound.play();
 
-        tune = FlxG.sound.load(Assets.getMusic("menus/TitleScreen/tune"));
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 
         tune.play();
     }
@@ -117,7 +117,7 @@ class TitleScreen extends CustomState
 
     public function clickExitButton():Void
     {
-        FlxG.sound.play(Assets.getSound("menus/TitleScreen/exitSound"), 1.0, false, null, true, () -> Sys.exit(0));
+        FlxG.sound.play(AssetCache.getSound("menus/TitleScreen/exitSound"), 1.0, false, null, true, () -> Sys.exit(0));
     }
 
     public function clickButton():Void
@@ -138,7 +138,7 @@ class TitleButton extends FlxSprite
 
         onClick = new FlxSignal();
 
-        var _graphic:FlxGraphic = Assets.getGraphic('menus/TitleScreen/${_path}');
+        var _graphic:FlxGraphic = AssetCache.getGraphic('menus/TitleScreen/${_path}');
 
         loadGraphic(_graphic, true, Math.floor(_graphic.width * 0.5), 64);
 

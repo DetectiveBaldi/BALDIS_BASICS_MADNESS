@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import data.WeekData;
@@ -80,7 +80,7 @@ class StoryMenuScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -94,7 +94,7 @@ class StoryMenuScreen extends CustomState
 
         add(background);
 
-        clipboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/clipboard"));
+        clipboard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/clipboard"));
 
         clipboard.scale.set(1.5, 1.5);
 
@@ -142,7 +142,7 @@ class StoryMenuScreen extends CustomState
 
         add(songListText);
 
-        weekInfoBoard = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/StoryMenuScreen/week-info-board"));
+        weekInfoBoard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/StoryMenuScreen/week-info-board"));
 
         weekInfoBoard.scale.set(1.25, 1.25);
 
@@ -190,7 +190,7 @@ class StoryMenuScreen extends CustomState
 
         add(weekDescText);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/chalkboard"));
+        chalkboard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/chalkboard"));
 
         chalkboard.scale.set(1.25, 1.25);
 
@@ -206,7 +206,7 @@ class StoryMenuScreen extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("deselect", [0], 0.0, false);
 
@@ -222,7 +222,7 @@ class StoryMenuScreen extends CustomState
 
         startButton = new FlxSprite();
 
-        startButton.loadGraphic(Assets.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
+        startButton.loadGraphic(AssetCache.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
 
         startButton.animation.add("deselect", [0], 0.0, false);
 
@@ -291,8 +291,9 @@ class StoryMenuScreen extends CustomState
             {
                 var weekToLoad:WeekData = weeks[curSelected];
 
-                if (HighScore.getWeekScore(weekToLoad.name, "normal") == 0.0 && weekToLoad.requiresScoreToPlay)
-                    return;
+                if (HighScore.getWeekScore(weekToLoad.name, "normal") == 0.0 && #if debug false #else
+                    weekToLoad.requiresScoreToPlay #end)
+                        return;
 
                 MainMenuScreen.fadeTune();
 
@@ -343,7 +344,7 @@ class StoryMenuScreen extends CustomState
 
     public function updateWeekPortrait(week:WeekData):Void
     {
-        weekPortrait.loadGraphic(Assets.getGraphic('shared/week-portrait-${week.name.setCase(" ", KEBAB)}'));
+        weekPortrait.loadGraphic(AssetCache.getGraphic('shared/week-portrait-${week.name.setCase(" ", KEBAB)}'));
 
         weekPortrait.scale.set(1.25, 1.25);
 

@@ -5,7 +5,7 @@ import flixel.FlxSprite;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 using util.MathUtil;
@@ -20,7 +20,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
     {
         super(_x, _y, _title, _description, _option);
 
-        checkContainer = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/options/items/BoolOptionItem/checkContainer"));
+        checkContainer = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/options/items/BoolOptionItem/checkContainer"));
 
         checkContainer.scale.set(3.0, 3.0);
 
@@ -30,7 +30,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
         add(checkContainer);
 
-        checkbox = new FlxSprite().loadGraphic(Assets.getGraphic("shared/numpad-indicators"), true, 24, 24);
+        checkbox = new FlxSprite().loadGraphic(AssetCache.getGraphic("shared/numpad-indicators"), true, 24, 24);
 
         checkbox.visible = value;
 

@@ -15,7 +15,7 @@ import flixel.util.FlxSignal;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import extendable.CustomState;
@@ -42,7 +42,7 @@ class MainMenuScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -56,7 +56,7 @@ class MainMenuScreen extends CustomState
 
         add(background);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/MainMenuScreen/chalkboard"));
+        chalkboard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/MainMenuScreen/chalkboard"));
 
         chalkboard.scale.set(2.2, 2.2);
 
@@ -90,7 +90,7 @@ class MainMenuScreen extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -160,7 +160,7 @@ class MainMenuScreen extends CustomState
         if (tune != null)
             return;
 
-        tune = FlxG.sound.load(Assets.getMusic("menus/MainMenuScreen/tune"), 1.0, true);
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/MainMenuScreen/tune"), 1.0, true);
 
         tune.persist = true;
 

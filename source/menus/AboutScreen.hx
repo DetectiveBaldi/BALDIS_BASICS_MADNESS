@@ -5,7 +5,7 @@ import flixel.FlxSprite;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
+import core.AssetCache;
 
 import extendable.CustomState;
 
@@ -25,11 +25,11 @@ class AboutScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         bg = new FlxSprite();
 
-        bg.loadGraphic(Assets.getGraphic("menus/AboutText"));
+        bg.loadGraphic(AssetCache.getGraphic("menus/AboutText"));
 
         bg.active = false;
 
@@ -43,7 +43,7 @@ class AboutScreen extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 

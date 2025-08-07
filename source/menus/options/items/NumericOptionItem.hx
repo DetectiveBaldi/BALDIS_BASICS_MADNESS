@@ -6,7 +6,7 @@ import flixel.group.FlxSpriteGroup;
 
 import flixel.math.FlxMath;
 
-import core.Assets;
+import core.AssetCache;
 
 import ui.OrientedButton;
 
@@ -56,7 +56,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         for (i in 0 ... cellsToGenerate)
         {
-            var cell:FlxSprite = new FlxSprite().loadGraphic(Assets.getGraphic("menus/options/items/IntOptionItem/cells"), true,
+            var cell:FlxSprite = new FlxSprite().loadGraphic(AssetCache.getGraphic("menus/options/items/IntOptionItem/cells"), true,
                 8, 32);
 
             cell.animation.add("off", [0], 0.0, false);

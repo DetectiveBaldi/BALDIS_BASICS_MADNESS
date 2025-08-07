@@ -11,7 +11,7 @@ import flixel.FlxState;
 
 import flixel.util.typeLimit.NextState;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 
 import data.Playlist;
@@ -61,7 +61,7 @@ class InitState extends FlxState
 
         FlxG.plugins.drawOnTop = true;
 
-        Assets.init();
+        AssetCache.init();
 
         setAutoPause(Options.autoPause);
 

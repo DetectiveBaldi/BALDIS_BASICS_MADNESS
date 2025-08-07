@@ -1,4 +1,4 @@
-package game.levels.freeplayw;
+package game.levels;
 
 import flixel.tweens.FlxEase;
 
@@ -11,23 +11,25 @@ import data.CharacterData;
 import game.events.FocusCamCharEvent;
 import game.events.FocusCamPointEvent;
 
-import game.stages.bladderw.WallsS;
+import game.stages.freeplayw.ScribbleS;
 
 using util.MathUtil;
 
 using StringTools;
 
-class SetbackL extends PlayState
+class ScribbleL extends PlayState
 {
-    public var wallsS:WallsS;
+    public var scribbleS:ScribbleS;
 
     override function create():Void
     {
-        stage = new WallsS();
+        stage = new ScribbleS();
 
-        wallsS = cast (stage, WallsS);
+        scribbleS = cast (stage, ScribbleS);
 
         super.create();
+        
+        scribbleS.classicHall0.visible = true;
 
         setCamStartPos();
     }

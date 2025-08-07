@@ -11,7 +11,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 class HeightenedButton extends FlxSpriteGroup
@@ -28,7 +28,7 @@ class HeightenedButton extends FlxSpriteGroup
 
         base = new FlxSprite();
 
-        base.loadGraphic(Assets.getGraphic("ui/HeightenedButton/base"), true, 128, 128);
+        base.loadGraphic(AssetCache.getGraphic("ui/HeightenedButton/base"), true, 128, 128);
 
         base.active = false;
 

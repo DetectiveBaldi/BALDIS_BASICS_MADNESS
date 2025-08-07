@@ -14,7 +14,7 @@ import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import menus.options.items.BaseOptionItem;
@@ -38,7 +38,7 @@ class OptionsTooltip extends FlxSpriteGroup
 
         options = _options;
 
-        panel = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/options/OptionsTooltip/panel"));
+        panel = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/options/OptionsTooltip/panel"));
 
         add(panel);
 

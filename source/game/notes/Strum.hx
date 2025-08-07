@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import music.Conductor;
@@ -29,7 +29,7 @@ class Strum extends FlxSprite
 
         conductor = _conductor;
 
-        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/Strum/default"),
+        frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Strum/default"),
             Paths.image(Paths.xml("game/notes/Strum/default")));
         
         for (i in 0 ... Note.DIRECTIONS.length)

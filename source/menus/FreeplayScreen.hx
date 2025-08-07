@@ -16,7 +16,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import data.LevelData;
@@ -57,7 +57,7 @@ class FreeplayScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -77,13 +77,13 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.hiddenWithoutScore && HighScore.getLevelScore(level.name, "normal") == 0.0)
+            if (#if debug true #else level.hiddenWithoutScore #end && HighScore.getLevelScore(level.name, "normal") == 0.0)
                 continue;
 
             levels.push(level);
         }
 
-        background = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/background"));
+        background = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/background"));
 
         background.setGraphicSize(FlxG.width, FlxG.height);
 
@@ -99,7 +99,7 @@ class FreeplayScreen extends CustomState
 
         scrollBg.visible = false;
 
-        scrollBg.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/FreeplayScreen/scroll-bg"), 
+        scrollBg.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg"), 
             Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg")));
 
         scrollBg.animation.addByPrefix("move", "move", 12.0, false);
@@ -116,7 +116,7 @@ class FreeplayScreen extends CustomState
 
         add(scrollBg);
 
-        tv = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/FreeplayScreen/tv"));
+        tv = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/tv"));
 
         tv.active = false;
 
@@ -136,7 +136,7 @@ class FreeplayScreen extends CustomState
 
         tvStatic = new FlxSprite(0.0, 0.0);
 
-        tvStatic.loadGraphic(Assets.getGraphic("menus/FreeplayScreen/tv-static"), true, 128, 128);
+        tvStatic.loadGraphic(AssetCache.getGraphic("menus/FreeplayScreen/tv-static"), true, 128, 128);
 
         tvStatic.animation.add("static", [0, 1], 18.0);
 
@@ -222,7 +222,8 @@ class FreeplayScreen extends CustomState
 
         var week:WeekData = level.week;
 
-        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay &&
+        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || #if debug true #else
+            !week.requiresScoreToPlay #end &&
                 week.hasTvPortrait))
                     tween.tween(tvStatic, {alpha: 0.0}, 0.5);
     }
@@ -235,14 +236,15 @@ class FreeplayScreen extends CustomState
 
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || !week.requiresScoreToPlay && week.hasTvPortrait)
-                portraitStr = week.name.toLowerCase();
+            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || #if debug true #else !week.requiresScoreToPlay
+                #end && week.hasTvPortrait)
+                    portraitStr = week.name.toLowerCase();
         }
 
         if (portraitStr == "unknown")
             tvPortrait.makeGraphic(1, 1, FlxColor.TRANSPARENT);
         else
-            tvPortrait.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/portraits/${portraitStr}'));
+            tvPortrait.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/portraits/${portraitStr}'));
 
         tvPortrait.scale.set(2.25, 2.25);
 
@@ -264,11 +266,11 @@ class FreeplayScreen extends CustomState
         }
         else
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && week.requiresScoreToPlay)
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && #if debug false #else week.requiresScoreToPlay #end)
                 path = "week-score-needed";
         }
 
-        poster.loadGraphic(Assets.getGraphic('menus/FreeplayScreen/posters/${path}'));
+        poster.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/posters/${path}'));
 
         poster.setGraphicSize(350.0, 350.0);
 
@@ -323,7 +325,7 @@ class FreeplayScreen extends CustomState
         
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && week.requiresScoreToPlay)
+            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && #if debug false #else week.requiresScoreToPlay #end)
                 return;
         }
 

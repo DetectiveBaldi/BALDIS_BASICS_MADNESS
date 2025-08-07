@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 
 import flixel.util.typeLimit.NextState;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import extendable.CustomState;
@@ -67,7 +67,7 @@ class OptionsMenu extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -81,7 +81,7 @@ class OptionsMenu extends CustomState
 
         add(background);
 
-        chalkboard = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/chalkboard"));
+        chalkboard = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/chalkboard"));
 
         chalkboard.scale.set(2.25, 2.25);
 
@@ -145,7 +145,7 @@ class OptionsMenu extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 

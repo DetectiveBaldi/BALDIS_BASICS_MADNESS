@@ -8,7 +8,6 @@ import flixel.graphics.frames.FlxFrame;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
 import core.Paths;
 
 /**

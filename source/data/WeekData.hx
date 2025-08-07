@@ -1,15 +1,5 @@
 package data;
 
-import haxe.Json;
-
-import haxe.ds.ArraySort;
-
-import sys.FileSystem;
-
-import core.Assets;
-
-import data.LevelData;
-
 @:structInit
 class WeekData
 {
@@ -41,7 +31,7 @@ class WeekData
 
         levels = new Array<LevelData>();
 
-        requiresScoreToPlay = false;
+        requiresScoreToPlay = true;
 
         showInStoryMenu = true;
 

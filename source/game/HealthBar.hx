@@ -8,7 +8,7 @@ import flixel.math.FlxMath;
 
 import flixel.util.FlxSignal;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import music.Conductor;
@@ -112,7 +112,7 @@ class HealthBar extends FlxSpriteGroup
 
         fillDirection = LEFT_TO_RIGHT;
 
-        gradient = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/HealthBar/gradient"));
+        gradient = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/HealthBar/gradient"));
 
         gradient.scale.set(1.3, 1.3);
 
@@ -120,7 +120,7 @@ class HealthBar extends FlxSpriteGroup
 
         add(gradient);
 
-        needle = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/HealthBar/needle"));
+        needle = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/HealthBar/needle"));
 
         needle.scale.set(1.3, 1.3);
 
@@ -128,7 +128,7 @@ class HealthBar extends FlxSpriteGroup
 
         add(needle);
 
-        overlay = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/HealthBar/overlay"));
+        overlay = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/HealthBar/overlay"));
 
         overlay.scale.set(1.3, 1.3);
 

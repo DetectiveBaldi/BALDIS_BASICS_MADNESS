@@ -2,7 +2,7 @@ package game;
 
 import flixel.FlxSprite;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 class HealthIcon extends FlxSprite
@@ -18,7 +18,7 @@ class HealthIcon extends FlxSprite
 
     public function load(character:String):Void
     {
-        loadGraphic(Assets.getGraphic('game/HealthIcon/${character}'), true, 150, 150);
+        loadGraphic(AssetCache.getGraphic('game/HealthIcon/${character}'), true, 150, 150);
 
         animation.add("icon", [0, 1], 0.0, false);
 

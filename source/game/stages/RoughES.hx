@@ -6,7 +6,6 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
 import core.Paths;
 
 class RoughES extends Stage

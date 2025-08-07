@@ -14,7 +14,7 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 import flixel.util.FlxSignal.FlxTypedSignal;
 
-import core.Assets;
+import core.AssetCache;
 
 import music.Conductor;
 
@@ -130,13 +130,13 @@ class Countdown extends FlxGroup
 
         goSpr.setPosition(goSpr.getCenterX(), FlxG.height);
 
-        threeSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/threeSnd"), 0.65);
+        threeSnd = FlxG.sound.load(AssetCache.getSound("ui/Countdown/threeSnd"), 0.65);
 
-        twoSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/twoSnd"), 0.65);
+        twoSnd = FlxG.sound.load(AssetCache.getSound("ui/Countdown/twoSnd"), 0.65);
 
-        oneSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/oneSnd"), 0.65);
+        oneSnd = FlxG.sound.load(AssetCache.getSound("ui/Countdown/oneSnd"), 0.65);
 
-        goSnd = FlxG.sound.load(Assets.getSound("ui/Countdown/goSnd"), 0.65);
+        goSnd = FlxG.sound.load(AssetCache.getSound("ui/Countdown/goSnd"), 0.65);
     }
 
     override function destroy():Void
@@ -263,7 +263,7 @@ class Countdown extends FlxGroup
 
     public function createCountdownSprite(name:String):FlxSprite
     {
-        var sprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic('ui/Countdown/${name}Spr'));
+        var sprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('ui/Countdown/${name}Spr'));
 
         sprite.scale.set(1.5, 1.5);
 

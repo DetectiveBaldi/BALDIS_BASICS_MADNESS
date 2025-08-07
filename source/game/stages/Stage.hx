@@ -10,7 +10,7 @@ import flixel.util.FlxAxes;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 using StringTools;
@@ -36,7 +36,7 @@ class Stage extends FlxGroup
         if (prependFilesPath)
             file = filesPath + file;
 
-        var newSprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic(file));
+        var newSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic(file));
 
         newSprite.active = false;
 
@@ -65,7 +65,7 @@ class Stage extends FlxGroup
 
         newSprite.visible = false;
 
-        newSprite.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(file), Paths.image(Paths.xml(file)));
+        newSprite.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic(file), Paths.image(Paths.xml(file)));
 
         newSprite.scale.set(scaleX, scaleY);
 
@@ -84,7 +84,7 @@ class Stage extends FlxGroup
         if (prependFilesPath)
             file = filesPath + file;
 
-        var getBackdrop:FlxBackdrop = new FlxBackdrop(Assets.getGraphic(file), axes);
+        var getBackdrop:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic(file), axes);
 
         getBackdrop.active = false;
 

@@ -30,7 +30,7 @@ import game.notes.events.SustainMissEvent;
 import game.notes.NoteSpawner;
 import game.notes.Strumline;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -104,7 +104,7 @@ class PlayField extends FlxGroup
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
-        scoreClip = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/clipboard"));
+        scoreClip = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/clipboard"));
 
         scoreClip.active = false;
 
@@ -143,7 +143,7 @@ class PlayField extends FlxGroup
 
         add(healthBar);
 
-        timerClock = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerClock"));
+        timerClock = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/PlayField/timerClock"));
         
         timerClock.active = false;
 
@@ -155,7 +155,7 @@ class PlayField extends FlxGroup
         
         add(timerClock);
 
-        timerNeedle = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/PlayField/timerNeedle"));
+        timerNeedle = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/PlayField/timerNeedle"));
 
         timerNeedle.active = false;
 

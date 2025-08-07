@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import core.Assets;
+import core.AssetCache;
 
 class OrientedButton extends FlxSprite
 {
@@ -16,7 +16,7 @@ class OrientedButton extends FlxSprite
     {
         super(x, y);
 
-        loadGraphic(Assets.getGraphic("ui/OrientedButton/sheet"), true, 32, 32);
+        loadGraphic(AssetCache.getGraphic("ui/OrientedButton/sheet"), true, 32, 32);
 
         animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
 

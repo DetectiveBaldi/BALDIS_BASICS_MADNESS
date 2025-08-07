@@ -9,7 +9,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -152,9 +152,9 @@ class Character extends FlxSprite
         
         switch (config.format ?? "".toLowerCase():String)
         {
-            case "sparrow": frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
+            case "sparrow": frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic(pngPath), xmlPath);
 
-            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
+            case "texturepackerxml": frames = FlxAtlasFrames.fromTexturePackerXml(AssetCache.getGraphic(pngPath), xmlPath);
         }
 
         antialiasing = config.antialiasing ?? true;

@@ -18,15 +18,6 @@ class Playlist
         
         WeekData.list.push(week);
 
-        // Freeplay
-        week = {name: "Freeplay", nameSuffix: "'s Week", description: ""}
-
-        week.levels.pushMany({week: week, name: "Scribble"}, {week: week, name: "Setback"});
-
-        week.hasTvPortrait = false;
-        
-        WeekData.list.push(week);
-
         // Bladder
         week = {name: "Bladder", nameSuffix: "'s Week", description: ""}
 
@@ -43,6 +34,16 @@ class Playlist
         var level:LevelData = {week: null, name: "Beginnings"}
 
         level.hiddenWithoutScore = true;
+
+        LevelData.list.push(level);
+
+        // Scribble
+        level = {week: null, name: "Scribble"}
+
+        LevelData.list.push(level);
+
+        // Setback
+        level = {week: null, name: "Setback"}
 
         LevelData.list.push(level);
     }

@@ -10,7 +10,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 import flixel.math.FlxPoint;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import data.AnimationData;
@@ -23,7 +23,7 @@ class NoteSplash extends FlxSprite
     {
         super(x, y);
 
-        frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/NoteSplash/default"), Paths.image(Paths.xml
+        frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/NoteSplash/default"), Paths.image(Paths.xml
             ("game/notes/NoteSplash/default")));
 
         var animations:Array<AnimationData> = new Array<AnimationData>();

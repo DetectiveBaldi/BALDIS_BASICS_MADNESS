@@ -5,7 +5,7 @@ import flixel.FlxSprite;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
+import core.AssetCache;
 
 import extendable.CustomState;
 
@@ -29,11 +29,11 @@ class CreditsScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         bg = new FlxSprite();
 
-        bg.loadGraphic(Assets.getGraphic("menus/CreditsText"));
+        bg.loadGraphic(AssetCache.getGraphic("menus/CreditsText"));
 
         bg.active = false;
 
@@ -47,7 +47,7 @@ class CreditsScreen extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -63,7 +63,7 @@ class CreditsScreen extends CustomState
 
         add(exitButton);
 
-        tune = FlxG.sound.load(Assets.getMusic("menus/CreditsScreen/Credits"), 1.0, true);
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/CreditsScreen/Credits"), 1.0, true);
         tune.play();
     }
 

@@ -8,7 +8,7 @@ import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import extendable.CustomState;
@@ -25,7 +25,7 @@ class WarningScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         var _text:String = "";
 
@@ -73,7 +73,7 @@ class WarningScreen extends CustomState
 
         text.addFormat(colorSwap, 248, 260);
 
-        tune = FlxG.sound.load(Assets.getMusic("menus/WarningScreen/tune"), 1.0, true);
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/WarningScreen/tune"), 1.0, true);
 
         tune.play();
     }

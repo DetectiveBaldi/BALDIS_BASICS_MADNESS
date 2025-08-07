@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 using util.ArrayUtil;
@@ -53,7 +53,7 @@ class Note extends FlxSprite
     {
         super(x, y);
 
-        NOTE_FRAMES ??= FlxAtlasFrames.fromSparrow(Assets.getGraphic("game/notes/Note/default"),
+        NOTE_FRAMES ??= FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
             Paths.image(Paths.xml("game/notes/Note/default")));
 
         frames = NOTE_FRAMES;

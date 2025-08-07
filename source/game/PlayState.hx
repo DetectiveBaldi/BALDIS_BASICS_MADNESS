@@ -15,7 +15,7 @@ import flixel.math.FlxPoint;
 
 import flixel.sound.FlxSound;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 import core.Options;
 
@@ -224,7 +224,7 @@ class PlayState extends CustomState
 
         add(stage);
 
-        Assets.getGraphic("game/Character/bf-dead");
+        AssetCache.getGraphic("game/Character/bf-dead");
 
         spectators = new FlxTypedSpriteGroup<Character>();
 
@@ -423,25 +423,25 @@ class PlayState extends CustomState
 
         var pathSuffix:String = "Instrumental";
 
-        instrumental = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
+        instrumental = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
 
         instrumental.onComplete = endSong;
 
         pathSuffix = "Vocals-Main";
 
         if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-            mainVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
+            mainVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
         else
         {
             pathSuffix = "Vocals-Opponent";
 
             if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-                opponentVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
+                opponentVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
 
             pathSuffix = "Vocals-Player";
 
             if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-                playerVocals = FlxG.sound.load(Assets.getMusic(songPath + pathSuffix));
+                playerVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
         }
     }
 

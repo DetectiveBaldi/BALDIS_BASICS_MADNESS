@@ -16,7 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -64,7 +64,7 @@ class GainGL extends PlayState
         opp.setPosition(390.0, 100.0);
         opp.skipDance = true;
 
-        Assets.getGraphic("game/Character/gotta-sweep");
+        AssetCache.getGraphic("game/Character/gotta-sweep");
     
         gainGS.remove(opponents, true);
         gainGS.insert(gainGS.members.indexOf(gainGS.entranceA4_Overlay0), opponents);
@@ -296,7 +296,7 @@ class GainGL extends PlayState
         {                       
             var plr:Character = getPlayer("bf-face-left");
             
-            principal = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/principal"));
+            principal = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/principal"));
             principal.scale.set(1.15, 1.15);
             principal.updateHitbox();
             principal.setPosition(2500, 150.0);

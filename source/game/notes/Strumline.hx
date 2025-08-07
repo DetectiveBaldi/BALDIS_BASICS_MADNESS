@@ -11,7 +11,7 @@ import flixel.sound.FlxSound;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal.FlxTypedSignal;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 
 import game.notes.events.GhostTapEvent;
@@ -378,7 +378,7 @@ class Strumline extends FlxGroup
         if (vocals != null)
             vocals.volume = 0.0;
 
-        var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
+        var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
 
         _noteMiss.onComplete = _noteMiss.kill;
     }
@@ -432,6 +432,9 @@ class Strumline extends FlxGroup
         note.length += note.time - conductor.time;
 
         note.time = conductor.time;
+
+        if (note.length == 0.0)
+            finishSustainNote(note);
     }
 
     public function finishSustainNote(note:Note):Void
@@ -441,7 +444,7 @@ class Strumline extends FlxGroup
 
         if (!botplay)
         {
-            if (keysHeld[note.direction])
+            if (note.unholdTime == 0.0)
             {
                 if (note.playSplash)
                     playSplash(note);
@@ -468,7 +471,7 @@ class Strumline extends FlxGroup
 
         if (!ghostTapEvent.ghostTapping)
         {
-            var _noteMiss:FlxSound = FlxG.sound.play(Assets.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
+            var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
 
             _noteMiss.onComplete = _noteMiss.kill;
 

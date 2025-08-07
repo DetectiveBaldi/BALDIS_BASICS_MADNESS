@@ -9,7 +9,7 @@ import flixel.sound.FlxSound;
 
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 
 import data.CharacterData;
 
@@ -51,7 +51,7 @@ class GameOverScreen extends CustomSubState
 
         add(player);
 
-        dead = FlxG.sound.load(Assets.getSound("game/GameOverScreen/dead"));
+        dead = FlxG.sound.load(AssetCache.getSound("game/GameOverScreen/dead"));
 
         dead.onComplete = showImages;
 
@@ -63,7 +63,7 @@ class GameOverScreen extends CustomSubState
 
         retryButton.visible = false;
 
-        retryButton.loadGraphic(Assets.getGraphic('game/GameOverScreen/retryButton'), true, 128, 66);
+        retryButton.loadGraphic(AssetCache.getGraphic('game/GameOverScreen/retryButton'), true, 128, 66);
 
         retryButton.animation.add("0", [0], 0.0, false);
 
@@ -115,7 +115,7 @@ class GameOverScreen extends CustomSubState
 
                     new FlxTimer(timer).start(2.5, (_timer:FlxTimer) -> FlxG.resetState());
 
-                    FlxG.sound.play(Assets.getSound("game/GameOverScreen/confirm"), 0.5, false, null, true);
+                    FlxG.sound.play(AssetCache.getSound("game/GameOverScreen/confirm"), 0.5, false, null, true);
                 }
             }
             else
@@ -134,7 +134,7 @@ class GameOverScreen extends CustomSubState
     {
         var rollIndex:Int = 0;
 
-        var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic('game/GameOverScreen/${rollIndex}'));
+        var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('game/GameOverScreen/${rollIndex}'));
 
         rollSprite.scale.set(2.0, 2.0);
 
@@ -144,7 +144,7 @@ class GameOverScreen extends CustomSubState
 
         add(rollSprite);
 
-        var rollSound:FlxSound = FlxG.sound.load(Assets.getSound('game/GameOverScreen/${rollIndex}'));
+        var rollSound:FlxSound = FlxG.sound.load(AssetCache.getSound('game/GameOverScreen/${rollIndex}'));
 
         rollSound.play();
 
@@ -152,7 +152,7 @@ class GameOverScreen extends CustomSubState
         {
             if (rollTimer.loopsLeft == 1.0)
             {
-                var sequence:FlxSound = FlxG.sound.play(Assets.getSound("game/GameOverScreen/suspence"), 1.0, false, null, true);
+                var sequence:FlxSound = FlxG.sound.play(AssetCache.getSound("game/GameOverScreen/suspence"), 1.0, false, null, true);
 
                 rollTimer.time = sequence.length * 0.001;
             }
@@ -165,12 +165,12 @@ class GameOverScreen extends CustomSubState
             if (rollTimer.loopsLeft != 0.0)
                 rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
 
-            rollSprite.loadGraphic(Assets.getGraphic
+            rollSprite.loadGraphic(AssetCache.getGraphic
                 ('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'));
 
             rollSprite.updateHitbox();
 
-            rollSound.loadEmbedded(Assets.getSound('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : 5.0}'));
+            rollSound.loadEmbedded(AssetCache.getSound('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : 5.0}'));
 
             rollSound.play();
         }, 35);
@@ -182,7 +182,7 @@ class GameOverScreen extends CustomSubState
     {
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         if (skipTimer)
         {
@@ -198,6 +198,6 @@ class GameOverScreen extends CustomSubState
 
         canRetry = true;
 
-        FlxG.sound.play(Assets.getSound("game/GameOverScreen/whistle"), 1.0, false, null, true);
+        FlxG.sound.play(AssetCache.getSound("game/GameOverScreen/whistle"), 1.0, false, null, true);
     }
 }

@@ -13,7 +13,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import extendable.CustomState;
@@ -34,11 +34,11 @@ class LogoScreen extends CustomState
 
         FlxG.mouse.visible = false;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         splash = new FlxSprite();
 
-        splash.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic("menus/LogoScreen/splash"), 
+        splash.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/LogoScreen/splash"), 
             Paths.image(Paths.xml("menus/LogoScreen/splash")));
 
         splash.animation.addByIndices("formation", "this",  [for (i in 0 ... 29) i ], "", 17.4, false);
@@ -53,7 +53,7 @@ class LogoScreen extends CustomState
 
         add(splash);
 
-        logo = new FlxSprite(0.0, 0.0, Assets.getGraphic("menus/LogoScreen/logo"));
+        logo = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/LogoScreen/logo"));
 
         logo.active = false;
 
@@ -71,7 +71,7 @@ class LogoScreen extends CustomState
 
             FlxTimer.wait(0.15, () ->
             {
-                tune = FlxG.sound.load(Assets.getMusic("menus/LogoScreen/tune"));
+                tune = FlxG.sound.load(AssetCache.getMusic("menus/LogoScreen/tune"));
 
                 tune.play();
 

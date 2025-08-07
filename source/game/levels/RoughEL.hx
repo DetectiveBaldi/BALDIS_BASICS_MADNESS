@@ -18,7 +18,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -77,31 +77,31 @@ class RoughEL extends PlayState
 
         plrStrumline.resetStrums();
 
-        Assets.getGraphic("game/Character/1st-prize-anim-coming");
+        AssetCache.getGraphic("game/Character/1st-prize-anim-coming");
 
-        Assets.getGraphic("game/Character/1st-prize-0");
+        AssetCache.getGraphic("game/Character/1st-prize-0");
 
-        Assets.getGraphic("game/Character/baldi-mad");
+        AssetCache.getGraphic("game/Character/baldi-mad");
 
-        Assets.getGraphic("game/Character/baldi-mad-face-front");
+        AssetCache.getGraphic("game/Character/baldi-mad-face-front");
 
-        Assets.getGraphic("game/Character/baldi-furious");
+        AssetCache.getGraphic("game/Character/baldi-furious");
 
-        Assets.getGraphic("game/Character/bf-face-left");
+        AssetCache.getGraphic("game/Character/bf-face-left");
 
-        Assets.getGraphic("game/Character/bf-running");
+        AssetCache.getGraphic("game/Character/bf-running");
 
-        Assets.getGraphic("game/Character/bf-clutching-wall");
+        AssetCache.getGraphic("game/Character/bf-clutching-wall");
 
-        Assets.getGraphic("game/Character/bully");
+        AssetCache.getGraphic("game/Character/bully");
 
-        Assets.getGraphic("game/Character/gotta-sweep");
+        AssetCache.getGraphic("game/Character/gotta-sweep");
 
-        Assets.getGraphic("game/Character/playtime");
+        AssetCache.getGraphic("game/Character/playtime");
 
-        Assets.getGraphic("game/Character/principal");
+        AssetCache.getGraphic("game/Character/principal");
 
-        Assets.getGraphic("game/Character/run-legs");
+        AssetCache.getGraphic("game/Character/run-legs");
 
         temperature = new FlxSprite();
     
@@ -228,7 +228,7 @@ class RoughEL extends PlayState
         {
             var plr:Character = getPlayer("bf-running");
 
-            var sodaSplash:FlxSprite = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/sodaSplash"));
+            var sodaSplash:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/sodaSplash"));
 
             sodaSplash.scale.set(11.5, 11.5);
 
@@ -1462,7 +1462,7 @@ class RoughEL extends PlayState
    
         if (step == 2768)
         {
-            craftersSprite1 = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/craftersSprite1"));
+            craftersSprite1 = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/craftersSprite1"));
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(-1500, 100);
@@ -1845,7 +1845,7 @@ class RoughEL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.fromRGB(255, 125, 125), conductor.beatLength * 2.0 * 0.001, null, true);
 
-            vignette = new FlxSprite(0.0, 0.0, Assets.getGraphic("shared/vigenette"));
+            vignette = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/vigenette"));
             vignette.scale.set(2.7, 2.7);
             vignette.camera = hudCamera;
             vignette.screenCenter();

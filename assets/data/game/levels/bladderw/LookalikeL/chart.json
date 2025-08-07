@@ -2358,7 +2358,7 @@
 	"needsVoices": true,
 	"validScore": true,
 	"stage": "stage",
-	"speed": 3.2,
+	"speed": 2.8,
 	"bpm": 190,
 	"format": "psych_v1_convert"
 }

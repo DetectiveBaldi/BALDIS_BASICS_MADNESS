@@ -13,7 +13,7 @@ import flixel.util.FlxSignal;
 
 import flixel.addons.display.FlxBackdrop;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import extendable.CustomState;
@@ -38,7 +38,7 @@ class ModeSelectScreen extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -122,7 +122,7 @@ class ModeSelectScreen extends CustomState
 
         exitButton = new FlxSprite();
 
-        exitButton.loadGraphic(Assets.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
 
         exitButton.animation.add("0", [0], 0.0, false);
 
@@ -209,7 +209,7 @@ class ModeSelectIcon extends FlxSprite
 
         onClick = new FlxSignal();
 
-        loadGraphic(Assets.getGraphic('menus/ModeSelectScreen/${_path}'), true, 128, 192);
+        loadGraphic(AssetCache.getGraphic('menus/ModeSelectScreen/${_path}'), true, 128, 192);
 
         animation.add("0", [0], 0.0, false);
 

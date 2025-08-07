@@ -42,7 +42,7 @@ import haxe.ui.events.UIEvent;
 
 import haxe.ui.focus.FocusManager;
 
-import core.Assets;
+import core.AssetCache;
 import core.Paths;
 
 import data.AnimationData;
@@ -107,7 +107,7 @@ class CharacterEditorState extends CustomState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(Assets.getGraphic("shared/cursor-default").bitmap);
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         gameCamera.zoom = 0.75;
 
@@ -123,7 +123,7 @@ class CharacterEditorState extends CustomState
 
         animationIndex = character.config.animations.indexOf(character.config.animations.first((animation:AnimationData) -> character.animation.name == animation.name));
 
-        cameraPointPointer = new FlxSprite(0.0, 0.0, Assets.getGraphic(FlxGraphic.fromClass(PointerGraphic)));
+        cameraPointPointer = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("editors/CharacterEditorState/cursorCross"));
 
         cameraPointPointer.scale.set(3.0, 3.0);
 
@@ -174,7 +174,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_button", Button).onClick = (ev:MouseEvent) ->
         {
-            character.config = CharacterData.get('${ui.findComponent("textfield", TextField).text}');
+            character.loadConfig(CharacterData.get('${ui.findComponent("textfield", TextField).text}'));
 
             character.screenCenter();
 
@@ -190,7 +190,7 @@ class CharacterEditorState extends CustomState
 
             refreshMainTab();
 
-            refreshAssetsTab();
+            refreshAssetCacheTab();
 
             refreshAnimationsTab();
         }
@@ -268,7 +268,7 @@ class CharacterEditorState extends CustomState
             character.singDuration = character.config.singDuration;
         }
 
-        refreshAssetsTab();
+        refreshAssetCacheTab();
 
         ui.findComponent("__button", Button).onClick = (ev:MouseEvent) ->
         {
@@ -282,9 +282,9 @@ class CharacterEditorState extends CustomState
 
             switch (character.config.format ?? "".toLowerCase():String)
             {
-                case "sparrow": character.frames = FlxAtlasFrames.fromSparrow(Assets.getGraphic(pngPath), xmlPath);
+                case "sparrow": character.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic(pngPath), xmlPath);
 
-                case "texturepackerxml": character.frames = FlxAtlasFrames.fromTexturePackerXml(Assets.getGraphic(pngPath), xmlPath);
+                case "texturepackerxml": character.frames = FlxAtlasFrames.fromTexturePackerXml(AssetCache.getGraphic(pngPath), xmlPath);
             }
 
             character.updateHitbox();
@@ -416,7 +416,7 @@ class CharacterEditorState extends CustomState
         ui.findComponent("___number-stepper", NumberStepper).value = character.config.singDuration ?? 8.0;
     }
 
-    public function refreshAssetsTab():Void
+    public function refreshAssetCacheTab():Void
     {
         ui.findComponent("__textfield", TextField).text = character.config.format;
 
@@ -592,6 +592,3 @@ class CharacterEditorState extends CustomState
         FlxG.camera.scroll.y = cameraPointPointer.y - FlxG.camera.height * 0.5;
     }
 }
-
-@:bitmap("assets/images/debugger/cursorCross.png")
-class PointerGraphic extends openfl.display.BitmapData {}

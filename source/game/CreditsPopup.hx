@@ -12,7 +12,7 @@ import flixel.tweens.FlxTween;
 
 import flixel.util.FlxTimer;
 
-import core.Assets;
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -42,7 +42,7 @@ class CreditsPopup extends FlxSpriteGroup
 
         this.credits = credits;
 
-        screen = new FlxSprite(0.0, 0.0, Assets.getGraphic("game/CreditsPopup/screen"));
+        screen = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/CreditsPopup/screen"));
         
         screen.active = false;
 
