@@ -81,7 +81,7 @@ class CreditsPopup extends FlxSpriteGroup
 
             tween.flicker(label, 2.0, 0.5);
 
-            label.text = 'Composer: ${credits.composer}';
+            label.text = 'Composer(s): ${credits.composer}';
         });
     }
 }
