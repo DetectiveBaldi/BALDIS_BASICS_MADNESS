@@ -13,7 +13,7 @@ class Rating
 
         {name: "Bad", timing: 135.0, bonus: 0.35, health: 0.0},
 
-        {name: "Crap!", timing: 166.6, bonus: 0.0, health: -1.0},
+        {name: "Shit", timing: 166.6, bonus: 0.0, health: -1.0},
     ];
     
     public var name:String;
