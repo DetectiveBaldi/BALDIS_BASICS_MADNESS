@@ -359,6 +359,10 @@ class InfoButtonSubState extends FlxSubState
 
     public var scoreText:FlxText;
 
+    public var levelText:FlxText;
+
+    public var gradeText:FlxText;
+
     public var level:LevelData;
 
     public function new(level:LevelData):Void
@@ -413,6 +417,10 @@ class InfoButtonSubState extends FlxSubState
 
                 exitButton.visible = false;
 
+                levelText.visible = false;
+
+                gradeText.visible = false;
+
                 clipboard.animation.onFinish.add((name:String) -> close());
             }
         }
@@ -440,22 +448,58 @@ class InfoButtonSubState extends FlxSubState
 
         add(exitButton);
 
-        scoreText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal").score));
+        levelText = new FlxText(0.0, 0.0, FlxG.width, Std.string(level.name));
+
+        levelText.color = FlxColor.BLACK;
+
+        levelText.size = 64;
+
+        levelText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        levelText.alignment = CENTER;
+
+        levelText.setPosition(0.0, 160.0);
+
+        levelText.textField.antiAliasType = ADVANCED;
+
+        levelText.textField.sharpness = 400.0;
+
+        add(levelText);
+
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, 'Score: ${Std.string(HighScore.getLevelScore(level.name, "normal").score)}\nAccuracy: ${Std.string(HighScore.getLevelScore(level.name, "normal").accuracy)}\nMisses: ${Std.string(HighScore.getLevelScore(level.name, "normal").misses)}\nFinal Grade:');
 
         scoreText.color = FlxColor.BLACK;
 
-        scoreText.size = 64;
+        scoreText.size = 44;
 
         scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         scoreText.alignment = CENTER;
 
+        scoreText.setPosition(0.0, 250.0);
+
         scoreText.textField.antiAliasType = ADVANCED;
 
         scoreText.textField.sharpness = 400.0;
 
-        scoreText.screenCenter();
-
         add(scoreText);
+
+        gradeText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal").grade));
+
+        gradeText.color = FlxColor.BLACK;
+
+        gradeText.size = 200;
+
+        gradeText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        gradeText.alignment = CENTER;
+
+        gradeText.setPosition(0.0, 450.0);
+
+        gradeText.textField.antiAliasType = ADVANCED;
+
+        gradeText.textField.sharpness = 400;
+
+        add(gradeText);
     }
 }
