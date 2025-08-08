@@ -1,8 +1,9 @@
 package game.levels;
 
-import flixel.tweens.FlxEase;
+import flixel.FlxG;
+import flixel.FlxSprite;
 
-import flixel.util.FlxColor;
+import flixel.math.FlxRect;
 
 import core.Options;
 
@@ -12,6 +13,8 @@ import game.events.FocusCamCharEvent;
 import game.events.FocusCamPointEvent;
 
 import game.stages.ScribbleS;
+
+import music.Conductor;
 
 using util.MathUtil;
 
@@ -30,9 +33,8 @@ class ScribbleL extends PlayState
         super.create();
         
         playField.scoreClip.visible = false;
-        
-        playField.scoreTxt.textField.sharpness = 0;
-        playField.scoreTxt.x = playField.scoreTxt.x - 50;
+
+        replaceHealthBar();
         
         var plrStrumlineX:Float = plrStrumline.strums.x;
         
@@ -47,26 +49,58 @@ class ScribbleL extends PlayState
         player.scale.set(3.75, 3.75);
         player.setPosition(700, 100);
 
-        opponent.setPosition(1050, 200);
+        opponent.setPosition(1050, 185);
 
         setCamStartPos();
     }
 
-    override function beatHit(beat:Int):Void
+    public function replaceHealthBar():Void
     {
-        var player:String;
-        
-        super.beatHit(beat);
-    
-        if (cameraTarget == "idc")
-        {
-            trace("AAAAAAAAAAH");
-        }
+        var healthBar:HealthBar = playField.healthBar;
 
+        healthBar.kill();
+
+        playField.healthBar = new OldHealthBar(0.0, 0.0, conductor);
+
+        healthBar = playField.healthBar;
+        
+        healthBar.onEmptied.add(gameOver);
+
+        healthBar.setPosition(healthBar.getCenterX(),
+            Options.downscroll ? -20.0 : FlxG.height - healthBar.height + 20.0);
+
+        updateHealthBar("opponent");
+
+        updateHealthBar("player");
+
+        playField.insert(playField.members.indexOf(playField.scoreTxt) + 1, healthBar);
     }
-   
-    override function stepHit(step:Int):Void
+}
+
+// TODO: Replace old components with red-green bar.
+class OldHealthBar extends HealthBar
+{
+    public function new(x:Float = 0.0, y:Float = 0.0, conductor:Conductor):Void
     {
-        super.stepHit(step);
+        super(x, y, conductor);
+
+        gradient.kill();
+
+        needle.kill();
+
+        overlay.kill();
+
+        positionNeedle = null;
+    }
+}
+
+class OldBarSideSprite extends FlxSprite
+{
+    @:noCompletion
+    override function set_clipRect(clip:FlxRect):FlxRect
+    {
+        clipRect = clip;
+
+        return clipRect;
     }
 }

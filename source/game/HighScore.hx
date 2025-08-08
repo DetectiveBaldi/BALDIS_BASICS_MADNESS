@@ -2,9 +2,6 @@ package game;
 
 import flixel.FlxG;
 
-/**
- * TODO: Move to `FlxG.save.data.highScores` and update format.
- */
 class HighScore
 {
     // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)

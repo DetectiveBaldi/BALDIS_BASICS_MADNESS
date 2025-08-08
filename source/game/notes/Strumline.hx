@@ -501,18 +501,18 @@ class Strumline extends FlxGroup
             if (note.kind == "alt-animation")
                 animSuffix = "-alt";
 
-            var translatedDir:String = Note.DIRECTIONS[note.direction];
+            var direcStr:String = Note.DIRECTIONS[note.direction];
 
-            if (hold && character.animation.name.contains(translatedDir))
+            if (hold && character.animation.name.contains(direcStr))
                 continue;
 
-            var animToPlay:String = 'Sing${translatedDir}${animSuffix}';
+            var animToPlay:String = 'Sing${direcStr}${animSuffix}';
 
             if (character.animation.exists(animToPlay))
                 character.animation.play(animToPlay, true);
             else
             {
-                animToPlay = 'Sing${translatedDir}';
+                animToPlay = 'Sing${direcStr}';
 
                 if (character.animation.exists(animToPlay))
                     character.animation.play(animToPlay, true);
@@ -542,15 +542,15 @@ class Strumline extends FlxGroup
                     animSuffix = "-alt";
             }
 
-            var translatedDir:String = Note.DIRECTIONS[note.direction];
+            var direcStr:String = Note.DIRECTIONS[note.direction];
 
-            var animToPlay:String = 'Sing${translatedDir}MISS${animSuffix}';
+            var animToPlay:String = 'Sing${direcStr}MISS${animSuffix}';
 
             if (character.animation.exists(animToPlay))
                 character.animation.play(animToPlay, true);
             else
             {
-                animToPlay = 'Sing${translatedDir}MISS';
+                animToPlay = 'Sing${direcStr}MISS';
 
                 if (character.animation.exists(animToPlay))
                     character.animation.play(animToPlay, true);
