@@ -100,7 +100,7 @@ class StoryMenuScreen extends CustomState
 
         clipboard.updateHitbox();
 
-        clipboard.setPosition(210.0, FlxG.height - clipboard.height * 0.75);
+        clipboard.setPosition(195.0, FlxG.height - clipboard.height * 0.75);
 
         add(clipboard);
 
@@ -148,7 +148,7 @@ class StoryMenuScreen extends CustomState
 
         weekInfoBoard.updateHitbox();
 
-        weekInfoBoard.setPosition(210.0, 45.0);
+        weekInfoBoard.setPosition(195.0, 45.0);
         
         add(weekInfoBoard);
 
@@ -196,7 +196,7 @@ class StoryMenuScreen extends CustomState
 
         chalkboard.updateHitbox();
 
-        chalkboard.setPosition(FlxG.width - chalkboard.width - 165.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
+        chalkboard.setPosition(FlxG.width - chalkboard.width - 180.0, weekInfoBoard.getMidpoint().y - chalkboard.height * 0.5);
 
         add(chalkboard);
 
@@ -216,7 +216,7 @@ class StoryMenuScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(165.0, 5.0);
+        exitButton.setPosition(FlxG.width - exitButton.width - 165.0, 5.0);
 
         add(exitButton);
 
