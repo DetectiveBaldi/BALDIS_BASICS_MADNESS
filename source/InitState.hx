@@ -69,6 +69,8 @@ class InitState extends FlxState
 
         HighScore.init();
 
+        HighScore.purgeInvalid();
+
         mouseRectPlugin = new MouseRectPlugin();
 
         FlxG.plugins.addPlugin(mouseRectPlugin);

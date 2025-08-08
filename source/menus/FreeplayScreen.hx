@@ -80,8 +80,9 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (#if debug false #else level.hiddenWithoutScore #end && HighScore.getLevelScore(level.name, "normal") == 0.0)
-                continue;
+            if (#if debug false #else level.hiddenWithoutScore #end &&
+                HighScore.getLevelScore(level.name, "normal").score == 0.0)
+                    continue;
 
             levels.push(level);
         }
@@ -225,7 +226,7 @@ class FreeplayScreen extends CustomState
 
         var week:WeekData = level.week;
 
-        if (week != null && (HighScore.getWeekScore(week.name, "normal") != 0.0 || #if debug true #else
+        if (week != null && (HighScore.getWeekScore(week.name, "normal").score != 0.0 || #if debug true #else
             !week.requiresScoreToPlay #end &&
                 week.hasTvPortrait))
                     tween.tween(tvStatic, {alpha: 0.0}, 0.5);
@@ -239,7 +240,7 @@ class FreeplayScreen extends CustomState
 
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") != 0.0 || #if debug true #else !week.requiresScoreToPlay
+            if (HighScore.getWeekScore(week.name, "normal").score != 0.0 || #if debug true #else !week.requiresScoreToPlay
                 #end && week.hasTvPortrait)
                     portraitStr = week.name.toLowerCase();
         }
@@ -264,13 +265,14 @@ class FreeplayScreen extends CustomState
 
         if (week == null)
         {
-            if (HighScore.getLevelScore(level.name, "normal") == 0.0 #if debug && false #end)
+            if (HighScore.getLevelScore(level.name, "normal").score == 0.0 #if debug && false #end)
                 path = "level-score-needed";
         }
         else
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && #if debug false #else week.requiresScoreToPlay #end)
-                path = "week-score-needed";
+            if (HighScore.getWeekScore(week.name, "normal").score == 0.0 &&
+                #if debug false #else week.requiresScoreToPlay #end)
+                    path = "week-score-needed";
         }
 
         poster.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/posters/${path}'));
@@ -328,8 +330,9 @@ class FreeplayScreen extends CustomState
         
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, "normal") == 0.0 && #if debug false #else week.requiresScoreToPlay #end)
-                return;
+            if (HighScore.getWeekScore(week.name, "normal").score == 0.0 &&
+                #if debug false #else week.requiresScoreToPlay #end)
+                    return;
         }
 
         MainMenuScreen.fadeTune();
@@ -437,7 +440,7 @@ class InfoButtonSubState extends FlxSubState
 
         add(exitButton);
 
-        scoreText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal")));
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal").score));
 
         scoreText.color = FlxColor.BLACK;
 

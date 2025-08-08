@@ -291,7 +291,7 @@ class StoryMenuScreen extends CustomState
             {
                 var weekToLoad:WeekData = weeks[curSelected];
 
-                if (HighScore.getWeekScore(weekToLoad.name, "normal") == 0.0 && #if debug false #else
+                if (HighScore.getWeekScore(weekToLoad.name, "normal").score == 0.0 && #if debug false #else
                     weekToLoad.requiresScoreToPlay #end)
                         return;
 
@@ -336,7 +336,7 @@ class StoryMenuScreen extends CustomState
 
         scoreTween?.cancel();
 
-        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, "normal"), 0.35, null, (v:Float) -> {
+        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, "normal").score, 0.35, null, (v:Float) -> {
             weekScore = Math.floor(v); scoreText.text = 'High Score: ${weekScore}';});
 
         updateWeekPortrait(week);

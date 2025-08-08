@@ -461,8 +461,19 @@ class PlayState extends CustomState
 
     public function endSong():Void
     {
-        if (HighScore.isLevelHighScore(level.name, "normal", playField.playStats.score))
-            HighScore.setLevelScore(level.name, "normal", playField.playStats.score);
+        var playStats:PlayStats = playField.playStats;
+
+        var score:Int = playStats.score;
+
+        var misses:Int = playStats.misses;
+
+        var accuracy:Float = playStats.accuracy;
+
+        var grade:String = playStats.grade;
+
+        if (HighScore.isLevelHighScore(level.name, "normal", score))
+            HighScore.setLevelScore(level.name, "normal",
+                {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
         if (isWeek)
         {
@@ -476,8 +487,17 @@ class PlayState extends CustomState
 
                 totalStats = totalStats.concat(for (k => v in weekStats) v);
 
-                if (HighScore.isWeekHighScore(week.name, "normal", totalStats.score))
-                    HighScore.setWeekScore(week.name, "normal", totalStats.score);
+                score = totalStats.score;
+
+                misses = totalStats.score;
+
+                accuracy = totalStats.accuracy;
+
+                grade = totalStats.grade;
+
+                if (HighScore.isWeekHighScore(week.name, "normal", score))
+                    HighScore.setWeekScore(week.name, "normal",
+                        {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
                 FlxG.switchState(() -> new StoryMenuScreen());
             }

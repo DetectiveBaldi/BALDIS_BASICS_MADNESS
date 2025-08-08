@@ -7,91 +7,85 @@ import flixel.FlxG;
  */
 class HighScore
 {
-    public static var weeks(get, never):Map<String, WeekScore>;
+    // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)
+    public static var weeks(get, never):Map<String, Map<String, WeekScore>>;
 
     @:noCompletion
-    static function get_weeks():Map<String, WeekScore>
+    static function get_weeks():Map<String, Map<String, WeekScore>>
     {
-        return FlxG.save.data.scores.weeks ??= new Map<String, WeekScore>();
+        return FlxG.save.data.highScores.weeks ??= new Map<String, Map<String, WeekScore>>();
     }
 
-    public static var levels(get, never):Map<String, LevelScore>;
+    // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)
+    public static var levels(get, never):Map<String, Map<String, LevelScore>>;
 
     @:noCompletion
-    static function get_levels():Map<String, LevelScore>
+    static function get_levels():Map<String, Map<String, LevelScore>>
     {
-        return FlxG.save.data.scores.levels ??= new Map<String, LevelScore>();
-    }
-
-    public static var version(get, never):String;
-
-    @:noCompletion
-    static function get_version():String
-    {
-        return FlxG.save.data.scores.version ??= "1.0.0";
+        return FlxG.save.data.highScores.levels ??= new Map<String, Map<String, LevelScore>>();
     }
 
     public static function init():Void
     {
-        FlxG.save.data.scores ??= {};
+        FlxG.save.data.highScores ??= {}
+    }
+
+    public static function purgeInvalid():Void
+    {
+        if (Reflect.hasField(FlxG.save.data, "scores"))
+            Reflect.deleteField(FlxG.save.data, "scores");
     }
 
     public static function isLevelHighScore(name:String, diff:String, score:Int):Bool
     {
-        var level:LevelScore = levels[name] ??= getBlankLevel();
-
-        return score > (level.difficulties[diff] ??= 0);
+        return score > getLevelScore(name, diff).score;
     }
 
-    public static function getLevelScore(name:String, diff:String):Int
+    public static function getLevelScore(name:String, diff:String):LevelScore
     {
-        var level:LevelScore = levels[name] ??= getBlankLevel();
-
-        return level.difficulties[diff] ??= 0;
+        return (levels[name] ??= new Map<String, LevelScore>())[diff] ?? getBlankLevel();
     }
 
-    public static function setLevelScore(name:String, diff:String, score:Int):Void
+    public static function setLevelScore(name:String, diff:String, score:LevelScore):Void
     {
-        var level:LevelScore = levels[name] ??= getBlankLevel();
-
-        level.difficulties[diff] = score;
+        (levels[name] ??= new Map<String, LevelScore>())[diff] = score;
     }
 
     public static function isWeekHighScore(name:String, diff:String, score:Int):Bool
     {
-        var week:WeekScore = weeks[name] ??= getBlankWeek();
-
-        return score > (week.difficulties[diff] ??= 0);
+        return score > getWeekScore(name, diff).score;
     }
 
-    public static function getWeekScore(name:String, diff:String):Int
+    public static function getWeekScore(name:String, diff:String):WeekScore
     {
-        var week:WeekScore = weeks[name] ??= getBlankWeek();
-
-        return week.difficulties[diff] ??= 0;
+        return (weeks[name] ??= new Map<String, WeekScore>())[diff] ?? getBlankWeek();
     }
 
-    public static function setWeekScore(name:String, diff:String, score:Int):Void
+    public static function setWeekScore(name:String, diff:String, score:WeekScore):Void
     {
-        var week:WeekScore = weeks[name] ??= getBlankWeek();
-
-        week.difficulties[diff] = score;
-    }
-
-    public static function getBlankLevel():LevelScore
-    {
-        return {difficulties: new Map<String, Int>()}
+        (weeks[name] ??= new Map<String, WeekScore>())[diff] = score;
     }
 
     public static function getBlankWeek():WeekScore
     {
-        return {difficulties: new Map<String, Int>()}
+        return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}
+    }
+
+    public static function getBlankLevel():LevelScore
+    {
+        return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}
     }
 }
 
-typedef LevelScore =
+typedef WeekScore =
 {
-    public var difficulties:Map<String, Int>;
+    public var score:Int;
+
+    public var misses:Int;
+
+    public var accuracy:Float;
+
+    public var grade:String;
 }
 
-typedef WeekScore = LevelScore;
+typedef LevelScore = WeekScore
