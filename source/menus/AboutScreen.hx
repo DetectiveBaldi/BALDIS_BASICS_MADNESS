@@ -21,11 +21,13 @@ class AboutScreen extends CustomState
     {
         super.create();
 
-        FlxG.camera.bgColor = FlxColor.WHITE;
+        FlxG.camera.bgColor = FlxColor.BLACK;
 
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         bg = new FlxSprite();
 
@@ -55,7 +57,7 @@ class AboutScreen extends CustomState
 
         exitButton.updateHitbox();
 
-        exitButton.setPosition(10.0, 10.0);
+        exitButton.setPosition(165.0, 5.0);
 
         add(exitButton);
 

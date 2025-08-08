@@ -35,6 +35,8 @@ class LauncherScreen extends CustomState
 
         launcher = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/LauncherScreen/launcher"));
 
+        InitState.setMouseRect(415.0, FlxG.width - 415.0, 70.0, FlxG.height - 70.0);
+
         launcher.active = false;
 
         launcher.scale.set(1.5, 1.5);
