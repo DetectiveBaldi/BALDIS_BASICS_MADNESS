@@ -460,13 +460,15 @@ class InfoButtonSubState extends FlxSubState
 
         levelText.setPosition(0.0, 160.0);
 
+        levelText.bold = true;
+
         levelText.textField.antiAliasType = ADVANCED;
 
         levelText.textField.sharpness = 400.0;
 
         add(levelText);
 
-        scoreText = new FlxText(0.0, 0.0, FlxG.width, 'Score: ${Std.string(HighScore.getLevelScore(level.name, "normal").score)}\nAccuracy: ${Std.string(HighScore.getLevelScore(level.name, "normal").accuracy)}\nMisses: ${Std.string(HighScore.getLevelScore(level.name, "normal").misses)}\nFinal Grade:');
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, 'Score: ${Std.string(HighScore.getLevelScore(level.name, "normal").score)}\nAccuracy: ${Std.string(FlxMath.roundDecimal(HighScore.getLevelScore(level.name, "normal").accuracy, 2))}\nMisses: ${Std.string(HighScore.getLevelScore(level.name, "normal").misses)}\nFinal Grade:');
 
         scoreText.color = FlxColor.BLACK;
 
