@@ -6,6 +6,14 @@ import flixel.tweens.FlxEase;
 
 import flixel.util.FlxColor;
 
+import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.FlxSprite;
+
+import core.AssetCache;
+
+import core.Paths;
+
 import core.Options;
 
 import data.CharacterData;
@@ -23,6 +31,8 @@ class LookalikeL extends PlayState
 {
     public var lookalikeS:LookalikeS;
 
+    public var smoke:FlxSprite;
+
     override function create():Void
     {
         stage = new LookalikeS();
@@ -30,6 +40,12 @@ class LookalikeL extends PlayState
         lookalikeS = cast (stage, LookalikeS);
 
         super.create();
+
+        smoke = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/smoke"));
+        smoke.scale.set(4, 4);
+        smoke.camera = hudCamera;
+        smoke.screenCenter();
+        insert(0, smoke);
 
         gameCameraZoom = 0.8;
 
@@ -42,6 +58,7 @@ class LookalikeL extends PlayState
         player.color = 0xFF7F7F7F;
 
         opponent.setPosition(-200, -150);
+        opponent.color = 0xFFAFAFAF;
 
         setCamStartPos();
     }
@@ -94,7 +111,9 @@ class LookalikeL extends PlayState
             lookalikeS.room3.visible = false;
            
             lookalikeS.bladderSchool0.visible = true;
-        
+
+            opponent.color = 0xFFFFFFFF;
+
             player.color = 0xFFFFFFFF;
         }
 
@@ -115,7 +134,12 @@ class LookalikeL extends PlayState
             lookalikeS.bladderSchool0.visible = false;
             lookalikeS.bladderSchool1.visible = false;
 
+            opponent.color = 0xB7B7A6;
+
             player.color = 0xFF7F7F7F;
+
+            tween.tween(smoke.scale, {x: 4, y: 4}, 
+                conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
         }
     
         if (step == 1024)
@@ -133,6 +157,12 @@ class LookalikeL extends PlayState
             lookalikeS.bladderSchool1.animation.play("0");
 
             player.color = 0xFFFFFFFF;
+
+            opponent.color = 0xFFFFFFFF;
         }
+
+        if (step == 512 || step == 1024)
+            tween.tween(smoke.scale, {x: 2.7, y: 2.7}, 
+                conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
     }
 }

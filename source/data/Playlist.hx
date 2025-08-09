@@ -23,7 +23,7 @@ class Playlist
 
         week.levels.pushMany({week: week, name: "Walls"}, {week: week, name: "Lookalike"});
 
-        week.hasTvPortrait = false;
+        week.hasTvPortrait = true;
         
         WeekData.list.push(week);
 

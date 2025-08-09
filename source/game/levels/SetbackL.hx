@@ -57,7 +57,7 @@ class SetbackL extends PlayState
 
         opponent.scale.set(1.16, 1.16);
 
-        player.setPosition(215.0, -20.0);
+        player.setPosition(305.0, 100.0);
 
         player.visible = false;
     }

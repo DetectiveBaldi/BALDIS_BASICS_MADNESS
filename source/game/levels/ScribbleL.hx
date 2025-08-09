@@ -4,7 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.math.FlxRect;
-
+import flixel.tweens.FlxEase;
 import flixel.util.FlxColor;
 
 import core.Options;
@@ -49,7 +49,8 @@ class ScribbleL extends PlayState
         player.scale.set(3.75, 3.75);
         player.setPosition(700, 100);
 
-        opponent.setPosition(1050, 185);
+        opponent.setPosition(1070, 185);
+        opponent.scale.set(0.85, 0.85);
 
         opponent.colorTransform.setOffsets(FlxColor.WHITE);
 
@@ -78,7 +79,7 @@ class ScribbleL extends PlayState
             tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
         }
 
-        if (step == 280.0)
+        if (step == 288.0)
         {
             playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
@@ -90,7 +91,50 @@ class ScribbleL extends PlayState
 
             tween.tween(player.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
                 conductor.beatLength * 2.0 * 0.001);
+
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
+
+        if (step == 1072)
+        {
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            playField.scoreClip.visible = playField.healthBar.visible = playField.scoreText.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            scribbleS.classicHall0.colorTransform.setOffsets(20, 20, 20, 155);
+        }
+
+        if (step == 1312)
+        {
+            tween.tween(player.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
+                conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(opponent.colorTransform, {redOffset: 204.0, greenOffset: 204.0, blueOffset: 204.0, alphaOffset: 0.0},
+                conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(scribbleS.classicHall0.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
+                conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 1328)
+        {
+            opponent.visible = false;
+
+            player.colorTransform.setOffsets(0xFFFFFF);
+
+            tween.tween(player, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            scribbleS.classicHall0.visible = false;
+        }
+
+        if (step == 548.0 || step == 552 || step == 555  || step == 682 || step == 684 || step == 736 || step == 1062 || step == 1068)
+            gameCameraZoom += 0.1;
+
+        if (step == 558  || step == 686 || step == 740)
+            gameCameraZoom -= 0.1;
     }
 
     override function measureHit(measure:Int):Void
