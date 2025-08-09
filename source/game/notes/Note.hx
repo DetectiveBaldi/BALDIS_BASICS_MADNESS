@@ -95,7 +95,7 @@ class Note extends FlxSprite
         if (status != HIT || length <= 0.0)
             y += (time - strumline.conductor.time) * (strumline.downscroll ? -1 : 1) * strumline.scrollSpeed * 0.45;
 
-        alpha = strumline.strums.alpha;
+        alpha = strum.alpha;
     }
 
     override function kill():Void

@@ -60,5 +60,9 @@ class Sustain extends FlxSprite
             trail.y -= sustainHeight + trail.height;
 
         trail.y -= 2.0 * (note.strumline.downscroll ? -1.0 : 1.0);
+
+        alpha = note.alpha;
+
+        trail.alpha = alpha;
     }
 }
