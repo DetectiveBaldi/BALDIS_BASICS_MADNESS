@@ -81,10 +81,7 @@ class WallsL extends PlayState
         }
 
         if (step == 16)
-        {
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-            
+        {            
             playField.visible = true;
         
             gameCameraZoom = 1.3;

@@ -51,6 +51,8 @@ class ScribbleL extends PlayState
 
         opponent.setPosition(1050, 185);
 
+        gameCameraZoom = 1.3;
+
         setCamStartPos();
     }
 
@@ -74,6 +76,20 @@ class ScribbleL extends PlayState
         updateHealthBar("player");
 
         playField.insert(playField.members.indexOf(playField.scoreTxt) + 1, healthBar);
+    }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+    
+    if (focusedCharacter == "OPPONENT")
+        {
+            gameCameraZoom = 1.3;
+        }
+     else
+        {
+            gameCameraZoom = 1;
+        }
     }
 }
 
