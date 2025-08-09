@@ -33,7 +33,7 @@ class NoteSplash extends FlxSprite
             var dir:String = Note.DIRECTIONS[i].toLowerCase();
 
             for (i in 0 ... 2)
-                animations.push({name: '${dir}${i}', prefix: 'note impact ${i} ${dir}', indices: []});
+                animations.push({name: '${dir}${i}', prefix: 'note impact ${i} ${dir}'});
         }
 
         for (i in 0 ... animations.length)

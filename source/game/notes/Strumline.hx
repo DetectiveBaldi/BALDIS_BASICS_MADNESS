@@ -16,8 +16,8 @@ import core.Options;
 
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
+import game.notes.events.SustainDropEvent;
 import game.notes.events.SustainHoldEvent;
-import game.notes.events.SustainMissEvent;
 
 import music.Conductor;
 
@@ -26,7 +26,7 @@ using StringTools;
 using util.ArrayUtil;
 using util.MathUtil;
 
-// TODO: Rework the entirety of `update`.
+// TODO: Update scoring when a note is dropped? Maybe?
 class Strumline extends FlxGroup
 {
     public var conductor:Conductor;
@@ -72,9 +72,9 @@ class Strumline extends FlxGroup
 
     public var sustainHoldEvent:SustainHoldEvent;
 
-    public var onSustainMiss:FlxTypedSignal<(event:SustainMissEvent)->Void>;
+    public var onSustainDrop:FlxTypedSignal<(event:SustainDropEvent)->Void>;
 
-    public var sustainMissEvent:SustainMissEvent;
+    public var sustainDropEvent:SustainDropEvent;
 
     public var onGhostTap:FlxTypedSignal<(event:GhostTapEvent)->Void>;
 
@@ -157,9 +157,9 @@ class Strumline extends FlxGroup
 
         sustainHoldEvent = new SustainHoldEvent();
 
-        onSustainMiss = new FlxTypedSignal<(event:SustainMissEvent)->Void>();
+        onSustainDrop = new FlxTypedSignal<(event:SustainDropEvent)->Void>();
 
-        sustainMissEvent = new SustainMissEvent();
+        sustainDropEvent = new SustainDropEvent();
 
         noteSplashes = new FlxTypedGroup<NoteSplash>();
 
@@ -182,6 +182,100 @@ class Strumline extends FlxGroup
     {
         super.update(elapsed);
 
+        if (botplay)
+        {
+            for (i in 0 ... notes.members.length)
+            {
+                var note:Note = notes.members[i];
+
+                if (note.isHittable())
+                    noteHit(note);
+            }
+        }
+        else
+        {
+            for (k => v in keys)
+            {
+                var keyCode:Int = k;
+
+                var direc:Int = v;
+
+                if (FlxG.keys.checkStatus(keyCode, JUST_PRESSED))
+                {
+                    keysHeld[direc] = true;
+
+                    var strum:Strum = strums.members[direc];
+
+                    strum.animation.play(Note.DIRECTIONS[direc].toLowerCase() + "Press");
+
+                    var note:Note = notes.getFirst((_note:Note) -> _note.isHittable() && _note.direction == direc);
+
+                    if (note == null)
+                        ghostTap(strum.direction);
+                    else
+                        noteHit(note);
+                }
+
+                if (FlxG.keys.checkStatus(keyCode, JUST_RELEASED))
+                {
+                    keysHeld[direc] = false;
+
+                    var strum:Strum = strums.members[direc];
+
+                    strum.animation.play(Note.DIRECTIONS[direc].toLowerCase() + "Static");
+                }
+            }
+        }
+
+        for (i in 0 ... notes.members.length)
+        {
+            var note:Note = notes.members[i];
+
+            var hasMissed:Bool = conductor.time > note.time + note.latestTiming;
+
+            if ((note.status == MOVING || note.status == DROPPING) && hasMissed)
+            {
+                if (note.status == MOVING)
+                    noteMiss(note);
+                else
+                    sustainDrop(note, note.sustain);
+            }
+
+            var hasExpired:Bool = conductor.time > note.time + note.length + note.latestTiming;
+
+            if (hasMissed && hasExpired)
+                notesPendingRemoval.push(note);
+
+            if (note.length == 0.0)
+                continue;
+
+            if (isHoldingNote(note))
+                holdSustainNote(note, note.sustain, elapsed);
+            else
+            {
+                if (note.status == HIT)
+                {
+                    if (note.status != DROPPING)
+                    {
+                        resizeSustainNote(note);
+
+                        note.status = DROPPING;
+                    }
+                }
+
+                if (note.status == DROPPING)
+                {
+                    note.droppedTime += 1000.0 * elapsed;
+
+                    if (note.droppedTime >= note.latestTiming * 2.0)
+                        sustainDrop(note, note.sustain);
+                }
+            }
+
+            if (conductor.time >= note.time + note.length)
+                finishSustainNote(note);
+        }
+
         while (notesPendingRemoval.length > 0.0)
         {
             var note:Note = notesPendingRemoval.pop();
@@ -198,88 +292,6 @@ class Strumline extends FlxGroup
             }
         }
 
-        if (keys != null)
-        {
-            for (k => v in keys)
-            {
-                var dir:Int = v;
-
-                if (FlxG.keys.checkStatus(k, JUST_PRESSED))
-                {
-                    keysHeld[dir] = true;
-
-                    var strum:Strum = strums.members[dir];
-
-                    strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Press");
-
-                    var note:Note = notes.getFirst((_note:Note) -> strum.direction == _note.direction && _note.isHittable());
-
-                    if (note == null)
-                        ghostTap(strum.direction);
-                    else
-                        noteHit(note);
-                }
-
-                if (FlxG.keys.checkStatus(k, JUST_RELEASED))
-                {
-                    keysHeld[dir] = false;
-
-                    var strum:Strum = strums.members[dir];
-
-                    strum.animation.play(Note.DIRECTIONS[dir].toLowerCase() + "Static");
-                }
-            }
-        }
-
-        for (i in 0 ... notes.members.length)
-        {
-            var note:Note = notes.members[i];
-
-            if (botplay && note.isHittable())
-                noteHit(note);
-
-            var isLate:Bool = conductor.time > note.time + note.latestTiming;
-
-            if (!botplay && note.status == IDLING && isLate)
-                noteMiss(note, false);
-
-            var isExpired:Bool = conductor.time > (note.time + note.length + (note.latestTiming / scrollSpeed));
-
-            if (isLate && isExpired)
-                notesPendingRemoval.push(note);
-
-            if (note.length > 0.0 && note.status != IDLING && !note.finishedHold)
-            {
-                if (isHolding(note))
-                {
-                    holdSustainNote(note, note.sustain, elapsed);
-
-                    note.unholdTime = Math.max(0.0, note.unholdTime - elapsed * 1000.0);
-                }
-                else
-                {
-                    if (note.status == MISSED)
-                    {
-                        if (note.sustain != null)
-                            missSustainNote(note, note.sustain, elapsed);
-                    }
-                    else
-                    {
-                        note.unholdTime += elapsed * 1000.0;
-
-                        if (note.unholdTime > note.latestTiming)
-                            noteMiss(note, true);
-                    }
-                }
-    
-                if (conductor.time >= note.time + note.length)
-                    finishSustainNote(note);
-            }
-        }
-
-        /**
-         * TODO: It seems like this fixes rendering bugs. However I need confirmation and if so, I want to figure out why.
-        */
         notes.update(elapsed);
 
         sustains.update(elapsed);
@@ -293,7 +305,7 @@ class Strumline extends FlxGroup
     {
         super.destroy();
 
-        clearKeys();
+        keys = null;
 
         keysHeld = null;
 
@@ -303,7 +315,7 @@ class Strumline extends FlxGroup
 
         onSustainHold = cast FlxDestroyUtil.destroy(onSustainHold);
 
-        onSustainMiss = cast FlxDestroyUtil.destroy(onSustainMiss);
+        onSustainDrop = cast FlxDestroyUtil.destroy(onSustainDrop);
 
         onNoteSpawn = cast FlxDestroyUtil.destroy(onNoteSpawn);
 
@@ -318,11 +330,6 @@ class Strumline extends FlxGroup
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
                     Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j] => i
         ];
-    }
-
-    public function clearKeys():Void
-    {
-        keys = null;
     }
 
     public function resetStrums():Void
@@ -365,12 +372,9 @@ class Strumline extends FlxGroup
             vocals.volume = 1.0;
     }
 
-    public function noteMiss(note:Note, resize:Bool):Void
+    public function noteMiss(note:Note):Void
     {
         onNoteMiss.dispatch(note);
-
-        if (resize)
-            resizeSustainNote(note);
 
         note.status = MISSED;
 
@@ -393,9 +397,15 @@ class Strumline extends FlxGroup
         splash.centerTo(note.strum);
     }
 
-    public function isHolding(note:Note):Bool
+    public function isHoldingNote(note:Note):Bool
     {
-        return note.status != MISSED && (botplay || keysHeld[note.direction] || (note.status == HIT && conductor.time >= note.time + note.length));
+        if (note.length == 0.0 || (note.status != HIT && note.status != DROPPING))
+            return false;
+
+        if (botplay)
+            return true;
+
+        return keysHeld[note.direction];
     }
 
     public function holdSustainNote(note:Note, sustain:Sustain, elapsed:Float):Void
@@ -407,6 +417,8 @@ class Strumline extends FlxGroup
         if (lastStep != conductor.step || note.status != HIT)
         {
             note.status = HIT;
+
+            note.droppedTime = 0.0;
             
             var strum:Strum = note.strum;
 
@@ -421,11 +433,22 @@ class Strumline extends FlxGroup
         }
     }
 
-    public function missSustainNote(note:Note, sustain:Sustain, elapsed:Float):Void
+    public function sustainDrop(note:Note, sustain:Sustain):Void
     {
-        sustainMissEvent.reset(note, sustain, elapsed);
+        sustainDropEvent.reset(note, sustain);
 
-        onSustainMiss.dispatch(sustainMissEvent);
+        onSustainDrop.dispatch(sustainDropEvent);
+
+        note.status = MISSED;
+
+        playCharMissAnims(note, note.direction);
+
+        if (vocals != null)
+            vocals.volume = 0.0;
+
+        var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
+
+        _noteMiss.onComplete = _noteMiss.kill;
     }
 
     public function resizeSustainNote(note:Note):Void
@@ -443,25 +466,17 @@ class Strumline extends FlxGroup
         if (note.status == HIT)
             notesPendingRemoval.push(note);
 
-        if (!botplay)
+        if (note.droppedTime == 0.0)
         {
-            if (note.unholdTime == 0.0)
-            {
-                if (note.playSplash)
-                    playSplash(note);
-            }
-            else
-            {
-                var anim:String = Note.DIRECTIONS[note.strum.direction].toLowerCase() + "Static";
-
-                note.strum.animation.play(anim, true);
-
-                if (note.status != MISSED)
-                    noteMiss(note, false);
-            }
+            if (!note.hasDropped && note.playSplash)
+                playSplash(note);
         }
+        else
+        {
+            var anim:String = Note.DIRECTIONS[note.strum.direction].toLowerCase() + "Static";
 
-        note.finishedHold = true;
+            note.strum.animation.play(anim, true);
+        }
     }
 
     public function ghostTap(direction:Int):Void

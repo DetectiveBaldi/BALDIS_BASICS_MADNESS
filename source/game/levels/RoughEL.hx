@@ -73,7 +73,7 @@ class RoughEL extends PlayState
 
         playField.visible = false;
 
-        plrStrumline.clearKeys();
+        plrStrumline.botplay = true;
 
         plrStrumline.resetStrums();
 
@@ -200,8 +200,7 @@ class RoughEL extends PlayState
 
             playField.visible = true;
 
-            if (!Options.botplay)
-                plrStrumline.getKeys();
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 464.0)
@@ -686,7 +685,7 @@ class RoughEL extends PlayState
 
             playField.visible = false;
 
-            plrStrumline.clearKeys();
+            plrStrumline.botplay = true;
 
             plrStrumline.resetStrums();
 
@@ -928,8 +927,7 @@ class RoughEL extends PlayState
 
             playField.visible = true;
 
-            if (!Options.botplay)
-                plrStrumline.getKeys();
+            plrStrumline.botplay = Options.botplay;
 
             roughES.remove(players, true);
 
@@ -956,7 +954,7 @@ class RoughEL extends PlayState
 
             playField.visible = false;
 
-            plrStrumline.clearKeys();
+            plrStrumline.botplay = true;
 
             plrStrumline.resetStrums();
 
@@ -1116,8 +1114,7 @@ class RoughEL extends PlayState
 
             playField.visible = true;
 
-            if (!Options.botplay)
-                plrStrumline.getKeys();
+            plrStrumline.botplay = Options.botplay;
         
             var plr:Character = getPlayer("bf-face-left");
             plr.setPosition(785.0, 170.0);

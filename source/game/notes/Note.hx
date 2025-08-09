@@ -37,9 +37,9 @@ class Note extends FlxSprite
 
     public var playSplash:Bool;
 
-    public var finishedHold:Bool;
+    public var hasDropped:Bool;
 
-    public var unholdTime:Float;
+    public var droppedTime:Float;
 
     public var latestTiming:Float;
 
@@ -73,13 +73,13 @@ class Note extends FlxSprite
 
         kind = "";
 
-        status = IDLING;
+        status = MOVING;
 
         playSplash = false;
 
-        finishedHold = false;
+        hasDropped = false;
 
-        unholdTime = 0.0;
+        droppedTime = 0.0;
 
         latestTiming = Rating.list.last().timing;
     }
@@ -109,15 +109,25 @@ class Note extends FlxSprite
 
     public function isHittable():Bool
     {
-        return status == IDLING && ((strumline.botplay && time <= strumline.conductor.time) || (!strumline.botplay && Math.abs(time - strumline.conductor.time) <= latestTiming));
+        if (status != MOVING)
+            return false;
+
+        var botplay:Bool = strumline.botplay;
+
+        if (botplay)
+            return time <= strumline.conductor.time - latestTiming;
+
+        return Math.abs(time - strumline.conductor.time) <= latestTiming;
     }
 }
 
 enum NoteStatus
 {
-    IDLING;
+    MOVING;
 
     HIT;
 
     MISSED;
+
+    DROPPING;
 }

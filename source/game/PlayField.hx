@@ -25,8 +25,8 @@ import data.PlayStats;
 import game.notes.Note;
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
+import game.notes.events.SustainDropEvent;
 import game.notes.events.SustainHoldEvent;
-import game.notes.events.SustainMissEvent;
 import game.notes.NoteSpawner;
 import game.notes.Strumline;
 
@@ -186,22 +186,9 @@ class PlayField extends FlxGroup
 
             strumline.onSustainHold.add(sustainHold);
 
-            strumline.onSustainMiss.add(sustainMiss);
+            strumline.onSustainDrop.add(sustainDrop);
 
             strumline.onGhostTap.add(ghostTap);
-        });
-
-        strumlines.memberRemoved.add((strumline:Strumline) ->
-        {
-            strumline.onNoteHit.remove(noteHit);
-
-            strumline.onNoteMiss.remove(noteMiss);
-
-            strumline.onSustainHold.remove(sustainHold);
-
-            strumline.onSustainMiss.remove(sustainMiss);
-
-            strumline.onGhostTap.remove(ghostTap);
         });
 
         add(strumlines);
@@ -212,21 +199,14 @@ class PlayField extends FlxGroup
 
         opponentStrumline.botplay = true;
 
-        opponentStrumline.clearKeys();
-
-        opponentStrumline.strums.setPosition(45.0,opponentStrumline.downscroll ?
+        opponentStrumline.strums.setPosition(45.0, opponentStrumline.downscroll ?
             FlxG.height - opponentStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(opponentStrumline);
 
         playerStrumline = new Strumline(conductor);
 
-        if (Options.botplay)
-        {
-            playerStrumline.botplay = true;
-
-            playerStrumline.clearKeys();
-        }
+        playerStrumline.botplay = Options.botplay;
 
         playerStrumline.strums.setPosition(FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ?
             FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
@@ -330,13 +310,13 @@ class PlayField extends FlxGroup
         healthBar.value += 10.0 * ev.elapsed;
     }
 
-    public function sustainMiss(ev:SustainMissEvent):Void
+    public function sustainDrop(ev:SustainDropEvent):Void
     {
-        playStats.score -= Math.floor(250.0 * ev.elapsed);
+        playStats.score -= 250;
 
         updateScoreTxt();
 
-        healthBar.value -= 10.0 * ev.elapsed;
+        healthBar.value -= 1.0;
     }
 
     public function ghostTap(ev:GhostTapEvent):Void

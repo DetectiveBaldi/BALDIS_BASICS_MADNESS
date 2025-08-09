@@ -79,13 +79,13 @@ class NoteSpawner extends FlxBasic
 
             note.kind = noteSchema.kind;
             
-            note.status = IDLING;
+            note.status = MOVING;
 
             note.playSplash = false;
 
-            note.finishedHold = false;
+            note.droppedTime = 0.0;
 
-            note.unholdTime = 0.0;
+            note.hasDropped = false;
 
             note.sustain = null;
 
