@@ -37,6 +37,13 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Uncanon
+        var level:LevelData = {week: null, name: "Uncanon"}
+
+        level.hiddenWithoutScore = true;
+
+        LevelData.list.push(level);
+
         // Scribble
         level = {week: null, name: "Scribble"}
 
