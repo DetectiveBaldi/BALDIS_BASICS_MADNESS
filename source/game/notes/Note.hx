@@ -115,7 +115,7 @@ class Note extends FlxSprite
         var botplay:Bool = strumline.botplay;
 
         if (botplay)
-            return time <= strumline.conductor.time - latestTiming;
+            return time <= strumline.conductor.time;
 
         return Math.abs(time - strumline.conductor.time) <= latestTiming;
     }
