@@ -81,6 +81,8 @@ class MouseRectPlugin extends FlxBasic
         top = newTop;
 
         bottom = newBottom;
+
+        updateMouseRect(FlxG.stage.mouseX, FlxG.stage.mouseY);
     }
 
     public function resetMouseRect():Void

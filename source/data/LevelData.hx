@@ -20,7 +20,7 @@ class LevelData
         hiddenWithoutScore = false;
     }
 
-    public function getClsPath():String
+    public function getClassFile():String
     {
         var splt:Array<String> = name.split(" ");
 

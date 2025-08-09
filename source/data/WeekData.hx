@@ -40,7 +40,7 @@ class WeekData
         hasTvPortrait = true;
     }
 
-    public function getPackPath():String
+    public function getLevelsPackage():String
     {
         return '${name.split(" ").join("").toLowerCase()}w';
     }

@@ -2,6 +2,8 @@ package game;
 
 import flixel.FlxG;
 
+import data.PlayStats;
+
 class HighScore
 {
     // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)
@@ -70,7 +72,17 @@ class HighScore
 
     public static function getBlankLevel():LevelScore
     {
-        return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}
+        return getBlankWeek();
+    }
+
+    public static function getWeekScoreFromPlayStats(stats:PlayStats):WeekScore
+    {
+        return {score: stats.score, misses: stats.misses, accuracy: stats.accuracy, grade: stats.grade}
+    }
+
+    public static function getLevelScoreFromPlayStats(stats:PlayStats):LevelScore
+    {
+        return getWeekScoreFromPlayStats(stats);
     }
 }
 

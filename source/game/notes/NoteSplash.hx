@@ -38,20 +38,20 @@ class NoteSplash extends FlxSprite
 
         for (i in 0 ... animations.length)
         {
-            var _animation:AnimationData = animations[i];
+            var animData:AnimationData = animations[i];
 
-            _animation.frameRate ??= 24.0;
+            animData.frameRate ??= 24.0;
 
-            _animation.looped ??= false;
+            animData.looped ??= false;
 
-            _animation.flipX ??= false;
+            animData.flipX ??= false;
 
-            _animation.flipY ??= false;
+            animData.flipY ??= false;
 
-            if (_animation.indices.length > 0.0)
-                animation.addByIndices(_animation.name, _animation.prefix, _animation.indices, "", _animation.frameRate, _animation.looped, _animation.flipX, _animation.flipY);
+            if (animData.indices != null)
+                animation.addByIndices(animData.name, animData.prefix, animData.indices, "", animData.frameRate, animData.looped, animData.flipX, animData.flipY);
             else
-                animation.addByPrefix(_animation.name, _animation.prefix, _animation.frameRate, _animation.looped, _animation.flipX, _animation.flipY);
+                animation.addByPrefix(animData.name, animData.prefix, animData.frameRate, animData.looped, animData.flipX, animData.flipY);
         }
 
         animation.onFinish.add((name:String) -> kill());

@@ -7,18 +7,18 @@ import core.Paths;
 
 class HealthIcon extends FlxSprite
 {
-    public function new(x:Float = 0.0, y:Float = 0.0, character:String):Void
+    public function new(file:String):Void
     {
-        super(x, y);
+        super(0.0, 0.0);
 
         active = false;
 
-        load(character);
+        loadFromFile(file);
     }
 
-    public function load(character:String):Void
+    public function loadFromFile(file:String):Void
     {
-        loadGraphic(AssetCache.getGraphic('game/HealthIcon/${character}'), true, 150, 150);
+        loadGraphic(AssetCache.getGraphic('game/HealthIcon/${file}'), true, 150, 150);
 
         animation.add("icon", [0, 1], 0.0, false);
 

@@ -149,7 +149,7 @@ class CharacterEditorState extends CustomState
 
         progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-        healthIcon = new HealthIcon(0.0, 0.0, character.config.healthIcon);
+        healthIcon = new HealthIcon(character.config.healthIcon);
 
         healthIcon.camera = hudCamera;
 
@@ -184,13 +184,13 @@ class CharacterEditorState extends CustomState
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-            healthIcon.load(character.config.healthIcon);
+            healthIcon.loadFromFile(character.config.healthIcon);
 
             animationIndex = 0;
 
             refreshMainTab();
 
-            refreshAssetCacheTab();
+            refreshAssetsTab();
 
             refreshAnimationsTab();
         }
@@ -268,7 +268,7 @@ class CharacterEditorState extends CustomState
             character.singDuration = character.config.singDuration;
         }
 
-        refreshAssetCacheTab();
+        refreshAssetsTab();
 
         ui.findComponent("__button", Button).onClick = (ev:MouseEvent) ->
         {
@@ -296,7 +296,7 @@ class CharacterEditorState extends CustomState
         {
             character.config.healthIcon = ui.findComponent("____textfield", TextField).text;
 
-            healthIcon.load(character.config.healthIcon);
+            healthIcon.loadFromFile(character.config.healthIcon);
 
             character.config.healthColor = ui.findComponent("_____textfield", TextField).text;
 
@@ -416,7 +416,7 @@ class CharacterEditorState extends CustomState
         ui.findComponent("___number-stepper", NumberStepper).value = character.config.singDuration ?? 8.0;
     }
 
-    public function refreshAssetCacheTab():Void
+    public function refreshAssetsTab():Void
     {
         ui.findComponent("__textfield", TextField).text = character.config.format;
 

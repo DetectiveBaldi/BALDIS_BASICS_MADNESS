@@ -68,25 +68,25 @@ class PlayState extends CustomState
 
     public static var weekStats:Map<String, PlayStats>;
 
-    public static function getClsPathFromLevel(level:LevelData = null, sep:String = "/"):String
+    public static function getFullClassPath(level:LevelData = null, sep:String = "/"):String
     {
         level ??= PlayState.level;
 
         var path:String = "game/levels";
 
         if (level.week != null)
-            path += '/${level.week.getPackPath()}';
+            path += '/${level.week.getLevelsPackage()}';
 
-        path += '/${level.getClsPath()}';
+        path += '/${level.getClassFile()}';
 
         return sep == "/" ? path : path.replace("/", sep);
     }
 
-    public static function getClsFromLevel(level:LevelData = null):PlayState
+    public static function getClassFromLevel(level:LevelData = null):PlayState
     {
         level ??= PlayState.level;
 
-        return Type.createInstance(Type.resolveClass(getClsPathFromLevel(level, ".")), []);
+        return Type.createInstance(Type.resolveClass(getFullClassPath(level, ".")), []);
     }
 
     public static function loadWeek(week:WeekData):Void
@@ -97,7 +97,7 @@ class PlayState extends CustomState
 
         weekStats = new Map<String, PlayStats>();
 
-        FlxG.switchState(() -> getClsFromLevel());
+        FlxG.switchState(() -> getClassFromLevel());
     }
 
     public static function loadSingle(level:LevelData):Void
@@ -108,7 +108,7 @@ class PlayState extends CustomState
 
         weekStats = null;
 
-        FlxG.switchState(() -> getClsFromLevel());
+        FlxG.switchState(() -> getClassFromLevel());
     }
 
     /**
@@ -127,9 +127,9 @@ class PlayState extends CustomState
     public var cameraTarget:String;
 
     /**
-     * A more specific form of `cameraTarget`
+     * A more specific form of `cameraTarget`.
      */
-    public var focusedCharacter:String;
+    public var cameraCharTarget:String;
 
     public var cameraLock:CameraLockMode;
 
@@ -215,7 +215,7 @@ class PlayState extends CustomState
 
         cameraTarget = "POINT";
 
-        focusedCharacter = "";
+        cameraCharTarget = "";
 
         cameraLock = DEFAULT;
 
@@ -365,7 +365,7 @@ class PlayState extends CustomState
 
         #if debug
         if (FlxG.keys.justPressed.EIGHT)
-            FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClsFromLevel()));
+            FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClassFromLevel()));
         #end
     }
 
@@ -380,7 +380,7 @@ class PlayState extends CustomState
 
     public function loadChart():Void
     {
-        chart = ChartLoader.readPath(Paths.data(PlayState.getClsPathFromLevel()));
+        chart = ChartLoader.readPath(Paths.data(PlayState.getFullClassPath()));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -420,7 +420,7 @@ class PlayState extends CustomState
 
     public function loadSong():Void
     {
-        var songPath:String = '${PlayState.getClsPathFromLevel()}/';
+        var songPath:String = '${PlayState.getFullClassPath()}/';
 
         var pathSuffix:String = "Instrumental";
 
@@ -465,15 +465,8 @@ class PlayState extends CustomState
 
         var score:Int = playStats.score;
 
-        var misses:Int = playStats.misses;
-
-        var accuracy:Float = playStats.accuracy;
-
-        var grade:String = playStats.grade;
-
         if (HighScore.isLevelHighScore(level.name, "normal", score))
-            HighScore.setLevelScore(level.name, "normal",
-                {score: score, misses: misses, accuracy: accuracy, grade: grade});
+            HighScore.setLevelScore(level.name, "normal", HighScore.getLevelScoreFromPlayStats(playStats));
 
         if (isWeek)
         {
@@ -489,15 +482,8 @@ class PlayState extends CustomState
 
                 score = totalStats.score;
 
-                misses = totalStats.score;
-
-                accuracy = totalStats.accuracy;
-
-                grade = totalStats.grade;
-
                 if (HighScore.isWeekHighScore(week.name, "normal", score))
-                    HighScore.setWeekScore(week.name, "normal",
-                        {score: score, misses: misses, accuracy: accuracy, grade: grade});
+                    HighScore.setWeekScore(week.name, "normal", HighScore.getWeekScoreFromPlayStats(totalStats));
 
                 FlxG.switchState(() -> new StoryMenuScreen());
             }
@@ -505,7 +491,7 @@ class PlayState extends CustomState
             {
                 level = week.levels[i + 1];
 
-                FlxG.switchState(() -> PlayState.getClsFromLevel());
+                FlxG.switchState(() -> PlayState.getClassFromLevel());
             }
         }
         else
@@ -571,9 +557,9 @@ class PlayState extends CustomState
         var healthBar:HealthBar = playField.healthBar;
 
         if (charType == "spectator" || charType == "opponent")
-            healthBar.opponentIcon.load(character.config.healthIcon);
+            healthBar.opponentIcon.loadFromFile(character.config.healthIcon);
         else
-            healthBar.playerIcon.load(character.config.healthIcon);
+            healthBar.playerIcon.loadFromFile(character.config.healthIcon);
     }
 
     public function setCamStartPos():Void

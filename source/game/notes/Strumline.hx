@@ -26,6 +26,7 @@ using StringTools;
 using util.ArrayUtil;
 using util.MathUtil;
 
+// TODO: Rework the entirety of `update`.
 class Strumline extends FlxGroup
 {
     public var conductor:Conductor;

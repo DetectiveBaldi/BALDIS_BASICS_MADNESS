@@ -9,7 +9,7 @@ class FocusCamCharEvent
     {
         game.cameraTarget = "CHARACTER";
 
-        game.focusedCharacter = charType.toUpperCase();
+        game.cameraCharTarget = charType.toUpperCase();
 
         if ((game.cameraLock == FOCUS_CAM_POINT || game.cameraLock == NONE) && !skipCameraLock)
             return;
