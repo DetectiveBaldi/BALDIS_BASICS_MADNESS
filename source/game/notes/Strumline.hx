@@ -23,8 +23,6 @@ import music.Conductor;
 
 using StringTools;
 
-using flixel.util.FlxColorTransformUtil;
-
 using util.ArrayUtil;
 using util.MathUtil;
 
@@ -267,8 +265,6 @@ class Strumline extends FlxGroup
 
                 if (note.status == DROPPING)
                 {
-                    note.colorTransform.setMultipliers(1.0, 1.0, 1.0, 1.0);
-
                     setStrumActive(note.direction, true);
 
                     note.droppedTime += 1000.0 * elapsed;
@@ -371,8 +367,6 @@ class Strumline extends FlxGroup
 
         if (note.length > 0.0)
         {
-            note.colorTransform.setMultipliers(1.75, 1.75, 1.75, 1.75);
-
             resizeSustainNote(note);
 
             setStrumActive(note.direction, false);
@@ -444,9 +438,7 @@ class Strumline extends FlxGroup
             strum.confirmTimer = 0.0;
 
             strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Confirm", true);
-
-            note.colorTransform.setMultipliers(1.75, 1.75, 1.75, 1.75);
-
+            
             setStrumActive(note.direction, false);
             
             if (vocals != null)
