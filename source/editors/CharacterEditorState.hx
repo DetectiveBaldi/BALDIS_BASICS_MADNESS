@@ -76,6 +76,8 @@ class CharacterEditorState extends CustomState
 
     public var hudCamera:FlxCamera;
 
+    public var ghost:FlxSprite;
+
     public var character:Character;
 
     public var animationIndex:Int;
@@ -115,11 +117,23 @@ class CharacterEditorState extends CustomState
 
         add(background);
 
+        ghost = new FlxSprite();
+
+        ghost.alpha = 0.65;
+
+        add(ghost);
+
         character = new Character(null, 0.0, 0.0, CharacterData.get("bf-face-left"));
 
         character.screenCenter();
 
         add(character);
+
+        updateGhostFrame();
+
+        updateGhostScale();
+
+        updateGhostFlip();
 
         animationIndex = character.config.animations.indexOf(character.config.animations.first((animation:AnimationData) -> character.animation.name == animation.name));
 
@@ -182,6 +196,12 @@ class CharacterEditorState extends CustomState
 
             resetCameraPoint();
 
+            updateGhostFrame();
+
+            updateGhostScale();
+
+            updateGhostFlip();
+
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
             healthIcon.loadFromFile(character.config.healthIcon);
@@ -213,6 +233,8 @@ class CharacterEditorState extends CustomState
             character.updateHitbox();
 
             character.screenCenter();
+
+            updateGhostScale();
         }
 
         ui.findComponent("_number-stepper", NumberStepper).onChange = (ev:UIEvent) ->
@@ -226,6 +248,8 @@ class CharacterEditorState extends CustomState
             character.updateHitbox();
 
             character.screenCenter();
+
+            updateGhostScale();
         }
 
         ui.findComponent("_checkbox", CheckBox).onChange = (ev:UIEvent) ->
@@ -233,6 +257,8 @@ class CharacterEditorState extends CustomState
             character.config.flipX = ui.findComponent("_checkbox", CheckBox).value;
 
             character.flipX = character.config.flipX;
+
+            updateGhostFlip();
         }
 
         ui.findComponent("__checkbox", CheckBox).onChange = (ev:UIEvent) ->
@@ -240,6 +266,8 @@ class CharacterEditorState extends CustomState
             character.config.flipY = ui.findComponent("__checkbox", CheckBox).value;
 
             character.flipY = character.config.flipY;
+
+            updateGhostFlip();
         }
 
         ui.findComponent("_textfield", TextField).onChange = (ev:UIEvent) ->
@@ -290,6 +318,10 @@ class CharacterEditorState extends CustomState
             character.updateHitbox();
 
             character.screenCenter();
+
+            updateGhostFrame();
+
+            updateGhostScale();
         }
 
         ui.findComponent("___button", Button).onClick = (ev:MouseEvent) ->
@@ -590,5 +622,33 @@ class CharacterEditorState extends CustomState
         FlxG.camera.scroll.x = cameraPointPointer.x - FlxG.camera.width * 0.5;
 
         FlxG.camera.scroll.y = cameraPointPointer.y - FlxG.camera.height * 0.5;
+    }
+
+    public function updateGhostFrame():Void
+    {
+        var allFrames:Array<FlxFrame> = character.frames.frames;
+
+        var validFrames:Array<FlxFrame> = allFrames.filter((frame:FlxFrame) -> frame.name.contains("idle") ||
+            frame.name.contains("dance"));
+
+        var frameToUse:FlxFrame = validFrames.last();
+
+        ghost.loadGraphic(FlxGraphic.fromFrame(frameToUse));
+    }
+
+    public function updateGhostScale():Void
+    {
+        ghost.scale.set(character.scale.x, character.scale.y);
+
+        ghost.updateHitbox();
+
+        ghost.centerTo();
+    }
+
+    public function updateGhostFlip():Void
+    {
+        ghost.flipX = character.flipX;
+
+        ghost.flipY = character.flipY;
     }
 }
