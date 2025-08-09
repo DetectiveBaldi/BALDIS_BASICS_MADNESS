@@ -214,6 +214,8 @@ class GainGL extends PlayState
         
         if (step == 448)
         {
+            cameraLock = FOCUS_CAM_CHAR;
+
             gameCameraZoom = 1;
 
             playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
@@ -258,8 +260,6 @@ class GainGL extends PlayState
 
             opp.x += 200.0;
 
-            FocusCamCharEvent.dispatch(this, "opponent", -1.0, "linear", true);
-
             opp.x -= 200.0;
 
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
@@ -271,9 +271,6 @@ class GainGL extends PlayState
             gainGS.ggfaculty0_Alt0.visible = false;
             gainGS.ggfaculty0.visible = true;
         }
-
-        if (step == 480.0)
-            cameraLock = FOCUS_CAM_CHAR;
     
         if (step == 504 || step == 507 || step == 510)
         {                        
@@ -282,7 +279,7 @@ class GainGL extends PlayState
     
         if (step == 512)
         {                        
-            gameCameraZoom = 0.8;
+            gameCameraZoom = 0.95;
         }
 
         if (step == 624)
@@ -290,6 +287,8 @@ class GainGL extends PlayState
             cameraLock = FOCUS_CAM_POINT;
 
             cameraPoint.centerTo();
+
+            gameCameraZoom = 0.75;
         }
 
         if (step == 632)
