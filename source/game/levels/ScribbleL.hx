@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 
 import flixel.math.FlxRect;
 
+import flixel.util.FlxColor;
+
 import core.Options;
 
 import data.CharacterData;
@@ -16,9 +18,11 @@ import game.stages.ScribbleS;
 
 import music.Conductor;
 
-using util.MathUtil;
-
 using StringTools;
+
+using flixel.util.FlxColorTransformUtil;
+
+using util.MathUtil;
 
 class ScribbleL extends PlayState
 {
@@ -31,8 +35,6 @@ class ScribbleL extends PlayState
         scribbleS = cast (stage, ScribbleS);
 
         super.create();
-        
-        playField.scoreClip.visible = false;
 
         replaceHealthBar();
         
@@ -44,16 +46,61 @@ class ScribbleL extends PlayState
         
         oppStrumline.strums.x = plrStrumlineX;
 
-        scribbleS.classicHall0.visible = true;
-
         player.scale.set(3.75, 3.75);
         player.setPosition(700, 100);
 
         opponent.setPosition(1050, 185);
 
+        opponent.colorTransform.setOffsets(FlxColor.WHITE);
+
+        player.colorTransform.setOffsets(FlxColor.WHITE);
+
+        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+        oppStrumline.strums.alpha = 0.0;
+
+        plrStrumline.strums.alpha = 0.0;
+
         gameCameraZoom = 1.3;
 
         setCamStartPos();
+    }
+
+    override function stepHit(step:Int):Void
+    {
+        super.stepHit(step);
+
+        if (step == 132.0)
+        {
+            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+
+            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+        }
+
+        if (step == 280.0)
+        {
+            playField.scoreTxt.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            scribbleS.classicHall0.visible = true;
+
+            tween.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+                conductor.beatLength * 2.0 * 0.001);
+
+            tween.tween(player.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+                conductor.beatLength * 2.0 * 0.001);
+        }
+    }
+
+    override function measureHit(measure:Int):Void
+    {
+        super.measureHit(measure);
+    
+        if (cameraCharTarget == "OPPONENT")
+            gameCameraZoom = 1.3;
+        else
+            gameCameraZoom = 1;
     }
 
     public function replaceHealthBar():Void
@@ -76,20 +123,6 @@ class ScribbleL extends PlayState
         updateHealthBar("player");
 
         playField.insert(playField.members.indexOf(playField.scoreTxt) + 1, healthBar);
-    }
-
-    override function beatHit(beat:Int):Void
-    {
-        super.beatHit(beat);
-    
-    if (focusedCharacter == "OPPONENT")
-        {
-            gameCameraZoom = 1.3;
-        }
-     else
-        {
-            gameCameraZoom = 1;
-        }
     }
 }
 
