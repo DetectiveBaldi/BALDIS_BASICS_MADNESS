@@ -23,6 +23,8 @@ import music.Conductor;
 
 using StringTools;
 
+using flixel.util.FlxColorTransformUtil;
+
 using util.ArrayUtil;
 using util.MathUtil;
 
@@ -265,6 +267,10 @@ class Strumline extends FlxGroup
 
                 if (note.status == DROPPING)
                 {
+                    note.colorTransform.setMultipliers(1.0, 1.0, 1.0, 1.0);
+
+                    setStrumActive(note.direction, true);
+
                     note.droppedTime += 1000.0 * elapsed;
 
                     if (note.droppedTime >= note.latestTiming * 2.0)
@@ -337,6 +343,16 @@ class Strumline extends FlxGroup
         strums.forEach((strum:Strum) -> strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Static", true));
     }
 
+    public function setStrumActive(direc:Int, active:Bool):Void
+    {
+        var strum:Strum = strums.members[direc];
+
+        strum.active = active;
+
+        if (!active)
+            strum.animation.finish();
+    }
+
     public function noteHit(note:Note):Void
     {
         noteHitEvent.reset(note);
@@ -347,24 +363,27 @@ class Strumline extends FlxGroup
 
         note.playSplash = noteHitEvent.playSplash;
 
+        var strum:Strum = note.strum;
+
+        strum.confirmTimer = 0.0;
+        
+        strum.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "Confirm", true);
+
         if (note.length > 0.0)
-            note.visible = false;
+        {
+            note.colorTransform.setMultipliers(1.75, 1.75, 1.75, 1.75);
+
+            resizeSustainNote(note);
+
+            setStrumActive(note.direction, false);
+        }
         else
         {
             notesPendingRemoval.push(note);
 
             if (note.playSplash)
                 playSplash(note);
-        }
-
-        if (note.length > 0.0)
-            resizeSustainNote(note);
-
-        var strum:Strum = note.strum;
-
-        strum.confirmTimer = 0.0;
-        
-        strum.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "Confirm", true);
+        }   
 
         playCharSingAnims(note, note.direction, false);
 
@@ -425,6 +444,10 @@ class Strumline extends FlxGroup
             strum.confirmTimer = 0.0;
 
             strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Confirm", true);
+
+            note.colorTransform.setMultipliers(1.75, 1.75, 1.75, 1.75);
+
+            setStrumActive(note.direction, false);
             
             if (vocals != null)
                 vocals.volume = 1.0;
@@ -463,6 +486,8 @@ class Strumline extends FlxGroup
 
     public function finishSustainNote(note:Note):Void
     {
+        setStrumActive(note.direction, true);
+
         if (note.status == HIT)
             notesPendingRemoval.push(note);
 

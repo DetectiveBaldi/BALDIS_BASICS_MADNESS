@@ -7,6 +7,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import core.AssetCache;
 import core.Paths;
 
+using flixel.util.FlxColorTransformUtil;
+
 using util.ArrayUtil;
 
 class Note extends FlxSprite
@@ -101,6 +103,8 @@ class Note extends FlxSprite
     override function kill():Void
     {
         super.kill();
+
+        colorTransform.setMultipliers(1.0, 1.0, 1.0, 1.0);
 
         sustain?.kill();
 
