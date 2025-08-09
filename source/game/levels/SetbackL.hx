@@ -85,7 +85,7 @@ class SetbackL extends PlayState
 
         if (step == 416)
         {
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
 
@@ -101,7 +101,7 @@ class SetbackL extends PlayState
         {
             gameCamera.alpha = 1.0;
             playField.visible = true;
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             var opp:Character = getOpponent("dsci");

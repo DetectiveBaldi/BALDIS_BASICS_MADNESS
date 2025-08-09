@@ -1,8 +1,16 @@
 package data;
 
+import flixel.util.FlxColor;
+
+using util.ArrayUtil;
+
 @:structInit
 class PlayStats
 {
+    public static var allGrades:Array<String> = ["A+", "A", "B", "C", "D", "F"];
+
+    public static var gradePercentages:Array<Float> = [97.0, 90.0, 80.0, 70.0, 60.0, 50.0];
+
     public static function empty():PlayStats
     {
         return {score: 0, hits: 0, misses: 0, bonus: 0.0}
@@ -32,22 +40,17 @@ class PlayStats
         if (Math.isNaN(accuracy))
             return "N/A";
 
-        if (accuracy >= 97.0)
-            return "A+";
+        for (i in 0 ... allGrades.length - 1)
+        {
+            var gradeStr:String = allGrades[i];
 
-        if (accuracy >= 90.0)
-            return "A";
+            var percentage:Float = gradePercentages[i];
 
-        if (accuracy >= 80.0)
-            return "B";
+            if (accuracy >= percentage)
+                return gradeStr;
+        }
 
-        if (accuracy >= 70.0)
-            return "C";
-
-        if (accuracy >= 60.0)
-            return "D";
-
-        return "F";
+        return allGrades.last();
     }
 
     public function isEmpty():Bool
@@ -78,5 +81,15 @@ class PlayStats
     public function copy():PlayStats
     {
         return {score: score, hits: hits, misses: misses, bonus: bonus}
+    }
+
+    public static function getColorForGrade(grade:String):FlxColor
+    {
+        var indexOf:Int = allGrades.indexOf(grade);
+
+        if (indexOf == -1)
+            return FlxColor.BLACK;
+
+        return FlxColor.interpolate(0xFF0EF403, 0xFFF70001, indexOf / (allGrades.length - 1));
     }
 }

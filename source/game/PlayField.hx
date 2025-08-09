@@ -55,7 +55,11 @@ class PlayField extends FlxGroup
 
     public var scoreClip:FlxSprite;
 
-    public var scoreTxt:FlxText;
+    public var scoreText:FlxText;
+
+    public var scoreTextFormat:FlxTextFormat;
+
+    public var formatRules:Array<FlxTextFormatMarkerPair>;
 
     public var healthBar:HealthBar;
 
@@ -114,27 +118,31 @@ class PlayField extends FlxGroup
 
         add(scoreClip);
 
-        scoreTxt = new FlxText(0.0, 0.0, scoreClip.width, "", 18);
+        scoreText = new FlxText(0.0, 0.0, scoreClip.width, "", 18);
 
-        scoreTxt.color = FlxColor.BLACK;
+        scoreText.color = FlxColor.BLACK;
 
-        scoreTxt.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        scoreTxt.alignment = LEFT;
+        scoreText.alignment = LEFT;
 
-        scoreTxt.textField.antiAliasType = ADVANCED;
+        scoreText.textField.antiAliasType = ADVANCED;
 
-        var tf:TextFormat = scoreTxt.textField.defaultTextFormat;
+        var tf:TextFormat = scoreText.textField.defaultTextFormat;
 
         tf.leading = 5;
 
-        scoreTxt.textField.defaultTextFormat = tf;
+        scoreText.textField.defaultTextFormat = tf;
 
-        scoreTxt.textField.sharpness = 400.0;
+        scoreText.textField.sharpness = 400.0;
 
-        add(scoreTxt);
+        add(scoreText);
 
-        updateScoreTxt();
+        scoreTextFormat = new FlxTextFormat(FlxColor.BLACK);
+
+        formatRules = [new FlxTextFormatMarkerPair(scoreTextFormat, "<color-format>")];
+
+        updateScoreText();
 
         healthBar = new HealthBar(0.0, 0.0, conductor);
 
@@ -237,17 +245,17 @@ class PlayField extends FlxGroup
             creditsPop.popUp();
     }
 
-    public function updateScoreTxt():Void
+    public function updateScoreText():Void
     {
         if (playStats.isEmpty())
         {
             if (Options.downscroll)
-                scoreTxt.text = "Grade: N/A\nAccuracy: 0%\nMisses: 0\nScore: 0";
+                scoreText.text = "Grade: N/A\nAccuracy: 0%\nMisses: 0\nScore: 0";
             else
-                scoreTxt.text = "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A";
+                scoreText.text = "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A";
 
-            scoreTxt.setPosition(scoreClip.x + 28.5, Options.downscroll ? scoreClip.y + scoreClip.height -
-                scoreTxt.height - 25.0 : scoreClip.y + 25.0);
+            scoreText.setPosition(scoreClip.x + 28.5, Options.downscroll ? scoreClip.y + scoreClip.height -
+                scoreText.height - 25.0 : scoreClip.y + 25.0);
 
             return;
         }
@@ -260,10 +268,17 @@ class PlayField extends FlxGroup
 
         var grade:String = playStats.grade;
 
+        @:privateAccess
+        scoreTextFormat.format.color = PlayStats.getColorForGrade(grade);
+
         if (Options.downscroll)
-            scoreTxt.text = 'Grade: ${grade}\nAccuracy: ${accuracy}%\nMisses: ${misses}\nScore: ${score}';
+            scoreText.applyMarkup
+                ('<color-format>Grade: ${grade}<color-format>\nAccuracy: ${accuracy}%\nMisses: ${misses}\nScore: ${score}', formatRules);
         else
-            scoreTxt.text = 'Score: ${score}\nMisses: ${misses}\nAccuracy: ${accuracy}%\nGrade: ${grade}';
+        {
+            scoreText.applyMarkup
+                ('Score: ${score}\nMisses: ${misses}\nAccuracy: ${accuracy}%\n<color-format>Grade: ${grade}<color-format>', formatRules);
+        }
     }
 
     public function noteHit(event:NoteHitEvent):Void
@@ -281,7 +296,7 @@ class PlayField extends FlxGroup
 
             playStats.bonus += rating.bonus;
 
-            updateScoreTxt();
+            updateScoreText();
 
             healthBar.value += rating.health;
         }
@@ -293,7 +308,7 @@ class PlayField extends FlxGroup
 
         playStats.misses++;
 
-        updateScoreTxt();
+        updateScoreText();
 
         healthBar.value -= 1.5;
     }
@@ -305,7 +320,7 @@ class PlayField extends FlxGroup
 
         playStats.score += Math.floor(250.0 * ev.elapsed);
 
-        updateScoreTxt();
+        updateScoreText();
 
         healthBar.value += 10.0 * ev.elapsed;
     }
@@ -314,7 +329,7 @@ class PlayField extends FlxGroup
     {
         playStats.score -= 250;
 
-        updateScoreTxt();
+        updateScoreText();
 
         healthBar.value -= 1.0;
     }
@@ -327,7 +342,7 @@ class PlayField extends FlxGroup
 
             playStats.misses++;
 
-            updateScoreTxt();
+            updateScoreText();
 
             healthBar.value -= 1.5;
         }

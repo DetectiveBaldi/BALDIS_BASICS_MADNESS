@@ -55,7 +55,7 @@ class ScribbleL extends PlayState
 
         player.colorTransform.setOffsets(FlxColor.WHITE);
 
-        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
         oppStrumline.strums.alpha = 0.0;
@@ -80,7 +80,7 @@ class ScribbleL extends PlayState
 
         if (step == 280.0)
         {
-            playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             scribbleS.classicHall0.visible = true;
@@ -122,7 +122,7 @@ class ScribbleL extends PlayState
 
         updateHealthBar("player");
 
-        playField.insert(playField.members.indexOf(playField.scoreTxt) + 1, healthBar);
+        playField.insert(playField.members.indexOf(playField.scoreText) + 1, healthBar);
     }
 }
 

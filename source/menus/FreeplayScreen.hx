@@ -21,6 +21,7 @@ import core.AssetCache;
 import core.Paths;
 
 import data.LevelData;
+import data.PlayStats;
 import data.WeekData;
 
 import extendable.CustomState;
@@ -347,6 +348,22 @@ class FreeplayScreen extends CustomState
 
     public function clickInfoButton():Void
     {
+        var level:LevelData = levels[curSelected];
+
+        var week:WeekData = level.week;
+
+        if (week == null)
+        {
+            if (#if debug false && #end HighScore.getLevelScore(level.name, "normal").score == 0.0)
+                return;
+        }
+        else
+        {
+            if (HighScore.getWeekScore(week.name, "normal").score == 0.0 &&
+                #if debug false #else week.requiresScoreToPlay #end)
+                    return;
+        }
+
         openSubState(new InfoButtonSubState(levels[curSelected]));
     }
 }
@@ -357,9 +374,9 @@ class InfoButtonSubState extends FlxSubState
 
     public var exitButton:FlxSprite;
 
-    public var scoreText:FlxText;
+    public var levelNameText:FlxText;
 
-    public var levelText:FlxText;
+    public var scoreText:FlxText;
 
     public var gradeText:FlxText;
 
@@ -385,10 +402,6 @@ class InfoButtonSubState extends FlxSubState
 
         clipboard.animation.addByPrefix("flip", "flip", 24.0, false);
 
-        clipboard.animation.play("flip");
-
-        clipboard.animation.onFinish.addOnce((name:String) -> buildUI());
-
         clipboard.setGraphicSize(960, 720);
 
         clipboard.updateHitbox();
@@ -396,40 +409,7 @@ class InfoButtonSubState extends FlxSubState
         clipboard.screenCenter();
 
         add(clipboard);
-    }
 
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (exitButton != null)
-            return
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justPressed)
-            {
-                clipboard.animation.play("flip", false, true);
-
-                scoreText.visible = false;
-
-                exitButton.visible = false;
-
-                levelText.visible = false;
-
-                gradeText.visible = false;
-
-                clipboard.animation.onFinish.add((name:String) -> close());
-            }
-        }
-        else
-            exitButton.animation.play("0");
-    }
-
-    public function buildUI()
-    {
         exitButton = new FlxSprite();
 
         exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
@@ -448,27 +428,33 @@ class InfoButtonSubState extends FlxSubState
 
         add(exitButton);
 
-        levelText = new FlxText(0.0, 0.0, FlxG.width, Std.string(level.name));
+        levelNameText = new FlxText(0.0, 0.0, FlxG.width, level.name);
 
-        levelText.color = FlxColor.BLACK;
+        levelNameText.visible = false;
 
-        levelText.size = 64;
+        levelNameText.color = FlxColor.BLACK;
 
-        levelText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        levelNameText.size = 64;
 
-        levelText.alignment = CENTER;
+        levelNameText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        levelText.setPosition(0.0, 160.0);
+        levelNameText.alignment = CENTER;
 
-        levelText.bold = true;
+        levelNameText.setPosition(0.0, 160.0);
 
-        levelText.textField.antiAliasType = ADVANCED;
+        levelNameText.bold = true;
 
-        levelText.textField.sharpness = 400.0;
+        levelNameText.textField.antiAliasType = ADVANCED;
 
-        add(levelText);
+        levelNameText.textField.sharpness = 400.0;
 
-        scoreText = new FlxText(0.0, 0.0, FlxG.width, 'Score: ${Std.string(HighScore.getLevelScore(level.name, "normal").score)}\nAccuracy: ${Std.string(FlxMath.roundDecimal(HighScore.getLevelScore(level.name, "normal").accuracy, 2))}\nMisses: ${Std.string(HighScore.getLevelScore(level.name, "normal").misses)}\nFinal Grade:');
+        add(levelNameText);
+
+        var highScore:LevelScore = HighScore.getLevelScore(level.name, "normal");
+
+        scoreText = new FlxText(0.0, 0.0, FlxG.width, 'Score: ${highScore.score}\nMisses: ${highScore.misses}\nAccuracy: ${Std.string(FlxMath.roundDecimal(highScore.accuracy, 2))}%\nGrade:');
+
+        scoreText.visible = false;
 
         scoreText.color = FlxColor.BLACK;
 
@@ -488,7 +474,9 @@ class InfoButtonSubState extends FlxSubState
 
         gradeText = new FlxText(0.0, 0.0, FlxG.width, Std.string(HighScore.getLevelScore(level.name, "normal").grade));
 
-        gradeText.color = FlxColor.BLACK;
+        gradeText.visible = false;
+
+        gradeText.color = PlayStats.getColorForGrade(highScore.grade);
 
         gradeText.size = 200;
 
@@ -503,5 +491,41 @@ class InfoButtonSubState extends FlxSubState
         gradeText.textField.sharpness = 400;
 
         add(gradeText);
+
+        clipboard.animation.onFinish.addOnce((name:String) -> setUIVisible(true));
+
+        clipboard.animation.play("flip");
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
+        {
+            exitButton.animation.play("1");
+
+            if (FlxG.mouse.justReleased)
+            {
+                clipboard.animation.onFinish.removeAll();
+
+                clipboard.animation.play("flip", false, true);
+
+                clipboard.animation.onFinish.add((name:String) -> close());
+
+                setUIVisible(false);
+            }
+        }
+        else
+            exitButton.animation.play("0");
+    }
+
+    public function setUIVisible(visible:Bool):Void
+    {
+        levelNameText.visible = visible;
+
+        scoreText.visible = visible;
+
+        gradeText.visible = visible;
     }
 }

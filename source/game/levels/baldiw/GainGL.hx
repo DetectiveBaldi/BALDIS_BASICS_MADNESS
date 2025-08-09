@@ -72,7 +72,7 @@ class GainGL extends PlayState
         gainGS.entranceA4.visible = true;
         gainGS.entranceA4_Overlay0.visible = true;
 
-        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
     }
 
@@ -115,7 +115,7 @@ class GainGL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             var opp:Character = getOpponent("baldi-mad-face-front");
@@ -146,7 +146,7 @@ class GainGL extends PlayState
 
             temperature.color = 0xFFA8A8A8;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
             cameraPoint.x -= 180.0;
@@ -218,7 +218,7 @@ class GainGL extends PlayState
 
             gameCameraZoom = 1;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             var oppStrumlineX:Float = oppStrumline.strums.x;
@@ -330,7 +330,7 @@ class GainGL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
             oppStrumline.strums.x = oppStrumline.strums.getCenterX();
@@ -390,7 +390,7 @@ class GainGL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
             
             oppStrumline.strums.x = 45.0;
@@ -541,7 +541,7 @@ class GainGL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible =
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
             tween.color(temperature, conductor.beatLength * 7.0 * 0.001, temperature.color, 0xFF000000,

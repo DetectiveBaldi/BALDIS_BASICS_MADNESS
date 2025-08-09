@@ -29,7 +29,7 @@ class WarmWL extends PlayState
 
         super.create();
 
-        playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
     
         warmWS.entranceA0.visible = true;
@@ -55,7 +55,7 @@ class WarmWL extends PlayState
 
             gameCameraZoom = 0.8;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
         }
 
@@ -68,7 +68,7 @@ class WarmWL extends PlayState
 
             warmWS.entranceA0.color = 0xFF999999;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
         }
 
@@ -81,7 +81,7 @@ class WarmWL extends PlayState
 
             warmWS.entranceA0.color = 0xFFFFFFFF;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
         }
     
@@ -99,7 +99,7 @@ class WarmWL extends PlayState
 
             gameCameraZoom = 0.7;
 
-            playField.scoreClip.visible = playField.scoreTxt.visible = playField.healthBar.visible = 
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
             var opp:Character = getOpponent("baldi-face-front");
