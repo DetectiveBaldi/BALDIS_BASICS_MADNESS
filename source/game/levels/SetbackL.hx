@@ -1,6 +1,8 @@
 package game.levels;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
+
 import flixel.tweens.FlxEase;
 
 import flixel.util.FlxColor;
@@ -32,8 +34,6 @@ class SetbackL extends PlayState
         setbackS = cast (stage, SetbackS);
 
         super.create();
-
-        setCamStartPos();
 
         cameraLock = FOCUS_CAM_POINT;
 

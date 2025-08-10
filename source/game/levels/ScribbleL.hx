@@ -37,14 +37,17 @@ class ScribbleL extends PlayState
         super.create();
 
         replaceHealthBar();
-        
-        var plrStrumlineX:Float = plrStrumline.strums.x;
-        
-        var oppStrumlineX:Float = oppStrumline.strums.x;
 
-        plrStrumline.strums.x = oppStrumlineX;
-        
-        oppStrumline.strums.x = plrStrumlineX;
+        oppStrumline.strums.alpha = 0.35;
+
+        oppStrumline.strums.centerTo();
+
+        oppStrumline.downscroll = !oppStrumline.downscroll;
+
+        oppStrumline.strums.setPosition(oppStrumline.strums.getCenterX(), oppStrumline.downscroll ? FlxG.height -
+            oppStrumline.strums.height - 15.0 : 15.0);
+
+        plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
         player.scale.set(3.75, 3.75);
         player.setPosition(700, 100);

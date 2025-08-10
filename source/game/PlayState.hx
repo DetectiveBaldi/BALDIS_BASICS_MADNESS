@@ -365,7 +365,8 @@ class PlayState extends CustomState
 
         #if debug
         if (FlxG.keys.justPressed.EIGHT)
-            FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClassFromLevel()));
+            FlxG.switchState(() -> new editors.CharacterEditorState(
+                () -> PlayState.getClassFromLevel(), player.config.name));
         #end
     }
 

@@ -66,6 +66,8 @@ class CharacterEditorState extends CustomState
 {
     public var nextState:NextState;
 
+    public var configName:String;
+
     public var gameCamera(get, never):FlxCamera;
     
     @:noCompletion
@@ -90,11 +92,13 @@ class CharacterEditorState extends CustomState
 
     public var ui:Box;
 
-    public function new(nextState:NextState):Void
+    public function new(nextState:NextState, configName:String = "bf-face-left"):Void
     {
         super();
 
         this.nextState = nextState;
+
+        this.configName = configName;
     }
 
     override function create():Void
@@ -123,7 +127,7 @@ class CharacterEditorState extends CustomState
 
         add(ghost);
 
-        character = new Character(null, 0.0, 0.0, CharacterData.get("bf-face-left"));
+        character = new Character(null, 0.0, 0.0, CharacterData.get(configName));
 
         character.screenCenter();
 
