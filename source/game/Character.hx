@@ -51,7 +51,7 @@ class Character extends FlxSprite
 
     public var danceSteps:Array<String>;
 
-    public var danceInterval:Float;
+    public var danceEvery:Float;
 
     public var singDuration:Float;
 
@@ -61,7 +61,7 @@ class Character extends FlxSprite
 
     public var skipSing:Bool;
 
-    public var singTimer:Float;
+    public var holdTimer:Float;
 
     public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0, _config:RawCharacterData):Void
     {
@@ -86,6 +86,8 @@ class Character extends FlxSprite
 
         dance();
 
+        danceIndex = 0;
+
         animation.finish();
     }
 
@@ -93,37 +95,39 @@ class Character extends FlxSprite
     {
         super.update(elapsed);
 
-        if (conductor != null && strumline != null)
+        if (conductor == null || strumline == null)
+            return;
+
+        if (FlxG.keys.anyJustPressed(keys) && !strumline.botplay)
+            holdTimer = 0.0;
+
+        if (isSinging())
         {
-            if (FlxG.keys.anyJustPressed(keys) && !strumline.botplay)
-                singTimer = 0.0;
+            holdTimer += elapsed;
 
-            if ((animation.name ?? "").startsWith("Sing"))
+            var singTimeSec:Float = singDuration * (conductor.beatLength * 0.25 * 0.001);
+
+            if ((animation.name ?? "").endsWith("MISS"))
+                singTimeSec *= 2.0;
+
+            var stopSinging:Bool = !FlxG.keys.anyPressed(keys) || strumline.botplay;
+
+            if (holdTimer >= singTimeSec && stopSinging)
             {
-                singTimer += elapsed;
-
-                var requiredTime:Float = singDuration * (conductor.beatLength * 0.25 * 0.001);
-
-                if ((animation.name ?? "").endsWith("MISS"))
-                    requiredTime *= FlxG.random.float(1.35, 1.85);
-
-                if (singTimer >= requiredTime && (!FlxG.keys.anyPressed(keys) || strumline.botplay))
-                {
-                    singTimer = 0.0;
-                    
-                    dance(true);
-                }
+                holdTimer = 0.0;
+                
+                dance(true);
             }
-            else
-                singTimer = 0.0;
         }
+        else
+            holdTimer = 0.0;
     }
 
     override function destroy():Void
     {
         super.destroy();
 
-        conductor?.onBeatHit?.remove(beatHit);
+        conductor = null;
 
         keys = null;
 
@@ -189,28 +193,45 @@ class Character extends FlxSprite
 
         danceSteps = config.danceSteps;
 
-        danceInterval = config.danceInterval ?? 2.0;
+        danceEvery = config.danceEvery ?? 2.0;
 
         singDuration = config.singDuration ?? 8.0;
 
-        singTimer = 0.0;
+        holdTimer = 0.0;
 
         return config;
     }
 
     public function beatHit(beat:Int):Void
     {
-        if (beat % danceInterval == 0.0)
+        if (beat % danceEvery == 0.0)
             dance();
     }
 
     public function dance(force:Bool = false):Void
     {
-        if (skipDance || (animation.name ?? "").startsWith("Sing") && !force)
+        if (skipDance)
             return;
+
+        if (!force)
+        {
+            if (isSinging())
+                return;
+
+            if (danceSteps.length > 1.0)
+            {
+                if (!animation.finished && danceSteps.contains(animation.name))
+                    return;
+            }
+        }
 
         danceIndex = FlxMath.wrap(danceIndex + 1, 0, danceSteps.length - 1);
 
         animation.play(danceSteps[danceIndex], force);
+    }
+
+    public function isSinging():Bool
+    {
+        return (animation.name ?? "").startsWith("Sing");
     }
 }

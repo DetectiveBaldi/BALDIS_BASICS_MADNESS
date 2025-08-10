@@ -34,7 +34,7 @@ typedef RawCharacterData =
 
     var danceSteps:Array<String>;
 
-    var ?danceInterval:Float;
+    var ?danceEvery:Float;
 
     var ?singDuration:Float;
 

@@ -527,7 +527,7 @@ class Strumline extends FlxGroup
             if (note.kind == "no-animation" || character.skipSing)
                 continue;
 
-            character.singTimer = 0.0;
+            character.holdTimer = 0.0;
 
             var animSuffix:String = "";
 
@@ -565,7 +565,7 @@ class Strumline extends FlxGroup
             if ((note != null && note.kind == "no-animation") || character.skipSing)
                 continue;
 
-            character.singTimer = 0.0;
+            character.holdTimer = 0.0;
 
             var animSuffix:String = "";
 

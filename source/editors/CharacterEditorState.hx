@@ -284,9 +284,9 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("__number-stepper", NumberStepper).onChange = (ev:UIEvent) ->
         {
-            character.config.danceInterval = ui.findComponent("__number-stepper", NumberStepper).value;
+            character.config.danceEvery = ui.findComponent("__number-stepper", NumberStepper).value;
 
-            character.danceInterval = character.config.danceInterval;
+            character.danceEvery = character.config.danceEvery;
         }
 
         ui.findComponent("___number-stepper", NumberStepper).onChange = (ev:UIEvent) ->
@@ -443,7 +443,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_textfield", TextField).text = ui.findComponent("_textfield", TextField).text.substring(1, ui.findComponent("_textfield", TextField).text.length - 1);
 
-        ui.findComponent("__number-stepper", NumberStepper).value = character.config.danceInterval ?? 1.0;
+        ui.findComponent("__number-stepper", NumberStepper).value = character.config.danceEvery ?? 1.0;
 
         ui.findComponent("___number-stepper", NumberStepper).value = character.config.singDuration ?? 8.0;
     }

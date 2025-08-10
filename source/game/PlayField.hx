@@ -114,6 +114,10 @@ class PlayField extends FlxGroup
 
         scoreClip.flipY = Options.downscroll;
 
+        scoreClip.scale.set(1.1, 1.1);
+
+        scoreClip.updateHitbox();
+
         scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.35 : FlxG.height - scoreClip.height * 0.65);
 
         add(scoreClip);
@@ -254,8 +258,8 @@ class PlayField extends FlxGroup
             else
                 scoreText.text = "Score: 0\nMisses: 0\nAccuracy: 0%\nGrade: N/A";
 
-            scoreText.setPosition(scoreClip.x + 28.5, Options.downscroll ? scoreClip.y + scoreClip.height -
-                scoreText.height - 25.0 : scoreClip.y + 25.0);
+            scoreText.setPosition(scoreClip.x + 32.0, Options.downscroll ? scoreClip.y + scoreClip.height -
+                scoreText.height - 28.0 : scoreClip.y + 28.0);
 
             return;
         }
@@ -264,7 +268,7 @@ class PlayField extends FlxGroup
 
         var misses:Int = playStats.misses;
 
-        var accuracy:Float = FlxMath.roundDecimal(playStats.accuracy, 1);
+        var accuracy:Float = FlxMath.roundDecimal(playStats.accuracy, 2);
 
         var grade:String = playStats.grade;
 

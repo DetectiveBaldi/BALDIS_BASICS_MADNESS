@@ -71,8 +71,11 @@ class LookalikeL extends PlayState
         {
             gameCameraZoom = 1;
             
-            opponent.skipDance == true;
+            opponent.skipDance = true;
+
             opponent.animation.play("scary");
+
+            opponent.animation.onFinish.addOnce((name:String) -> { opponent.skipDance = false; });
         }
         
         if (step == 250 || step == 253 || step == 255)
@@ -99,8 +102,6 @@ class LookalikeL extends PlayState
             lookalikeS.room3.visible = false;
             
             lookalikeS.room3_Alt0.visible = true;
-        
-            opponent.skipDance == false;
         }
     
         if (step == 512)

@@ -35,7 +35,7 @@
                     </hbox>
 
                     <hbox id="____hbox">
-                        <label id="____label" text="Dance Interval" verticalAlign="center" />
+                        <label id="____label" text="Dance Every: (Beats)" verticalAlign="center" />
 
                         <number-stepper id="__number-stepper" step="1.0" />
                     </hbox>
