@@ -49,6 +49,8 @@ class LookalikeL extends PlayState
 
         gameCameraZoom = 0.8;
 
+        gameCamZoomStrength = 0.02;
+
         lookalikeS.room3.visible = true;
         
         var anim:FlxAnimation = lookalikeS.bladderSchool1.animation.getByName("0");
@@ -139,6 +141,8 @@ class LookalikeL extends PlayState
 
             player.color = 0xFF7F7F7F;
 
+            gameCamZoomStrength = 0.02;
+
             tween.tween(smoke.scale, {x: 4, y: 4}, 
                 conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
         }
@@ -149,6 +153,8 @@ class LookalikeL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
             
             gameCameraZoom = 0.6;
+
+            gameCamZoomStrength = 0.065;
 
             tween.tween(this, {gameCameraZoom: 1.1}, 18);
 

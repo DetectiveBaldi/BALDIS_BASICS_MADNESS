@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="two-plus-bg.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bg0000" x="2" y="2" width="320" height="240"/>
+	<SubTexture name="bg0001" x="2" y="2" width="320" height="240"/>
+	<SubTexture name="bg0002" x="324" y="2" width="320" height="240"/>
+	<SubTexture name="bg0003" x="324" y="2" width="320" height="240"/>
+	<SubTexture name="bg0004" x="646" y="2" width="320" height="240"/>
+	<SubTexture name="bg0005" x="646" y="2" width="320" height="240"/>
+	<SubTexture name="bg0006" x="2" y="244" width="320" height="240"/>
+	<SubTexture name="bg0007" x="2" y="244" width="320" height="240"/>
+</TextureAtlas>

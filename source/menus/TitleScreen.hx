@@ -134,7 +134,7 @@ class TitleScreen extends CustomState
             {
                 CustomState.cancelFadeIn = true;
 
-                CustomState.cancelFadeOut = false;
+                CustomState.cancelFadeOut = true;
 
                 PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Two"));
             }

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="two-noise.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="noise0000" x="2" y="2" width="320" height="240"/>
+	<SubTexture name="noise0001" x="2" y="244" width="320" height="240"/>
+</TextureAtlas>

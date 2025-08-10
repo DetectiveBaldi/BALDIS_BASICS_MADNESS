@@ -8,6 +8,10 @@ class TwoS extends Stage
 {
     public var space:FlxSprite;
 
+    public var plus:FlxSprite;
+
+    public var noise:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -21,5 +25,29 @@ class TwoS extends Stage
         space.screenCenter();
 
         add(space);
+
+        plus = getAtlasSprite("two-plus-bg");
+
+        plus.animation.addByPrefix("0", "bg", 24.0);
+
+        plus.scale.set(3.0, 3.0);
+
+        plus.active = true;
+
+        plus.updateHitbox();
+
+        plus.screenCenter();
+
+        noise = getAtlasSprite("two-noise");
+
+        noise.animation.addByPrefix("1", "noise", 24.0);
+
+        noise.scale.set(3.0, 3.0);
+
+        noise.active = true;
+
+        noise.updateHitbox();
+
+        noise.screenCenter();
     }
 }
