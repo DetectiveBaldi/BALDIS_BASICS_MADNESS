@@ -48,7 +48,7 @@ class CreditsPopup extends FlxSpriteGroup
 
         add(screen);
 
-        label = new FlxText(0.0, 0.0, screen.width);
+        label = new FlxText(0.0, 0.0, 0.0);
 
         label.visible = false;
 
@@ -62,7 +62,7 @@ class CreditsPopup extends FlxSpriteGroup
 
         label.textField.sharpness = 400.0;
 
-        label.setPosition(label.getCenterX(screen), label.getCenterY(screen) + 20.0);
+        label.setPosition(label.getCenterX(screen), label.getCenterY(screen));
 
         add(label);
 
@@ -82,6 +82,13 @@ class CreditsPopup extends FlxSpriteGroup
             tween.flicker(label, 2.0, 0.5);
 
             label.text = 'Composer(s): ${credits.composer}';
+
+            var widthToLimitTo:Float = screen.width * 0.675;
+
+            while (label.width > widthToLimitTo)
+                label.size--;
+
+            label.setPosition(label.getCenterX(screen), label.getCenterY(screen));
         });
     }
 }

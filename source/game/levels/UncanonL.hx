@@ -46,11 +46,6 @@ class UncanonL extends PlayState
         gameCameraZoom = 0.3;
 
         cameraLock = FOCUS_CAM_POINT;
-
-        cameraPoint.centerTo(opponent);
-        cameraPoint.x -= 50;
-        
-        gameCamera.snapToTarget();
     
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = false;
@@ -62,6 +57,12 @@ class UncanonL extends PlayState
         opponent.setPosition(-75, 0);
         opponent.colorTransform.setOffsets(FlxColor.WHITE);
         opponent.alpha = 0;
+
+        cameraPoint.centerTo(opponent);
+
+        cameraPoint.x -= 0.5;
+        
+        gameCamera.snapToTarget();
     }
 
     override function stepHit(step:Int):Void
