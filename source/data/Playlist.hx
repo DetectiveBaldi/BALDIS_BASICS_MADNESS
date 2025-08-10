@@ -48,6 +48,13 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Overseer
+        var level:LevelData = {week: null, name: "Overseer"}
+
+        level.hiddenWithoutScore = true;
+
+        LevelData.list.push(level);
+
         // Scribble
         level = {week: null, name: "Scribble"}
 
