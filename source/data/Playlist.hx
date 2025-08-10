@@ -21,6 +21,10 @@ class Playlist
         // Bladder
         week = {name: "Bladder", nameSuffix: "'s Week", description: ""}
 
+        week.description += 'Out of pure curiosity, you slap a Portal Poster on a wall ';
+
+        week.description += "you think seemed strange and ended up finding Bladder!\nDo you have what it takes to beat him?";
+
         week.levels.pushMany({week: week, name: "Walls"}, {week: week, name: "Lookalike"});
 
         week.hasTvPortrait = true;
