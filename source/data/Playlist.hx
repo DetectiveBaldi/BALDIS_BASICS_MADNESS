@@ -57,5 +57,10 @@ class Playlist
         level = {week: null, name: "Setback"}
 
         LevelData.list.push(level);
+
+        // Two
+        level = {week: null, name: "Two"}
+
+        LevelData.list.push(level);
     }
 }
