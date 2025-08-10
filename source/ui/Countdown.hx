@@ -201,6 +201,15 @@ class Countdown extends FlxGroup
         onResume.dispatch();
     }
 
+    public function skip():Void
+    {
+        kill();
+
+        skipped = true;
+
+        onSkip.dispatch();
+    }
+
     public function beatHit(beat:Int):Void
     {
         if (!started || paused || finished || skipped)

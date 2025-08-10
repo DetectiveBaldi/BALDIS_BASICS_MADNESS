@@ -39,23 +39,26 @@ class TwoL extends PlayState
 
         super.create();
 
-        setCamStartPos();
+        gameCamZoomStrength = 0.0;
+
+        hudCamZoomStrength = 0.0;
+
+        countdown.skip();
 
         cameraLock = FOCUS_CAM_POINT;
 
         cameraPoint.centerTo();
 
-        FlxG.camera.bgColor = FlxColor.WHITE;
+        gameCamera.snapToTarget();
 
         playField.visible = false;
 
-        gameCameraZoom = 0.8;
+        gameCameraZoom = 1.0;
         
         player.setPosition(700, 125);
         player.visible = false;
 
-        opponent.setPosition(0.0, 0.0);
-        opponent.scale.set(3.5, 3.5);
+        opponent.setPosition(100.0, -148.0);
     }
 
     override function stepHit(step:Int):Void

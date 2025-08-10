@@ -25,6 +25,10 @@ using util.ArrayUtil;
 
 class CustomState extends FlxState
 {
+    public static var cancelFadeOut:Bool;
+
+    public static var cancelFadeIn:Bool;
+
     public var tween:FlxTweenManager;
 
     public var timer:FlxTimerManager;
@@ -35,7 +39,8 @@ class CustomState extends FlxState
     {
         super.create();
 
-        persistentUpdate = true;
+        if (!cancelFadeOut)
+            persistentUpdate = true;
 
         tween = new FlxTweenManager();
 
@@ -53,11 +58,23 @@ class CustomState extends FlxState
         
         conductor.onMeasureHit.add(measureHit);
 
-        openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
+        if (!cancelFadeOut)
+            openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
+
+        cancelFadeOut = false;
     }
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
+        if (cancelFadeIn)
+        {
+            onOutroComplete();
+
+            cancelFadeIn = false;
+
+            return;
+        }
+
         persistentUpdate = false;
 
         openSubState(new CustomTransition(IN, onOutroComplete));

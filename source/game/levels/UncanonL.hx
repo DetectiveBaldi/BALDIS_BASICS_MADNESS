@@ -75,6 +75,8 @@ class UncanonL extends PlayState
             
             cameraPoint.x += 75;
 
+            gameCamera.snapToTarget();
+
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = true;
 

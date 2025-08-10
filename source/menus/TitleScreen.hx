@@ -18,11 +18,18 @@ import extendable.CustomState;
 import core.AssetCache;
 import core.Paths;
 
+import data.LevelData;
+
+import game.PlayState;
+
+using util.ArrayUtil;
 using util.MathUtil;
 
 class TitleScreen extends CustomState
 {
     public var title:FlxSprite;
+
+    public var rulerHitbox:FlxSprite;
 
     public var exitButton:TitleButton;
 
@@ -55,6 +62,20 @@ class TitleScreen extends CustomState
         title.setPosition(title.getCenterX(), 0.0);
 
         add(title);
+
+        rulerHitbox = new FlxSprite(0.0, 0.0).makeGraphic(1, 1, FlxColor.TRANSPARENT);
+
+        rulerHitbox.active = false;
+
+        rulerHitbox.visible = false;
+
+        rulerHitbox.scale.set(20.0, 5.0);
+
+        rulerHitbox.updateHitbox();
+
+        rulerHitbox.setPosition(546.0, 260.5);
+
+        add(rulerHitbox);
 
         playButton = new TitleButton(0.0, 0.0, "playButton");
 
@@ -101,6 +122,23 @@ class TitleScreen extends CustomState
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 
         tune.play();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(rulerHitbox))
+        {
+            if (FlxG.mouse.justReleased)
+            {
+                CustomState.cancelFadeIn = true;
+
+                CustomState.cancelFadeOut = false;
+
+                PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Two"));
+            }
+        }
     }
 
     override function destroy():Void

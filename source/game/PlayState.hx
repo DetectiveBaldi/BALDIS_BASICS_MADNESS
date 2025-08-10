@@ -133,12 +133,16 @@ class PlayState extends CustomState
 
     public var cameraLock:CameraLockMode;
 
+    public var gameCamZoomStrength:Float;
+
     public var gameCameraZoom:Float;
 
     /**
      * Most UI elements are drawn on this camera.
      */
     public var hudCamera:FlxCamera;
+
+    public var hudCamZoomStrength:Float;
 
     /**
      * Elements such as the pause menu and other sub states are drawn on this camera.
@@ -219,7 +223,11 @@ class PlayState extends CustomState
 
         cameraLock = DEFAULT;
 
+        gameCamZoomStrength = 0.035;
+
         gameCameraZoom = gameCamera.zoom;
+
+        hudCamZoomStrength = 0.015;
 
         loadChart();
 
@@ -374,9 +382,9 @@ class PlayState extends CustomState
     {
         super.measureHit(measure);
 
-        gameCamera.zoom += 0.035;
+        gameCamera.zoom += gameCamZoomStrength;
 
-        hudCamera.zoom += 0.015;
+        hudCamera.zoom += hudCamZoomStrength;
     }
 
     public function loadChart():Void
