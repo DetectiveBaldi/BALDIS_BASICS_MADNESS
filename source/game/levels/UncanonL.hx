@@ -47,15 +47,19 @@ class UncanonL extends PlayState
     
         cameraPoint.centerTo(opponent);
 
+        cameraPoint.x -= 50.0;
+
         gameCameraZoom = 0.3;
+
+        gameCamZoomStrength = 0.0;
 
         gameCamera.snapToTarget();
 
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = false;
 
-        player.scale.set(2.0, 2.0);
-        player.setPosition(625.0, 225.0);
+        player.scale.set(4.5, 4.5);
+        player.setPosition(500.0, 150.0);
         player.visible = false;
         
         opponent.setPosition(-75.0, 0.0);
@@ -73,6 +77,8 @@ class UncanonL extends PlayState
 
             gameCameraZoom = 0.65;
 
+            gameCamZoomStrength = 0.035;
+
             gameCamera.snapToTarget();
 
             cameraLock = FOCUS_CAM_CHAR;
@@ -88,7 +94,7 @@ class UncanonL extends PlayState
             opponent.colorTransform.setOffsets(0.0, 0.0, 0.0, 0.0);
         }
 
-        if (step == 316 || step == 448 || step == 568)
+        if (step == 316 || step == 448 || step == 568 || step == 720)
             gameCameraZoom = 0.7;
 
         if (step == 320 || step == 452)
@@ -105,9 +111,23 @@ class UncanonL extends PlayState
         if (step == 592)
         {
             FlxG.camera.visible = true;
+        
+            gameCameraZoom = 0.65;
 
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+            uncanonS.connorRoom0.visible = false;
+            
+            uncanonS.connorRoom1.visible = true;
+        
+            var plr:Character = getPlayer("bf-face-back-left");
+            plr.visible = false;
+
+            opponent.scale.set(3.4, 3.4);
+            opponent.x += 20.0;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-left"));
+            plr.scale.set(1.65, 1.65);
+            plr.setPosition(480, 40);
+            players.add(plr);
         }
     }
 
