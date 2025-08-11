@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="overseer-ref.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bidle0000" x="2" y="2" width="480" height="360"/>
+	<SubTexture name="dclosed0000" x="484" y="2" width="256" height="256"/>
+	<SubTexture name="dglitch0000" x="742" y="2" width="256" height="256"/>
+	<SubTexture name="dglitch0001" x="2" y="364" width="256" height="256"/>
+	<SubTexture name="dopen0000" x="260" y="364" width="256" height="256"/>
+	<SubTexture name="nidle0000" x="518" y="364" width="212" height="54"/>
+	<SubTexture name="nnine0000" x="732" y="364" width="212" height="54"/>
+</TextureAtlas>
