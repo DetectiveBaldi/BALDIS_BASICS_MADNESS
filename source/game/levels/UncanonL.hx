@@ -47,8 +47,6 @@ class UncanonL extends PlayState
     
         cameraPoint.centerTo(opponent);
 
-        cameraPoint.x -= 0.5;
-
         gameCameraZoom = 0.3;
 
         gameCamera.snapToTarget();
@@ -56,7 +54,7 @@ class UncanonL extends PlayState
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = false;
 
-        player.scale.set(5.0, 5.0);
+        player.scale.set(2.0, 2.0);
         player.setPosition(625.0, 225.0);
         player.visible = false;
         
@@ -77,6 +75,8 @@ class UncanonL extends PlayState
 
             gameCamera.snapToTarget();
 
+            cameraLock = FOCUS_CAM_CHAR;
+
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = true;
 
@@ -86,6 +86,28 @@ class UncanonL extends PlayState
 
             opponent.alpha = 1.0;
             opponent.colorTransform.setOffsets(0.0, 0.0, 0.0, 0.0);
+        }
+
+        if (step == 316 || step == 448 || step == 568)
+            gameCameraZoom = 0.7;
+
+        if (step == 320 || step == 452)
+        {
+            gameCameraZoom = 0.65;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+
+        if (step == 589)
+            FlxG.camera.visible = false;
+
+        if (step == 592)
+        {
+            FlxG.camera.visible = true;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
         }
     }
 
