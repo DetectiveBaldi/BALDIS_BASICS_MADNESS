@@ -81,9 +81,10 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (#if debug false #else level.hiddenWithoutScore #end &&
-                HighScore.getLevelScore(level.name, "normal").score == 0.0)
-                    continue;
+            #if !debug
+            if (!level.showInFreeplayMenu)
+                continue;
+            #end
 
             levels.push(level);
         }

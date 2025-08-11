@@ -2,6 +2,7 @@ package data;
 
 using util.ArrayUtil;
 
+// TODO: Remove portraits of songs with `showInFreeplayMenu` set to `false`.
 class Playlist
 {
     public static function init():Void
@@ -37,21 +38,21 @@ class Playlist
         // Beginnings
         var level:LevelData = {week: null, name: "Beginnings"}
 
-        level.hiddenWithoutScore = true;
+        level.showInFreeplayMenu = false;
 
         LevelData.list.push(level);
 
         // Uncanon
         var level:LevelData = {week: null, name: "Uncanon"}
 
-        level.hiddenWithoutScore = true;
+        level.showInFreeplayMenu = false;
 
         LevelData.list.push(level);
 
         // Overseer
         var level:LevelData = {week: null, name: "Overseer"}
 
-        level.hiddenWithoutScore = true;
+        level.showInFreeplayMenu = false;
 
         LevelData.list.push(level);
 
@@ -67,6 +68,8 @@ class Playlist
 
         // Two
         level = {week: null, name: "Two"}
+
+        level.showInFreeplayMenu = false;
 
         LevelData.list.push(level);
     }

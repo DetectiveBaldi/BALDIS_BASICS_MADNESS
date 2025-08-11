@@ -85,8 +85,6 @@ class NoteSpawner extends FlxBasic
 
             note.droppedTime = 0.0;
 
-            note.hasDropped = false;
-
             note.sustain = null;
 
             note.strumline = strumline;
@@ -119,7 +117,7 @@ class NoteSpawner extends FlxBasic
 
                 sustain.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "HoldPiece");
 
-                sustain.flipY = strumline.downscroll;
+                sustain.flipY = note.strum.downscroll;
 
                 sustain.setGraphicSize(sustain.frameWidth * 0.7, note.length * strumline.scrollSpeed * 0.45);
 
@@ -141,7 +139,7 @@ class NoteSpawner extends FlxBasic
 
                 trail.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "HoldTail");
 
-                trail.flipY = strumline.downscroll;
+                trail.flipY = note.strum.downscroll;
 
                 trail.scale.set(0.7, 0.7);
 

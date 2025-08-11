@@ -1,12 +1,11 @@
 package game.notes;
 
-import haxe.Json;
-
 import flixel.FlxSprite;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
 import core.AssetCache;
+import core.Options;
 import core.Paths;
 
 import music.Conductor;
@@ -21,7 +20,9 @@ class Strum extends FlxSprite
 
     public var direction:Int;
 
-    public var confirmTimer:Float;
+    public var downscroll:Bool;
+
+    public var holdTimer:Float;
 
     public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0):Void
     {
@@ -43,7 +44,9 @@ class Strum extends FlxSprite
 
         direction = 0;
 
-        confirmTimer = 0.0;
+        downscroll = Options.downscroll;
+
+        holdTimer = 0.0;
     }
 
     override function update(elapsed:Float):Void
@@ -55,16 +58,16 @@ class Strum extends FlxSprite
 
         if ((animation.name ?? "").endsWith("Confirm"))
         {
-            confirmTimer += elapsed;
+            holdTimer += elapsed;
 
-            if (confirmTimer >= conductor.stepLength * 0.001)
+            if (holdTimer >= conductor.stepLength * 0.001)
             {
-                confirmTimer = 0.0;
+                holdTimer = 0.0;
 
                 animation.play(Note.DIRECTIONS[direction].toLowerCase() + (strumline.botplay ? "Static" : "Press"));
             }
         }
         else
-            confirmTimer = 0.0;
+            holdTimer = 0.0;
     }
 }

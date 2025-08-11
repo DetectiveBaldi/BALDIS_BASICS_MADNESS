@@ -82,7 +82,18 @@ class Strumline extends FlxGroup
 
     public var scrollSpeed:Float;
 
-    public var downscroll:Bool;
+    public var downscroll(default, set):Bool;
+
+    @:noCompletion
+    function set_downscroll(down:Bool):Bool
+    {
+        downscroll = down;
+
+        for (i in 0 ... strums.members.length)
+            strums.members[i].downscroll = downscroll;
+
+        return downscroll;
+    }
 
     public var botplay:Bool;
 
@@ -361,7 +372,7 @@ class Strumline extends FlxGroup
 
         var strum:Strum = note.strum;
 
-        strum.confirmTimer = 0.0;
+        strum.holdTimer = 0.0;
         
         strum.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "Confirm", true);
 
@@ -435,7 +446,7 @@ class Strumline extends FlxGroup
             
             var strum:Strum = note.strum;
 
-            strum.confirmTimer = 0.0;
+            strum.holdTimer = 0.0;
 
             strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Confirm", true);
             
@@ -485,7 +496,7 @@ class Strumline extends FlxGroup
 
         if (note.droppedTime == 0.0)
         {
-            if (!note.hasDropped && note.playSplash)
+            if (note.playSplash)
                 playSplash(note);
         }
         else

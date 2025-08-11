@@ -240,7 +240,11 @@ class PauseScreen extends CustomSubState
             iconText.text = "";
 
         if (FlxG.keys.justPressed.ESCAPE)
+        {
             close();
+
+            game.resume();
+        }
     }
 
     override function destroy():Void

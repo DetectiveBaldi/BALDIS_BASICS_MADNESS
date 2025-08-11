@@ -37,8 +37,6 @@ class Note extends FlxSprite
 
     public var playSplash:Bool;
 
-    public var hasDropped:Bool;
-
     public var droppedTime:Float;
 
     public var latestTiming:Float;
@@ -77,8 +75,6 @@ class Note extends FlxSprite
 
         playSplash = false;
 
-        hasDropped = false;
-
         droppedTime = 0.0;
 
         latestTiming = Rating.list.last().timing;
@@ -93,7 +89,7 @@ class Note extends FlxSprite
         y = strum.y;
 
         if (status != HIT || length <= 0.0)
-            y += (time - strumline.conductor.time) * (strumline.downscroll ? -1 : 1) * strumline.scrollSpeed * 0.45;
+            y += (time - strumline.conductor.time) * (strum.downscroll ? -1 : 1) * strumline.scrollSpeed * 0.45;
 
         alpha = strum.alpha;
     }

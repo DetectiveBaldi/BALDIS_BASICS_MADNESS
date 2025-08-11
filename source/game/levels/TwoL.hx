@@ -10,6 +10,8 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.addons.display.FlxBackdrop;
+
 import core.AssetCache;
 
 import core.Paths;
@@ -18,10 +20,14 @@ import core.Options;
 
 import data.CharacterData;
 
-import flixel.addons.display.FlxBackdrop;
+import extendable.CustomState;
 
 import game.events.FocusCamCharEvent;
 import game.events.FocusCamPointEvent;
+
+import game.notes.Strum;
+import game.notes.Strumline;
+import game.notes.events.NoteHitEvent;
 
 import game.stages.TwoS;
 
@@ -33,8 +39,6 @@ class TwoL extends PlayState
 {
     public var twoS:TwoS;
 
-    public var black:FlxSprite;
-
     override function create():Void
     {
         stage = new TwoS();
@@ -43,17 +47,7 @@ class TwoL extends PlayState
 
         super.create();
 
-        black = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-
-        black.scale.set(960.0, 720.0);
-
-        black.updateHitbox();
-
-        black.screenCenter();
-
-        add(black);
-
-        black.visible = false;
+        canPause = false;
 
         gameCamZoomStrength = 0.0;
 
@@ -94,7 +88,7 @@ class TwoL extends PlayState
 
         if (step == 256)
         {
-            black.visible = true;
+            FlxG.camera.visible = false;
         }
     
         if (step == 260)
@@ -103,10 +97,7 @@ class TwoL extends PlayState
 
             playField.visible = true;
 
-            black.visible = false;
-
-            if (Options.flashingLights)
-                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            FlxG.camera.visible = true;
         }
 
         if (step == 768)
@@ -114,19 +105,86 @@ class TwoL extends PlayState
             twoS.plus.visible = true;
             twoS.plus.animation.play("0");
             tween.tween(twoS.plus, {alpha: 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            for (i in 0 ... 2)
+            {
+                var strum:Strum = plrStrumline.strums.members[i];
+
+                tween.tween(strum, {x: strum.x - 225.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            }
+
+            for (i in 2 ... 4)
+            {
+                var strum:Strum = plrStrumline.strums.members[i];
+
+                tween.tween(strum, {x: strum.x + 225.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            }
         }
 
         if (step == 1024)
+        {
             tween.tween(twoS.plus, {alpha: 0.35}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            for (i in 0 ... 2)
+            {
+                var strum:Strum = plrStrumline.strums.members[i];
+
+                tween.tween(strum, {x: strum.x + 225.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            }
+
+            for (i in 2 ... 4)
+            {
+                var strum:Strum = plrStrumline.strums.members[i];
+
+                tween.tween(strum, {x: strum.x - 225.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            }
+        }
 
         if (step == 1032)
             tween.tween(twoS.plus, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-        if (step == 1280)
+        if (step == 1280.0)
         {
             twoS.noise.visible = true;
             twoS.noise.animation.play("1");
             tween.tween(twoS.noise, {alpha: 0.35}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            for (i in 0 ... 4)
+            {
+                var strum:Strum = oppStrumline.strums.members[i];
+
+                tween.tween(strum, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            }
+
+            toggleStrumScroll(plrStrumline, 3);
+        }
+
+        if (step == 1344.0)
+        {
+            toggleStrumScroll(plrStrumline, 0);
+
+            toggleStrumScroll(plrStrumline, 1);
+
+            toggleStrumScroll(plrStrumline, 3);
+        }
+
+        if (step == 1408.0)
+        {
+            toggleStrumScroll(plrStrumline, 1);
+
+            toggleStrumScroll(plrStrumline, 2);
+
+            toggleStrumScroll(plrStrumline, 3);
+        }
+
+        if (step == 1472.0)
+            toggleStrumScroll(plrStrumline, 3);
+
+        if (step == 1528.0)
+        {
+            toggleStrumScroll(plrStrumline, 0);
+
+            toggleStrumScroll(plrStrumline, 2);
         }
         
         if (step == 1536)
@@ -135,27 +193,54 @@ class TwoL extends PlayState
 
             playField.visible = false;
 
-            black.visible = true;
+            FlxG.camera.visible = true;
 
             twoS.noise.alpha = 1.0;
 
             tween.tween(twoS.noise, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            black.alpha = 0.0;
+            FlxG.camera.alpha = 0.0;
 
-            tween.tween(black, {alpha: 0.9}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quadOut});
+            tween.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 1600)
-            tween.tween(black, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(FlxG.camera, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
         if (step == 1616)
         {
             opponent.alpha = 1.0;
 
-            tween.tween(black, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
             
             twoS.noise.alpha = twoS.plus.alpha = 0.75;
         }
+    }
+
+    override function noteHit(ev:NoteHitEvent):Void
+    {
+        super.noteHit(ev);
+
+        if (conductor.step >= 768.0 && conductor.step < 1032.0)
+            ev.playSplash = false;
+    }
+
+    override function endSong():Void
+    {
+        CustomState.cancelFadeIn = true;
+
+        CustomState.cancelFadeOut = true;
+
+        super.endSong();
+    }
+
+    public function toggleStrumScroll(strumline:Strumline, i:Int):Void
+    {
+        var strum:Strum = strumline.strums.members[i];
+
+        strum.downscroll = !strum.downscroll;
+
+        tween.tween(strum, {y: strum.downscroll ? FlxG.height - strum.height - 15.0 : 15.0},
+            conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
     }
 }

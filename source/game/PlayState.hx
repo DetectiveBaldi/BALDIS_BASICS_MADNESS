@@ -13,6 +13,8 @@ import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 
+import flixel.util.typeLimit.NextState;
+
 import flixel.sound.FlxSound;
 
 import core.AssetCache;
@@ -68,9 +70,9 @@ class PlayState extends CustomState
 
     public static var weekStats:Map<String, PlayStats>;
 
-    public static function getFullClassPath(level:LevelData = null, sep:String = "/"):String
+    public static function getFullClassPath(sep:String = "/"):String
     {
-        level ??= PlayState.level;
+        var level:LevelData = PlayState.level;
 
         var path:String = "game/levels";
 
@@ -82,11 +84,9 @@ class PlayState extends CustomState
         return sep == "/" ? path : path.replace("/", sep);
     }
 
-    public static function getClassFromLevel(level:LevelData = null):PlayState
+    public static function getClassFromLevel(nextState:NextState = null):PlayState
     {
-        level ??= PlayState.level;
-
-        return Type.createInstance(Type.resolveClass(getFullClassPath(level, ".")), []);
+        return Type.createInstance(Type.resolveClass(getFullClassPath(".")), [nextState]);
     }
 
     public static function loadWeek(week:WeekData):Void
@@ -100,7 +100,7 @@ class PlayState extends CustomState
         FlxG.switchState(() -> getClassFromLevel());
     }
 
-    public static function loadSingle(level:LevelData):Void
+    public static function loadSingle(level:LevelData, nextState:NextState = null):Void
     {
         week = null;
 
@@ -108,8 +108,10 @@ class PlayState extends CustomState
 
         weekStats = null;
 
-        FlxG.switchState(() -> getClassFromLevel());
+        FlxG.switchState(() -> getClassFromLevel(nextState));
     }
+
+    public var nextState:NextState;
 
     /**
      * Characters and stages are drawn on this camera.
@@ -148,6 +150,8 @@ class PlayState extends CustomState
      * Elements such as the pause menu and other sub states are drawn on this camera.
      */
     public var topCamera:FlxCamera;
+
+    public var canPause:Bool;
 
     public var chart:Chart;
 
@@ -195,6 +199,13 @@ class PlayState extends CustomState
 
     public var countdown:Countdown;
 
+    public function new(nextState:NextState = null):Void
+    {
+        super();
+
+        this.nextState = nextState;
+    }
+
     override function create():Void
     {
         hudCamera = new FlxCamera();
@@ -208,6 +219,8 @@ class PlayState extends CustomState
         topCamera.bgColor.alpha = 0;
 
         FlxG.cameras.add(topCamera, false);
+
+        canPause = true;
 
         super.create();
 
@@ -368,7 +381,7 @@ class PlayState extends CustomState
                     playerVocals.time = instrumental.time;
         }
 
-        if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]))
+        if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]) && canPause)
             pause();
 
         #if debug
@@ -493,24 +506,26 @@ class PlayState extends CustomState
 
                 if (HighScore.isWeekHighScore(week.name, "normal", score))
                     HighScore.setWeekScore(week.name, "normal", HighScore.getWeekScoreFromPlayStats(totalStats));
-
-                FlxG.switchState(() -> new StoryMenuScreen());
+                
+                nextState ??= () -> new StoryMenuScreen();
             }
             else
             {
                 level = week.levels[i + 1];
 
-                FlxG.switchState(() -> PlayState.getClassFromLevel());
+                nextState ??= () -> PlayState.getClassFromLevel();
             }
         }
         else
-            FlxG.switchState(() -> new FreeplayScreen());
+            nextState ??= () -> new FreeplayScreen();
 
         mainVocals?.stop();
 
         opponentVocals?.stop();
 
         playerVocals?.stop();
+
+        FlxG.switchState(nextState);
     }
 
     public function clearNotesBefore(time:Float):Void

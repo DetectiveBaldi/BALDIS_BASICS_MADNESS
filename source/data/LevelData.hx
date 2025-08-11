@@ -9,7 +9,7 @@ class LevelData
 
     public var name:String;
 
-    public var hiddenWithoutScore:Bool;
+    public var showInFreeplayMenu:Bool;
 
     public function new(week:WeekData, name:String):Void
     {
@@ -17,7 +17,7 @@ class LevelData
 
         this.name = name;
 
-        hiddenWithoutScore = false;
+        showInFreeplayMenu = true;
     }
 
     public function getClassFile():String

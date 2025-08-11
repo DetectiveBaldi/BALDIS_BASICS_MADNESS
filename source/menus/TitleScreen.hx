@@ -73,7 +73,7 @@ class TitleScreen extends CustomState
 
         rulerHitbox.updateHitbox();
 
-        rulerHitbox.setPosition(546.0, 260.5);
+        rulerHitbox.setPosition(545.0, 242.0);
 
         add(rulerHitbox);
 
@@ -136,7 +136,7 @@ class TitleScreen extends CustomState
 
                 CustomState.cancelFadeOut = true;
 
-                PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Two"));
+                PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Two"), () -> new TitleScreen());
             }
         }
     }
