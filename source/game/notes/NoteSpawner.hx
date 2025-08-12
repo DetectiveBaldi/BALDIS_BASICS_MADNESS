@@ -62,7 +62,7 @@ class NoteSpawner extends FlxBasic
 
             var strumline:Strumline = strumlines.members[noteSchema.lane];
 
-            if (noteSchema.time - conductor.time > 1500.0 / strumline.scrollSpeed)
+            if (noteSchema.time > conductor.time + getSpawnDistance(noteSchema.lane))
                 break;
 
             var note:Note = notes.recycle(Note, noteConstructor);
@@ -111,8 +111,6 @@ class NoteSpawner extends FlxBasic
             {
                 var sustain:Sustain = sustains.recycle(Sustain, sustainConstructor);
 
-                sustain.antialiasing = note.antialiasing;
-
                 sustain.note = note;
 
                 sustain.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "HoldPiece");
@@ -132,8 +130,6 @@ class NoteSpawner extends FlxBasic
                 note.sustain = sustain;
 
                 var trail:SustainTrail = trails.recycle(SustainTrail, trailConstructor);
-
-                trail.antialiasing = sustain.antialiasing;
 
                 trail.sustain = sustain;
 
@@ -171,5 +167,17 @@ class NoteSpawner extends FlxBasic
     public function trailConstructor():SustainTrail
     {
         return new SustainTrail();
+    }
+
+    public function getStrumline(lane:Int):Strumline
+    {
+        return strumlines.members[lane];
+    }
+
+    public function getSpawnDistance(lane:Int):Float
+    {
+        var strumline:Strumline = getStrumline(lane);
+
+        return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
     }
 }

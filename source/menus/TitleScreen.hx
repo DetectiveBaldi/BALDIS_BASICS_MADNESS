@@ -69,11 +69,11 @@ class TitleScreen extends CustomState
 
         rulerHitbox.visible = false;
 
-        rulerHitbox.scale.set(20.0, 5.0);
+        rulerHitbox.scale.set(22.0, 21.0);
 
         rulerHitbox.updateHitbox();
 
-        rulerHitbox.setPosition(545.0, 242.0);
+        rulerHitbox.setPosition(544.0, 238.0);
 
         add(rulerHitbox);
 
