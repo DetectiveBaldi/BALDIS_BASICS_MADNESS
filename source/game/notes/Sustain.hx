@@ -45,16 +45,12 @@ class Sustain extends FlxSprite
 
         updateHitbox();
 
-        x = note.getMidpoint().x - width * 0.5;
-
-        y = note.y + note.height * 0.5;
+        setPosition(note.getMidpoint().x - width * 0.5, note.y + note.height * 0.5);
 
         if (note.strum.downscroll)
             y -= sustainHeight;
 
-        trail.x = getMidpoint().x - trail.width * 0.5;
-
-        trail.y = y + sustainHeight;
+        trail.setPosition(getMidpoint().x - trail.width * 0.5, y + sustainHeight);
 
         if (note.strum.downscroll)
             trail.y -= sustainHeight + trail.height;

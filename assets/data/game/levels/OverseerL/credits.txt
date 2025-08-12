@@ -1,1 +1,1 @@
-composer=KayipKux|step=32
+composer=KayipKux|step=192
