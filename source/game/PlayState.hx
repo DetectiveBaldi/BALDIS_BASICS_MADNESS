@@ -528,33 +528,20 @@ class PlayState extends CustomState
         FlxG.switchState(nextState);
     }
 
-    public function clearNotesBefore(time:Float):Void
-    {
-        var noteIndex:Int = chart.notes.length - 1;
-
-        while (noteIndex >= 0.0)
-        {
-            var noteSchema:NoteSchema = chart.notes[noteIndex];
-
-            if (noteSchema.time < time)
-                chart.notes.remove(noteSchema);
-
-            noteIndex--;
-        }
-    }
-
     public function forwardTime(newTime:Float):Void
     {
-        if (!countdown.finished && !countdown.skipped)
+        if (conductor.time < 0.0)
             return;
-
-        clearNotesBefore(newTime);
 
         pauseMusic();
 
+        playField.noteSpawner.clearNotesBefore(newTime);
+
         while (conductor.time < newTime)
+        {
             @:privateAccess
-                FlxG.game.step();
+            FlxG.game.step();
+        }
 
         resumeMusic();
     }

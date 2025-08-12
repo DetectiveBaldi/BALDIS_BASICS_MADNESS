@@ -39,7 +39,7 @@ class NoteSpawner extends FlxBasic
 
         conductor = _conductor;
         
-        noteData = _noteData;
+        noteData = _noteData.copy();
 
         strumlines = _strumlines;
 
@@ -179,5 +179,21 @@ class NoteSpawner extends FlxBasic
         var strumline:Strumline = getStrumline(lane);
 
         return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
+    }
+
+    public function clearNotesBefore(time:Float):Void
+    {
+        var notesToRemove:Array<NoteSchema> = new Array<NoteSchema>();
+
+        for (i in 0 ... noteData.length)
+        {
+            var noteSchema:NoteSchema = noteData[i];
+
+            if (noteIndex < i && noteSchema.time - getSpawnDistance(noteSchema.lane) < time)
+                notesToRemove.push(noteSchema);
+        }
+
+        for (i in 0 ... notesToRemove.length)
+            noteData.remove(notesToRemove[i]);
     }
 }
