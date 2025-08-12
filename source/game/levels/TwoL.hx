@@ -1,33 +1,13 @@
 package game.levels;
 
-import flixel.animation.FlxAnimation;
+import flixel.FlxG;
 
 import flixel.tweens.FlxEase;
 
-import flixel.util.FlxColor;
-
-import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxSprite;
-
-import flixel.addons.display.FlxBackdrop;
-
-import core.AssetCache;
-
-import core.Paths;
-
-import core.Options;
-
-import data.CharacterData;
-
 import extendable.CustomState;
-
-import game.events.FocusCamCharEvent;
-import game.events.FocusCamPointEvent;
 
 import game.notes.Strum;
 import game.notes.Strumline;
-import game.notes.events.NoteHitEvent;
 
 import game.stages.TwoS;
 
@@ -162,16 +142,16 @@ class TwoL extends PlayState
                 tween.tween(strum, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
             }
 
-            toggleStrumScroll(plrStrumline, 2);
+            toggleStrumScroll(plrStrumline, 1);
         }
 
         if (step == 1344.0)
         {
-            toggleStrumScroll(plrStrumline, 0);
-
             toggleStrumScroll(plrStrumline, 1);
 
             toggleStrumScroll(plrStrumline, 2);
+
+            toggleStrumScroll(plrStrumline, 3);
         }
 
         if (step == 1408.0)
@@ -184,7 +164,13 @@ class TwoL extends PlayState
         }
 
         if (step == 1528.0)
-            toggleStrumScroll(plrStrumline, 2);
+        {
+            toggleStrumScroll(plrStrumline, 0);
+
+            toggleStrumScroll(plrStrumline, 1);
+
+            toggleStrumScroll(plrStrumline, 3);
+        }
         
         if (step == 1536)
         {
@@ -218,9 +204,12 @@ class TwoL extends PlayState
 
     override function endSong():Void
     {
-        CustomState.cancelFadeIn = true;
+        if (nextState != null)
+        {
+            CustomState.cancelFadeIn = true;
 
-        CustomState.cancelFadeOut = true;
+            CustomState.cancelFadeOut = true;
+        }
 
         super.endSong();
     }
