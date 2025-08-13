@@ -164,7 +164,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf-peaking");
             plr.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-clutching-wall"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
             plr.setPosition(-100.0, 125.0);
             players.add(plr);
             plr.visible = true;
@@ -232,7 +232,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf-clutching-wall");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-left"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(1.75, 1.75);
             plr.setPosition(950.0, 125.0);
             plr.visible = true;
@@ -243,7 +243,7 @@ class GainGL extends PlayState
             var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
             opp.scale.set(2.0, 2.0);
             opp.setPosition(-600.0, 0.0);
             opp.skipDance = true;
@@ -345,7 +345,7 @@ class GainGL extends PlayState
             var plr:Character = getPlayer("bf-face-left");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-back-left"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
             plr.scale.set(2.0, 2.0);      
             plr.setPosition(350.0, 200.0);
             players.add(plr);
@@ -366,7 +366,7 @@ class GainGL extends PlayState
         {
             gameCameraZoom = 1.3;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-mad-angled"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
 
             opp.scale.set(1.5, 1.5);
 
@@ -405,7 +405,7 @@ class GainGL extends PlayState
             var opp:Character = getOpponent("baldi-mad-angled");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-walking"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-walking"));
 
             var anim:FlxAnimation = plr.animation.getByName("dance");
 
@@ -415,7 +415,7 @@ class GainGL extends PlayState
 
             players.add(plr);
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("walk-legs"));
+            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("walk-legs"));
 
             anim = _plr.animation.getByName("legs");
 
@@ -524,7 +524,7 @@ class GainGL extends PlayState
 
             tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("gotta-sweep"));
+            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("gotta-sweep"));
 
             _opp.skipSing = true;
 

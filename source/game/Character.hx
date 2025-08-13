@@ -1,5 +1,7 @@
 package game;
 
+import haxe.Json;
+
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -14,7 +16,7 @@ import core.Options;
 import core.Paths;
 
 import data.AnimationData;
-import data.CharacterData.RawCharacterData;
+import data.CharacterData;
 
 import game.notes.Note;
 import game.notes.Strumline;
@@ -27,6 +29,11 @@ using util.ArrayUtil;
 
 class Character extends FlxSprite
 {
+    public static function getConfig(file:String):CharacterData
+    {
+        return Json.parse(AssetCache.getText(Paths.data(Paths.json('game/Character/${file}'))));
+    }
+    
     public var conductor(default, set):Conductor;
 
     @:noCompletion
@@ -47,7 +54,7 @@ class Character extends FlxSprite
 
     public var keys:Array<Int>;
     
-    public var config:RawCharacterData;
+    public var config:CharacterData;
 
     public var danceSteps:Array<String>;
 
@@ -63,7 +70,7 @@ class Character extends FlxSprite
 
     public var holdTimer:Float;
 
-    public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0, _config:RawCharacterData):Void
+    public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0, _config:CharacterData):Void
     {
         super(x, y);
 
@@ -146,7 +153,7 @@ class Character extends FlxSprite
         return output;
     }
 
-    public function loadConfig(newConfig:RawCharacterData):RawCharacterData
+    public function loadConfig(newConfig:CharacterData):CharacterData
     {
         config = newConfig;
 

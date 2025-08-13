@@ -229,7 +229,7 @@ class OverseerL extends PlayState
 
         if (step == 2256)
         {
-            var oppAnim:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("overseer-ref"));
+            var oppAnim:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("overseer-ref"));
             oppAnim.setPosition(400.0, 115.0);
             oppAnim.skipDance = true;
             oppAnim.animation.play("dclosed");

@@ -43,7 +43,7 @@ class GameOverScreen extends CustomSubState
 
         camera.zoom = 0.75;
 
-        player = new Character(null, 0.0, 0.0, CharacterData.get("bf-dead"));
+        player = new Character(null, 0.0, 0.0, Character.getConfig("bf-dead"));
 
         player.dance();
 

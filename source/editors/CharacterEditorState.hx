@@ -127,7 +127,7 @@ class CharacterEditorState extends CustomState
 
         add(ghost);
 
-        character = new Character(null, 0.0, 0.0, CharacterData.get(configName));
+        character = new Character(null, 0.0, 0.0, Character.getConfig(configName));
 
         character.screenCenter();
 
@@ -192,7 +192,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_button", Button).onClick = (ev:MouseEvent) ->
         {
-            character.loadConfig(CharacterData.get('${ui.findComponent("textfield", TextField).text}'));
+            character.loadConfig(Character.getConfig('${ui.findComponent("textfield", TextField).text}'));
 
             character.screenCenter();
 

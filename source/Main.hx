@@ -6,6 +6,7 @@ import flixel.FlxGame;
 
 import menus.LauncherScreen;
 
+// TODO: A lot of code sucks ass. I need to find out why and how to fix it.
 class Main extends Sprite
 {
 	public function new():Void

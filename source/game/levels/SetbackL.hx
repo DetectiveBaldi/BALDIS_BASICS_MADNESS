@@ -107,7 +107,7 @@ class SetbackL extends PlayState
             var opp:Character = getOpponent("dsci");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("dsci-pov"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("dsci-pov"));
             opp.setPosition(-725.0, -408.0);
             opp.color = 0x333333;
             opponents.add(opp);

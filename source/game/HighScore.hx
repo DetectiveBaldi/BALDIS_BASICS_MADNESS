@@ -74,16 +74,6 @@ class HighScore
     {
         return getBlankWeek();
     }
-
-    public static function getWeekScoreFromPlayStats(stats:PlayStats):WeekScore
-    {
-        return {score: stats.score, misses: stats.misses, accuracy: stats.accuracy, grade: stats.grade}
-    }
-
-    public static function getLevelScoreFromPlayStats(stats:PlayStats):LevelScore
-    {
-        return getWeekScoreFromPlayStats(stats);
-    }
 }
 
 typedef WeekScore =

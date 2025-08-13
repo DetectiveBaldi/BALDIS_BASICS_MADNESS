@@ -114,6 +114,9 @@ class PlayState extends CustomState
     
     public function getClassFromNextState():Class<FlxState>
     {
+        if (nextState == null)
+            return null;
+        
         return Type.getClass(nextState.createInstance());
     }
 
@@ -274,9 +277,9 @@ class PlayState extends CustomState
 
         stage.add(spectators);
 
-        if (chart.spectator != "")
+        if (chart?.spectator != "")
         {
-            spectator = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.spectator));
+            spectator = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.spectator));
 
             spectator.skipSing = true;
         }
@@ -285,13 +288,13 @@ class PlayState extends CustomState
 
         stage.add(opponents);
 
-        opponent = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.opponent));
+        opponent = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.opponent));
 
         players = new FlxTypedSpriteGroup<Character>();
 
         stage.add(players);
 
-        player = new Character(conductor, 0.0, 0.0, CharacterData.get(chart.player));
+        player = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.player));
 
         playField = new PlayField(tween, timer, conductor, chart, instrumental);
 
@@ -507,8 +510,14 @@ class PlayState extends CustomState
 
         var score:Int = playStats.score;
 
+        var misses:Int = playStats.misses;
+
+        var accuracy:Float = playStats.accuracy;
+
+        var grade:String = playStats.grade;
+
         if (HighScore.isLevelHighScore(level.name, "normal", score))
-            HighScore.setLevelScore(level.name, "normal", HighScore.getLevelScoreFromPlayStats(playStats));
+            HighScore.setLevelScore(level.name, "normal", {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
         if (isWeek)
         {
@@ -524,8 +533,15 @@ class PlayState extends CustomState
 
                 score = totalStats.score;
 
+                misses = totalStats.misses;
+
+                accuracy = totalStats.accuracy;
+
+                grade = totalStats.grade;
+
                 if (HighScore.isWeekHighScore(week.name, "normal", score))
-                    HighScore.setWeekScore(week.name, "normal", HighScore.getWeekScoreFromPlayStats(totalStats));
+                    HighScore.setWeekScore(week.name, "normal", {score: score, misses: misses, accuracy: accuracy,
+                        grade: grade});
             }
             else
             {
@@ -548,6 +564,11 @@ class PlayState extends CustomState
     }
 
     public function forwardTime(newTime:Float):Void
+    {
+        skipTime(newTime);
+    }
+
+    public function skipTime(newTime:Float):Void
     {
         if (conductor.time < 0.0)
             return;

@@ -105,11 +105,11 @@ class WarmWL extends PlayState
             var opp:Character = getOpponent("baldi-face-front");
             opp.visible = false;
         
-            var plr:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-face-left"));
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.setPosition(400.0, 0.0);
             players.add(plr);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("baldi-face-right"));
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-face-right"));
             opp.setPosition(-550.0, -150.0);
             opponents.add(opp);
         
@@ -148,7 +148,7 @@ class WarmWL extends PlayState
             var opp:Character = getOpponent("baldi-face-right");
             opp.skipDance = true;
 
-            var plrAnim:Character = new Character(conductor, 0.0, 0.0, CharacterData.get("bf-anim-door"));
+            var plrAnim:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-door"));
             plrAnim.setPosition(400.0, 0.0);
             plrAnim.skipDance = true;
             plrAnim.skipSing = true;

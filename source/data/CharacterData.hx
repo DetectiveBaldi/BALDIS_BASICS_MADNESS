@@ -1,20 +1,8 @@
 package data;
 
 import data.AxisData;
-import haxe.Json;
 
-import core.AssetCache;
-import core.Paths;
-
-class CharacterData
-{
-    public static function get(path:String):RawCharacterData
-    {
-        return Json.parse(AssetCache.getText(Paths.data(Paths.json('game/Character/${path}'))));
-    }
-}
-
-typedef RawCharacterData =
+typedef CharacterData =
 {
     var name:String;
     
