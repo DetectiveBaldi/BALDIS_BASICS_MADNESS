@@ -339,7 +339,7 @@ class FreeplayScreen extends CustomState
 
         MainMenuScreen.fadeTune();
 
-        PlayState.loadSingle(levels[curSelected]);
+        PlayState.loadLevel(levels[curSelected]);
     }
 
     public function clickExitButton():Void

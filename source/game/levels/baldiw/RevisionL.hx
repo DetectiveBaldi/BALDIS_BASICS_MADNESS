@@ -104,13 +104,16 @@ class RevisionL extends PlayState
     {
         super.update(elapsed);
 
+        if (padMinigame == null)
+            return;
+
         @:privateAccess
             var musPath:String = AssetCache.getAudioPath(true, instrumental._sound);
 
         if (musPath.contains("Bad-Math"))
             return;
 
-        if (padMinigame?.loss)
+        if (padMinigame.loss)
         {
             instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.getFullClassPath()}/Instrumental-Bad-Math'), 
                 false, false, endSong);
@@ -852,7 +855,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         if (submission == "31718")
         {
-            PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
+            PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
 
             problemText.text = "THIS IS WHERE IT ALL BEGAN";
 

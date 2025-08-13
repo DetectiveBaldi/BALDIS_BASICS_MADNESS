@@ -44,4 +44,26 @@ class WeekData
     {
         return '${name.split(" ").join("").toLowerCase()}w';
     }
+
+    /**
+     * Returns an exact copy of `this` `WeekData`. Level data is not recreated!
+     * @return `WeekData`
+     */
+    public function copy():WeekData
+    {
+        var data:WeekData = {name: name, nameSuffix: nameSuffix, description: description}
+
+        // TODO: Make sure that copying is necessary.
+        data.levels = levels.copy();
+
+        data.requiresScoreToPlay = requiresScoreToPlay;
+
+        data.showInStoryMenu = showInStoryMenu;
+
+        data.showInFreeplayMenu = showInFreeplayMenu;
+
+        data.hasTvPortrait = hasTvPortrait;
+
+        return data;
+    }
 }

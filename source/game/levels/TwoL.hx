@@ -6,6 +6,8 @@ import flixel.tweens.FlxEase;
 
 import extendable.CustomState;
 
+import menus.TitleScreen;
+
 import game.notes.Strum;
 import game.notes.Strumline;
 
@@ -204,7 +206,7 @@ class TwoL extends PlayState
 
     override function endSong():Void
     {
-        if (nextState != null)
+        if (nextStateClass == TitleScreen)
         {
             CustomState.cancelFadeIn = true;
 

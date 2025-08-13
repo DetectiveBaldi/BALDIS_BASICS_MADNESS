@@ -2,7 +2,7 @@ package data;
 
 using util.ArrayUtil;
 
-// TODO: Remove portraits of songs with `showInFreeplayMenu` set to `false`.
+// TODO: Remove portraits of songs with `showInFreeplayMenu` set to false.
 class Playlist
 {
     public static function init():Void

@@ -173,7 +173,7 @@ class ScribbleL extends PlayState
     }
 }
 
-// TODO: Replace old components with red-green bar.
+// TODO: Update to use ProgressBar.
 class OldHealthBar extends HealthBar
 {
     public function new(x:Float = 0.0, y:Float = 0.0, conductor:Conductor):Void

@@ -132,11 +132,11 @@ class TitleScreen extends CustomState
         {
             if (FlxG.mouse.justReleased)
             {
-                CustomState.cancelFadeIn = true;
+                disableTransition();
 
-                CustomState.cancelFadeOut = true;
+                var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Two");
 
-                PlayState.loadSingle(LevelData.list.first((lv:LevelData) -> lv.name == "Two"), () -> new TitleScreen());
+                PlayState.loadLevel(levelToLoad, () -> new TitleScreen());
             }
         }
     }

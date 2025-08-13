@@ -5,6 +5,7 @@ import sys.FileSystem;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxState;
 import flixel.FlxSubState;
 
 import flixel.group.FlxGroup;
@@ -91,7 +92,7 @@ class PlayState extends CustomState
 
     public static function loadWeek(week:WeekData):Void
     {
-        PlayState.week = week;
+        PlayState.week = week.copy();
 
         level = week.levels[0];
 
@@ -100,7 +101,7 @@ class PlayState extends CustomState
         FlxG.switchState(() -> getClassFromLevel());
     }
 
-    public static function loadSingle(level:LevelData, nextState:NextState = null):Void
+    public static function loadLevel(level:LevelData, nextState:NextState = null):Void
     {
         week = null;
 
@@ -110,8 +111,25 @@ class PlayState extends CustomState
 
         FlxG.switchState(() -> getClassFromLevel(nextState));
     }
+    
+    public function getClassFromNextState():Class<FlxState>
+    {
+        return Type.getClass(nextState.createInstance());
+    }
 
-    public var nextState:NextState;
+    public var nextState(default, set):NextState;
+
+    @:noCompletion
+    function set_nextState(nex:NextState):NextState
+    {
+        nextState = nex;
+
+        nextStateClass = getClassFromNextState();
+
+        return nextState;
+    }
+
+    public var nextStateClass:Class<FlxState>;
 
     /**
      * Characters and stages are drawn on this camera.
@@ -483,6 +501,8 @@ class PlayState extends CustomState
 
     public function endSong():Void
     {
+        var stateToSwitchTo:NextState = () -> new StoryMenuScreen();
+        
         var playStats:PlayStats = playField.playStats;
 
         var score:Int = playStats.score;
@@ -494,9 +514,9 @@ class PlayState extends CustomState
         {
             weekStats[level.name] = playField.playStats.copy();
 
-            var i:Int = week.levels.indexOf(level);
+            week.levels.shift();
 
-            if (i == week.levels.length - 1.0)
+            if (week.levels.length == 0.0)
             {
                 var totalStats:PlayStats = PlayStats.empty();
 
@@ -506,18 +526,16 @@ class PlayState extends CustomState
 
                 if (HighScore.isWeekHighScore(week.name, "normal", score))
                     HighScore.setWeekScore(week.name, "normal", HighScore.getWeekScoreFromPlayStats(totalStats));
-                
-                nextState ??= () -> new StoryMenuScreen();
             }
             else
             {
-                level = week.levels[i + 1];
+                level = week.levels[0];
 
-                nextState ??= () -> PlayState.getClassFromLevel();
+                stateToSwitchTo = () -> PlayState.getClassFromLevel();
             }
         }
         else
-            nextState ??= () -> new FreeplayScreen();
+            stateToSwitchTo = () -> new FreeplayScreen();
 
         mainVocals?.stop();
 
@@ -525,7 +543,8 @@ class PlayState extends CustomState
 
         playerVocals?.stop();
 
-        FlxG.switchState(nextState);
+        // If nextState is null, switch to StoryMenuScreen, FreeplayScreen, or the next level.
+        FlxG.switchState(nextState ?? stateToSwitchTo);
     }
 
     public function forwardTime(newTime:Float):Void

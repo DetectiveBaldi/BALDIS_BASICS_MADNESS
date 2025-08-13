@@ -91,6 +91,13 @@ class CustomState extends FlxState
         return spr;
     }
 
+    public function disableTransition():Void
+    {
+        CustomState.cancelFadeIn = true;
+
+        CustomState.cancelFadeOut = true;
+    }
+
     public function stepHit(step:Int):Void
     {
 
