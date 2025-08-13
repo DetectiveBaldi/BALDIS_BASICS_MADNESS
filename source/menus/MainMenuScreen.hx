@@ -115,7 +115,7 @@ class MainMenuScreen extends CustomState
         {
             exitButton.animation.play("1");
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
             {
                 fadeTune();
 
@@ -211,7 +211,7 @@ class MenuText extends FlxText
 
             underline = true;
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
         else

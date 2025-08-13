@@ -239,7 +239,7 @@ class PauseScreen extends CustomSubState
         if (!FlxG.mouse.overlaps(pauseIcons, camera))
             iconText.text = "";
 
-        if (FlxG.keys.justPressed.ESCAPE)
+        if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]))
         {
             close();
 
@@ -329,7 +329,7 @@ class PauseScreenIcon extends FlxSprite
 
             selected = true;
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
         else

@@ -24,7 +24,7 @@ class ControlsPage extends BaseOptionsPage
 
         control.setPosition(285.0, 395.0);
 
-        control = addControlOption("Pause", "Controls for entering the pause menu.", "UI:PAUSE");
+        control = addControlOption("Pause", "Controls for toggling the pause menu.", "UI:PAUSE");
 
         control.setPosition(285.0, 500.0);
     }

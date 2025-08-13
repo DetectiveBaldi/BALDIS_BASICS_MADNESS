@@ -156,7 +156,7 @@ class ModeSelectScreen extends CustomState
         {
             exitButton.animation.play("1");
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
                 FlxG.switchState(() -> new MainMenuScreen());
         }
         else
@@ -235,7 +235,7 @@ class ModeSelectIcon extends FlxSprite
 
             selected = true;
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
         else

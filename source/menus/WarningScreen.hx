@@ -80,7 +80,7 @@ class WarningScreen extends CustomState
 
     override function update(elapsed:Float):Void
     {
-        if (FlxG.keys.justPressed.ANY || FlxG.mouse.justPressed)
+        if (FlxG.keys.justPressed.ANY || FlxG.mouse.justReleased)
             FlxG.switchState(() -> new TitleScreen());
     }
 }

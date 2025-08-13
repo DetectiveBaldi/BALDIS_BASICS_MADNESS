@@ -32,7 +32,7 @@ class BaseOptionsPage extends FlxTypedGroup<BaseOptionItem>
 
             if (FlxG.mouse.overlaps(option))
             {
-                if (FlxG.mouse.justPressed)
+                if (FlxG.mouse.justReleased)
                 {
                     if (lastTouch == option)
                         continue;

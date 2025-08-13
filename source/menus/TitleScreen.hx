@@ -199,7 +199,7 @@ class TitleButton extends FlxSprite
         {
             animation.play("1");
 
-            if (FlxG.mouse.justPressed)
+            if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
         else

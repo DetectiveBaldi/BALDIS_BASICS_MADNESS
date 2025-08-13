@@ -107,7 +107,7 @@ class GameOverScreen extends CustomSubState
             {
                 retryButton.animation.play("1");
 
-                if (FlxG.mouse.justPressed)
+                if (FlxG.mouse.justReleased)
                 {
                     tween.tween(retryButton, {alpha: 0.0}, 0.5);
 
