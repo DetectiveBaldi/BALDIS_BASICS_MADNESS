@@ -30,7 +30,7 @@ import data.AxisData;
 import data.CharacterData;
 import data.LevelData;
 
-import game.events.FocusCamPointEvent;
+import game.events.SetCamFocusEvent;
 
 import game.stages.baldiw.RevisionS;
 
@@ -60,7 +60,7 @@ class RevisionL extends PlayState
 
         super.create();
 
-        FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 300.0, cameraPoint.getCenterY(), -1.0);
+        SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() - 300.0, cameraPoint.getCenterY(), null, 0.0, "linear");
 
         gameCamera.snapToTarget();
 
@@ -137,8 +137,7 @@ class RevisionL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 50.0,
-                cameraPoint.getCenterY(), -1.0);
+            SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() + 50.0, cameraPoint.getCenterY(), null, 0.0, "linear");
 
             gameCameraZoom = 0.7;
 
@@ -169,8 +168,8 @@ class RevisionL extends PlayState
 
             tween.cancelTweensOf(this, ["gameCameraZoom"]);
             
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
-                cameraPoint.getCenterY() + 50.0, -1.0);
+            SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() + 100.0, cameraPoint.getCenterY() + 50.0, null,
+                0.0, "linear");
 
             gameCamera.snapToTarget();
 

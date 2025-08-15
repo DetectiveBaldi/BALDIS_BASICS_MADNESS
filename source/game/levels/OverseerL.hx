@@ -22,8 +22,6 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.FocusCamPointEvent;
-
 import flixel.addons.display.FlxBackdrop; 
 
 import game.stages.OverseerS;

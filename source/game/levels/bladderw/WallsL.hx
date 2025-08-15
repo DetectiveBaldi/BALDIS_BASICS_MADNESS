@@ -8,9 +8,6 @@ import core.Options;
 
 import data.CharacterData;
 
-import game.events.FocusCamCharEvent;
-import game.events.FocusCamPointEvent;
-
 import game.stages.bladderw.WallsS;
 
 using util.MathUtil;

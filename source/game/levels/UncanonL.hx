@@ -21,8 +21,6 @@ import core.Paths;
 
 import data.CharacterData;
 
-import game.events.FocusCamPointEvent;
-
 import game.stages.UncanonS;
 
 using util.MathUtil;

@@ -129,7 +129,7 @@ class PsychConverter
 
             if (character != newCharacter)
             {
-                output.events.push({time: time, name: "FocusCamChar", value: {charType: newCharacter,
+                output.events.push({time: time, name: "SetCamFocus", value: {x: 0.0, y: 0.0, charType: newCharacter,
                     duration: 0.0, ease: "linear"}});
 
                 character = newCharacter;

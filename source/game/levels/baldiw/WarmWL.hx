@@ -8,9 +8,7 @@ import core.Options;
 
 import data.CharacterData;
 
-import game.events.FocusCamCharEvent;
-import game.events.FocusCamPointEvent;
-
+import game.events.SetCamFocusEvent;
 import game.stages.baldiw.WarmWS;
 
 using util.MathUtil;
@@ -120,14 +118,14 @@ class WarmWL extends PlayState
 
         if (step == 1152)
         {
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() + 100.0,
-                cameraPoint.getCenterY(), -1.0);
+            SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() + 100.0, cameraPoint.getCenterY(), null, 0.0,
+                "linear");
         }
     
         if (step == 1280)
         {
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX() - 100.0,
-                cameraPoint.getCenterY(), -1.0);
+            SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() - 100.0, cameraPoint.getCenterY(), null, 0.0,
+                "linear");
         }
 
         if (step == 1408)
@@ -137,8 +135,8 @@ class WarmWL extends PlayState
 
             warmWS.entranceA1.color = 0xFFFFFFFF;
 
-            FocusCamPointEvent.dispatch(this, cameraPoint.getCenterX(),
-                cameraPoint.getCenterY(), -1.0);
+            SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX(), cameraPoint.getCenterY(), null, 0.0,
+                "linear");
 
             gameCamera.snapToTarget();
 

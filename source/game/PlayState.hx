@@ -41,8 +41,7 @@ import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
 
 import game.events.CameraZoomEvent;
-import game.events.FocusCamCharEvent;
-import game.events.FocusCamPointEvent;
+import game.events.SetCamFocusEvent;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
@@ -362,10 +361,16 @@ class PlayState extends CustomState
     {
         super.update(elapsed);
 
-        // Calculate new time here, we need to dispatch song events for dispatching step, beat, and measure updates.
+        // Calculate new time here, we need to update camera target fields before updating the conductor.
         var timeToUpdateTo:Float = conductor.time + 1000.0 * elapsed;
+        
+        // Update the camera target fields.
+        updateCameraTarget(timeToUpdateTo);
+        
+        // Update the conductor now.
+        if (countdown.active && !countdown.paused)
+            conductor.update(timeToUpdateTo);
 
-        // Update events before conductor.
         while (eventIndex < chart.events.length)
         {
             var event:EventSchema = chart.events[eventIndex];
@@ -375,10 +380,6 @@ class PlayState extends CustomState
 
             onEvent(event);
         }
-        
-        // Update the conductor now.
-        if (countdown.active && !countdown.paused)
-            conductor.update(timeToUpdateTo);
         
         gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
 
@@ -451,11 +452,8 @@ class PlayState extends CustomState
             case "CameraZoom":
                 CameraZoomEvent.dispatch(this, val.zoom, val.duration, val.ease);
 
-            case "FocusCamChar":
-                FocusCamCharEvent.dispatch(this, val.charType, val.duration, val.ease);
-
-            case "FocusCamPoint":
-                FocusCamPointEvent.dispatch(this, val.x, val.y, val.duration, val.ease);
+            case "SetCamFocus":
+                SetCamFocusEvent.dispatch(this, val.x, val.y, val.charType, val.duration, val.ease);
         }
 
         eventIndex++;
@@ -615,11 +613,35 @@ class PlayState extends CustomState
 
     public function setCamStartPos():Void
     {
-        var ev:EventSchema = chart.events.first((e:EventSchema) -> e.name == "FocusCamChar");
+        var ev:EventSchema = chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
 
-        FocusCamCharEvent.dispatch(this, ev.value.charType, -1.0);
+        SetCamFocusEvent.dispatch(this, ev.value.x, ev.value.y, ev.value.charType, 0.0, "linear");
 
         gameCamera.snapToTarget();
+    }
+
+    public function getCameraTarget(timeToCheck:Float):String
+    {
+        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && timeToCheck < conductor.time);
+
+        if (ev == null)
+            ev = chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
+
+        return ev.value.charType == null ? "POINT" : ev.value.charType.toUpperCase();
+    }
+
+    public function updateCameraTarget(timeToCheck:Float):Void
+    {
+        var target:String = getCameraTarget(timeToCheck);
+
+        if (target == "POINT")
+            cameraTarget = "POINT";
+        else
+        {
+            cameraTarget = "CHARACTER";
+
+            cameraCharTarget = target;
+        }
     }
 
     public function noteSpawn(note:Note):Void {}
@@ -702,12 +724,12 @@ enum CameraLockMode
     DEFAULT;
 
     /**
-     * Camera movement is limited to the use of `FocusCamChar` events.
+     * Camera movement is limited to the use of `SetCamFocus` events with `charType == null`.
      */
     FOCUS_CAM_CHAR;
 
     /**
-     * Camera movement is limited to the use of `FocusCamPoint` events.
+     * Camera movement is limited to the use of `SetCamFocus` events with `charType != null`.
      */
     FOCUS_CAM_POINT;
 
