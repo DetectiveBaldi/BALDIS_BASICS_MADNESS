@@ -20,6 +20,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
+import flixel.util.typeLimit.NextState;
 
 import core.AssetCache;
 import core.Options;
@@ -196,10 +197,12 @@ class PauseScreen extends CustomSubState
 
         var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> 
         {
+            var stateToSwitchTo:NextState = () -> new FreeplayScreen();
+
             if (PlayState.isWeek)
-                FlxG.switchState(() -> new StoryMenuScreen());
-            else
-                FlxG.switchState(() -> new FreeplayScreen());
+                stateToSwitchTo = () -> new StoryMenuScreen();
+
+            FlxG.switchState(game.nextState ?? stateToSwitchTo);
         });
 
         tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});

@@ -506,7 +506,7 @@ class PlayState extends CustomState
 
     public function endSong():Void
     {
-        var stateToSwitchTo:NextState = () -> new StoryMenuScreen();
+        var stateToSwitchTo:NextState = () -> new FreeplayScreen();
         
         var playStats:PlayStats = playField.playStats;
 
@@ -544,6 +544,8 @@ class PlayState extends CustomState
                 if (HighScore.isWeekHighScore(week.name, "normal", score))
                     HighScore.setWeekScore(week.name, "normal", {score: score, misses: misses, accuracy: accuracy,
                         grade: grade});
+
+                stateToSwitchTo = () -> new StoryMenuScreen();
             }
             else
             {
@@ -552,8 +554,6 @@ class PlayState extends CustomState
                 stateToSwitchTo = () -> PlayState.getClassFromLevel();
             }
         }
-        else
-            stateToSwitchTo = () -> new FreeplayScreen();
 
         mainVocals?.stop();
 
@@ -705,7 +705,7 @@ class PlayState extends CustomState
         
         persistentDraw = false;
 
-        openSubState(new GameOverScreen());
+        openSubState(new GameOverScreen(this));
 
         pauseMusic();
     }
@@ -741,12 +741,12 @@ enum CameraLockMode
     DEFAULT;
 
     /**
-     * Camera movement is limited to the use of `SetCamFocus` events with `charType == null`.
+     * Camera movement is limited to the use of `SetCamFocus` events with `charType != null`.
      */
     FOCUS_CAM_CHAR;
 
     /**
-     * Camera movement is limited to the use of `SetCamFocus` events with `charType != null`.
+     * Camera movement is limited to the use of `SetCamFocus` events with `charType == null`.
      */
     FOCUS_CAM_POINT;
 

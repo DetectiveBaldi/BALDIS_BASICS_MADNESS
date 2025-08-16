@@ -404,16 +404,9 @@ class CharacterEditorState extends CustomState
                 {
                     var animation:AnimationData = character.config.animations[animationIndex];
 
-                    try
-                    {
-                        var offset:AxisData<Float> = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
+                    var offset:AxisData<Float> = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
 
-                        setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
-                    }
-                    catch (e:Exception)
-                    {
-                        
-                    }
+                    setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
                 }
             }
 

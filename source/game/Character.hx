@@ -2,6 +2,8 @@ package game;
 
 import haxe.Json;
 
+import sys.io.File;
+
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -31,7 +33,7 @@ class Character extends FlxSprite
 {
     public static function getConfig(file:String):CharacterData
     {
-        return Json.parse(AssetCache.getText(Paths.data(Paths.json('game/Character/${file}'))));
+        return Json.parse(File.getContent(Paths.data(Paths.json('game/Character/${file}'))));
     }
     
     public var conductor(default, set):Conductor;

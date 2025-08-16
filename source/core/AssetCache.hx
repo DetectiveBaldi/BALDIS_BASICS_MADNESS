@@ -140,11 +140,6 @@ class AssetCache
         map.remove(path);
     }
 
-    public static function getText(path:String):String
-    {
-        return File.getContent(path);
-    }
-
     public static function clearAll():Void
     {
         for (k => v in graphics)

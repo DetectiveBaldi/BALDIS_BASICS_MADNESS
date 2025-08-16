@@ -204,16 +204,16 @@ class TwoL extends PlayState
         }
     }
 
-    override function endSong():Void
+    override function startOutro(onOutroComplete:()->Void):Void
     {
-        if (nextStateClass == TitleScreen)
+        if (nextStateClass != null)
         {
             CustomState.cancelFadeIn = true;
 
             CustomState.cancelFadeOut = true;
         }
 
-        super.endSong();
+        super.startOutro(onOutroComplete);
     }
 
     public function toggleStrumScroll(strumline:Strumline, i:Int):Void

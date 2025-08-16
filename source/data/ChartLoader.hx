@@ -3,6 +3,7 @@ package data;
 import haxe.Json;
 
 import sys.FileSystem;
+import sys.io.File;
 
 import core.AssetCache;
 import core.Paths;
@@ -42,7 +43,7 @@ class ChartLoader
         {
             var chartFilePath:String = '${path}/chart.json';
 
-            var chart:Dynamic = Json.parse(AssetCache.getText(chartFilePath));
+            var chart:Dynamic = Json.parse(File.getContent(chartFilePath));
 
             if (Reflect.hasField(chart, "format"))
                 return PsychConverter.parse(chartFilePath, '${path}/credits.txt');

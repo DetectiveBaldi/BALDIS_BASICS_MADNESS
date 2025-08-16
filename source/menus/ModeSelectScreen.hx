@@ -105,7 +105,7 @@ class ModeSelectScreen extends CustomState
 
         storyIcon.onClick.remove(MainMenuScreen.fadeTune);
 
-        storyIcon.setPosition(365.0, storyIcon.getCenterY() - 100.0);
+        storyIcon.setPosition(265.0, storyIcon.getCenterY() - 100.0);
 
         text = "Discover the rest of";
 
@@ -114,11 +114,20 @@ class ModeSelectScreen extends CustomState
         text += "\ncompanions!";
 
         var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay Mode", text, () -> FlxG.switchState(() -> 
-            new MysteryScreen()));
+            new FreeplayScreen()));
 
         freeplayIcon.onClick.remove(MainMenuScreen.fadeTune);
 
-        freeplayIcon.setPosition((FlxG.width - freeplayIcon.width) - 365.0 + 112.0, freeplayIcon.getCenterY() - 100.0);
+        freeplayIcon.setPosition(freeplayIcon.getCenterX() + 56.0, freeplayIcon.getCenterY() - 100.0);
+
+        text = "Dig and discover the secrets";
+
+        text += "\nof Here School...";
+
+        var mysteryIcon:ModeSelectIcon = createIcon("mystery-icon", "Mystery Mode", text, () -> FlxG.switchState(() -> 
+            new MysteryScreen()));
+
+        mysteryIcon.setPosition(FlxG.width - mysteryIcon.width - 265.0 + 112.0, mysteryIcon.getCenterY() - 100.0);
 
         exitButton = new FlxSprite();
 

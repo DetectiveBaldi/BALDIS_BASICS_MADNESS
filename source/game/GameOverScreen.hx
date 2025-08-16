@@ -8,6 +8,7 @@ import flixel.math.FlxMath;
 import flixel.sound.FlxSound;
 
 import flixel.util.FlxTimer;
+import flixel.util.typeLimit.NextState;
 
 import core.AssetCache;
 
@@ -23,6 +24,8 @@ using util.MathUtil;
 
 class GameOverScreen extends CustomSubState
 {
+    public var game:PlayState;
+
     public var player:Character;
 
     public var dead:FlxSound;
@@ -34,6 +37,13 @@ class GameOverScreen extends CustomSubState
     public var canSkip:Bool;
 
     public var canRetry:Bool;
+
+    public function new(game:PlayState):Void
+    {
+        super();
+
+        this.game = game;
+    }
 
     override function create():Void
     {
@@ -91,7 +101,14 @@ class GameOverScreen extends CustomSubState
         if (canSkip)
         {
             if (FlxG.keys.justPressed.ESCAPE)
-                FlxG.switchState(PlayState.isWeek ? () -> new StoryMenuScreen() : () -> new FreeplayScreen());
+            {
+                var stateToSwitchTo:NextState = () -> new FreeplayScreen();
+
+                if (PlayState.isWeek)
+                    stateToSwitchTo = () -> new StoryMenuScreen();
+
+                FlxG.switchState(game.nextState ?? stateToSwitchTo);
+            }
 
             if (FlxG.keys.justPressed.ENTER && !rollTimer.finished)
             {
