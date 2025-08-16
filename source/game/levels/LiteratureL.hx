@@ -75,9 +75,9 @@ class LiteratureL extends PlayState
 
         if (step == 128)
         {
+            opponent.x = -275;
+
             cameraLock = FOCUS_CAM_CHAR;
-            
-            gameCamera.snapToTarget();
 
             gameCameraZoom = 0.9;
            
@@ -90,8 +90,6 @@ class LiteratureL extends PlayState
             literatureS.hall0.visible = false;
 
             literatureS.classroom.visible = true;
-        
-            opponent.x = -275;
         }
     }
 

@@ -124,18 +124,13 @@ class PsychConverter
 
             TimedObjectUtil.sort(_section.sectionNotes);
 
-            var newCharacter:String = _section.mustHitSection ? "player" : "opponent";
+            character = _section.mustHitSection ? "player" : "opponent";
 
             if (_section.gfSection)
-                newCharacter = "spectator";
-
-            if (character != newCharacter)
-            {
-                output.events.push({time: time, name: "SetCamFocus", value: {x: 0.0, y: 0.0, charType: newCharacter,
-                    duration: 0.0, ease: "linear"}});
-
-                character = newCharacter;
-            }
+                character = "spectator";
+            
+            output.events.push({time: time, name: "SetCamFocus", value: {x: 0.0, y: 0.0, charType: character,
+                duration: 0.0, ease: "linear"}});
 
             var beatLength:Float = (60.0 / tempo * 1000.0);
 
