@@ -114,7 +114,7 @@ class ModeSelectScreen extends CustomState
         text += "\ncompanions!";
 
         var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay Mode", text, () -> FlxG.switchState(() -> 
-            new FreeplayScreen()));
+            new MysteryScreen()));
 
         freeplayIcon.onClick.remove(MainMenuScreen.fadeTune);
 
