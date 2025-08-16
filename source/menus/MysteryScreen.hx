@@ -35,6 +35,8 @@ import menus.FreeplayScreen.InfoButtonSubState;
 import ui.HeightenedButton;
 import ui.OrientedButton;
 
+using flixel.util.FlxColorTransformUtil;
+
 using util.MathUtil;
 using util.StringUtil;
 
@@ -55,6 +57,8 @@ class MysteryScreen extends CustomState
     public var door:FlxSprite;
 
     public var tune:FlxSound;
+
+    public var questionMark:FlxSprite;
 
     public static var curSelected:Int = 0;
 
@@ -90,6 +94,11 @@ class MysteryScreen extends CustomState
                 continue;
 
             levels.push(level);
+        }
+
+        for (i in 0 ... 30)
+        {
+            questionMarks();
         }
 
         exitButton = new FlxSprite();
@@ -152,27 +161,27 @@ class MysteryScreen extends CustomState
 
         startButton.updateHitbox();
 
-        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 300.0);
+        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 270.0);
 
         add(startButton);
 
-        infoText = new FlxText(0.0, 0.0, FlxG.width);
+        infoText = new FlxText(0.0, 0.0);
+
+        infoText.text = "Info";
 
         infoText.color = FlxColor.WHITE;
 
-        infoText.size = 60;
+        infoText.size = 40;
 
         infoText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        infoText.alignment = RIGHT;
+        infoText.alignment = CENTER;
 
-        infoText.setPosition(100.0, 270.0);
+        infoText.setPosition(FlxG.width - infoText.width - 165.0, 3.0);
 
         infoText.textField.antiAliasType = ADVANCED;
 
         infoText.textField.sharpness = 400.0;
-
-        infoText.visible = true;
 
         add(infoText);
 
@@ -200,7 +209,7 @@ class MysteryScreen extends CustomState
             exitButton.animation.play("1");
 
             if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new MainMenuScreen());
+                FlxG.switchState(() -> new ModeSelectScreen());
         }
         else
             exitButton.animation.play("0");
@@ -232,7 +241,7 @@ class MysteryScreen extends CustomState
         
         if (FlxG.mouse.overlaps(infoText, camera))
         {
-            infoText.color = 0xFF00DC00;
+            infoText.color = 0xFF00FF00;
             
             infoText.underline = true;
 
@@ -247,12 +256,28 @@ class MysteryScreen extends CustomState
         }
     }
 
-
     override function destroy():Void
     {
         super.destroy();
 
         FlxG.mouse.visible = false;
+    }
+
+    public function questionMarks():Void
+    {
+        questionMark = new FlxSprite();
+
+        questionMark.loadGraphic(AssetCache.getGraphic('menus/MysteryScreen/questionMarks/qMark${FlxG.random.int(0, 7)}'), true, 32, 32);
+
+        questionMark.scale.set(1.5, 1.5);
+
+        questionMark.updateHitbox();
+
+        questionMark.setPosition(FlxG.random.float(160.0, FlxG.width - questionMark.width - 160.0), FlxG.random.float(0, FlxG.height - questionMark.height));
+
+        questionMark.color = questionMark.color.getDarkened(FlxG.random.float(0.4, 0.8));
+
+        add(questionMark);
     }
 
     public function clickPlayButton():Void
