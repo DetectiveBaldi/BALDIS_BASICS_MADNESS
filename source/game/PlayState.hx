@@ -375,7 +375,7 @@ class PlayState extends CustomState
         {
             var event:EventSchema = chart.events[eventIndex];
 
-            if (timeToUpdateTo < event.time)
+            if (conductor.time < event.time)
                 break;
 
             onEvent(event);
