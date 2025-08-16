@@ -35,14 +35,7 @@ class ScribbleL extends PlayState
 
         replaceHealthBar();
 
-        oppStrumline.strums.alpha = 0.35;
-
-        oppStrumline.strums.centerTo();
-
-        oppStrumline.downscroll = !oppStrumline.downscroll;
-
-        oppStrumline.strums.setPosition(oppStrumline.strums.getCenterX(), oppStrumline.downscroll ? FlxG.height -
-            oppStrumline.strums.height - 15.0 : 15.0);
+        oppStrumline.strums.x = oppStrumline.strums.getCenterX();
 
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
@@ -74,7 +67,7 @@ class ScribbleL extends PlayState
 
         if (step == 132.0)
         {
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+            tween.tween(oppStrumline.strums, {alpha: 0.25}, conductor.beatLength * 0.001);
 
             tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
         }
@@ -130,11 +123,14 @@ class ScribbleL extends PlayState
             scribbleS.classicHall0.visible = false;
         }
 
+        // TODO: Look into this later, right now certain zooms cause clipping issues.
+        /*
         if (step == 548.0 || step == 552 || step == 555  || step == 682 || step == 684 || step == 736 || step == 1062 || step == 1068)
             gameCameraZoom += 0.1;
 
         if (step == 558  || step == 686 || step == 740)
             gameCameraZoom -= 0.1;
+        */
     }
 
     override function measureHit(measure:Int):Void

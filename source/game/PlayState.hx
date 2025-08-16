@@ -622,7 +622,7 @@ class PlayState extends CustomState
 
     public function getCameraTarget(timeToCheck:Float):String
     {
-        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && timeToCheck < conductor.time);
+        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && e.time < timeToCheck);
 
         if (ev == null)
             ev = chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
