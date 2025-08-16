@@ -635,7 +635,7 @@ class PlayState extends CustomState
         var target:String = getCameraTarget(timeToCheck);
 
         if (target == "POINT")
-            cameraTarget = "POINT";
+            cameraTarget = target;
         else
         {
             cameraTarget = "CHARACTER";
