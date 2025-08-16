@@ -60,9 +60,9 @@ class OverseerL extends PlayState
 
         gameCamera.snapToTarget();
 
-        gameCamZoomStrength = 0.0;
+        gameCamBopStrength = 0.0;
 
-        hudCamZoomStrength = 0.0;
+        hudCamBopStrength = 0.0;
 
         player.visible = false;
 
@@ -102,13 +102,13 @@ class OverseerL extends PlayState
 
         if (step == 192)
         {
-            gameCamZoomStrength = 0.03;
+            gameCamBopStrength = 0.03;
 
-            hudCamZoomStrength = 0.03;
+            hudCamBopStrength = 0.03;
         }
 
         if (step == 448)
-            gameCamZoomStrength = 0.06;
+            gameCamBopStrength = 0.06;
 
         if (step == 704)
         {
@@ -117,7 +117,7 @@ class OverseerL extends PlayState
 
             opponent.color = 0xFF0000;
 
-            gameCamZoomStrength = 0.03;
+            gameCamBopStrength = 0.03;
         }
 
         if (step == 816)
@@ -266,9 +266,9 @@ class OverseerL extends PlayState
 
         if (step == 2256 || step == 2288 || step == 2320)
         {
-            gameCamZoomStrength = 0.0;
+            gameCamBopStrength = 0.0;
 
-            hudCamZoomStrength = 0.0;
+            hudCamBopStrength = 0.0;
 
             var opp:Character = getOpponent("overseer-99");
             opp.visible = false;
@@ -299,9 +299,9 @@ class OverseerL extends PlayState
 
             gameCameraZoom = 1.2;
 
-            gameCamZoomStrength = 0.06;
+            gameCamBopStrength = 0.06;
 
-            hudCamZoomStrength = 0.03;
+            hudCamBopStrength = 0.03;
             
             tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadOut});
 

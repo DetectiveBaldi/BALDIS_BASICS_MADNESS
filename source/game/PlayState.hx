@@ -146,16 +146,20 @@ class PlayState extends CustomState
 
     public var cameraPoint:FlxObject;
 
+    /**
+     * Simplistic representation of what the camera is viewing. Values include "POINT" and "CHARACTER".
+     */
     public var cameraTarget:String;
 
     /**
-     * A more specific form of `cameraTarget`.
+     * A more specific version `cameraTarget` that explicitly refers to the type of character the camera is viewing.
+     * Values include "SPECTATOR", "OPPONENT", "PLAYER".
      */
     public var cameraCharTarget:String;
 
     public var cameraLock:CameraLockMode;
 
-    public var gameCamZoomStrength:Float;
+    public var gameCamBopStrength:Float;
 
     public var gameCameraZoom:Float;
 
@@ -164,7 +168,7 @@ class PlayState extends CustomState
      */
     public var hudCamera:FlxCamera;
 
-    public var hudCamZoomStrength:Float;
+    public var hudCamBopStrength:Float;
 
     /**
      * Elements such as the pause menu and other sub states are drawn on this camera.
@@ -256,11 +260,11 @@ class PlayState extends CustomState
 
         cameraLock = DEFAULT;
 
-        gameCamZoomStrength = 0.035;
+        gameCamBopStrength = 0.035;
 
         gameCameraZoom = gameCamera.zoom;
 
-        hudCamZoomStrength = 0.015;
+        hudCamBopStrength = 0.015;
 
         loadChart();
 
@@ -417,9 +421,9 @@ class PlayState extends CustomState
     {
         super.measureHit(measure);
 
-        gameCamera.zoom += gameCamZoomStrength;
+        gameCamera.zoom += gameCamBopStrength;
 
-        hudCamera.zoom += hudCamZoomStrength;
+        hudCamera.zoom += hudCamBopStrength;
     }
 
     public function loadChart():Void
@@ -611,23 +615,36 @@ class PlayState extends CustomState
             healthBar.playerIcon.loadFromFile(character.config.healthIcon);
     }
 
+    public function getStartingCamFocusEvent():EventSchema
+    {
+        return chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
+    }
+
     public function setCamStartPos():Void
     {
-        var ev:EventSchema = chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
+        var ev:EventSchema = getStartingCamFocusEvent();
+
+        // I don't know why you wouldn't have atleast one of these, but who knows?
+        if (ev == null)
+            return;
 
         SetCamFocusEvent.dispatch(this, ev.value.x, ev.value.y, ev.value.charType, 0.0, "linear");
 
         gameCamera.snapToTarget();
     }
 
+    // TODO: Sometimes returns incorrect values, maybe?
     public function getCameraTarget(timeToCheck:Float):String
     {
-        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && e.time < timeToCheck);
+        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && e.time <= timeToCheck);
 
         if (ev == null)
-            ev = chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
+            ev = getStartingCamFocusEvent();
 
-        return ev.value.charType == null ? "POINT" : ev.value.charType.toUpperCase();
+        if (ev.value.charType == null)
+            return "POINT";
+        else
+            return ev.value.charType.toUpperCase();
     }
 
     public function updateCameraTarget(timeToCheck:Float):Void

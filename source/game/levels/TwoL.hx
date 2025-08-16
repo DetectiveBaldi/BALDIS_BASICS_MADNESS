@@ -31,9 +31,9 @@ class TwoL extends PlayState
 
         canPause = false;
 
-        gameCamZoomStrength = 0.0;
+        gameCamBopStrength = 0.0;
 
-        hudCamZoomStrength = 0.0;
+        hudCamBopStrength = 0.0;
 
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
         oppStrumline.strums.alpha = 0.25;

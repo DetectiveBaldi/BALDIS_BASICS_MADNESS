@@ -49,7 +49,7 @@ class UncanonL extends PlayState
 
         gameCameraZoom = 0.3;
 
-        gameCamZoomStrength = 0.0;
+        gameCamBopStrength = 0.0;
 
         gameCamera.snapToTarget();
 
@@ -75,7 +75,7 @@ class UncanonL extends PlayState
 
             gameCameraZoom = 0.65;
 
-            gameCamZoomStrength = 0.035;
+            gameCamBopStrength = 0.035;
 
             gameCamera.snapToTarget();
 
