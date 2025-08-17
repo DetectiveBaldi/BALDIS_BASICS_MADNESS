@@ -30,9 +30,9 @@
 		{
 			"sectionNotes": [],
 			"sectionBeats": 4,
-			"changeBPM": false,
 			"mustHitSection": false,
-			"bpm": 160
+			"bpm": 160,
+			"changeBPM": false
 		},
 		{
 			"sectionNotes": [],
@@ -458,7 +458,7 @@
 			"sectionNotes": [],
 			"gfSection": false,
 			"altAnim": false,
-			"mustHitSection": false,
+			"mustHitSection": true,
 			"changeBPM": false,
 			"bpm": 216
 		},
@@ -548,7 +548,7 @@
 			],
 			"gfSection": false,
 			"altAnim": false,
-			"mustHitSection": false,
+			"mustHitSection": true,
 			"changeBPM": false,
 			"bpm": 216
 		},
@@ -557,7 +557,7 @@
 			"sectionNotes": [],
 			"gfSection": false,
 			"altAnim": false,
-			"mustHitSection": false,
+			"mustHitSection": true,
 			"changeBPM": false,
 			"bpm": 216
 		},
@@ -566,7 +566,7 @@
 			"sectionNotes": [],
 			"gfSection": false,
 			"altAnim": false,
-			"mustHitSection": false,
+			"mustHitSection": true,
 			"changeBPM": false,
 			"bpm": 216
 		},
@@ -575,7 +575,7 @@
 			"sectionNotes": [],
 			"gfSection": false,
 			"altAnim": false,
-			"mustHitSection": false,
+			"mustHitSection": true,
 			"changeBPM": false,
 			"bpm": 216
 		},
@@ -1472,9 +1472,9 @@
 	"gfVersion": "",
 	"events": [],
 	"song": "Literature",
-	"validScore": true,
 	"stage": "stage",
 	"needsVoices": true,
+	"validScore": true,
 	"speed": 2.8,
 	"bpm": 216,
 	"format": "psych_v1_convert"

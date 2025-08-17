@@ -12,6 +12,8 @@ class LiteratureS extends Stage
 
     public var classroom:FlxSprite;
 
+    public var chairs:FlxSprite;
+
     public var sky:FlxSprite;
 
     public var clouds:FlxBackdrop;
@@ -20,14 +22,18 @@ class LiteratureS extends Stage
     {
         super();
     
-        hall0 = getSprite("baldina-hall0");
-
-        hall1 = getSprite("baldina-hall1");
-
-        classroom = getSprite("baldina-classroom");
+        hall0 = getSprite("baldina-hall0", 2, 2);
 
         sky = getSprite("baldina-sky");
 
         clouds = getBackdrop("baldina-clouds");
+
+        clouds.active = true;
+
+        hall1 = getSprite("baldina-hall1", 2, 2);
+
+        classroom = getSprite("baldina-classroom", 2, 2);
+
+        chairs = getSprite("baldina-classroom-chair", 2, 2);
     }
 }

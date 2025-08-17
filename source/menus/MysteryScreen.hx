@@ -102,7 +102,7 @@ class MysteryScreen extends CustomState
 
         add(questionMarks);
 
-        for (i in 0 ... 24)
+        for (i in 0 ... 16)
             spawnQuestionMark();
 
         exitButton = new FlxSprite();
@@ -165,7 +165,7 @@ class MysteryScreen extends CustomState
 
         startButton.updateHitbox();
 
-        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 270.0);
+        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 275.0);
 
         add(startButton);
 
@@ -183,7 +183,7 @@ class MysteryScreen extends CustomState
 
         infoText.textField.sharpness = 400.0;
 
-        infoText.setPosition(FlxG.width - infoText.width - 165.0, infoText.getCenterY(exitButton));
+        infoText.setPosition(FlxG.width - infoText.width - 165.0, infoText.getCenterY(exitButton) - 15.0);
 
         add(infoText);
 
