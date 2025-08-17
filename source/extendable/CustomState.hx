@@ -64,6 +64,28 @@ class CustomState extends FlxState
         cancelFadeOut = false;
     }
 
+    override function openSubState(newSubState:FlxSubState):Void
+    {
+        super.openSubState(newSubState);
+
+        var typeOf:Class<FlxSubState> = Type.getClass(newSubState);
+
+        // If the sub state trying to open ISN'T of type `CustomTransition`, proceed.
+        if (typeOf != CustomTransition)
+        {
+            // Get type of current sub state.
+            typeOf = Type.getClass(subState);
+
+            /**
+             * We set `persistentUpdate` to false here because Flixel has internally already closed the `CustomTransition`
+             * sub state, but it hasn't (and won't) dispatched the sub state's `close` method, which WOULD set this to false.
+             * Therefore, we have to do it ourselves here.
+             */
+            if (typeOf == CustomTransition)
+                persistentUpdate = false;
+        }
+    }
+
     override function startOutro(onOutroComplete:()->Void):Void
     {
         if (cancelFadeIn)

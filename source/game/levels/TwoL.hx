@@ -206,7 +206,7 @@ class TwoL extends PlayState
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
-        if (nextStateClass != null)
+        if (nextStateClass != TitleScreen)
         {
             CustomState.cancelFadeIn = true;
 

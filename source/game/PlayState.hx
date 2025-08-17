@@ -683,8 +683,6 @@ class PlayState extends CustomState
 
     public function pause():Void
     {
-        persistentUpdate = false;
-
         openSubState(new PauseScreen(this));
 
         pauseMusic();
@@ -700,8 +698,6 @@ class PlayState extends CustomState
         #if debug
         return;
         #end
-
-        persistentUpdate = false;
         
         persistentDraw = false;
 

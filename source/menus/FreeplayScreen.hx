@@ -493,7 +493,7 @@ class InfoButtonSubState extends FlxSubState
 
         add(gradeText);
 
-        clipboard.animation.onFinish.addOnce((name:String) -> setUIVisible(true));
+        clipboard.animation.onFinish.add((name:String) -> setUIVisible(true));
 
         clipboard.animation.play("flip");
     }
@@ -508,13 +508,16 @@ class InfoButtonSubState extends FlxSubState
 
             if (FlxG.mouse.justReleased)
             {
-                clipboard.animation.onFinish.removeAll();
+                if (clipboard.animation.finished)
+                {
+                    clipboard.animation.onFinish.removeAll();
 
-                clipboard.animation.play("flip", false, true);
+                    clipboard.animation.play("flip", false, true);
 
-                clipboard.animation.onFinish.add((name:String) -> close());
+                    clipboard.animation.onFinish.add((name:String) -> close());
 
-                setUIVisible(false);
+                    setUIVisible(false);
+                }
             }
         }
         else
