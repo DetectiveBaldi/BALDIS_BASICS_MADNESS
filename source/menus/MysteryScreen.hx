@@ -89,22 +89,12 @@ class MysteryScreen extends CustomState
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         levels = new Array<LevelData>();
-
-        for (i in 0 ... WeekData.list.length)
-        {
-            var week:WeekData = WeekData.list[i];
-
-            if (week.showInFreeplayMenu)
-                continue;
-
-            levels = levels.concat(WeekData.list[i].levels);
-        }
     
         for (i in 0 ... LevelData.list.length)
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.showInFreeplayMenu)
+            if (!level.showInMysteryMenu)
                 continue;
 
             levels.push(level);

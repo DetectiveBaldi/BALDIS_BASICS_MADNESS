@@ -2,7 +2,6 @@ package data;
 
 using util.ArrayUtil;
 
-// TODO: Remove portraits of songs with `showInFreeplayMenu` set to false.
 class Playlist
 {
     public static function init():Void
@@ -35,29 +34,8 @@ class Playlist
         // Rough Escape
         LevelData.list.push({week : null, name: "Rough Escape"});
 
-        // Beginnings
-        var level:LevelData = {week: null, name: "Beginnings"}
-
-        level.showInFreeplayMenu = false;
-
-        LevelData.list.push(level);
-
-        // Uncanon
-        var level:LevelData = {week: null, name: "Uncanon"}
-
-        level.showInFreeplayMenu = false;
-
-        LevelData.list.push(level);
-
-        // Overseer
-        var level:LevelData = {week: null, name: "Overseer"}
-
-        level.showInFreeplayMenu = false;
-
-        LevelData.list.push(level);
-
         // Scribble
-        level = {week: null, name: "Scribble"}
+        var level:LevelData = {week: null, name: "Scribble"}
 
         LevelData.list.push(level);
 
@@ -71,10 +49,31 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Beginnings
+        level = {week: null, name: "Beginnings"}
+
+        level.showInFreeplayMenu = false;
+
+        LevelData.list.push(level);
+
+        // Uncanon
+        var level:LevelData = {week: null, name: "Uncanon"}
+
+        level.showInMysteryMenu = true;
+
+        LevelData.list.push(level);
+
         // Two
         level = {week: null, name: "Two"}
 
-        level.showInFreeplayMenu = false;
+        level.showInMysteryMenu = true;
+
+        LevelData.list.push(level);
+
+        // Overseer
+        var level:LevelData = {week: null, name: "Overseer"}
+
+        level.showInMysteryMenu = true;
 
         LevelData.list.push(level);
     }

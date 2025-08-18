@@ -11,6 +11,8 @@ class LevelData
 
     public var showInFreeplayMenu:Bool;
 
+    public var showInMysteryMenu:Bool;
+
     public function new(week:WeekData, name:String):Void
     {
         this.week = week;
@@ -18,6 +20,8 @@ class LevelData
         this.name = name;
 
         showInFreeplayMenu = true;
+
+        showInMysteryMenu = false;
     }
 
     public function getClassFile():String

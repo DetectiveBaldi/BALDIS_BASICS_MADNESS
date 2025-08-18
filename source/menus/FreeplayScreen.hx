@@ -81,10 +81,8 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            #if !debug
-            if (!level.showInFreeplayMenu)
+            if (!level.showInFreeplayMenu || level.showInMysteryMenu)
                 continue;
-            #end
 
             levels.push(level);
         }
