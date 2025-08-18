@@ -248,6 +248,12 @@ class PlayState extends CustomState
 
         super.create();
 
+        FlxG.watch.add(conductor, "step", "Step");
+
+        FlxG.watch.add(conductor, "beat", "Beat");
+
+        FlxG.watch.add(conductor, "measure", "Measure");
+
         cameraPoint = new FlxObject();
 
         add(cameraPoint);
@@ -304,6 +310,12 @@ class PlayState extends CustomState
         playField.camera = hudCamera;
 
         add(playField);
+
+        FlxG.watch.add(playField.playStats, "score", "Score");
+
+        FlxG.watch.add(playField.playStats, "misses", "Misses");
+
+        FlxG.watch.add(playField.playStats, "accuracy", "Accuracy%");
 
         var healthBar:HealthBar = playField.healthBar;
 

@@ -39,6 +39,7 @@ import music.Conductor;
 using util.MathUtil;
 using util.StringUtil;
 
+// TODO: Have sustain drops add misses.
 class PlayField extends FlxGroup
 {
     public var tween:FlxTweenManager;

@@ -52,12 +52,7 @@ class PlaymateL extends PlayState
 
         opponent.setPosition(-1500.0, 190.0);
 
-        black = new FlxSprite();
-
-        black.color = 0x000000;
-        gameCamera.color = 0x000000;
-
-        add(black);
+        gameCamera.color = FlxColor.BLACK;
 
         playField.visible = false;
     }
@@ -68,8 +63,9 @@ class PlaymateL extends PlayState
 
         if (step == 0)
         {
-            tween.color(black, conductor.beatLength * 32.0 * 0.001, black.color, 0xFFFFFFFF,
-                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = black.color;}});
+            gameCamera.color = FlxColor.WHITE;
+
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 32.0 * 0.001, true);
         }
 
         if (step == 128)
@@ -93,7 +89,7 @@ class PlaymateL extends PlayState
 
             playField.visible = true;
 
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.65;
         }
 
         if (step == 392 || step == 520 || step == 648 || step == 1304)
