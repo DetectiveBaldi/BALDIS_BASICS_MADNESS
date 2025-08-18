@@ -65,6 +65,11 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Mishap
+        level = {week: null, name: "Mishap"}
+
+        LevelData.list.push(level);
+
         // Beginnings
         level = {week: null, name: "Beginnings"}
 
