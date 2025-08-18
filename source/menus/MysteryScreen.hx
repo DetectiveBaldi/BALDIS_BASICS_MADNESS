@@ -56,6 +56,8 @@ class MysteryScreen extends CustomState
 
     public var door:FlxSprite;
 
+    public var lock:FlxSprite;
+
     public var nameText:FlxText;
 
     public var needHintText:MenuText;
@@ -109,6 +111,8 @@ class MysteryScreen extends CustomState
 
         door = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/MysteryScreen/door-idle"));
 
+        door.active = false;
+
         door.scale.set(1.75, 1.75);
 
         door.updateHitbox();
@@ -116,6 +120,20 @@ class MysteryScreen extends CustomState
         door.screenCenter();
 
         add(door);
+
+        lock = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/swinging-door-lock"));
+
+        lock.active = false;
+
+        lock.visible = false;
+
+        lock.scale.set(3.5, 3.5);
+
+        lock.updateHitbox();
+
+        lock.setPosition(lock.getCenterX(), lock.getCenterY() - 35.0);
+
+        add(lock);
 
         nameText = new FlxText(0.0, 0.0, door.width);
 
@@ -147,7 +165,7 @@ class MysteryScreen extends CustomState
 
         add(needHintText);
 
-        hintTimer = 0.0;
+        hintTimer = -1.0;
 
         startButton = new FlxSprite();
 
@@ -386,6 +404,8 @@ class MysteryScreen extends CustomState
 
         fadeOutUI();
 
+        needHintText.kill();
+
         hintTimer = -1.0;
 
         new FlxTimer(timer).start(1.5, (_:FlxTimer) ->
@@ -442,29 +462,32 @@ class MysteryScreen extends CustomState
 
     public function changeSelection(change:Int):Void
     {
-        needHintText.kill();
-
-        hintTimer = 0.0;
-        
         curSelected = FlxMath.wrap(curSelected + change, 0, levels.length - 1);
 
-        updateNameText(levels[curSelected]);
-    }
+        var level:LevelData = levels[curSelected];
 
-    public function updateNameText(level:LevelData):Void
-    {
-        var name:String = level.name;
+        nameText.text = level.name;
+
+        var score:Int = HighScore.getLevelScore(level.name, "normal").score;
 
         #if !debug
-        if (HighScore.getLevelScore(name, "normal").score == 0.0)
-        {
-            nameText.text = "...";
+        lock.visible = score == 0.0;
 
-            return;
-        }
+        nameText.visible = score != 0.0; 
         #end
 
-        nameText.text = name;
+        needHintText.kill();
+
+        if (score == 0.0)
+        {
+            #if !debug
+            hintTimer = 0.0;
+
+            FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
+            #end
+        }
+        else
+            FlxG.sound.play(AssetCache.getSound("shared/door-unlock"));
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
@@ -483,13 +506,13 @@ class HintScreen extends CustomSubState
 {
     public static var hintTable:Map<String, String> =
     [
-        "Beginnings" => "'THIS IS WHERE IT ALL BEGAN'",
+        "Beginnings" => "\"THIS IS WHERE IT ALL BEGAN\"",
 
         "Uncanon" => "It's not canon. He is certainly\nnot canon.",
 
-        "Overseer" => "'Game over!'",
+        "Overseer" => "\"Game over!\"",
 
-        "Two" => "'Welcome 2 Baldi's...'"
+        "Two" => "\"Welcome 2 Baldi's...\""
     ];
 
     public var name:String;
