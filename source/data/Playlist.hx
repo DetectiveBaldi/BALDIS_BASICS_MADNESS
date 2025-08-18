@@ -7,7 +7,7 @@ class Playlist
     public static function init():Void
     {
         // Baldi
-        var week:WeekData = {name: "Baldi", nameSuffix: "'s Week", description: ""}
+        var week:WeekData = {name: "Baldi", nameSuffix: " Style", description: ""}
 
         week.description += 'You get a very suspicious note from your friend, asking you to get their "noteboos" ';
 
@@ -16,6 +16,22 @@ class Playlist
         week.levels.pushMany({week: week, name: "Warm Welcome"}, {week: week, name: "Revision"}, 
             {week: week, name: "Gain Ground"});
         
+        WeekData.list.push(week);
+
+        // Classic
+
+        week = {name: "Classic", nameSuffix: " Style", description: ""}
+
+        week.description += 'While you try to avoid Baldi, his friends come in play and ';
+        
+        week.description += "try to stop you from your objective! Be careful, you don't wanna get caught...";
+
+        week.levels.pushMany({week: week, name: "Playmate"}, {week: week, name: "Walls"},
+        {week: week, name: "Literature"}, {week: week, name: "Scribble"}, {week: week, name: "Warm Welcome"}, 
+        {week: week, name: "Lookalike"}, {week: week, name: "Rough Escape"});
+
+        week.hasTvPortrait = true;
+
         WeekData.list.push(week);
 
         // Bladder
@@ -52,7 +68,7 @@ class Playlist
         // Beginnings
         level = {week: null, name: "Beginnings"}
 
-        level.showInFreeplayMenu = false;
+        level.showInMysteryMenu = true;
 
         LevelData.list.push(level);
 

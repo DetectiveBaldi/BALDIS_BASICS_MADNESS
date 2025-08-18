@@ -483,13 +483,13 @@ class HintScreen extends CustomSubState
 {
     public static var hintTable:Map<String, String> =
     [
-        "Beginnings" => "This is the hint for Beginnings.",
+        "Beginnings" => "'THIS IS WHERE IT ALL BEGAN'",
 
-        "Uncanon" => "This is the hint for Uncanon.",
+        "Uncanon" => "It's not canon. He is certainly\nnot canon.",
 
-        "Overseer" => "This is the hint for Overseer.",
+        "Overseer" => "'Game over!'",
 
-        "Two" => "This is the hint for Two."
+        "Two" => "'Welcome 2 Baldi's...'"
     ];
 
     public var name:String;

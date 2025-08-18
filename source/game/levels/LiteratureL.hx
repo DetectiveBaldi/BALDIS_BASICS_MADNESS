@@ -77,6 +77,8 @@ class LiteratureL extends PlayState
         {
             opponent.skipDance = false;
 
+            tween.tween(opponent, {x: 600.0, y: -120.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quadIn});
+
             tween.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
         }
 
@@ -172,6 +174,8 @@ class LiteratureL extends PlayState
         if (step == 888)
         {
             tween.tween(opponent, {x: 650.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            opponent.animation.play("talk");
         }
 
         if (step == 904)
@@ -199,25 +203,24 @@ class LiteratureL extends PlayState
         if (step == 1416)
             FlxG.camera.visible = false;
 
-        if (step == 1463)
+        if (step == 1464)
         {
             FlxG.camera.visible = true;
             
-            var opp:Character = getOpponent("baldina-angry");
-            opp.visible = false;
+            opponent.visible = false;
 
-            var opp:Character = getOpponent("baldina-happy");
-            opp.visible = true;
+            player.visible = false;
+
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-dance"));
+            opp.scale.set(1.5, 1.5);
+            opponents.add(opp);
             opponent = opp;
-
-            opponent.setPosition(-300.0, -100.0);
-
-            var plr:Character = getPlayer("bf-baldina-flipped");
-            plr.visible = false;
 
             var plr:Character = getPlayer("bf-baldina");
             plr.visible = true;
             player = plr;
+
+            opponent.setPosition(-200.0, -100.0);
 
             player.setPosition(515.0, 180.0);
 
@@ -249,20 +252,20 @@ class LiteratureL extends PlayState
         if (step == 1592)
             gameCameraZoom += 0.1;
 
-        if (step == 1710)
+        if (step == 1712)
             gameCameraZoom = 0.7;
 
-        if (step == 1714)
+        if (step == 1716)
         {
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
             gameCameraZoom = 0.8;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            player.animation.play("hey");
+            player.animation.play("ay");
             player.skipDance = true;
         }
     }

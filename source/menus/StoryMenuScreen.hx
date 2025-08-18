@@ -100,7 +100,7 @@ class StoryMenuScreen extends CustomState
 
         clipboard.updateHitbox();
 
-        clipboard.setPosition(195.0, FlxG.height - clipboard.height * 0.75);
+        clipboard.setPosition(195.0, FlxG.height - clipboard.height * 0.75 - 40.0);
 
         add(clipboard);
 

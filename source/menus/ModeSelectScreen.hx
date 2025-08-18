@@ -122,7 +122,9 @@ class ModeSelectScreen extends CustomState
 
         text = "Dig and discover the secrets";
 
-        text += "\nof Here School...";
+        text += "\nthat lie within";
+
+        text += "\nHere School...";
 
         var mysteryIcon:ModeSelectIcon = createIcon("mystery-icon", "Mystery Mode", text, () -> FlxG.switchState(() -> 
             new MysteryScreen()));
