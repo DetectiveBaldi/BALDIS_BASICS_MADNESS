@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 
+import flixel.effects.FlxFlicker;
+
 import flixel.graphics.frames.FlxAtlasFrames;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -15,9 +17,13 @@ import flixel.sound.FlxSound;
 
 import flixel.text.FlxText;
 
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
+import flixel.util.FlxTimer;
 
 import core.AssetCache;
 import core.Paths;
@@ -27,40 +33,46 @@ import data.PlayStats;
 import data.WeekData;
 
 import extendable.CustomState;
+import extendable.CustomSubState;
 
 import game.HighScore;
 import game.PlayState;
-import menus.FreeplayScreen.InfoButtonSubState;
 
 import ui.HeightenedButton;
 import ui.OrientedButton;
+import ui.MenuText;
 
 using flixel.util.FlxColorTransformUtil;
 
 using util.MathUtil;
 using util.StringUtil;
 
+// TODO: Maybe adjust naming and general code clean-up.
 class MysteryScreen extends CustomState
 {
-    public var level:LevelData;
-
     public var levels:Array<LevelData>;
 
     public var questionMarks:FlxTypedGroup<FlxSprite>;
 
-    public var exitButton:FlxSprite;
-
-    public var startButton:FlxSprite;
-
-    public var songText:FlxText;
-
-    public var infoText:FlxText;
-
     public var door:FlxSprite;
 
-    public var tune:FlxSound;
+    public var nameText:FlxText;
 
-    public var mark:FlxSprite;
+    public var needHintText:MenuText;
+
+    public var hintTimer:Float;
+
+    public var startButton:FlxSprite;    
+
+    public var infoText:MenuText;
+
+    public var leftButton:OrientedButton;
+
+    public var rightButton:OrientedButton;
+
+    public var exitButton:FlxSprite;
+
+    public var tune:FlxSound;
 
     public static var curSelected:Int = 0;
 
@@ -105,6 +117,84 @@ class MysteryScreen extends CustomState
         for (i in 0 ... 16)
             spawnQuestionMark();
 
+        door = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/MysteryScreen/door-idle"));
+
+        door.scale.set(1.75, 1.75);
+
+        door.updateHitbox();
+
+        door.screenCenter();
+
+        add(door);
+
+        nameText = new FlxText(0.0, 0.0, door.width);
+
+        nameText.color = FlxColor.BLACK;
+
+        nameText.size = 28;
+
+        nameText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        nameText.alignment = CENTER;
+
+        nameText.textField.antiAliasType = ADVANCED;
+
+        nameText.textField.sharpness = 400.0;
+
+        nameText.setPosition(door.getCenterX(), 258.5);
+
+        add(nameText);
+
+        needHintText = new MenuText(0.0, 0.0, "Need a hint?");
+
+        needHintText.size = 36;
+
+        needHintText.onClick.add(clickNeedHintButton);
+
+        needHintText.setPosition(needHintText.getCenterX(), door.y - 50.0);
+
+        needHintText.kill();
+
+        add(needHintText);
+
+        hintTimer = 0.0;
+
+        startButton = new FlxSprite();
+
+        startButton.loadGraphic(AssetCache.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
+
+        startButton.animation.add("deselect", [0], 0.0, false);
+
+        startButton.animation.add("select", [1], 0.0, false);
+
+        startButton.scale.set(1.25, 1.25);
+
+        startButton.updateHitbox();
+
+        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 275.0);
+
+        add(startButton);
+
+        infoText = new MenuText(0.0, 0.0, "Info");
+
+        infoText.size = 32;
+
+        infoText.onClick.add(clickInfoButton);
+
+        infoText.setPosition(FlxG.width - infoText.width - 165.0, 5.0);
+
+        add(infoText);
+
+        leftButton = addOrientedButton(LEFT, clickLeftButton);
+
+        leftButton.setPosition(leftButton.getCenterX() - 150.0, leftButton.getCenterY());
+
+        rightButton = addOrientedButton(RIGHT, clickRightButton);
+
+        rightButton.setPosition(rightButton.getCenterX() + 150.0, rightButton.getCenterY());
+
+        changeSelection(0);
+
         exitButton = new FlxSprite();
 
         exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
@@ -123,81 +213,7 @@ class MysteryScreen extends CustomState
 
         add(exitButton);
 
-        door = new FlxSprite();
-
-        door.loadGraphic(AssetCache.getGraphic("menus/MysteryScreen/door-idle"), true, 256, 225);
-
-        door.scale.set(1.75, 1.75);
-
-        door.updateHitbox();
-
-        door.screenCenter();
-
-        add(door);
-
-        songText = new FlxText(0.0, 0.0, door.width);
-
-        songText.color = FlxColor.BLACK;
-
-        songText.size = 28;
-
-        songText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        songText.alignment = CENTER;
-
-        songText.textField.antiAliasType = ADVANCED;
-
-        songText.textField.sharpness = 400.0;
-
-        songText.setPosition(door.getCenterX(), 255.0);
-
-        add(songText);
-
-        startButton = new FlxSprite();
-
-        startButton.loadGraphic(AssetCache.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
-
-        startButton.animation.add("deselect", [0], 0.0, false);
-
-        startButton.animation.add("select", [1], 0.0, false);
-
-        startButton.scale.set(1.25, 1.25);
-
-        startButton.updateHitbox();
-
-        startButton.setPosition(door.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 275.0);
-
-        add(startButton);
-
-        infoText = new FlxText(0.0, 0.0, 0.0, "Info");
-
-        infoText.color = FlxColor.WHITE;
-
-        infoText.size = 32;
-
-        infoText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        infoText.alignment = CENTER;
-
-        infoText.textField.antiAliasType = ADVANCED;
-
-        infoText.textField.sharpness = 400.0;
-
-        infoText.setPosition(FlxG.width - infoText.width - 165.0, infoText.getCenterY(exitButton) - 15.0);
-
-        add(infoText);
-
-        var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
-
-        leftButton.setPosition(leftButton.getCenterX() - 150.0, leftButton.getCenterY());
-
-        var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
-
-        rightButton.setPosition(rightButton.getCenterX() + 150.0, rightButton.getCenterY());
-
-        changeSelection(0);
-
-        tune = FlxG.sound.load(AssetCache.getMusic("menus/MysteryScreen/mystery"), 1.0, true);
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/MysteryScreen/tune"), 1.0, true);
 
         tune.play();
     }
@@ -227,9 +243,9 @@ class MysteryScreen extends CustomState
                 if (FlxG.random.bool())
                     direction *= -1;
 
-                mark.velocity.x += FlxG.random.int(0, 5) * direction;
+                mark.velocity.x += FlxG.random.int(2, 10) * direction;
 
-                // Hopefully fixes issue where question marks get stuck on an edge?
+                // Hopefully fixes an issue where question marks get stuck on an edge?
                 if (mark.x <= left)
                     mark.x = left + 1;
                 else
@@ -245,9 +261,9 @@ class MysteryScreen extends CustomState
                 if (FlxG.random.bool())
                     direction *= -1;
 
-                mark.velocity.y += FlxG.random.int(0, 5) * direction;
+                mark.velocity.y += FlxG.random.int(2, 10) * direction;
 
-                // Hopefully fixes issue where question marks get stuck on an edge?
+                // Hopefully fixes an issue where question marks get stuck on an edge?
                 if (mark.y <= top)
                     mark.y = top + 1;
                 else
@@ -255,15 +271,20 @@ class MysteryScreen extends CustomState
             }
         }
 
-        if (FlxG.mouse.overlaps(exitButton, camera))
+        if (#if debug true #else HighScore.getLevelScore(levels[curSelected].name, "normal").score == 0.0 #end
+            && hintTimer != -1.0)
         {
-            exitButton.animation.play("1");
+            hintTimer += elapsed;
 
-            if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new ModeSelectScreen());
+            if (hintTimer >= 5.0)
+            {
+                needHintText.revive();
+
+                hintTimer = -1.0;
+
+                FlxG.sound.play(AssetCache.getSound("shared/notebook-respawn"), 0.75);
+            }
         }
-        else
-            exitButton.animation.play("0");
 
         if (FlxG.mouse.overlaps(startButton, camera))
         {
@@ -274,22 +295,16 @@ class MysteryScreen extends CustomState
         }
         else
             startButton.animation.play("deselect");
-        
-        if (FlxG.mouse.overlaps(infoText, camera))
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
         {
-            infoText.color = 0xFF00FF00;
-            
-            infoText.underline = true;
+            exitButton.animation.play("1");
 
             if (FlxG.mouse.justReleased)
-                clickInfoButton();
+                FlxG.switchState(() -> new ModeSelectScreen());
         }
         else
-        {
-            infoText.color = FlxColor.WHITE;
-
-            infoText.underline = false;
-        }
+            exitButton.animation.play("0");
     }
 
     override function destroy():Void
@@ -301,7 +316,7 @@ class MysteryScreen extends CustomState
 
     public function spawnQuestionMark():Void
     {
-        mark = new FlxSprite();
+        var mark:FlxSprite = new FlxSprite();
 
         mark.loadGraphic(AssetCache.getGraphic('menus/MysteryScreen/questionMarks/qMark${FlxG.random.int(0, 7)}'), true, 32, 32);
 
@@ -336,6 +351,36 @@ class MysteryScreen extends CustomState
         questionMarks.add(mark);
     }
 
+    public function fadeOutUI():Void
+    {
+        tween.tween(startButton, {alpha: 0.0}, 0.35);
+
+        tween.tween(infoText, {alpha: 0.0}, 0.35);
+
+        tween.tween(leftButton, {alpha: 0.0}, 0.35);
+
+        tween.tween(rightButton, {alpha: 0.0}, 0.35);
+
+        tween.tween(exitButton, {alpha: 0.0}, 0.35);
+    }
+
+    public function clickNeedHintButton():Void
+    {
+        needHintText.kill();
+
+        openSubState(new HintScreen(levels[curSelected].name));
+    }
+
+    public function clickInfoButton():Void
+    {
+        var level:LevelData = levels[curSelected];
+
+        if (#if debug false && #end HighScore.getLevelScore(level.name, "normal").score == 0.0)
+            return;
+
+        openSubState(new LevelInfoScreen(levels[curSelected]));
+    }
+
     public function clickStartButton():Void
     {
         var level:LevelData = levels[curSelected];
@@ -345,7 +390,54 @@ class MysteryScreen extends CustomState
             return;
         #end
 
-        PlayState.loadLevel(levels[curSelected], () -> new MysteryScreen());
+        FlxG.mouse.enabled = false;
+
+        FlxG.mouse.visible = false;
+
+        fadeOutUI();
+
+        hintTimer = -1.0;
+
+        new FlxTimer(timer).start(1.5, (_:FlxTimer) ->
+        {
+            var doorOpen:FlxSprite = new FlxSprite();
+
+            doorOpen.loadGraphic(AssetCache.getGraphic("menus/MysteryScreen/door-open"), true, 256, 256);
+
+            doorOpen.animation.add("noise", [0, 1], 24.0);
+
+            doorOpen.animation.play("noise");
+
+            doorOpen.scale.set(1.75, 1.75);
+
+            doorOpen.updateHitbox();
+
+            doorOpen.screenCenter();
+
+            add(doorOpen);
+
+            FlxG.sound.play(AssetCache.getSound("shared/door-open"));
+
+            var noiseSnd:FlxSound = FlxG.sound.play(AssetCache.getSound("shared/static-noise"), 0.15, true);
+
+            new FlxTimer(timer).start(1.0, (_:FlxTimer) ->
+            {
+                tween.num(0.15, 0.35, 1.0, {ease: FlxEase.expoIn}, (num:Float) -> {noiseSnd.volume = num;});
+
+                tween.tween(camera, {zoom: 1.65}, 1.0, {ease: FlxEase.expoIn, onComplete: (_:FlxTween) ->
+                {
+                    FlxG.camera.visible = false;
+
+                    FlxG.mouse.enabled = true;
+
+                    tune.stop();
+
+                    noiseSnd.stop();
+
+                    PlayState.loadLevel(levels[curSelected], () -> new MysteryScreen());
+                }});
+            });
+        });
     }
 
     public function clickLeftButton():Void
@@ -358,41 +450,31 @@ class MysteryScreen extends CustomState
         changeSelection(1);
     }
 
-    public function clickInfoButton():Void
-    {
-        var level:LevelData = levels[curSelected];
-
-        if (#if debug false && #end HighScore.getLevelScore(level.name, "normal").score == 0.0)
-            return;
-
-        openSubState(new InfoButtonSubState(levels[curSelected]));
-    }
-
     public function changeSelection(change:Int):Void
     {
+        needHintText.kill();
+
+        hintTimer = 0.0;
+        
         curSelected = FlxMath.wrap(curSelected + change, 0, levels.length - 1);
 
-        var level:LevelData = levels[curSelected];
-
-        updateText(level);
-
-        var week:WeekData = level.week;
+        updateNameText(levels[curSelected]);
     }
 
-    public function updateText(level:LevelData):Void
+    public function updateNameText(level:LevelData):Void
     {
         var name:String = level.name;
 
         #if !debug
         if (HighScore.getLevelScore(name, "normal").score == 0.0)
         {
-            songText.text = "";
+            nameText.text = "...";
 
             return;
         }
         #end
 
-        songText.text = '${name}';
+        nameText.text = name;
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
@@ -404,5 +486,131 @@ class MysteryScreen extends CustomState
         add(button);
 
         return button;
+    }
+}
+
+class HintScreen extends CustomSubState
+{
+    public static var hintTable:Map<String, String> =
+    [
+        "Beginnings" => "This is the hint for Beginnings.",
+
+        "Uncanon" => "This is the hint for Uncanon.",
+
+        "Overseer" => "This is the hint for Overseer.",
+
+        "Two" => "This is the hint for Two."
+    ];
+
+    public var name:String;
+
+    public var thumbsUp:FlxSprite;
+
+    public var hintText:FlxText;
+
+    public var exitButton:FlxSprite;
+
+    public function new(name:String):Void
+    {
+        super();
+
+        this.name = name;
+    }
+
+    override function create():Void
+    {
+        super.create();
+
+        thumbsUp = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/baldi-thumbs-up"));
+
+        thumbsUp.scale.set(2.0, 2.0);
+
+        thumbsUp.updateHitbox();
+
+        thumbsUp.setPosition(thumbsUp.getCenterX(), FlxG.height);
+
+        tween.tween(thumbsUp, {y: 0.0}, 0.5);
+
+        add(thumbsUp);
+
+        hintText = new FlxText(0.0, 0.0, thumbsUp.width, hintTable[name]);
+
+        hintText.visible = false;
+
+        hintText.color = FlxColor.BLACK;
+
+        hintText.size = 44;
+
+        hintText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        hintText.alignment = CENTER;
+
+        hintText.textField.antiAliasType = ADVANCED;
+
+        hintText.textField.sharpness = 400.0;
+
+        hintText.setPosition(hintText.getCenterX(), 25.0);
+
+        add(hintText);
+
+        exitButton = new FlxSprite();
+
+        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+
+        exitButton.animation.add("0", [0], 0.0, false);
+
+        exitButton.animation.add("1", [1], 0.0, false);
+
+        exitButton.animation.play("0");
+
+        exitButton.scale.set(2.0, 2.0);
+
+        exitButton.updateHitbox();
+
+        exitButton.setPosition(165.0, 5.0);
+
+        add(exitButton);
+
+        new FlxTimer(timer).start(0.5, (_:FlxTimer) ->
+        {
+            setUIVisible(true);
+
+            tween.flicker(hintText, 1.5, 0.2);
+
+            FlxG.sound.play(AssetCache.getSound("shared/correct-activ"), 0.75);
+        });
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(exitButton, camera))
+        {
+            exitButton.animation.play("1");
+
+            if (FlxG.mouse.justReleased)
+            {
+                @:privateAccess
+                if (!tween.containsTweensOf(thumbsUp))
+                {
+                    tween.tween(thumbsUp, {y: FlxG.height}, 0.5, {onComplete: (_:FlxTween) ->
+                    {
+                        close();
+                    }});
+
+                    tween.cancelTweensOf(hintText);
+
+                    setUIVisible(false);
+                }
+            }
+        }
+        else
+            exitButton.animation.play("0");
+    }
+
+    public function setUIVisible(visible:Bool):Void
+    {
+        hintText.visible = visible;
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="clipboard-InfoFlip.png">
+<TextureAtlas imagePath="clipboard-info-flip.png">
 	<!-- Created with Adobe Animate version 22.0.0.93 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="flip0000" x="2" y="2" width="480" height="360"/>
@@ -12,14 +12,4 @@
 	<SubTexture name="flip0007" x="1448" y="2" width="480" height="360"/>
 	<SubTexture name="flip0008" x="2" y="364" width="480" height="360"/>
 	<SubTexture name="flip0009" x="2" y="364" width="480" height="360"/>
-	<SubTexture name="unflip0000" x="2" y="364" width="480" height="360"/>
-	<SubTexture name="unflip0001" x="2" y="364" width="480" height="360"/>
-	<SubTexture name="unflip0002" x="1448" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0003" x="1448" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0004" x="966" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0005" x="966" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0006" x="484" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0007" x="484" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0008" x="2" y="2" width="480" height="360"/>
-	<SubTexture name="unflip0009" x="2" y="2" width="480" height="360"/>
 </TextureAtlas>

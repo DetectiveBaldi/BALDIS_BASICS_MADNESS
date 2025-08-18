@@ -22,6 +22,8 @@ import extendable.CustomState;
 
 import menus.options.OptionsMenu;
 
+import ui.MenuText;
+
 using util.MathUtil;
 
 class MainMenuScreen extends CustomState
@@ -177,55 +179,5 @@ class MainMenuScreen extends CustomState
         tune.stop();
 
         tune = null;
-    }
-}
-
-class MenuText extends FlxText
-{
-    public var onClick:FlxSignal;
-
-    public function new(x:Float = 0.0, y:Float = 0.0, text:String):Void
-    {
-        super(x, y, 0.0, text);
-
-        onClick = new FlxSignal();
-
-        font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        size = 42;
-
-        alignment = CENTER;
-
-        textField.antiAliasType = ADVANCED;
-
-        textField.sharpness = 400.0;
-    }
-
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(this, camera))
-        {
-            color = 0xFF00DC00;
-
-            underline = true;
-
-            if (FlxG.mouse.justReleased)
-                onClick.dispatch();
-        }
-        else
-        {
-            color = FlxColor.WHITE;
-
-            underline = false;
-        }
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        onClick = cast FlxDestroyUtil.destroy(onClick);
     }
 }

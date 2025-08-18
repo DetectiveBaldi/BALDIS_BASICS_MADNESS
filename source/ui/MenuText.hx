@@ -1,0 +1,71 @@
+package ui;
+
+import flixel.FlxG;
+
+import flixel.text.FlxText;
+
+import flixel.util.FlxColor;
+import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxSignal;
+
+import core.Paths;
+
+class MenuText extends FlxText
+{
+    public var unlitColor:FlxColor;
+
+    public var litColor:FlxColor;
+
+    public var onClick:FlxSignal;
+
+    public function new(x:Float = 0.0, y:Float = 0.0, text:String):Void
+    {
+        super(x, y, 0.0, text);
+
+        onClick = new FlxSignal();
+
+        font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        size = 42;
+
+        alignment = CENTER;
+
+        textField.antiAliasType = ADVANCED;
+
+        textField.sharpness = 400.0;
+
+        unlitColor = FlxColor.WHITE;
+
+        litColor = FlxColor.LIME;
+
+        onClick = new FlxSignal();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.mouse.overlaps(this, camera))
+        {
+            color = litColor;
+
+            underline = true;
+
+            if (FlxG.mouse.justReleased)
+                onClick.dispatch();
+        }
+        else
+        {
+            color = unlitColor;
+
+            underline = false;
+        }
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        onClick = cast FlxDestroyUtil.destroy(onClick);
+    }
+}
