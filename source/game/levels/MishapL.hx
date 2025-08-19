@@ -41,8 +41,6 @@ class MishapL extends PlayState
 
         super.create();
     
-        gameCameraZoom = 0.8;
-
         setCamStartPos();
 
         mishapS.breadySchool.visible = true;
@@ -54,6 +52,23 @@ class MishapL extends PlayState
 
     override function stepHit(step:Int):Void
     {
-        // im gonna add minor events later trust
+        if (step == 64 || step == 320 || step == 452)
+        {
+            gameCameraZoom -= 0.2;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    
+        if (step == 448)
+            gameCameraZoom += 0.2;
+    
+        if (step == 576)
+        {
+            gameCameraZoom = 1;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
     }
 }

@@ -65,6 +65,11 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Bloxy Cola
+        level = {week: null, name: "Bloxy Cola"}
+
+        LevelData.list.push(level);
+        
         // Mishap
         level = {week: null, name: "Mishap"}
 
