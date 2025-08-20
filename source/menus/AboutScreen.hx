@@ -9,11 +9,13 @@ import core.AssetCache;
 
 import extendable.CustomState;
 
+import ui.BackOutButton;
+
 using util.MathUtil;
 
 class AboutScreen extends CustomState
 {
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     public var bg:FlxSprite;
 
@@ -43,42 +45,16 @@ class AboutScreen extends CustomState
 
         add(bg);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(FlxG.switchState.bind(() -> new MainMenuScreen()));
 
-        exitButton.animation.add("0", [0], 0.0, false);
+        backOutButton.setPosition(165.0, 5.0);
 
-        exitButton.animation.add("1", [1], 0.0, false);
-
-        exitButton.animation.play("0");
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
 
         MainMenuScreen.playTune();
     }
-
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new MainMenuScreen());
-        }
-        else
-            exitButton.animation.play("0");
-    }
-
 
     override function destroy():Void
     {

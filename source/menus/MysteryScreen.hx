@@ -38,9 +38,12 @@ import extendable.CustomSubState;
 import game.HighScore;
 import game.PlayState;
 
+import ui.BackOutButton;
 import ui.HeightenedButton;
 import ui.OrientedButton;
 import ui.MenuText;
+
+import util.ClickSoundUtil;
 
 using flixel.util.FlxColorTransformUtil;
 
@@ -72,7 +75,7 @@ class MysteryScreen extends CustomState
 
     public var rightButton:OrientedButton;
 
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     public var tune:FlxSound;
 
@@ -203,23 +206,13 @@ class MysteryScreen extends CustomState
 
         changeSelection(0);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(FlxG.switchState.bind(() -> new ModeSelectScreen()));
 
-        exitButton.animation.add("0", [0], 0.0, false);
+        backOutButton.setPosition(165.0, 5.0);
 
-        exitButton.animation.add("1", [1], 0.0, false);
-
-        exitButton.animation.play("0");
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/MysteryScreen/tune"), 1.0, true);
 
@@ -299,20 +292,14 @@ class MysteryScreen extends CustomState
             startButton.animation.play("select");
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+
                 clickStartButton();
+            }
         }
         else
             startButton.animation.play("deselect");
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new ModeSelectScreen());
-        }
-        else
-            exitButton.animation.play("0");
     }
 
     override function destroy():Void
@@ -369,7 +356,7 @@ class MysteryScreen extends CustomState
 
         tween.tween(rightButton, {alpha: 0.0}, 0.35);
 
-        tween.tween(exitButton, {alpha: 0.0}, 0.35);
+        tween.tween(backOutButton, {alpha: 0.0}, 0.35);
     }
 
     public function clickNeedHintButton():Void
@@ -470,6 +457,14 @@ class MysteryScreen extends CustomState
 
         var score:Int = HighScore.getLevelScore(level.name, "normal").score;
 
+        var playSound:Bool = true;
+
+        if (change != 0.0)
+        {
+            if (lock.visible && score == 0.0 || !lock.visible && score != 0.0)
+                playSound = false;
+        }
+
         #if !debug
         lock.visible = score == 0.0;
 
@@ -483,11 +478,15 @@ class MysteryScreen extends CustomState
             #if !debug
             hintTimer = 0.0;
 
-            FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
+            if (playSound)
+                FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
             #end
         }
         else
-            FlxG.sound.play(AssetCache.getSound("shared/door-unlock"));
+        {
+            if (playSound)
+                FlxG.sound.play(AssetCache.getSound("shared/door-unlock"));
+        }
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
@@ -521,7 +520,7 @@ class HintScreen extends CustomSubState
 
     public var hintText:FlxText;
 
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     public function new(name:String):Void
     {
@@ -566,23 +565,13 @@ class HintScreen extends CustomSubState
 
         add(hintText);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(clickBackOutButton);
 
-        exitButton.animation.add("0", [0], 0.0, false);
+        backOutButton.setPosition(165.0, 5.0);
 
-        exitButton.animation.add("1", [1], 0.0, false);
-
-        exitButton.animation.play("0");
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
 
         new FlxTimer(timer).start(0.5, (_:FlxTimer) ->
         {
@@ -594,36 +583,24 @@ class HintScreen extends CustomSubState
         });
     }
 
-    override function update(elapsed:Float):Void
-    {
-        super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justReleased)
-            {
-                @:privateAccess
-                if (!tween.containsTweensOf(thumbsUp))
-                {
-                    tween.tween(thumbsUp, {y: FlxG.height}, 0.5, {onComplete: (_:FlxTween) ->
-                    {
-                        close();
-                    }});
-
-                    tween.cancelTweensOf(hintText);
-
-                    setUIVisible(false);
-                }
-            }
-        }
-        else
-            exitButton.animation.play("0");
-    }
-
     public function setUIVisible(visible:Bool):Void
     {
         hintText.visible = visible;
+    }
+
+    public function clickBackOutButton():Void
+    {
+        @:privateAccess
+        if (!tween.containsTweensOf(thumbsUp))
+        {
+            tween.tween(thumbsUp, {y: FlxG.height}, 0.5, {onComplete: (_:FlxTween) ->
+            {
+                close();
+            }});
+
+            tween.cancelTweensOf(hintText);
+
+            setUIVisible(false);
+        }
     }
 }

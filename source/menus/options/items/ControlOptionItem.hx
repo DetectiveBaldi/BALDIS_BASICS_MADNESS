@@ -16,6 +16,8 @@ import flixel.util.FlxColor;
 import core.Options;
 import core.Paths;
 
+import util.ClickSoundUtil;
+
 class ControlOptionItem extends VariableOptionItem<Array<Int>>
 {
     override function get_value():Array<Int>
@@ -129,7 +131,11 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
                 titleText.underline = true;
 
                 if (FlxG.mouse.justReleased)
+                {
+                    ClickSoundUtil.playSound();
+
                     selected = true;
+                }
             }
             else
                 titleText.underline = false;

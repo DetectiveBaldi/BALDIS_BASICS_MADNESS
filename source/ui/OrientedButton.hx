@@ -8,6 +8,8 @@ import flixel.util.FlxSignal;
 
 import core.AssetCache;
 
+import util.ClickSoundUtil;
+
 class OrientedButton extends FlxSprite
 {
     public var onClick:FlxSignal;
@@ -40,7 +42,11 @@ class OrientedButton extends FlxSprite
             animation.play("select");
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+                
                 onClick.dispatch();
+            }
         }
         else
             animation.play("deselect");

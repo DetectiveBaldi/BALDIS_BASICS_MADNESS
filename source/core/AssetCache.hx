@@ -130,7 +130,7 @@ class AssetCache
         var aud:Sound = map[path];
 
         @:privateAccess
-        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd.active && snd._sound == aud) != null)
+        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd._sound == aud && (snd.active || snd.persist)) != null)
                 return;
 
         aud.close();

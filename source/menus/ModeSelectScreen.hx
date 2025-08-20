@@ -18,6 +18,10 @@ import core.Paths;
 
 import extendable.CustomState;
 
+import ui.BackOutButton;
+
+import util.ClickSoundUtil;
+
 using util.MathUtil;
 
 class ModeSelectScreen extends CustomState
@@ -30,7 +34,7 @@ class ModeSelectScreen extends CustomState
 
     public var modeIcons:FlxTypedGroup<ModeSelectIcon>;
 
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     override function create():Void
     {
@@ -131,23 +135,13 @@ class ModeSelectScreen extends CustomState
 
         mysteryIcon.setPosition(FlxG.width - mysteryIcon.width - 285.0 + 112.0, mysteryIcon.getCenterY() - 100.0);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(FlxG.switchState.bind(() -> new MainMenuScreen()));
 
-        exitButton.animation.add("0", [0], 0.0, false);
+        backOutButton.setPosition(165.0, 5.0);
 
-        exitButton.animation.add("1", [1], 0.0, false);
-
-        exitButton.animation.play("0");
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
 
         MainMenuScreen.playTune();
     }
@@ -162,16 +156,6 @@ class ModeSelectScreen extends CustomState
 
             iconText.text = "";
         }
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new MainMenuScreen());
-        }
-        else
-            exitButton.animation.play("0");
     }
 
     public function createIcon(path:String, name:String, text:String, onClick:()->Void):ModeSelectIcon
@@ -247,7 +231,11 @@ class ModeSelectIcon extends FlxSprite
             selected = true;
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+
                 onClick.dispatch();
+            }
         }
         else
         {

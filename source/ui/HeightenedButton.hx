@@ -14,6 +14,8 @@ import flixel.util.FlxSignal;
 import core.AssetCache;
 import core.Paths;
 
+import util.ClickSoundUtil;
+
 class HeightenedButton extends FlxSpriteGroup
 {
     public var base:FlxSprite;
@@ -77,7 +79,11 @@ class HeightenedButton extends FlxSpriteGroup
                 base.animation.play("up");
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound(BUTTON);
+
                 onClick.dispatch();
+            }
         }
         else
             base.animation.play("up");

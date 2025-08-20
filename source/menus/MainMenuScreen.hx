@@ -22,6 +22,7 @@ import extendable.CustomState;
 
 import menus.options.OptionsMenu;
 
+import ui.BackOutButton;
 import ui.MenuText;
 
 using util.MathUtil;
@@ -30,11 +31,48 @@ class MainMenuScreen extends CustomState
 {
     public static var tune:FlxSound;
 
+    public function createText(text:String, onClick:()->Void):MenuText
+    {
+        var text:MenuText = new MenuText(0.0, 0.0, text);
+
+        text.onClick.add(fadeTune);
+
+        text.onClick.add(onClick);
+
+        add(text);
+
+        return text;
+    }
+
+    public static function playTune():Void
+    {
+        if (tune != null)
+            return;
+
+        tune = FlxG.sound.load(AssetCache.getMusic("menus/MainMenuScreen/tune"), 1.0, true);
+
+        tune.persist = true;
+
+        tune.play();
+    }
+
+    public static function fadeTune():Void
+    {
+        tune.fadeOut(0.25, 0.0, stopTune);
+    }
+
+    public static function stopTune(tween:FlxTween):Void
+    {
+        tune.stop();
+
+        tune = null;
+    }
+
     public var background:FlxSprite;
 
     public var chalkboard:FlxSprite;
 
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     override function create():Void
     {
@@ -90,42 +128,18 @@ class MainMenuScreen extends CustomState
 
         creditsText.setPosition(creditsText.getCenterX(), aboutText.y + aboutText.height + 50.0);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(clickBackOutButton);
 
-        exitButton.animation.add("0", [0], 0.0, false);
+        backOutButton.setPosition(165.0, 5.0);
 
-        exitButton.animation.add("1", [1], 0.0, false);
-
-        exitButton.animation.play("0");
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("1");
-
-            if (FlxG.mouse.justReleased)
-            {
-                fadeTune();
-
-                FlxG.switchState(() -> new TitleScreen());
-            }
-        }
-        else
-            exitButton.animation.play("0");
 
         #if debug
         if (FlxG.keys.justPressed.EIGHT)
@@ -144,40 +158,10 @@ class MainMenuScreen extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function createText(text:String, onClick:()->Void):MenuText
+    public function clickBackOutButton():Void
     {
-        var text:MenuText = new MenuText(0.0, 0.0, text);
+        fadeTune();
 
-        text.onClick.add(fadeTune);
-
-        text.onClick.add(onClick);
-
-        add(text);
-
-        return text;
-    }
-
-    public static function playTune():Void
-    {
-        if (tune != null)
-            return;
-
-        tune = FlxG.sound.load(AssetCache.getMusic("menus/MainMenuScreen/tune"), 1.0, true);
-
-        tune.persist = true;
-
-        tune.play();
-    }
-
-    public static function fadeTune():Void
-    {
-        tune.fadeOut(0.25, 0.0, stopTune);
-    }
-
-    public static function stopTune(tween:FlxTween):Void
-    {
-        tune.stop();
-
-        tune = null;
+        FlxG.switchState(() -> new TitleScreen());
     }
 }

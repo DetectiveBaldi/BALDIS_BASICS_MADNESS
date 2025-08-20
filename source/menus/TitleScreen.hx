@@ -22,6 +22,8 @@ import data.LevelData;
 
 import game.PlayState;
 
+import util.ClickSoundUtil;
+
 using util.ArrayUtil;
 using util.MathUtil;
 
@@ -200,7 +202,11 @@ class TitleButton extends FlxSprite
             animation.play("1");
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+
                 onClick.dispatch();
+            }
         }
         else
             animation.play("0");

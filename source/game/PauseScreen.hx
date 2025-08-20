@@ -34,6 +34,8 @@ import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
+import util.ClickSoundUtil;
+
 using util.ArrayUtil;
 using util.MathUtil;
 
@@ -333,7 +335,11 @@ class PauseScreenIcon extends FlxSprite
             selected = true;
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+
                 onClick.dispatch();
+            }
         }
         else
         {

@@ -8,6 +8,8 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Paths;
 
+import util.ClickSoundUtil;
+
 using util.MathUtil;
 
 class BoolOptionItem extends VariableOptionItem<Bool>
@@ -57,6 +59,8 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
             if (FlxG.mouse.justReleased)
             {
+                ClickSoundUtil.playSound();
+                
                 value = !value;
 
                 checkbox.visible = value;

@@ -19,6 +19,8 @@ import extendable.CustomSubState;
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
 
+import util.ClickSoundUtil;
+
 using util.ArrayUtil;
 using util.MathUtil;
 
@@ -126,6 +128,8 @@ class GameOverScreen extends CustomSubState
 
                 if (FlxG.mouse.justReleased)
                 {
+                    ClickSoundUtil.playSound();
+                    
                     tween.tween(retryButton, {alpha: 0.0}, 0.5);
 
                     canRetry = false;

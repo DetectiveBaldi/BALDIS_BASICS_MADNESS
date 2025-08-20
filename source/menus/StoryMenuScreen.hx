@@ -23,7 +23,10 @@ import extendable.CustomState;
 import game.HighScore;
 import game.PlayState;
 
+import ui.BackOutButton;
 import ui.OrientedButton;
+
+import util.ClickSoundUtil;
 
 using util.MathUtil;
 using util.StringUtil;
@@ -50,7 +53,7 @@ class StoryMenuScreen extends CustomState
 
     public var weekPortrait:FlxSprite;
 
-    public var exitButton:FlxSprite;
+    public var backOutButton:BackOutButton;
 
     public var startButton:FlxSprite;
 
@@ -204,21 +207,13 @@ class StoryMenuScreen extends CustomState
 
         add(weekPortrait);
 
-        exitButton = new FlxSprite();
+        backOutButton = new BackOutButton();
 
-        exitButton.loadGraphic(AssetCache.getGraphic("menus/MainMenuScreen/exitButton"), true, 32, 32);
+        backOutButton.onClick.add(FlxG.switchState.bind(() -> new ModeSelectScreen()));
 
-        exitButton.animation.add("deselect", [0], 0.0, false);
+        backOutButton.setPosition(FlxG.width - backOutButton.width - 165.0, 5.0);
 
-        exitButton.animation.add("select", [1], 0.0, false);
-
-        exitButton.scale.set(2.0, 2.0);
-
-        exitButton.updateHitbox();
-
-        exitButton.setPosition(FlxG.width - exitButton.width - 165.0, 5.0);
-
-        add(exitButton);
+        add(backOutButton);
 
         startButton = new FlxSprite();
 
@@ -273,16 +268,6 @@ class StoryMenuScreen extends CustomState
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(exitButton, camera))
-        {
-            exitButton.animation.play("select");
-
-            if (FlxG.mouse.justReleased)
-                FlxG.switchState(() -> new ModeSelectScreen());
-        }
-        else
-            exitButton.animation.play("deselect");
-
         if (FlxG.mouse.overlaps(startButton, camera))
         {
             startButton.animation.play("select");
@@ -294,6 +279,8 @@ class StoryMenuScreen extends CustomState
                 if (HighScore.getWeekScore(weekToLoad.name, "normal").score == 0.0 && #if debug false #else
                     weekToLoad.requiresScoreToPlay #end)
                         return;
+
+                ClickSoundUtil.playSound();
 
                 MainMenuScreen.fadeTune();
 

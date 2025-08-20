@@ -35,19 +35,9 @@ class HighScore
             Reflect.deleteField(FlxG.save.data, "scores");
     }
 
-    public static function isLevelHighScore(name:String, diff:String, score:Int):Bool
+    public static function getBlankWeek():WeekScore
     {
-        return score > getLevelScore(name, diff).score;
-    }
-
-    public static function getLevelScore(name:String, diff:String):LevelScore
-    {
-        return (levels[name] ??= new Map<String, LevelScore>())[diff] ?? getBlankLevel();
-    }
-
-    public static function setLevelScore(name:String, diff:String, score:LevelScore):Void
-    {
-        (levels[name] ??= new Map<String, LevelScore>())[diff] = score;
+        return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}
     }
 
     public static function isWeekHighScore(name:String, diff:String, score:Int):Bool
@@ -65,14 +55,34 @@ class HighScore
         (weeks[name] ??= new Map<String, WeekScore>())[diff] = score;
     }
 
-    public static function getBlankWeek():WeekScore
+    public static function resetWeekScore(name:String, diff:String):Void
     {
-        return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}
+        setWeekScore(name, diff, getBlankWeek());
     }
 
     public static function getBlankLevel():LevelScore
     {
         return getBlankWeek();
+    }
+
+    public static function isLevelHighScore(name:String, diff:String, score:Int):Bool
+    {
+        return score > getLevelScore(name, diff).score;
+    }
+
+    public static function getLevelScore(name:String, diff:String):LevelScore
+    {
+        return (levels[name] ??= new Map<String, LevelScore>())[diff] ?? getBlankLevel();
+    }
+
+    public static function setLevelScore(name:String, diff:String, score:LevelScore):Void
+    {
+        (levels[name] ??= new Map<String, LevelScore>())[diff] = score;
+    }
+
+    public static function resetLevelScore(name:String, diff:String):Void
+    {
+        setLevelScore(name, diff, getBlankLevel());
     }
 }
 

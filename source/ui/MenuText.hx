@@ -10,6 +10,8 @@ import flixel.util.FlxSignal;
 
 import core.Paths;
 
+import util.ClickSoundUtil;
+
 class MenuText extends FlxText
 {
     public var unlitColor:FlxColor;
@@ -52,7 +54,11 @@ class MenuText extends FlxText
             underline = true;
 
             if (FlxG.mouse.justReleased)
+            {
+                ClickSoundUtil.playSound();
+
                 onClick.dispatch();
+            }
         }
         else
         {
