@@ -12,18 +12,17 @@ class ClickSoundUtil
 
     public static var buttonClick:FlxSound;
 
-    public static function loadSound(type:ClickSoundType = ITEM):FlxSound
+    public static function resolveSound(type:ClickSoundType = ITEM):FlxSound
     {
         var res:FlxSound = null;
 
         switch (type:ClickSoundType)
         {
             case ITEM:
-                res = FlxG.sound.load(AssetCache.getSound("shared/item-click"));
+                res = (itemClick ??= FlxG.sound.load(AssetCache.getSound("shared/item-click")));
 
             case BUTTON:
-                res = FlxG.sound.load(AssetCache.getSound("shared/button-click"));
-
+                res = (buttonClick ??= FlxG.sound.load(AssetCache.getSound("shared/button-click")));
         }
 
         res.persist = true;
@@ -33,28 +32,11 @@ class ClickSoundUtil
 
     public static function playSound(type:ClickSoundType = ITEM, volume:Float = 1.0):Void
     {
-        switch (type:ClickSoundType)
-        {
-            case ITEM:
-            {
-                if (itemClick == null)
-                    itemClick = loadSound(ITEM);
+        var clickSound:FlxSound = resolveSound(type);
 
-                itemClick.volume = volume;
+        clickSound.volume = volume;
 
-                itemClick.play(true);
-            }
-
-            case BUTTON:
-            {
-                if (buttonClick == null)
-                    buttonClick = loadSound(BUTTON);
-
-                buttonClick.volume = volume;
-
-                buttonClick.play(true);
-            }
-        }
+        clickSound.play(true);
     }
 }
 

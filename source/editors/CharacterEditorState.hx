@@ -1,6 +1,5 @@
 package editors;
 
-import haxe.Exception;
 import haxe.Json;
 
 import openfl.desktop.Clipboard;
@@ -10,6 +9,8 @@ import openfl.net.FileReference;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
+
+import flixel.animation.FlxAnimation;
 
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -544,6 +545,8 @@ class CharacterEditorState extends CustomState
             character.animation.addByPrefix(animation.name, animation.prefix, animation.frameRate, animation.looped,
                 animation.flipX, animation.flipY);
 
+        updateGhostFrame();
+
         character.animation.play(animation.name, true);
 
         refreshAnimationsTab();
@@ -623,14 +626,23 @@ class CharacterEditorState extends CustomState
 
     public function updateGhostFrame():Void
     {
-        var allFrames:Array<FlxFrame> = character.frames.frames;
+        var allAnimations:Array<FlxAnimation> = character.animation.getAnimationList();
 
-        var validFrames:Array<FlxFrame> = allFrames.filter((frame:FlxFrame) -> frame.name.contains("idle") ||
-            frame.name.contains("dance"));
+        var animationToUse:FlxAnimation = allAnimations.last((anim:FlxAnimation) -> anim.name.contains("idle") ||
+            anim.name.contains("dance"));
 
-        var frameToUse:FlxFrame = validFrames.last();
+        if (animationToUse == null)
+        {
+            ghost.visible = false;
 
-        ghost.loadGraphic(FlxGraphic.fromFrame(frameToUse));
+            return;
+        }
+
+        var frameToLoad:FlxFrame = character.frames.frames[animationToUse.frames.last()];
+
+        ghost.loadGraphic(FlxGraphic.fromFrame(frameToLoad));
+
+        ghost.visible = true;
     }
 
     public function updateGhostScale():Void
