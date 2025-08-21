@@ -47,14 +47,30 @@ class MishapL extends PlayState
 
         player.setPosition(600.0, 125.0);
     
-        opponent.setPosition(-250.0, 125.0);
+        opponent.setPosition(-250.0, 75.0);
     }
 
     override function stepHit(step:Int):Void
     {
-        if (step == 64 || step == 320 || step == 452)
+        if (step == 16)
+        {
+            opponent.skipDance = true;
+            opponent.animation.play("wave");
+        }
+        
+        if (step == 64)
         {
             gameCameraZoom -= 0.2;
+        
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        
+            opponent.skipDance = false;
+        }
+        
+        if (step == 320 || step == 452)
+        {
+            gameCameraZoom -= 0.1;
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);

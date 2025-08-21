@@ -10,6 +10,6 @@ class MishapS extends Stage
     {
         super();
     
-        breadySchool = getSprite("bready-school");
+        breadySchool = getSprite("bready-school", 2, 2);
     }
 }

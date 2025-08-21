@@ -86,8 +86,6 @@ class RoughES extends Stage
 
         hall0 = getSprite("hall0");
 
-        hall0.visible = true;
-
         hall1 = getSprite("hall1");
 
         hall2 = getBackdrop("game/stages/shared/scrolling-hall0", false);

@@ -22,8 +22,6 @@ class DetentionS extends Stage
 
     public var faculty2:FlxSprite;
 
-    public var office0:FlxSprite;
-
     public function new():Void
     {
         super();
@@ -49,7 +47,5 @@ class DetentionS extends Stage
         faculty2 = getSprite("faculty-caught1", 2, 2);
 
         faculty1 = getSprite("faculty-caught0", 2, 2);
-
-        office0 = getSprite("office0", 2, 2);
     }
 }
