@@ -27,7 +27,7 @@ class Playlist
         week.description += "try to stop you from your objective! Be careful, you don't wanna get caught...";
 
         week.levels.pushMany({week: week, name: "Playmate"}, {week: week, name: "Walls"},
-        {week: week, name: "Literature"}, {week: week, name: "Scribble"}, {week: week, name: "Warm Welcome"}, 
+        {week: week, name: "Detention"}, {week: week, name: "Scribble"}, {week: week, name: "Warm Welcome"}, 
         {week: week, name: "Lookalike"}, {week: week, name: "Rough Escape"});
 
         week.hasTvPortrait = true;

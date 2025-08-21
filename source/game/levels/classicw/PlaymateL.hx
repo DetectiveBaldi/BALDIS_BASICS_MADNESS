@@ -28,6 +28,8 @@ class PlaymateL extends PlayState
 
     public var black:FlxSprite;
 
+    public var opp:Character;
+
     override function create():Void
     {
         stage = new PlaymateS();
@@ -141,7 +143,27 @@ class PlaymateL extends PlayState
         {
             playmateS.hall.color = playmateS.cafe.color = 0x777777;
 
+            opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
+            opp.setPosition(650.0, 110.0);
+            opp.scale.set(0.95, 0.95);
+            opp.skipDance = true;
+            opp.skipSing = true;
+            opp.animation.play("slap");
+            add(opp);
+
+            remove(opp, true);
+            playmateS.insert(playmateS.members.indexOf(playmateS.hall), opp);
+
+            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+
             gameCameraZoom = 0.8;
+        }
+
+        if (step == 1200)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 120.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1188)
@@ -157,9 +179,69 @@ class PlaymateL extends PlayState
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
         }
 
+        if (step == 1440)
+        {   
+            cameraLock = FOCUS_CAM_POINT;
+
+            cameraPoint.centerTo();
+
+            gameCameraZoom = 0.6;
+            
+            opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
+            opp.setPosition(-700.0, 30.0);
+            opp.scale.set(2.9, 2.9);
+            opp.skipDance = true;
+            opp.skipSing = true;
+            opp.animation.play("slap");
+            add(opp);
+
+            tween.tween(opp, {x: -300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+
         if (step == 1456)
         {
-            
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 0.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+
+            gameCameraZoom += 0.05;
+        }
+
+        if (step == 1464)
+            tween.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+
+        if (step == 1472)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            gameCameraZoom = 0.7;
+        }
+
+        if (step == 1488)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(opponent, {x: -1200.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 8.0 * 0.001, false);
+        }
+
+        if (step == 1504)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 1300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
     }
 

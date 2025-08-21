@@ -1,0 +1,343 @@
+package game.levels.classicw;
+
+import haxe.ui.util.EventDispatcher;
+import openfl.filters.BitmapFilter;
+
+import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.FlxSprite;
+
+import flixel.animation.FlxAnimation;
+
+import flixel.text.FlxText;
+
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+
+import core.Options;
+import core.Paths;
+
+import data.CharacterData;
+
+import game.stages.classicw.DetentionS;
+import game.stages.RoughES;
+
+using util.MathUtil;
+
+using StringTools;
+
+class DetentionL extends PlayState
+{
+    public var detentionS:DetentionS;
+
+    public var roughES:RoughES;
+
+    override function create():Void
+    {
+        stage = new DetentionS();
+
+        detentionS = cast (stage, DetentionS);
+
+        stage = new RoughES();
+
+        roughES = cast (stage, RoughES);
+
+        super.create();
+
+        cameraLock = FOCUS_CAM_POINT;
+
+        cameraPoint.centerTo();
+
+        detentionS.hall.visible = true;
+
+        detentionS.hall.velocity.set(-400.0, 0.0);
+
+        gameCamera.snapToTarget();
+
+        gameCameraZoom = 0.65;
+
+        gameCamera.color = FlxColor.BLACK;
+
+        playField.visible = false;
+
+        var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("walk-legs"));
+
+        var anim:FlxAnimation = __plr.animation.getByName("legs");
+
+        anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+
+        anim = __plr.animation.getByName("legs miss");
+
+        anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+
+        __plr.animation.play("legs", true);
+
+        __plr.skipDance = true;
+
+        __plr.skipSing = true;
+
+        players.insert(players.members.indexOf(player), __plr);
+
+        anim = player.animation.getByName("walk");
+
+        anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+
+        player.animation.play("walk");
+
+        player.skipDance = true;
+
+        player.skipSing = true;
+
+        player.setPosition(340.0, 155.0);
+
+        __plr.setPosition(player.x, player.y);
+
+        player.animation.onFrameChange.add(updateLegStatus);
+
+        opponent.setPosition(-1000.0, 10.0);
+    }
+
+    override function stepHit(step:Int):Void
+    {
+        super.stepHit(step);
+
+        if (step == 16)
+        {
+            gameCamera.color = FlxColor.WHITE;
+
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 4.0 * 0.001, true);
+        }
+
+        if (step == 128)
+            player.animation.play("prise");
+        
+        if (step == 136)
+            player.animation.play("t1");
+
+        if (step == 140)
+        {
+            tween.tween(opponent, {x: 385.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            tween.tween(player, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            var __plr:Character = getPlayer("walk-legs");
+
+            tween.tween(__plr, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+        }
+        
+        if (step == 144)
+        {
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            
+            gameCameraZoom = 0.65;
+
+            playField.visible = true;
+        }
+
+        if (step == 147)
+        {
+            player.animation.play("t2");
+
+            player.skipDance = false;
+
+            player.skipSing = false;
+        }
+
+        if (step == 400)
+        {
+            gameCameraZoom = 0.75;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+
+        if (step == 528)
+        {
+            gameCameraZoom = 0.7;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            detentionS.schoolRules.visible = true;
+
+            detentionS.schoolRules.velocity.x = -400.0;
+
+            detentionS.schoolRules.x = gameCamera.viewX + gameCamera.viewWidth;
+        }
+
+        if (step == 656)
+        {
+            gameCameraZoom = 0.6;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            tween.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 674)
+        {
+            tween.tween(player, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            var __plr:Character = getPlayer("walk-legs");
+
+            tween.tween(__plr, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+        }
+
+        if (step == 744)
+        {
+            detentionS.facultyStandard.visible = true;
+
+            detentionS.facultyStandard.velocity.x = -400.0;
+
+            detentionS.facultyStandard.x = gameCamera.viewX + gameCamera.viewWidth;
+        }
+
+        if (step == 752)
+        {
+            tween.tween(detentionS.hall.velocity, {x: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            tween.tween(detentionS.facultyStandard.velocity, {x: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            tween.tween(player, {x: 1040.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.sineIn});
+
+            var __plr:Character = getPlayer("walk-legs");
+            
+            tween.tween(__plr, {x: 1040.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.sineIn});
+        }
+
+        if (step == 768)
+        {
+            detentionS.facultyStandardOpen.visible = true;
+
+            detentionS.facultyStandard.visible = false;
+
+            detentionS.facultyStandardOpen.setPosition(detentionS.facultyStandard.x, detentionS.facultyStandard.y);
+        }
+
+        if (step == 776)
+        {
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
+        }
+
+        if (step == 780)
+        {
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
+
+            var plr:Character = getPlayer("bf-walk-detention");
+            plr.visible = false;
+
+            var _plr:Character = getPlayer("walk-legs");
+            _plr.visible = false;
+
+            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
+            plr2.scale.set(4.5, 4.5);
+            plr2.setPosition(1000.0, 120.0);
+            players.add(plr2);
+
+            tween.tween(plr2, {x: 650.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            detentionS.hall.visible = false;
+            detentionS.facultyStandardOpen.visible = false;
+            
+            detentionS.faculty0.visible = true;
+        }
+
+        if (step == 896)
+            gameCameraZoom += 0.1;
+
+        if (step == 912)
+        {
+            gameCameraZoom = 0.6;
+
+            var plr:Character = getPlayer("bf-face-back-left");
+            plr.visible = false;
+
+            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-caught"));
+            plr2.scale.set(4.8, 4.8);
+            plr2.setPosition(600.0, -20.0);
+            plr.skipDance = true;
+            plr.skipSing = true;
+            players.add(plr2);
+
+            plr2.animation.play("caught");
+            
+            opponent.setPosition(90.0, -20.0);
+            opponent.scale.set(0.4, 0.4);
+
+            tween.tween(opponent, {x: 105.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(opponent.scale, {x: 0.5, y: 0.5}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            detentionS.faculty2.visible = true;
+        }
+
+        if (step == 928)
+        {
+            detentionS.faculty1.visible = true;
+
+            tween.tween(opponent, {x: 250.0, y: 20.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+
+            var plr2:Character = getPlayer("bf-anim-caught");
+            plr2.animation.play("turn");
+        }
+
+        if (step == 944)
+        {
+            gameCameraZoom = 0.6;
+
+            roughES.office0.visible = true;
+
+            var plr2:Character = getPlayer("bf-anim-caught");
+            plr2.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            plr.scale.set(2.7, 2.7);
+            plr.setPosition(600.0, -180.0);
+            players.add(plr);
+
+            opponent.scale.set(1.2, 1.2);
+            opponent.setPosition(220.0, 20.0);
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+    
+        if (beat >= 32 && beat < 36 || beat >= 160 && beat < 164 || beat >= 232 && beat < 236)
+        {
+            if (beat % 1 == 0)
+                gameCameraZoom += 0.05;
+        }
+    }
+
+    public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
+    {
+        var plr:Character = getPlayer("walk-legs");
+    
+        var curFrame:Int = plr.animation.curAnim.curFrame;
+    
+        if (name.contains("MISS"))
+        {
+            if (!plr.animation.name.contains("miss"))
+                plr.animation.play("legs miss", true, false, curFrame);
+        }
+        else
+        {
+            if (plr.animation.name.contains("miss"))
+                plr.animation.play("legs", true, false, curFrame);
+        }
+    }
+}
