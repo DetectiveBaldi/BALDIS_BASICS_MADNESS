@@ -23,7 +23,6 @@ import core.Paths;
 import data.CharacterData;
 
 import game.stages.classicw.DetentionS;
-import game.stages.RoughES;
 
 using util.MathUtil;
 
@@ -33,17 +32,11 @@ class DetentionL extends PlayState
 {
     public var detentionS:DetentionS;
 
-    public var roughES:RoughES;
-
     override function create():Void
     {
         stage = new DetentionS();
 
         detentionS = cast (stage, DetentionS);
-
-        stage = new RoughES();
-
-        roughES = cast (stage, RoughES);
 
         super.create();
 
@@ -260,14 +253,7 @@ class DetentionL extends PlayState
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
 
-            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-caught"));
-            plr2.scale.set(4.8, 4.8);
-            plr2.setPosition(600.0, -20.0);
-            plr.skipDance = true;
-            plr.skipSing = true;
-            players.add(plr2);
-
-            plr2.animation.play("caught");
+            //plr2.animation.play("caught");
             
             opponent.setPosition(90.0, -20.0);
             opponent.scale.set(0.4, 0.4);
@@ -286,29 +272,78 @@ class DetentionL extends PlayState
 
             tween.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            var plr2:Character = getPlayer("bf-anim-caught");
-            plr2.animation.play("turn");
+            //plr2.animation.play("turn");
         }
 
         if (step == 944)
         {
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.7;
 
-            roughES.office0.visible = true;
+            gameCamera.snapToTarget();
 
-            var plr2:Character = getPlayer("bf-anim-caught");
-            plr2.visible = false;
+            cameraLock = FOCUS_CAM_CHAR;
+
+            detentionS.office0.visible = true;
+            detentionS.office2.visible = true;
+
+            detentionS.faculty1.visible = false;
+            detentionS.faculty2.visible = false;
+            detentionS.faculty0.visible = false;
+
+            //plr2.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(2.7, 2.7);
-            plr.setPosition(600.0, -180.0);
+            plr.setPosition(840.0, 180.0);
             players.add(plr);
+            player = plr;
 
             opponent.scale.set(1.2, 1.2);
-            opponent.setPosition(220.0, 20.0);
+            opponent.setPosition(170.0, 60.0);
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+        }
+
+        if (step == 1200)
+        {
+            gameCameraZoom = 0.8;
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+
+        if (step == 1456)
+            gameCameraZoom = 0.9;
+
+        if (step == 1472)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            gameCameraZoom = 0.7;
+        }
+
+        if (step == 1484)
+        {
+            tween.tween(opponent, {x: 300.0, y: 5.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+
+            tween.tween(opponent.scale, {x: 0.6, y: 0.6}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+        }
+
+        if (step == 1493)
+        {
+            detentionS.remove(opponents, true);
+
+            detentionS.insert(detentionS.members.indexOf(detentionS.office1), opponents);
+
+            detentionS.office0.visible = false;
+            detentionS.office1.visible = true;
+
+            tween.tween(opponent, {x: -280.0}, conductor.beatLength * 2.0 * 0.001);
         }
     }
 
