@@ -253,7 +253,14 @@ class DetentionL extends PlayState
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
 
-            //plr2.animation.play("caught");
+            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-caught"));
+            plr2.scale.set(4.6, 4.6);
+            plr2.setPosition(580.0, 100.0);
+            plr2.skipDance = true;
+            plr2.skipSing = true;
+            players.add(plr2);
+
+            plr2.animation.play("caught");
             
             opponent.setPosition(90.0, -20.0);
             opponent.scale.set(0.4, 0.4);
@@ -271,8 +278,13 @@ class DetentionL extends PlayState
             tween.tween(opponent, {x: 250.0, y: 20.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
             tween.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+        }
 
-            //plr2.animation.play("turn");
+        if (step == 940)
+        {
+            var plr2:Character = getPlayer("bf-anim-caught");
+
+            plr2.animation.play("turn");
         }
 
         if (step == 944)
@@ -290,7 +302,8 @@ class DetentionL extends PlayState
             detentionS.faculty2.visible = false;
             detentionS.faculty0.visible = false;
 
-            //plr2.visible = false;
+            var plr2:Character = getPlayer("bf-anim-caught");
+            plr2.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(2.7, 2.7);
@@ -303,6 +316,34 @@ class DetentionL extends PlayState
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            var timerText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "You get detention!\n30 seconds remain!", 48);
+
+            timerText.camera = hudCamera;
+
+            timerText.color = FlxColor.RED;
+            
+            timerText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+            timerText.alignment = CENTER;
+
+            timerText.textField.antiAliasType = ADVANCED;
+
+            timerText.textField.sharpness = 400.0;
+
+            timerText.screenCenter();
+
+            add(timerText);
+
+            new FlxTimer(timer).start(1.0, (_timer:FlxTimer) ->
+            {
+                if (_timer.loopsLeft == 0.0)
+                    timerText.active = timerText.visible = false;
+
+                timerText.text = 'You get detention!\n${_timer.loopsLeft} seconds remain!';
+
+                timerText.screenCenter();
+            }, 30);
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -317,7 +358,12 @@ class DetentionL extends PlayState
         }
 
         if (step == 1456)
+        {
             gameCameraZoom = 0.9;
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+        }
 
         if (step == 1472)
         {
@@ -325,11 +371,15 @@ class DetentionL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
             gameCameraZoom = 0.7;
+
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 1484)
         {
-            tween.tween(opponent, {x: 300.0, y: 5.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(opponent, {x: 300.0, y: -10.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
 
             tween.tween(opponent.scale, {x: 0.6, y: 0.6}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
         }
