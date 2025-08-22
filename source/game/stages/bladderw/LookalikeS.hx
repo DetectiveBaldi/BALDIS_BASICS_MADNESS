@@ -6,6 +6,8 @@ class LookalikeS extends Stage
 {
     public var room3:FlxSprite;
 
+    public var room3_Overlay0:FlxSprite;
+
     public var room3_Alt0:FlxSprite;
     
     public var bladderSchool0:FlxSprite;
@@ -18,6 +20,9 @@ class LookalikeS extends Stage
 
         room3 = getSprite("secret-room3");
         room3.scale.set(2, 2);
+
+        room3_Overlay0 = getSprite("secret-room3-overlay0");
+        room3_Overlay0.scale.set(2, 2);
 
         room3_Alt0 = getSprite("secret-room3-alt0");
         room3_Alt0.scale.set(2, 2);

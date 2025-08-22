@@ -30,6 +30,8 @@ class LookalikeL extends PlayState
 
     public var smoke:FlxSprite;
 
+    public var baldi:Character;
+
     override function create():Void
     {
         stage = new LookalikeS();
@@ -49,7 +51,8 @@ class LookalikeL extends PlayState
         gameCamBopStrength = 0.02;
 
         lookalikeS.room3.visible = true;
-        
+        lookalikeS.room3_Overlay0.visible = true;
+
         var anim:FlxAnimation = lookalikeS.bladderSchool1.animation.getByName("0");
         anim.frameRate = anim.numFrames / (conductor.beatLength * 0.002);
         
@@ -65,7 +68,23 @@ class LookalikeL extends PlayState
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
-    
+
+        if (step == 240)
+        {
+            baldi = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
+            baldi.setPosition(-100.0, 110.0);
+            baldi.scale.set(0.75, 0.75);
+            baldi.skipDance = true;
+            baldi.skipSing = true;
+            baldi.animation.play("slap");
+            add(baldi);
+
+            remove(baldi, true);
+            lookalikeS.insert(lookalikeS.members.indexOf(lookalikeS.room3_Overlay0), baldi);
+
+            tween.tween(baldi, {x: 175.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+        
         if (step == 246)
         {
             gameCameraZoom = 1;
@@ -93,14 +112,18 @@ class LookalikeL extends PlayState
 
         if (step == 256)
         {
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-            
             gameCameraZoom = 0.8;
             
             lookalikeS.room3.visible = false;
             
+            lookalikeS.room3_Overlay0.visible = false;
+
             lookalikeS.room3_Alt0.visible = true;
+        
+            baldi.destroy();
+        
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
     
         if (step == 512)
