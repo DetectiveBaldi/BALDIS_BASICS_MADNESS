@@ -505,6 +505,9 @@ class Strumline extends FlxGroup
 
             note.strum.animation.play(anim, true);
         }
+
+        for (i in 0 ... characters.members.length)
+            characters.members[i].animation.resume();
     }
 
     public function ghostTap(direction:Int):Void
@@ -539,6 +542,11 @@ class Strumline extends FlxGroup
                 continue;
 
             character.holdTimer = 0.0;
+
+            if (note.length == 0.0)
+                character.animation.resume();
+            else
+                character.animation.pause();
 
             var animSuffix:String = "";
 
@@ -577,6 +585,8 @@ class Strumline extends FlxGroup
                 continue;
 
             character.holdTimer = 0.0;
+
+            character.animation.resume();
 
             var animSuffix:String = "";
 
