@@ -29,6 +29,13 @@ class CustomState extends FlxState
 
     public static var cancelFadeIn:Bool;
 
+    public static function cancelNextTransition():Void
+    {
+        CustomState.cancelFadeIn = true;
+
+        CustomState.cancelFadeOut = true;
+    }
+
     public var tween:FlxTweenManager;
 
     public var timer:FlxTimerManager;
@@ -111,13 +118,6 @@ class CustomState extends FlxState
         add(spr);
 
         return spr;
-    }
-
-    public function disableTransition():Void
-    {
-        CustomState.cancelFadeIn = true;
-
-        CustomState.cancelFadeOut = true;
     }
 
     public function stepHit(step:Int):Void

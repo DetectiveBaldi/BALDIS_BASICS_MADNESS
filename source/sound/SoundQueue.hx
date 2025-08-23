@@ -22,7 +22,7 @@ class SoundQueue
     {
         if (list.length == 0.0)
         {
-            sound.onComplete = update;
+            sound.onComplete = updateQueue;
 
             sound.play();
 
@@ -40,7 +40,7 @@ class SoundQueue
         var isPlaying:Bool = list.indexOf(sound) == 0.0;
 
         if (isPlaying)
-            update();
+            updateQueue();
         else
             list.remove(sound);
     }
@@ -78,7 +78,7 @@ class SoundQueue
         list.resize(0);
     }
 
-    public function update():Void
+    public function updateQueue():Void
     {
         if (list.length == 0.0)
             return;
@@ -94,7 +94,7 @@ class SoundQueue
 
         var newSound:FlxSound = list[0];
 
-        newSound.onComplete = update;
+        newSound.onComplete = updateQueue;
 
         newSound.play(true);
 

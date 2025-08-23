@@ -134,7 +134,7 @@ class TitleScreen extends CustomState
         {
             if (FlxG.mouse.justReleased)
             {
-                disableTransition();
+                CustomState.cancelNextTransition();
 
                 var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Two");
 

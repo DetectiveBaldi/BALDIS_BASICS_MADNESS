@@ -13,11 +13,14 @@ import flixel.util.typeLimit.NextState;
 import core.AssetCache;
 
 import data.CharacterData;
+import data.LevelData;
 
+import extendable.CustomState;
 import extendable.CustomSubState;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
+import menus.TitleScreen;
 
 import util.ClickSoundUtil;
 
@@ -27,6 +30,8 @@ using util.MathUtil;
 class GameOverScreen extends CustomSubState
 {
     public var game:PlayState;
+
+    public var characterToShow:String;
 
     public var player:Character;
 
@@ -40,11 +45,13 @@ class GameOverScreen extends CustomSubState
 
     public var canRetry:Bool;
 
-    public function new(game:PlayState):Void
+    public function new(game:PlayState, characterToShow:String = "bf-dead"):Void
     {
         super();
 
         this.game = game;
+
+        this.characterToShow = characterToShow;
     }
 
     override function create():Void
@@ -55,7 +62,7 @@ class GameOverScreen extends CustomSubState
 
         camera.zoom = 0.75;
 
-        player = new Character(null, 0.0, 0.0, Character.getConfig("bf-dead"));
+        player = new Character(null, 0.0, 0.0, Character.getConfig(characterToShow));
 
         player.dance();
 
@@ -153,7 +160,11 @@ class GameOverScreen extends CustomSubState
 
     public function showImages():Void
     {
+        camera.zoom = 1.0;
+
         var rollIndex:Int = 0;
+
+        var totalRolls:Int = 0;
 
         var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('game/GameOverScreen/${rollIndex}'));
 
@@ -179,12 +190,38 @@ class GameOverScreen extends CustomSubState
             }
             else
                 if (rollTimer.loopsLeft == 0.0)
-                    skipShowcase(false);
+                    skipShowcase();
                 else
                     rollTimer.time += 0.01;
 
             if (rollTimer.loopsLeft != 0.0)
+            {
                 rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
+
+                totalRolls++;
+
+                var chance:Int = #if debug 3 #else 99 #end ; 
+
+                if (totalRolls < 24.0)
+                    chance = -1;
+
+                if (#if debug false #else HighScore.getLevelScore("Overseer", "normal").score != 0.0 #end)
+                    chance = -1;
+
+                if (PlayState.level.showInMysteryMenu)
+                    chance = -1;
+
+                if (FlxG.random.int(1, Std.int(Math.abs(chance))) == chance)
+                {
+                    rollTimer.cancel();
+
+                    rollSprite.kill();
+
+                    secretSequence();
+
+                    return;
+                }
+            }
 
             rollSprite.loadGraphic(AssetCache.getGraphic
                 ('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'));
@@ -199,11 +236,13 @@ class GameOverScreen extends CustomSubState
         canSkip = true;
     }
 
-    public function skipShowcase(skipTimer:Bool):Void
+    public function skipShowcase(skipTimer:Bool = false):Void
     {
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+
+        camera.zoom = 0.75;
 
         if (skipTimer)
         {
@@ -220,5 +259,25 @@ class GameOverScreen extends CustomSubState
         canRetry = true;
 
         FlxG.sound.play(AssetCache.getSound("game/GameOverScreen/whistle"), 1.0, false, null, true);
+    }
+
+    public function secretSequence():Void
+    {
+        CustomState.cancelNextTransition();
+
+        var character:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
+
+        character.setPosition(590.0, 300.0);
+
+        character.scale.set(0.85, 0.85);
+
+        add(character);
+
+        new FlxTimer(timer).start(9.0, (_:FlxTimer) ->
+        {
+            var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Overseer");
+        
+            PlayState.loadLevel(levelToLoad, () -> new TitleScreen());
+        });
     }
 }

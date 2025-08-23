@@ -423,6 +423,9 @@ class PlayState extends CustomState
             pause();
 
         #if debug
+        if (FlxG.keys.justPressed.R)
+            gameOver();
+
         if (FlxG.keys.justPressed.EIGHT)
             FlxG.switchState(() -> new editors.CharacterEditorState(
                 () -> PlayState.getClassFromLevel(), player.config.name));
@@ -707,7 +710,7 @@ class PlayState extends CustomState
 
     public function gameOver():Void
     {
-        #if debug
+        #if NO_GAME_OVER
         return;
         #end
         
