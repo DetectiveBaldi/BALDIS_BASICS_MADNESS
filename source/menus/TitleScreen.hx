@@ -99,7 +99,7 @@ class TitleScreen extends CustomState
 
         add(exitButton);
 
-        studio = new FlxText(0.0, 0.0, FlxG.width, "©2025 MamaCita's");
+        studio = new FlxText(0.0, 0.0, FlxG.width, "2025 MamaCita's");
 
         studio.color = FlxColor.BLACK;
 
@@ -203,7 +203,7 @@ class TitleButton extends FlxSprite
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
 
                 onClick.dispatch();
             }

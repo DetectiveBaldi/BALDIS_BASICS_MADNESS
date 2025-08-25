@@ -94,17 +94,14 @@ class AssetCache
         return sounds[path];
     }
 
-    public static function getMusic(path:String, stream:Bool = true):Sound
+    public static function getMusic(path:String):Sound
     {
         path = Paths.music(Paths.ogg(path));
 
         if (music.exists(path))
             return music[path];
 
-        if (stream)
-            music[path] = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(path)));
-        else
-            music[path] = Sound.fromFile(path);
+        music[path] = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(path)));
 
         return music[path];
     }
@@ -130,7 +127,8 @@ class AssetCache
         var aud:Sound = map[path];
 
         @:privateAccess
-        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd._sound == aud && (snd.active || snd.persist)) != null)
+        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd._sound == aud && (snd.active || snd.persist))
+            != null)
                 return;
 
         aud.close();

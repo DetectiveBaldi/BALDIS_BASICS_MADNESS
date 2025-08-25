@@ -64,6 +64,8 @@ class Character extends FlxSprite
 
     public var singDuration:Float;
 
+    public var deathCharacter:String;
+
     public var danceIndex:Int;
 
     public var skipDance:Bool;
@@ -92,6 +94,8 @@ class Character extends FlxSprite
         skipDance = false;
 
         skipSing = false;
+
+        holdTimer = 0.0;
 
         dance();
 
@@ -206,7 +210,7 @@ class Character extends FlxSprite
 
         singDuration = config.singDuration ?? 8.0;
 
-        holdTimer = 0.0;
+        deathCharacter = config.deathCharacter ?? "bf-dead";
 
         return config;
     }

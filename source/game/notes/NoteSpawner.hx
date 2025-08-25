@@ -83,7 +83,7 @@ class NoteSpawner extends FlxBasic
 
             note.playSplash = false;
 
-            note.droppedTime = 0.0;
+            note.unholdTime = 0.0;
 
             note.sustain = null;
 

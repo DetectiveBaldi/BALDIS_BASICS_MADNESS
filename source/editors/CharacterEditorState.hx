@@ -340,11 +340,18 @@ class CharacterEditorState extends CustomState
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
         }
 
+        ui.findComponent("____button").onClick = (ev:MouseEvent) ->
+        {
+            character.config.deathCharacter = ui.findComponent("______textfield", TextField).text;
+
+            character.deathCharacter = character.config.deathCharacter;
+        }
+
         refreshAnimationsTab();
 
-        ui.findComponent("____button", Button).onClick = (ev:MouseEvent) -> saveAnimation();
+        ui.findComponent("_____button", Button).onClick = (ev:MouseEvent) -> saveAnimation();
 
-        ui.findComponent("_____button", Button).onClick = (ev:MouseEvent) -> deleteAnimation();
+        ui.findComponent("______button", Button).onClick = (ev:MouseEvent) -> deleteAnimation();
     }
 
     override function update(elapsed:Float):Void
@@ -455,15 +462,17 @@ class CharacterEditorState extends CustomState
         ui.findComponent("____textfield", TextField).text = character.config.healthIcon;
 
         ui.findComponent("_____textfield", TextField).text = character.config.healthColor;
+
+        ui.findComponent("______textfield", TextField).text = character.deathCharacter;
     }
 
     public function refreshAnimationsTab():Void
     {
         var animation:AnimationData = character.config.animations[animationIndex];
 
-        ui.findComponent("______textfield", TextField).text = animation.name;
+        ui.findComponent("_______textfield", TextField).text = animation.name;
 
-        ui.findComponent("_______textfield", TextField).text = animation.prefix;
+        ui.findComponent("________textfield", TextField).text = animation.prefix;
 
         var indicesText:String = animation.indices?.toString() ?? "";
 
@@ -483,7 +492,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_____checkbox", CheckBox).value = animation.flipY ?? false;
 
-        ui.findComponent("______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
     }
 
     public function saveAnimation():Void
@@ -491,22 +500,22 @@ class CharacterEditorState extends CustomState
         var frames:Array<FlxFrame> = new Array<FlxFrame>();
 
         @:privateAccess
-        character.animation.findByPrefix(frames, ui.findComponent("_______textfield", TextField).text);
+        character.animation.findByPrefix(frames, ui.findComponent("________textfield", TextField).text);
         
         if (frames.length == 0.0)
             return;
 
         var indices:Array<Int> = FlxStringUtil.toIntArray(ui.findComponent("textarea", TextArea).text);
 
-        var animation:AnimationData = character.config.animations.first((animation:AnimationData) -> ui.findComponent("______textfield", TextField).text == animation.name);
+        var animation:AnimationData = character.config.animations.first((animation:AnimationData) -> ui.findComponent("_______textfield", TextField).text == animation.name);
 
         if (animation == null)
         {
             character.config.animations.push
             ({
-                name: ui.findComponent("______textfield", TextField).text,
+                name: ui.findComponent("_______textfield", TextField).text,
 
-                prefix: ui.findComponent("_______textfield", TextField).text,
+                prefix: ui.findComponent("________textfield", TextField).text,
 
                 indices: indices,
 
@@ -525,7 +534,7 @@ class CharacterEditorState extends CustomState
         }
         else
         {
-            animation.prefix = ui.findComponent("_______textfield", TextField).text;
+            animation.prefix = ui.findComponent("________textfield", TextField).text;
 
             animation.indices = indices;
 
@@ -581,7 +590,7 @@ class CharacterEditorState extends CustomState
 
         animation.offset.y = y;
 
-        ui.findComponent("______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
     }
 
     public function addAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void

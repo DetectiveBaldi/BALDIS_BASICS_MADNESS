@@ -157,7 +157,7 @@ class PsychConverter
                 if (note.type == "No Animation")
                     kind = "no-animation";
 
-                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25), length: MathUtil.maxInt(Math.round(note.length - beatLength * 0.25), 0), kind: kind});
+                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25), length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});
             }
         }
 

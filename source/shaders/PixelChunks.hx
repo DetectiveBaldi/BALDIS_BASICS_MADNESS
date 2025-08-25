@@ -2,6 +2,7 @@ package shaders;
 
 import flixel.system.FlxAssets.FlxShader;
 
+// Source: https://www.shadertoy.com/view/NtSXRm
 class PixelChunks extends FlxShader
 {
     @:glFragmentSource("
@@ -23,13 +24,6 @@ class PixelChunks extends FlxShader
 
         void main()
         {
-            if (tileSize == 0.0)
-            {
-                fragColor = texture(bitmap, uv);
-
-                return;
-            }
-            
             vec2 tileVec = vec2(tileSize);
 
             vec2 edgePadding = mod(iResolution.xy * 0.5 - tileVec * 0.5, tileVec);
@@ -39,7 +33,6 @@ class PixelChunks extends FlxShader
             fragColor = texture(iChannel0, (edgePadding + tileIndex * tileVec - tileVec * 0.5) / iResolution.xy);
         }
     ")
-
     public function new():Void
     {
         super();

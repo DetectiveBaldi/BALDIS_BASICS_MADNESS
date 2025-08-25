@@ -31,4 +31,6 @@ typedef CharacterData =
     var healthIcon:String;
 
     var ?healthColor:String;
+
+    var ?deathCharacter:String;
 }

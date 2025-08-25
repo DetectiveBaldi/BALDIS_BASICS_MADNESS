@@ -232,7 +232,7 @@ class ModeSelectIcon extends FlxSprite
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
 
                 onClick.dispatch();
             }

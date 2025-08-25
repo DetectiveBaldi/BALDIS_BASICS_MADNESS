@@ -278,9 +278,9 @@ class Strumline extends FlxGroup
                 {
                     setStrumActive(note.direction, true);
 
-                    note.droppedTime += 1000.0 * elapsed;
+                    note.unholdTime += 1000.0 * elapsed;
 
-                    if (note.droppedTime >= note.latestTiming * 2.0)
+                    if (note.unholdTime >= note.latestTiming * 2.0)
                         sustainDrop(note, note.sustain);
                 }
             }
@@ -442,7 +442,7 @@ class Strumline extends FlxGroup
         {
             note.status = HIT;
 
-            note.droppedTime = 0.0;
+            note.unholdTime = 0.0;
             
             var strum:Strum = note.strum;
 
@@ -494,7 +494,7 @@ class Strumline extends FlxGroup
         if (note.status == HIT)
             notesPendingRemoval.push(note);
 
-        if (note.droppedTime == 0.0)
+        if (note.unholdTime == 0.0)
         {
             if (note.playSplash)
                 playSplash(note);

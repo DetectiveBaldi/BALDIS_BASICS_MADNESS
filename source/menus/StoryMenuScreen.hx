@@ -280,7 +280,7 @@ class StoryMenuScreen extends CustomState
                     weekToLoad.requiresScoreToPlay #end)
                         return;
 
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
 
                 MainMenuScreen.fadeTune();
 

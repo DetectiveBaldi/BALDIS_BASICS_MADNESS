@@ -132,7 +132,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
                 if (FlxG.mouse.justReleased)
                 {
-                    ClickSoundUtil.playSound();
+                    ClickSoundUtil.play();
 
                     selected = true;
                 }

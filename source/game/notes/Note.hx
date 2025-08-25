@@ -13,8 +13,6 @@ class Note extends FlxSprite
 {
     public static final DIRECTIONS:Array<String> = ["LEFT", "DOWN", "UP", "RIGHT"];
 
-    public static var NOTE_FRAMES:FlxAtlasFrames;
-
     public var time:Float;
 
     public var direction:Int;
@@ -37,7 +35,7 @@ class Note extends FlxSprite
 
     public var playSplash:Bool;
 
-    public var droppedTime:Float;
+    public var unholdTime:Float;
 
     public var latestTiming:Float;
 
@@ -51,10 +49,8 @@ class Note extends FlxSprite
     {
         super(x, y);
 
-        NOTE_FRAMES ??= FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
+        frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
             Paths.image(Paths.xml("game/notes/Note/default")));
-
-        frames = NOTE_FRAMES;
 
         for (i in 0 ... DIRECTIONS.length)
             animation.addByPrefix(DIRECTIONS[i].toLowerCase(), DIRECTIONS[i].toLowerCase() + "0", 24.0, false);
@@ -75,7 +71,7 @@ class Note extends FlxSprite
 
         playSplash = false;
 
-        droppedTime = 0.0;
+        unholdTime = 0.0;
 
         latestTiming = Rating.list.last().timing;
     }

@@ -28,8 +28,6 @@ class LevelData
     {
         var splt:Array<String> = name.split(" ");
 
-        splt[0].toUpperCase();
-
         for (i in 1 ... splt.length)
         {
             var s:String = splt[i];

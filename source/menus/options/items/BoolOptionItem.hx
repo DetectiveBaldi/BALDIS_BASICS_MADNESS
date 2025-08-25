@@ -59,7 +59,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
                 
                 value = !value;
 

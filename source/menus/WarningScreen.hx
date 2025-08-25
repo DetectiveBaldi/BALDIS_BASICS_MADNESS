@@ -27,29 +27,33 @@ class WarningScreen extends CustomState
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
-        var _text:String = "";
+        var textColorSwap:FlxTextFormat = new FlxTextFormat(FlxColor.RED);
 
-        _text += "WARNING\n\n";
+        var rules:Array<FlxTextFormatMarkerPair> = [new FlxTextFormatMarkerPair(textColorSwap, "<color-swap>")];
 
-        _text += "This is a mod of Friday Night Funkin',\n";
+        var textToShow:String = "";
 
-        _text += "based off a horror game called Baldi's Basics.\n";
+        textToShow += "<color-swap>WARNING\n\n<color-swap>";
 
-        _text += "This mod includes\n";
+        textToShow += "This is a mod of Friday Night Funkin',\n";
 
-        _text += "flashing lights, loud noises, and\n";
+        textToShow += "based off a<color-swap>horror game <color-swap>called Baldi's Basics.\n";
 
-        _text += "other elements that might make the player\n";
+        textToShow += "This mod includes\n";
 
-        _text += "uncomfortable.\n\n";
+        textToShow += "flashing lights, loud noises, and\n";
 
-        _text += "If you wish to not experience any of this,\n";
+        textToShow += "other elements that might make the player\n";
 
-        _text += "DO NOT PLAY.\n\n";
+        textToShow += "uncomfortable.\n\n";
 
-        _text += "PRESS ANY BUTTON TO CONTINUE.";
+        textToShow += "If you wish to not experience any of this,\n";
 
-        text = new FlxText(0.0, 0.0, FlxG.width, _text);
+        textToShow += "<color-swap>DO NOT PLAY.\n\n<color-swap>";
+
+        textToShow += "PRESS ANY BUTTON TO CONTINUE.";
+
+        text = new FlxText(0.0, 0.0, FlxG.width, textToShow);
 
         text.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -65,13 +69,7 @@ class WarningScreen extends CustomState
 
         add(text);
 
-        var colorSwap:FlxTextFormat = new FlxTextFormat(FlxColor.RED);
-
-        text.addFormat(colorSwap, 0, 7);
-
-        text.addFormat(colorSwap, 60, 71);
-
-        text.addFormat(colorSwap, 248, 260);
+        text.applyMarkup(textToShow, rules);
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/WarningScreen/tune"), 1.0, true);
 

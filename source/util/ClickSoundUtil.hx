@@ -12,27 +12,22 @@ class ClickSoundUtil
 
     public static var buttonClick:FlxSound;
 
-    public static function resolveSound(type:ClickSoundType = ITEM):FlxSound
+    public static function resolve(type:ClickSoundType = ITEM):FlxSound
     {
-        var res:FlxSound = null;
+        buttonClick ??= FlxG.sound.load(AssetCache.getSound("shared/button-click"));
 
-        switch (type:ClickSoundType)
-        {
-            case ITEM:
-                res = (itemClick ??= FlxG.sound.load(AssetCache.getSound("shared/item-click")));
+        itemClick ??= FlxG.sound.load(AssetCache.getSound("shared/item-click"));
 
-            case BUTTON:
-                res = (buttonClick ??= FlxG.sound.load(AssetCache.getSound("shared/button-click")));
-        }
+        var soundOut:FlxSound = type == BUTTON ? buttonClick : itemClick;
 
-        res.persist = true;
+        soundOut.persist = true;
 
-        return res;
+        return soundOut;
     }
 
-    public static function playSound(type:ClickSoundType = ITEM, volume:Float = 1.0):Void
+    public static function play(type:ClickSoundType = ITEM, volume:Float = 1.0):Void
     {
-        var clickSound:FlxSound = resolveSound(type);
+        var clickSound:FlxSound = resolve(type);
 
         clickSound.volume = volume;
 
@@ -42,7 +37,7 @@ class ClickSoundUtil
 
 enum ClickSoundType
 {
-    ITEM;
-
     BUTTON;
+
+    ITEM;
 }

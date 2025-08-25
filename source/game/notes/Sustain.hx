@@ -8,12 +8,9 @@ import flixel.graphics.frames.FlxFrame;
 
 import flixel.util.FlxColor;
 
+import core.AssetCache;
 import core.Paths;
 
-/**
- * TODO: Patch sustain clipping when note is not held.
- * TODO: Replace coloring during misses with an alpha decrease.
- */
 class Sustain extends FlxSprite
 {
     public var note:Note;
@@ -24,7 +21,8 @@ class Sustain extends FlxSprite
     {
         super(x, y);
 
-        frames = Note.NOTE_FRAMES;
+        frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
+            Paths.image(Paths.xml("game/notes/Note/default")));
 
         for (i in 0 ... Note.DIRECTIONS.length)
             animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldPiece", Note.DIRECTIONS[i].toLowerCase() + "HoldPiece0", 24.0, false);

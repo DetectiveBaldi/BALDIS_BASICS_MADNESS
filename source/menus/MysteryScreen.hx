@@ -293,7 +293,7 @@ class MysteryScreen extends CustomState
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
 
                 clickStartButton();
             }

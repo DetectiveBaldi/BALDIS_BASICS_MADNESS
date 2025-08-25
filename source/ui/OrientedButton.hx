@@ -43,7 +43,7 @@ class OrientedButton extends FlxSprite
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.playSound();
+                ClickSoundUtil.play();
                 
                 onClick.dispatch();
             }

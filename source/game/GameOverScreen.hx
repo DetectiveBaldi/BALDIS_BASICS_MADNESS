@@ -30,9 +30,7 @@ using util.MathUtil;
 class GameOverScreen extends CustomSubState
 {
     public var game:PlayState;
-
-    public var characterToShow:String;
-
+    
     public var player:Character;
 
     public var dead:FlxSound;
@@ -45,13 +43,11 @@ class GameOverScreen extends CustomSubState
 
     public var canRetry:Bool;
 
-    public function new(game:PlayState, characterToShow:String = "bf-dead"):Void
+    public function new(game:PlayState):Void
     {
         super();
 
         this.game = game;
-
-        this.characterToShow = characterToShow;
     }
 
     override function create():Void
@@ -62,7 +58,7 @@ class GameOverScreen extends CustomSubState
 
         camera.zoom = 0.75;
 
-        player = new Character(null, 0.0, 0.0, Character.getConfig(characterToShow));
+        player = new Character(null, 0.0, 0.0, Character.getConfig(game.player.deathCharacter));
 
         player.dance();
 
@@ -135,7 +131,7 @@ class GameOverScreen extends CustomSubState
 
                 if (FlxG.mouse.justReleased)
                 {
-                    ClickSoundUtil.playSound();
+                    ClickSoundUtil.play();
                     
                     tween.tween(retryButton, {alpha: 0.0}, 0.5);
 
