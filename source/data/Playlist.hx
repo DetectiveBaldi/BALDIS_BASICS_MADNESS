@@ -27,7 +27,7 @@ class Playlist
         week.description += "try to stop you from your objective! Be careful, you don't wanna get caught...";
 
         week.levels.pushMany({week: week, name: "Playmate"}, {week: week, name: "Detention"},
-        {week: week, name: "Standoff"}, {week: week, name: "Scribble"}, {week: week, name: "Hugs"}, 
+        {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"},
         {week: week, name: "Lookalike"}, {week: week, name: "Rough Escape"});
 
         week.hasTvPortrait = true;
@@ -35,7 +35,7 @@ class Playlist
         WeekData.list.push(week);
 
         // Bladder
-        week = {name: "Bladder", nameSuffix: "'s Week", description: ""}
+        week = {name: "Bladder", nameSuffix: " Style", description: ""}
 
         week.description += 'Out of pure curiosity, you slap a Portal Poster on a wall ';
 

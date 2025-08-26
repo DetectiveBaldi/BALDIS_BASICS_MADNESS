@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="hall5.png">
+<TextureAtlas imagePath="scrolling-hall2.png">
     <SubTexture name="redLongHall run0000" x="0" y="0" width="1352" height="634" frameX="0" frameY="0" frameWidth="1352" frameHeight="634" />
     <SubTexture name="redLongHall run0001" x="0" y="634" width="1352" height="634" frameX="0" frameY="0" frameWidth="1352" frameHeight="634" />
     <SubTexture name="redLongHall run0002" x="1352" y="0" width="1352" height="634" frameX="0" frameY="0" frameWidth="1352" frameHeight="634" />

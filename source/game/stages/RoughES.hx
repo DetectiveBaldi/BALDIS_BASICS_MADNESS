@@ -96,7 +96,7 @@ class RoughES extends Stage
 
         hall4 = getSprite("hall4", 0.75, 0.75);
 
-        hall5 = getAtlasSprite("hall5");
+        hall5 = getAtlasSprite("game/stages/shared/scrolling-hall2");
 
         hall5.active = true;
 
