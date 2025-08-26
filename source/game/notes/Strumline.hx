@@ -377,20 +377,20 @@ class Strumline extends FlxGroup
         strum.animation.play(Note.DIRECTIONS[note.direction].toLowerCase() + "Confirm", true);
 
         if (note.length > 0.0)
-        {
             resizeSustainNote(note);
-
-            setStrumActive(note.direction, false);
-        }
         else
         {
             notesPendingRemoval.push(note);
 
             if (note.playSplash)
                 playSplash(note);
-        }   
+        }
+        
+        setStrumActive(note.direction, note.length == 0.0);
 
         playCharSingAnims(note, note.direction, false);
+
+        setCharAnimsActive(note.length == 0.0);
 
         if (vocals != null)
             vocals.volume = 1.0;
@@ -404,12 +404,12 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
+        setCharAnimsActive(true);
+
         if (vocals != null)
             vocals.volume = 0.0;
 
-        var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
-
-        _noteMiss.onComplete = _noteMiss.kill;
+        FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
     }
 
     public function playSplash(note:Note):Void
@@ -469,6 +469,8 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
+        setCharAnimsActive(true);
+
         if (vocals != null)
             vocals.volume = 0.0;
 
@@ -491,6 +493,9 @@ class Strumline extends FlxGroup
     {
         setStrumActive(note.direction, true);
 
+        for (i in 0 ... characters.members.length)
+            characters.members[i].animation.resume();
+
         if (note.status == HIT)
             notesPendingRemoval.push(note);
 
@@ -505,9 +510,6 @@ class Strumline extends FlxGroup
 
             note.strum.animation.play(anim, true);
         }
-
-        for (i in 0 ... characters.members.length)
-            characters.members[i].animation.resume();
     }
 
     public function ghostTap(direction:Int):Void
@@ -518,11 +520,11 @@ class Strumline extends FlxGroup
 
         if (!ghostTapEvent.ghostTapping)
         {
-            var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
-
-            _noteMiss.onComplete = _noteMiss.kill;
+            FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
 
             playCharMissAnims(null, direction);
+
+            setCharAnimsActive(true);
 
             if (vocals != null)
                 vocals.volume = 0.0;
@@ -542,11 +544,6 @@ class Strumline extends FlxGroup
                 continue;
 
             character.holdTimer = 0.0;
-
-            if (note.length == 0.0)
-                character.animation.resume();
-            else
-                character.animation.pause();
 
             var animSuffix:String = "";
 
@@ -586,8 +583,6 @@ class Strumline extends FlxGroup
 
             character.holdTimer = 0.0;
 
-            character.animation.resume();
-
             var animSuffix:String = "";
 
             if (note != null)
@@ -609,6 +604,19 @@ class Strumline extends FlxGroup
                 if (character.animation.exists(animToPlay))
                     character.animation.play(animToPlay, true);
             }
+        }
+    }
+
+    public function setCharAnimsActive(active:Bool):Void
+    {
+        for (i in 0 ... characters.members.length)
+        {
+            var character:Character = characters.members[i];
+
+            if (active)
+                character.animation.resume();
+            else
+                character.animation.pause();
         }
     }
 }
