@@ -10,9 +10,13 @@ class HugsS extends Stage
 {
     public var hall:FlxSprite;
 
+    public var hallcorner1:FlxSprite;
+
     public var hallcorner2:FlxSprite;
 
     public var hallcorner4:FlxSprite;
+
+    public var hallend:FlxSprite;
 
     public var doorStandard:FlxSprite;
 
@@ -26,6 +30,10 @@ class HugsS extends Stage
 
         hall.active = true;
 
+        hallcorner1 = getSprite("hallcorner-1");
+
+        hallcorner1.active = true;
+
         hallcorner2 = getSprite("hallcorner-2");
 
         hallcorner2.active = true;
@@ -33,6 +41,10 @@ class HugsS extends Stage
         hallcorner4 = getSprite("hallcorner-4");
 
         hallcorner4.active = true;
+
+        hallend = getSprite("hall-end");
+
+        hallend.active = true;
 
         doorStandard = getSprite("doorStandard", 2.35, 2.35);
 

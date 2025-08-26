@@ -228,7 +228,7 @@ class HugsL extends PlayState
         }
         
         if (step == 576)
-            gameCameraZoom += 0.1;
+            gameCameraZoom += 0.125;
 
         if (step == 697)
         {
@@ -242,6 +242,8 @@ class HugsL extends PlayState
         if (step == 704)
         {
             hugsS.hall.velocity.x = hugsS.hallcorner2.velocity.x = 0;
+
+            playField.healthBar.percent -= 35;
 
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
@@ -274,7 +276,7 @@ class HugsL extends PlayState
 
             tween.tween(player.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opponent, {x: -95.0, y: -250.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(opponent, {x: -97.0, y: -250.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
             tween.tween(player, {x: 192.0, y: 80.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
         }
@@ -308,12 +310,12 @@ class HugsL extends PlayState
             tween.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
-        if (step == 992)
+        if (step == 992 || step == 1440)
         {
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            gameCameraZoom += 0.2;
+            gameCameraZoom += 0.125;
         }
 
         if (step == 1110)
@@ -326,7 +328,13 @@ class HugsL extends PlayState
         }
 
         if (step == 1116)
+        {
             hugsS.hall.velocity.x = hugsS.hallcorner4.velocity.x = 0.0;
+
+            playField.healthBar.percent -= 35;
+
+            tween.tween(opponent, {x: -110.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+        }
 
         if (step == 1120)
         {
@@ -334,9 +342,180 @@ class HugsL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             hugsS.hallcorner4.visible = false;
+            hugsS.hallcorner1.visible = true;
 
-            var opp:Character = getOpponent("1st-prize-180");
+            gameCameraZoom = 0.6;
+
+            hugsS.hallcorner1.velocity.x = -1600.0;
+            hugsS.hall.velocity.x = -1600.0;
+
+            var plr:Character = getPlayer("bf-face-right");
+            plr.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-running"));
+            plr.scale.set(2.7, 2.7);
+            players.add(plr);
+            player = plr;
+
+            var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("run-legs"));
+
+            var anim:FlxAnimation = __plr.animation.getByName("legs");
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+            anim = __plr.animation.getByName("legs miss");
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+
+            __plr.animation.play("legs", true);
+            __plr.skipDance = true;
+            __plr.skipSing = true;
+
+            players.insert(players.members.indexOf(player), __plr);
+
+            player.setPosition(340.0, 140.0);
+
+            __plr.setPosition(player.x, 155.5);
+
+            player.animation.onFrameChange.add(updateLegStatus);
+
+            var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
+
+            var opp:Character = getOpponent("1st-prize-337-5");
+            opp.setPosition(-800.0, -180.0);
+            opp.visible = true;
+            opponent = opp;
+
+            tween.tween(opponent, {x: -1500.0}, conductor.beatLength * 1.25 * 0.001);
+        }
+
+        if (step == 1178)
+            tween.tween(opponent, {x: 2800.0}, conductor.beatLength * 2.0 * 0.001);
+
+        if (step == 1180)
+        {
+            tween.tween(player, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
+
+            var _plr:Character = getPlayer("run-legs");
+            tween.tween(_plr, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
+
+            tween.tween(hugsS.hall.velocity, {x: 0.0}, conductor.beatLength * 0.9 * 0.001, {ease: FlxEase.quartOut});
+        }
+        
+        if (step == 1184)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            var opp:Character = getOpponent("1st-prize-337-5");
+            opp.visible = false;
+
+            var opp:Character = getOpponent("1st-prize-270");
+            opp.x = -1500.0;
+            opp.visible = true;
+            opponent = opp;
+
+            hugsS.hall.velocity.x = -3840.0;
+
+            var plr:Character = getPlayer("bf-running");
+            plr.visible = false;
+
+            var plr:Character = getPlayer("run-legs");
+            plr.visible = false;
+
+            var plr:Character = getPlayer("bf-face-right");
+            plr.visible = true;
+            player = plr;
+
+            player.x = -800.0;
+            player.y = 140.0;
+            player.scale.set(2.7, 2.7);
+
+            hugsS.remove(opponents, true);
+            hugsS.insert(hugsS.members.indexOf(players), opponents);
+
+            tween.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+
+        if (step == 1562)
+        {
+            hugsS.hallend.visible = true;
+
+            hugsS.hallend.velocity.x = -3840.0;
+
+            hugsS.hallend.x = gameCamera.viewX + gameCamera.viewWidth;   
+        }
+
+        if (step == 1568)
+        {
+            hugsS.hallend.velocity.x = hugsS.hall.velocity.x = 0.0;
+
+            var plr:Character = getPlayer("bf-face-right");
+            plr.visible = false;
+
+            var plr:Character = getPlayer("bf-running");
+            plr.x = 500.0;
+            plr.visible = true;
+            player = plr;
+
+            tween.tween(player, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
+
+            var _plr:Character = getPlayer("run-legs");
+
+            var anim:FlxAnimation = _plr.animation.getByName("legs");
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+            anim = _plr.animation.getByName("legs miss");
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
+
+            _plr.animation.play("legs", true);
+            _plr.x = 500.0;
+            _plr.skipDance = true;
+            _plr.skipSing = true;
+
+            players.insert(players.members.indexOf(player), _plr);
+
+            tween.tween(_plr, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
+            _plr.visible = true;
+
+            player.animation.onFrameChange.add(updateLegStatus);
+
+            var opp:Character = getOpponent("1st-prize-270");
+            opp.visible = false;
+
+            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-spin"));
+            _opp.setPosition(-100.0, -180.0);
+            _opp.animation.play("spin");
+            _opp.skipDance = true;
+            _opp.skipSing = true;
+            _opp.visible = true;
+            opponent = _opp;
+        }
+
+        if (step == 1584)
+        {
+            playField.visible = false;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 16.0 * 0.001, false);
+        }
+    }
+
+    public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
+    {
+        var plr:Character = getPlayer("run-legs");
+    
+        var curFrame:Int = plr.animation.curAnim.curFrame;
+    
+        if (name.contains("MISS"))
+        {
+            if (!plr.animation.name.contains("miss"))
+                plr.animation.play("legs miss", true, false, curFrame);
+        }
+        else
+        {
+            if (plr.animation.name.contains("miss"))
+                plr.animation.play("legs", true, false, curFrame);
         }
     }
 }
