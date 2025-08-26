@@ -14,13 +14,15 @@ class ClickSoundUtil
 
     public static function resolve(type:ClickSoundType = ITEM):FlxSound
     {
-        buttonClick ??= FlxG.sound.load(AssetCache.getSound("shared/button-click"));
+        buttonClick = FlxG.sound.load(AssetCache.getSound("shared/button-click"));
+
+        buttonClick.persist = true;
 
         itemClick ??= FlxG.sound.load(AssetCache.getSound("shared/item-click"));
 
-        var soundOut:FlxSound = type == BUTTON ? buttonClick : itemClick;
+        itemClick.persist = true;
 
-        soundOut.persist = true;
+        var soundOut:FlxSound = type == BUTTON ? buttonClick : itemClick;
 
         return soundOut;
     }
