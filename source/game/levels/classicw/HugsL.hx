@@ -482,11 +482,11 @@ class HugsL extends PlayState
             opp.visible = false;
 
             var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-spin"));
-            _opp.setPosition(-100.0, -180.0);
+            _opp.setPosition(120.0, 220.0);
             _opp.animation.play("spin");
             _opp.skipDance = true;
             _opp.skipSing = true;
-            _opp.visible = true;
+            opponents.add(_opp);
             opponent = _opp;
         }
 

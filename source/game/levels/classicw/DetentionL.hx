@@ -393,7 +393,7 @@ class DetentionL extends PlayState
             detentionS.office0.visible = false;
             detentionS.office1.visible = true;
 
-            tween.tween(opponent, {x: -280.0}, conductor.beatLength * 2.0 * 0.001);
+            tween.tween(opponent, {x: -320.0}, conductor.beatLength * 2.0 * 0.001);
         }
     }
 
