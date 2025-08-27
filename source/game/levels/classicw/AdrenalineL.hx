@@ -78,8 +78,8 @@ class AdrenalineL extends PlayState
             }
         );
 
-        player.scale.set(3, 3);
-        player.setPosition(220.0, 50.0);
+        player.scale.set(2.4, 2.4);
+        player.setPosition(1600.0, 110.0);
 
         opponent.scale.set(1.5, 1.5);
         opponent.setPosition(300.0, 50.0);
@@ -90,9 +90,21 @@ class AdrenalineL extends PlayState
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
+
+        if (step == 0)
+        {
+            player.animation.play("walk");
+            player.skipDance = true;
+            player.skipSing = true;
+
+            tween.tween(player, {x: 540.0}, conductor.beatLength * 4.0 * 0.001);
+        }
     
         if (step == 16)
         {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
             playField.visible = true;
 
             adrenalineS.closet.visible = false;
@@ -103,6 +115,12 @@ class AdrenalineL extends PlayState
             adrenalineS.insert(adrenalineS.members.indexOf(adrenalineS.closet_Overlay), noSquee);
 
             adrenalineS.insert(adrenalineS.members.indexOf(adrenalineS.closet_Overlay), opponents);
+
+            tween.tween(player, {x: 560.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            player.animation.play("shock");
+            player.skipDance = false;
+            player.skipSing = false;
         }
 
         if (step == 288)
@@ -143,7 +161,7 @@ class AdrenalineL extends PlayState
             adrenalineS.closet_Overlay.visible = false;
             
             adrenalineS.hall.visible = true;
-            adrenalineS.hall.velocity.set(-10560.0, 0.0);
+            adrenalineS.hall.velocity.set(-3560.0, 0.0);
 
             player.visible = false;
             
@@ -173,17 +191,19 @@ class AdrenalineL extends PlayState
                     ease: FlxEase.backOut
                 }
             );
+
+            gameCameraZoom = 0.65;
         
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
         }
     
         if (step == 560)
-            tween.tween(this, {gameCameraZoom: 1}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.backIn});
+            tween.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.backIn});
 
         if (step == 564)
         {
-            gameCameraZoom = 0.6;
+            gameCameraZoom = 0.65;
 
             tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
@@ -234,61 +254,49 @@ class AdrenalineL extends PlayState
 
             adrenalineS.hall.visible = false;
             
-            adrenalineS.faculty0.visible = true;
-            adrenalineS.faculty0_Overlay0.visible = true;
-
-            quarter = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/quarter"));
-            quarter.scale.set(1.5, 1.5);
-            quarter.updateHitbox();
-            quarter.setPosition(957.0, 325.0);
-            add(quarter);
-
-            alarmClock = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/alarm-clock"));
-            alarmClock.scale.set(0.45, 0.45);
-            alarmClock.updateHitbox();
-            alarmClock.setPosition(933.0, 350.0);
-            adrenalineS.insert(adrenalineS.members.indexOf(players), alarmClock);
-
-            tween.tween(quarter, {y: quarter.y - 25}, conductor.beatLength * 2.0 * 0.001, 
-                {
-                    ease: FlxEase.sineInOut, 
-                    type: PINGPONG
-                }
-            );
-            
-            tween.tween(alarmClock, {y: alarmClock.y - 12.5}, conductor.beatLength * 2.0 * 0.001, 
-                {
-                    ease: FlxEase.sineInOut, 
-                    type: PINGPONG
-                }
-            );
-            
-            player.visible = false;
+            adrenalineS.closet1.visible = true;
            
             opponent.visible = false;
-
-            adrenalineS.remove(players, true);
-            adrenalineS.insert(adrenalineS.members.indexOf(adrenalineS.faculty0_Overlay0), players);
 
             adrenalineS.remove(opponents, true);
             adrenalineS.insert(adrenalineS.members.indexOf(players), opponents);
 
-            var plr:Character = getPlayer("bf-face-back");
-            plr.updateHitbox();
-            plr.setPosition(-100.0, 100.0);
-            plr.visible = true;
-            player = plr;
-
             var opp:Character = getOpponent("gotta-sweep-face-front");
             opp.updateHitbox();
-            opp.setPosition(0.0, 150.0);
+            opp.setPosition(-100.0, 100.0);
+            opp.scale.set(3.25, 3.25);
             opp.visible = true;
             opponent = opp;
+
+            player.setPosition(-100.0, 140.0);
+            player.scale.set(3.1, 3.1);
+
+            tween.tween(opponent, {x: 160.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(player, {x: 640.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
             
-            roomTravel("IN");
-            
+            noSquee.scale.set(2.0, 2.0);
+            noSquee.updateHitbox();
+            noSquee.setPosition(1400.0, 350.0);
+
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+
+        if (step == 832)
+            adrenalineS.closet0.visible = true;
+
+        if (step == 1216)
+        {
+            tween.tween(opponent, {x: -1600.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(player, {x: -1600.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 1224)
+        {
+            adrenalineS.closet1.visible = true;
+            adrenalineS.closet0.visible = false;
         }
     
         if (step == 1232)
@@ -314,135 +322,5 @@ class AdrenalineL extends PlayState
         if (beat >= 0 && beat < 4)
             gameCameraZoom += 0.05;
 
-        if (beat >= 4 && beat < 76)
-            if (cameraCharTarget == "OPPONENT")
-                {
-                    gameCameraZoom = 0.9;
-                
-                    tween.tween(player, {alpha: 0.25}, conductor.beatLength * 1.0 * 0.001);
-                }
-            else
-                {
-                    gameCameraZoom = 0.6;
-                    
-                    tween.tween(player, {alpha: 1}, conductor.beatLength * 1.0 * 0.001);
-                }
-    }
-
-    public function roomTravel(direction):Void
-    {
-        if (direction == "IN")
-        {
-            tween.tween(player.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 1.5 * 0.001);
-
-            tween.tween(player, {x: -600.0, y: -150.0}, conductor.beatLength * 1.5 * 0.001);
-
-            tween.tween(opponent.scale, {x: 1.25, y: 1.25}, conductor.beatLength * 1.5 * 0.001);
-
-            tween.tween(opponent, {x: -500.0, y: 50.0}, conductor.beatLength * 1.5 * 0.001,
-                {
-                    onComplete: (_tween:FlxTween) ->
-                    {
-                        tween.tween(player.scale, {x: 1.55, y: 1.55}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(player, {x: 300.0, y: -145.0}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(opponent.scale, {x: 1.45, y: 1.45}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(opponent, {x: 400.0, y: 25.0}, conductor.beatLength * 1.5 * 0.001,
-                            {
-                                onComplete: (_tween:FlxTween) ->
-                                {
-                                    tween.tween(player.scale, {x: 2.25, y: 2.25}, conductor.beatLength * 1.5 * 0.001);
-
-                                    tween.tween(player, {x: 1100.0, y: -75.0}, conductor.beatLength * 1.5 * 0.001);
-
-                                    tween.tween(opponent.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 1.5 * 0.001);
-                                    
-                                    tween.tween(opponent, {x: 1200.0, y: 75.0}, conductor.beatLength * 1.5 * 0.001,
-                                        {
-                                            onComplete: (_tween:FlxTween) ->
-                                            {
-                                                tween.tween(player.scale, {x: 1.25, y: 1.25}, conductor.beatLength * 1 * 0.001);
-
-                                                tween.tween(player, {x: 1175.0, y: -175.0}, conductor.beatLength * 1 * 0.001);
-                            
-                                                tween.tween(opponent.scale, {x: 1.0, y: 1.0}, conductor.beatLength * 1 * 0.001);
-
-                                                tween.tween(opponent, {x: 1300.0, y: 50.0}, conductor.beatLength * 1 * 0.001,
-                                                    {
-                                                        onComplete: (_tween:FlxTween) ->
-                                                        {
-                                                            roomTravel("OUT");
-                                                        }
-                                                    }
-                                                );
-                                            }
-                                        }
-                                    );
-                                }
-                            }
-                        );
-                    }
-                }
-            );
-        }
-        
-        if (direction == "OUT")
-        {
-            tween.tween(player.scale, {x: 2.25, y: 2.25}, conductor.beatLength * 1.5 * 0.001);
-            
-            tween.tween(player, {x: 1100.0, y: -75.0}, conductor.beatLength * 1.5 * 0.001);
-
-            tween.tween(opponent.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 1.5 * 0.001);
-                                    
-            tween.tween(opponent, {x: 1200.0, y: 75.0}, conductor.beatLength * 1.5 * 0.001,
-                {
-                    onComplete: (_tween:FlxTween) ->
-                    {
-                        tween.tween(player.scale, {x: 1.55, y: 1.55}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(player, {x: 300.0, y: -145.0}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(opponent.scale, {x: 1.45, y: 1.45}, conductor.beatLength * 1.5 * 0.001);
-
-                        tween.tween(opponent, {x: 400.0, y: 25.0}, conductor.beatLength * 1.5 * 0.001,
-                            {
-                                onComplete: (_tween:FlxTween) ->
-                                {
-                                    tween.tween(player.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 1.5 * 0.001);
-                                    
-                                    tween.tween(player, {x: -600.0, y: -150.0}, conductor.beatLength * 1.5 * 0.001);
-                                    
-                                    tween.tween(opponent.scale, {x: 1.25, y: 1.25}, conductor.beatLength * 1.5 * 0.001);
-                                    
-                                    tween.tween(opponent, {x: -500.0, y: 50.0}, conductor.beatLength * 1.5 * 0.001,
-                                        {
-                                            onComplete: (_tween:FlxTween) ->
-                                            {
-                                                tween.tween(player.scale, {x: 2.7, y: 2.7}, conductor.beatLength * 1 * 0.001);
-                                                           
-                                                tween.tween(player, {x: -100.0, y: 100.0}, conductor.beatLength * 1 * 0.001);
-                                                           
-                                                tween.tween(opponent.scale, {x: 2.75, y: 2.75}, conductor.beatLength * 1 * 0.001);
-                                                           
-                                                tween.tween(opponent, {x: 0.0, y: 150.0}, conductor.beatLength * 1 * 0.001,
-                                                    {
-                                                        onComplete: (_tween:FlxTween) ->
-                                                        {
-                                                            roomTravel("IN");
-                                                        }
-                                                    }
-                                                );
-                                            }
-                                        }
-                                    );
-                                }
-                            }
-                        );
-                    }
-                }
-            );
-        }
     }
 }

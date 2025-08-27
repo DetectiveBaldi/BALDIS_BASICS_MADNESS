@@ -22,9 +22,17 @@ class AdrenalineS extends Stage
     
     public var faculty0_Overlay1:FlxSprite;
 
+    public var closet0:FlxSprite;
+
+    public var closet1:FlxSprite;
+
     public function new():Void
     {
         super();
+
+        closet1 = getSprite("closetInOpen", 2, 2);
+
+        closet0 = getSprite("closetIn", 2, 2);
 
         closet = getSprite("closet", 2, 2);
 
