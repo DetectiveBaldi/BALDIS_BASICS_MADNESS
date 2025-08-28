@@ -1,4 +1,4 @@
-package game.stages;
+package game.stages.classicw.diff_hard;
 
 import flixel.FlxSprite;
 
@@ -88,7 +88,7 @@ class RoughES extends Stage
 
         hall1 = getSprite("hall1");
 
-        hall2 = getBackdrop("game/stages/shared/scrolling-hall0", false);
+        hall2 = getBackdrop("scrolling-hall0", true);
 
         hall2.active = true;
 
@@ -96,7 +96,7 @@ class RoughES extends Stage
 
         hall4 = getSprite("hall4", 0.75, 0.75);
 
-        hall5 = getAtlasSprite("game/stages/shared/scrolling-hall2");
+        hall5 = getAtlasSprite("scrolling-hall2", true);
 
         hall5.active = true;
 

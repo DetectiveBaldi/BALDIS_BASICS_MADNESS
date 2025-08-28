@@ -26,7 +26,7 @@ class HugsS extends Stage
     {
         super();
 
-        hall = getBackdrop("game/stages/shared/scrolling-hall0", false);
+        hall = getBackdrop("scrolling-hall0", true);
 
         hall.active = true;
 

@@ -58,7 +58,7 @@ class GainGS extends Stage
 
         principalOffice0_Overlay0 = getSprite("principal-office0-overlay0");
 
-        scrollingHall0 = getBackdrop("game/stages/shared/scrolling-hall0", false);
+        scrollingHall0 = getBackdrop("scrolling-hall0", true);
 
         phoneHall0 = getSprite("phone-hall0");
     }

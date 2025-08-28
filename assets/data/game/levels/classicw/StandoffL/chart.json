@@ -10,7 +10,7 @@
 		{
 			"sectionNotes": [],
 			"sectionBeats": 4,
-			"mustHitSection": true
+			"mustHitSection": false
 		},
 		{
 			"sectionNotes": [],
@@ -18,13 +18,7 @@
 			"mustHitSection": true
 		},
 		{
-			"sectionNotes": [
-				[4333.33333333333, 4, 0],
-				[4555.55555555556, 7, 0],
-				[4666.66666666667, 5, 0],
-				[4888.88888888889, 7, 0],
-				[5000, 6, 291.666666666667]
-			],
+			"sectionNotes": [],
 			"sectionBeats": 4,
 			"mustHitSection": false
 		},

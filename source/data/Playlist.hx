@@ -6,7 +6,7 @@ class Playlist
 {
     public static function init():Void
     {
-        // Baldi
+        // Baldi Week
         var week:WeekData = {name: "Baldi", nameSuffix: " Style", description: ""}
 
         week.description += 'You get a very suspicious note from your friend, asking you to get their "noteboos" ';
@@ -18,8 +18,7 @@ class Playlist
         
         WeekData.list.push(week);
 
-        // Classic
-
+        // Classic Week
         week = {name: "Classic", nameSuffix: " Style", description: ""}
 
         week.description += 'While you try to avoid Baldi, his friends come in play and ';
@@ -27,14 +26,16 @@ class Playlist
         week.description += "try to stop you from your objective! Be careful, you don't wanna get caught...";
 
         week.levels.pushMany({week: week, name: "Playmate"}, {week: week, name: "Detention"},
-        {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"},
-        {week: week, name: "Lookalike"}, {week: week, name: "Rough Escape"});
+            {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"});
+
+        // Hard Difficulty
+        week.levels.pushMany({week: week, name: "Rough Escape", difficulty: "Hard"});
 
         week.hasTvPortrait = true;
 
         WeekData.list.push(week);
 
-        // Bladder
+        // Bladder Week
         week = {name: "Bladder", nameSuffix: " Style", description: ""}
 
         week.description += 'Out of pure curiosity, you slap a Portal Poster on a wall ';
@@ -46,9 +47,6 @@ class Playlist
         week.hasTvPortrait = true;
         
         WeekData.list.push(week);
-
-        // Rough Escape
-        LevelData.list.push({week : null, name: "Rough Escape"});
 
         // Scribble
         var level:LevelData = {week: null, name: "Scribble"}

@@ -1,5 +1,7 @@
 package data;
 
+using util.ArrayUtil;
+
 @:structInit
 class WeekData
 {
@@ -65,5 +67,10 @@ class WeekData
         data.hasTvPortrait = hasTvPortrait;
 
         return data;
+    }
+
+    public function hasDifficulty(difficulty:String):Bool
+    {
+        return levels.first((lv:LevelData) -> lv.difficulty == difficulty) != null;
     }
 }

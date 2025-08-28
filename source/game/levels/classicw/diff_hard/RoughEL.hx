@@ -1,4 +1,4 @@
-package game.levels;
+package game.levels.classicw.diff_hard;
 
 import openfl.filters.BitmapFilter;
 import openfl.filters.BlurFilter;
@@ -26,7 +26,7 @@ import data.CharacterData;
 
 import game.events.SetCamFocusEvent;
 
-import game.stages.RoughES;
+import game.stages.classicw.diff_hard.RoughES;
 
 import shaders.PixelChunks;
 

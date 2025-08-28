@@ -40,11 +40,11 @@ class AdrenalineS extends Stage
 
         closet_Overlay = getSprite("closet-overlay", 2, 2);
     
-        hall = getBackdrop("game/stages/shared/scrolling-hall0", false);
+        hall = getBackdrop("scrolling-hall0", true);
     
         hall.active = true;
     
-        hall2 = getAtlasSprite("game/stages/shared/scrolling-hall2", false);
+        hall2 = getAtlasSprite("scrolling-hall2", true);
 
         hall2.active = true;
 

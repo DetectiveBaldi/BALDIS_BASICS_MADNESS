@@ -47,12 +47,7 @@ class LevelData
             split[i] = s.getFirstCharacter().toUpperCase();
         }
 
-        var difficultyToAppend:String = "";
-
-        if (difficulty != "Normal")
-            difficultyToAppend = difficulty.toUpperCase();
-
-        return '${split.join("")}L_${difficultyToAppend}';
+        return '${split.join("")}L';
     }
 
     public function getClassPath(sep:String = "/"):String
@@ -61,6 +56,14 @@ class LevelData
 
         if (week != null)
             path += '/${week.getFormattedName()}';
+
+        var diffToAppend:String = "";
+
+        if (difficulty != "Normal")
+            diffToAppend = difficulty.toLowerCase();
+
+        if (diffToAppend != "")
+            path += '/diff_${diffToAppend.toLowerCase()}';
 
         path += '/${getFormattedName()}';
 

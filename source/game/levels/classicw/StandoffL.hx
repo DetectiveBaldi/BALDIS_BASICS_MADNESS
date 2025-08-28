@@ -58,7 +58,7 @@ class StandoffL extends PlayState
     {
         super.stepHit(step);
     
-        if (step == 52 || step == 704 || step == 1376)
+        if (step == 48 || step == 704 || step == 1376)
             cameraLock = FOCUS_CAM_CHAR;
 
         if (step == 64)
@@ -273,7 +273,7 @@ class StandoffL extends PlayState
     {
         super.beatHit(beat);
 
-        if (beat >= 16 && beat < 76 || beat >= 80 && beat < 114 || beat >= 176 && beat < 204 || beat >= 344 && beat < 372)
+        if (beat >= 12 && beat < 76 || beat >= 80 && beat < 114 || beat >= 176 && beat < 204 || beat >= 344 && beat < 372)
             if (cameraCharTarget == "OPPONENT")
                 gameCameraZoom = 0.9;
         else
