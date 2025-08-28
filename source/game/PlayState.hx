@@ -69,24 +69,12 @@ class PlayState extends CustomState
     }
 
     public static var weekStats:Map<String, PlayStats>;
-
-    public static function getFullClassPath(sep:String = "/"):String
+    
+    public static function getClassFromLevel(level:LevelData = null, nextState:NextState = null):PlayState
     {
-        var level:LevelData = PlayState.level;
+        level ??= PlayState.level;
 
-        var path:String = "game/levels";
-
-        if (level.week != null)
-            path += '/${level.week.getLevelsPackage()}';
-
-        path += '/${level.getClassFile()}';
-
-        return sep == "/" ? path : path.replace("/", sep);
-    }
-
-    public static function getClassFromLevel(nextState:NextState = null):PlayState
-    {
-        return Type.createInstance(Type.resolveClass(getFullClassPath(".")), [nextState]);
+        return Type.createInstance(Type.resolveClass(level.getClassPath(".")), [nextState]);
     }
 
     public static function loadWeek(week:WeekData):Void
@@ -443,7 +431,7 @@ class PlayState extends CustomState
 
     public function loadChart():Void
     {
-        chart = ChartLoader.readPath(Paths.data(PlayState.getFullClassPath()));
+        chart = ChartLoader.readPath(Paths.data(level.getClassPath()));
 
         TimedObjectUtil.sort(chart.notes);
 
@@ -480,7 +468,7 @@ class PlayState extends CustomState
 
     public function loadSong():Void
     {
-        var songPath:String = '${PlayState.getFullClassPath()}/';
+        var songPath:String = '${level.getClassPath()}/';
 
         var pathSuffix:String = "Instrumental";
 
@@ -710,7 +698,7 @@ class PlayState extends CustomState
 
     public function gameOver():Void
     {
-        #if NO_GAME_OVER
+        #if !FEATURE_GAME_OVER
         return;
         #end
         

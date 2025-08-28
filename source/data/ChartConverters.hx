@@ -19,13 +19,13 @@ using util.ArrayUtil;
 
 class FunkinConverter
 {
-    public static function parse(chartPath:String, metaPath:String, diff:String):Chart
+    public static function run(chartPath:String, metaPath:String, difficulty:String):Chart
     {
         var output:Chart = new Chart();
 
         var rawChart:Dynamic = Json.parse(File.getContent(chartPath));
 
-        var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, diff);
+        var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, difficulty);
 
         sortTimedObjects(notes);
 
@@ -39,15 +39,17 @@ class FunkinConverter
 
         output.tempo = timeChanges[0].bpm;
 
-        output.scrollSpeed = Reflect.field(rawChart.scrollSpeed, diff);
+        output.scrollSpeed = Reflect.field(rawChart.scrollSpeed, difficulty);
 
         for (i in 0 ... notes.length)
         {
             var note:FunkinNote = notes[i];
 
-            output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l, kind: note.k});
+            output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l,
+                kind: note.k});
         }
 
+        // Start at index 1 because Funkin' inserts a time change with a time of 0 at index 0.
         for (i in 1 ... timeChanges.length)
         {
             var timeChange:FunkinTimeChange = timeChanges[i];
@@ -55,11 +57,13 @@ class FunkinConverter
             output.timeChanges.push({time: timeChange.t, tempo: timeChange.bpm, step: 0.0});
         }
 
-        output.spectator = rawMeta.playData.characters.girlfriend;
+        var characters:Dynamic = rawMeta.playData.characters;
 
-        output.player = rawMeta.playData.characters.opponent;
+        output.spectator = characters.girlfriend;
 
-        output.opponent = rawMeta.playData.characters.player;
+        output.opponent = characters.opponent;
+
+        output.player = characters.player;
 
         output.credits = {composer: rawMeta.artist, step: 0}
 
@@ -77,7 +81,7 @@ class FunkinConverter
 // TODO: Migrate credits .txt to .json.
 class PsychConverter
 {
-    public static function parse(chartPath:String, creditsPath:String):Chart
+    public static function run(chartPath:String, creditsPath:String):Chart
     {
         var output:Chart = new Chart();
 
@@ -157,7 +161,8 @@ class PsychConverter
                 if (note.type == "No Animation")
                     kind = "no-animation";
 
-                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25), length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});
+                output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25),
+                    length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});
             }
         }
 

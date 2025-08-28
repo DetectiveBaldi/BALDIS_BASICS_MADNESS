@@ -115,7 +115,7 @@ class RevisionL extends PlayState
 
         if (padMinigame.loss)
         {
-            instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.getFullClassPath()}/Instrumental-Bad-Math'), 
+            instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.level.getClassPath()}/Instrumental-Bad-Math'), 
                 false, false, endSong);
 
             instrumental.play();

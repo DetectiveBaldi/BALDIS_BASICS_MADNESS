@@ -1,5 +1,11 @@
 package data;
 
+import flixel.util.typeLimit.NextState;
+
+import game.PlayState;
+
+using StringTools;
+
 @:structInit
 class LevelData
 {
@@ -24,7 +30,7 @@ class LevelData
         showInMysteryMenu = false;
     }
 
-    public function getClassFile():String
+    public function getFormattedName():String
     {
         var splt:Array<String> = name.split(" ");
 
@@ -36,5 +42,17 @@ class LevelData
         }
 
         return '${splt.join("")}L';
+    }
+
+    public function getClassPath(sep:String = "/"):String
+    {
+        var path:String = "game/levels";
+
+        if (week != null)
+            path += '/${week.getFormattedName()}';
+
+        path += '/${getFormattedName()}';
+
+        return path.replace("/", sep);
     }
 }

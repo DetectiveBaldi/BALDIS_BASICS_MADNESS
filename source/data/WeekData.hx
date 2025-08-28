@@ -40,20 +40,20 @@ class WeekData
         hasTvPortrait = true;
     }
 
-    public function getLevelsPackage():String
+    public function getFormattedName():String
     {
         return '${name.split(" ").join("").toLowerCase()}w';
     }
 
     /**
-     * Returns an exact copy of `this` `WeekData`. Level data is not recreated!
+     * Returns an exact copy of this `WeekData`. Level data is not recreated!
      * @return `WeekData`
      */
     public function copy():WeekData
     {
         var data:WeekData = {name: name, nameSuffix: nameSuffix, description: description}
 
-        // TODO: Make sure that copying is necessary.
+        // TODO: Check that copying here is necessary.
         data.levels = levels.copy();
 
         data.requiresScoreToPlay = requiresScoreToPlay;

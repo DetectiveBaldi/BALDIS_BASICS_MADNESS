@@ -353,7 +353,8 @@ class HugsL extends PlayState
             plr.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-running"));
-            plr.scale.set(2.7, 2.7);
+            var anim:FlxAnimation = plr.animation.getByName("dance");
+            anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
             players.add(plr);
             player = plr;
 
@@ -372,7 +373,7 @@ class HugsL extends PlayState
 
             player.setPosition(340.0, 140.0);
 
-            __plr.setPosition(player.x, 155.5);
+            __plr.setPosition(player.x, player.y);
 
             player.animation.onFrameChange.add(updateLegStatus);
 

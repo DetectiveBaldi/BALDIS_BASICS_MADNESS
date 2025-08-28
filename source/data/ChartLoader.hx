@@ -21,32 +21,15 @@ class ChartLoader
         var metaFilePath:String = '${path}/meta.json';
 
         if (FileSystem.exists(metaFilePath))
-        {
-            var filesList:Array<String> = FileSystem.readDirectory(path);
-
-            var chartFile:String = filesList.first((file:String) -> file.startsWith("chart"));
-
-            var chartFilePath:String = '${path}/' + chartFile;
-
-            var difficulty:String = "normal";
-
-            if (chartFilePath.contains("-"))
-            {
-                var split:Array<String> = chartFilePath.split("-");
-
-                difficulty = split.last();
-            }
-
-            return FunkinConverter.parse(chartFilePath, metaFilePath, difficulty);
-        }
+            return FunkinConverter.run('${path}/chart.json', metaFilePath, "normal");
         else
         {
             var chartFilePath:String = '${path}/chart.json';
 
             var chart:Dynamic = Json.parse(File.getContent(chartFilePath));
 
-            if (Reflect.hasField(chart, "format"))
-                return PsychConverter.parse(chartFilePath, '${path}/credits.txt');
+            if (Reflect.hasField(chart, "song"))
+                return PsychConverter.run(chartFilePath, '${path}/credits.txt');
             else
                 return chart;
         }
