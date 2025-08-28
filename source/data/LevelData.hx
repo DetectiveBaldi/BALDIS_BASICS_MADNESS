@@ -4,6 +4,8 @@ import flixel.util.typeLimit.NextState;
 
 import game.PlayState;
 
+using util.StringUtil;
+
 using StringTools;
 
 @:structInit
@@ -15,15 +17,19 @@ class LevelData
 
     public var name:String;
 
+    public var difficulty:String;
+
     public var showInFreeplayMenu:Bool;
 
     public var showInMysteryMenu:Bool;
 
-    public function new(week:WeekData, name:String):Void
+    public function new(week:WeekData, name:String, difficulty:String = "Normal"):Void
     {
         this.week = week;
 
         this.name = name;
+
+        this.difficulty = difficulty;
 
         showInFreeplayMenu = true;
 
@@ -32,16 +38,21 @@ class LevelData
 
     public function getFormattedName():String
     {
-        var splt:Array<String> = name.split(" ");
+        var split:Array<String> = name.split(" ");
 
-        for (i in 1 ... splt.length)
+        for (i in 1 ... split.length)
         {
-            var s:String = splt[i];
+            var s:String = split[i];
 
-            splt[i] = s.substring(0, 1).toUpperCase();
+            split[i] = s.getFirstCharacter().toUpperCase();
         }
 
-        return '${splt.join("")}L';
+        var difficultyToAppend:String = "";
+
+        if (difficulty != "Normal")
+            difficultyToAppend = difficulty.toUpperCase();
+
+        return '${split.join("")}L_${difficultyToAppend}';
     }
 
     public function getClassPath(sep:String = "/"):String

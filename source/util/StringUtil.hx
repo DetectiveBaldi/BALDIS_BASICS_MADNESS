@@ -4,6 +4,16 @@ using StringTools;
 
 class StringUtil
 {
+    public static function getFirstCharacter(str:String):String
+    {
+        return str.substring(0, 1);
+    }
+    
+    public static function getLastCharacter(str:String):String
+    {
+        return str.substring(str.length - 1);
+    }
+
     public static function setCase(str:String, delimiter:String = " ", strCase:StringCase):String
     {
         switch (strCase:StringCase)
