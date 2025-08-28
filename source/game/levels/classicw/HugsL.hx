@@ -509,14 +509,8 @@ class HugsL extends PlayState
         var curFrame:Int = plr.animation.curAnim.curFrame;
     
         if (name.contains("MISS"))
-        {
-            if (!plr.animation.name.contains("miss"))
-                plr.animation.play("legs miss", true, false, curFrame);
-        }
+            plr.animation.play("legs miss", false, false, curFrame);
         else
-        {
-            if (plr.animation.name.contains("miss"))
-                plr.animation.play("legs", true, false, curFrame);
-        }
+            plr.animation.play("legs", false, false, curFrame);
     }
 }
