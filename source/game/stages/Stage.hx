@@ -17,25 +17,29 @@ using StringTools;
 
 class Stage extends FlxGroup
 {
-    public function getPathPrepend(sharedPath:Bool = false):String
+    public function getPathPrepend(useSharedPath:Bool = false, useCustomPath:Bool = false):String
     {
         var strResult:String = "";
 
-        if (sharedPath)
+        if (useSharedPath)
         {
             strResult = "game/stages/shared/";
 
             return strResult;
         }
+
+        if (useCustomPath)
+            return "";
         
         strResult = '${Type.getClassName(Type.getClass(this)).replace(".", "/")}/';
 
         return strResult;
     }
 
-    public function getSprite(file:String, useSharedPath:Bool = false, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
+    public function getSprite(file:String, useSharedPath:Bool = false, useCustomPath:Bool = false,
+        scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
     {
-        file = '${getPathPrepend(useSharedPath)}${file}';
+        file = '${getPathPrepend(useSharedPath, useCustomPath)}${file}';
 
         var newSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic(file));
 
@@ -54,10 +58,10 @@ class Stage extends FlxGroup
         return newSprite;
     }
 
-    public function getAtlasSprite(file:String, useSharedPath:Bool = false,
+    public function getAtlasSprite(file:String, useSharedPath:Bool = false, useCustomPath:Bool = false,
         scaleX:Float = 1.15, scaleY:Float = 1.15):FlxSprite
     {
-        file = '${getPathPrepend(useSharedPath)}${file}';
+        file = '${getPathPrepend(useSharedPath, useCustomPath)}${file}';
 
         var newSprite = new FlxSprite();
 
@@ -78,10 +82,10 @@ class Stage extends FlxGroup
         return newSprite;
     }
 
-    public function getBackdrop(file:String, useSharedPath:Bool = false, axes:FlxAxes = XY,
+    public function getBackdrop(file:String, useSharedPath:Bool = false, useCustomPath:Bool = false, axes:FlxAxes = XY,
         scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
     {
-        file = '${getPathPrepend(useSharedPath)}${file}';
+        file = '${getPathPrepend(useSharedPath, useCustomPath)}${file}';
 
         var getBackdrop:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic(file), axes);
 
