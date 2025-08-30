@@ -58,6 +58,8 @@ class Character extends FlxSprite
     
     public var config:CharacterData;
 
+    public var lastScale:FlxPoint;
+
     public var danceSteps:Array<String>;
 
     public var danceEvery:Float;
@@ -89,6 +91,10 @@ class Character extends FlxSprite
         
         loadConfig(_config);
 
+        lastScale = FlxPoint.get();
+
+        lastScale.copyFrom(scale);
+
         danceIndex = 0;
 
         skipDance = false;
@@ -107,6 +113,8 @@ class Character extends FlxSprite
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        checkScale();
 
         if (conductor == null || strumline == null)
             return;
@@ -136,6 +144,18 @@ class Character extends FlxSprite
             holdTimer = 0.0;
     }
 
+    override function getScreenPosition(?result:FlxPoint, ?camera:FlxCamera):FlxPoint
+    {
+        var output:FlxPoint = super.getScreenPosition(result, camera);
+
+        var animData:AnimationData = config.animations.first((anim:AnimationData) -> animation.name ?? "" == anim.name);
+
+        if (animData != null)
+            output.add(animData.offset.x, animData.offset.y);
+
+        return output;
+    }
+
     override function destroy():Void
     {
         super.destroy();
@@ -144,19 +164,9 @@ class Character extends FlxSprite
 
         keys = null;
 
+        lastScale.put();
+
         danceSteps = null;
-    }
-
-    override function getScreenPosition(?result:FlxPoint, ?camera:FlxCamera):FlxPoint
-    {
-        var output:FlxPoint = super.getScreenPosition(result, camera);
-
-        var animData:AnimationData = config.animations.first((anim:AnimationData) -> animation.name ?? "" == anim.name);
-
-        if (animData != null)
-            output.add(animData.offset?.x ?? 0.0, animData.offset?.y ?? 0.0);
-
-        return output;
     }
 
     public function loadConfig(newConfig:CharacterData):CharacterData
@@ -196,6 +206,9 @@ class Character extends FlxSprite
 
             animData.flipY ??= false;
 
+            // TODO: Remove this when all animations include `offset`.
+            animData.offset ??= {x: 0.0, y: 0.0}
+
             if (animData.indices != null)
                 animation.addByIndices(animData.name, animData.prefix, animData.indices, "", animData.frameRate,
                     animData.looped, animData.flipX, animData.flipY);
@@ -215,6 +228,32 @@ class Character extends FlxSprite
         return config;
     }
 
+    public function isSinging():Bool
+    {
+        return (animation.name ?? "").startsWith("Sing");
+    }
+    
+    public function checkScale():Void
+    {
+        if (lastScale.equals(scale))
+            return;
+
+        var xDiff:Float = scale.x - lastScale.x;
+
+        var yDiff:Float = scale.y - lastScale.y;
+
+        for (i in 0 ... config.animations.length)
+        {
+            var animData:AnimationData = config.animations[i];
+
+            animData.offset.x *= xDiff;
+
+            animData.offset.y *= yDiff;
+        }
+
+        lastScale.copyFrom(scale);
+    }
+
     public function beatHit(beat:Int):Void
     {
         if (beat % danceEvery == 0.0)
@@ -231,6 +270,7 @@ class Character extends FlxSprite
             if (isSinging())
                 return;
 
+            // TODO: Why do we need this again?
             if (danceSteps.length > 1.0)
             {
                 if (!animation.finished && danceSteps.contains(animation.name))
@@ -241,10 +281,5 @@ class Character extends FlxSprite
         danceIndex = FlxMath.wrap(danceIndex + 1, 0, danceSteps.length - 1);
 
         animation.play(danceSteps[danceIndex], force);
-    }
-
-    public function isSinging():Bool
-    {
-        return (animation.name ?? "").startsWith("Sing");
     }
 }
