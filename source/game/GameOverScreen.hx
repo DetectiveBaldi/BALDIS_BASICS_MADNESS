@@ -263,9 +263,11 @@ class GameOverScreen extends CustomSubState
 
         var character:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
 
-        character.setPosition(590.0, 300.0);
-
         character.scale.set(0.85, 0.85);
+
+        character.updateHitbox();
+
+        character.screenCenter();
 
         add(character);
 

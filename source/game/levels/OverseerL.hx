@@ -181,7 +181,7 @@ class OverseerL extends PlayState
 
             opponent.animation.play("sreturn");
 
-            opponent.setPosition(590.0, 300.0);
+            opponent.screenCenter();
         }
 
         if (step == 2132 || step == 2134 || step == 2164 || step == 2192 || step == 2196 || step == 2198 ||
@@ -201,35 +201,35 @@ class OverseerL extends PlayState
         if (step == 1995 || step == 2123)
         {
             opponent.animation.play("sscissors");
-            opponent.setPosition(799.0, 523.0);
+            opponent.screenCenter();
             opponent.skipDance = true;
         }
 
         if (step == 2027 || step == 2155)
         {
             opponent.animation.play("sfidget");
-            opponent.setPosition(794.5, 523.0);
+            opponent.screenCenter();
             opponent.skipDance = true;
         }
 
         if (step == 2059 || step == 2187)
         {
             opponent.animation.play("sglasses");
-            opponent.setPosition(794.5, 523.0);
+            opponent.screenCenter();
             opponent.skipDance = true;
         }
 
         if (step == 2091 || step == 2219)
         {
             opponent.animation.play("smusic");
-            opponent.setPosition(794.5, 523.0);
+            opponent.screenCenter();
             opponent.skipDance = true;
         }
 
         if (step == 2256)
         {
             var oppAnim:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("overseer-ref"));
-            oppAnim.setPosition(400.0, 115.0);
+            oppAnim.setPosition(400.0, 100.0);
             oppAnim.skipDance = true;
             oppAnim.animation.play("dclosed");
             opponents.add(oppAnim);
@@ -404,8 +404,9 @@ class OverseerL extends PlayState
         {
             overseerS.redstatic.alpha = 1.0;
 
-            opponent.scale.set(5.0, 5.0);
-            opponent.setPosition(590.0, 430.0);
+            opponent.scale.set(1.9, 1.9);
+            opponent.updateHitbox();
+            opponent.screenCenter();
         }
 
         if (step == 3216)
