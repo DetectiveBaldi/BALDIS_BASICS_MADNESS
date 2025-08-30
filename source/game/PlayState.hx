@@ -2,6 +2,8 @@ package game;
 
 import sys.FileSystem;
 
+import openfl.filters.BitmapFilter;
+
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -220,9 +222,13 @@ class PlayState extends CustomState
 
     override function create():Void
     {
+        gameCamera.filters = new Array<BitmapFilter>();
+        
         hudCamera = new FlxCamera();
 
         hudCamera.bgColor.alpha = 0;
+
+        hudCamera.filters = new Array<BitmapFilter>();
 
         FlxG.cameras.add(hudCamera, false);
 

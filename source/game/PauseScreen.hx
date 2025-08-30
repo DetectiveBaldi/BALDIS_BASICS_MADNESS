@@ -90,13 +90,11 @@ class PauseScreen extends CustomSubState
 
             tween.tween(blur, {blurX: 3.0, blurY: 3.0, quality: 1}, 0.65, {ease: FlxEase.quartIn});
 
-            game.gameCamera.filters ??= new Array<BitmapFilter>();
+            if (!game.gameCamera.filters.contains(blur))
+                game.gameCamera.filters.push(blur);
 
-            game.hudCamera.filters ??= new Array<BitmapFilter>();
-
-            game.gameCamera.filters.push(blur);
-
-            game.hudCamera.filters.push(blur);
+            if (!game.hudCamera.filters.contains(blur))
+                game.hudCamera.filters.push(blur);
         }
 
         var background:FlxSprite = new FlxSprite();

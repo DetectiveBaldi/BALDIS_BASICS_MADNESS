@@ -1295,8 +1295,6 @@ class RoughEL extends PlayState
 
                 pxContainer = new ShaderFilter(pxChunks);
 
-                gameCamera.filters ??= new Array<BitmapFilter>();
-
                 gameCamera.filters.push(pxContainer);
             }
             
@@ -1884,8 +1882,16 @@ class RoughEL extends PlayState
 
         if (beat == 868.0)
         {
-            vignette.destroy();
+            vignette.kill();
         }
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        if (pxContainer != null)
+            gameCamera.filters.remove(pxContainer);
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
