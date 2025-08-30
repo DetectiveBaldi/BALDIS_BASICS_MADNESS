@@ -40,7 +40,7 @@ class OverseerS extends Stage
 
         redstatic.screenCenter();
 
-        ninenine = getBackdrop("game/stages/OverseerS/99-ref", false);
+        ninenine = getBackdrop("99-ref");
 
         ninenine.active = true;
 

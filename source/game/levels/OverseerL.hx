@@ -71,8 +71,9 @@ class OverseerL extends PlayState
         overseerS.ninenine.visible = false;
         overseerS.ninenine.alpha = 0.15;
 
-        opponent.setPosition(590.0, 300.0);
         opponent.scale.set(0.85, 0.85);
+        opponent.updateHitbox();
+        opponent.screenCenter();
 
         countdown.skip();
 
