@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="scrolling-hall1.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bg0000" x="2" y="2" width="1044" height="583"/>
+	<SubTexture name="bg0001" x="1048" y="2" width="1044" height="583"/>
+	<SubTexture name="bg0002" x="2094" y="2" width="1044" height="583"/>
+	<SubTexture name="bg0003" x="2" y="587" width="1044" height="583"/>
+	<SubTexture name="bg0004" x="1048" y="587" width="1044" height="583"/>
+</TextureAtlas>

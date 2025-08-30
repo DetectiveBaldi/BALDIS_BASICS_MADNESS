@@ -12,27 +12,25 @@ class AdrenalineS extends Stage
 
     public var closet_Overlay:FlxSprite;
 
+    public var closetInside:FlxSprite;
+    
+    public var closetInside_Alt:FlxSprite;
+
+    public var closetInside_Overlay:FlxSprite;
+
     public var hall:FlxBackdrop;
 
     public var hall2:FlxSprite;
-    
-    public var faculty0:FlxSprite;
 
-    public var faculty0_Overlay0:FlxSprite;
-    
-    public var faculty0_Overlay1:FlxSprite;
+    public var hall3:FlxSprite;
 
-    public var closet0:FlxSprite;
+    public var hall3_Alt:FlxSprite;
 
-    public var closet1:FlxSprite;
+    public var hall3_Overlay:FlxSprite;
 
     public function new():Void
     {
         super();
-
-        closet1 = getSprite("closetInOpen", 2, 2);
-
-        closet0 = getSprite("closetIn", 2, 2);
 
         closet = getSprite("closet", 2, 2);
 
@@ -40,22 +38,28 @@ class AdrenalineS extends Stage
 
         closet_Overlay = getSprite("closet-overlay", 2, 2);
     
+        closetInside = getSprite("closet-inside", 2, 2);
+    
+        closetInside_Alt = getSprite("closet-inside-alt", 2, 2);
+
+        closetInside_Overlay = getSprite("closet-inside-overlay", 2, 2);
+
         hall = getBackdrop("scrolling-hall0", true);
     
         hall.active = true;
     
-        hall2 = getAtlasSprite("scrolling-hall2", true);
+        hall2 = getAtlasSprite("scrolling-hall1", true);
 
         hall2.active = true;
 
-        hall2.animation.addByPrefix("0", "redLongHall run", 48.0);
+        hall2.animation.addByPrefix("0", "bg", 48.0, true, true);
 
         hall2.animation.play("0");
+    
+        hall3 = getSprite("game/stages/classicw/StandoffS/hall", false, true);
 
-        faculty0 = getSprite("faculty0");
+        hall3_Alt = getSprite("game/stages/classicw/StandoffS/hall-alt", false, true);
 
-        faculty0_Overlay0 = getSprite("faculty0-overlay0");
-
-        faculty0_Overlay1 = getSprite("faculty0-overlay1");
+        hall3_Overlay = getSprite("game/stages/classicw/StandoffS/hall-overlay1", false, true);
     }
 }
