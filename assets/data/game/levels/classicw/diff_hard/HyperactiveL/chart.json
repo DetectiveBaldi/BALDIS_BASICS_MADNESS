@@ -4468,10 +4468,10 @@
 	"events": [],
 	"player2": "baldi-mad",
 	"offset": 0,
-	"song": "Rough Escape",
+	"song": "Hyperactive",
 	"needsVoices": true,
 	"stage": "stage",
-	"bpm": 120,
+	"bpm": 218,
 	"speed": 2.8,
 	"format": "psych_v1"
 }

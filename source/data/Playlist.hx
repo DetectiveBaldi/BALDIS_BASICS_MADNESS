@@ -29,7 +29,7 @@ class Playlist
             {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"}, {week: week, name: "Essential Escape"});
 
         // Hard Difficulty
-        week.levels.pushMany({week: week, name: "Rough Escape", difficulty: "Hard"});
+        week.levels.pushMany({week: week, name: "Hyperactive", difficulty: "Hard"}, {week: week, name: "Rough Escape", difficulty: "Hard"});
 
         week.hasTvPortrait = true;
 

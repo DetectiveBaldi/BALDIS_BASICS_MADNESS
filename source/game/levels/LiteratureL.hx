@@ -151,6 +151,8 @@ class LiteratureL extends PlayState
             opp.scale.set(1.2, 1.2);
             opponents.add(opp);
             opponent = opp;
+            
+            updateHealthBar("opponent");
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-baldina-flipped"));
             plr.setPosition(-50.0, 140.0);

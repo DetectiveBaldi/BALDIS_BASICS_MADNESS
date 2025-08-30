@@ -52,10 +52,10 @@ class AdrenalineS extends Stage
 
         hall2.active = true;
 
-        hall2.animation.addByPrefix("0", "bg", 48.0, true, true);
-
-        hall2.animation.play("0");
-    
+        hall2.animation.addByPrefix("0", "bg", 48.0);
+        
+        hall2.animation.play("0", false, true);
+        
         hall3 = getSprite("game/stages/classicw/StandoffS/hall", false, true);
 
         hall3_Alt = getSprite("game/stages/classicw/StandoffS/hall-alt", false, true);
