@@ -114,7 +114,7 @@ class Character extends FlxSprite
     {
         super.update(elapsed);
 
-        checkScale();
+        calcOffsetsByScale();
 
         if (conductor == null || strumline == null)
             return;
@@ -206,7 +206,6 @@ class Character extends FlxSprite
 
             animData.flipY ??= false;
 
-            // TODO: Remove this when all animations include `offset`.
             animData.offset ??= {x: 0.0, y: 0.0}
 
             if (animData.indices != null)
@@ -232,10 +231,10 @@ class Character extends FlxSprite
     {
         return (animation.name ?? "").startsWith("Sing");
     }
-    
-    public function checkScale():Void
+
+    public function calcOffsetsByScale():Void
     {
-        if (lastScale.equals(scale))
+        if (scale.equals(lastScale))
             return;
 
         var xDiff:Float = scale.x - lastScale.x;
