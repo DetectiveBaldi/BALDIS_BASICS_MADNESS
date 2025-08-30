@@ -55,10 +55,10 @@ class Character extends FlxSprite
     public var strumline:Strumline;
 
     public var keys:Array<Int>;
-    
-    public var config:CharacterData;
 
     public var lastScale:FlxPoint;
+    
+    public var config:CharacterData;
 
     public var danceSteps:Array<String>;
 
@@ -88,12 +88,10 @@ class Character extends FlxSprite
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
                     Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
         ];
-        
-        loadConfig(_config);
 
         lastScale = FlxPoint.get();
-
-        lastScale.copyFrom(scale);
+        
+        loadConfig(_config);
 
         danceIndex = 0;
 
@@ -190,6 +188,8 @@ class Character extends FlxSprite
 
         updateHitbox();
 
+        lastScale.copyFrom(scale);
+
         flipX = config.flipX ?? false;
 
         flipY = config.flipY ?? false;
@@ -245,9 +245,15 @@ class Character extends FlxSprite
         {
             var animData:AnimationData = config.animations[i];
 
-            animData.offset.x *= xDiff;
+            var x:Float = animData.offset.x;
 
-            animData.offset.y *= yDiff;
+            var y:Float = animData.offset.y;
+
+            if (xDiff != 0.0)
+                animData.offset.x = Math.floor(x * (1.0 + xDiff));
+
+            if (yDiff != 0.0)
+                animData.offset.y = Math.floor(y * (1.0 + yDiff));
         }
 
         lastScale.copyFrom(scale);

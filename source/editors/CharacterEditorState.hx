@@ -366,23 +366,23 @@ class CharacterEditorState extends CustomState
             if (FlxG.keys.justPressed.S)
                 animationIndex = FlxMath.wrap(animationIndex + 1, 0, character.config.animations.length - 1);
 
-            var animation:AnimationData = character.config.animations[animationIndex];
-
             if (FlxG.keys.justPressed.UP)
-                addAnimationOffset(animation, 0.0, FlxG.keys.pressed.SHIFT ? -10.0 : -1.0);
+                addAnimationOffset(0.0, FlxG.keys.pressed.SHIFT ? -10.0 : -1.0);
 
             if (FlxG.keys.justPressed.LEFT)
-                addAnimationOffset(animation, FlxG.keys.pressed.SHIFT ? -10.0 : -1.0, 0.0);
+                addAnimationOffset(FlxG.keys.pressed.SHIFT ? -10.0 : -1.0, 0.0);
 
             if (FlxG.keys.justPressed.DOWN)
-                addAnimationOffset(animation, 0.0, FlxG.keys.pressed.SHIFT ? 10.0 : 1.0);
+                addAnimationOffset(0.0, FlxG.keys.pressed.SHIFT ? 10.0 : 1.0);
 
             if (FlxG.keys.justPressed.RIGHT)
-                addAnimationOffset(animation, FlxG.keys.pressed.SHIFT ? 10.0 : 1.0, 0.0);
+                addAnimationOffset(FlxG.keys.pressed.SHIFT ? 10.0 : 1.0, 0.0);
+
+            var animData:AnimationData = character.config.animations[animationIndex];
 
             if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.S || FlxG.keys.justPressed.SPACE)
             {
-                character.animation.play(animation.name, true);
+                character.animation.play(animData.name, true);
 
                 refreshAnimationsTab();
             }
@@ -410,11 +410,9 @@ class CharacterEditorState extends CustomState
 
                 if (FlxG.keys.justPressed.V)
                 {
-                    var animation:AnimationData = character.config.animations[animationIndex];
-
                     var offset:AxisData<Float> = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
 
-                    setAnimationOffset(animation, offset?.x ?? 0.0, offset?.y ?? 0.0);
+                    setAnimationOffset(offset.x, offset.y);
                 }
             }
 
@@ -492,7 +490,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_____checkbox", CheckBox).value = animation.flipY ?? false;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset?.x ?? 0.0}, ${animation.offset?.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x}, ${animation.offset.y})';
     }
 
     public function saveAnimation():Void
@@ -582,22 +580,32 @@ class CharacterEditorState extends CustomState
         refreshAnimationsTab();
     }
 
-    public function setAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void
+    public function getCurrentAnimation():AnimationData
     {
-        animation.offset ??= {x: 0.0, y: 0.0};
+        return character.config.animations[animationIndex];
+    }
+
+    public function getCurrentAnimationOffset():AxisData<Float>
+    {
+        return getCurrentAnimation().offset;
+    }
+
+    public function setAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
+    {
+        var animation:AnimationData = getCurrentAnimation();
 
         animation.offset.x = x;
 
         animation.offset.y = y;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x ?? 0.0}, ${animation.offset.y ?? 0.0})';
+        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x}, ${animation.offset.y})';
     }
 
-    public function addAnimationOffset(animation:AnimationData, x:Float = 0.0, y:Float = 0.0):Void
+    public function addAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
     {
-        animation.offset ??= {x: 0.0, y: 0.0};
+        var data:AxisData<Float> = getCurrentAnimationOffset();
 
-        setAnimationOffset(animation, (animation.offset.x ?? 0.0) + x, (animation.offset.y ?? 0.0) + y);
+        setAnimationOffset(data.x + x, data.y + y);
     }
 
     public function updateCameraPoint(x:Float = 0.0, y:Float = 0.0):Void
