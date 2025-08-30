@@ -688,11 +688,15 @@ class PlayState extends CustomState
     {
         openSubState(new PauseScreen(this));
 
+        gameCamera.active = false;
+
         pauseMusic();
     }
 
     public function resume():Void
     {
+        gameCamera.active = true;
+        
         resumeMusic();
     }
 
