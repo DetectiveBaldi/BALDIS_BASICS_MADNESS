@@ -28,7 +28,7 @@ class GainGS extends Stage
 
     public var principalOffice0_Overlay0:FlxSprite;
 
-    public var scrollingHall0:FlxBackdrop;
+    public var scrollingHall0:FlxSprite;
 
     public var phoneHall0:FlxSprite;
 
@@ -58,7 +58,13 @@ class GainGS extends Stage
 
         principalOffice0_Overlay0 = getSprite("principal-office0-overlay0");
 
-        scrollingHall0 = getBackdrop("scrolling-hall0", true);
+        scrollingHall0 = getAtlasSprite("scrolling-hall0", true);
+
+        scrollingHall0.active = true;
+
+        scrollingHall0.animation.addByPrefix("0", "scroll", 32.0);
+        
+        scrollingHall0.animation.play("0");
 
         phoneHall0 = getSprite("phone-hall0");
     }
