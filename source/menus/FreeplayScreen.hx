@@ -188,7 +188,7 @@ class FreeplayScreen extends CustomState
 
         leftDifficulty.updateHitbox();
 
-        leftDifficulty.setPosition(leftDifficulty.getCenterX(difficultyPanel) - 142.0, 55.0);
+        leftDifficulty.setPosition(leftDifficulty.getCenterX(difficultyPanel) - 142.0, 42.0);
 
         var rightDifficulty:OrientedButton = addOrientedButton(RIGHT, clickRightDifficulty);
 
@@ -196,7 +196,7 @@ class FreeplayScreen extends CustomState
 
         rightDifficulty.updateHitbox();
 
-        rightDifficulty.setPosition(rightDifficulty.getCenterX(difficultyPanel) + 142.0, 55.0);
+        rightDifficulty.setPosition(rightDifficulty.getCenterX(difficultyPanel) + 142.0, 42.0);
 
         MainMenuScreen.playTune();
     }
