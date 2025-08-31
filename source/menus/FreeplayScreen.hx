@@ -370,7 +370,7 @@ class FreeplayScreen extends CustomState
             }});
         }
 
-        tween.tween(difficultyPanel, {y: 0.0}, 0.25, {ease: FlxEase.backOut, startDelay: cancelFadeIn ? 0.0 : 0.25});
+        tween.tween(difficultyPanel, {y: -15.0}, 0.25, {ease: FlxEase.backOut, startDelay: cancelFadeIn ? 0.0 : 0.25});
 
         FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
     }

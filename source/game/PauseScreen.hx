@@ -43,8 +43,6 @@ class PauseScreen extends CustomSubState
 {
     public var game:PlayState;
 
-    public var camLerp:Float;
-
     public var mouseVis:Bool;
 
     public static var blur:BlurFilter;
@@ -70,11 +68,7 @@ class PauseScreen extends CustomSubState
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
-        camLerp = FlxG.camera.followLerp;
-
         mouseVis = FlxG.mouse.visible;
-
-        FlxG.camera.followLerp = 0.0;
 
         FlxG.mouse.visible = true;
 
@@ -253,8 +247,6 @@ class PauseScreen extends CustomSubState
     override function destroy():Void
     {
         super.destroy();
-
-        FlxG.camera.followLerp = camLerp;
 
         FlxG.mouse.visible = mouseVis;
 

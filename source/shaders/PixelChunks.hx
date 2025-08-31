@@ -24,6 +24,13 @@ class PixelChunks extends FlxShader
 
         void main()
         {
+            if (tileSize == 0.0)
+            {
+                fragColor = texture(bitmap, uv);
+
+                return;
+            }
+            
             vec2 tileVec = vec2(tileSize);
 
             vec2 edgePadding = mod(iResolution.xy * 0.5 - tileVec * 0.5, tileVec);
