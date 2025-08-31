@@ -63,10 +63,6 @@ class StoryMenuScreen extends CustomState
 
     public var difficultyText:FlxText;
 
-    public var difficultyTextFormat:FlxTextFormat;
-
-    public var formatRules:Array<FlxTextFormatMarkerPair>;
-
     public var weekScore:Int;
 
     public var scoreText:FlxText;

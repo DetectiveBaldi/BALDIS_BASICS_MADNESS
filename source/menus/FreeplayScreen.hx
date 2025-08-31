@@ -13,6 +13,9 @@ import flixel.math.FlxRect;
 
 import flixel.text.FlxText;
 
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
@@ -20,6 +23,7 @@ import flixel.util.FlxSignal;
 import core.AssetCache;
 import core.Paths;
 
+import data.Difficulty;
 import data.LevelData;
 import data.PlayStats;
 import data.WeekData;
@@ -37,6 +41,12 @@ using util.StringUtil;
 
 class FreeplayScreen extends CustomState
 {
+    public static var selectedDifficulty:Int = 0;
+
+    public static var lastSelectedLevel:Map<Int, Int> = new Map<Int, Int>();
+
+    public static var selectedLevel:Int = 0;
+
     public var levels:Array<LevelData>;
 
     public var background:FlxSprite;
@@ -51,9 +61,7 @@ class FreeplayScreen extends CustomState
 
     public var poster:FlxSprite;
 
-    public var clipboard:FlxSprite;
-
-    public static var curSelected:Int = 0;
+    public var difficultyPanel:FlxSprite;
 
     override function create():Void
     {
@@ -67,25 +75,7 @@ class FreeplayScreen extends CustomState
 
         levels = new Array<LevelData>();
 
-        for (i in 0 ... WeekData.list.length)
-        {
-            var week:WeekData = WeekData.list[i];
-
-            if (!week.showInFreeplayMenu)
-                continue;
-
-            levels = levels.concat(WeekData.list[i].levels);
-        }
-    
-        for (i in 0 ... LevelData.list.length)
-        {
-            var level:LevelData = LevelData.list[i];
-
-            if (!level.showInFreeplayMenu || level.showInMysteryMenu)
-                continue;
-
-            levels.push(level);
-        }
+        filterLevelsList();
 
         background = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/background"));
 
@@ -160,13 +150,15 @@ class FreeplayScreen extends CustomState
 
         add(poster);
 
-        var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
+        difficultyPanel = new FlxSprite();
 
-        leftButton.setPosition(leftButton.getCenterX() - 225.0, leftButton.getCenterY());
+        difficultyPanel.active = false;
 
-        var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
+        add(difficultyPanel);
 
-        rightButton.setPosition(rightButton.getCenterX() + 225.0, rightButton.getCenterY());
+        updateDifficultyPanel(true);
+
+        changeDifficulty(0);
 
         var playButton:HeightenedButton = addHeightenedButton("Play!", LARGE, clickPlayButton);
 
@@ -182,7 +174,29 @@ class FreeplayScreen extends CustomState
 
         infoButton.setPosition(playButton.x + playButton.width + 30.0, FlxG.height - infoButton.height + 35.0);
 
-        changeSelection(0);
+        var leftLevel:OrientedButton = addOrientedButton(LEFT, clickLeftLevel);
+
+        leftLevel.setPosition(leftLevel.getCenterX() - 225.0, leftLevel.getCenterY());
+
+        var rightLevel:OrientedButton = addOrientedButton(RIGHT, clickRightLevel);
+
+        rightLevel.setPosition(rightLevel.getCenterX() + 225.0, rightLevel.getCenterY());
+
+        var leftDifficulty:OrientedButton = addOrientedButton(LEFT, clickLeftDifficulty);
+
+        leftDifficulty.scale.set(2.0, 2.0);
+
+        leftDifficulty.updateHitbox();
+
+        leftDifficulty.setPosition(leftDifficulty.getCenterX(difficultyPanel) - 142.0, 55.0);
+
+        var rightDifficulty:OrientedButton = addOrientedButton(RIGHT, clickRightDifficulty);
+
+        rightDifficulty.scale.set(2.0, 2.0);
+
+        rightDifficulty.updateHitbox();
+
+        rightDifficulty.setPosition(rightDifficulty.getCenterX(difficultyPanel) + 142.0, 55.0);
 
         MainMenuScreen.playTune();
     }
@@ -201,20 +215,36 @@ class FreeplayScreen extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function changeSelection(change:Int):Void
+    public function changeDifficulty(change:Int):Void
     {
-        curSelected = FlxMath.wrap(curSelected + change, 0, levels.length - 1);
+        var list:Array<String> = Difficulty.list;
 
-        var level:LevelData = levels[curSelected];
+        lastSelectedLevel[selectedDifficulty] = selectedLevel;
+
+        selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
+
+        filterLevelsList();
 
         if (change != 0.0)
-        {
-            scrollBg.visible = true;
+            selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
 
-            scrollBg.animation.play("move", false, change < 0.0);
+        changeSelection(0);
 
-            poster.visible = false;
-        }
+        if (change != 0.0)
+            updateDifficultyPanel();
+    }
+
+    public function changeSelection(change:Int):Void
+    {
+        selectedLevel = FlxMath.wrap(selectedLevel + change, 0, levels.length - 1);
+
+        scrollBg.visible = true;
+
+        scrollBg.animation.play("move", false, change < 0.0);
+
+        poster.visible = false;
+
+        var level:LevelData = levels[selectedLevel];
 
         updateTvPortrait(level);
 
@@ -230,6 +260,44 @@ class FreeplayScreen extends CustomState
             !week.requiresScoreToPlay #end &&
                 week.hasTvPortrait))
                     tween.tween(tvStatic, {alpha: 0.0}, 0.5);
+    }
+
+    public function filterLevelsList():Void
+    {
+        levels.resize(0);
+
+        var difficultyList:Array<String> = Difficulty.list;
+
+        for (i in 0 ... WeekData.list.length)
+        {
+            var week:WeekData = WeekData.list[i];
+
+            if (!week.showInFreeplayMenu)
+                continue;
+
+            for (j in 0 ... week.levels.length)
+            {
+                var level:LevelData = week.levels[j];
+
+                if (level.difficulty != difficultyList[selectedDifficulty])
+                    continue;
+
+                levels.push(level);
+            }
+        }
+    
+        for (i in 0 ... LevelData.list.length)
+        {
+            var level:LevelData = LevelData.list[i];
+
+            if (level.difficulty != difficultyList[selectedDifficulty])
+                continue;
+
+            if (!level.showInFreeplayMenu || level.showInMysteryMenu)
+                continue;
+
+            levels.push(level);
+        }
     }
 
     public function updateTvPortrait(level:LevelData):Void
@@ -284,6 +352,29 @@ class FreeplayScreen extends CustomState
         poster.screenCenter();
     }
 
+    public function updateDifficultyPanel(cancelFadeIn:Bool = false):Void
+    {
+        tween.cancelTweensOf(difficultyPanel);
+
+        if (cancelFadeIn)
+        {
+            difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty]}'));
+
+            difficultyPanel.setPosition(difficultyPanel.getCenterX(), -difficultyPanel.height);
+        }
+        else
+        {
+            tween.tween(difficultyPanel, {y: -difficultyPanel.height}, 0.25, {ease: FlxEase.backOut, onComplete: (_:FlxTween) ->
+            {
+                difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty]}'));
+            }});
+        }
+
+        tween.tween(difficultyPanel, {y: 0.0}, 0.25, {ease: FlxEase.backOut, startDelay: cancelFadeIn ? 0.0 : 0.25});
+
+        FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
+    }
+
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
     {
         var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
@@ -295,7 +386,23 @@ class FreeplayScreen extends CustomState
         return button;
     }
 
-    public function clickLeftButton():Void
+    public function clickLeftDifficulty():Void
+    {
+        if (!scrollBg.animation.finished)
+            return;
+
+        changeDifficulty(-1);
+    }
+
+    public function clickRightDifficulty():Void
+    {
+        if (!scrollBg.animation.finished)
+            return;
+
+        changeDifficulty(1);
+    }
+
+    public function clickLeftLevel():Void
     {
         if (!scrollBg.animation.finished)
             return;
@@ -303,7 +410,7 @@ class FreeplayScreen extends CustomState
         changeSelection(-1);
     }
 
-    public function clickRightButton():Void
+    public function clickRightLevel():Void
     {
         if (!scrollBg.animation.finished)
             return;
@@ -324,7 +431,7 @@ class FreeplayScreen extends CustomState
 
     public function clickPlayButton():Void
     {
-        var level:LevelData = levels[curSelected];
+        var level:LevelData = levels[selectedLevel];
 
         var week:WeekData = level.week;
         
@@ -347,7 +454,7 @@ class FreeplayScreen extends CustomState
 
     public function clickInfoButton():Void
     {
-        var level:LevelData = levels[curSelected];
+        var level:LevelData = levels[selectedLevel];
 
         var week:WeekData = level.week;
 
@@ -363,6 +470,6 @@ class FreeplayScreen extends CustomState
                     return;
         }
 
-        openSubState(new LevelInfoScreen(levels[curSelected]));
+        openSubState(new LevelInfoScreen(levels[selectedLevel]));
     }
 }
