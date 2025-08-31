@@ -57,13 +57,8 @@ class LevelData
         if (week != null)
             path += '/${week.getFormattedName()}';
 
-        var diffToAppend:String = "";
-
         if (difficulty != "Normal")
-            diffToAppend = difficulty.toLowerCase();
-
-        if (diffToAppend != "")
-            path += '/diff_${diffToAppend.toLowerCase()}';
+            path += '/diff_${difficulty.toLowerCase()}';
 
         path += '/${getFormattedName()}';
 

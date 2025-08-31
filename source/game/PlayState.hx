@@ -527,8 +527,8 @@ class PlayState extends CustomState
 
         var grade:String = playStats.grade;
 
-        if (HighScore.isLevelHighScore(level.name, "normal", score))
-            HighScore.setLevelScore(level.name, "normal", {score: score, misses: misses, accuracy: accuracy, grade: grade});
+        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
         if (isWeek)
         {
@@ -550,8 +550,8 @@ class PlayState extends CustomState
 
                 grade = totalStats.grade;
 
-                if (HighScore.isWeekHighScore(week.name, "normal", score))
-                    HighScore.setWeekScore(week.name, "normal", {score: score, misses: misses, accuracy: accuracy,
+                if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
+                    HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
                         grade: grade});
 
                 stateToSwitchTo = () -> new StoryMenuScreen();

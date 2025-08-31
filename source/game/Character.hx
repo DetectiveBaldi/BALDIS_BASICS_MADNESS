@@ -245,9 +245,13 @@ class Character extends FlxSprite
         {
             var animData:AnimationData = config.animations[i];
 
-            animData.offset.x *= xRatio;
+            var x:Float = animData.offset.x;
+
+            var y:Float = animData.offset.y;
+
+            animData.offset.x = Math.floor(x * xRatio);
             
-            animData.offset.y *= yRatio;
+            animData.offset.y = Math.floor(y * yRatio);
         }
 
         lastScale.copyFrom(scale);

@@ -201,7 +201,7 @@ class GameOverScreen extends CustomSubState
                 if (totalRolls < 24.0)
                     chance = -1;
 
-                if (#if debug false #else HighScore.getLevelScore("Overseer", "normal").score != 0.0 #end)
+                if (#if debug false #else HighScore.getLevelScore("Overseer", "Normal").score != 0.0 #end)
                     chance = -1;
 
                 if (PlayState.level.showInMysteryMenu)

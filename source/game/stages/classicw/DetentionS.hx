@@ -46,8 +46,6 @@ class DetentionS extends Stage
 
         facultyStandardOpen = getSprite("facultyStandard-open", 2.35, 2.35);
 
-        facultyStandardOpen.active = true;
-
         faculty0 = getSprite("faculty", 2, 2);
 
         faculty2 = getSprite("faculty-caught1", 2, 2);

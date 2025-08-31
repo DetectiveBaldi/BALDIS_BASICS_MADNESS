@@ -16,6 +16,8 @@ import flixel.addons.display.FlxBackdrop;
 import core.AssetCache;
 import core.Paths;
 
+import data.Difficulty;
+import data.LevelData;
 import data.WeekData;
 
 import extendable.CustomState;
@@ -33,6 +35,12 @@ using util.StringUtil;
 
 class StoryMenuScreen extends CustomState
 {
+    public static var selectedDifficulty:Int = 0;
+
+    public static var lastSelectedWeek:Map<Int, Int> = new Map<Int, Int>();
+
+    public static var selectedWeek:Int;
+
     public var weeks:Array<WeekData>;
 
     public var background:FlxSprite;
@@ -53,17 +61,21 @@ class StoryMenuScreen extends CustomState
 
     public var weekPortrait:FlxSprite;
 
-    public var backOutButton:BackOutButton;
+    public var difficultyText:FlxText;
 
-    public var startButton:FlxSprite;
+    public var difficultyTextFormat:FlxTextFormat;
+
+    public var formatRules:Array<FlxTextFormatMarkerPair>;
 
     public var weekScore:Int;
 
-    public var scoreTween:FlxTween;
-
     public var scoreText:FlxText;
 
-    public static var curSelected:Int = 0;
+    public var scoreTween:FlxTween;
+
+    public var startButton:FlxSprite;
+
+    public var backOutButton:BackOutButton;
 
     override function create():Void
     {
@@ -71,15 +83,7 @@ class StoryMenuScreen extends CustomState
 
         weeks = new Array<WeekData>();
 
-        for (i in 0 ... WeekData.list.length)
-        {
-            var week:WeekData = WeekData.list[i];
-
-            if (!week.showInStoryMenu)
-                continue;
-
-            weeks.push(week);
-        }
+        filterWeeksList();
 
         FlxG.mouse.visible = true;
 
@@ -175,7 +179,7 @@ class StoryMenuScreen extends CustomState
 
         add(weekNameText);
 
-        weekDescText = new FlxText(0.0, 0.0, weekInfoBoard.width - 27.5, "");
+        weekDescText = new FlxText(0.0, 0.0, weekInfoBoard.width - 27.5);
 
         weekDescText.color = FlxColor.BLACK;
 
@@ -207,29 +211,23 @@ class StoryMenuScreen extends CustomState
 
         add(weekPortrait);
 
-        backOutButton = new BackOutButton();
+        difficultyText = new FlxText(0.0, 0.0, chalkboard.width, "");
 
-        backOutButton.onClick.add(FlxG.switchState.bind(() -> new ModeSelectScreen()));
+        difficultyText.color = FlxColor.BLACK;
 
-        backOutButton.setPosition(FlxG.width - backOutButton.width - 165.0, 5.0);
+        difficultyText.size = 28;
 
-        add(backOutButton);
+        difficultyText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        startButton = new FlxSprite();
+        difficultyText.alignment = CENTER;
 
-        startButton.loadGraphic(AssetCache.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
+        difficultyText.textField.antiAliasType = ADVANCED;
 
-        startButton.animation.add("deselect", [0], 0.0, false);
+        difficultyText.textField.sharpness = 400.0;
 
-        startButton.animation.add("select", [1], 0.0, false);
+        difficultyText.setPosition(difficultyText.getCenterX(chalkboard), chalkboard.y + chalkboard.height - 15.0);
 
-        startButton.scale.set(1.25, 1.25);
-
-        startButton.updateHitbox();
-
-        startButton.setPosition(chalkboard.getMidpoint().x - startButton.width * 0.5, startButton.getCenterY() + 150.0);
-
-        add(startButton);
+        add(difficultyText);
 
         weekScore = 0;
 
@@ -251,15 +249,59 @@ class StoryMenuScreen extends CustomState
 
         add(scoreText);
 
-        changeSelection(curSelected);
+        startButton = new FlxSprite();
 
-        var leftButton:OrientedButton = addOrientedButton(LEFT, clickLeftButton);
+        startButton.loadGraphic(AssetCache.getGraphic("menus/StoryMenuScreen/start-button"), true, 256, 128);
 
-        leftButton.setPosition(chalkboard.x - leftButton.width + 85.0, chalkboard.getMidpoint().y - leftButton.height * 0.5);
+        startButton.animation.add("deselect", [0], 0.0, false);
 
-        var rightButton:OrientedButton = addOrientedButton(RIGHT, clickRightButton);
+        startButton.animation.add("select", [1], 0.0, false);
 
-        rightButton.setPosition(chalkboard.x + chalkboard.width - 85.0, chalkboard.getMidpoint().y - rightButton.height * 0.5);
+        startButton.scale.set(1.25, 1.25);
+
+        startButton.updateHitbox();
+
+        startButton.setPosition(startButton.getCenterX(chalkboard), chalkboard.y + chalkboard.height + 55.0);
+
+        add(startButton);
+
+        backOutButton = new BackOutButton();
+
+        backOutButton.onClick.add(FlxG.switchState.bind(() -> new ModeSelectScreen()));
+
+        backOutButton.setPosition(FlxG.width - backOutButton.width - 165.0, 5.0);
+
+        add(backOutButton);
+
+        changeDifficulty(0);
+
+        var leftDifficulty:OrientedButton = addOrientedButton(LEFT, clickLeftDifficulty);
+
+        leftDifficulty.scale.set(1.5, 1.5);
+
+        leftDifficulty.updateHitbox();
+
+        leftDifficulty.centerTo(difficultyText);
+
+        leftDifficulty.x -= 96.0;
+
+        var rightDifficulty:OrientedButton = addOrientedButton(RIGHT, clickRightDifficulty);
+
+        rightDifficulty.scale.set(1.5, 1.5);
+
+        rightDifficulty.updateHitbox();
+
+        rightDifficulty.centerTo(difficultyText);
+
+        rightDifficulty.x += 96.0;
+
+        var leftWeek:OrientedButton = addOrientedButton(LEFT, clickLeftWeek);
+
+        leftWeek.setPosition(chalkboard.x - leftWeek.width + 85.0, chalkboard.getMidpoint().y - leftWeek.height * 0.5);
+
+        var rightWeek:OrientedButton = addOrientedButton(RIGHT, clickRightWeek);
+
+        rightWeek.setPosition(chalkboard.x + chalkboard.width - 85.0, chalkboard.getMidpoint().y - rightWeek.height * 0.5);
 
         MainMenuScreen.playTune();
     }
@@ -274,15 +316,21 @@ class StoryMenuScreen extends CustomState
 
             if (FlxG.mouse.justReleased)
             {
-                var weekToLoad:WeekData = weeks[curSelected];
+                var weekToCopy:WeekData = weeks[selectedWeek];
 
-                if (HighScore.getWeekScore(weekToLoad.name, "normal").score == 0.0 && #if debug false #else
-                    weekToLoad.requiresScoreToPlay #end)
+                var difficulty:String = Difficulty.list[selectedDifficulty];
+
+                if (HighScore.getWeekScore(weekToCopy.name, difficulty).score == 0.0 && #if debug false #else
+                    weekToCopy.requiresScoreToPlay #end)
                         return;
 
                 ClickSoundUtil.play();
 
                 MainMenuScreen.fadeTune();
+
+                var weekToLoad:WeekData = weekToCopy.copy();
+
+                weekToLoad.levels = weekToLoad.filterByDifficulty(difficulty);
 
                 PlayState.loadWeek(weekToLoad);
             }
@@ -298,32 +346,61 @@ class StoryMenuScreen extends CustomState
         FlxG.mouse.visible = false;
     }
 
+    public function filterWeeksList():Void
+    {
+        weeks.resize(0);
+
+        for (i in 0 ... WeekData.list.length)
+        {
+            var week:WeekData = WeekData.list[i];
+
+            if (!week.showInStoryMenu || !week.hasDifficulty(Difficulty.list[selectedDifficulty]))
+                continue;
+
+            weeks.push(week);
+        }
+    }
+
+    public function changeDifficulty(change:Int):Void
+    {
+        var list:Array<String> = Difficulty.list;
+
+        lastSelectedWeek[selectedDifficulty] = selectedWeek;
+
+        selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
+
+        filterWeeksList();
+
+        if (change != 0.0)
+            selectedWeek = lastSelectedWeek.exists(selectedDifficulty) ? lastSelectedWeek[selectedDifficulty] : 0;
+
+        difficultyText.text = 'Difficulty:\n${list[selectedDifficulty].toUpperCase()}';
+
+        changeSelection(0);
+    }
+
     public function changeSelection(change:Int):Void
     {
-        curSelected = FlxMath.wrap(change, 0, weeks.length - 1);
+        selectedWeek = FlxMath.wrap(selectedWeek + change, 0, weeks.length - 1);
 
-        var week:WeekData = weeks[curSelected];
+        var week:WeekData = weeks[selectedWeek];
+
+        var levels:Array<LevelData> = week.filterByDifficulty(Difficulty.list[selectedDifficulty]);
 
         var text:String = "";
 
-        for (i in 0 ... week.levels.length)
-            text += '${week.levels[i].name}\n';
+        for (i in 0 ... levels.length)
+            text += '${levels[i].name}\n';
 
         songListText.text = text;
 
-        text = week.name;
-        
-        text += week.nameSuffix;
+        weekNameText.text = week.name + week.nameSuffix;
 
-        weekNameText.text = text;
-
-        text = week.description;
-
-        weekDescText.text = text;
+        weekDescText.text = week.description;
 
         scoreTween?.cancel();
 
-        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, "normal").score, 0.35, null, (v:Float) -> {
+        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, levels[0].difficulty).score, 0.35, null, (v:Float) -> {
             weekScore = Math.floor(v); scoreText.text = 'High Score: ${weekScore}';});
 
         updateWeekPortrait(week);
@@ -351,13 +428,23 @@ class StoryMenuScreen extends CustomState
         return button;
     }
 
-    public function clickLeftButton():Void
+    public function clickLeftDifficulty():Void
     {
-        changeSelection(curSelected - 1);
+        changeDifficulty(-1);
     }
 
-    public function clickRightButton():Void
+    public function clickRightDifficulty():Void
     {
-        changeSelection(curSelected + 1);
+        changeDifficulty(1);
+    }
+
+    public function clickLeftWeek():Void
+    {
+        changeSelection(1);
+    }
+
+    public function clickRightWeek():Void
+    {
+        changeSelection(1);
     }
 }

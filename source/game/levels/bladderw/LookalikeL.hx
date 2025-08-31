@@ -120,7 +120,7 @@ class LookalikeL extends PlayState
 
             lookalikeS.room3_Alt0.visible = true;
         
-            baldi.destroy();
+            baldi.kill();
         
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);

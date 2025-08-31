@@ -20,11 +20,11 @@ class OrientedButton extends FlxSprite
 
         loadGraphic(AssetCache.getGraphic("ui/OrientedButton/sheet"), true, 32, 32);
 
-        animation.add("deselect", orientation == LEFT ? [0] : [1], 0.0, false);
+        animation.add("deselected", orientation == LEFT ? [0] : [1], 0.0, false);
 
         animation.add("select", orientation == LEFT ? [2] : [3], 0.0, false);
 
-        animation.play("deselect");
+        animation.play("deselected");
 
         scale.set(3.0, 3.0);
 
@@ -49,7 +49,7 @@ class OrientedButton extends FlxSprite
             }
         }
         else
-            animation.play("deselect");
+            animation.play("deselected");
     }
 
     override function destroy():Void

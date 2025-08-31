@@ -55,6 +55,8 @@ class MysteryScreen extends CustomState
 {
     public var levels:Array<LevelData>;
 
+    public var hasScore:Bool;
+
     public var questionMarks:FlxTypedGroup<FlxSprite>;
 
     public var door:FlxSprite;
@@ -272,8 +274,7 @@ class MysteryScreen extends CustomState
             }
         }
 
-        if (#if debug true #else HighScore.getLevelScore(levels[curSelected].name, "normal").score == 0.0 #end
-            && hintTimer != -1.0)
+        if (#if debug true #else !hasScore #end && hintTimer != -1.0)
         {
             hintTimer += elapsed;
 
@@ -370,7 +371,7 @@ class MysteryScreen extends CustomState
     {
         var level:LevelData = levels[curSelected];
 
-        if (#if debug false && #end HighScore.getLevelScore(level.name, "normal").score == 0.0)
+        if (#if debug false && #end !hasScore)
             return;
 
         openSubState(new LevelInfoScreen(levels[curSelected]));
@@ -381,7 +382,7 @@ class MysteryScreen extends CustomState
         var level:LevelData = levels[curSelected];
 
         #if !debug
-        if (HighScore.getLevelScore(level.name, "normal").score == 0.0)
+        if (!hasScore)
             return;
         #end
 
@@ -453,9 +454,11 @@ class MysteryScreen extends CustomState
 
         var level:LevelData = levels[curSelected];
 
-        nameText.text = level.name;
+        var score:Int = HighScore.getLevelScore(level.name, "Normal").score;
 
-        var score:Int = HighScore.getLevelScore(level.name, "normal").score;
+        hasScore = score != 0.0;
+
+        nameText.text = level.name;
 
         var playSound:Bool = true;
 

@@ -176,7 +176,7 @@ class RevisionL extends PlayState
             revisionS.entranceA2.visible = false;
             revisionS.entranceA3.visible = true;
 
-            quarter.destroy();
+            quarter.kill();
 
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
@@ -659,12 +659,12 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
                 default:
                 {
-                    var str:String = FlxKey.toStringMap[firstJustPressed];
+                    var keyStr:String = FlxKey.toStringMap[firstJustPressed];
 
-                    var pars:Int = str.parseInt();
+                    var keyInt:Int = keyStr.parseInt();
 
-                    if (pars != -1)
-                        updateSubmission(pars);
+                    if (keyInt != -1)
+                        updateSubmission(keyInt);
                 }
             }
 

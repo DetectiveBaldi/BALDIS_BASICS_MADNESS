@@ -66,7 +66,7 @@ class LevelInfoScreen extends FlxSubState
 
         var name:String = level.name;
 
-        var highScore:LevelScore = HighScore.getLevelScore(level.name, "normal");
+        var highScore:LevelScore = HighScore.getLevelScore(level.name, level.difficulty);
 
         #if !debug
         if (highScore.score == 0.0)
@@ -115,7 +115,7 @@ class LevelInfoScreen extends FlxSubState
 
         add(scoreText);
 
-        gradeText = new FlxText(0.0, 0.0, clipboard.width, Std.string(HighScore.getLevelScore(level.name, "normal").grade));
+        gradeText = new FlxText(0.0, 0.0, clipboard.width, Std.string(highScore.grade));
 
         gradeText.visible = false;
 

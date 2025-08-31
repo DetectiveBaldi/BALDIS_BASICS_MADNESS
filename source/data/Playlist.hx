@@ -26,7 +26,8 @@ class Playlist
         week.description += "try to stop you from your objective! Be careful, you don't wanna get caught...";
 
         week.levels.pushMany({week: week, name: "Playmate"}, {week: week, name: "Detention"},
-            {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"}, {week: week, name: "Essential Escape"});
+            {week: week, name: "Standoff"}, {week: week, name: "Adrenaline"}, {week: week, name: "Hugs"},
+                {week: week, name: "Essential Escape"});
 
         // Hard Difficulty
         week.levels.pushMany({week: week, name: "Hyperactive", difficulty: "Hard"}, {week: week, name: "Rough Escape", difficulty: "Hard"});
@@ -36,7 +37,7 @@ class Playlist
         WeekData.list.push(week);
 
         // Bladder Week
-        week = {name: "Bladder", nameSuffix: " Style", description: ""}
+        week = {name: "Bladder", nameSuffix: "", description: ""}
 
         week.description += 'Out of pure curiosity, you slap a Portal Poster on a wall ';
 

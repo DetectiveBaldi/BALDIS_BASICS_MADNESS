@@ -47,7 +47,13 @@ class CustomState extends FlxState
         super.create();
 
         if (!cancelFadeOut)
+        {
             persistentUpdate = true;
+
+            openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
+        }
+
+        cancelFadeOut = false;
 
         tween = new FlxTweenManager();
 
@@ -64,11 +70,6 @@ class CustomState extends FlxState
         conductor.onBeatHit.add(beatHit);
         
         conductor.onMeasureHit.add(measureHit);
-
-        if (!cancelFadeOut)
-            openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
-
-        cancelFadeOut = false;
     }
 
     override function openSubState(newSubState:FlxSubState):Void

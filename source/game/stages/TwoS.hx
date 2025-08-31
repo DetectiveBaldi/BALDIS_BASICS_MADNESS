@@ -18,6 +18,8 @@ class TwoS extends Stage
 
         space = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
+        space.active = false;
+
         space.scale.set(960.0, 720.0);
 
         space.updateHitbox();

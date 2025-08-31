@@ -73,4 +73,9 @@ class WeekData
     {
         return levels.first((lv:LevelData) -> lv.difficulty == difficulty) != null;
     }
+
+    public function filterByDifficulty(difficulty:String):Array<LevelData>
+    {
+        return levels.filter((lv:LevelData) -> lv.difficulty == difficulty);
+    }
 }
