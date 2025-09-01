@@ -49,9 +49,16 @@ class BloxyCL extends PlayState
 
         bloxyCS.oldSchool.visible = true;
 
-        player.setPosition(800.0, 125.0);
+        player.setPosition(800.0, 175.0);
+        player.scale.set(2.3, 2.3);
     
         opponent.setPosition(200.0, 125.0);
+
+        var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("old-baldi-mad"));
+        opp.setPosition(168.0, 134.0);
+        opp.skipDance = true;
+        opp.visible = false;
+        opponents.add(opp);
     }
 
     override function stepHit(step:Int):Void
@@ -59,7 +66,7 @@ class BloxyCL extends PlayState
          
         if (step == 16)
         {
-            gameCameraZoom = 0.9;
+            gameCameraZoom = 0.85;
             
             cameraLock = FOCUS_CAM_CHAR;
             
@@ -70,7 +77,7 @@ class BloxyCL extends PlayState
         }
     
         if (step == 160 || step == 192 || step == 224 || step == 256)
-            gameCameraZoom = 0.9;
+            gameCameraZoom = 0.85;
     
         if (step == 208 || step == 672)
         {
@@ -79,7 +86,7 @@ class BloxyCL extends PlayState
     
         if (step == 272 || step == 656 || step == 784)
         {
-            gameCameraZoom = 1.25;
+            gameCameraZoom = 0.95;
         
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
@@ -115,12 +122,10 @@ class BloxyCL extends PlayState
         {
             opponent.visible = false;
             
-            opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("old-baldi-mad"));
-            opponent.setPosition(178.0, 134.0);
-            opponent.skipDance = true;
-            opponents.add(opponent);
-
-            opponent.animation.play("slap");
+            var opp:Character = getOpponent("old-baldi-mad");
+            opp.animation.play("slap");
+            opp.visible = true;
+            opponent = opp;
         }
         
         if (step == 400)
@@ -136,7 +141,7 @@ class BloxyCL extends PlayState
         }
     
         if (step == 776)
-            gameCameraZoom = 1.25;
+            gameCameraZoom = 0.95;
 
         if (step == 784)
         {
@@ -168,7 +173,9 @@ class BloxyCL extends PlayState
             {
                 cameraPoint.centerTo(player);
 
-                cameraPoint.x -= 50;
+                cameraPoint.x -= 25;
+
+                cameraPoint.y -= 50;
 
                 gameCamera.snapToTarget();
             }
@@ -179,7 +186,7 @@ class BloxyCL extends PlayState
 
                 cameraPoint.x += 20;
 
-                cameraPoint.y -= 50;
+                cameraPoint.y -= 100;
 
                 gameCamera.snapToTarget();
             }
