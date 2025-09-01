@@ -523,7 +523,9 @@ class CharacterEditorState extends CustomState
 
                 flipX: ui.findComponent("____checkbox", CheckBox).value,
 
-                flipY: ui.findComponent("_____checkbox", CheckBox).value
+                flipY: ui.findComponent("_____checkbox", CheckBox).value,
+
+                offset: {x: 0.0, y: 0.0}
             });
 
             animationIndex = character.config.animations.length - 1;

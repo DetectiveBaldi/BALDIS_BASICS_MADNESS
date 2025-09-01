@@ -1,1 +1,1 @@
-composer=GREXA|step=128
+composer=GREXA|step=400
