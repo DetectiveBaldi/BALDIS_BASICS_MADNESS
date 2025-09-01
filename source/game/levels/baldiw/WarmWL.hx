@@ -27,14 +27,21 @@ class WarmWL extends PlayState
 
         super.create();
 
+        gameCameraZoom = 0.6;
+
+        cameraPoint.centerTo();
+
+        cameraLock = FOCUS_CAM_POINT;
+
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
     
         warmWS.entranceA0.visible = true;
 
         var plr:Character = getPlayer("bf-face-back");
-        plr.setPosition(-20, -280);
-        plr.visible = false;
+        plr.scale.set(5.0, 5.0);
+        plr.updateHitbox();
+        plr.setPosition(-350.0, -300.0);
         
         players.setPosition(215, 165);
         opponents.setPosition(345, 180);
@@ -51,16 +58,12 @@ class WarmWL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
 
-            gameCameraZoom = 0.8;
-
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = true;
         }
 
         if (step == 384)
         {
-            gameCameraZoom = 0.95;
-
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
@@ -72,8 +75,6 @@ class WarmWL extends PlayState
 
         if (step == 640)
         {
-            gameCameraZoom = 0.8;
-
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
@@ -100,6 +101,8 @@ class WarmWL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
+            player.visible = false;
+            
             var opp:Character = getOpponent("baldi-face-front");
             opp.visible = false;
         
@@ -186,6 +189,27 @@ class WarmWL extends PlayState
             warmWS.remove(players, true);
             warmWS.insert(warmWS.members.indexOf(warmWS.entranceA1_Overlay0), players);
             warmWS.entranceA1_Overlay0.visible = true;
+        }
+    }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+        
+        if (beat >= 0.0 && beat < 288.0)
+        {
+            if (cameraCharTarget == "OPPONENT")
+            {
+                gameCameraZoom = 1.0;
+            
+                tween.tween(player, {alpha: 0.0}, conductor.beatLength * 0.001);
+            }
+            else
+            {
+                gameCameraZoom = 0.6;
+                    
+                tween.tween(player, {alpha: 1.0}, conductor.beatLength * 0.001);
+            }
         }
     }
 }
