@@ -40,20 +40,172 @@ class BloxyCL extends PlayState
         bloxyCS = cast (stage, BloxyCS);
 
         super.create();
-    
-        gameCameraZoom = 0.8;
+            
+        cameraPoint.centerTo();
 
-        setCamStartPos();
+        cameraLock = FOCUS_CAM_POINT;
+
+        playField.visible = false;
 
         bloxyCS.oldSchool.visible = true;
 
-        player.setPosition(600.0, 125.0);
+        player.setPosition(800.0, 125.0);
     
-        opponent.setPosition(-250.0, 125.0);
+        opponent.setPosition(200.0, 125.0);
     }
 
     override function stepHit(step:Int):Void
     {
-        // im gonna add minor events later trust
+         
+        if (step == 16)
+        {
+            gameCameraZoom = 0.9;
+            
+            cameraLock = FOCUS_CAM_CHAR;
+            
+            playField.visible = true;
+
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    
+        if (step == 160 || step == 192 || step == 224 || step == 256)
+            gameCameraZoom = 0.9;
+    
+        if (step == 208 || step == 672)
+        {
+            gameCameraZoom = 0.8;
+        }
+    
+        if (step == 272 || step == 656 || step == 784)
+        {
+            gameCameraZoom = 1.25;
+        
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    
+        if (step == 328)
+        {
+            tween.tween(hudCamera, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+        }
+        
+        if (step == 336)
+        {
+            gameCameraZoom = 0.75;
+            
+            cameraPoint.centerTo();
+
+            cameraLock = FOCUS_CAM_POINT;
+        }
+
+        if (step == 368)
+        {
+            opponent.skipDance = true;
+            opponent.animation.play("annoyed");
+        }
+        
+        if (step == 384)
+        {
+            opponent.skipDance = true;
+            opponent.animation.play("angry");
+        }
+        
+        if (step == 396)
+        {
+            opponent.visible = false;
+            
+            opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("old-baldi-mad"));
+            opponent.setPosition(178.0, 134.0);
+            opponent.skipDance = true;
+            opponents.add(opponent);
+
+            opponent.animation.play("slap");
+        }
+        
+        if (step == 400)
+        {
+            gameCameraZoom = 0.8;
+
+            cameraLock = FOCUS_CAM_CHAR;
+            
+            hudCamera.alpha = 1.0;
+
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    
+        if (step == 776)
+            gameCameraZoom = 1.25;
+
+        if (step == 784)
+        {
+            gameCameraZoom = 0.75;
+            
+            cameraPoint.centerTo();
+
+            cameraLock = FOCUS_CAM_POINT;
+        
+            playField.visible = false;
+
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+
+        if (step == 848)
+            gameCamera.visible = false;
+    }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+    
+        if (beat >= 0 && beat < 4)
+        {
+            gameCameraZoom += 0.05;
+            
+            if (beat % 1 == 0)
+            {
+                cameraPoint.centerTo(player);
+
+                cameraPoint.x -= 50;
+
+                gameCamera.snapToTarget();
+            }
+        
+            if (beat % 2 == 0)
+            {
+                cameraPoint.centerTo(opponent);
+
+                cameraPoint.x += 20;
+
+                cameraPoint.y -= 50;
+
+                gameCamera.snapToTarget();
+            }
+        }
+
+        if (beat >= 38 && beat < 64 && (beat - 38) % 8 < 2)
+        {
+            gameCameraZoom += 0.05;
+        }
+        
+        if (beat >= 88 && beat < 98)
+        {
+            if (beat % 4 == 0)
+                gameCameraZoom += 0.05;
+        }
+    
+        if (beat >= 100)
+            if (beat % 1 == 0)
+                opponent.animation.play("slap");
+    
+        if (beat >= 204)
+            if (beat % 2 == 0)
+                tween.tween(opponent, {x: opponent.x + 150.0}, conductor.beatLength * 0.275 * 0.001, 
+                    {
+                        ease: FlxEase.sineIn
+                    }
+                );
     }
 }
