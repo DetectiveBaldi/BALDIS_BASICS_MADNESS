@@ -12,6 +12,12 @@ class EssentialES extends Stage
 
     public var hall:FlxSprite;
 
+    public var exit:FlxSprite;
+
+    public var exitClosed:FlxSprite;
+
+    public var exitClosed2:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -27,5 +33,17 @@ class EssentialES extends Stage
         hall.animation.addByPrefix("0", "scroll", 36.0);
         
         hall.animation.play("0", false, true);
+
+        exit = getSprite("exit");
+
+        exit.active = true;
+
+        exitClosed = getSprite("exitClosed");
+
+        exitClosed.active = true;
+
+        exitClosed2 = getSprite("exitClosed");
+
+        exitClosed2.active = true;
     }
 }
