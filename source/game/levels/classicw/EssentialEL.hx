@@ -20,6 +20,8 @@ import game.events.SetCamFocusEvent;
 
 import game.stages.classicw.EssentialES;
 
+using flixel.util.FlxColorTransformUtil;
+
 using util.MathUtil;
 
 using StringTools;
@@ -29,6 +31,8 @@ class EssentialEL extends PlayState
     public var essentialES:EssentialES;
 
     public var temperature:FlxSprite;
+
+    public var win:FlxSprite;
 
     override function create():Void
     {
@@ -189,7 +193,7 @@ class EssentialEL extends PlayState
             essentialES.hall.visible = true;
         }
 
-        if (step == 656 || step == 784)
+        if (step == 656 || step == 784 || step == 1680)
             cameraPoint.x = 500.0;
 
         if (step == 720 || step == 848)
@@ -252,7 +256,7 @@ class EssentialEL extends PlayState
 
             cameraPoint.centerTo();
 
-            tween.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF6363,
+            tween.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF4848,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -272,6 +276,231 @@ class EssentialEL extends PlayState
         if (step == 1248)
         {
             tween.tween(this.cameraPoint, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(essentialES.hall.colorTransform, {redOffset: 155.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 155.0},
+                conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 1264)
+        {
+            var opp:Character = getOpponent("baldi-mad");
+            opp.visible = false;
+
+            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-glitch"));
+            _opp.setPosition(-100.0, 18.5);
+            opponents.add(_opp);
+            opponent = _opp;
+        }
+
+        if (step == 1296)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF0E0E,
+                {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+            opponent.x = -880.0;
+
+            cameraPoint.x = 950.0;
+        }
+
+        if (step == 1360)
+            gameCameraZoom = 0.9;
+
+        if (step == 1424)
+        {
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            var opp:Character = getOpponent("baldi-mad-glitch");
+            opp.visible = false;
+
+            var _opp:Character = getOpponent("baldi-mad");
+            _opp.visible = true;
+            opponent = _opp;
+
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            tween.tween(player, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
+
+            var _plr:Character = getPlayer("run-legs");
+
+            tween.tween(_plr, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
+
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 7.9 * 0.001, false);
+        }
+
+        if (step == 1456)
+        {
+            gameCamera.color = FlxColor.RED;
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 7.9 * 0.001, true);
+
+            essentialES.hall.visible = false;
+            essentialES.hall0.visible = true;
+
+            cameraPoint.x = 500.0;
+
+            opponent.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-zesty-essential"));
+            plr.visible = true;
+            plr.skipDance = true;
+            plr.skipSing = true;
+            plr.animation.play("rest");
+            plr.setPosition(-680.0, 185.0);
+            players.add(plr);
+            player = plr;
+
+            tween.tween(plr, {x: 300.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+
+        if (step == 1472)
+            player.animation.play("leftlook");
+
+        if (step == 1488)
+            player.animation.play("rightlook");
+
+        if (step == 1504)
+            player.animation.play("check");
+
+        if (step == 1520)
+            player.animation.play("found");
+
+        if (step == 1528)
+        {
+            player.animation.play("smirkleft");
+
+            opponent.visible = true;
+
+            opponent.x = -1200.0;
+        }
+
+        if (step == 1540)
+            player.animation.play("eat");
+
+        if (step == 1544)
+        {
+            tween.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadIn});
+        }
+
+        if (step == 1546)
+            player.animation.play("run");
+
+        if (step == 1552)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            essentialES.hall.visible = true;
+            essentialES.hall0.visible = false;
+
+            opponent.x = -845.0;
+
+            cameraPoint.x = 950.0;
+
+            var __plr:Character = getPlayer("bf-zesty-essential");
+            __plr.visible = false;
+
+            var plr:Character = getPlayer("bf-running");
+            plr.x = 480.5;
+            player = plr;
+
+            var _plr:Character = getPlayer("run-legs");
+            _plr.x = player.x;
+
+            tween.tween(player, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(_plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+        }
+
+        if (step == 1792)
+        {
+            gameCameraZoom += 0.05;
+
+            opponent.x = -800.0;
+        }
+
+        if (step == 1808)
+        {
+            cameraPoint.centerTo();
+
+            gameCameraZoom -= 0.15;
+        }
+
+        if (step == 1820)
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
+
+        if (step == 1824)
+        {
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            player.visible = false;
+
+            var plr:Character = getPlayer("run-legs");
+            plr.visible = false;
+
+            opponent.visible = false;
+
+            essentialES.hall.visible = false;
+
+            essentialES.cafeExit0.visible = true;
+        }
+
+        if (step == 1828)
+            essentialES.cafeExit1.visible = true;
+
+        if (step == 1832)
+            essentialES.cafeExit2.visible = true;
+
+        if (step == 1836)
+            essentialES.cafeExit3.visible = true;
+
+        if (step == 1840)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            gameCamera.color = FlxColor.WHITE;
+
+            essentialES.cafeExit0.visible = false;
+            essentialES.cafeExit1.visible = false;
+            essentialES.cafeExit2.visible = false;
+            essentialES.cafeExit3.visible = false;
+
+            oppStrumline.strums.alpha = 0.25;
+
+            tween.tween(plrStrumline.strums, {x: plrStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(oppStrumline.strums, {x: oppStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            hudCamBopStrength = 0.0;
+            gameCamBopStrength = 0.0;
+
+            win = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/win"));
+            win.scale.set(2.5, 2.5);
+            win.camera = gameCamera;
+            win.screenCenter();
+            insert(0, win);
+        }
+
+        if (step == 1916)
+        {
+            hudCamera.visible = false;
+            gameCamera.visible = false;
         }
     }
 
@@ -300,7 +529,7 @@ class EssentialEL extends PlayState
             }
         }
 
-        if (beat >= 228.0 && beat <= 323.0)
+        if (beat >= 228.0 && beat <= 315.0 || beat >= 356.0 && beat <= 363.0)
         {
             if (beat % 2.0 == 0.0)
             {
@@ -308,6 +537,68 @@ class EssentialEL extends PlayState
 
                 tween.tween(opp, {x: opp.x + 870.0}, conductor.beatLength * 0.35 * 0.001,
                     {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 870.0}, 0.5);}});
+
+                opp.animation.play("slap", true);
+            }
+        }
+
+        if (Options.flashingLights)
+        {
+            if (beat >= 316 && beat <= 323)
+            {
+                if (beat % 2.0 == 1.0)
+                {
+                    essentialES.hall.colorTransform.setOffsets(200, 0, 0, 155);
+
+                    tween.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
+                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tween.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
+                }
+                else
+                {
+                    essentialES.hall.colorTransform.setOffsets(200, 0, 0, 155);
+
+                    gameCamera.color = 0xFF0000;
+
+                    tween.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
+                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tween.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
+                }
+            }
+        }
+
+        if (beat >= 324.0 && beat <= 355.0)
+        {
+            if (beat % 2.0 == 1.0)
+            {
+                var opp:Character = getOpponent("baldi-mad-glitch");
+
+                tween.tween(opp, {x: opp.x + 940.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 940.0}, 0.5);}});
+            }
+        }
+
+        if (beat >= 336.0 && beat <= 339.0)
+            gameCameraZoom += 0.05;
+
+        if (beat >= 384 && beat <= 387)
+        {
+            if (beat % 2.0 == 0.0)
+            {
+                var opp:Character = getOpponent("baldi-mad");
+
+                tween.tween(opp, {x: opp.x + 520.0}, conductor.beatLength * 0.35 * 0.001, {ease: FlxEase.quadOut});
+
+                opp.animation.play("slap", true);
+            }
+        }
+
+        if (beat >= 388.0 && beat <= 455.0)
+        {
+            if (beat % 2.0 == 1.0)
+            {
+                var opp:Character = getOpponent("baldi-mad");
+
+                tween.tween(opp, {x: opp.x + 900.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 900.0}, 0.5);}});
 
                 opp.animation.play("slap", true);
             }

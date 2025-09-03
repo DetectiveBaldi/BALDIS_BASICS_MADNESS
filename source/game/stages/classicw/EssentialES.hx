@@ -12,11 +12,21 @@ class EssentialES extends Stage
 
     public var hall:FlxSprite;
 
+    public var hall0:FlxSprite;
+
     public var exit:FlxSprite;
 
     public var exitClosed:FlxSprite;
 
     public var exitClosed2:FlxSprite;
+
+    public var cafeExit0:FlxSprite;
+
+    public var cafeExit1:FlxSprite;
+
+    public var cafeExit2:FlxSprite;
+
+    public var cafeExit3:FlxSprite;
 
     public function new():Void
     {
@@ -34,6 +44,8 @@ class EssentialES extends Stage
         
         hall.animation.play("0", false, true);
 
+        hall0 = getSprite("hall0", true);
+
         exit = getSprite("exit");
 
         exit.active = true;
@@ -45,5 +57,13 @@ class EssentialES extends Stage
         exitClosed2 = getSprite("exitClosed");
 
         exitClosed2.active = true;
+
+        cafeExit0 = getSprite("cafeExit0", 2, 2);
+
+        cafeExit1 = getSprite("cafeExit1", 2, 2);
+
+        cafeExit2 = getSprite("cafeExit2", 2, 2);
+
+        cafeExit3 = getSprite("cafeExit3", 2, 2);
     }
 }

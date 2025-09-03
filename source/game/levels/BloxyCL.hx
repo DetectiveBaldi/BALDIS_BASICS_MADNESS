@@ -43,14 +43,16 @@ class BloxyCL extends PlayState
             
         cameraPoint.centerTo();
 
+        cameraPoint.x += 50.0;
+
         cameraLock = FOCUS_CAM_POINT;
 
         playField.visible = false;
 
         bloxyCS.oldSchool.visible = true;
 
-        player.setPosition(800.0, 175.0);
-        player.scale.set(2.3, 2.3);
+        player.setPosition(800.0, 335.0);
+        player.scale.set(1.55, 1.55);
     
         opponent.setPosition(200.0, 125.0);
 
@@ -100,10 +102,14 @@ class BloxyCL extends PlayState
         if (step == 336)
         {
             gameCameraZoom = 0.75;
+
+            opponent.skipDance = true;
             
             cameraPoint.centerTo();
 
             cameraLock = FOCUS_CAM_POINT;
+
+            cameraPoint.x += 50.0;
         }
 
         if (step == 368)
@@ -150,6 +156,8 @@ class BloxyCL extends PlayState
             cameraPoint.centerTo();
 
             cameraLock = FOCUS_CAM_POINT;
+
+            cameraPoint.x += 50.0;
         
             playField.visible = false;
 

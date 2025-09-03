@@ -45,7 +45,7 @@ class MishapL extends PlayState
 
         mishapS.breadySchool.visible = true;
 
-        player.setPosition(600.0, 125.0);
+        player.setPosition(840.0, 315.0);
     
         opponent.setPosition(-250.0, 75.0);
     }
