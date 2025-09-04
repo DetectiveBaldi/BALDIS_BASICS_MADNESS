@@ -134,6 +134,8 @@ class RoughEL extends PlayState
 
             var plr:Character = getPlayer("bf-face-left");
 
+            plr.color = 0xC7BEA7;
+
             plr.skipDance = true;
 
             plr.animation.play("ay");
@@ -152,8 +154,6 @@ class RoughEL extends PlayState
 
             roughES.hall2.visible = true;
 
-            roughES.hall2.velocity.set(-2560.0, 0.0);
-
             opponents.visible = true;
 
             var opp:Character = getOpponent("baldi-mad");
@@ -161,6 +161,8 @@ class RoughEL extends PlayState
             opp.skipDance = true;
 
             opp.setPosition(-845.0, 18.5);
+
+            opp.color = 0xC2B499;
 
             var plr:Character = getPlayer("bf-face-left");
 
@@ -173,6 +175,8 @@ class RoughEL extends PlayState
             anim.frameRate = anim.numFrames / (conductor.beatLength * 0.001);
 
             _plr.setPosition(798.5, 205.5);
+
+            _plr.color = 0xC7BEA7;
 
             players.add(_plr);
 
@@ -231,6 +235,8 @@ class RoughEL extends PlayState
 
             sodaSplash.scale.set(11.5, 11.5);
 
+            sodaSplash.color = 0xD3CDAB;
+
             sodaSplash.updateHitbox();
 
             sodaSplash.setPosition(plr.getMidpoint().x - sodaSplash.width * 0.5, (FlxG.height - sodaSplash.height) * 0.5);
@@ -252,23 +258,32 @@ class RoughEL extends PlayState
                 {ease: FlxEase.quartOut});
         }
 
+        if (step == 576.0)
+        {
+
+        }
+
+
         if (step == 580.0)
         {
             var plr:Character = getPlayer("bf-running");
 
-            SetCamFocusEvent.dispatch(this, plr.getMidpoint().x - cameraPoint.width * 0.5,
-                (FlxG.height - cameraPoint.height) * 0.5, null, conductor.beatLength * 2.5 * 0.001, "quartInOut");
-
             var _plr:Character = getPlayer("run-legs");
-
-            roughES.hall2.velocity.set(roughES.hall2.velocity.x *= 1.25, 0.0);
-
-            tween.tween(roughES.hall2.velocity, {x: roughES.hall2.velocity.x / 1.25}, conductor.beatLength * 2.5 * 0.001,
-                {ease: FlxEase.sineOut});
 
             tween.tween(plr.animation, {timeScale: 1.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.sineOut});
 
             tween.tween(_plr.animation, {timeScale: 1.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.sineOut});
+
+            tween.tween(plr, {x: 260.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.quartInOut});
+
+            tween.tween(_plr, {x: 260.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.quartInOut});
+
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
+        }
+
+        if (step == 584.0)
+        {
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
         }
 
         if (step == 590.0)
@@ -277,11 +292,13 @@ class RoughEL extends PlayState
 
             opp.flipX = true;
 
-            opp.setPosition(2285.0, -555.0);
+            opp.color = 0xCCC0A9;
+
+            opp.setPosition(1085.0, -555.0);
 
             opponents.add(opp);
 
-            tween.tween(opp, {x: 1885}, conductor.beatLength * 0.5 * 0.001);
+            tween.tween(opp, {x: 540.0}, conductor.beatLength * 0.5 * 0.001);
         }
 
         if (step == 592.0)
@@ -307,6 +324,8 @@ class RoughEL extends PlayState
             _opp.flipX = false;
 
             tween.cancelTweensOf(_opp);
+
+            opp.color = 0xCCC0A9;
 
             _opp.setPosition(-685.0, -555.0);
 
@@ -372,6 +391,8 @@ class RoughEL extends PlayState
 
             opp.skipDance = true;
 
+            opp.color = 0x8A7D65;
+
             opp.scale.set(0.8, 0.8);
 
             opp.setPosition(140.0, 120.0);
@@ -385,6 +406,8 @@ class RoughEL extends PlayState
             var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
 
             _plr.setPosition(-280.0, 125.0);
+
+            _plr.color = 0xC7BEA7;
 
             players.add(_plr);
 
@@ -409,6 +432,9 @@ class RoughEL extends PlayState
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
+        if (step == 872)
+            opponent.color = 0xAA9C82;
+
         if (step == 878.0)
             hudCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
 
@@ -423,6 +449,8 @@ class RoughEL extends PlayState
             var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.setPosition(390.0, 135.0);
+
+            opp.color = 0xC2B59D;
 
             oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -501,6 +529,8 @@ class RoughEL extends PlayState
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
 
             opp.setPosition(-862.5, 22.5);
+
+            opp.color = 0xC4B7A0;
 
             opponents.add(opp);
         }
@@ -653,6 +683,8 @@ class RoughEL extends PlayState
 
             opp.scale.set(0.25, 0.25);
 
+            opp.color = 0x000000;
+
             opp.setPosition(385.0, 110.0);
 
             var _opp:Character = getOpponent("principal");
@@ -676,6 +708,8 @@ class RoughEL extends PlayState
             _plr.animation.play("window1", true);
 
             _plr.setPosition(500.0, 0.0);
+
+            _plr.color = 0xC7BEA7;
 
             players.add(_plr);
 
@@ -706,6 +740,8 @@ class RoughEL extends PlayState
             roughES.office3.visible = false;
 
             roughES.office5.visible = true;
+
+            opponent.color = 0x14120B;
         }
 
         if (step == 1504.0)
@@ -713,6 +749,8 @@ class RoughEL extends PlayState
             var plr:Character = getPlayer("bf-anim-window");
 
             plr.animation.play("window2", true);
+
+            opponent.color = 0x2B2619;
         }
 
         if (step == 1520.0)
@@ -720,6 +758,8 @@ class RoughEL extends PlayState
             var plr:Character = getPlayer("bf-anim-window");
 
             plr.animation.play("window3", true);
+
+            opponent.color = 0x4B432F;
         }
 
         if (step == 1536.0)
@@ -727,6 +767,8 @@ class RoughEL extends PlayState
             var plr:Character = getPlayer("bf-anim-window");
 
             plr.animation.play("window4", true);
+
+            opponent.color = 0x685E45;
         }
 
         if (step == 1544.0)
@@ -847,6 +889,8 @@ class RoughEL extends PlayState
             opp.scale.set(1.75, 1.75);
 
             opp.setPosition(400.0, 155.0);
+
+            opp.color = 0xC2B59D;
 
             tween.tween(opp.scale, {x: 2.5, y: 2.5}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
 
@@ -1017,6 +1061,8 @@ class RoughEL extends PlayState
 
             _plr.skipSing = true;
 
+            _plr.color = 0xC7BEA7;
+
             _plr.animation.play("lock", true);
 
             _plr.animation.pause();
@@ -1087,6 +1133,7 @@ class RoughEL extends PlayState
             opp.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime"));
+            opp.color = 0xC7BDA6;
             opp.setPosition(-1100, 220.0);
             opp.scale.set(1, 1);
             opponents.add(opp);
@@ -1131,7 +1178,7 @@ class RoughEL extends PlayState
             roughES.cafeteria3.visible = false;
             roughES.cafeteria4.visible = true;
         
-            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFD7312E,
+            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFE9221F,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
     
@@ -1159,7 +1206,8 @@ class RoughEL extends PlayState
         if (step == 2176)
         {
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("gotta-sweep"));
-            opp.setPosition(1750, -100);
+            opp.color = 0xB4A88D;
+            opp.setPosition(1750, -25);
             opp.skipSing = true;
             opponents.add(opp);
             
@@ -1210,7 +1258,6 @@ class RoughEL extends PlayState
 
             roughES.cafeteria4.visible = false;
             roughES.hall2.visible = true;
-            roughES.hall2.velocity.set(-10560.0, 0.0);
 
             var opp:Character = getOpponent("playtime");
             opp.visible = false;
@@ -1219,7 +1266,8 @@ class RoughEL extends PlayState
             opp.visible = false;
 
             var opp:Character = getOpponent("gotta-sweep");
-            opp.setPosition(-1000, -100);
+            opp.color = 0xBEB398;
+            opp.setPosition(-1000, -25);
             opp.skipSing = false;
 
             opponent = opp;
@@ -1255,7 +1303,7 @@ class RoughEL extends PlayState
         if (step == 2494)
         {
             roughES.facultyStandard.visible = true;
-            roughES.facultyStandard.velocity.x = -2560.0;
+            roughES.facultyStandard.velocity.x = -3119.5;
             roughES.facultyStandard.x = gameCamera.viewX + gameCamera.viewWidth;
         }
 
@@ -1263,7 +1311,8 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 1;
 
-            roughES.hall2.velocity.set(0.0, 0.0);
+            roughES.hall2.visible = false;
+            roughES.hall2still.visible = true;
         
             roughES.facultyStandard.velocity.x = 0.0;
 
@@ -1284,7 +1333,7 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 0.75;
             
-            SetCamFocusEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 300.0,
+            SetCamFocusEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 180.0,
                 (FlxG.height - cameraPoint.height) * 0.5, null, 0.0);
 
             if (Options.shaders)
@@ -1301,6 +1350,7 @@ class RoughEL extends PlayState
             var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-anim-coming"));
             _opp.skipDance = true;
             _opp.animation.play("coming");
+            _opp.color = 0xAFA487;
             _opp.setPosition(950, -150);
             opponents.add(_opp);
             
@@ -1327,6 +1377,7 @@ class RoughEL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
         
@@ -1337,6 +1388,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-315"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
         
@@ -1347,6 +1399,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
 
@@ -1357,6 +1410,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-0"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
         
@@ -1367,6 +1421,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
 
@@ -1377,6 +1432,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-45"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
        
@@ -1387,6 +1443,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
 
@@ -1397,6 +1454,7 @@ class RoughEL extends PlayState
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-90"));
             opp.setPosition(950, -150);
+            opp.color = 0xAFA487;
             opponents.add(opp);
         }
 
@@ -1438,9 +1496,12 @@ class RoughEL extends PlayState
                 (FlxG.height - cameraPoint.height) * 0.5, null, 0.0);
 
             gameCamera.snapToTarget();
+
+            opponent.color = 0xC7BEA7;
            
             gameCameraZoom = 0.7;
-            roughES.hall2.velocity.set(5560.0, 0.0);
+            roughES.hall2rev.visible = true;
+            roughES.hall2still.visible = false;
             roughES.facultyStandard.velocity.x = 5560.0;
         }
     
@@ -1451,7 +1512,7 @@ class RoughEL extends PlayState
 
             tween.tween(opp, {x: 300}, 1, {ease: FlxEase.quartOut});
             
-            tween.tween(plr, {x: 150}, 1, {ease: FlxEase.quartOut, onComplete: (_tween:FlxTween) -> {roughES.hall2.velocity.set(2560.0, 0.0);}});
+            tween.tween(plr, {x: 150}, 1, {ease: FlxEase.quartOut});
 
         }
    
@@ -1461,6 +1522,7 @@ class RoughEL extends PlayState
             craftersSprite1.scale.set(1.35, 1.35);
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(-1500, 100);
+            craftersSprite1.color = 0xC2B8A1;
             roughES.add(craftersSprite1);
 
             tween.tween(craftersSprite1, {x: 50}, 0.5,                
@@ -1534,6 +1596,7 @@ class RoughEL extends PlayState
             var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-teleported"));
             _plr.skipDance = true;
             _plr.skipSing = true;
+            _plr.color = 0xC7BEA7;
             _plr.setPosition(550, 100);
             _plr.animation.play("shock");
             players.add(_plr);
@@ -1542,6 +1605,7 @@ class RoughEL extends PlayState
             opp.scale.set(0.7, 0.7);
             opp.updateHitbox();
             opp.setPosition(1100, 280);
+            opp.color = 0x5C574A;
             opp.visible = true;
             opp.animation.play("slap");
             tween.tween(opp, {x: opp.x + 200.0}, conductor.beatLength * 0.275 * 0.001, {ease: FlxEase.sineIn});
@@ -1567,6 +1631,9 @@ class RoughEL extends PlayState
 
             gameCameraZoom = 0.75;
 
+            roughES.hall2rev.visible = false;
+            roughES.hall2.visible = true;
+
             hudCamera.visible = true;
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
@@ -1579,6 +1646,7 @@ class RoughEL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-furious"));
             opp.setPosition(-885.0, 18.5);
+            opp.color = 0xC2B499;
             opp.skipDance = true;
             opponents.add(opp);
 
@@ -1597,7 +1665,6 @@ class RoughEL extends PlayState
             roughES.hall6.visible = false;
             roughES.hall7.visible = false;
             roughES.hall2.visible = true;
-            roughES.hall2.velocity.set(-2560.0, 0.0);
 
             var oppStrumlineX:Float = oppStrumline.strums.x;
 
@@ -1892,6 +1959,8 @@ class RoughEL extends PlayState
 
         if (pxContainer != null)
             gameCamera.filters.remove(pxContainer);
+
+        //the if statement above causes the game to crash when the song ends
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
