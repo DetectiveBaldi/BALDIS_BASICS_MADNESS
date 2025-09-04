@@ -46,8 +46,6 @@ class DetentionL extends PlayState
 
         detentionS.hall.visible = true;
 
-        detentionS.hall.velocity.set(-400.0, 0.0);
-
         gameCamera.snapToTarget();
 
         gameCameraZoom = 0.65;
@@ -91,6 +89,8 @@ class DetentionL extends PlayState
         player.animation.onFrameChange.add(updateLegStatus);
 
         opponent.setPosition(-1000.0, 10.0);
+
+        detentionS.hall.animation.play("0");
     }
 
     override function stepHit(step:Int):Void
@@ -154,12 +154,6 @@ class DetentionL extends PlayState
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
-
-            detentionS.schoolRules.visible = true;
-
-            detentionS.schoolRules.velocity.x = -400.0;
-
-            detentionS.schoolRules.x = gameCamera.viewX + gameCamera.viewWidth;
         }
 
         if (step == 656)
@@ -184,26 +178,25 @@ class DetentionL extends PlayState
             tween.tween(__plr, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
-        if (step == 744)
-        {
-            detentionS.facultyStandard.visible = true;
-
-            detentionS.facultyStandard.velocity.x = -400.0;
-
-            detentionS.facultyStandard.x = gameCamera.viewX + gameCamera.viewWidth;
-        }
-
         if (step == 752)
         {
-            tween.tween(detentionS.hall.velocity, {x: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            player.x = -1200.0;
 
-            tween.tween(detentionS.facultyStandard.velocity, {x: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
-
-            tween.tween(player, {x: 1040.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.sineIn});
+            tween.tween(player, {x: 800.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
+
+            __plr.x = -1200.0;
             
-            tween.tween(__plr, {x: 1040.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.sineIn});
+            tween.tween(__plr, {x: 800.0}, conductor.beatLength * 8.0 * 0.001);
+
+            detentionS.hall.visible = false;
+
+            detentionS.hallstill.visible = true;
+
+            detentionS.facultyStandard.visible = true;
+
+            detentionS.facultyStandard.x = 600.0;
         }
 
         if (step == 768)

@@ -10,6 +10,8 @@ class HugsS extends Stage
 {
     public var hall:FlxSprite;
 
+    public var hallstill:FlxSprite;
+
     public var hallcorner1:FlxSprite;
 
     public var hallcorner2:FlxSprite;
@@ -26,17 +28,29 @@ class HugsS extends Stage
     {
         super();
 
-        hall = getBackdrop("scrolling-hall0", true);
+        hall = getAtlasSprite("scrolling-hall0", true);
 
         hall.active = true;
 
+        hall.animation.addByPrefix("0", "scroll", 60.0);
+
+        hallstill = getSprite("hall0", true);
+
         hallcorner1 = getSprite("hallcorner-1");
+
+        hallcorner1.active = true;
 
         hallcorner2 = getSprite("hallcorner-2");
 
+        hallcorner2.active = true;
+
         hallcorner4 = getSprite("hallcorner-4");
 
+        hallcorner4.active = true;
+
         hallend = getSprite("hall-end");
+
+        hallend.active = true;
 
         doorStandard = getSprite("doorStandard", 2.35, 2.35);
 

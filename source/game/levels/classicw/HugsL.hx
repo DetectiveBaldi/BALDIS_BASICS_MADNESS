@@ -39,7 +39,7 @@ class HugsL extends PlayState
 
         super.create();
 
-        hugsS.hall.visible = true;
+        hugsS.hallstill.visible = true;
 
         hugsS.doorStandard.visible = true;
 
@@ -218,7 +218,9 @@ class HugsL extends PlayState
             opp.visible = true;
             opponent = opp;
 
-            hugsS.hall.velocity.set(-3840.0, 0.0);
+            hugsS.hallstill.visible = false;
+            hugsS.hall.visible = true;
+            hugsS.hall.animation.play("0");
             hugsS.doorStandard.visible = false;
 
             player.x = -800.0;
@@ -241,7 +243,7 @@ class HugsL extends PlayState
 
         if (step == 704)
         {
-            hugsS.hall.velocity.x = hugsS.hallcorner2.velocity.x = 0;
+            hugsS.hallcorner2.velocity.x = 0;
 
             playField.healthBar.percent -= 35;
 
@@ -299,7 +301,7 @@ class HugsL extends PlayState
             opp.visible = true;
             opponent = opp;
 
-            hugsS.hall.velocity.set(-3840.0, 0.0);
+            hugsS.hall.visible = true;
 
             player.x = -800.0;
 
@@ -329,7 +331,7 @@ class HugsL extends PlayState
 
         if (step == 1116)
         {
-            hugsS.hall.velocity.x = hugsS.hallcorner4.velocity.x = 0.0;
+            hugsS.hallcorner4.velocity.x = 0.0;
 
             playField.healthBar.percent -= 35;
 
@@ -347,7 +349,7 @@ class HugsL extends PlayState
             gameCameraZoom = 0.6;
 
             hugsS.hallcorner1.velocity.x = -1600.0;
-            hugsS.hall.velocity.x = -1600.0;
+            hugsS.hall.visible = true;
 
             var plr:Character = getPlayer("bf-face-right");
             plr.visible = false;
@@ -398,7 +400,7 @@ class HugsL extends PlayState
             var _plr:Character = getPlayer("run-legs");
             tween.tween(_plr, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
 
-            tween.tween(hugsS.hall.velocity, {x: 0.0}, conductor.beatLength * 0.9 * 0.001, {ease: FlxEase.quartOut});
+            hugsS.hall.animation.pause();
         }
         
         if (step == 1184)
@@ -414,7 +416,7 @@ class HugsL extends PlayState
             opp.visible = true;
             opponent = opp;
 
-            hugsS.hall.velocity.x = -3840.0;
+            hugsS.hall.animation.resume();
 
             var plr:Character = getPlayer("bf-running");
             plr.visible = false;
@@ -448,7 +450,7 @@ class HugsL extends PlayState
 
         if (step == 1568)
         {
-            hugsS.hallend.velocity.x = hugsS.hall.velocity.x = 0.0;
+            hugsS.hallend.velocity.x = 0.0;
 
             var plr:Character = getPlayer("bf-face-right");
             plr.visible = false;

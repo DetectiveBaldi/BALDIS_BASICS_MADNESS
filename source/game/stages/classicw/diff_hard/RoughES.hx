@@ -98,7 +98,7 @@ class RoughES extends Stage
 
         hall2.active = true;
 
-        hall2.animation.addByPrefix("0", "scroll", 48.0);
+        hall2.animation.addByPrefix("0", "scroll", 60.0);
 
         hall2.animation.play("0");
 
@@ -106,7 +106,7 @@ class RoughES extends Stage
 
         hall2rev.active = true;
 
-        hall2rev.animation.addByPrefix("0", "scroll", 60.0);
+        hall2rev.animation.addByPrefix("0", "scroll", 70.0);
 
         hall2rev.animation.play("0", false, true);
 
@@ -122,7 +122,7 @@ class RoughES extends Stage
 
         hall5.active = true;
 
-        hall5.animation.addByPrefix("0", "scroll", 30.0);
+        hall5.animation.addByPrefix("0", "scroll", 60.0);
 
         hall5.animation.play("0");
         

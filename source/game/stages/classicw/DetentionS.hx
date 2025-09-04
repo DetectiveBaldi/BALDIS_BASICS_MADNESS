@@ -10,6 +10,8 @@ class DetentionS extends Stage
 {
     public var hall:FlxSprite;
 
+    public var hallstill:FlxSprite;
+
     public var schoolRules:FlxSprite;
 
     public var facultyStandard:FlxSprite;
@@ -32,9 +34,15 @@ class DetentionS extends Stage
     {
         super();
 
-        hall = getBackdrop("scrolling-hall0", true);
+        hall = getAtlasSprite("scrolling-hall0", true);
 
         hall.active = true;
+
+        hall.animation.addByPrefix("0", "scroll", 20.0);
+
+        hallstill = getSprite("hall0", true);
+
+        hallstill.active = true;
 
         schoolRules = getSprite("schoolRules", 2.35, 2.35);
 
