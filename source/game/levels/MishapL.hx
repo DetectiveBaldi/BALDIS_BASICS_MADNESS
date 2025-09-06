@@ -47,7 +47,7 @@ class MishapL extends PlayState
 
         player.setPosition(840.0, 315.0);
     
-        opponent.setPosition(-250.0, 75.0);
+        opponent.setPosition(-200.0, 125.0);
     }
 
     override function stepHit(step:Int):Void

@@ -10,8 +10,6 @@ import core.AssetCache;
 import core.Paths;
 
 import util.MathUtil;
-import util.TimedObjectUtil;
-import util.TimedObjectUtil.TimedObject;
 
 using StringTools;
 
@@ -27,13 +25,9 @@ class FunkinConverter
 
         var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, difficulty);
 
-        sortTimedObjects(notes);
-
         var rawMeta:Dynamic = Json.parse(File.getContent(metaPath));
 
         var timeChanges:Array<FunkinTimeChange> = rawMeta.timeChanges;
-
-        sortTimedObjects(timeChanges);
 
         output.name = rawMeta.songName;
 
@@ -68,13 +62,6 @@ class FunkinConverter
         output.credits = {composer: rawMeta.artist, step: 0}
 
         return output;
-    }
-    
-    public static function sortTimedObjects(arr:Array<FunkinTimedObject>):Array<FunkinTimedObject>
-    {
-        ArraySort.sort(arr, (a:FunkinTimedObject, b:FunkinTimedObject) -> Std.int(a.t - b.t));
-        
-        return arr;
     }
 }
 
@@ -126,7 +113,7 @@ class PsychConverter
                 bpm: section.bpm
             };
 
-            TimedObjectUtil.sort(_section.sectionNotes);
+            _section.sectionNotes.sortByProperty("time");
 
             character = _section.mustHitSection ? "player" : "opponent";
 

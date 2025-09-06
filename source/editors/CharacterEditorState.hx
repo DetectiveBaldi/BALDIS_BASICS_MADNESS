@@ -176,7 +176,7 @@ class CharacterEditorState extends CustomState
 
         add(healthIcon);
 
-        refreshMainTab();
+        updateMainTab();
 
         ui.findComponent("textfield", TextField).onChange = (ev:UIEvent) -> character.config.name = ui.findComponent("textfield", TextField).text;
 
@@ -213,11 +213,11 @@ class CharacterEditorState extends CustomState
 
             animationIndex = 0;
 
-            refreshMainTab();
+            updateMainTab();
 
-            refreshAssetsTab();
+            updateAssetsTab();
 
-            refreshAnimationsTab();
+            updateAnimationsTab();
         }
 
         ui.findComponent("checkbox", CheckBox).onChange = (ev:UIEvent) ->
@@ -240,6 +240,8 @@ class CharacterEditorState extends CustomState
             character.screenCenter();
 
             updateGhostScale();
+
+            updateOffsetLabel();
         }
 
         ui.findComponent("_number-stepper", NumberStepper).onChange = (ev:UIEvent) ->
@@ -255,6 +257,8 @@ class CharacterEditorState extends CustomState
             character.screenCenter();
 
             updateGhostScale();
+
+            updateOffsetLabel();
         }
 
         ui.findComponent("_checkbox", CheckBox).onChange = (ev:UIEvent) ->
@@ -301,7 +305,7 @@ class CharacterEditorState extends CustomState
             character.singDuration = character.config.singDuration;
         }
 
-        refreshAssetsTab();
+        updateAssetsTab();
 
         ui.findComponent("__button", Button).onClick = (ev:MouseEvent) ->
         {
@@ -347,7 +351,7 @@ class CharacterEditorState extends CustomState
             character.deathCharacter = character.config.deathCharacter;
         }
 
-        refreshAnimationsTab();
+        updateAnimationsTab();
 
         ui.findComponent("_____button", Button).onClick = (ev:MouseEvent) -> saveAnimation();
 
@@ -378,13 +382,13 @@ class CharacterEditorState extends CustomState
             if (FlxG.keys.justPressed.RIGHT)
                 addAnimationOffset(FlxG.keys.pressed.SHIFT ? 10.0 : 1.0, 0.0);
 
-            var animData:AnimationData = character.config.animations[animationIndex];
+            var animData:AnimationData = getCurrentAnimation();
 
             if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.S || FlxG.keys.justPressed.SPACE)
             {
                 character.animation.play(animData.name, true);
 
-                refreshAnimationsTab();
+                updateAnimationsTab();
             }
 
             if (FlxG.keys.justPressed.I)
@@ -405,7 +409,7 @@ class CharacterEditorState extends CustomState
                 {
                     Clipboard.generalClipboard.clear();
 
-                    Clipboard.generalClipboard.setData(TEXT_FORMAT, Json.stringify(character.config.animations[animationIndex].offset), false);
+                    Clipboard.generalClipboard.setData(TEXT_FORMAT, Json.stringify(getCurrentAnimation().offset), false);
                 }
 
                 if (FlxG.keys.justPressed.V)
@@ -428,7 +432,7 @@ class CharacterEditorState extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function refreshMainTab():Void
+    public function updateMainTab():Void
     {
         ui.findComponent("textfield", TextField).text = character.config.name;
 
@@ -451,7 +455,7 @@ class CharacterEditorState extends CustomState
         ui.findComponent("___number-stepper", NumberStepper).value = character.config.singDuration ?? 8.0;
     }
 
-    public function refreshAssetsTab():Void
+    public function updateAssetsTab():Void
     {
         ui.findComponent("__textfield", TextField).text = character.config.format;
 
@@ -464,9 +468,9 @@ class CharacterEditorState extends CustomState
         ui.findComponent("______textfield", TextField).text = character.deathCharacter;
     }
 
-    public function refreshAnimationsTab():Void
+    public function updateAnimationsTab():Void
     {
-        var animation:AnimationData = character.config.animations[animationIndex];
+        var animation:AnimationData = getCurrentAnimation();
 
         ui.findComponent("_______textfield", TextField).text = animation.name;
 
@@ -490,7 +494,7 @@ class CharacterEditorState extends CustomState
 
         ui.findComponent("_____checkbox", CheckBox).value = animation.flipY ?? false;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x}, ${animation.offset.y})';
+        updateOffsetLabel();
     }
 
     public function saveAnimation():Void
@@ -528,9 +532,7 @@ class CharacterEditorState extends CustomState
                 offset: {x: 0.0, y: 0.0}
             });
 
-            animationIndex = character.config.animations.length - 1;
-
-            animation = character.config.animations[animationIndex];
+            animation = setAnimationIndex(character.config.animations.length - 1);
         }
         else
         {
@@ -558,28 +560,23 @@ class CharacterEditorState extends CustomState
 
         character.animation.play(animation.name, true);
 
-        refreshAnimationsTab();
+        updateAnimationsTab();
     }
 
     public function deleteAnimation():Void
     {
-        if (character.config.animations.length == 1.0)
-            return;
-
-        var animation:AnimationData = character.config.animations[animationIndex];
+        var animation:AnimationData = getCurrentAnimation();
 
         character.config.animations.remove(animation);
 
         if (character.animation.exists(animation.name))
             character.animation.remove(animation.name);
 
-        animationIndex = 0;
-
-        animation = character.config.animations[animationIndex];
+        animation = setAnimationIndex(0);
 
         character.animation.play(animation.name, true);
 
-        refreshAnimationsTab();
+        updateAnimationsTab();
     }
 
     public function getCurrentAnimation():AnimationData
@@ -587,9 +584,23 @@ class CharacterEditorState extends CustomState
         return character.config.animations[animationIndex];
     }
 
+    public function setAnimationIndex(newIndex:Int):AnimationData
+    {
+        animationIndex = newIndex;
+
+        return getCurrentAnimation();
+    }
+
     public function getCurrentAnimationOffset():AxisData<Float>
     {
         return getCurrentAnimation().offset;
+    }
+
+    public function updateOffsetLabel():Void
+    {
+        var newOffset:AxisData<Float> = getCurrentAnimationOffset();
+
+        ui.findComponent("_______________label", Label).text = 'Offset: (${newOffset.x}, ${newOffset.y})';
     }
 
     public function setAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
@@ -600,7 +611,7 @@ class CharacterEditorState extends CustomState
 
         animation.offset.y = y;
 
-        ui.findComponent("_______________label", Label).text = 'Offset: (${animation.offset.x}, ${animation.offset.y})';
+        updateOffsetLabel();
     }
 
     public function addAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void

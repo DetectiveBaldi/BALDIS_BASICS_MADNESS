@@ -50,8 +50,6 @@ import menus.StoryMenuScreen;
 
 import ui.Countdown;
 
-import util.TimedObjectUtil;
-
 using StringTools;
 
 using util.ArrayUtil;
@@ -213,6 +211,8 @@ class PlayState extends CustomState
 
     public var countdown:Countdown;
 
+    public var startingSong:Bool;
+
     public function new(nextState:NextState = null):Void
     {
         super();
@@ -358,13 +358,9 @@ class PlayState extends CustomState
         
         countdown.camera = hudCamera;
 
-        countdown.onFinish.add(startSong);
-
-        countdown.onSkip.add(startSong);
-
-        countdown.start();
-
         add(countdown);
+
+        startingSong = true;
     }
 
     override function update(elapsed:Float):Void
@@ -373,13 +369,12 @@ class PlayState extends CustomState
 
         // Calculate new time here, we need to update camera target fields before updating the conductor.
         var timeToUpdateTo:Float = conductor.time + 1000.0 * elapsed;
-        
+
         // Update the camera target fields.
         updateCameraTarget(timeToUpdateTo);
-        
+            
         // Update the conductor now.
-        if (countdown.active && !countdown.paused)
-            conductor.update(timeToUpdateTo);
+        conductor.update(timeToUpdateTo);
 
         while (eventIndex < chart.events.length)
         {
@@ -390,13 +385,14 @@ class PlayState extends CustomState
 
             onEvent(event);
         }
-        
-        gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
 
-        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
-
-        if (countdown.finished || countdown.skipped)
+        if (startingSong)
         {
+            if (conductor.time > 0.0)
+                startSong();
+        }
+        else
+        {   
             if (Math.abs(instrumental.time - conductor.time) >= 25.0)
                 instrumental.time = conductor.time;
 
@@ -412,6 +408,10 @@ class PlayState extends CustomState
                 if (Math.abs(playerVocals.time - instrumental.time) >= 5.0)
                     playerVocals.time = instrumental.time;
         }
+        
+        gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
+
+        hudCamera.zoom = FlxMath.lerp(hudCamera.zoom, 1.0, FlxMath.getElapsedLerp(0.15, elapsed));
 
         if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]) && canPause)
             pause();
@@ -439,11 +439,11 @@ class PlayState extends CustomState
     {
         chart = ChartLoader.readPath(Paths.data(level.getClassPath()));
 
-        TimedObjectUtil.sort(chart.notes);
+        chart.notes.sortByProperty("time");
 
-        TimedObjectUtil.sort(chart.events);
+        chart.events.sortByProperty("time");
 
-        TimedObjectUtil.sort(chart.timeChanges);
+        chart.events.sortByProperty("time");
 
         conductor.tempo = chart.tempo;
 
@@ -511,6 +511,8 @@ class PlayState extends CustomState
         opponentVocals?.play();
 
         playerVocals?.play();
+
+        startingSong = false;
     }
 
     public function endSong():Void

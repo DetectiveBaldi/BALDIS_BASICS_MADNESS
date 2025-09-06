@@ -2,23 +2,30 @@ package data;
 
 import haxe.Json;
 
-import util.TimedObjectUtil.TimedObject;
-
 class Chart
 {
     public static function parse(schema:ChartSchema):Chart
     {
         var chart:Chart = new Chart();
 
-        var fields:Array<String> = Reflect.fields(schema);
+        chart.name = schema.name;
 
-        for (i in 0 ... fields.length)
-        {
-            var field:String = fields[i];
+        chart.scrollSpeed = schema.scrollSpeed;
 
-            Reflect.setProperty(chart, field, Reflect.field(schema, field));
-        }
+        chart.notes = schema.notes;
 
+        chart.events = schema.events;
+
+        chart.timeChanges = schema.timeChanges;
+
+        chart.spectator = schema.spectator;
+
+        chart.opponent = schema.opponent;
+
+        chart.player = schema.player;
+
+        chart.credits = schema.credits;
+        
         return chart;
     }
 
@@ -74,7 +81,7 @@ typedef ChartSchema =
 
     var scrollSpeed:Float;
 
-    var notes:Array<ChartSchema>;
+    var notes:Array<NoteSchema>;
 
     var events:Array<EventSchema>;
 

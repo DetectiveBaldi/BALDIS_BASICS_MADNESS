@@ -26,32 +26,12 @@ class NoteSplash extends FlxSprite
         frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/NoteSplash/default"), Paths.image(Paths.xml
             ("game/notes/NoteSplash/default")));
 
-        var animations:Array<AnimationData> = new Array<AnimationData>();
-
         for (i in 0 ... Note.DIRECTIONS.length)
         {
             var dir:String = Note.DIRECTIONS[i].toLowerCase();
 
             for (i in 0 ... 2)
-                animations.push({name: '${dir}${i}', prefix: 'note impact ${i} ${dir}'});
-        }
-
-        for (i in 0 ... animations.length)
-        {
-            var animData:AnimationData = animations[i];
-
-            animData.frameRate ??= 24.0;
-
-            animData.looped ??= false;
-
-            animData.flipX ??= false;
-
-            animData.flipY ??= false;
-
-            if (animData.indices != null)
-                animation.addByIndices(animData.name, animData.prefix, animData.indices, "", animData.frameRate, animData.looped, animData.flipX, animData.flipY);
-            else
-                animation.addByPrefix(animData.name, animData.prefix, animData.frameRate, animData.looped, animData.flipX, animData.flipY);
+                animation.addByPrefix('${dir}${i}', 'note impact ${i} ${dir}', 24.0, false);
         }
 
         animation.onFinish.add((name:String) -> kill());

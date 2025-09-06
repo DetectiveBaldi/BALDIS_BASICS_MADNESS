@@ -1,90 +1,68 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <TextureAtlas imagePath="bready.png">
-	<!-- Created with Adobe Animate version 22.0.0.93 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="down0000" x="2" y="2" width="500" height="500" frameX="0" frameY="-4" frameWidth="500" frameHeight="504"/>
-	<SubTexture name="down0001" x="2" y="2" width="500" height="500" frameX="0" frameY="-4" frameWidth="500" frameHeight="504"/>
-	<SubTexture name="down0002" x="504" y="2" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="504"/>
-	<SubTexture name="down0003" x="504" y="2" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="504"/>
-	<SubTexture name="down0004" x="504" y="2" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="504"/>
-	<SubTexture name="idle0000" x="1006" y="2" width="500" height="500"/>
-	<SubTexture name="idle0001" x="1006" y="2" width="500" height="500"/>
-	<SubTexture name="idle0002" x="1508" y="2" width="500" height="500"/>
-	<SubTexture name="idle0003" x="1508" y="2" width="500" height="500"/>
-	<SubTexture name="idle0004" x="2010" y="2" width="500" height="500"/>
-	<SubTexture name="idle0005" x="2010" y="2" width="500" height="500"/>
-	<SubTexture name="idle0006" x="2512" y="2" width="500" height="500"/>
-	<SubTexture name="idle0007" x="2512" y="2" width="500" height="500"/>
-	<SubTexture name="idle0008" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0009" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0010" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0011" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0012" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0013" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="idle0014" x="3014" y="2" width="500" height="500"/>
-	<SubTexture name="left0000" x="3516" y="2" width="500" height="500" frameX="0" frameY="-5" frameWidth="508" frameHeight="505"/>
-	<SubTexture name="left0001" x="3516" y="2" width="500" height="500" frameX="0" frameY="-5" frameWidth="508" frameHeight="505"/>
-	<SubTexture name="left0002" x="2" y="504" width="500" height="500" frameX="-8" frameY="0" frameWidth="508" frameHeight="505"/>
-	<SubTexture name="left0003" x="2" y="504" width="500" height="500" frameX="-8" frameY="0" frameWidth="508" frameHeight="505"/>
-	<SubTexture name="left0004" x="2" y="504" width="500" height="500" frameX="-8" frameY="0" frameWidth="508" frameHeight="505"/>
-	<SubTexture name="right0000" x="504" y="504" width="500" height="500" frameX="-7" frameY="0" frameWidth="507" frameHeight="501"/>
-	<SubTexture name="right0001" x="504" y="504" width="500" height="500" frameX="-7" frameY="0" frameWidth="507" frameHeight="501"/>
-	<SubTexture name="right0002" x="1006" y="504" width="500" height="500" frameX="0" frameY="-1" frameWidth="507" frameHeight="501"/>
-	<SubTexture name="right0003" x="1006" y="504" width="500" height="500" frameX="0" frameY="-1" frameWidth="507" frameHeight="501"/>
-	<SubTexture name="right0004" x="1006" y="504" width="500" height="500" frameX="0" frameY="-1" frameWidth="507" frameHeight="501"/>
-	<SubTexture name="up0000" x="1508" y="504" width="500" height="500" frameX="0" frameY="-3" frameWidth="500" frameHeight="503"/>
-	<SubTexture name="up0001" x="1508" y="504" width="500" height="500" frameX="0" frameY="-3" frameWidth="500" frameHeight="503"/>
-	<SubTexture name="up0002" x="2010" y="504" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="503"/>
-	<SubTexture name="up0003" x="2010" y="504" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="503"/>
-	<SubTexture name="up0004" x="2010" y="504" width="500" height="500" frameX="0" frameY="0" frameWidth="500" frameHeight="503"/>
-	<SubTexture name="wave0000" x="2512" y="504" width="500" height="500"/>
-	<SubTexture name="wave0001" x="2512" y="504" width="500" height="500"/>
-	<SubTexture name="wave0002" x="3014" y="504" width="500" height="500"/>
-	<SubTexture name="wave0003" x="3014" y="504" width="500" height="500"/>
-	<SubTexture name="wave0004" x="3516" y="504" width="500" height="500"/>
-	<SubTexture name="wave0005" x="3516" y="504" width="500" height="500"/>
-	<SubTexture name="wave0006" x="2" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0007" x="2" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0008" x="504" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0009" x="504" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0010" x="1006" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0011" x="1006" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0012" x="1508" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0013" x="1508" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0014" x="2010" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0015" x="2010" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0016" x="2512" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0017" x="2512" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0018" x="3014" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0019" x="3014" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0020" x="3516" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0021" x="3516" y="1006" width="500" height="500"/>
-	<SubTexture name="wave0022" x="2" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0023" x="2" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0024" x="504" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0025" x="504" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0026" x="1006" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0027" x="1006" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0028" x="1508" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0029" x="1508" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0030" x="2010" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0031" x="2010" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0032" x="2512" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0033" x="2512" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0034" x="3014" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0035" x="3014" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0036" x="3516" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0037" x="3516" y="1508" width="500" height="500"/>
-	<SubTexture name="wave0038" x="2" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0039" x="2" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0040" x="504" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0041" x="504" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0042" x="1006" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0043" x="1006" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0044" x="1508" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0045" x="1508" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0046" x="2010" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0047" x="2010" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0048" x="2512" y="2010" width="500" height="500"/>
-	<SubTexture name="wave0049" x="2512" y="2010" width="500" height="500"/>
+<SubTexture name="bready idle0000" x="674" y="2670" width="226" height="637" frameX="-249" frameY="-70" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready idle0001" x="449" y="2670" width="225" height="641" frameX="-250" frameY="-66" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready idle0002" x="224" y="2670" width="225" height="650" frameX="-250" frameY="-57" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready idle0003" x="2655" y="1307" width="225" height="651" frameX="-250" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0000" x="2655" y="1307" width="225" height="651" frameX="-250" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0001" x="2375" y="1311" width="225" height="651" frameX="-250" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0002" x="2097" y="657" width="229" height="651" frameX="-246" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0003" x="2097" y="1308" width="237" height="651" frameX="-238" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0004" x="1839" y="661" width="258" height="651" frameX="-217" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0005" x="282" y="2018" width="313" height="651" frameX="-162" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0006" x="595" y="2018" width="309" height="651" frameX="-166" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0007" x="904" y="2018" width="269" height="651" frameX="-206" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0008" x="282" y="688" width="247" height="668" frameX="-228" frameY="-39" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0009" x="1339" y="0" width="244" height="674" frameX="-231" frameY="-33" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0010" x="1095" y="0" width="244" height="676" frameX="-231" frameY="-31" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0011" x="851" y="0" width="244" height="677" frameX="-231" frameY="-30" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0012" x="331" y="0" width="252" height="682" frameX="-223" frameY="-25" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0013" x="583" y="0" width="268" height="678" frameX="-207" frameY="-29" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0014" x="0" y="688" width="282" height="669" frameX="-193" frameY="-38" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0015" x="268" y="1357" width="292" height="660" frameX="-183" frameY="-47" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0016" x="902" y="688" width="263" height="662" frameX="-212" frameY="-45" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0017" x="1220" y="1357" width="260" height="658" frameX="-215" frameY="-49" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0018" x="2375" y="656" width="263" height="655" frameX="-212" frameY="-52" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0019" x="2655" y="655" width="275" height="652" frameX="-200" frameY="-55" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0020" x="0" y="2018" width="282" height="652" frameX="-193" frameY="-55" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0021" x="2655" y="0" width="281" height="655" frameX="-194" frameY="-52" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0022" x="2097" y="0" width="278" height="657" frameX="-197" frameY="-50" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0023" x="560" y="1357" width="264" height="660" frameX="-211" frameY="-47" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0024" x="1839" y="0" width="258" height="661" frameX="-217" frameY="-46" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0025" x="1165" y="688" width="256" height="662" frameX="-219" frameY="-45" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0026" x="1583" y="0" width="256" height="662" frameX="-219" frameY="-45" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0027" x="0" y="1357" width="268" height="661" frameX="-207" frameY="-46" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0028" x="2375" y="0" width="280" height="656" frameX="-195" frameY="-51" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0029" x="1173" y="2018" width="290" height="651" frameX="-185" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0030" x="1463" y="2018" width="299" height="651" frameX="-176" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0031" x="1762" y="2018" width="310" height="651" frameX="-165" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0032" x="2072" y="2018" width="323" height="651" frameX="-152" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0033" x="2395" y="2018" width="337" height="651" frameX="-138" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0034" x="2936" y="0" width="332" height="651" frameX="-143" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0035" x="2936" y="651" width="298" height="651" frameX="-177" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0036" x="2936" y="1302" width="266" height="651" frameX="-209" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0037" x="2936" y="1953" width="243" height="651" frameX="-232" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0038" x="1583" y="662" width="229" height="651" frameX="-246" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0039" x="3268" y="0" width="223" height="651" frameX="-252" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0040" x="3268" y="651" width="221" height="651" frameX="-254" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0041" x="3268" y="1302" width="221" height="651" frameX="-254" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0042" x="3268" y="1953" width="222" height="651" frameX="-253" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0043" x="0" y="2670" width="224" height="651" frameX="-251" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready wave0044" x="2655" y="1307" width="225" height="651" frameX="-250" frameY="-56" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready left0000" x="485" y="3321" width="488" height="549" frameX="-10" frameY="-150" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready left0001" x="1815" y="2670" width="467" height="574" frameX="-46" frameY="-125" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready left0002" x="1357" y="2670" width="458" height="581" frameX="-55" frameY="-119" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready left0003" x="900" y="2670" width="457" height="582" frameX="-56" frameY="-118" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready up0000" x="0" y="0" width="331" height="688" frameX="-190" frameY="-20" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready up0001" x="529" y="688" width="373" height="665" frameX="-178" frameY="-44" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready up0002" x="824" y="1357" width="396" height="659" frameX="-165" frameY="-50" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready up0003" x="1480" y="1357" width="402" height="658" frameX="-161" frameY="-51" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready right0000" x="3491" y="0" width="433" height="562" frameX="-266" frameY="-148" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready right0001" x="3075" y="2670" width="410" height="564" frameX="-273" frameY="-145" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready right0002" x="2679" y="2670" width="396" height="566" frameX="-280" frameY="-143" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready right0003" x="2282" y="2670" width="397" height="568" frameX="-281" frameY="-142" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready down0000" x="1948" y="3321" width="490" height="505" frameX="-156" frameY="-206" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready down0001" x="1459" y="3321" width="489" height="532" frameX="-154" frameY="-180" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready down0002" x="973" y="3321" width="486" height="546" frameX="-155" frameY="-165" frameWidth="720" frameHeight="720" />
+<SubTexture name="bready down0003" x="0" y="3321" width="485" height="550" frameX="-156" frameY="-161" frameWidth="720" frameHeight="720" />
 </TextureAtlas>

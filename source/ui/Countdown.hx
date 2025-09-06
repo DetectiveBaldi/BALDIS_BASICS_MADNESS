@@ -22,45 +22,11 @@ using util.MathUtil;
 
 class Countdown extends FlxGroup
 {
-    public var conductor(default, set):Conductor;
-
-    @:noCompletion
-    function set_conductor(_conductor:Conductor):Conductor
-    {
-        var __conductor:Conductor = conductor;
-
-        conductor = _conductor;
-
-        conductor?.onBeatHit?.add(beatHit);
-
-        __conductor?.onBeatHit?.remove(beatHit);
-
-        return conductor;
-    }
-
-    public var started:Bool;
-
-    public var onStart:FlxSignal;
-
-    public var tick:Int;
-
-    public var onTick:FlxTypedSignal<(tick:Int)->Void>;
-
-    public var paused:Bool;
-
-    public var onPause:FlxSignal;
-
-    public var onResume:FlxSignal;
-
-    public var finished:Bool;
-
-    public var onFinish:FlxSignal;
-
-    public var skipped:Bool;
-
-    public var onSkip:FlxSignal;
+    public var conductor:Conductor;
 
     public var tween:FlxTweenManager;
+
+    public var tick:Int;
 
     public var threeSpr:FlxSprite;
 
@@ -84,31 +50,13 @@ class Countdown extends FlxGroup
 
         conductor = _conductor;
 
-        started = false;
-
-        onStart = new FlxSignal();
-
-        tick = 0;
-
-        onTick = new FlxTypedSignal<(tick:Int)->Void>();
-
-        paused = false;
-
-        onPause = new FlxSignal();
-
-        onResume = new FlxSignal();
-
-        finished = false;
-
-        onFinish = new FlxSignal();
-
-        skipped = false;
-
-        onSkip = new FlxSignal();
+        addListeners();
 
         tween = new FlxTweenManager();
 
         add(tween);
+
+        tick = 0;
 
         threeSpr = createCountdownSprite("three");
 
@@ -143,78 +91,21 @@ class Countdown extends FlxGroup
     {
         super.destroy();
 
-        onStart = cast FlxDestroyUtil.destroy(onStart);
-
-        onTick = cast FlxDestroyUtil.destroy(onTick);
-
-        onFinish = cast FlxDestroyUtil.destroy(onFinish);
-
-        onSkip = cast FlxDestroyUtil.destroy(onSkip);
-
-        threeSnd.destroy();
-
-        twoSnd.destroy();
-
-        oneSnd.destroy();
-
-        goSnd.destroy();
+        stopSounds();
     }
 
-    public function start():Void
+    public function addListeners():Void
     {
-        started = true;
-
-        onStart.dispatch();
+        conductor.onBeatHit.add(beatHit);
     }
 
-    public function pause():Void
+    public function removeListeners():Void
     {
-        tween.active = false;
-
-        threeSnd.pause();
-
-        twoSnd.pause();
-
-        oneSnd.pause();
-
-        goSnd.pause();
-
-        paused = true;
-
-        onPause.dispatch();
-    }
-
-    public function resume():Void
-    {
-        tween.active = true;
-
-        threeSnd.resume();
-
-        twoSnd.resume();
-
-        oneSnd.resume();
-
-        goSnd.resume();
-
-        paused = false;
-
-        onResume.dispatch();
-    }
-
-    public function skip():Void
-    {
-        kill();
-
-        skipped = true;
-
-        onSkip.dispatch();
+        conductor.onBeatHit.remove(beatHit);
     }
 
     public function beatHit(beat:Int):Void
     {
-        if (!started || paused || finished || skipped)
-            return;
-
         switch (tick:Int)
         {
             case 0:
@@ -258,10 +149,6 @@ class Countdown extends FlxGroup
             {
                 tween.tween(goSpr, {y: FlxG.height}, conductor.beatLength * 0.001, 
                     {ease: FlxEase.quartIn});
-
-                finished = true;
-
-                onFinish.dispatch();
             }
 
             case 5:
@@ -269,8 +156,15 @@ class Countdown extends FlxGroup
         }
 
         tick++;
+    }
 
-        onTick.dispatch(tick);
+    public function skip():Void
+    {
+        kill();
+        
+        removeListeners();
+
+        stopSounds(false);
     }
 
     public function createCountdownSprite(name:String):FlxSprite
@@ -284,5 +178,27 @@ class Countdown extends FlxGroup
         add(sprite);
 
         return sprite;
+    }
+
+    public function stopSounds(destroySounds:Bool = true):Void
+    {
+        threeSnd.stop();
+
+        twoSnd.stop();
+
+        oneSnd.stop();
+
+        goSnd.stop();
+
+        if (destroySounds)
+        {
+            threeSnd.destroy();
+
+            twoSnd.destroy();
+
+            oneSnd.destroy();
+
+            goSnd.destroy();
+        }
     }
 }
