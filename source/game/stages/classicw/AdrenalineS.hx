@@ -18,7 +18,7 @@ class AdrenalineS extends Stage
 
     public var closetInside_Overlay:FlxSprite;
 
-    public var hall:FlxBackdrop;
+    public var hall:FlxSprite;
 
     public var hall2:FlxSprite;
 
@@ -44,9 +44,11 @@ class AdrenalineS extends Stage
 
         closetInside_Overlay = getSprite("closet-inside-overlay", 2, 2);
 
-        hall = getBackdrop("scrolling-hall0", true);
-    
+        hall = getAtlasSprite("scrolling-hall0", true);
+
         hall.active = true;
+
+        hall.animation.addByPrefix("0", "scroll", 48.0);
     
         hall2 = getAtlasSprite("scrolling-hall1", true);
 

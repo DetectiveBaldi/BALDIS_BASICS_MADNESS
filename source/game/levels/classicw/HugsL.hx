@@ -348,7 +348,7 @@ class HugsL extends PlayState
 
             gameCameraZoom = 0.6;
 
-            hugsS.hallcorner1.velocity.x = -1600.0;
+            hugsS.hallcorner1.velocity.x = -3840.0;
             hugsS.hall.visible = true;
 
             var plr:Character = getPlayer("bf-face-right");
@@ -387,11 +387,11 @@ class HugsL extends PlayState
             opp.visible = true;
             opponent = opp;
 
-            tween.tween(opponent, {x: -1500.0}, conductor.beatLength * 1.25 * 0.001);
+            tween.tween(opponent, {x: -2000.0}, conductor.beatLength * 1.25 * 0.001);
         }
 
         if (step == 1178)
-            tween.tween(opponent, {x: 2800.0}, conductor.beatLength * 2.0 * 0.001);
+            tween.tween(opponent, {x: 3800.0}, conductor.beatLength * 2.0 * 0.001);
 
         if (step == 1180)
         {

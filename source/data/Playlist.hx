@@ -30,7 +30,7 @@ class Playlist
                 {week: week, name: "Essential Escape"});
 
         // Hard Difficulty
-        week.levels.pushMany({week: week, name: "Hyperactive", difficulty: "Hard"}, {week: week, name: "Rough Escape", difficulty: "Hard"});
+        week.levels.pushMany({week: week, name: "Fundamentals", difficulty: "Hard"}, {week: week, name: "Hyperactive", difficulty: "Hard"}, {week: week, name: "Rough Escape", difficulty: "Hard"});
 
         week.hasTvPortrait = true;
 
