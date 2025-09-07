@@ -522,8 +522,6 @@ class PlayState extends CustomState
         playerVocals?.play();
 
         startingSong = false;
-
-        trace(conductor.time);
     }
 
     public function endSong():Void
@@ -576,6 +574,8 @@ class PlayState extends CustomState
                 nextState ??= () -> PlayState.getClassFromLevel();
             }
         }
+        else
+            nextState ??= () -> new FreeplayScreen();
 
         mainVocals?.stop();
 
@@ -591,45 +591,29 @@ class PlayState extends CustomState
         if (startingSong)
             return;
 
-        var requestedTime:Float = conductor.time + newTime;
-
-        if (conductor.time == requestedTime)
+        if (conductor.time == newTime)
             return;
 
-        if (conductor.time > requestedTime)
+        if (conductor.time > newTime)
         {
             CustomState.cancelNextTransition();
 
-            FlxG.switchState(() -> PlayState.getClassFromLevel({startOnTime: requestedTime, nextState: params?.nextState,
+            FlxG.switchState(() -> PlayState.getClassFromLevel({startOnTime: newTime, nextState: params?.nextState,
                 playStats: playField.playStats.copy(), health: playField.healthBar.value}));
         }
         else
         {
             pauseMusic();
 
-            playField.noteSpawner.removeNotesBefore(requestedTime);
+            playField.noteSpawner.removeNotesBefore(newTime);
 
-            while (conductor.time < requestedTime)
+            while (conductor.time < newTime)
             {
                 @:privateAccess
                 FlxG.game.step();
             }
 
             resumeMusic();
-        }
-    }    
-
-    public function reverseEventIndex(time:Float):Void
-    {
-        eventIndex = 0;
-        
-        var event:EventSchema = chart.events[eventIndex];
-
-        while (eventIndex < chart.events.length && event.time <= conductor.time + time)
-        {
-            eventIndex++;
-
-            event = chart.events[eventIndex];
         }
     }
 
