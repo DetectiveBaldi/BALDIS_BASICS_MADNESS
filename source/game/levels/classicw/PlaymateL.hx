@@ -1,12 +1,15 @@
 package game.levels.classicw;
 
+import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.group.FlxGroup;
+
 import flixel.math.FlxRect;
+
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 
 import flixel.util.FlxColor;
 
@@ -29,6 +32,10 @@ class PlaymateL extends PlayState
     public var black:FlxSprite;
 
     public var opp:Character;
+
+    public var jumpMinigame:JumpRopeMinigame;
+
+    public var jumpUI:JumpRopeUI;
 
     override function create():Void
     {
@@ -255,4 +262,17 @@ class PlaymateL extends PlayState
                 gameCameraZoom += 0.025;
         }
     }
+}
+
+class JumpRopeMinigame extends FlxBasic
+{
+    public function new():Void
+    {
+        super();
+    }
+}
+
+class JumpRopeUI extends FlxGroup
+{
+
 }

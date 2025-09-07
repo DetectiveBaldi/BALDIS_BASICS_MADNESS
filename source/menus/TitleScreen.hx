@@ -138,7 +138,7 @@ class TitleScreen extends CustomState
 
                 var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Two");
 
-                PlayState.loadLevel(levelToLoad, () -> new TitleScreen());
+                PlayState.loadLevel(levelToLoad, {nextState: () -> new TitleScreen()});
             }
         }
     }

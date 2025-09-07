@@ -107,12 +107,14 @@ class GameOverScreen extends CustomSubState
         {
             if (FlxG.keys.justPressed.ESCAPE)
             {
-                var stateToSwitchTo:NextState = () -> new FreeplayScreen();
+                var nextState:NextState = game.params?.nextState;
 
                 if (PlayState.isWeek)
-                    stateToSwitchTo = () -> new StoryMenuScreen();
+                    nextState ??= () -> new StoryMenuScreen();
+                else
+                    nextState ??= () -> new FreeplayScreen();
 
-                FlxG.switchState(game.nextState ?? stateToSwitchTo);
+                FlxG.switchState(nextState);
             }
 
             if (FlxG.keys.justPressed.ENTER && !rollTimer.finished)
@@ -275,7 +277,7 @@ class GameOverScreen extends CustomSubState
         {
             var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Overseer");
         
-            PlayState.loadLevel(levelToLoad, () -> new TitleScreen());
+            PlayState.loadLevel(levelToLoad, {nextState: () -> new TitleScreen()});
         });
     }
 }

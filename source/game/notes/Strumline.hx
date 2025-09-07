@@ -290,20 +290,7 @@ class Strumline extends FlxGroup
         }
 
         while (notesPendingRemoval.length > 0.0)
-        {
-            var note:Note = notesPendingRemoval.pop();
-
-            notes.members.remove(note);
-
-            note.kill();
-
-            if (note.sustain != null)
-            {
-                sustains.members.remove(note.sustain);
-
-                trails.members.remove(note.sustain.trail);
-            }
-        }
+            removeNote (notesPendingRemoval.pop());
 
         notes.update(elapsed);
 
@@ -627,5 +614,31 @@ class Strumline extends FlxGroup
     public function canCharSing(char:Character):Bool
     {
         return !char.skipSing;
+    }
+
+    public function removeNote(note:Note):Void
+    {
+        notes.members.remove(note);
+
+        note.kill();
+
+        if (note.sustain != null)
+        {
+            sustains.members.remove(note.sustain);
+
+            trails.members.remove(note.sustain.trail);
+        }
+    }
+
+    public function removeAllNotes():Void
+    {
+        var i:Int = notes.members.length - 1;
+
+        while (i >= 0.0)
+        {
+            removeNote(notes.members[i]);
+
+            i--;
+        }
     }
 }

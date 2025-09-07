@@ -68,13 +68,13 @@ class PlayState extends CustomState
         return week != null;
     }
 
-    public static var weekStats:Map<String, PlayStats>;
+    public static var weekStats:Map<String, PlayStats> = new Map<String, PlayStats>();
     
-    public static function getClassFromLevel(level:LevelData = null, nextState:NextState = null):PlayState
+    public static function getClassFromLevel(level:LevelData = null, params:PlayStateParams = null):PlayState
     {
         level ??= PlayState.level;
 
-        return Type.createInstance(Type.resolveClass(level.getClassPath(".")), [nextState]);
+        return Type.createInstance(Type.resolveClass(level.getClassPath(".")), [params]);
     }
 
     public static function loadWeek(week:WeekData):Void
@@ -83,12 +83,12 @@ class PlayState extends CustomState
 
         level = week.levels[0];
 
-        weekStats = new Map<String, PlayStats>();
+        weekStats.clear();
 
         FlxG.switchState(() -> getClassFromLevel());
     }
 
-    public static function loadLevel(level:LevelData, nextState:NextState = null):Void
+    public static function loadLevel(level:LevelData, params:PlayStateParams = null):Void
     {
         week = null;
 
@@ -96,30 +96,20 @@ class PlayState extends CustomState
 
         weekStats = null;
 
-        FlxG.switchState(() -> getClassFromLevel(nextState));
+        FlxG.switchState(() -> getClassFromLevel(params));
     }
     
     public function getClassFromNextState():Class<FlxState>
     {
+        var nextState:NextState = params?.nextState;
+
         if (nextState == null)
             return null;
         
         return Type.getClass(nextState.createInstance());
     }
 
-    public var nextState(default, set):NextState;
-
-    @:noCompletion
-    function set_nextState(nex:NextState):NextState
-    {
-        nextState = nex;
-
-        nextStateClass = getClassFromNextState();
-
-        return nextState;
-    }
-
-    public var nextStateClass:Class<FlxState>;
+    public var params:PlayStateParams;
 
     /**
      * Characters and stages are drawn on this camera.
@@ -141,7 +131,6 @@ class PlayState extends CustomState
 
     /**
      * A more specific version `cameraTarget` that explicitly refers to the type of character the camera is viewing.
-     * Values include "SPECTATOR", "OPPONENT", "PLAYER".
      */
     public var cameraCharTarget:String;
 
@@ -213,11 +202,11 @@ class PlayState extends CustomState
 
     public var startingSong:Bool;
 
-    public function new(nextState:NextState = null):Void
+    public function new(params:PlayStateParams):Void
     {
         super();
 
-        this.nextState = nextState;
+        this.params = params;
     }
 
     override function create():Void
@@ -303,6 +292,12 @@ class PlayState extends CustomState
 
         playField.camera = hudCamera;
 
+        if (params?.playStats != null)
+            playField.playStats = params?.playStats;
+
+        if (params?.health != null)
+            playField.healthBar.value = params?.health;
+
         add(playField);
 
         FlxG.watch.add(playField.playStats, "score", "Score");
@@ -360,6 +355,15 @@ class PlayState extends CustomState
 
         add(countdown);
 
+        var startOnTime:Null<Float> = params?.startOnTime;
+
+        if (startOnTime != null && startOnTime > 0.0)
+        {
+            countdown.skip();
+
+            changeTime(startOnTime);
+        }
+
         startingSong = true;
     }
 
@@ -369,6 +373,9 @@ class PlayState extends CustomState
 
         // Calculate new time here, we need to update camera target fields before updating the conductor.
         var timeToUpdateTo:Float = conductor.time + 1000.0 * elapsed;
+
+        if (startingSong)
+            timeToUpdateTo = Math.min(timeToUpdateTo, 0.0);
 
         // Update the camera target fields.
         updateCameraTarget(timeToUpdateTo);
@@ -388,7 +395,7 @@ class PlayState extends CustomState
 
         if (startingSong)
         {
-            if (conductor.time > 0.0)
+            if (conductor.time == 0.0)
                 startSong();
         }
         else
@@ -451,7 +458,7 @@ class PlayState extends CustomState
 
         conductor.timeChanges = chart.timeChanges;
 
-        conductor.time = -conductor.beatLength * 5.0;
+        conductor.update(-conductor.beatLength * 5.0);
 
         eventIndex = 0;
     }
@@ -502,8 +509,6 @@ class PlayState extends CustomState
 
     public function startSong():Void
     {
-        conductor.time = 0.0;
-
         instrumental.play();
 
         mainVocals?.play();
@@ -513,11 +518,13 @@ class PlayState extends CustomState
         playerVocals?.play();
 
         startingSong = false;
+
+        trace(conductor.time);
     }
 
     public function endSong():Void
     {
-        var stateToSwitchTo:NextState = () -> new FreeplayScreen();
+        var nextState:NextState = params?.nextState;
         
         var playStats:PlayStats = playField.playStats;
 
@@ -556,13 +563,13 @@ class PlayState extends CustomState
                     HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
                         grade: grade});
 
-                stateToSwitchTo = () -> new StoryMenuScreen();
+                nextState ??= () -> new StoryMenuScreen();
             }
             else
             {
                 level = week.levels[0];
 
-                stateToSwitchTo = () -> PlayState.getClassFromLevel();
+                nextState ??= () -> PlayState.getClassFromLevel();
             }
         }
 
@@ -572,31 +579,54 @@ class PlayState extends CustomState
 
         playerVocals?.stop();
 
-        // If nextState is null, switch to StoryMenuScreen, FreeplayScreen, or the next level.
-        FlxG.switchState(nextState ?? stateToSwitchTo);
+        FlxG.switchState(nextState);
     }
 
-    public function forwardTime(newTime:Float):Void
+    public function changeTime(newTime:Float):Void
     {
-        skipTime(newTime);
-    }
-
-    public function skipTime(newTime:Float):Void
-    {
-        if (conductor.time < 0.0)
+        if (startingSong)
             return;
 
-        pauseMusic();
+        var requestedTime:Float = conductor.time + newTime;
 
-        playField.noteSpawner.clearNotesBefore(newTime);
+        if (conductor.time == requestedTime)
+            return;
 
-        while (conductor.time < newTime)
+        if (conductor.time > requestedTime)
         {
-            @:privateAccess
-            FlxG.game.step();
-        }
+            CustomState.cancelNextTransition();
 
-        resumeMusic();
+            FlxG.switchState(() -> PlayState.getClassFromLevel({startOnTime: requestedTime, nextState: params?.nextState,
+                playStats: playField.playStats.copy(), health: playField.healthBar.value}));
+        }
+        else
+        {
+            pauseMusic();
+
+            playField.noteSpawner.removeNotesBefore(requestedTime);
+
+            while (conductor.time < requestedTime)
+            {
+                @:privateAccess
+                FlxG.game.step();
+            }
+
+            resumeMusic();
+        }
+    }    
+
+    public function reverseEventIndex(time:Float):Void
+    {
+        eventIndex = 0;
+        
+        var event:EventSchema = chart.events[eventIndex];
+
+        while (eventIndex < chart.events.length && event.time <= conductor.time + time)
+        {
+            eventIndex++;
+
+            event = chart.events[eventIndex];
+        }
     }
 
     public function getSpectator(name:String):Character
@@ -644,7 +674,6 @@ class PlayState extends CustomState
         gameCamera.snapToTarget();
     }
 
-    // TODO: Sometimes returns incorrect values, maybe?
     public function getCameraTarget(timeToCheck:Float):String
     {
         var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && e.time <= timeToCheck);
@@ -766,3 +795,26 @@ enum CameraLockMode
      */
     NONE;
 }
+
+typedef PlayStateParams =
+{
+    /**
+     * At what point in time should the level initialize to?
+     */
+    var ?startOnTime:Float;
+
+    /**
+     * Play stats to initialize with.
+     */
+    var ?playStats:PlayStats;
+
+    /**
+     * Health to initialize with.
+     */
+    var ?health:Float;
+
+    /**
+     * Where should we go after this level is finished?
+     */
+    var ?nextState:NextState;
+} 

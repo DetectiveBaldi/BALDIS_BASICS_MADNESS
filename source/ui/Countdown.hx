@@ -161,6 +161,8 @@ class Countdown extends FlxGroup
     public function skip():Void
     {
         kill();
+
+        conductor.update(0.0);
         
         removeListeners();
 

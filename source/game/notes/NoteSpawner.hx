@@ -181,19 +181,38 @@ class NoteSpawner extends FlxBasic
         return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
     }
 
-    public function clearNotesBefore(time:Float):Void
+    public function reverseNoteIndex(time:Float):Void
     {
-        var notesToRemove:Array<NoteSchema> = new Array<NoteSchema>();
+        noteIndex = 0;
+        
+        var note:NoteSchema = noteData[noteIndex];
 
-        for (i in 0 ... noteData.length)
+        while (noteIndex < noteData.length && note.time <= conductor.time + time)
+        {
+            noteIndex++;
+
+            note = noteData[noteIndex];
+        }
+    }
+
+    public function removeNotesBefore(time:Float):Void
+    {
+        var i = noteData.length - 1;
+
+        while (i >= 0.0)
         {
             var noteSchema:NoteSchema = noteData[i];
 
             if (noteIndex < i && noteSchema.time - getSpawnDistance(noteSchema.lane) < time)
-                notesToRemove.push(noteSchema);
-        }
+                noteData.remove(noteSchema);
 
-        for (i in 0 ... notesToRemove.length)
-            noteData.remove(notesToRemove[i]);
+            i--;
+        }
+    }
+
+    public function removeActiveNotes():Void
+    {
+        for (strumline in strumlines)
+            strumline.removeAllNotes();
     }
 }

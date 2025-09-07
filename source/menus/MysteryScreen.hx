@@ -432,7 +432,7 @@ class MysteryScreen extends CustomState
 
                     noiseSnd.stop();
 
-                    PlayState.loadLevel(levels[curSelected], () -> new MysteryScreen());
+                    PlayState.loadLevel(levels[curSelected], {nextState: () -> new MysteryScreen()});
                 }});
             });
         });
