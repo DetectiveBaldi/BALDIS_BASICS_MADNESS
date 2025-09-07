@@ -7,6 +7,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import core.AssetCache;
 import core.Paths;
 
+import data.Chart.NoteKindData;
+
 using util.ArrayUtil;
 
 class Note extends FlxSprite
@@ -30,6 +32,8 @@ class Note extends FlxSprite
     public var lane:Int;
 
     public var kind:String;
+
+    public var kindData:NoteKindData;
 
     public var status:NoteStatus;
 

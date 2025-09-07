@@ -2,6 +2,8 @@ package data;
 
 import haxe.Json;
 
+using StringTools;
+
 class Chart
 {
     public static function parse(schema:ChartSchema):Chart
@@ -126,4 +128,41 @@ typedef CreditsData =
     public var composer:String;
 
     public var ?step:Int;
+}
+
+@:structInit
+class NoteKindData
+{
+    public var altAnimation:Bool;
+
+    public var noAnimation:Bool;
+
+    public var specSing:Bool;
+
+    public static function parseString(str:String):NoteKindData
+    {
+        return {altAnimation: NoteKindData.hasField(str, "alt-animation"),
+            noAnimation: NoteKindData.hasField(str, "no-animation"), specSing: NoteKindData.hasField(str, "spec-sing")};
+    }
+
+    public static function addField(data:String, field:String):String
+    {
+        if (data.length == 0.0)
+        {
+            data = field;
+
+            return data;
+        }
+
+        data = data.trim();
+
+        data += '&& ${field}';
+
+        return data;
+    }
+
+    public static function hasField(data:String, field:String):Bool
+    {
+        return data.contains(field);
+    }
 }

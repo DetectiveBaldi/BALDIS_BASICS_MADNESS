@@ -78,6 +78,8 @@ class NoteSpawner extends FlxBasic
             note.lane = noteSchema.lane;
 
             note.kind = noteSchema.kind;
+
+            note.kindData = NoteKindData.parseString(note.kind);
             
             note.status = MOVING;
 

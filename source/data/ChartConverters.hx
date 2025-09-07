@@ -9,6 +9,8 @@ import sys.io.File;
 import core.AssetCache;
 import core.Paths;
 
+import data.Chart;
+
 import util.MathUtil;
 
 using StringTools;
@@ -142,11 +144,15 @@ class PsychConverter
 
                 var kind:String = "";
 
+                // `_section.gfSection` is not supported here unfortunately.
+                if (note.type == "GF Sing")
+                    kind = NoteKindData.addField(kind, "spec-sing");
+
                 if (note.type == "Alt Animation")
-                    kind = "alt-animation";
+                    kind = NoteKindData.addField(kind, "alt-animation");
 
                 if (note.type == "No Animation")
-                    kind = "no-animation";
+                    kind = NoteKindData.addField(kind, "no-animation");
 
                 output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25),
                     length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});

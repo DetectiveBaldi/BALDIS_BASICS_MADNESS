@@ -99,6 +99,8 @@ class Strumline extends FlxGroup
 
     public var characters:FlxTypedSpriteGroup<Character>;
 
+    public var spectators:FlxTypedSpriteGroup<Character>;
+
     public var vocals:FlxSound;
 
     public var lastStep:Int;
@@ -377,7 +379,7 @@ class Strumline extends FlxGroup
 
         playCharSingAnims(note, note.direction, false);
 
-        setCharAnimsActive(note.length == 0.0, canCharSing);
+        setCharAnimsActive(note, note.length == 0.0, canCharSing);
 
         if (vocals != null)
             vocals.volume = 1.0;
@@ -391,7 +393,7 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
-        setCharAnimsActive(true, canCharSing);
+        setCharAnimsActive(note, true, canCharSing);
 
         if (vocals != null)
             vocals.volume = 0.0;
@@ -444,7 +446,7 @@ class Strumline extends FlxGroup
 
             playCharSingAnims(note, note.direction, true);
 
-            setCharAnimsActive(false, canCharSing);
+            setCharAnimsActive(note, false, canCharSing);
         }
     }
 
@@ -458,7 +460,7 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
-        setCharAnimsActive(true, canCharSing);
+        setCharAnimsActive(note, true, canCharSing);
 
         if (vocals != null)
             vocals.volume = 0.0;
@@ -482,7 +484,7 @@ class Strumline extends FlxGroup
     {
         setStrumActive(note.direction, true);
 
-        setCharAnimsActive(true, canCharSing);
+        setCharAnimsActive(note, true, canCharSing);
 
         if (note.status == HIT)
             notesPendingRemoval.push(note);
@@ -512,7 +514,7 @@ class Strumline extends FlxGroup
 
             playCharMissAnims(null, direction);
 
-            setCharAnimsActive(true, canCharSing);
+            setCharAnimsActive(null, true, canCharSing);
 
             if (vocals != null)
                 vocals.volume = 0.0;
@@ -521,21 +523,23 @@ class Strumline extends FlxGroup
 
     public function playCharSingAnims(note:Note, direction:Int, hold:Bool):Void
     {
-        if (characters == null)
-            return;
+        var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
-        for (i in 0 ... characters.members.length)
+        if (note.kindData.specSing)
+            charGroup = spectators;
+
+        for (i in 0 ... charGroup.members.length)
         {
-            var character:Character = characters.members[i];
+            var character:Character = charGroup.members[i];
 
-            if (note.kind == "no-animation" || !canCharSing(character))
+            if (note.kindData.noAnimation || !canCharSing(character))
                 continue;
 
             character.holdTimer = 0.0;
 
             var animSuffix:String = "";
 
-            if (note.kind == "alt-animation")
+            if (note.kindData.altAnimation)
                 animSuffix = "-alt";
 
             var direcStr:String = Note.DIRECTIONS[note.direction];
@@ -559,25 +563,24 @@ class Strumline extends FlxGroup
 
     public function playCharMissAnims(note:Note, direction:Int):Void
     {
-        if (characters == null)
-            return;
+        var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
-        for (i in 0 ... characters.members.length)
+        if (note?.kindData?.specSing)
+            charGroup = spectators;
+
+        for (i in 0 ... charGroup.members.length)
         {
-            var character:Character = characters.members[i];
+            var character:Character = charGroup.members[i];
 
-            if ((note != null && note.kind == "no-animation") || !canCharSing(character))
+            if (note?.kindData?.noAnimation || !canCharSing(character))
                 continue;
 
             character.holdTimer = 0.0;
 
             var animSuffix:String = "";
 
-            if (note != null)
-            {
-                if (note.kind == "alt-animation")
-                    animSuffix = "-alt";
-            }
+            if (note?.kindData?.altAnimation)
+                animSuffix = "-alt";
 
             var direcStr:String = Note.DIRECTIONS[note.direction];
 
@@ -595,11 +598,16 @@ class Strumline extends FlxGroup
         }
     }
 
-    public function setCharAnimsActive(active:Bool, iff:(char:Character)->Bool = null):Void
+    public function setCharAnimsActive(note:Note, active:Bool, iff:(char:Character)->Bool = null):Void
     {
-        for (i in 0 ... characters.members.length)
+        var charGroup:FlxTypedSpriteGroup<Character> = characters;
+
+        if (note?.kindData?.specSing)
+            charGroup = spectators;
+
+        for (i in 0 ... charGroup.members.length)
         {
-            var character:Character = characters.members[i];
+            var character:Character = charGroup.members[i];
 
             if ((iff != null && !iff(character)))
                 continue;

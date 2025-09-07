@@ -326,9 +326,13 @@ class PlayState extends CustomState
 
         oppStrumline.characters = opponents;
 
+        oppStrumline.spectators = spectators;
+
         oppStrumline.vocals = opponentVocals ?? mainVocals;
 
         plrStrumline.characters = players;
+
+        plrStrumline.spectators = spectators;
 
         plrStrumline.vocals = playerVocals ?? mainVocals;
 
