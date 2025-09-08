@@ -146,9 +146,9 @@ class SetbackL extends PlayState
 
         var posX:Float;
 
-        posX = new FlxG.random(-1000.0, 1000.0);
+        posX = FlxG.random.int(-1000, 1000);
 
-        scaleNum = new FlxG.random(0.75, 3.0);
+        scaleNum = FlxG.random.float(0.75, 3);
 
         balloon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/spoopBalloon"));
 
@@ -164,11 +164,11 @@ class SetbackL extends PlayState
 
         if (balloon.x <= 200.0)
         {
-            tween.tween(balloon, {x: balloon.x + 500})
+            tween.tween(balloon, {x: balloon.x + 500});
         }
         else
         {
-            tween.tween(balloon, {x: balloon.x - 500})
+            tween.tween(balloon, {x: balloon.x - 500});
         }
     }
 }
