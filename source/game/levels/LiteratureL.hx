@@ -218,6 +218,8 @@ class LiteratureL extends PlayState
             opponents.add(opp);
             opponent = opp;
 
+            updateHealthBar("opponent");
+
             var plr:Character = getPlayer("bf-baldina");
             plr.visible = true;
             player = plr;

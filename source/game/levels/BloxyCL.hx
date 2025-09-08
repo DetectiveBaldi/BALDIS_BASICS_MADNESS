@@ -132,6 +132,8 @@ class BloxyCL extends PlayState
             opp.animation.play("slap");
             opp.visible = true;
             opponent = opp;
+
+            updateHealthBar("opponent");
         }
         
         if (step == 400)

@@ -126,4 +126,49 @@ class SetbackL extends PlayState
             add(thanks);
         }
     }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+
+        if (beat >= 120 && beat <= 199)
+        {
+            if (beat % 4.0 == 0.0)
+                spawnBalloon();
+        }
+    }
+
+    public function spawnBalloon():Void
+    {
+        var balloon:FlxSprite;
+
+        var scaleNum:Float;
+
+        var posX:Float;
+
+        posX = new FlxG.random(-1000.0, 1000.0);
+
+        scaleNum = new FlxG.random(0.75, 3.0);
+
+        balloon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/spoopBalloon"));
+
+        balloon.setPosition(posX, 120.0);
+
+        balloon.scale.set(scaleNum, scaleNum);
+
+        if (scaleNum <= 1.5)
+        {
+            remove(balloon);
+            setbackS.insert(setbackS.members.indexOf(players), balloon);
+        }
+
+        if (balloon.x <= 200.0)
+        {
+            tween.tween(balloon, {x: balloon.x + 500})
+        }
+        else
+        {
+            tween.tween(balloon, {x: balloon.x - 500})
+        }
+    }
 }

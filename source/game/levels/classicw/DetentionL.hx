@@ -17,6 +17,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -91,6 +92,16 @@ class DetentionL extends PlayState
         opponent.setPosition(-1000.0, 10.0);
 
         detentionS.hall.animation.play("0");
+
+        AssetCache.getGraphic("game/Character/bf-walk-detention");
+        AssetCache.getGraphic("game/Character/walk-legs");
+        AssetCache.getGraphic("game/Character/bf-face-left");
+        AssetCache.getGraphic("game/Character/bf-face-back-left");
+        AssetCache.getGraphic("game/Character/bf-detention-caught");
+
+        AssetCache.getGraphic("game/Character/principal");
+    
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall0");
     }
 
     override function stepHit(step:Int):Void

@@ -32,7 +32,7 @@ class HugsS extends Stage
 
         hall.active = true;
 
-        hall.animation.addByPrefix("0", "scroll", 60.0);
+        hall.animation.addByPrefix("0", "scroll", 64.0);
 
         hallstill = getSprite("hall0", true);
 

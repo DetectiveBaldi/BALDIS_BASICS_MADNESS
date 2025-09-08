@@ -103,6 +103,10 @@ class RoughEL extends PlayState
 
         AssetCache.getGraphic("game/Character/run-legs");
 
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall3");
+
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall4");
+
         temperature = new FlxSprite();
     
         checkLayer = true;

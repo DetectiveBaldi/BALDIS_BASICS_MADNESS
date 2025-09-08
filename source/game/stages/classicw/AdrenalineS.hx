@@ -48,13 +48,13 @@ class AdrenalineS extends Stage
 
         hall.active = true;
 
-        hall.animation.addByPrefix("0", "scroll", 48.0);
+        hall.animation.addByPrefix("0", "scroll", 64.0);
     
         hall2 = getAtlasSprite("scrolling-hall1", true);
 
         hall2.active = true;
 
-        hall2.animation.addByPrefix("0", "bg", 48.0);
+        hall2.animation.addByPrefix("0", "bg", 44.0);
         
         hall2.animation.play("0", false, true);
         

@@ -40,7 +40,7 @@ class EssentialES extends Stage
 
         hall.active = true;
 
-        hall.animation.addByPrefix("0", "scroll", 36.0);
+        hall.animation.addByPrefix("0", "scroll", 54.0);
         
         hall.animation.play("0", false, true);
 

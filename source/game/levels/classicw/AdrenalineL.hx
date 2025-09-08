@@ -83,6 +83,17 @@ class AdrenalineL extends PlayState
         opponent.setPosition(390.0, 145.0);
 
         adrenalineS.remove(opponents, true);
+
+        AssetCache.getGraphic("game/Character/bf-intro-adrenaline");
+        AssetCache.getGraphic("game/Character/bf-face-left");
+        AssetCache.getGraphic("game/Character/bf-face-right");
+        AssetCache.getGraphic("game/Character/bf-face-front");
+
+        AssetCache.getGraphic("game/Character/gotta-sweep");
+        AssetCache.getGraphic("game/Character/gotta-sweep-face-front");
+
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall0");
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall1");
     }
 
     override function stepHit(step:Int):Void

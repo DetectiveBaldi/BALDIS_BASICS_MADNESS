@@ -16,6 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
@@ -69,6 +70,15 @@ class HugsL extends PlayState
         oppStrumline.strums.x = plrStrumlineX;
 
         plrStrumline.strums.x = oppStrumlineX;
+
+        AssetCache.getGraphic("game/Character/bf-face-right");
+        AssetCache.getGraphic("game/Character/bf-running");
+        AssetCache.getGraphic("game/Character/run-legs");
+
+        AssetCache.getGraphic("game/Character/1st-prize-90");
+        AssetCache.getGraphic("game/Character/1st-prize-270");
+    
+        AssetCache.getGraphic("game/stages/shared/scrolling-hall0");
     }
 
     override function stepHit(step:Int):Void

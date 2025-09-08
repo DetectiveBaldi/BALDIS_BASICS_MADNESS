@@ -62,7 +62,7 @@ class GainGS extends Stage
 
         scrollingHall0.active = true;
 
-        scrollingHall0.animation.addByPrefix("0", "scroll", 32.0);
+        scrollingHall0.animation.addByPrefix("0", "scroll", 26.0);
         
         scrollingHall0.animation.play("0");
 
