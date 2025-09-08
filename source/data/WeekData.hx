@@ -33,7 +33,7 @@ class WeekData
 
         levels = new Array<LevelData>();
 
-        requiresScoreToPlay = true;
+        requiresScoreToPlay = false;
 
         showInStoryMenu = true;
 
