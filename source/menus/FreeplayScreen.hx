@@ -278,11 +278,19 @@ class FreeplayScreen extends CustomState
             if (!week.showInFreeplayMenu)
                 continue;
 
+            var difficulty:String = Difficulty.list[selectedDifficulty];
+
+            var hasDifficulty:Bool = week.hasDifficulty(difficulty);
+
+            if (!hasDifficulty #if !debug || (difficulty != "Normal" &&
+                HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end)
+                    continue;
+
             for (j in 0 ... week.levels.length)
             {
                 var level:LevelData = week.levels[j];
 
-                if (level.difficulty != list[selectedDifficulty])
+                if (level.difficulty != difficulty)
                     continue;
 
                 res.push(level);

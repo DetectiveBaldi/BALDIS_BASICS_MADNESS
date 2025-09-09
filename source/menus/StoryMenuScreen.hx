@@ -345,14 +345,16 @@ class StoryMenuScreen extends CustomState
         {
             var week:WeekData = WeekData.list[i];
 
+            if (!week.showInStoryMenu)
+                continue;
+
             var difficulty:String = Difficulty.list[selectedDifficulty];
 
             var hasDifficulty:Bool = week.hasDifficulty(difficulty);
 
-            if (!week.showInStoryMenu || !hasDifficulty
-                #if !debug || (difficulty != "Normal" &&
-                    HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end)
-                        continue;
+            if (!hasDifficulty #if !debug || (difficulty != "Normal" &&
+                HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end)
+                    continue;
 
             res.push(week);
         }
