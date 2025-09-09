@@ -1956,17 +1956,7 @@ class RoughEL extends PlayState
             vignette.kill();
         }
     }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        if (pxContainer != null)
-            gameCamera.filters.remove(pxContainer);
-
-        //the if statement above causes the game to crash when the song ends
-    }
-
+    
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
     {
         var plr:Character = getPlayer("run-legs");

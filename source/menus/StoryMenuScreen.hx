@@ -317,7 +317,7 @@ class StoryMenuScreen extends CustomState
 
                 MainMenuScreen.fadeTune();
 
-                var week = week.copy();
+                week = week.copy();
 
                 week.levels = week.filterByDifficulty(Difficulty.list[selectedDifficulty]);
 
