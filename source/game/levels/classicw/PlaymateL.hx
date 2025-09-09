@@ -161,12 +161,26 @@ class PlaymateL extends PlayState
             remove(opp, true);
             playmateS.insert(playmateS.members.indexOf(playmateS.hall), opp);
 
-            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(opp, {x: 540.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
             gameCameraZoom = 0.8;
         }
 
         if (step == 1200)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+
+        if (step == 1216)
+        {
+            opp.animation.play("slap");
+
+            tween.tween(opp, {x: 260.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+        }
+
+        if (step == 1232)
         {
             opp.animation.play("slap");
 

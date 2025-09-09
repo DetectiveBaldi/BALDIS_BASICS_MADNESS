@@ -45,7 +45,7 @@ class BeginningsL extends PlayState
 
         gameCamera.snapToTarget();
 
-        gameCameraZoom = 1.0;
+        gameCameraZoom = 0.8;
 
         spectator.scale.set(1.0, 1.0);
 
@@ -55,9 +55,11 @@ class BeginningsL extends PlayState
 
         opponent.setPosition(-185.0, -150);
 
-        player.scale.set(1.75, 1.75);
+        player.scale.set(2.0, 2.0);
 
-        player.setPosition(beginningsS.testRoom.x + beginningsS.testRoom.width - player.width, -25.0);
+        player.updateHitbox();
+
+        player.setPosition(880.0, 180.0);
     }
 
     override function stepHit(step:Int):Void
@@ -93,9 +95,7 @@ class BeginningsL extends PlayState
         }
     
         if (step == 288)
-        {
             gameCameraZoom = 1;
-        }
     
         if (step == 416)
         {
@@ -120,19 +120,10 @@ class BeginningsL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
     
-        if (step == 544)
-        {
+        if (step == 544 || step == 816)
             gameCameraZoom = 0.8;
-        }
     
         if (step == 800)
-        {
             gameCameraZoom = 1.15;
-        }
-        
-        if (step == 816)
-        {
-            gameCameraZoom = 0.8;
-        }
     }
 }

@@ -131,7 +131,7 @@ class SetbackL extends PlayState
     {
         super.beatHit(beat);
 
-        if (beat >= 120 && beat <= 199)
+        if (beat >= 152 && beat <= 199)
         {
             if (beat % 4.0 == 0.0)
                 spawnBalloon();
@@ -148,27 +148,35 @@ class SetbackL extends PlayState
 
         posX = FlxG.random.int(-1000, 1000);
 
-        scaleNum = FlxG.random.float(0.75, 3);
+        scaleNum = FlxG.random.float(1.0, 5.0);
 
         balloon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/spoopBalloon"));
 
-        balloon.setPosition(posX, 120.0);
-
         balloon.scale.set(scaleNum, scaleNum);
 
-        if (scaleNum <= 1.5)
+        balloon.updateHitbox();
+
+        balloon.setPosition(posX, balloon.getCenterY() + 15.0);
+
+        balloon.active = true;
+
+        add(balloon);
+
+        if (scaleNum <= 2.5)
         {
             remove(balloon);
             setbackS.insert(setbackS.members.indexOf(players), balloon);
         }
 
-        if (balloon.x <= 200.0)
+        if (scaleNum <= 2.0)
         {
-            tween.tween(balloon, {x: balloon.x + 500});
+            remove(balloon);
+            setbackS.insert(setbackS.members.indexOf(setbackS.chair), balloon);
         }
+
+        if (balloon.x <= 0)
+            balloon.velocity.x = 400.0;
         else
-        {
-            tween.tween(balloon, {x: balloon.x - 500});
-        }
+            balloon.velocity.x = -400.0;
     }
 }

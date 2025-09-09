@@ -508,9 +508,9 @@ class HintScreen extends CustomSubState
 {
     public static var hintTable:Map<String, String> =
     [
-        "Beginnings" => "\"THIS IS WHERE IT ALL BEGAN\"",
+        "Beginnings" => "\"31718\"",
 
-        "Uncanon" => "It's not canon. He is certainly\nnot canon.",
+        "Uncanon" => "He resides near a soda machine, and he\ndefinitely isn't canon.",
 
         "Overseer" => "\"Game over!\"",
 

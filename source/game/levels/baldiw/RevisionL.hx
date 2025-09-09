@@ -92,7 +92,8 @@ class RevisionL extends PlayState
 
         var plr:Character = getPlayer("bf-face-back-left");
         plr.scale.set(4.5, 4.5);
-        plr.setPosition(1060.0, 300.0);
+        plr.updateHitbox();
+        plr.setPosition(710.0, -30.0);
 
         var opp:Character = getOpponent("baldi-face-right");
         opp.scale.set(2.3, 2.3);

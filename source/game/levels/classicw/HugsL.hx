@@ -59,9 +59,13 @@ class HugsL extends PlayState
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-        player.setPosition(-1000.0, 140.0);
+        player.setPosition(-1000.0, 120.0);
 
-        opponent.setPosition(200.0, -180.0);
+        player.skipDance = true;
+
+        player.animation.play("wright");
+
+        opponent.setPosition(200.0, -145.0);
 
         var oppStrumlineX:Float = oppStrumline.strums.x;
 
@@ -72,6 +76,7 @@ class HugsL extends PlayState
         plrStrumline.strums.x = oppStrumlineX;
 
         AssetCache.getGraphic("game/Character/bf-face-right");
+        AssetCache.getGraphic("game/Character/bf-intro-adrenaline");
         AssetCache.getGraphic("game/Character/bf-running");
         AssetCache.getGraphic("game/Character/run-legs");
 
@@ -95,19 +100,31 @@ class HugsL extends PlayState
         }
 
         if (step == 16)
-            tween.tween(player, {x: -260.0}, conductor.beatLength * 12.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(player, {x: -260.0}, conductor.beatLength * 4.0 * 0.001);
+
+        if (step == 32)
+            player.animation.play("sright");
 
         if (step == 64)
         {
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
+            var _plr:Character = getPlayer("bf-intro-adrenaline");
+            _plr.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            plr.setPosition(-260.0, 175.0);
+            plr.skipDance = false;
+            players.add(plr);
+            player = plr;
+
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
 
@@ -122,7 +139,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-315"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -134,7 +151,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -146,7 +163,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-0"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -158,7 +175,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -170,7 +187,7 @@ class HugsL extends PlayState
       
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-45"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -182,7 +199,7 @@ class HugsL extends PlayState
       
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -194,7 +211,7 @@ class HugsL extends PlayState
      
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-90"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(450.0, -180.0);
+            opp.setPosition(450.0, -145.0);
             opponents.add(opp);
             opponent = opp;
         }
@@ -262,7 +279,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-225"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(-100.0, -180.0);
+            opp.setPosition(-100.0, -145.0);
             opponents.add(opp);
             opponent = opp;
 
@@ -280,7 +297,7 @@ class HugsL extends PlayState
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-180"));
             opp.scale.set(3.0, 3.0);
-            opp.setPosition(-100.0, -180.0);
+            opp.setPosition(-100.0, -145.0);
             opponents.add(opp);
             opponent = opp;
 
@@ -495,7 +512,7 @@ class HugsL extends PlayState
             opp.visible = false;
 
             var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-spin"));
-            _opp.setPosition(120.0, 220.0);
+            _opp.setPosition(120.0, 245.0);
             _opp.animation.play("spin");
             _opp.skipDance = true;
             _opp.skipSing = true;

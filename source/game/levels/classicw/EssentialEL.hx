@@ -479,6 +479,8 @@ class EssentialEL extends PlayState
 
             oppStrumline.strums.alpha = 0.25;
 
+            canPause = false;
+
             tween.tween(plrStrumline.strums, {x: plrStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             tween.tween(oppStrumline.strums, {x: oppStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});

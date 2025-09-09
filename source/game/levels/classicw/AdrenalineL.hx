@@ -76,7 +76,7 @@ class AdrenalineL extends PlayState
 
         player.scale.set(2.4, 2.4);
         player.updateHitbox();
-        player.setPosition(1600.0, 145.0);
+        player.setPosition(-900.0, 145.0);
 
         opponent.scale.set(1.45, 1.45);
         opponent.updateHitbox();
@@ -102,7 +102,7 @@ class AdrenalineL extends PlayState
 
         if (step == 0)
         {
-            player.animation.play("walk");
+            player.animation.play("wright");
             player.skipDance = true;
             player.skipSing = true;
 
@@ -127,7 +127,7 @@ class AdrenalineL extends PlayState
 
             tween.tween(player, {x: 590.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            player.animation.play("shock");
+            player.animation.play("sleft");
             player.skipDance = false;
             player.skipSing = false;
         }

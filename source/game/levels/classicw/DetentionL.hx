@@ -83,13 +83,13 @@ class DetentionL extends PlayState
 
         player.skipSing = true;
 
-        player.setPosition(340.0, 155.0);
+        player.setPosition(340.0, 180.0);
 
         __plr.setPosition(player.x, player.y);
 
         player.animation.onFrameChange.add(updateLegStatus);
 
-        opponent.setPosition(-1000.0, 10.0);
+        opponent.setPosition(-1000.0, 35.0);
 
         detentionS.hall.animation.play("0");
 

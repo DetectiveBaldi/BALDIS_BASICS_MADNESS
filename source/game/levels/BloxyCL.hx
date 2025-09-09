@@ -45,6 +45,8 @@ class BloxyCL extends PlayState
 
         cameraPoint.x += 50.0;
 
+        gameCamera.snapToTarget();
+
         cameraLock = FOCUS_CAM_POINT;
 
         playField.visible = false;

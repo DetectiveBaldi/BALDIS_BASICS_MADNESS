@@ -43,6 +43,10 @@ class MishapL extends PlayState
     
         setCamStartPos();
 
+        cameraPoint.centerTo();
+
+        gameCamera.snapToTarget();
+
         mishapS.breadySchool.visible = true;
 
         player.setPosition(840.0, 315.0);

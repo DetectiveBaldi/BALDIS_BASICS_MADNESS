@@ -77,7 +77,6 @@ class GainGL extends PlayState
         opponent.scale.set(0.35, 0.35);
         opponent.updateHitbox();
         opponent.setPosition(595.0, 330.0);
-        opponent.skipDance = true;
     
         AssetCache.getGraphic("game/Character/gotta-sweep");
     }
@@ -240,7 +239,7 @@ class GainGL extends PlayState
             player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             player.scale.set(1.75, 1.75);
             player.updateHitbox();
-            player.setPosition(1000.0, 225.0);
+            player.setPosition(1000.0, 255.0);
             players.add(player);
 
             opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
