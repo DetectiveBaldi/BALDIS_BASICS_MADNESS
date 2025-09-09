@@ -310,9 +310,7 @@ class StoryMenuScreen extends CustomState
             {
                 var week:WeekData = weeks[selectedWeek];
 
-                var difficulty:String = Difficulty.list[selectedDifficulty];
-
-                if (#if debug false #else week.scoresValidated() #end)
+                if (#if debug false #else !week.scoresValidated() #end)
                     return;
 
                 ClickSoundUtil.play();
@@ -321,7 +319,7 @@ class StoryMenuScreen extends CustomState
 
                 var week = week.copy();
 
-                week.levels = week.filterByDifficulty(difficulty);
+                week.levels = week.filterByDifficulty(Difficulty.list[selectedDifficulty]);
 
                 PlayState.loadWeek(week);
             }
