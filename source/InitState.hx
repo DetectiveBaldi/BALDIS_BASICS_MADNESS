@@ -13,6 +13,7 @@ import flixel.util.typeLimit.NextState;
 
 import core.AssetCache;
 import core.Options;
+import core.Paths;
 
 import data.Playlist;
 
@@ -49,6 +50,8 @@ class InitState extends FlxState
 
         Options.purgeInvalid();
 
+        setAutoPause(Options.autoPause);
+
         setFrameRateCap(Options.frameRate);
 
         FlxG.mouse.visible = false;
@@ -63,7 +66,7 @@ class InitState extends FlxState
 
         AssetCache.init();
 
-        setAutoPause(Options.autoPause);
+        Paths.init();
 
         Playlist.init();
 

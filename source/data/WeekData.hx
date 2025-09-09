@@ -1,5 +1,7 @@
 package data;
 
+import game.HighScore;
+
 using util.ArrayUtil;
 
 @:structInit
@@ -15,13 +17,13 @@ class WeekData
 
     public var levels:Array<LevelData>;
 
-    public var requiresScoreToPlay:Bool;
-
     public var showInStoryMenu:Bool;
 
     public var showInFreeplayMenu:Bool;
 
     public var hasTvPortrait:Bool;
+
+    public var scoreRequirements:Map<String, Array<String>>;
 
     public function new(name:String, nameSuffix:String, description:String):Void
     {
@@ -33,13 +35,13 @@ class WeekData
 
         levels = new Array<LevelData>();
 
-        requiresScoreToPlay = false;
-
         showInStoryMenu = true;
 
         showInFreeplayMenu = true;
 
         hasTvPortrait = true;
+
+        scoreRequirements = new Map<String, Array<String>>();
     }
 
     public function getFormattedName():String
@@ -58,13 +60,13 @@ class WeekData
         // TODO: Check that copying here is necessary.
         data.levels = levels.copy();
 
-        data.requiresScoreToPlay = requiresScoreToPlay;
-
         data.showInStoryMenu = showInStoryMenu;
 
         data.showInFreeplayMenu = showInFreeplayMenu;
 
         data.hasTvPortrait = hasTvPortrait;
+
+        data.scoreRequirements = scoreRequirements.copy();
 
         return data;
     }
@@ -77,5 +79,28 @@ class WeekData
     public function filterByDifficulty(difficulty:String):Array<LevelData>
     {
         return levels.filter((lv:LevelData) -> lv.difficulty == difficulty);
+    }
+
+    public function addScoreRequirement(name:String, difficulty:String):Void
+    {
+        var requirement:Array<String> = scoreRequirements[name] ??= new Array<String>();
+
+        requirement.push(difficulty);
+    }
+
+    public function scoresValidated():Bool
+    {
+        for (k => v in scoreRequirements)
+        {
+            var requirement:Array<String> = v;
+
+            for (diff in requirement)
+            {
+                if (HighScore.getWeekScore(k, diff).score == 0.0)
+                    return false;
+            }
+        }
+
+        return true;
     }
 }

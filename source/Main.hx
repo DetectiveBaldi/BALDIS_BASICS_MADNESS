@@ -17,22 +17,10 @@ class Main extends Sprite
 
 		addChild(new FlxGame(0, 0, () -> new InitState(getNextState()), 60, 60, true, false));
 	}
-
+	
 	public function getNextState():NextState
 	{
 		var nextState:NextState = () -> new LauncherScreen();
-
-		#if INIT_STATE_LOGO_SCREEN
-		nextState = () -> new menus.LogoScreen();
-		#end
-
-		#if INIT_STATE_TITLE_SCREEN
-		nextState = () -> new menus.TitleScreen();
-		#end
-
-		#if (INIT_STATE_WARNING_SCREEN)
-		nextState = () -> new menus.WarningScreen();
-		#end
 
 		return nextState;
 	}

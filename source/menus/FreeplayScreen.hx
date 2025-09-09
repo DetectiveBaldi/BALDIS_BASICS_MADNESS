@@ -73,10 +73,6 @@ class FreeplayScreen extends CustomState
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
-        levels = new Array<LevelData>();
-
-        filterLevelsList();
-
         background = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/background"));
 
         background.setGraphicSize(FlxG.width, FlxG.height);
@@ -223,7 +219,16 @@ class FreeplayScreen extends CustomState
 
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
 
-        filterLevelsList();
+        var newLevels:Array<LevelData> = filterLevelsList();
+
+        if (newLevels.length == 0.0)
+        {
+            selectedDifficulty = FlxMath.wrap(selectedDifficulty - change, 0, list.length - 1);
+
+            return;
+        }
+
+        levels = newLevels;
 
         if (change != 0.0)
             selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
@@ -256,17 +261,15 @@ class FreeplayScreen extends CustomState
 
         var week:WeekData = level.week;
 
-        if (week != null && (HighScore.getWeekScore(week.name, level.difficulty).score != 0.0 || #if debug true #else
-            !week.requiresScoreToPlay #end &&
-                week.hasTvPortrait))
-                    tween.tween(tvStatic, {alpha: 0.0}, 0.5);
+        if (week != null && (#if debug true #else week.scoresValidated() #end && week.hasTvPortrait))
+            tween.tween(tvStatic, {alpha: 0.0}, 0.5);
     }
 
-    public function filterLevelsList():Void
+    public function filterLevelsList():Array<LevelData>
     {
-        levels.resize(0);
+        var res:Array<LevelData> = new Array<LevelData>();
 
-        var difficultyList:Array<String> = Difficulty.list;
+        var list:Array<String> = Difficulty.list;
 
         for (i in 0 ... WeekData.list.length)
         {
@@ -279,10 +282,10 @@ class FreeplayScreen extends CustomState
             {
                 var level:LevelData = week.levels[j];
 
-                if (level.difficulty != difficultyList[selectedDifficulty])
+                if (level.difficulty != list[selectedDifficulty])
                     continue;
 
-                levels.push(level);
+                res.push(level);
             }
         }
     
@@ -290,14 +293,13 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.difficulty != difficultyList[selectedDifficulty])
+            if (level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu || level.showInMysteryMenu)
                 continue;
 
-            if (!level.showInFreeplayMenu || level.showInMysteryMenu)
-                continue;
-
-            levels.push(level);
+            res.push(level);
         }
+
+        return res;
     }
 
     public function updateTvPortrait(level:LevelData):Void
@@ -308,9 +310,8 @@ class FreeplayScreen extends CustomState
 
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, level.difficulty).score != 0.0 || #if debug true #else
-                !week.requiresScoreToPlay #end && week.hasTvPortrait)
-                    portraitStr = week.name.toLowerCase();
+            if (#if debug true #else week.scoresValidated() #end && week.hasTvPortrait)
+                portraitStr = week.name.toLowerCase();
         }
 
         if (portraitStr == "unknown")
@@ -333,14 +334,13 @@ class FreeplayScreen extends CustomState
 
         if (week == null)
         {
-            if (HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #if debug && false #end)
+            if (#if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end)
                 path = "level-score-needed";
         }
         else
         {
-            if (HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 &&
-                #if debug false #else week.requiresScoreToPlay #end)
-                    path = "week-score-needed";
+            if (#if debug false #else !week.scoresValidated() #end)
+                path = "week-score-needed";
         }
 
         poster.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/posters/${path}'));
@@ -437,9 +437,8 @@ class FreeplayScreen extends CustomState
         
         if (week != null)
         {
-            if (HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 &&
-                #if debug false #else week.requiresScoreToPlay #end)
-                    return;
+            if (#if debug false #else !week.scoresValidated() #end)
+                return;
         }
 
         MainMenuScreen.fadeTune();
@@ -460,14 +459,13 @@ class FreeplayScreen extends CustomState
 
         if (week == null)
         {
-            if (#if debug false && #end HighScore.getLevelScore(level.name, level.difficulty).score == 0.0)
+            if (#if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end)
                 return;
         }
         else
         {
-            if (HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 &&
-                #if debug false #else week.requiresScoreToPlay #end)
-                    return;
+            if (#if debug false #else !week.scoresValidated() #end)
+                return;
         }
 
         openSubState(new LevelInfoScreen(levels[selectedLevel]));

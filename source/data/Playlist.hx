@@ -34,6 +34,8 @@ class Playlist
 
         week.hasTvPortrait = true;
 
+        week.addScoreRequirement("Baldi", "Normal");
+
         WeekData.list.push(week);
 
         // Bladder Week
@@ -46,6 +48,8 @@ class Playlist
         week.levels.pushMany({week: week, name: "Walls"}, {week: week, name: "Lookalike"});
 
         week.hasTvPortrait = true;
+
+        week.addScoreRequirement("Bladder", "Normal");
         
         WeekData.list.push(week);
 

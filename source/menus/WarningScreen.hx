@@ -37,7 +37,7 @@ class WarningScreen extends CustomState
 
         textToShow += "This is a mod of Friday Night Funkin',\n";
 
-        textToShow += "based off a<color-swap>horror game <color-swap>called Baldi's Basics.\n";
+        textToShow += "based off a<color-swap> horror game <color-swap>called Baldi's Basics.\n";
 
         textToShow += "This mod includes\n";
 

@@ -77,10 +77,6 @@ class StoryMenuScreen extends CustomState
     {
         super.create();
 
-        weeks = new Array<WeekData>();
-
-        filterWeeksList();
-
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
@@ -316,9 +312,8 @@ class StoryMenuScreen extends CustomState
 
                 var difficulty:String = Difficulty.list[selectedDifficulty];
 
-                if (HighScore.getWeekScore(weekToCopy.name, difficulty).score == 0.0 && #if debug false #else
-                    weekToCopy.requiresScoreToPlay #end)
-                        return;
+                if (#if debug false #else HighScore.getWeekScore(weekToCopy.name, difficulty).score == 0.0 #end)
+                    return;
 
                 ClickSoundUtil.play();
 
@@ -342,19 +337,27 @@ class StoryMenuScreen extends CustomState
         FlxG.mouse.visible = false;
     }
 
-    public function filterWeeksList():Void
+    public function filterWeeksList():Array<WeekData>
     {
-        weeks.resize(0);
+        var res:Array<WeekData> = new Array<WeekData>();
 
         for (i in 0 ... WeekData.list.length)
         {
             var week:WeekData = WeekData.list[i];
 
-            if (!week.showInStoryMenu || !week.hasDifficulty(Difficulty.list[selectedDifficulty]))
-                continue;
+            var difficulty:String = Difficulty.list[selectedDifficulty];
 
-            weeks.push(week);
+            var hasDifficulty:Bool = week.hasDifficulty(difficulty);
+
+            if (!week.showInStoryMenu || !hasDifficulty
+                #if !debug || (difficulty != "Normal" &&
+                    HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end)
+                        continue;
+
+            res.push(week);
         }
+
+        return res;
     }
 
     public function changeDifficulty(change:Int):Void
@@ -365,7 +368,16 @@ class StoryMenuScreen extends CustomState
 
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
 
-        filterWeeksList();
+        var newWeeks:Array<WeekData> = filterWeeksList();
+
+        if (newWeeks.length == 0.0)
+        {
+            selectedDifficulty = FlxMath.wrap(selectedDifficulty - change, 0, list.length - 1);
+
+            return;
+        }
+
+        weeks = newWeeks;
 
         if (change != 0.0)
             selectedWeek = lastSelectedWeek.exists(selectedDifficulty) ? lastSelectedWeek[selectedDifficulty] : 0;
@@ -388,9 +400,11 @@ class StoryMenuScreen extends CustomState
         for (i in 0 ... levels.length)
             text += '${levels[i].name}\n';
 
-        songListText.text = text;
+        var scoresValidated:Bool = #if debug true #else week.scoresValidated() #end;
 
-        weekNameText.text = week.name + week.nameSuffix;
+        songListText.text = scoresValidated ? text : "";
+
+        weekNameText.text = scoresValidated ? week.name + week.nameSuffix : "???";
 
         weekDescText.text = week.description;
 
@@ -404,7 +418,20 @@ class StoryMenuScreen extends CustomState
 
     public function updateWeekPortrait(week:WeekData):Void
     {
-        weekPortrait.loadGraphic(AssetCache.getGraphic('shared/week-portrait-${week.name.setCase(" ", KEBAB)}'));
+        var path:String = 'menus/StoryMenuScreen/week-portrait-${week.name.setCase(" ", KEBAB)}';
+
+        var difficulty:String = Difficulty.list[selectedDifficulty];
+
+        if (difficulty != "Normal")
+        {
+            if (Paths.exists(Paths.image(Paths.png('${path}-${difficulty.toLowerCase()}'))))
+                path += '-${difficulty.toLowerCase()}';
+        }
+
+        if (#if debug false #else !week.scoresValidated() #end)
+            path = 'menus/StoryMenuScreen/week-portrait-obfuscated';
+
+        weekPortrait.loadGraphic(AssetCache.getGraphic(path));
 
         weekPortrait.scale.set(1.25, 1.25);
 
