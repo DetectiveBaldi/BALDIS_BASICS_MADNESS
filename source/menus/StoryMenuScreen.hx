@@ -308,22 +308,22 @@ class StoryMenuScreen extends CustomState
 
             if (FlxG.mouse.justReleased)
             {
-                var weekToCopy:WeekData = weeks[selectedWeek];
+                var week:WeekData = weeks[selectedWeek];
 
                 var difficulty:String = Difficulty.list[selectedDifficulty];
 
-                if (#if debug false #else HighScore.getWeekScore(weekToCopy.name, difficulty).score == 0.0 #end)
+                if (#if debug false #else week.scoresValidated() #end)
                     return;
 
                 ClickSoundUtil.play();
 
                 MainMenuScreen.fadeTune();
 
-                var weekToLoad:WeekData = weekToCopy.copy();
+                var week = week.copy();
 
-                weekToLoad.levels = weekToLoad.filterByDifficulty(difficulty);
+                week.levels = week.filterByDifficulty(difficulty);
 
-                PlayState.loadWeek(weekToLoad);
+                PlayState.loadWeek(week);
             }
         }
         else
