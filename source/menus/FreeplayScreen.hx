@@ -349,7 +349,7 @@ class FreeplayScreen extends CustomState
             var filtered:Array<LevelData> = week.filterByDifficulty(level.difficulty);
             
             if (#if debug false #else !week.scoresValidated() || filtered.indexOf(level) != 0.0 &&
-                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0) #end
+                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end)
                     path = "week-score-needed";
         }
 
@@ -450,7 +450,7 @@ class FreeplayScreen extends CustomState
             var filtered:Array<LevelData> = week.filterByDifficulty(level.difficulty);
             
             if (#if debug false #else !week.scoresValidated() || filtered.indexOf(level) != 0.0 &&
-                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0) #end
+                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end)
                     return;
         }
 
