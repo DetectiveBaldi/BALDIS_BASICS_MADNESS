@@ -42,6 +42,7 @@ using util.StringUtil;
 
 using StringTools;
 
+// TODO: You can see Boyfriend's hair at times in the opening sequence.
 class RevisionL extends PlayState
 {
     public var revisionS:RevisionS;

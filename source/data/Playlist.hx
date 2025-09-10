@@ -32,8 +32,6 @@ class Playlist
         // Hard Difficulty
         week.levels.pushMany({week: week, name: "Fundamentals", difficulty: "Hard"}, {week: week, name: "Hyperactive", difficulty: "Hard"}, {week: week, name: "Rough Escape", difficulty: "Hard"});
 
-        week.hasTvPortrait = true;
-
         week.addScoreRequirement("Baldi", "Normal");
 
         WeekData.list.push(week);
@@ -46,8 +44,6 @@ class Playlist
         week.description += "you think seemed strange and ended up finding Bladder!\nDo you have what it takes to beat him?";
 
         week.levels.pushMany({week: week, name: "Walls"}, {week: week, name: "Lookalike"});
-
-        week.hasTvPortrait = true;
 
         week.addScoreRequirement("Bladder", "Normal");
         

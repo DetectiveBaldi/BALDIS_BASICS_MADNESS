@@ -21,8 +21,6 @@ class WeekData
 
     public var showInFreeplayMenu:Bool;
 
-    public var hasTvPortrait:Bool;
-
     public var scoreRequirements:Map<String, Array<String>>;
 
     public function new(name:String, nameSuffix:String, description:String):Void
@@ -38,8 +36,6 @@ class WeekData
         showInStoryMenu = true;
 
         showInFreeplayMenu = true;
-
-        hasTvPortrait = true;
 
         scoreRequirements = new Map<String, Array<String>>();
     }
@@ -63,8 +59,6 @@ class WeekData
         data.showInStoryMenu = showInStoryMenu;
 
         data.showInFreeplayMenu = showInFreeplayMenu;
-
-        data.hasTvPortrait = hasTvPortrait;
 
         data.scoreRequirements = scoreRequirements.copy();
 
