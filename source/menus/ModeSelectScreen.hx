@@ -18,6 +18,8 @@ import core.Paths;
 
 import extendable.CustomState;
 
+import game.HighScore;
+
 import ui.BackOutButton;
 
 import util.ClickSoundUtil;
@@ -104,7 +106,7 @@ class ModeSelectScreen extends CustomState
 
         text += "\nthe schoolhouse!";
 
-        var storyIcon:ModeSelectIcon = createIcon("story-icon", "Story Mode", text, () -> FlxG.switchState(() -> new
+        var storyIcon:ModeSelectIcon = createIcon("story-icon", "Story", text, () -> FlxG.switchState(() -> new
             StoryMenuScreen()));
 
         storyIcon.onClick.remove(MainMenuScreen.fadeTune);
@@ -117,8 +119,14 @@ class ModeSelectScreen extends CustomState
 
         text += "\ncompanions!";
 
-        var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay Mode", text, () -> FlxG.switchState(() -> 
+        var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay", text, () -> FlxG.switchState(() -> 
             new FreeplayScreen()));
+
+        var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore("Baldi", "Normal").score != 0.0 &&
+            HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end ;
+
+        if (!scoresValidated)
+            freeplayIcon.lock(true);
 
         freeplayIcon.onClick.remove(MainMenuScreen.fadeTune);
 
@@ -130,8 +138,11 @@ class ModeSelectScreen extends CustomState
 
         text += "\nHere School...";
 
-        var mysteryIcon:ModeSelectIcon = createIcon("mystery-icon", "Mystery Mode", text, () -> FlxG.switchState(() -> 
+        var mysteryIcon:ModeSelectIcon = createIcon("mystery-icon", "Mystery", text, () -> FlxG.switchState(() -> 
             new MysteryScreen()));
+
+        if (!scoresValidated)
+            mysteryIcon.lock(true);
 
         mysteryIcon.setPosition(FlxG.width - mysteryIcon.width - 285.0 + 112.0, mysteryIcon.getCenterY() - 100.0);
 
@@ -164,9 +175,9 @@ class ModeSelectScreen extends CustomState
 
         icon.onSelect.add(() ->
         {
-            nameText.text = name;
+            nameText.text = '${icon.locked ? "???" : name} Mode';
 
-            iconText.text = text;
+            iconText.text = icon.locked ? "This mode is locked!" : text;
         });
 
         icon.onClick.add(MainMenuScreen.fadeTune);
@@ -188,33 +199,29 @@ class ModeSelectScreen extends CustomState
 
 class ModeSelectIcon extends FlxSprite
 {
+    public var file:String;
+
+    public var locked:Bool;
+
     public var selected:Bool;
 
     public var onSelect:FlxSignal;
 
     public var onClick:FlxSignal;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, file:String):Void
     {
         super(x, y);
+
+        this.file = file;
+
+        lock(false);
 
         selected = false;
 
         onSelect = new FlxSignal();
 
         onClick = new FlxSignal();
-
-        loadGraphic(AssetCache.getGraphic('menus/ModeSelectScreen/${_path}'), true, 128, 192);
-
-        animation.add("0", [0], 0.0, false);
-
-        animation.add("1", [1], 0.0, false);
-
-        animation.play("0");
-
-        scale.set(2.0, 2.0);
-
-        updateHitbox();
     }
 
     override function update(elapsed:Float):Void
@@ -232,9 +239,14 @@ class ModeSelectIcon extends FlxSprite
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.play();
+                if (locked)
+                    FlxG.sound.play(AssetCache.getSound("shared/locked-door-rattle"));
+                else
+                {
+                    ClickSoundUtil.play();
 
-                onClick.dispatch();
+                    onClick.dispatch();
+                }
             }
         }
         else
@@ -252,5 +264,25 @@ class ModeSelectIcon extends FlxSprite
         onSelect = cast FlxDestroyUtil.destroy(onSelect);
 
         onClick = cast FlxDestroyUtil.destroy(onClick);
+    }
+
+    public function lock(value:Bool):Void
+    {
+        locked = value;
+
+        loadGraphic(AssetCache.getGraphic('menus/ModeSelectScreen/${locked ? "lockedIcon" : file}'), true, 128, 192);
+
+        animation.add("0", [0], 0.0, false);
+
+        animation.add("1", [1], 0.0, false);
+
+        animation.play("0");
+
+        scale.set(2.0, 2.0);
+
+        updateHitbox();
+
+        if (locked)
+            FlxG.sound.play(AssetCache.getSound("shared/door-unlock"));
     }
 }

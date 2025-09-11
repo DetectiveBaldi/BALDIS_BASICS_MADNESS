@@ -20,6 +20,8 @@ class HugsS extends Stage
 
     public var hallend:FlxSprite;
 
+    public var hallendportal:FlxSprite;
+
     public var doorStandard:FlxSprite;
 
     public var doorStandardOpen:FlxSprite;
@@ -51,6 +53,8 @@ class HugsS extends Stage
         hallend = getSprite("hall-end");
 
         hallend.active = true;
+
+        hallendportal = getSprite("hall-end-portal");
 
         doorStandard = getSprite("doorStandard", 2.35, 2.35);
 

@@ -1,13 +1,13 @@
 package game.levels.classicw;
 
-import haxe.ui.util.EventDispatcher;
-import openfl.filters.BitmapFilter;
-
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.animation.FlxAnimation;
+
+import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 
 import flixel.text.FlxText;
 
@@ -21,7 +21,7 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
-import data.CharacterData;
+import data.WeekData;
 
 import game.stages.classicw.DetentionS;
 
@@ -29,9 +29,13 @@ using util.MathUtil;
 
 using StringTools;
 
+using util.ArrayUtil;
+
 class DetentionL extends PlayState
 {
     public var detentionS:DetentionS;
+
+    public var portalRect:FlxRect;
 
     override function create():Void
     {
@@ -102,6 +106,35 @@ class DetentionL extends PlayState
         AssetCache.getGraphic("game/Character/principal");
     
         AssetCache.getGraphic("game/stages/shared/scrolling-hall0");
+
+        portalRect = FlxRect.get();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (detentionS.faculty0.visible || detentionS.faculty0portal.visible)
+        {
+            if (FlxG.mouse.justPressed && FlxMath.pointInFlxRect(FlxG.mouse.x, FlxG.mouse.y, portalRect))
+            {
+                if ( #if debug false #else PlayState.isWeek #end )
+                    FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
+                else
+                {
+                    if (detentionS.faculty0.visible)
+                    {
+                        detentionS.faculty0.visible = false;
+
+                        detentionS.faculty0portal.visible = true;
+
+                        FlxG.sound.play(AssetCache.getSound("shared/portal-poster-hit"));
+                    }
+                    else
+                        PlayState.loadWeek(WeekData.list.first((week:WeekData) -> week.name == "Bladder"));
+                }
+            }
+        }
     }
 
     override function stepHit(step:Int):Void
@@ -226,6 +259,10 @@ class DetentionL extends PlayState
 
         if (step == 780)
         {
+            FlxG.mouse.visible = true;
+
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+
             getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
 
             var plr:Character = getPlayer("bf-walk-detention");
@@ -245,6 +282,9 @@ class DetentionL extends PlayState
             detentionS.facultyStandardOpen.visible = false;
             
             detentionS.faculty0.visible = true;
+
+            portalRect.set(detentionS.faculty0portal.x + 671.0 * 2.0, detentionS.faculty0portal.y + 298.0 * 2.0,
+                96 * 2.0, 172.0 * 2.0);
         }
 
         if (step == 896)
@@ -252,6 +292,8 @@ class DetentionL extends PlayState
 
         if (step == 912)
         {
+            FlxG.mouse.visible = false;
+
             gameCameraZoom = 0.6;
 
             var plr:Character = getPlayer("bf-face-back-left");
@@ -272,6 +314,8 @@ class DetentionL extends PlayState
             tween.tween(opponent, {x: 105.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
             tween.tween(opponent.scale, {x: 0.5, y: 0.5}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
+            detentionS.faculty0.visible = false;
+            detentionS.faculty0portal.visible = false;
             detentionS.faculty2.visible = true;
         }
 
@@ -410,6 +454,15 @@ class DetentionL extends PlayState
             if (beat % 1 == 0)
                 gameCameraZoom += 0.05;
         }
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+
+        portalRect.put();
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void

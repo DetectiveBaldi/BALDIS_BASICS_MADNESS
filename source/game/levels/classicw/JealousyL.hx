@@ -196,6 +196,7 @@ class JealousyL extends PlayState
         {
             FlxG.camera.visible = true;
 
+            var plr:Character = getPlayer("bf-anim-jealousy");
             plr.animation.play("teleport");
         }
         

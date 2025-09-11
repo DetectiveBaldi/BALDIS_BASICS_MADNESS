@@ -20,6 +20,8 @@ class DetentionS extends Stage
 
     public var faculty0:FlxSprite;
 
+    public var faculty0portal:FlxSprite;
+
     public var faculty1:FlxSprite;
 
     public var faculty2:FlxSprite;
@@ -55,6 +57,8 @@ class DetentionS extends Stage
         facultyStandardOpen = getSprite("facultyStandard-open", 2.35, 2.35);
 
         faculty0 = getSprite("faculty", 2, 2);
+
+        faculty0portal = getSprite("faculty-portal", 2, 2);
 
         faculty2 = getSprite("faculty-caught1", 2, 2);
 

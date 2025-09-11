@@ -94,7 +94,7 @@ class PlayState extends CustomState
 
         PlayState.level = level;
 
-        weekStats = null;
+        weekStats.clear();
 
         FlxG.switchState(() -> getClassFromLevel(params));
     }
@@ -230,6 +230,8 @@ class PlayState extends CustomState
         canPause = true;
 
         super.create();
+
+        FlxG.watch.add(conductor, "time", "Conductor Time");
 
         FlxG.watch.add(conductor, "step", "Step");
 

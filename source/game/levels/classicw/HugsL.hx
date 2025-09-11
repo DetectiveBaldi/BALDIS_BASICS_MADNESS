@@ -8,6 +8,9 @@ import flixel.FlxSprite;
 
 import flixel.animation.FlxAnimation;
 
+import flixel.math.FlxMath;
+import flixel.math.FlxRect;
+
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
@@ -20,7 +23,7 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
-import data.CharacterData;
+import data.LevelData;
 
 import game.stages.classicw.HugsS;
 
@@ -28,9 +31,15 @@ using util.MathUtil;
 
 using StringTools;
 
+using util.ArrayUtil;
+
 class HugsL extends PlayState
 {
+    public var sprite:FlxSprite;
+
     public var hugsS:HugsS;
+
+    public var portalRect:FlxRect;
 
     override function create():Void
     {
@@ -84,6 +93,35 @@ class HugsL extends PlayState
         AssetCache.getGraphic("game/Character/1st-prize-270");
     
         AssetCache.getGraphic("game/stages/shared/scrolling-hall0");
+
+        portalRect = FlxRect.get();
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (hugsS.hallend.visible || hugsS.hallendportal.visible && hugsS.hallend.velocity.x == 0.0)
+        {
+            if (FlxG.mouse.justPressed && FlxMath.pointInFlxRect(FlxG.mouse.x, FlxG.mouse.y, portalRect))
+            {
+                if ( #if debug false #else PlayState.isWeek #end )
+                    FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
+                else
+                {
+                    if (hugsS.hallend.visible)
+                    {
+                        hugsS.hallend.visible = false;
+
+                        hugsS.hallendportal.visible = true;
+
+                        FlxG.sound.play(AssetCache.getSound("shared/portal-poster-hit"));
+                    }
+                    else
+                        PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Uncanon"));
+                }
+            }
+        }
     }
 
     override function stepHit(step:Int):Void
@@ -477,7 +515,16 @@ class HugsL extends PlayState
 
         if (step == 1568)
         {
+            FlxG.mouse.visible = true;
+
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+
             hugsS.hallend.velocity.x = 0.0;
+
+            hugsS.hallendportal.x = hugsS.hallend.x;
+
+            portalRect.set(hugsS.hallendportal.x + 752.0 * 1.15, hugsS.hallendportal.y + 289.0 * 1.15,
+                310.0 * 1.15, 510.0 * 1.15);
 
             var plr:Character = getPlayer("bf-face-right");
             plr.visible = false;
@@ -529,6 +576,15 @@ class HugsL extends PlayState
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 16.0 * 0.001, false);
         }
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+
+        portalRect.put();
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
