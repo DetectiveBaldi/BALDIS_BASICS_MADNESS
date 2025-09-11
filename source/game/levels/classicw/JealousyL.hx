@@ -54,6 +54,12 @@ class JealousyL extends PlayState
         cameraLock = FOCUS_CAM_POINT;
 
         cameraPoint.centerTo();
+
+        var oppStrumlineX:Float = oppStrumline.strums.x;
+        var plrStrumlineX:Float = plrStrumline.strums.x;
+
+        oppStrumline.strums.x = plrStrumlineX;
+        plrStrumline.strums.x = oppStrumlineX;
     }
 
     override function stepHit(step:Int):Void
@@ -196,8 +202,10 @@ class JealousyL extends PlayState
         {
             FlxG.camera.visible = true;
 
-            var plr:Character = getPlayer("bf-anim-jealousy");
-            plr.animation.play("teleport");
+            player.animation.play("teleport");
+
+            gameCamera.snapToTarget();
+            cameraPoint.y = -30.0;
         }
         
         if (step == 1072)

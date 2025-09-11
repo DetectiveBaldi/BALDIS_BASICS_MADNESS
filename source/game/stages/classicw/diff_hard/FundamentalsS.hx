@@ -14,6 +14,10 @@ class FundamentalsS extends Stage
 
     public var hall1:FlxSprite;
 
+    public var hall1open:FlxSprite;
+
+    public var hall1front:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -25,5 +29,9 @@ class FundamentalsS extends Stage
         office2 = getSprite("office2", 2, 2);
 
         hall1 = getSprite("hall1", 2, 2);
+
+        hall1open = getSprite("hall1-open", 2, 2);
+
+        hall1front = getSprite("hall1-front", 2, 2);
     }
 }

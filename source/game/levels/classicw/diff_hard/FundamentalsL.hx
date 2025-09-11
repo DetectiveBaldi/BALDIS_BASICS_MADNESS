@@ -1,5 +1,6 @@
 package game.levels.classicw.diff_hard;
 
+import flixel.animation.FlxAnimation;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -93,8 +94,6 @@ class FundamentalsL extends PlayState
             opp.setPosition(-1800.0, 80.0);
             opp.color = 0xADA493;
             opponents.add(opp);
-
-            player.visible = false;
         }
 
         if (step == 790)
@@ -106,10 +105,36 @@ class FundamentalsL extends PlayState
         if (step == 798)
             opponent.visible = false;
 
+        if (step == 800)
+        {
+            player.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fundamentals"));
+            plr.setPosition(player.x + 62.0, player.y + 62.0);
+            plr.color = 0xB8B19C;
+            plr.skipDance = true;
+            plr.animation.play("happy");
+            plr.visible = true;
+            players.add(plr);
+        }
+
+        if (step == 816)
+        {
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.animation.play("run");
+            tween.tween(plr, {x: 60.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
+        }
+
+        if (step == 832)
+        {
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.animation.play("c0");
+        }
+
         if (step == 840)
         {
             var opp:Character = getOpponent("principal");
-            tween.tween(opp, {x: -700.0}, conductor.beatLength * 4.0 * 0.001);
+            tween.tween(opp, {x: -1200.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 848)
@@ -133,6 +158,9 @@ class FundamentalsL extends PlayState
             bul.updateHitbox();
             bul.color = 0xADA493;
             spectators.add(bul);
+
+            var _plr:Character = getPlayer("bf-anim-fundamentals");
+            _plr.visible = false;
             
             var plr:Character = getPlayer("bf-face-left");
             plr.setPosition(720.0, 205.0);
@@ -180,12 +208,32 @@ class FundamentalsL extends PlayState
             opponent = opp;
 
             player.visible = false;
+
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.scale.set(4.5, 4.5);
+            plr.updateHitbox();
+            plr.setPosition(-150.0, -50.0);
+            plr.animation.play("realize");
+            plr.visible = true;
+        }
+
+        if (step == 1396)
+        {
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.animation.play("turn");
         }
 
         if (step == 1432)
         {
             fundamentalsS.office2.visible = false;
             fundamentalsS.hall1.visible = true;
+
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.scale.set(2.25, 2.25);
+            plr.updateHitbox();
+            plr.setPosition(-285.0, 160.0);
+            plr.visible = false;
+            plr.animation.play("d0");
 
             updateHealthBar("opponent");
         }
@@ -195,6 +243,23 @@ class FundamentalsL extends PlayState
             tween.tween(opponent, {x: 665.0}, conductor.beatLength * 5.0 * 0.001, {ease: FlxEase.quartOut});
 
             opponent.animation.play("play");
+
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.visible = true;
+
+            tween.tween(plr, {x: -315.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+
+            fundamentalsS.hall1open.visible = true;
+            fundamentalsS.hall1front.visible = true;
+
+            remove(players);
+            fundamentalsS.insert(fundamentalsS.members.indexOf(players), fundamentalsS.hall1front);
+        }
+
+        if (step == 1444)
+        {
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.animation.play("d1");
         }
 
         if (step == 1456)
@@ -202,9 +267,15 @@ class FundamentalsL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
+            fundamentalsS.hall1open.visible = false;
+            fundamentalsS.hall1front.visible = false;
+
             playField.visible = true;
 
             opponent.skipDance = false;
+
+            var plr:Character = getPlayer("bf-anim-fundamentals");
+            plr.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-105.0, 145.0);
