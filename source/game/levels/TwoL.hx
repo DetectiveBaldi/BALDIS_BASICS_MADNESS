@@ -4,6 +4,8 @@ import flixel.FlxG;
 
 import flixel.tweens.FlxEase;
 
+import data.LevelData;
+
 import extendable.CustomState;
 
 import menus.TitleScreen;
@@ -204,14 +206,23 @@ class TwoL extends PlayState
         }
     }
 
-    override function startOutro(onOutroComplete:()->Void):Void
+    override function endSong():Void
     {
-        if (getClassFromNextState() == TitleScreen)
+        var level:LevelData = PlayState.level;
+
+        if (getClassFromNextState() == TitleScreen && HighScore.getLevelScore(level.name, level.difficulty).score != 0.0)
         {
             CustomState.cancelFadeIn = true;
 
             CustomState.cancelFadeOut = true;
         }
+
+        super.endSong();
+    }
+
+    override function startOutro(onOutroComplete:()->Void):Void
+    {
+        
 
         super.startOutro(onOutroComplete);
     }

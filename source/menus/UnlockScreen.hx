@@ -1,44 +1,50 @@
 package menus;
 
-import core.Paths;
-import flixel.text.FlxText;
-import flixel.addons.display.FlxBackdrop;
+import openfl.geom.Rectangle;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.text.FlxText;
+
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+import flixel.util.typeLimit.NextState;
+
+import flixel.addons.display.FlxBackdrop;
 
 import core.AssetCache;
+import core.Paths;
+
+import data.LevelData;
+import data.WeekData;
 
 import extendable.CustomState;
-
-import flixel.sound.FlxSound;
-
-import ui.BackOutButton;
 
 using util.MathUtil;
 
 class UnlockScreen extends CustomState
 {
-    public var backOutButton:BackOutButton;
+    public var nextState:NextState;
 
-    public var bg:FlxSprite;
+    public var week:WeekData;
 
-    public var border1:FlxSprite;
+    public var level:LevelData;
 
-    public var border2:FlxSprite;
+    public function new(nextState:NextState, week:WeekData, level:LevelData):Void    
+    {
+        super();
 
-    public var baldi:FlxBackdrop;
+        this.nextState = nextState;
 
-    public var wow:FlxSound;
+        this.week = week;
 
-    public var uText:FlxText;
+        this.level = level;
+    }
 
     override function create():Void
     {
         super.create();
-
-        FlxG.camera.bgColor = FlxColor.BLACK;
 
         FlxG.mouse.visible = true;
 
@@ -46,75 +52,72 @@ class UnlockScreen extends CustomState
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
-        bg = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
+        var background:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
-        bg.scale.set(960.0, 720.0);
+        background.active = false;
 
-        bg.updateHitbox();
+        background.scale.set(FlxG.width, FlxG.height);
 
-        bg.screenCenter();
+        background.updateHitbox();
 
-        add(bg);
+        background.centerTo();
 
-        baldi = new FlxBackdrop(AssetCache.getGraphic("menus/BaldiHeads"));
+        add(background);
+
+        var baldi:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic("menus/BaldiHeads"));
 
         baldi.active = true;
 
-        baldi.velocity.set(-100.0, -50.0);
+        baldi.velocity.set(100.0, 50.0);
 
         add(baldi);
 
-        border1 = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+        var text:String = "Wow! You just unlocked\n";
 
-        border1.scale.set(160.0, 720.0);
+        if (week == null)
+            text += level.name;
+        else
+            text += week.name + week.nameSuffix;
 
-        border1.updateHitbox();
+        text += ".";
 
-        add(border1);
+        var wowText:FlxText = new FlxText(0.0, 0.0, 0.0, text, 60);
 
-        border2 = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+        wowText.color = 0xFF0EF403;
 
-        border2.scale.set(160.0, 720.0);
+        wowText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        border2.updateHitbox();
+        wowText.bold = true;
 
-        border2.setPosition(1120.0, 0.0);
+        wowText.textField.antiAliasType = ADVANCED;
 
-        add(border2);
+        wowText.textField.sharpness = 400.0;
 
-        backOutButton = new BackOutButton();
+        wowText.alignment = CENTER;
 
-        backOutButton.onClick.add(FlxG.switchState.bind(() -> new MainMenuScreen()));
+        wowText.centerTo();
 
-        backOutButton.setPosition(165.0, 5.0);
+        add(wowText);
 
-        add(backOutButton);
+        var foreground:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
 
-        uText = new FlxText(0.0, 0.0, FlxG.width);
+        foreground.active = false;
 
-        uText.color = 0x00FF00;
+        var rectToFill:Rectangle = new Rectangle(0.0, 0.0, 160.0, FlxG.height);
 
-        uText.text = "Wowee! You just unlocked\n???";
+        foreground.pixels.fillRect(rectToFill, 0xFF000000);
 
-        uText.size = 60;
+        rectToFill.setTo(FlxG.width - 160.0, 0.0, 160.0, FlxG.height);
 
-        uText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        foreground.pixels.fillRect(rectToFill, 0xFF000000);
 
-        uText.bold = true;
+        foreground.centerTo();
 
-        uText.alignment = CENTER;
+        add(foreground);
 
-        uText.textField.antiAliasType = ADVANCED;
+        FlxG.sound.play(AssetCache.getSound("menus/baldi-wow"), 1.0, false);
 
-        uText.textField.sharpness = 400.0;
-
-        uText.screenCenter();
-
-        add(uText);
-
-        wow = FlxG.sound.load(AssetCache.getSound("menus/BAL_Wow"), 1.0, false);
-
-        wow.play();
+        new FlxTimer(timer).start(5.0, (_:FlxTimer) -> FlxG.switchState(nextState));
     }
 
     override function destroy():Void

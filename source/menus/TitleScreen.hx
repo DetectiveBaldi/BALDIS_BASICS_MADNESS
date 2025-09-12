@@ -20,6 +20,7 @@ import core.Paths;
 
 import data.LevelData;
 
+import game.HighScore;
 import game.PlayState;
 
 import util.ClickSoundUtil;
@@ -130,7 +131,8 @@ class TitleScreen extends CustomState
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(rulerHitbox))
+        if (FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
+            HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end )
         {
             if (FlxG.mouse.justReleased)
             {

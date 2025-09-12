@@ -47,6 +47,7 @@ import game.events.SetCamFocusEvent;
 
 import menus.FreeplayScreen;
 import menus.StoryMenuScreen;
+import menus.UnlockScreen;
 
 import ui.Countdown;
 
@@ -54,6 +55,7 @@ using StringTools;
 
 using util.ArrayUtil;
 
+// TODO: Improve song syncing.
 class PlayState extends CustomState
 {
     public static var week:WeekData;
@@ -231,7 +233,7 @@ class PlayState extends CustomState
 
         super.create();
 
-        FlxG.watch.add(conductor, "time", "Conductor Time");
+        FlxG.watch.add(conductor, "time", "Time");
 
         FlxG.watch.add(conductor, "step", "Step");
 
@@ -528,6 +530,12 @@ class PlayState extends CustomState
 
     public function endSong():Void
     {
+        mainVocals?.stop();
+
+        opponentVocals?.stop();
+
+        playerVocals?.stop();
+
         var nextState:NextState = params?.nextState;
         
         var playStats:PlayStats = playField.playStats;
@@ -540,8 +548,7 @@ class PlayState extends CustomState
 
         var grade:String = playStats.grade;
 
-        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
-            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
+        var showUnlockScreen:Bool = false;
 
         if (isWeek)
         {
@@ -551,6 +558,8 @@ class PlayState extends CustomState
 
             if (week.levels.length == 0.0)
             {
+                nextState ??= () -> new StoryMenuScreen();
+
                 var totalStats:PlayStats = PlayStats.empty();
 
                 totalStats = totalStats.concat(for (k => v in weekStats) v);
@@ -563,11 +572,13 @@ class PlayState extends CustomState
 
                 grade = totalStats.grade;
 
+                if ( #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 &&
+                    week.scoreRequirements.exists(week.name) #end )
+                        showUnlockScreen = true;
+
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
                     HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
                         grade: grade});
-
-                nextState ??= () -> new StoryMenuScreen();
             }
             else
             {
@@ -577,15 +588,18 @@ class PlayState extends CustomState
             }
         }
         else
+        {
             nextState ??= () -> new FreeplayScreen();
 
-        mainVocals?.stop();
+            if ( #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 &&
+                level.showInMysteryMenu #end)
+                    showUnlockScreen = true;
+        }
 
-        opponentVocals?.stop();
+        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
-        playerVocals?.stop();
-
-        FlxG.switchState(nextState);
+        FlxG.switchState(showUnlockScreen ? () -> new UnlockScreen(nextState, week, level) : nextState);
     }
 
     public function changeTime(newTime:Float):Void
