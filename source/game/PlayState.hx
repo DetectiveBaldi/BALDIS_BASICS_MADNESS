@@ -572,8 +572,8 @@ class PlayState extends CustomState
 
                 grade = totalStats.grade;
 
-                if ( #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 &&
-                    week.scoreRequirements.exists(week.name) #end )
+                if ( #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 #end &&
+                    week.scoreRequirements.exists(week.name))
                         showUnlockScreen = true;
 
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
@@ -591,8 +591,8 @@ class PlayState extends CustomState
         {
             nextState ??= () -> new FreeplayScreen();
 
-            if ( #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 &&
-                level.showInMysteryMenu #end)
+            if ( #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end &&
+                level.showInMysteryMenu)
                     showUnlockScreen = true;
         }
 

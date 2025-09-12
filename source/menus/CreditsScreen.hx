@@ -88,11 +88,11 @@ class CreditsScreen extends CustomState
 
         rightButton = addOrientedButton(RIGHT, clickRight);
 
-        rightButton.setPosition(rightButton.getCenterX() + 450.0, rightButton.getCenterY() + 310.0);
+        rightButton.setPosition(FlxG.width - rightButton.width - 170.0, FlxG.height - rightButton.height - 5.0);
 
         leftButton = addOrientedButton(LEFT, clickLeft);
 
-        leftButton.setPosition(leftButton.getCenterX() - 450.0, leftButton.getCenterY() + 310.0);
+        leftButton.setPosition(165.0, FlxG.height - leftButton.height - 5.0);
 
         leftButton.active = false;
 
@@ -106,6 +106,10 @@ class CreditsScreen extends CustomState
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
     {
         var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+
+        button.scale.set(2.0, 2.0);
+
+        button.updateHitbox();
 
         button.onClick.add(onClick);
 
