@@ -219,7 +219,7 @@ class BloxyCL extends PlayState
             if (beat % 2 == 1.0)
                 opponent.animation.play("slap");
     
-        if (beat >= 204)
+        if (beat >= 206)
             if (beat % 2 == 1.0)
                 tween.tween(opponent, {x: opponent.x + 150.0}, conductor.beatLength * 0.275 * 0.001, 
                     {

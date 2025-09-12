@@ -12,6 +12,8 @@ class FundamentalsS extends Stage
 
     public var office2:FlxSprite;
 
+    public var office2_Overlay:FlxSprite;
+
     public var hall1:FlxSprite;
 
     public var hall1open:FlxSprite;
@@ -27,6 +29,8 @@ class FundamentalsS extends Stage
         office = getSprite("office", 2, 2);
 
         office2 = getSprite("office2", 2, 2);
+
+        office2_Overlay = getSprite("office2-overlay", 2, 2);
 
         hall1 = getSprite("hall1", 2, 2);
 

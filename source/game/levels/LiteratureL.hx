@@ -73,20 +73,28 @@ class LiteratureL extends PlayState
         if (step == 16)            
             opponent.animation.play("talk");
         
+        if (step == 88)
+        {
+            tween.tween(opponent, {x: 1200.0, y: -120.0}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
+
+            tween.tween(opponent.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
+        }
+
         if (step == 112)
         {
-            opponent.skipDance = false;
-
-            tween.tween(opponent, {x: 600.0, y: -120.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quadIn});
-
             tween.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            
+            opponent.skipDance = false;
         }
 
         if (step == 128)
         {
+            opponent.scale.set(1.5, 1.5);
             opponent.x = -250.0;
 
-            player.setPosition(515.0, 180.0);
+            player.setPosition(700.0, 180.0);
+
+            tween.tween(player, {x: 515.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             literatureS.remove(players, true);
 
@@ -111,6 +119,8 @@ class LiteratureL extends PlayState
 
         if (step == 640)
         {
+            tween.tween(this, {gameCameraZoom: 1.3}, conductor.beatLength * 16.0 * 0.001);
+            
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
@@ -124,7 +134,11 @@ class LiteratureL extends PlayState
 
         if (step == 736)
         {
+            gameCameraZoom = 0.75;
+            
             tween.tween(player, {x: 1500.0, y: 140.0}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
+        
+            tween.tween(player.scale, {x: 0.8, y: 0.8}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 768)
@@ -147,7 +161,7 @@ class LiteratureL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-angry"));
-            opp.setPosition(1800.0, -160.0);
+            opp.setPosition(1800.0, -130.0);
             opp.scale.set(1.2, 1.2);
             opponents.add(opp);
             opponent = opp;
@@ -155,7 +169,7 @@ class LiteratureL extends PlayState
             updateHealthBar("opponent");
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-baldina-flipped"));
-            plr.setPosition(-50.0, 140.0);
+            plr.setPosition(-50.0, 155.0);
             plr.scale.set(1.2, 1.2);
             players.add(plr);
             player = plr;
@@ -238,6 +252,7 @@ class LiteratureL extends PlayState
             updateHealthBar("opponent");
 
             var plr:Character = getPlayer("bf-baldina");
+            plr.scale.set(1.5, 1.5);
             plr.visible = true;
             player = plr;
 
@@ -280,14 +295,11 @@ class LiteratureL extends PlayState
         {
             gameCameraZoom = 0.8;
 
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
-
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            player.animation.play("ay");
             player.skipDance = true;
+            player.animation.play("ay");
         }
     }
 

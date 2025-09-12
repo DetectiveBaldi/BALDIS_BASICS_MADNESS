@@ -4,15 +4,19 @@ import flixel.animation.FlxAnimation;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.text.FlxText;
+
 import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 import core.AssetCache;
 import core.Options;
+import core.Paths;
 
 import data.CharacterData;
 
@@ -27,6 +31,8 @@ using StringTools;
 class FundamentalsL extends PlayState
 {
     public var fundamentalsS:FundamentalsS;
+
+    public var principal:FlxSprite;
 
     override function create():Void
     {
@@ -53,6 +59,8 @@ class FundamentalsL extends PlayState
         player.color = 0xB8B19C;
 
         gameCamera.alpha = 0.0;
+
+        playField.visible = false;
     }
 
     override function stepHit(step:Int):Void
@@ -66,7 +74,11 @@ class FundamentalsL extends PlayState
         }
 
         if (step == 16)
+        {
             gameCamera.alpha += 1.0;
+            
+            playField.visible = true;
+        }
 
         if (step == 272)
         {
@@ -89,23 +101,24 @@ class FundamentalsL extends PlayState
             cameraLock = FOCUS_CAM_POINT;
 
             cameraPoint.centerTo();
-
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
-            opp.setPosition(-1800.0, 80.0);
-            opp.color = 0xADA493;
-            opponents.add(opp);
         }
 
         if (step == 790)
-        {
-            var opp:Character = getOpponent("principal");
-            tween.tween(opp, {x: 2000.0}, conductor.beatLength * 6.5 * 0.001);
+        {            
+            principal = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/principal"));
+            principal.scale.set(1.65, 1.65);
+            principal.updateHitbox();
+            principal.setPosition(-1200.0, 105.0);
+            principal.color = 0xBBAC91;
+            fundamentalsS.insert(fundamentalsS.members.indexOf(players), principal);
+
+            tween.tween(principal, {x: 2000.0}, conductor.beatLength * 6.5 * 0.001);
         }
 
         if (step == 798)
             opponent.visible = false;
 
-        if (step == 800)
+        if (step == 804)
         {
             player.visible = false;
 
@@ -133,8 +146,7 @@ class FundamentalsL extends PlayState
 
         if (step == 840)
         {
-            var opp:Character = getOpponent("principal");
-            tween.tween(opp, {x: -1200.0}, conductor.beatLength * 4.0 * 0.001);
+           tween.tween(principal, {x: -1200.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 848)
@@ -152,6 +164,9 @@ class FundamentalsL extends PlayState
 
             opponent.visible = false;
 
+            tween.cancelTweensOf(principal);
+            principal.visible = false;
+
             var bul:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bully-spectator"));
             bul.setPosition(-50.0, 115.0);
             bul.scale.set(2.05, 2.05);
@@ -167,12 +182,43 @@ class FundamentalsL extends PlayState
             plr.visible = true;
             player = plr;
 
-            var opp:Character = getOpponent("principal");
-            tween.cancelTweensOf(opp);
-            opp.setPosition(-60.0, 100.0);
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
+            opp.scale.set(1.35, 1.35);
+            opp.updateHitbox();
+            opp.setPosition(-60.0, 10.0);
+            opp.color = 0xADA493;
+            opponents.add(opp);
             opponent = opp;
 
             updateHealthBar("opponent");
+        
+            var timerText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "You get detention!\n30 seconds remain!", 48);
+
+            timerText.camera = hudCamera;
+
+            timerText.color = FlxColor.RED;
+            
+            timerText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+            timerText.alignment = CENTER;
+
+            timerText.textField.antiAliasType = ADVANCED;
+
+            timerText.textField.sharpness = 400.0;
+
+            timerText.screenCenter();
+
+            add(timerText);
+
+            new FlxTimer(timer).start(1.0, (_timer:FlxTimer) ->
+            {
+                if (_timer.loopsLeft == 0.0)
+                    timerText.active = timerText.visible = false;
+
+                timerText.text = 'You get detention!\n${_timer.loopsLeft} seconds remain!';
+
+                timerText.screenCenter();
+            }, 30);
         }
 
         if (step == 1232 || step == 1343)
@@ -184,6 +230,9 @@ class FundamentalsL extends PlayState
             bul.visible = false;
         }
 
+        if (step == 1344)
+            tween.tween(opponent, {x: 1500.0}, conductor.beatLength * 2.0 * 0.001);
+       
         if (step == 1360)
         {
             if (Options.flashingLights)
@@ -197,11 +246,20 @@ class FundamentalsL extends PlayState
 
             fundamentalsS.office.visible = false;
             fundamentalsS.office2.visible = true;
+            fundamentalsS.office2_Overlay.visible = true;
+
+            principal.scale.set(0.75, 0.75);
+            principal.updateHitbox();
+            principal.setPosition(650.0, 250.0);
+            principal.visible = true;
+            
+            fundamentalsS.remove(principal, true);
+            fundamentalsS.insert(fundamentalsS.members.indexOf(fundamentalsS.office2_Overlay), principal);
 
             opponent.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime-flipped"));
-            opp.setPosition(1800.0, 180.0);
+            opp.setPosition(1900.0, 180.0);
             opp.color = 0xBBAC91;
             opp.skipDance = true;
             opponents.add(opp);
@@ -215,6 +273,8 @@ class FundamentalsL extends PlayState
             plr.setPosition(-150.0, -50.0);
             plr.animation.play("realize");
             plr.visible = true;
+        
+            tween.tween(principal, {x: -300.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1396)
@@ -226,7 +286,10 @@ class FundamentalsL extends PlayState
         if (step == 1432)
         {
             fundamentalsS.office2.visible = false;
+            fundamentalsS.office2_Overlay.visible = false;
             fundamentalsS.hall1.visible = true;
+
+            principal.visible = false;
 
             var plr:Character = getPlayer("bf-anim-fundamentals");
             plr.scale.set(2.25, 2.25);

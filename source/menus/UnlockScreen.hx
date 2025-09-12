@@ -72,14 +72,12 @@ class UnlockScreen extends CustomState
 
         add(baldi);
 
-        var text:String = "Wow! You just unlocked\n";
+        var text:String = "Wowee! You just unlocked\n";
 
         if (week == null)
             text += level.name;
         else
             text += week.name + week.nameSuffix;
-
-        text += ".";
 
         var wowText:FlxText = new FlxText(0.0, 0.0, 0.0, text, 60);
 
