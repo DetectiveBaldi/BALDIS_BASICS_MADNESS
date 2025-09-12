@@ -171,6 +171,12 @@ class LiteratureL extends PlayState
             literatureS.clouds.velocity.set(-30.0, 0.0);
 
             literatureS.hall1.visible = true;
+
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            oppStrumline.strums.x = plrStrumlineX;
+            plrStrumline.strums.x = oppStrumlineX;
         }
 
         if (step == 888)
@@ -204,6 +210,17 @@ class LiteratureL extends PlayState
 
         if (step == 1416)
             FlxG.camera.visible = false;
+
+        if (step == 1432)
+        {
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+        }
 
         if (step == 1464)
         {

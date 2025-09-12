@@ -1,5 +1,10 @@
 package menus;
 
+import ui.OrientedButton;
+import flixel.util.FlxDestroyUtil;
+import util.ClickSoundUtil;
+import flixel.graphics.FlxGraphic;
+import flixel.util.FlxSignal;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -19,7 +24,15 @@ class CreditsScreen extends CustomState
 {
     public var backOutButton:BackOutButton;
 
+    public var rightButton:OrientedButton;
+
+    public var leftButton:OrientedButton;
+
+    public var pageButton:FlxSprite;
+
     public var bg:FlxSprite;
+
+    public var bg2:FlxSprite;
 
     public var tune:FlxSound;
 
@@ -37,7 +50,7 @@ class CreditsScreen extends CustomState
 
         bg = new FlxSprite();
 
-        bg.loadGraphic(AssetCache.getGraphic("menus/CreditsText"));
+        bg.loadGraphic(AssetCache.getGraphic("menus/CreditsScreen/Text1"));
 
         bg.active = false;
 
@@ -49,6 +62,22 @@ class CreditsScreen extends CustomState
 
         add(bg);
 
+        bg2 = new FlxSprite();
+
+        bg2.loadGraphic(AssetCache.getGraphic("menus/CreditsScreen/Text2"));
+
+        bg2.active = false;
+
+        bg2.scale.set(2.0, 2.0);
+
+        bg2.updateHitbox();
+
+        bg2.setPosition(bg.getCenterX(), 0.0);
+
+        add(bg2);
+
+        bg2.visible = false;
+
         backOutButton = new BackOutButton();
 
         backOutButton.onClick.add(FlxG.switchState.bind(() -> new MainMenuScreen()));
@@ -57,9 +86,62 @@ class CreditsScreen extends CustomState
 
         add(backOutButton);
 
+        rightButton = addOrientedButton(RIGHT, clickRight);
+
+        rightButton.setPosition(rightButton.getCenterX() + 450.0, rightButton.getCenterY() + 310.0);
+
+        leftButton = addOrientedButton(LEFT, clickLeft);
+
+        leftButton.setPosition(leftButton.getCenterX() - 450.0, leftButton.getCenterY() + 310.0);
+
+        leftButton.active = false;
+
+        leftButton.visible = false;
+
         tune = FlxG.sound.load(AssetCache.getMusic("menus/CreditsScreen/Credits"), 1.0, true);
 
         tune.play();
+    }
+
+    public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
+    {
+        var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+
+        button.onClick.add(onClick);
+
+        add(button);
+
+        return button;
+    }
+
+    public function clickRight():Void
+    {
+        bg.visible = false;
+
+        bg2.visible = true;
+
+        rightButton.active = false;
+
+        rightButton.visible = false;
+
+        leftButton.active = true;
+
+        leftButton.visible = true;
+    }
+
+    public function clickLeft():Void
+    {
+        bg.visible = true;
+
+        bg2.visible = false;
+
+        rightButton.active = true;
+
+        rightButton.visible = true;
+
+        leftButton.active = false;
+
+        leftButton.visible = false;
     }
 
     override function destroy():Void
