@@ -146,9 +146,16 @@ class SetbackL extends PlayState
 
         var posX:Float;
 
-        posX = FlxG.random.int(-1000, 1000);
+        var randomThing:Int;
 
-        scaleNum = FlxG.random.float(1.0, 5.0);
+        randomThing = FlxG.random.int(1, 2);
+
+        if (randomThing == 1)
+            posX = -1500.0;
+        else
+            posX = 1500.0;
+
+        scaleNum = FlxG.random.float(2.25, 5.0);
 
         balloon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/spoopBalloon"));
 
@@ -162,21 +169,15 @@ class SetbackL extends PlayState
 
         add(balloon);
 
-        if (scaleNum <= 2.5)
+        if (scaleNum <= 2.75)
         {
             remove(balloon);
             setbackS.insert(setbackS.members.indexOf(players), balloon);
         }
-
-        if (scaleNum <= 2.0)
-        {
-            remove(balloon);
-            setbackS.insert(setbackS.members.indexOf(setbackS.chair), balloon);
-        }
-
+        
         if (balloon.x <= 0)
-            balloon.velocity.x = 400.0;
+            balloon.velocity.x = 550.0;
         else
-            balloon.velocity.x = -400.0;
+            balloon.velocity.x = -550.0;
     }
 }

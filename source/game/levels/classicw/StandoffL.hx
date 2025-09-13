@@ -105,7 +105,7 @@ class StandoffL extends PlayState
 
             baldi = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
             baldi.setPosition(400.0, 105.0);
-            baldi.scale.set(0.3, 0.3);
+            baldi.scale.set(0.29, 0.29);
             baldi.skipDance = true;
             baldi.skipSing = true;
             baldi.animation.play("slap");
@@ -124,9 +124,9 @@ class StandoffL extends PlayState
             standoffS.hall_Overlay1.visible = true;
 
             sweeper = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/gotta-sweep"));
-            sweeper.scale.set(0.275, 0.275);
+            sweeper.scale.set(0.325, 0.325);
             sweeper.updateHitbox();
-            sweeper.setPosition(500.0, 338.0);
+            sweeper.setPosition(500.0, 322.0);
             standoffS.insert(standoffS.members.indexOf(standoffS.hall_Overlay0), sweeper);
             
             baldi.animation.play("slap");
@@ -144,9 +144,11 @@ class StandoffL extends PlayState
 
                         tween.tween(baldi.scale, {x: baldi.scale.x - 0.035, y: baldi.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
 
-                        tween.tween(sweeper, {y: 325.0}, conductor.beatLength * 1.0 * 0.001);
+                        tween.tween(sweeper, {y: 320.0}, conductor.beatLength * 1.0 * 0.001);
 
-                        tween.tween(sweeper.scale, {x: sweeper.scale.x + 0.035, y: sweeper.scale.y + 0.035}, conductor.beatLength * 1.0 * 0.001,
+                        tween.tween(sweeper, {x: 550.0}, conductor.beatLength * 1.0 * 0.001);
+
+                        tween.tween(sweeper.scale, {x: sweeper.scale.x - 0.035, y: sweeper.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {
@@ -213,9 +215,9 @@ class StandoffL extends PlayState
                 {
                     onComplete: (_tween:FlxTween) ->
                     {                        
-                        tween.tween(sweeper.scale, {x: 0.275, y: 0.275}, conductor.beatLength * 4.0 * 0.001);
+                        tween.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 3.5 * 0.001);
 
-                        tween.tween(sweeper, {x:547, y: 338.0}, conductor.beatLength * 4.0 * 0.001,
+                        tween.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 3.5 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {
@@ -223,7 +225,7 @@ class StandoffL extends PlayState
 
                                     standoffS.hall_Overlay1.visible = true;
                                     
-                                    tween.tween(sweeper, {x: 400.0}, conductor.beatLength * 2.0 * 0.001,
+                                    tween.tween(sweeper, {x: 400.0}, conductor.beatLength * 1.0 * 0.001,
                                         {
                                             onComplete: (_tween:FlxTween) ->
                                             {

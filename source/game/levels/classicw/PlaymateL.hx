@@ -1,5 +1,6 @@
 package game.levels.classicw;
 
+import core.Paths;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,6 +8,8 @@ import flixel.FlxSprite;
 import flixel.animation.FlxAnimation;
 
 import flixel.group.FlxSpriteGroup;
+
+import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
 
@@ -33,6 +36,8 @@ class PlaymateL extends PlayState
     public var jumpUI:JumpRopeUI;
 
     public var jumpMinigame:JumpRopeMinigame;
+
+    public var tutorText:FlxText;
 
     override function create():Void
     {
@@ -70,6 +75,8 @@ class PlaymateL extends PlayState
         if (jumpMinigame?.failed)
         {
             getTransitionSprite(conductor.beatLength * 0.001, IN, runItBack);
+
+            FlxG.sound.play(AssetCache.getSound('shared/playmate-reverse'), 1.0);
 
             opponentVocals.volume = 0.0;
 
@@ -137,6 +144,24 @@ class PlaymateL extends PlayState
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            tutorText = new FlxText(0.0, 0.0, FlxG.width, 'Press SPACE to jump!');
+
+            tutorText.color = FlxColor.BLACK;
+
+            tutorText.size = 44;
+
+            tutorText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+            tutorText.alignment = CENTER;
+
+            tutorText.textField.antiAliasType = ADVANCED;
+
+            tutorText.textField.sharpness = 400.0;
+
+            tutorText.screenCenter();
+
+            add(tutorText);
         }
 
         if (step == 928)
@@ -145,6 +170,8 @@ class PlaymateL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
             gameCameraZoom = 0.7;
+
+            tutorText.kill();
 
             oppStrumline.strums.alpha = 0.0;
 
@@ -364,7 +391,9 @@ class PlaymateL extends PlayState
 
     public function runItBack():Void
     {
-        changeTime(88850.0);
+        changeTime(84800.0);
+
+        getTransitionSprite(conductor.beatLength * 0.001, OUT, null);
 
         gameCameraZoom = 0.8;
 
@@ -405,7 +434,7 @@ class JumpRopeUI extends FlxSpriteGroup
 
         waitJump.visible = false;
 
-        waitJump.scale.set(1.5, 1.5);
+        waitJump.scale.set(2.0, 2.0);
 
         waitJump.updateHitbox();
 
@@ -417,7 +446,7 @@ class JumpRopeUI extends FlxSpriteGroup
 
         nowJump.visible = false;
 
-        nowJump.scale.set(1.5, 1.5);
+        nowJump.scale.set(2.0, 2.0);
 
         nowJump.updateHitbox();
 
