@@ -11,7 +11,7 @@ class Playlist
 
         week.description += 'You get a very suspicious note from your friend, asking you to get their "noteboos" ';
 
-        week.description += "from a school you've never heard of before.\nWhat could go wrong?";
+        week.description += "from a school you've never heard of before. What could go wrong?";
 
         week.levels.pushMany({week: week, name: "Warm Welcome"}, {week: week, name: "Revision"}, 
             {week: week, name: "Gain Ground"});
@@ -39,9 +39,9 @@ class Playlist
         // Bladder Week
         week = {name: "Bladder", nameSuffix: "", description: ""}
 
-        week.description += 'Out of pure curiosity, you slap a Portal Poster on a wall ';
+        week.description += "You slap a Portal Poster in a faculty room ";
 
-        week.description += "you think seemed strange and ended up finding Bladder!\nDo you have what it takes to beat him?";
+        week.description += "that seemed strange and ended up finding Bladder! Do you have what it takes to beat him?";
 
         week.levels.pushMany({week: week, name: "Walls"}, {week: week, name: "Lookalike"});
 

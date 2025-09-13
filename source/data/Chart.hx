@@ -2,6 +2,8 @@ package data;
 
 import haxe.Json;
 
+import util.TimingUtil;
+
 using StringTools;
 
 class Chart
@@ -18,7 +20,7 @@ class Chart
 
         chart.events = schema.events;
 
-        chart.timeChanges = schema.timeChanges;
+        chart.timingPoints = schema.timingPoints;
 
         chart.spectator = schema.spectator;
 
@@ -41,8 +43,8 @@ class Chart
 
     public var events:Array<EventSchema>;
 
-    public var timeChanges:Array<TimeChange>;
-
+    public var timingPoints:Array<TimingPointData>;
+    
     public var spectator:String;
 
     public var opponent:String;
@@ -63,7 +65,7 @@ class Chart
 
         events = new Array<EventSchema>();
 
-        timeChanges = new Array<TimeChange>();
+        timingPoints = new Array<TimingPointData>();
 
         spectator = "";
 
@@ -87,7 +89,7 @@ typedef ChartSchema =
 
     var events:Array<EventSchema>;
 
-    var timeChanges:Array<TimeChange>;
+    var timingPoints:Array<TimingPointData>;
 
     var spectator:String;
 
@@ -116,11 +118,9 @@ typedef NoteSchema = TimedObject &
     var kind:String;
 }
 
-typedef TimeChange = TimedObject &
+typedef TimingPointData = TimedObject &
 {
     var tempo:Float;
-
-    var step:Float;
 }
 
 typedef CreditsData =

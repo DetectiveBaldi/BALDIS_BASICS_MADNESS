@@ -67,13 +67,4 @@ class ArrayUtil
 
         return result;
     }
-
-    /**
-     * Sorts an array using the specified property. Uses the `Reflect` API, so use sparingly.
-     */
-    public static function sortByProperty<T>(array:Array<T>, property:String):Void
-    {
-        ArraySort.sort(array, (a:T, b:T) -> return Math.floor(Reflect.getProperty(a, property) -
-            Reflect.getProperty(b, property)));
-    }
 }

@@ -54,6 +54,7 @@ import ui.Countdown;
 using StringTools;
 
 using util.ArrayUtil;
+using util.TimingUtil;
 
 // TODO: Improve song syncing.
 class PlayState extends CustomState
@@ -233,14 +234,6 @@ class PlayState extends CustomState
 
         super.create();
 
-        FlxG.watch.add(conductor, "time", "Time");
-
-        FlxG.watch.add(conductor, "step", "Step");
-
-        FlxG.watch.add(conductor, "beat", "Beat");
-
-        FlxG.watch.add(conductor, "measure", "Measure");
-
         cameraPoint = new FlxObject();
 
         add(cameraPoint);
@@ -319,12 +312,6 @@ class PlayState extends CustomState
         oppStrumline.onNoteHit.add(noteHit); plrStrumline.onNoteHit.add(noteHit);
 
         oppStrumline.onNoteMiss.add(noteMiss); plrStrumline.onNoteMiss.add(noteMiss);
-
-        oppStrumline.onNoteSpawn.add(oppNoteSpawn); plrStrumline.onNoteSpawn.add(plrNoteSpawn);
-
-        oppStrumline.onNoteHit.add(oppNoteHit); plrStrumline.onNoteHit.add(plrNoteHit);
-
-        oppStrumline.onNoteMiss.add(oppNoteMiss); plrStrumline.onNoteMiss.add(plrNoteMiss);
 
         oppStrumline.onGhostTap.add(ghostTap); plrStrumline.onGhostTap.add(ghostTap);
 
@@ -454,19 +441,23 @@ class PlayState extends CustomState
     {
         chart = ChartLoader.readPath(Paths.data(level.getClassPath()));
 
-        chart.notes.sortByProperty("time");
+        chart.notes.sortTimed();
 
-        chart.events.sortByProperty("time");
+        chart.events.sortTimed();
+        
+        conductor.writeTimingPointData(chart.timingPoints);
 
-        chart.events.sortByProperty("time");
-
-        conductor.tempo = chart.tempo;
-
-        conductor.timeChange = {time: 0.0, tempo: chart.tempo, step: 0.0};
-
-        conductor.timeChanges = chart.timeChanges;
+        conductor.calibrateTimingPoints();
 
         conductor.update(-conductor.beatLength * 5.0);
+
+        FlxG.watch.add(conductor, "time", "Time");
+
+        FlxG.watch.add(conductor, "step", "Step");
+
+        FlxG.watch.add(conductor, "beat", "Beat");
+
+        FlxG.watch.add(conductor, "measure", "Measure");
 
         eventIndex = 0;
     }
@@ -720,25 +711,16 @@ class PlayState extends CustomState
         }
     }
 
-    public function noteSpawn(note:Note):Void {}
+    public function noteSpawn(note:Note):Void
+    {
+        // conductor.getTimeInSteps(note.time);
+    }
 
     public function noteHit(ev:NoteHitEvent):Void {}
 
     public function noteMiss(note:Note):Void {}
 
     public function ghostTap(ev:GhostTapEvent):Void {}
-
-    public function oppNoteSpawn(note:Note):Void {}
-
-    public function oppNoteHit(ev:NoteHitEvent):Void {}
-
-    public function oppNoteMiss(note:Note):Void {}
-
-    public function plrNoteSpawn(note:Note):Void {}
-
-    public function plrNoteHit(ev:NoteHitEvent):Void {}
-
-    public function plrNoteMiss(note:Note):Void {}
 
     public function pause():Void
     {

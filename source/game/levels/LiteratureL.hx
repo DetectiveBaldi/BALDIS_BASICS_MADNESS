@@ -22,7 +22,7 @@ import core.Paths;
 import data.CharacterData;
 
 import game.events.SetCamFocusEvent;
-
+import game.notes.Note;
 import game.stages.LiteratureS;
 
 using util.MathUtil;

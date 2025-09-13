@@ -12,6 +12,7 @@ import core.Paths;
 import data.Chart;
 
 import util.MathUtil;
+import util.TimingUtil;
 
 using StringTools;
 
@@ -29,11 +30,7 @@ class FunkinConverter
 
         var rawMeta:Dynamic = Json.parse(File.getContent(metaPath));
 
-        var timeChanges:Array<FunkinTimeChange> = rawMeta.timeChanges;
-
         output.name = rawMeta.songName;
-
-        output.tempo = timeChanges[0].bpm;
 
         output.scrollSpeed = Reflect.field(rawChart.scrollSpeed, difficulty);
 
@@ -45,12 +42,13 @@ class FunkinConverter
                 kind: note.k});
         }
 
-        // Start at index 1 because Funkin' inserts a time change with a time of 0 at index 0.
-        for (i in 1 ... timeChanges.length)
-        {
-            var timeChange:FunkinTimeChange = timeChanges[i];
+        var timingPoints:Array<FunkinTimingPoint> = rawMeta.timingPoints;
 
-            output.timeChanges.push({time: timeChange.t, tempo: timeChange.bpm, step: 0.0});
+        for (i in 0 ... timingPoints.length)
+        {
+            var timeChange:FunkinTimingPoint = timingPoints[i];
+
+            output.timingPoints.push({time: timeChange.t, tempo: timeChange.bpm});
         }
 
         var characters:Dynamic = rawMeta.playData.characters;
@@ -67,7 +65,6 @@ class FunkinConverter
     }
 }
 
-// TODO: Migrate credits .txt to .json.
 class PsychConverter
 {
     public static function run(chartPath:String, creditsPath:String):Chart
@@ -78,13 +75,13 @@ class PsychConverter
 
         output.name = raw.song;
 
-        output.tempo = raw.bpm;
-
         output.scrollSpeed = raw.speed;
         
         var time:Float = 0.0;
 
-        var tempo:Float = output.tempo;
+        var tempo:Float = raw.bpm;
+
+        output.timingPoints.push({time: 0.0, tempo: tempo});
 
         var character:String = "";
 
@@ -115,8 +112,6 @@ class PsychConverter
                 bpm: section.bpm
             };
 
-            _section.sectionNotes.sortByProperty("time");
-
             character = _section.mustHitSection ? "player" : "opponent";
 
             if (_section.gfSection)
@@ -133,7 +128,7 @@ class PsychConverter
 
                 beatLength = (60.0 / tempo * 1000.0);
 
-                output.timeChanges.push({time: time, tempo: tempo, step: 0.0});
+                output.timingPoints.push({time: time, tempo: tempo});
             }
 
             time += beatLength * (Math.round(_section.sectionBeats * 4.0) * 0.25);
@@ -169,10 +164,9 @@ class PsychConverter
 
         var split:Array<String> = credits.split("|");
 
-        var composer:String = split.first((str:String) -> str.toLowerCase().contains("composer")).split("=")[1];
+        var composer:String = split[0].split("=").last();
 
-        var step:Null<Int> = split.length > 1.0 ? Std.parseInt(split.first((str:String) -> str.toLowerCase().contains("step"))
-            .split("=")[1]) : null;
+        var step:Int = Std.int(Math.abs(Std.parseInt(split[1]?.split("=")?.last() ?? "0")));
 
         output.credits = {composer: composer, step: step}
 
@@ -201,7 +195,7 @@ typedef FunkinNote = FunkinTimedObject &
     var k:String;
 };
 
-typedef FunkinTimeChange = FunkinTimedObject &
+typedef FunkinTimingPoint = FunkinTimedObject &
 {
     var b:Float;
 

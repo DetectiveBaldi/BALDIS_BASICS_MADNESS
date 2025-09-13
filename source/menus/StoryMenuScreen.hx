@@ -137,7 +137,7 @@ class StoryMenuScreen extends CustomState
 
         songListText.textField.sharpness = 400.0;
 
-        songListText.setPosition(clipboard.getMidpoint().x - songsLabel.width * 0.5, songsLabel.y + 50.0);
+        songListText.setPosition(clipboard.getMidpoint().x - songsLabel.width * 0.5, songsLabel.y + 45.0);
 
         add(songListText);
 
@@ -185,7 +185,7 @@ class StoryMenuScreen extends CustomState
 
         weekDescText.textField.sharpness = 400.0;
 
-        weekDescText.setPosition(weekInfoBoard.getMidpoint().x - weekDescText.width * 0.5, weekNameText.y + 65.0);
+        weekDescText.setPosition(weekInfoBoard.getMidpoint().x - weekDescText.width * 0.5, weekNameText.y + 55.0);
 
         add(weekDescText);
 
