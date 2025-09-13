@@ -379,7 +379,7 @@ class Strumline extends FlxGroup
 
         playCharSingAnims(note, note.direction, false);
 
-        setCharAnimsActive(note, note.length == 0.0, canCharSing);
+        setCharAnimsActive(note, note.length == 0.0);
 
         if (vocals != null)
             vocals.volume = 1.0;
@@ -393,7 +393,7 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
-        setCharAnimsActive(note, true, canCharSing);
+        setCharAnimsActive(note, true);
 
         if (vocals != null)
             vocals.volume = 0.0;
@@ -446,7 +446,7 @@ class Strumline extends FlxGroup
 
             playCharSingAnims(note, note.direction, true);
 
-            setCharAnimsActive(note, false, canCharSing);
+            setCharAnimsActive(note, false);
         }
     }
 
@@ -460,7 +460,7 @@ class Strumline extends FlxGroup
 
         playCharMissAnims(note, note.direction);
 
-        setCharAnimsActive(note, true, canCharSing);
+        setCharAnimsActive(note, true);
 
         if (vocals != null)
             vocals.volume = 0.0;
@@ -484,7 +484,7 @@ class Strumline extends FlxGroup
     {
         setStrumActive(note.direction, true);
 
-        setCharAnimsActive(note, true, canCharSing);
+        setCharAnimsActive(note, true);
 
         if (note.status == HIT)
             notesPendingRemoval.push(note);
@@ -514,7 +514,7 @@ class Strumline extends FlxGroup
 
             playCharMissAnims(null, direction);
 
-            setCharAnimsActive(null, true, canCharSing);
+            setCharAnimsActive(null, true);
 
             if (vocals != null)
                 vocals.volume = 0.0;
@@ -532,7 +532,15 @@ class Strumline extends FlxGroup
         {
             var character:Character = charGroup.members[i];
 
-            if (note.kindData.noAnimation || !canCharSing(character))
+            if (note.kindData.noAnimation)
+                continue;
+
+            var charId:Int = note.charId;
+
+            if (charId != -1.0 && i != charId)
+                continue;
+
+            if (character.skipSing)
                 continue;
 
             character.holdTimer = 0.0;
@@ -572,7 +580,18 @@ class Strumline extends FlxGroup
         {
             var character:Character = charGroup.members[i];
 
-            if (note?.kindData?.noAnimation || !canCharSing(character))
+            if (note != null)
+            {
+                if (note.kindData.noAnimation)
+                    continue;
+
+                 var charId:Int = note.charId;
+
+                if (charId != -1.0 && i != charId)
+                    continue;
+            }
+
+            if (character.skipSing)
                 continue;
 
             character.holdTimer = 0.0;
@@ -598,7 +617,7 @@ class Strumline extends FlxGroup
         }
     }
 
-    public function setCharAnimsActive(note:Note, active:Bool, iff:(char:Character)->Bool = null):Void
+    public function setCharAnimsActive(note:Note, active:Bool):Void
     {
         var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
@@ -609,7 +628,18 @@ class Strumline extends FlxGroup
         {
             var character:Character = charGroup.members[i];
 
-            if ((iff != null && !iff(character)))
+            if (note != null)
+            {
+                if (note.kindData.noAnimation)
+                    continue;
+
+                 var charId:Int = note.charId;
+
+                if (charId != -1.0 && i != charId)
+                    continue;
+            }
+
+            if (character.skipSing)
                 continue;
 
             if (active)
@@ -617,11 +647,6 @@ class Strumline extends FlxGroup
             else
                 character.animation.pause();
         }
-    }
-
-    public function canCharSing(char:Character):Bool
-    {
-        return !char.skipSing;
     }
 
     public function removeNote(note:Note):Void

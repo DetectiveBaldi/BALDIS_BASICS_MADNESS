@@ -39,7 +39,7 @@ class FunkinConverter
             var note:FunkinNote = notes[i];
 
             output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l,
-                kind: note.k});
+                kind: note.k, charId: -1});
         }
 
         var timingPoints:Array<FunkinTimingPoint> = rawMeta.timingPoints;
@@ -137,20 +137,27 @@ class PsychConverter
             {
                 var note:PsychNote = _section.sectionNotes[j];
 
+                var type:String = note.type ?? "";
+
                 var kind:String = "";
 
                 // `_section.gfSection` is not supported here unfortunately.
-                if (note.type == "GF Sing")
+                if (type == "GF Sing")
                     kind = NoteKindData.addField(kind, "spec-sing");
 
-                if (note.type == "Alt Animation")
+                if (type == "Alt Animation")
                     kind = NoteKindData.addField(kind, "alt-animation");
 
-                if (note.type == "No Animation")
+                if (type == "No Animation")
                     kind = NoteKindData.addField(kind, "no-animation");
 
+                var charId:Int = -1;
+
+                if (type.startsWith("mamacitas-char-id"))
+                    charId = Std.parseInt(type.split("-").last());
+
                 output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25),
-                    length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});
+                    length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind, charId: charId});
             }
         }
 

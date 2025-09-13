@@ -116,6 +116,8 @@ typedef NoteSchema = TimedObject &
     var lane:Int;
 
     var kind:String;
+
+    var charId:Int;
 }
 
 typedef TimingPointData = TimedObject &
