@@ -10,6 +10,8 @@ class JealousyS extends Stage
     
     public var hall0:FlxSprite;
 
+    public var hall1:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -21,5 +23,7 @@ class JealousyS extends Stage
         hall.animation.addByPrefix("0", "scroll", 22.0);
 
         hall0 = getSprite("hall-pov0", 2, 2);
+
+        hall1 = getSprite("hall-pov1");
     }
 }
