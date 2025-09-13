@@ -1,5 +1,7 @@
 package game.levels;
 
+import core.Paths;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -23,6 +25,8 @@ class SetbackL extends PlayState
     public var setbackS:SetbackS;
 
     public var thanks:FlxSprite;
+
+    public var spoop:FlxSprite;
 
     override function create():Void
     {
@@ -57,6 +61,42 @@ class SetbackL extends PlayState
         player.setPosition(305.0, 100.0);
 
         player.visible = false;
+
+        spoop = new FlxSprite();
+
+        spoop.active = false;
+
+        spoop.visible = false;
+
+        spoop.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/stages/SetbackS/spoopballoon-distraction"), Paths.image(Paths.xml("game/stages/SetbackS/spoopballoon-distraction")));
+
+        spoop.scale.set(2.7, 2.7);
+
+        spoop.updateHitbox();
+
+        spoop.screenCenter();
+
+        spoop.animation.addByPrefix("intro", "intro", 24.0, false);
+
+        spoop.animation.addByPrefix("left", "left", 24.0, false);
+
+        spoop.animation.addByPrefix("right", "right", 24.0, false);
+
+        spoop.animation.addByPrefix("lpopup", "lpopup", 24.0, false);
+
+        spoop.animation.addByPrefix("rpopup", "rpopup", 24.0, false);
+
+        spoop.animation.addByPrefix("lbye", "lbye", 24.0, false);
+
+        spoop.animation.addByPrefix("rbye", "rbye", 24.0, false);
+
+        spoop.animation.addByPrefix("outro", "outro", 24.0, false);
+
+        spoop.active = true;
+
+        spoop.camera = hudCamera;
+
+        add(spoop);
     }
 
     override function stepHit(step:Int):Void
@@ -112,10 +152,36 @@ class SetbackL extends PlayState
             player.visible = true;
         }
 
+        if (step == 604)
+        {
+            spoop.visible = true;
+            spoop.animation.play("intro");
+        }
+
+        if (step == 672)
+            spoop.animation.play("left");
+
+        if (step == 704)
+            spoop.animation.play("right");
+
         if (step == 736)
         {
             gameCameraZoom = 0.65;
+
+            spoop.animation.play("lpopup");
         }
+
+        if (step == 748)
+            spoop.animation.play("lbye");
+
+        if (step == 752)
+            spoop.animation.play("rpopup");
+
+        if (step == 764)
+            spoop.animation.play("rbye");
+
+        if (step == 768)
+            spoop.animation.play("outro");
 
         if (step == 800)
         {
@@ -124,6 +190,12 @@ class SetbackL extends PlayState
             thanks.camera = hudCamera;
             thanks.screenCenter();
             add(thanks);
+
+            hudCamBopStrength = 0.0;
+
+            gameCamBopStrength = 0.0;
+
+            canPause = false;
         }
     }
 
@@ -131,9 +203,15 @@ class SetbackL extends PlayState
     {
         super.beatHit(beat);
 
-        if (beat >= 152 && beat <= 199)
+        if (beat >= 152 && beat <= 183)
         {
             if (beat % 4.0 == 0.0)
+                spawnBalloon();
+        }
+
+        if (beat >= 184 && beat <= 199)
+        {
+            if (beat % 2.0 == 0.0)
                 spawnBalloon();
         }
     }
