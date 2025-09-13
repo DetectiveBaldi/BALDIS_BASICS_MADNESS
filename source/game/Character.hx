@@ -129,9 +129,7 @@ class Character extends FlxSprite
             if ((animation.name ?? "").endsWith("MISS"))
                 singTimeSec *= 2.0;
 
-            var stopSinging:Bool = !FlxG.keys.anyPressed(keys) || strumline.botplay;
-
-            if (holdTimer >= singTimeSec && stopSinging)
+            if (holdTimer >= singTimeSec)
             {
                 holdTimer = 0.0;
                 
