@@ -2,9 +2,12 @@ package game.levels.classicw.diff_hard;
 
 import flixel.animation.FlxAnimation;
 import flixel.FlxG;
+import flixel.FlxBasic;
 import flixel.FlxSprite;
 
 import flixel.text.FlxText;
+
+import flixel.group.FlxSpriteGroup;
 
 import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
@@ -34,6 +37,12 @@ class FundamentalsL extends PlayState
 
     public var principal:FlxSprite;
 
+    public var jumpUI:JumpRopeUI;
+
+    public var jumpMinigame:JumpRopeMinigame;
+
+    public var missRandom:Int;
+
     override function create():Void
     {
         stage = new FundamentalsS();
@@ -61,6 +70,11 @@ class FundamentalsL extends PlayState
         gameCamera.alpha = 0.0;
 
         playField.visible = false;
+    }
+
+    public function fail():Void
+    {
+        playField.healthBar.percent -= 25;
     }
 
     override function stepHit(step:Int):Void
@@ -364,6 +378,33 @@ class FundamentalsL extends PlayState
             gameCameraZoom = 0.65;
         }
 
+        if (step == 1864)
+        {
+            fundamentalsS.hall2.visible = true;
+            fundamentalsS.hall1.visible = false;
+
+            opponent.visible = false;
+            player.visible = false;
+
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            plr.setPosition(505.0, 145.0);
+            plr.color = 0xB8B19C;
+            players.add(plr);
+            player = plr;
+            
+            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime"));
+            opp.setPosition(-500.0, 180.0);
+            opp.color = 0xBBAC91;
+            opponents.add(opp);
+            opponent = opp;
+
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+        }
+
         if (step == 1876)
         {
             if (Options.flashingLights)
@@ -372,13 +413,81 @@ class FundamentalsL extends PlayState
             gameCameraZoom = 0.725;
 
             cameraLock = FOCUS_CAM_CHAR;
+
+            jumpUI = new JumpRopeUI();
+
+            jumpUI.setPosition(player.x - jumpUI.width * 0.5, player.y + jumpUI.height * 0.5);
+
+            add(jumpUI);
+
+            jumpMinigame = new JumpRopeMinigame(jumpUI);
+
+            add(jumpMinigame);
+
+            player.visible = false;
+
+            var plr:Character = getPlayer("bf-jump");
+
+            if (plr == null)
+            {
+                var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-jump"));
+
+                plr.skipDance = true;
+
+                plr.skipSing = true;
+
+                plr.setPosition(player.x + 20.0, player.y - 20.0);
+
+                player = plr;
+
+                players.add(plr);
+            }
+            else
+            {
+                player = plr;
+
+                player.visible = true;
+
+                player.animation.play("jump");
+
+                player.animation.finish();
+
+                player.animation.curAnim.curFrame = 0;
+            }
+
+            jumpMinigame.sprite = player;
+        }
+
+        // So we don't cause a null object reference while resetting the scene.
+        if (jumpUI != null && jumpMinigame != null)
+        {
+            if (step == 1882 || step == 1894 || step == 1906 || step == 1918 || step == 1930 || step == 1942 || step == 1954  || step == 1966 || step == 1978)
+                jumpMinigame.sendJump();
+
+            if (step == 1984.0)
+            {
+                jumpUI.kill();
+
+                jumpMinigame.kill();
+            }
+
+            if (jumpMinigame?.failed)
+                fail();
+        }
+
+        if (step == 1984.0)
+        {
+            player.visible = false;
+
+            player = getPlayer("bf-face-left");
+
+            player.visible = true;
         }
 
         if (step == 2044)
         {
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
-            opp.flipX = true;
-            opp.setPosition(1800.0, 40.0);
+            opp.setPosition(-1500.0, 40.0);
             opp.color = 0xAFA38E;
             opp.scale.set(2.9, 2.9);
             opp.updateHitbox();
@@ -422,10 +531,206 @@ class FundamentalsL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad");
 
-                tween.tween(opp, {x: opp.x - 350.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+                tween.tween(opp, {x: opp.x + 350.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
                 opp.animation.play("slap");
             }
         }
+    }
+
+    public function runItBack():Void
+    {
+        changeTime(84800.0);
+
+        getTransitionSprite(conductor.beatLength * 0.001, OUT, null);
+
+        gameCameraZoom = 0.65;
+
+        fundamentalsS.hall1open.visible = false;
+        fundamentalsS.hall1front.visible = false;
+
+        var oppStrumlineX:Float = oppStrumline.strums.x;
+        var plrStrumlineX:Float = plrStrumline.strums.x;
+
+        oppStrumline.strums.x = plrStrumlineX;
+        plrStrumline.strums.x = oppStrumlineX;
+
+        var plr = getOpponent("bf-face-right");
+        plr.visible = true;
+        player = plr;
+            
+        var opp = getOpponent("playtime-flipped");
+        opp.visible = true;
+        opponent = opp;
+
+        SetCamFocusEvent.dispatch(this, 0.0, 0.0, "player", -1.0, "linear", true);
+    }
+}
+
+class JumpRopeUI extends FlxSpriteGroup
+{
+    public var waitJump:FlxSprite;
+
+    public var nowJump:FlxSprite;
+
+    public function new():Void
+    {
+        super();
+
+        waitJump = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/levels/classicw/PlaymateL/JumpRopeUI/wait-jump"));
+
+        waitJump.active = false;
+
+        waitJump.visible = false;
+
+        waitJump.scale.set(2.0, 2.0);
+
+        waitJump.updateHitbox();
+
+        add(waitJump);
+
+        nowJump = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/levels/classicw/PlaymateL/JumpRopeUI/now-jump"));
+
+        nowJump.active = false;
+
+        nowJump.visible = false;
+
+        nowJump.scale.set(2.0, 2.0);
+
+        nowJump.updateHitbox();
+
+        add(nowJump);
+    }
+}
+
+class JumpRopeMinigame extends FlxBasic
+{
+    public var ui:JumpRopeUI;
+
+    public var sprite:FlxSprite;
+
+    public var timesJumped:Int;
+
+    public var jumpCount:Int;
+
+    public var height:Float;
+
+    public var velocity:Float;
+
+    public var leniency:Float;
+
+    public var failed:Bool;
+
+    public var ropeDelay:Float;
+
+    public var checkTime:Float;
+
+    public function new(ui:JumpRopeUI):Void
+    {
+        super();
+
+        visible = false;
+
+        this.ui = ui;
+
+        timesJumped = 0;
+
+        jumpCount = 0;
+
+        height = -1.0;
+
+        velocity = -1.0;
+
+        leniency = 0.2;
+
+        failed = false;
+
+        ropeDelay = -1.0;
+
+        checkTime = 0.9;
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.keys.justPressed.SPACE && !Options.botplay)
+            jumpAction();
+
+        if (height >= 0.0)
+        {
+            height += velocity * elapsed + 1.0 * -2.0 * elapsed * elapsed;
+
+            velocity += -3.85 * elapsed;
+        }
+
+        if (ropeDelay != -1.0)
+        {
+            if (ropeDelay > 0.0)
+            {
+                ropeDelay -= elapsed;
+
+                ui.waitJump.visible = true;
+
+                ui.nowJump.visible = false;
+            }
+            else
+            {
+                ui.waitJump.visible = false;
+
+                ui.nowJump.visible = true;
+
+                if (checkTime > 0.0)
+                    checkTime -= elapsed;
+                else
+                    checkJump();
+
+                if (Options.botplay)
+                    jumpAction();
+            }
+        }
+    }
+
+    public function sendJump():Void
+    {
+        jumpCount++;
+
+        ropeDelay = 0.5;
+    }
+
+    public function jumpAction():Void
+    {
+        if (timesJumped == jumpCount)
+            return;
+
+        sprite?.animation?.play("jump");
+
+        timesJumped++;
+
+        height = 0.0;
+
+        velocity = 2.0;
+    }
+
+    public function checkJump():Void
+    {
+        velocity = -1.0;
+
+        ropeDelay = -1.0;
+
+        checkTime = 0.9;
+
+        if (height > leniency)
+            playCountAudio();
+        else
+        {
+            sprite?.animation?.play("jump miss");
+
+            failed = true;
+        }
+    }
+
+    public function playCountAudio():Void
+    {
     }
 }
