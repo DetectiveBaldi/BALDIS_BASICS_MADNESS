@@ -262,32 +262,21 @@ class RoughEL extends PlayState
                 {ease: FlxEase.quartOut});
         }
 
-        if (step == 576.0)
-        {
-
-        }
-
-
         if (step == 580.0)
         {
             var plr:Character = getPlayer("bf-running");
 
+            SetCamFocusEvent.dispatch(this, plr.getMidpoint().x - cameraPoint.width * 0.5,
+                (FlxG.height - cameraPoint.height) * 0.5, null, conductor.beatLength * 2.5 * 0.001, "quartInOut");
+
             var _plr:Character = getPlayer("run-legs");
+
+            tween.tween(roughES.hall2, {x: roughES.hall2.getCenterX(plr)}, conductor.beatLength * 2.5 * 0.001,
+                {ease: FlxEase.quartInOut});
 
             tween.tween(plr.animation, {timeScale: 1.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.sineOut});
 
             tween.tween(_plr.animation, {timeScale: 1.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.sineOut});
-
-            tween.tween(plr, {x: 260.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.quartInOut});
-
-            tween.tween(_plr, {x: 260.0}, conductor.beatLength * 2.5 * 0.001, {ease: FlxEase.quartInOut});
-
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
-        }
-
-        if (step == 584.0)
-        {
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
         }
 
         if (step == 590.0)
@@ -298,11 +287,11 @@ class RoughEL extends PlayState
 
             opp.color = 0xCCC0A9;
 
-            opp.setPosition(1085.0, -555.0);
+            opp.setPosition(2285.0, -555.0);
 
             opponents.add(opp);
 
-            tween.tween(opp, {x: 540.0}, conductor.beatLength * 0.5 * 0.001);
+            tween.tween(opp, {x: 1885.0}, conductor.beatLength * 0.5 * 0.001);
         }
 
         if (step == 592.0)
@@ -316,6 +305,8 @@ class RoughEL extends PlayState
             gameCamera.snapToTarget();
 
             roughES.hall2.visible = false;
+
+            roughES.hall2.x = roughES.hall2.getCenterX();
 
             roughES.hall3.visible = true;
 
