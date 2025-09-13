@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Options;
 
+import game.events.SetCamFocusEvent;
 import game.stages.classicw.PlaymateS;
 
 using util.MathUtil;
@@ -60,6 +61,28 @@ class PlaymateL extends PlayState
         gameCamera.color = FlxColor.BLACK;
 
         playField.visible = false;
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (jumpMinigame?.failed)
+        {
+            getTransitionSprite(conductor.beatLength * 0.001, IN, runItBack);
+
+            opponentVocals.volume = 0.0;
+
+            player.animation.play("jump miss");
+
+            jumpUI.kill();
+
+            jumpMinigame.kill();
+
+            jumpUI = null;
+
+            jumpMinigame = null;
+        }
     }
 
     override function stepHit(step:Int):Void
@@ -135,19 +158,65 @@ class PlaymateL extends PlayState
 
             add(jumpUI);
 
-            jumpMinigame = new JumpRopeMinigame(jumpUI, 5);
+            jumpMinigame = new JumpRopeMinigame(jumpUI);
 
             add(jumpMinigame);
+
+            player.visible = false;
+
+            var plr:Character = getPlayer("bf-jump");
+
+            if (plr == null)
+            {
+                var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-jump"));
+
+                plr.skipDance = true;
+
+                plr.skipSing = true;
+
+                plr.setPosition(player.x + 20.0, player.y - 20.0);
+
+                player = plr;
+
+                players.add(plr);
+            }
+            else
+            {
+                player = plr;
+
+                player.visible = true;
+
+                player.animation.play("jump");
+
+                player.animation.finish();
+
+                player.animation.curAnim.curFrame = 0;
+            }
+
+            jumpMinigame.sprite = player;
         }
 
-        if (step == 928 || step == 944 || step == 960 || step == 976 || step == 992)
-            jumpMinigame.sendJump();
-
-        if (step == 1008.0)
+        // So we don't cause a null object reference while resetting the scene.
+        if (jumpUI != null && jumpMinigame != null)
         {
-            jumpUI.kill();
+            if (step == 928 || step == 944 || step == 960 || step == 976 || step == 992)
+                jumpMinigame.sendJump();
 
-            jumpMinigame.kill();
+            if (step == 1008.0)
+            {
+                jumpUI.kill();
+
+                jumpMinigame.kill();
+            }
+        }
+
+        if (step == 1033.0)
+        {
+            player.visible = false;
+
+            player = getPlayer("bf-face-left");
+
+            player.visible = true;
         }
         
         if (step == 1040)
@@ -292,6 +361,32 @@ class PlaymateL extends PlayState
                 gameCameraZoom += 0.025;
         }
     }
+
+    public function runItBack():Void
+    {
+        changeTime(88850.0);
+
+        gameCameraZoom = 0.8;
+
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+                playField.timerClock.visible = playField.timerNeedle.visible = true;
+
+        oppStrumline.strums.alpha = 1.0;
+
+        plrStrumline.strums.alpha = 1.0;
+
+        playmateS.hall.color = playmateS.cafe.color = FlxColor.WHITE;
+
+        opponentVocals.volume = 1.0;
+        
+        player.visible = false;
+
+        player = getPlayer("bf-face-left");
+
+        player.visible = true;
+
+        SetCamFocusEvent.dispatch(this, 0.0, 0.0, "player", -1.0, "linear", true);
+    }
 }
 
 class JumpRopeUI extends FlxSpriteGroup
@@ -334,23 +429,25 @@ class JumpRopeMinigame extends FlxBasic
 {
     public var ui:JumpRopeUI;
 
-    public var maxJumps:Int;
+    public var sprite:FlxSprite;
+
+    public var timesJumped:Int;
 
     public var jumpCount:Int;
 
     public var height:Float;
 
+    public var velocity:Float;
+
+    public var leniency:Float;
+
     public var failed:Bool;
 
-    public var ropeDelay:Float = -1.0;
+    public var ropeDelay:Float;
 
-    public var hitTime:Float = 0.9;
+    public var checkTime:Float;
 
-    public var jumpVelocity:Float = 2.0;
-
-    public var jumpBuffer:Float = 0.2;
-
-    public function new(ui:JumpRopeUI, maxJumps:Int):Void
+    public function new(ui:JumpRopeUI):Void
     {
         super();
 
@@ -358,27 +455,35 @@ class JumpRopeMinigame extends FlxBasic
 
         this.ui = ui;
 
-        jumpCount = 0;
+        timesJumped = 0;
 
-        this.maxJumps = maxJumps;
+        jumpCount = 0;
 
         height = -1.0;
 
+        velocity = -1.0;
+
+        leniency = 0.2;
+
         failed = false;
+
+        ropeDelay = -1.0;
+
+        checkTime = 0.9;
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
-        if (FlxG.keys.justPressed.SPACE && height <= 0.0)
+        if (FlxG.keys.justPressed.SPACE && !Options.botplay)
             jumpAction();
 
         if (height >= 0.0)
         {
-            height += jumpVelocity * elapsed + 1.0 * -2.0 * elapsed * elapsed;
+            height += velocity * elapsed + 1.0 * -2.0 * elapsed * elapsed;
 
-            jumpVelocity += -3.85 * elapsed;
+            velocity += -3.85 * elapsed;
         }
 
         if (ropeDelay != -1.0)
@@ -397,10 +502,13 @@ class JumpRopeMinigame extends FlxBasic
 
                 ui.nowJump.visible = true;
 
-                if (hitTime > 0.0)
-                    hitTime -= elapsed;
+                if (checkTime > 0.0)
+                    checkTime -= elapsed;
                 else
                     checkJump();
+
+                if (Options.botplay)
+                    jumpAction();
             }
         }
     }
@@ -414,41 +522,45 @@ class JumpRopeMinigame extends FlxBasic
 
     public function jumpAction():Void
     {
+        if (timesJumped == jumpCount)
+            return;
+
+        sprite?.animation?.play("jump");
+
+        timesJumped++;
+
         height = 0.0;
 
-        jumpVelocity = 2.0;
-    }
-
-    public function resetJumps():Void
-    {
-        jumpCount = 0;
+        velocity = 2.0;
     }
 
     public function checkJump():Void
     {
+        velocity = -1.0;
+
         ropeDelay = -1.0;
 
-        hitTime = 0.9;
+        checkTime = 0.9;
 
-        if (height > jumpBuffer)
-        {
+        if (height > leniency)
             playCountAudio();
-        }
         else
         {
+            sprite?.animation?.play("jump miss");
+
             failed = true;
 
-            playFailAudio();
+            playOopsAudio();
         }
     }
 
     public function playCountAudio():Void
     {
-        FlxG.sound.play(AssetCache.getSound('shared/pt-${jumpCount}'), 0.3);
+        FlxG.sound.play(AssetCache.getSound('shared/pt-${jumpCount}'), 0.2);
     }
 
-    public function playFailAudio():Void
+    public function playOopsAudio():Void
     {
-        FlxG.sound.play(AssetCache.getSound("shared/pt-oops"), 0.3);
+        FlxG.sound.play(AssetCache.getSound("shared/pt-oops-short"), 0.2);
     }
 }

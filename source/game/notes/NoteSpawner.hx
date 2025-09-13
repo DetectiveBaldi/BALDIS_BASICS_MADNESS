@@ -183,6 +183,20 @@ class NoteSpawner extends FlxBasic
         return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
     }
 
+    public function reverseNoteIndex(time:Float):Void
+    {
+        noteIndex = 0;
+        
+        var note:NoteSchema = noteData[noteIndex];
+
+        while (noteIndex < noteData.length && note.time <= time)
+        {
+            noteIndex++;
+
+            note = noteData[noteIndex];
+        }
+    }
+
     public function removeNotesBefore(time:Float):Void
     {
         var i = noteData.length - 1;

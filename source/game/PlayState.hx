@@ -612,10 +612,11 @@ class PlayState extends CustomState
 
         if (conductor.time > newTime)
         {
-            CustomState.cancelNextTransition();
+            conductor.time = newTime;
+            
+            playField.noteSpawner.reverseNoteIndex(newTime);
 
-            FlxG.switchState(() -> PlayState.getClassFromLevel({startOnTime: newTime, nextState: params?.nextState,
-                playStats: playField.playStats.copy(), health: playField.healthBar.value}));
+            reverseEventIndex(newTime);
         }
         else
         {
@@ -630,6 +631,20 @@ class PlayState extends CustomState
             }
 
             resumeMusic();
+        }
+    }
+
+    public function reverseEventIndex(time:Float):Void
+    {
+        eventIndex = 0;
+        
+        var event:EventSchema = chart.events[eventIndex];
+
+        while (eventIndex < chart.events.length && event.time <= time)
+        {
+            eventIndex++;
+
+            event = chart.events[eventIndex];
         }
     }
 
