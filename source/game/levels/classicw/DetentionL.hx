@@ -259,12 +259,9 @@ class DetentionL extends PlayState
 
         if (step == 780)
         {
-            if ( #if debug true #else PlayState.isWeek #end )
-            {
-                FlxG.mouse.visible = true;
+            FlxG.mouse.visible = true;
 
-                FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
-            }
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
             getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
 

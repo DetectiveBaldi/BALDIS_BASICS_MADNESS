@@ -515,12 +515,9 @@ class HugsL extends PlayState
 
         if (step == 1568)
         {
-            if ( #if debug true #else PlayState.isWeek #end )
-            {
-                FlxG.mouse.visible = true;
+            FlxG.mouse.visible = true;
 
-                FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
-            }
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
             hugsS.hallend.velocity.x = 0.0;
 
