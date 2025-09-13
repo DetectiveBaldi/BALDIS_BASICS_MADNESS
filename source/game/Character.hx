@@ -18,6 +18,7 @@ import core.Options;
 import core.Paths;
 
 import data.AnimationData;
+import data.AxisData;
 import data.CharacterData;
 
 import game.notes.Note;
@@ -55,10 +56,12 @@ class Character extends FlxSprite
     public var strumline:Strumline;
 
     public var keys:Array<Int>;
-
-    public var lastScale:FlxPoint;
     
     public var config:CharacterData;
+
+    public var lastScale:FlxPoint;
+
+    public var baseOffsets:Map<String, AxisData<Float>>;
 
     public var danceSteps:Array<String>;
 
@@ -88,8 +91,6 @@ class Character extends FlxSprite
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
                     Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
         ];
-
-        lastScale = FlxPoint.get();
         
         loadConfig(_config);
 
@@ -184,13 +185,19 @@ class Character extends FlxSprite
 
         scale.set(config.scale?.x ?? 1.0, config.scale?.y ?? 1.0);
 
-        updateHitbox();
+        lastScale ??= FlxPoint.get();
 
         lastScale.copyFrom(scale);
+
+        updateHitbox();
 
         flipX = config.flipX ?? false;
 
         flipY = config.flipY ?? false;
+
+        baseOffsets ??= new Map<String, AxisData<Float>>();
+
+        baseOffsets.clear();
 
         for (i in 0 ... config.animations.length)
         {
@@ -212,6 +219,10 @@ class Character extends FlxSprite
             else
                 animation.addByPrefix(animData.name, animData.prefix, animData.frameRate, animData.looped,
                     animData.flipX, animData.flipY);
+
+            var offsetToCopy:AxisData<Float> = animData.offset;
+
+            baseOffsets[animData.name] = {x: offsetToCopy.x, y: offsetToCopy.y};
         }
 
         danceSteps = config.danceSteps;
@@ -243,13 +254,11 @@ class Character extends FlxSprite
         {
             var animData:AnimationData = config.animations[i];
 
-            var x:Float = animData.offset.x;
-
-            var y:Float = animData.offset.y;
-
-            animData.offset.x = Math.floor(x * xRatio);
+            var oldOffsets:AxisData<Float> = baseOffsets[animData.name];
             
-            animData.offset.y = Math.floor(y * yRatio);
+            animData.offset.x = Math.floor(oldOffsets.x * xRatio);
+            
+            animData.offset.y = Math.floor(oldOffsets.y * yRatio);
         }
 
         lastScale.copyFrom(scale);

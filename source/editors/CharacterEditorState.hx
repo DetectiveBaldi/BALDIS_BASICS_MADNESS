@@ -611,6 +611,10 @@ class CharacterEditorState extends CustomState
 
         animation.offset.y = y;
 
+        var offsetsToCopy:AxisData<Float> = animation.offset;
+
+        character.baseOffsets[animation.name] = {x: offsetsToCopy.x, y: offsetsToCopy.y}
+
         updateOffsetLabel();
     }
 
