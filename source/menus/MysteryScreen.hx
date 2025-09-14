@@ -473,12 +473,12 @@ class MysteryScreen extends CustomState
         #end
 
         needHintText.kill();
+        
+        hintTimer = #if debug 0.0 #else score == 0.0 ? 0.0 : -1.0 #end ;
 
         if (score == 0.0)
         {
             #if !debug
-            hintTimer = 0.0;
-
             if (playSound)
                 FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
             #end
