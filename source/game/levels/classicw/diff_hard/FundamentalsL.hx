@@ -171,15 +171,7 @@ class FundamentalsL extends PlayState
 
             opponent.visible = false;
 
-            tween.cancelTweensOf(principal);
             principal.visible = false;
-
-            var bul:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bully-spectator"));
-            bul.setPosition(-50.0, 115.0);
-            bul.scale.set(2.05, 2.05);
-            bul.updateHitbox();
-            bul.color = 0xADA493;
-            spectators.add(bul);
 
             var _plr:Character = getPlayer("bf-anim-fundamentals");
             _plr.visible = false;
@@ -188,6 +180,13 @@ class FundamentalsL extends PlayState
             plr.setPosition(720.0, 205.0);
             plr.visible = true;
             player = plr;
+
+            var bul:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bully-spectator"));
+            bul.setPosition(-50.0, 115.0);
+            bul.scale.set(2.05, 2.05);
+            bul.updateHitbox();
+            bul.color = 0xADA493;
+            opponents.add(bul);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
             opp.scale.set(1.35, 1.35);
@@ -233,7 +232,7 @@ class FundamentalsL extends PlayState
 
         if (step == 1232)
         {
-            var bul:Character = getSpectator("bully-spectator");
+            var bul:Character = getOpponent("bully-spectator");
             bul.visible = false;
         }
 
