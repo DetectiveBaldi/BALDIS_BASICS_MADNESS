@@ -11,6 +11,8 @@ class HyperactiveS extends Stage
     public var hall2:FlxSprite;
 
     public var room:FlxSprite;
+   
+    public var room_Overlay:FlxSprite;
 
     public var roomback:FlxSprite;
 
@@ -33,5 +35,7 @@ class HyperactiveS extends Stage
         roomback = getSprite("room-back", 2, 2);
 
         room = getSprite("room", 2, 2);
+    
+        room_Overlay = getSprite("room-overlay", 2, 2);
     }
 }

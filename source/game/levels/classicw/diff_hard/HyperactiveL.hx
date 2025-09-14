@@ -449,21 +449,34 @@ class HyperactiveL extends PlayState
 
             hyperactiveS.hall2.visible = false;
             hyperactiveS.room.visible = true;
+            hyperactiveS.room_Overlay.visible = true;
             hyperactiveS.roomback.visible = true;
 
             gameCamBopStrength = 0.0;
             hudCamBopStrength = 0.0;
 
+            player.visible = false;
+            
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fly"));
+            plr.setPosition(100.0, -350.0);
+            plr.color = 0xB8B19C;
+            plr.skipDance = true;
+            plr.skipSing = true;
+            plr.animation.play("fly");
+            plr.visible = true;
+            players.add(plr);
+
             var opp:Character = getOpponent("1st-prize-270");
-            opp.x = -140.0;
+            opp.x = -200;
 
             var _opp:Character = getOpponent("gotta-sweep");
-            _opp.x = 300.0;
+            _opp.x = 50;
 
-            player.x = 160.0;
+            hyperactiveS.remove(opponents, true);
+            hyperactiveS.insert(hyperactiveS.members.indexOf(hyperactiveS.room_Overlay), opponents);
 
             book = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/notebook-cyan"));
-            book.scale.set(0.3, 0.3);
+            book.scale.set(0.4, 0.4);
             book.updateHitbox();
             book.setPosition(1063.0, 340.0);
             book.color = 0xA19686;
@@ -481,26 +494,31 @@ class HyperactiveL extends PlayState
             tween.cancelTweensOf(opp);
             tween.cancelTweensOf(player);
 
-            tween.tween(opp, {x: -90.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(opp, {x: -300.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(_opp, {x: -90.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(_opp, {x: -50.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 190.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(plr, {x: 800.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 2176)
         {
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            
             var opp:Character = getOpponent("1st-prize-270");
             var _opp:Character = getOpponent("gotta-sweep");
 
-            tween.tween(_opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
-            tween.tween(opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
-        }
+            tween.tween(_opp, {y: _opp.y - 30.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            
+            tween.tween(opp, {y: opp.y - 65.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
-        if (step == 2188)
-        {
-            hyperactiveS.remove(opponents, true);
-            hyperactiveS.insert(hyperactiveS.members.indexOf(hyperactiveS.room), opponents);
+            tween.tween(_opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(_opp.scale, {x: _opp.scale.x - 0.25, y: _opp.scale.y - 0.25}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tween.tween(opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(opp.scale, {x: opp.scale.x - 0.5, y: opp.scale.y - 0.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     }
 

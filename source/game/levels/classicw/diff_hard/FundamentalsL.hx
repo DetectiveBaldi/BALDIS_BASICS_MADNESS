@@ -37,6 +37,10 @@ class FundamentalsL extends PlayState
 
     public var principal:FlxSprite;
 
+    public var jumpUI:JumpRopeUI;
+
+    public var jumpMinigame:JumpRopeMinigame;
+
     override function create():Void
     {
         stage = new FundamentalsS();
@@ -64,11 +68,6 @@ class FundamentalsL extends PlayState
         gameCamera.alpha = 0.0;
 
         playField.visible = false;
-    }
-
-    public function fail():Void
-    {
-        playField.healthBar.percent -= 25;
     }
 
     override function stepHit(step:Int):Void
@@ -407,6 +406,56 @@ class FundamentalsL extends PlayState
             gameCameraZoom = 0.725;
 
             cameraLock = FOCUS_CAM_CHAR;
+        
+            jumpUI = new JumpRopeUI();
+
+            jumpUI.setPosition(player.x - jumpUI.width * 0.5, player.y + jumpUI.height * 0.5);
+
+            add(jumpUI);
+
+            jumpMinigame = new JumpRopeMinigame(jumpUI, playField);
+
+            add(jumpMinigame);
+
+                        player.visible = false;
+
+            var plr:Character = getPlayer("bf-jump");
+
+            if (plr == null)
+            {
+                var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-jump"));
+
+                plr.skipDance = true;
+
+                plr.skipSing = true;
+
+                plr.setPosition(player.x + 20.0, player.y - 20.0);
+
+                player = plr;
+
+                players.add(plr);
+            }
+            else
+            {
+                player = plr;
+
+                player.visible = true;
+
+                player.animation.play("jump");
+
+                player.animation.finish();
+
+                player.animation.curAnim.curFrame = 0;
+            }
+
+            jumpMinigame.sprite = player;
+        }
+
+        if (jumpUI != null && jumpMinigame != null)
+        {
+            if (step == 1882 || step == 1894 || step == 1906 || step == 1918 || step == 1930 || step == 1942 || step == 1954  
+        || step == 1966 || step == 1978)
+                jumpMinigame.sendJump();
         }
 
         if (step == 1984.0)
@@ -470,5 +519,187 @@ class FundamentalsL extends PlayState
                 opp.animation.play("slap");
             }
         }
+    }
+}
+
+class JumpRopeUI extends FlxSpriteGroup
+{
+    public var waitJump:FlxSprite;
+
+    public var nowJump:FlxSprite;
+
+    public function new():Void
+    {
+        super();
+
+        waitJump = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/levels/classicw/PlaymateL/JumpRopeUI/wait-jump"));
+
+        waitJump.active = false;
+
+        waitJump.visible = false;
+
+        waitJump.scale.set(2.0, 2.0);
+
+        waitJump.updateHitbox();
+
+        add(waitJump);
+
+        nowJump = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/levels/classicw/PlaymateL/JumpRopeUI/now-jump"));
+
+        nowJump.active = false;
+
+        nowJump.visible = false;
+
+        nowJump.scale.set(2.0, 2.0);
+
+        nowJump.updateHitbox();
+
+        add(nowJump);
+    }
+}
+
+class JumpRopeMinigame extends FlxBasic
+{
+    public var playField:PlayField;
+    
+    public var ui:JumpRopeUI;
+
+    public var sprite:FlxSprite;
+
+    public var timesJumped:Int;
+
+    public var jumpCount:Int;
+
+    public var height:Float;
+
+    public var velocity:Float;
+
+    public var leniency:Float;
+
+    public var failed:Bool;
+
+    public var ropeDelay:Float;
+
+    public var checkTime:Float;
+
+    public function new(ui:JumpRopeUI, playField:PlayField):Void
+    {
+        super();
+
+        visible = false;
+
+        this.ui = ui;
+        
+        this.playField = playField;
+
+        timesJumped = 0;
+
+        jumpCount = 0;
+
+        height = -1.0;
+
+        velocity = -1.0;
+
+        leniency = 0.2;
+
+        failed = false;
+
+        ropeDelay = -1.0;
+
+        checkTime = 0.5;
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (FlxG.keys.justPressed.SPACE && !Options.botplay)
+            jumpAction();
+
+        if (height >= 0.0)
+        {
+            height += velocity * elapsed + 1.0 * -2.0 * elapsed * elapsed;
+
+            velocity += -3.85 * elapsed;
+        }
+
+        if (ropeDelay != -1.0)
+        {
+            if (ropeDelay > 0.0)
+            {
+                ropeDelay -= elapsed;
+
+                ui.waitJump.visible = true;
+
+                ui.nowJump.visible = false;
+            }
+            else
+            {
+                ui.waitJump.visible = false;
+
+                ui.nowJump.visible = true;
+
+                if (checkTime > 0.0)
+                    checkTime -= elapsed;
+                else
+                    checkJump();
+
+                if (Options.botplay)
+                    jumpAction();
+            }
+        }
+    }
+
+    public function sendJump():Void
+    {
+        jumpCount++;
+
+        ropeDelay = 0.5;
+    }
+
+    public function jumpAction():Void
+    {
+        if (timesJumped == jumpCount)
+            return;
+
+        sprite?.animation?.play("jump");
+
+        timesJumped++;
+
+        height = 0.0;
+
+        velocity = 2.0;
+    }
+
+    public function checkJump():Void
+    {
+        velocity = -1.0;
+
+        ropeDelay = -1.0;
+
+        checkTime = 0.9;
+
+        if (height > leniency)
+            playCountAudio();
+        else
+        {
+            sprite?.animation?.play("jump miss");
+
+            failed = true;
+
+            playField.healthBar.percent -= 25.0;
+
+            playOopsAudio();
+        }
+    }
+
+    public function playCountAudio():Void
+    {
+        FlxG.sound.play(AssetCache.getSound('shared/pt-${jumpCount}'), 0.2);
+    }
+
+    public function playOopsAudio():Void
+    {
+        FlxG.sound.play(AssetCache.getSound("shared/pt-oops-short"), 0.2);
     }
 }
