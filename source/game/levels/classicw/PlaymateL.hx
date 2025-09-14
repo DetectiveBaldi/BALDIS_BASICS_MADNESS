@@ -585,11 +585,11 @@ class JumpRopeMinigame extends FlxBasic
 
     public function playCountAudio():Void
     {
-        FlxG.sound.play(AssetCache.getSound('shared/pt-${jumpCount}'), 0.2);
+        FlxG.sound.play(AssetCache.getSound('shared/pt-${jumpCount}'), 0.7);
     }
 
     public function playOopsAudio():Void
     {
-        FlxG.sound.play(AssetCache.getSound("shared/pt-oops-short"), 0.2);
+        FlxG.sound.play(AssetCache.getSound("shared/pt-oops-short"), 0.7);
     }
 }
