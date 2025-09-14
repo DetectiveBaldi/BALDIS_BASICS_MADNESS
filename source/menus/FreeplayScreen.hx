@@ -308,7 +308,7 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu || level.showInMysteryMenu)
+            if (level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu || level.obscurity != NONE)
                 continue;
 
             res.push(level);

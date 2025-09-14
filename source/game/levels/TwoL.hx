@@ -208,9 +208,7 @@ class TwoL extends PlayState
 
     override function endSong():Void
     {
-        var level:LevelData = PlayState.level;
-
-        if (getClassFromNextState() == TitleScreen && HighScore.getLevelScore(level.name, level.difficulty).score != 0.0)
+        if (getClassFromNextState() == TitleScreen)
         {
             CustomState.cancelFadeIn = true;
 
@@ -218,13 +216,6 @@ class TwoL extends PlayState
         }
 
         super.endSong();
-    }
-
-    override function startOutro(onOutroComplete:()->Void):Void
-    {
-        
-
-        super.startOutro(onOutroComplete);
     }
 
     public function toggleStrumScroll(strumline:Strumline, i:Int):Void

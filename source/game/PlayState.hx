@@ -539,7 +539,7 @@ class PlayState extends CustomState
 
         var grade:String = playStats.grade;
 
-        var showUnlockScreen:Bool = false;
+        var unlocks:Array<UnlockScreenParams> = new Array<UnlockScreenParams>();
 
         if (isWeek)
         {
@@ -563,9 +563,43 @@ class PlayState extends CustomState
 
                 grade = totalStats.grade;
 
-                if ( #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 #end &&
-                    week.scoreRequirements.exists(week.name))
-                        showUnlockScreen = true;
+                var testA:Bool = #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 #end ;
+
+                var weekToSearch:WeekData = WeekData.list.first((w:WeekData) -> w.name == week.name);
+
+                if (testA)
+                {
+                    if (WeekData.list.first() == weekToSearch)
+                    {
+                        unlocks.push({unlock: "Freeplay Mode"});
+
+                        unlocks.push({unlock: "Mystery Mode"});
+                    }
+
+                    var filteredDependencies:Array<WeekData> = WeekData.list.filter((w:WeekData) ->
+                        w.scoreRequirements.exists(week.name));
+
+                    for (w in filteredDependencies)
+                    {
+                        // We display this later down the line.
+                        if (week.name == w.name)
+                            continue;
+
+                        unlocks.push({unlock: w.name + week.nameSuffix});
+                    }
+                }
+
+                var testB:Bool = #if debug true #else HighScore.getWeekScore(week.name, "Normal").score == 0.0 #end &&
+                    weekToSearch.hasDifficulty("Hard");
+
+                if (testB)
+                    unlocks.push({unlock: "Hard Mode"});
+
+                if (testA)
+                {
+                    if (week.scoreRequirements.exists(week.name))
+                        unlocks.push({unlock: week.name + week.nameSuffix});
+                }
 
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
                     HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
@@ -582,15 +616,17 @@ class PlayState extends CustomState
         {
             nextState ??= () -> new FreeplayScreen();
 
-            if ( #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end &&
-                level.showInMysteryMenu)
-                    showUnlockScreen = true;
+            var testA:Bool = #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end &&
+                level.obscurity == SMALL;
+
+            if (testA)
+                unlocks.push({unlock : level.name});
         }
 
         if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
             HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
-        FlxG.switchState(showUnlockScreen ? () -> new UnlockScreen(nextState, week, level) : nextState);
+        FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
     }
 
     public function changeTime(newTime:Float):Void
@@ -711,10 +747,7 @@ class PlayState extends CustomState
         }
     }
 
-    public function noteSpawn(note:Note):Void
-    {
-        // conductor.getTimeInSteps(note.time);
-    }
+    public function noteSpawn(note:Note):Void {}
 
     public function noteHit(ev:NoteHitEvent):Void {}
 

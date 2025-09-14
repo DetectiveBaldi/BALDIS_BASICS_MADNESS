@@ -50,7 +50,6 @@ using flixel.util.FlxColorTransformUtil;
 using util.MathUtil;
 using util.StringUtil;
 
-// TODO: Maybe adjust naming and general code clean-up.
 class MysteryScreen extends CustomState
 {
     public var levels:Array<LevelData>;
@@ -101,7 +100,7 @@ class MysteryScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (!level.showInMysteryMenu)
+            if (level.obscurity == NONE)
                 continue;
 
             levels.push(level);
@@ -266,7 +265,6 @@ class MysteryScreen extends CustomState
 
                 mark.velocity.y += FlxG.random.int(2, 10) * direction;
 
-                // Hopefully fixes an issue where question marks get stuck on an edge?
                 if (mark.y <= top)
                     mark.y = top + 1;
                 else
@@ -274,7 +272,7 @@ class MysteryScreen extends CustomState
             }
         }
 
-        if (#if debug true #else !hasScore #end && hintTimer != -1.0)
+        if ( #if debug true #else !hasScore #end && hintTimer != -1.0)
         {
             hintTimer += elapsed;
 
@@ -510,7 +508,7 @@ class HintScreen extends CustomSubState
     [
         "Beginnings" => "\"31718\"",
 
-        "Uncanon" => "He resides near a soda machine, and he\ndefinitely isn't canon.",
+        "Uncanon" => "He resides near a soda machine.",
 
         "Overseer" => "\"Game over!\"",
 

@@ -52,8 +52,7 @@ class WeekData
     public function copy():WeekData
     {
         var data:WeekData = {name: name, nameSuffix: nameSuffix, description: description}
-
-        // TODO: Check that copying here is necessary.
+        
         data.levels = levels.copy();
 
         data.showInStoryMenu = showInStoryMenu;

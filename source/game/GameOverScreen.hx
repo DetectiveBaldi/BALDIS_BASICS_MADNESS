@@ -203,7 +203,7 @@ class GameOverScreen extends CustomSubState
                 if (totalRolls < 24.0)
                     chance = -1;
 
-                if (PlayState.level.showInMysteryMenu)
+                if (PlayState.level.obscurity != NONE)
                     chance = -1;
 
                 if ( #if debug false #else HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end )

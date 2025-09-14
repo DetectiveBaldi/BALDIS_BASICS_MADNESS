@@ -854,7 +854,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public function checkSubmission():Void
     {
-        if (submission == "31718")
+        if ( #if debug true #else !PlayState.isWeek #end && submission == "31718")
         {
             PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
 

@@ -27,19 +27,15 @@ class UnlockScreen extends CustomState
 {
     public var nextState:NextState;
 
-    public var week:WeekData;
+    public var params:Array<UnlockScreenParams>;
 
-    public var level:LevelData;
-
-    public function new(nextState:NextState, week:WeekData, level:LevelData):Void    
+    public function new(nextState:NextState, params:Array<UnlockScreenParams>):Void    
     {
         super();
 
         this.nextState = nextState;
 
-        this.week = week;
-
-        this.level = level;
+        this.params = params;
     }
 
     override function create():Void
@@ -72,12 +68,7 @@ class UnlockScreen extends CustomState
 
         add(baldi);
 
-        var text:String = "Wowee! You just unlocked\n";
-
-        if (week == null)
-            text += level.name;
-        else
-            text += week.name + week.nameSuffix;
+        var text:String = 'Wowee! You just unlocked\n${params[0].unlock}';
 
         var wowText:FlxText = new FlxText(0.0, 0.0, 0.0, text, 60);
 
@@ -115,7 +106,19 @@ class UnlockScreen extends CustomState
 
         FlxG.sound.play(AssetCache.getSound("menus/baldi-wow"), 1.0, false);
 
-        new FlxTimer(timer).start(5.0, (_:FlxTimer) -> FlxG.switchState(nextState));
+        params.shift();
+
+        new FlxTimer(timer).start(5.0, (_:FlxTimer) ->
+        {
+            if (params.length == 0.0)
+            {
+                FlxG.switchState(nextState);
+
+                return;
+            }
+
+            FlxG.switchState(() -> new UnlockScreen(nextState, params));
+        });
     }
 
     override function destroy():Void
@@ -124,4 +127,9 @@ class UnlockScreen extends CustomState
 
         FlxG.mouse.visible = false;
     }
+}
+
+typedef UnlockScreenParams =
+{
+    var unlock:String;
 }

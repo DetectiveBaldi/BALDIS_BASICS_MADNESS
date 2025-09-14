@@ -21,7 +21,7 @@ class LevelData
 
     public var showInFreeplayMenu:Bool;
 
-    public var showInMysteryMenu:Bool;
+    public var obscurity:ObscurityLevel;
 
     public function new(week:WeekData, name:String, difficulty:String = "Normal"):Void
     {
@@ -33,7 +33,7 @@ class LevelData
 
         showInFreeplayMenu = true;
 
-        showInMysteryMenu = false;
+        obscurity = NONE;
     }
 
     public function getFormattedName():String
@@ -64,4 +64,13 @@ class LevelData
 
         return path.replace("/", sep);
     }
+}
+
+enum ObscurityLevel
+{
+    NONE;
+
+    SMALL;
+
+    LARGE;
 }

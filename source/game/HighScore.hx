@@ -6,7 +6,6 @@ import data.PlayStats;
 
 class HighScore
 {
-    // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)
     public static var weeks(get, never):Map<String, Map<String, WeekScore>>;
 
     @:noCompletion
@@ -14,8 +13,7 @@ class HighScore
     {
         return FlxG.save.data.highScores.weeks ??= new Map<String, Map<String, WeekScore>>();
     }
-
-    // Name (Map<String), Difficulty (, Map<String), Score (, LevelScore)
+    
     public static var levels(get, never):Map<String, Map<String, LevelScore>>;
 
     @:noCompletion
