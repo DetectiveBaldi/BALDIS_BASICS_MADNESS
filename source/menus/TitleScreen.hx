@@ -40,6 +40,8 @@ class TitleScreen extends CustomState
 
     public var studio:FlxText;
 
+    public var version:FlxText;
+
     public var introSound:FlxSound;
 
     public var tune:FlxSound;
@@ -117,6 +119,24 @@ class TitleScreen extends CustomState
         studio.setPosition(title.x + title.width - studio.width - 5.0, title.y + title.height - studio.height - 5.0);
 
         add(studio);
+
+        version = new FlxText(0.0, 0.0, FlxG.width, "Version 2.0");
+
+        version.color = 0xCECECE;
+
+        version.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        version.size = 24;
+
+        version.alignment = LEFT;
+
+        version.textField.antiAliasType = ADVANCED;
+
+        version.textField.sharpness = 400.0;
+
+        version.setPosition(title.x, -5.0);
+
+        add(version);
 
         introSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/introSound"));
 
