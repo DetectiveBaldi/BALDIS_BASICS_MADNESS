@@ -200,6 +200,8 @@ class RoughEL extends PlayState
 
             __plr.skipSing = true;
 
+            __plr.color = 0xC7BEA7;
+
             __plr.setPosition(_plr.x, _plr.y);
 
             players.insert(players.members.indexOf(_plr), __plr);
@@ -789,6 +791,8 @@ class RoughEL extends PlayState
             var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-unlock"));
 
             _plr.skipDance = true;
+
+            _plr.color = 0xC7BEA7;
 
             _plr.animation.play("unlock", true);
 
@@ -1890,8 +1894,8 @@ class RoughEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-furious");
 
-                tween.tween(opp, {x: opp.x + 725.0}, conductor.beatLength * 0.275 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 725.0}, 0.35);}});
+                tween.tween(opp, {x: opp.x + 755.0}, conductor.beatLength * 0.275 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 755.0}, 0.35);}});
 
                 opp.animation.play("slap", true);
             }
@@ -1932,7 +1936,7 @@ class RoughEL extends PlayState
     
         if (beat == 836.0 || beat == 852.0)
         {
-            SetCamFocusEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 140.0,
+            SetCamFocusEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 - 125.0,
                 (FlxG.height - cameraPoint.height) * 0.5, null, 0.0);
         }
     
