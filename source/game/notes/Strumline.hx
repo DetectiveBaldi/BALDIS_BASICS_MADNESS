@@ -16,7 +16,6 @@ import core.Options;
 
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
-import game.notes.events.SustainDropEvent;
 import game.notes.events.SustainHoldEvent;
 
 import music.Conductor;
@@ -26,7 +25,6 @@ using StringTools;
 using util.ArrayUtil;
 using util.MathUtil;
 
-// TODO: Update scoring when a note is dropped? Maybe?
 class Strumline extends FlxGroup
 {
     public var conductor:Conductor;
@@ -71,10 +69,6 @@ class Strumline extends FlxGroup
     public var onSustainHold:FlxTypedSignal<(event:SustainHoldEvent)->Void>;
 
     public var sustainHoldEvent:SustainHoldEvent;
-
-    public var onSustainDrop:FlxTypedSignal<(event:SustainDropEvent)->Void>;
-
-    public var sustainDropEvent:SustainDropEvent;
 
     public var onGhostTap:FlxTypedSignal<(event:GhostTapEvent)->Void>;
 
@@ -170,10 +164,6 @@ class Strumline extends FlxGroup
 
         sustainHoldEvent = new SustainHoldEvent();
 
-        onSustainDrop = new FlxTypedSignal<(event:SustainDropEvent)->Void>();
-
-        sustainDropEvent = new SustainDropEvent();
-
         noteSplashes = new FlxTypedGroup<NoteSplash>();
 
         add(noteSplashes);
@@ -247,12 +237,7 @@ class Strumline extends FlxGroup
             var hasMissed:Bool = conductor.time > note.time + note.latestTiming;
 
             if ((note.status == MOVING || note.status == DROPPING) && hasMissed)
-            {
-                if (note.status == MOVING)
-                    noteMiss(note);
-                else
-                    sustainDrop(note, note.sustain);
-            }
+                noteMiss(note);
 
             var hasExpired:Bool = conductor.time > note.time + note.length + note.latestTiming;
 
@@ -283,7 +268,7 @@ class Strumline extends FlxGroup
                     note.unholdTime += 1000.0 * elapsed;
 
                     if (note.unholdTime >= note.latestTiming * 2.0)
-                        sustainDrop(note, note.sustain);
+                        noteMiss(note);
                 }
             }
 
@@ -315,9 +300,6 @@ class Strumline extends FlxGroup
 
         onNoteMiss = cast FlxDestroyUtil.destroy(onNoteMiss);
 
-        onSustainHold = cast FlxDestroyUtil.destroy(onSustainHold);
-
-        onSustainDrop = cast FlxDestroyUtil.destroy(onSustainDrop);
 
         onNoteSpawn = cast FlxDestroyUtil.destroy(onNoteSpawn);
 
@@ -448,26 +430,6 @@ class Strumline extends FlxGroup
 
             setCharAnimsActive(note, false);
         }
-    }
-
-    public function sustainDrop(note:Note, sustain:Sustain):Void
-    {
-        sustainDropEvent.reset(note, sustain);
-
-        onSustainDrop.dispatch(sustainDropEvent);
-
-        note.status = MISSED;
-
-        playCharMissAnims(note, note.direction);
-
-        setCharAnimsActive(note, true);
-
-        if (vocals != null)
-            vocals.volume = 0.0;
-
-        var _noteMiss:FlxSound = FlxG.sound.play(AssetCache.getSound('game/GameState/noteMiss${FlxG.random.int(0, 2)}'), 0.15);
-
-        _noteMiss.onComplete = _noteMiss.kill;
     }
 
     public function resizeSustainNote(note:Note):Void

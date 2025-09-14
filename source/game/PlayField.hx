@@ -25,7 +25,6 @@ import data.PlayStats;
 import game.notes.Note;
 import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
-import game.notes.events.SustainDropEvent;
 import game.notes.events.SustainHoldEvent;
 import game.notes.NoteSpawner;
 import game.notes.Strumline;
@@ -199,8 +198,6 @@ class PlayField extends FlxGroup
 
             strumline.onSustainHold.add(sustainHold);
 
-            strumline.onSustainDrop.add(sustainDrop);
-
             strumline.onGhostTap.add(ghostTap);
         });
 
@@ -328,15 +325,6 @@ class PlayField extends FlxGroup
         updateScoreText();
 
         healthBar.value += 10.0 * ev.elapsed;
-    }
-
-    public function sustainDrop(ev:SustainDropEvent):Void
-    {
-        playStats.score -= 250;
-
-        updateScoreText();
-
-        healthBar.value -= 1.0;
     }
 
     public function ghostTap(ev:GhostTapEvent):Void

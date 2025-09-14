@@ -42,7 +42,6 @@ using util.StringUtil;
 
 using StringTools;
 
-// TODO: You can see Boyfriend's hair at times in the opening sequence.
 class RevisionL extends PlayState
 {
     public var revisionS:RevisionS;
@@ -94,7 +93,7 @@ class RevisionL extends PlayState
         var plr:Character = getPlayer("bf-face-back-left");
         plr.scale.set(4.5, 4.5);
         plr.updateHitbox();
-        plr.setPosition(710.0, -30.0);
+        plr.setPosition(725.0, -30.0);
 
         var opp:Character = getOpponent("baldi-face-right");
         opp.scale.set(2.3, 2.3);
