@@ -463,7 +463,7 @@ class StoryMenuScreen extends CustomState
 
     public function clickLeftWeek():Void
     {
-        changeSelection(1);
+        changeSelection(-1);
     }
 
     public function clickRightWeek():Void
