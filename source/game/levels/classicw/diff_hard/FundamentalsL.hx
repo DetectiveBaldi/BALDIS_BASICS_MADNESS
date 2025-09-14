@@ -273,7 +273,7 @@ class FundamentalsL extends PlayState
             opponent.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime-flipped"));
-            opp.setPosition(1900.0, 180.0);
+            opp.setPosition(1900.0, 110.0);
             opp.color = 0xBBAC91;
             opp.skipDance = true;
             opponents.add(opp);
@@ -387,13 +387,13 @@ class FundamentalsL extends PlayState
             player.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
-            plr.setPosition(505.0, 145.0);
+            plr.setPosition(625.0, 125.0);
             plr.color = 0xB8B19C;
             players.add(plr);
             player = plr;
             
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime"));
-            opp.setPosition(-500.0, 180.0);
+            opp.setPosition(-350.0, 180.0);
             opp.color = 0xBBAC91;
             opponents.add(opp);
             opponent = opp;
@@ -436,7 +436,7 @@ class FundamentalsL extends PlayState
 
                 plr.skipSing = true;
 
-                plr.setPosition(player.x + 20.0, player.y - 20.0);
+                plr.setPosition(player.x, player.y);
 
                 player = plr;
 
@@ -498,7 +498,7 @@ class FundamentalsL extends PlayState
 
         if (step == 2056)
         {
-            tween.tween(player, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(player, {x: 1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 2068)
@@ -512,7 +512,7 @@ class FundamentalsL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(opponent, {x: -2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     }
 
