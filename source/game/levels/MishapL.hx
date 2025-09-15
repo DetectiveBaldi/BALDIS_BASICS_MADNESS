@@ -1,5 +1,8 @@
 package game.levels;
 
+import util.ClickSoundUtil;
+import data.PlayStats;
+import core.AssetCache;
 import openfl.filters.BitmapFilter;
 
 import flixel.FlxCamera;
@@ -33,6 +36,12 @@ class MishapL extends PlayState
 {
     public var mishapS:MishapS;
 
+    public var adChance:Int;
+
+    public var ad:FlxSprite;
+
+    public var close:FlxSprite;
+
     override function create():Void
     {
         stage = new MishapS();
@@ -52,10 +61,16 @@ class MishapL extends PlayState
         player.setPosition(840.0, 315.0);
     
         opponent.setPosition(-200.0, 125.0);
+
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
     }
 
     override function stepHit(step:Int):Void
     {
+        super.stepHit(step);
+
         if (step == 16)
         {
             opponent.skipDance = true;
@@ -89,6 +104,78 @@ class MishapL extends PlayState
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+        }
+    }
+
+    override function beatHit(beat:Int):Void
+    {
+        super.beatHit(beat);
+
+        if (beat >= 80 && beat <= 175)
+            adChance = FlxG.random.int(0, 25);
+
+        if (adChance == 25)
+            spawnAdPopup();
+    }
+
+    public function spawnAdPopup():Void
+    {
+        ad = new FlxSprite();
+
+        ad.loadGraphic(AssetCache.getGraphic('shared/mishapAds/ad${FlxG.random.int(0, 6)}'));
+
+        ad.scale.set(1.7, 1.7);
+
+        ad.updateHitbox();
+
+        ad.setPosition(FlxG.random.float(0, FlxG.width - ad.width), 
+            FlxG.random.float(0, FlxG.height - ad.height));
+
+        ad.camera = hudCamera;
+
+        add(ad);
+
+        close = new FlxSprite();
+
+        close.loadGraphic(AssetCache.getGraphic("shared/mishapAds/close-sheet"), true, 15, 15);
+
+        close.animation.add("0", [0], 0.0, false);
+
+        close.animation.add("1", [1], 0.0, false);
+
+        close.animation.play("0");
+
+        close.scale.set(1.7, 1.7);
+
+        close.updateHitbox();
+        
+        close.setPosition(ad.getMidpoint().x + 240.0, ad.y + 8.25);
+
+        close.camera = hudCamera;
+
+        add(close);
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (close != null && ad != null)
+        {
+            if (FlxG.mouse.overlaps(close, hudCamera))
+            {
+                close.animation.play("1");
+
+                if (FlxG.mouse.justReleased)
+                {
+                    ClickSoundUtil.play();
+
+                    ad.destroy();
+                    close.destroy();
+                }
+            }
+            else
+                close.animation.play("0");
         }
     }
 }
