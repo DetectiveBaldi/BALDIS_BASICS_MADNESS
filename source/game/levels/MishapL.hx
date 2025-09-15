@@ -38,9 +38,9 @@ class MishapL extends PlayState
 
     public var adChance:Int;
 
-    public var ad:FlxSprite;
-
-    public var close:FlxSprite;
+    var ads:Array<FlxSprite> = [];
+    
+    var closes:Array<FlxSprite> = [];
 
     override function create():Void
     {
@@ -120,62 +120,62 @@ class MishapL extends PlayState
 
     public function spawnAdPopup():Void
     {
-        ad = new FlxSprite();
-
+        var ad = new FlxSprite();
         ad.loadGraphic(AssetCache.getGraphic('shared/mishapAds/ad${FlxG.random.int(0, 6)}'));
-
         ad.scale.set(1.7, 1.7);
-
         ad.updateHitbox();
-
         ad.setPosition(FlxG.random.float(0, FlxG.width - ad.width), 
-            FlxG.random.float(0, FlxG.height - ad.height));
-
+        FlxG.random.float(0, FlxG.height - ad.height));
         ad.camera = hudCamera;
-
         add(ad);
-
-        close = new FlxSprite();
-
+            
+        var close = new FlxSprite();
         close.loadGraphic(AssetCache.getGraphic("shared/mishapAds/close-sheet"), true, 15, 15);
-
         close.animation.add("0", [0], 0.0, false);
-
         close.animation.add("1", [1], 0.0, false);
-
         close.animation.play("0");
-
         close.scale.set(1.7, 1.7);
-
         close.updateHitbox();
-        
         close.setPosition(ad.getMidpoint().x + 240.0, ad.y + 8.25);
-
         close.camera = hudCamera;
-
         add(close);
+            
+        ads.push(ad);
+        closes.push(close);
     }
-
+    
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        if (close != null && ad != null)
-        {
-            if (FlxG.mouse.overlaps(close, hudCamera))
+        
+        for (i in 0...closes.length)
             {
-                close.animation.play("1");
-
-                if (FlxG.mouse.justReleased)
-                {
-                    ClickSoundUtil.play();
-
-                    ad.destroy();
-                    close.destroy();
+                var close = closes[i];
+                var ad = ads[i];
+                
+                if (close != null && ad != null)
+                    {
+                        if (FlxG.mouse.overlaps(close, hudCamera))
+                            {
+                                close.animation.play("1");
+                                
+                                if (FlxG.mouse.justReleased)
+                                    {
+                                        ClickSoundUtil.play();
+                                        
+                                        ad.destroy();
+                                        close.destroy();
+                                        
+                                        ads[i] = null;
+                                        closes[i] = null;
+                                    }
+                            }
+                else
+                    close.animation.play("0");
                 }
             }
-            else
-                close.animation.play("0");
-        }
+            
+        ads = ads.filter(function(a) return a != null);
+        closes = closes.filter(function(c) return c != null);
     }
 }
