@@ -30,7 +30,7 @@ class GainGS extends Stage
 
     public var scrollingHall0:FlxSprite;
 
-    public var phoneHall0:FlxSprite;
+    public var hall:FlxSprite;
 
     public function new():Void
     {
@@ -66,6 +66,6 @@ class GainGS extends Stage
         
         scrollingHall0.animation.play("0");
 
-        phoneHall0 = getSprite("phone-hall0");
+        hall = getSprite("hall", 3.25, 3.25);
     }
 }

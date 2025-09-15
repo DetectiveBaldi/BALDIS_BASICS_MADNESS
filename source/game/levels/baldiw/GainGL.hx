@@ -38,6 +38,8 @@ class GainGL extends PlayState
 
     public var principal:FlxSprite;
 
+    public var sweeper:FlxSprite;
+
     override function create():Void
     {
         stage = new GainGS();
@@ -77,7 +79,8 @@ class GainGL extends PlayState
         opponent.scale.set(0.35, 0.35);
         opponent.updateHitbox();
         opponent.setPosition(595.0, 330.0);
-    
+        opponent.skipDance = true;
+
         AssetCache.getGraphic("game/Character/gotta-sweep");
     }
 
@@ -239,13 +242,14 @@ class GainGL extends PlayState
             player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
             player.scale.set(1.75, 1.75);
             player.updateHitbox();
-            player.setPosition(1000.0, 255.0);
+            player.setPosition(1000.0, 235.0);
             players.add(player);
 
             opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
             opponent.scale.set(1.9, 1.9);
             opponent.updateHitbox();
             opponent.setPosition(-500.0, 145.0);
+            opponent.skipDance = true;
             opponents.add(opponent);
 
             tween.tween(opponent, {x: opponent.x + 200.0}, conductor.beatLength * 0.275 * 0.001, 
@@ -295,15 +299,7 @@ class GainGL extends PlayState
             principal.setPosition(2500, 150.0);
             gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), principal);
         
-            tween.tween(principal, {x: player.x + 200}, conductor.beatLength * 2.0 * 0.001,                
-                {
-                    onComplete: (_tween:FlxTween) ->  
-                    {
-                        principal.visible = false;
-                        player.visible = false;
-                    }
-                }
-            );
+            tween.tween(principal, {x: player.x + 200}, conductor.beatLength * 2.0 * 0.001);
         }
     
         if (step == 640)
@@ -328,8 +324,12 @@ class GainGL extends PlayState
             gainGS.principalOffice0.visible = true;
             gainGS.principalOffice0_Overlay0.visible = true;
 
+            player.visible = false;
+
             opponent.visible = false;
             
+            principal.visible = false;
+
             gainGS.remove(players, true);
             gainGS.add(players);
 
@@ -478,13 +478,27 @@ class GainGL extends PlayState
             tween.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
         }
 
+        if (step == 1164.0)
+        {
+            if (Options.flashingLights)
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
+            
+            tween.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                {
+                    ease: FlxEase.quadOut,
+                }
+            );
+        }
+        
         if (step == 1168.0)
         {
-            gameCameraZoom = 0.4;
+            gameCameraZoom = 0.9;
+
+            cameraLock = FOCUS_CAM_CHAR;
 
             gainGS.scrollingHall0.visible = false;
 
-            gainGS.phoneHall0.visible = true;
+            gainGS.hall.visible = true;
 
             player.visible = false;
 
@@ -495,33 +509,41 @@ class GainGL extends PlayState
             player.visible = true;
             player.scale.set(2.7, 2.7);
             player.updateHitbox();
-            player.setPosition(520.0, 175.0);
+            player.setPosition(1500.0, 175.0);
         
+            opponent.setPosition(-700.0, 35.0);
+            
             if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-        }
-
-        if (step == 1264.0)
-        {
-            tween.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001);
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
         }
 
         if (step == 1268.0)
         {
+            gameCameraZoom = 0.8;
+            
+            cameraPoint.y = (FlxG.height - cameraPoint.height) / 2;
+
+            cameraLock = FOCUS_CAM_POINT;
+
+            tween.tween(cameraPoint, {x: cameraPoint.x - 550.0}, conductor.beatLength * 2.0 * 0.001, 
+                {
+                    startDelay: 0.5,
+                    ease: FlxEase.backIn,
+                }
+            );
+
             var opp:Character = getOpponent("baldi-mad");
 
             tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("gotta-sweep"));
-
-            _opp.skipSing = true;
-
-            _opp.setPosition(-_opp.width, -100.0);
-
-            opponents.add(_opp);
-
-            tween.tween(_opp, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
-                onComplete: (_tween:FlxTween) -> {tween.tween(_opp, {x: -opp.width * 2}, 0.5, {ease: FlxEase.quartIn});}});
+            sweeper = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/gotta-sweep"));
+            sweeper.scale.set(2.75, 2.75);
+            sweeper.updateHitbox();
+            sweeper.setPosition(0.0, 90.0);
+            gainGS.insert(gainGS.members.indexOf(players), sweeper);
+            
+            tween.tween(sweeper, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
+                onComplete: (_tween:FlxTween) -> {tween.tween(sweeper, {x: -opp.width * 2}, 0.5, {ease: FlxEase.quartIn});}});
         }
 
         if (step == 1296.0)
@@ -529,6 +551,10 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
         
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
         }
@@ -551,6 +577,10 @@ class GainGL extends PlayState
                 }
             }
     
+        if (beat >= 32.0)
+            if (beat % 4 == 0.0 && opponent.animation.exists("slap"))
+                opponent.animation.play("slap", true);
+        
         if (beat >= 80.0 && beat < 112.0)
             {
                 if (beat % 4 == 0.0)
@@ -558,8 +588,6 @@ class GainGL extends PlayState
                     tween.tween(opponent.scale, {x: opponent.scale.x + 0.225, y: opponent.scale.y + 0.225}, conductor.beatLength * 0.275 * 0.001);
         
                     tween.tween(opponent, {x: opponent.x + 40.0, y: opponent.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
-        
-                    opponent.animation.play("slap", true);
                 }
             }
         
@@ -579,6 +607,14 @@ class GainGL extends PlayState
                 );
             }
         }
+    
+        if (beat >= 292.0 && beat < 320.0)
+            if (beat % 4 == 0.0)
+                tween.tween(opponent, {x: opponent.x + 250.0}, conductor.beatLength * 0.35 * 0.001,
+                    {
+                        ease: FlxEase.quadOut,
+                    }
+                );
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
