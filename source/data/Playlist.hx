@@ -101,10 +101,5 @@ class Playlist
         level.obscurity = LARGE;
 
         LevelData.list.push(level);
-
-        // Daboedy
-        level = {week: null, name: "Daboedy"}
-
-        LevelData.list.push(level);
     }
 }
