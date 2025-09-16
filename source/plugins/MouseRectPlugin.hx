@@ -3,11 +3,6 @@ package plugins;
 import flixel.FlxBasic;
 import flixel.FlxG;
 
-/**
- * TODO: Support more resolutions? Potentially using: 
- * `cursorContainer.x = Math.max(Math.min(FlxG.game.mouseX, Std.int(FlxG.width * FlxG.scaleMode.scale.x) - cursorContainer.width), 0);`
- * `cursorContainer.y = Math.max(Math.min(FlxG.game.mouseY, Std.int(FlxG.height * FlxG.scaleMode.scale.y) - cursorContainer.height), 0);`
- */
 class MouseRectPlugin extends FlxBasic
 {
     public var left:Float;

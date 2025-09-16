@@ -1465,7 +1465,7 @@ class RoughEL extends PlayState
                     tween.num(5.0, 0.0, conductor.beatLength * 0.5 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
 
                 if (step == 2652.0 || step == 2653.0 || step == 2654.0 || step == 2655.0 || step == 2656.0)
-                    tween.num(10.0, 0.0, conductor.stepLength * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
+                    tween.num(10.0, 0.0, conductor.beatLength * 0.25 * 0.001, {}, (num:Float) -> pxChunks.data.tileSize.value[0] = num);
             }
         }
 

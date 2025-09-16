@@ -38,11 +38,13 @@ class TitleScreen extends CustomState
 
     public var playButton:TitleButton;
 
-    public var studio:FlxText;
+    public var studioText:FlxText;
 
-    public var version:FlxText;
+    public var versionText:FlxText;
 
     public var introSound:FlxSound;
+
+    public var exitSound:FlxSound;
 
     public var tune:FlxSound;
 
@@ -86,8 +88,6 @@ class TitleScreen extends CustomState
 
         playButton.onClick.add(clickPlayButton);
 
-        playButton.onClick.add(clickButton);
-
         playButton.setPosition(700.0, 500.0);
 
         add(playButton);
@@ -96,51 +96,53 @@ class TitleScreen extends CustomState
 
         exitButton.onClick.add(clickExitButton);
 
-        exitButton.onClick.add(clickButton);
-
         exitButton.setPosition(title.x, title.y + title.height - exitButton.height);
 
         add(exitButton);
 
-        studio = new FlxText(0.0, 0.0, FlxG.width, "2025 MamaCita's");
+        studioText = new FlxText(0.0, 0.0, FlxG.width, "2025 MamaCita's");
 
-        studio.color = FlxColor.BLACK;
+        studioText.color = FlxColor.BLACK;
 
-        studio.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        studioText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        studio.size = 42;
+        studioText.size = 42;
 
-        studio.alignment = RIGHT;
+        studioText.alignment = RIGHT;
 
-        studio.textField.antiAliasType = ADVANCED;
+        studioText.textField.antiAliasType = ADVANCED;
 
-        studio.textField.sharpness = 400.0;
+        studioText.textField.sharpness = 400.0;
 
-        studio.setPosition(title.x + title.width - studio.width - 5.0, title.y + title.height - studio.height - 5.0);
+        studioText.setPosition(title.x + title.width - studioText.width - 5.0, title.y + title.height - studioText.height - 5.0);
 
-        add(studio);
+        add(studioText);
 
-        version = new FlxText(0.0, 0.0, FlxG.width, "Version 2.0");
+        versionText = new FlxText(0.0, 0.0, FlxG.width, "Version 2.0");
 
-        version.color = 0xCECECE;
+        versionText.color = 0xCECECE;
 
-        version.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        versionText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        version.size = 24;
+        versionText.size = 24;
 
-        version.alignment = LEFT;
+        versionText.alignment = LEFT;
 
-        version.textField.antiAliasType = ADVANCED;
+        versionText.textField.antiAliasType = ADVANCED;
 
-        version.textField.sharpness = 400.0;
+        versionText.textField.sharpness = 400.0;
 
-        version.setPosition(title.x, -5.0);
+        versionText.setPosition(165.0, 5.0);
 
-        add(version);
+        add(versionText);
 
         introSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/introSound"));
 
         introSound.play();
+
+        exitSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/exitSound"));
+
+        exitSound.onComplete = getTransitionSprite.bind(0.5, IN, Sys.exit.bind(0));
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 
@@ -151,7 +153,7 @@ class TitleScreen extends CustomState
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
+        if (FlxG.mouse.visible && FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
             HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end )
         {
             if (FlxG.mouse.justReleased)
@@ -179,14 +181,13 @@ class TitleScreen extends CustomState
 
     public function clickExitButton():Void
     {
-        FlxG.sound.play(AssetCache.getSound("menus/TitleScreen/exitSound"), 1.0, false, null, true, () -> Sys.exit(0));
-    }
+        FlxG.mouse.visible = false;
 
-    public function clickButton():Void
-    {
-        playButton.onClick.removeAll();
+        exitButton.active = false;
+
+        playButton.active = false;
         
-        exitButton.onClick.removeAll();
+        exitSound.play();
     }
 }
 

@@ -1,19 +1,20 @@
 package game.levels;
 
+import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-import flixel.math.FlxRect;
+import flixel.group.FlxGroup;
+
 import flixel.tweens.FlxEase;
+
 import flixel.util.FlxColor;
 
 import core.Options;
 
-import data.CharacterData;
-
 import game.stages.ScribbleS;
 
-import music.Conductor;
+import ui.ProgressBar;
 
 using StringTools;
 
@@ -33,8 +34,6 @@ class ScribbleL extends PlayState
 
         super.create();
 
-        replaceHealthBar();
-
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
 
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
@@ -49,7 +48,7 @@ class ScribbleL extends PlayState
 
         player.colorTransform.setOffsets(FlxColor.WHITE);
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
+        playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
         oppStrumline.strums.alpha = 0.0;
@@ -142,54 +141,52 @@ class ScribbleL extends PlayState
         else
             gameCameraZoom = 1;
     }
+}
 
-    public function replaceHealthBar():Void
+class ScribbleUI extends FlxGroup
+{
+    public var playField:PlayField;
+
+    public var progressBar:ProgressBar;
+
+    public function new(playField:PlayField):Void
     {
+        super();
+
+        this.playField = playField;
+
+        playField.scoreClip.kill();
+
+        var scoreText:FlxText = playField.scoreText;
+
+        scoreText.textField.antiAliasType = NORMAL;
+
+        scoreText.textField.sharpness = 100.0;
+
+        scoreText.kill();
+
         var healthBar:HealthBar = playField.healthBar;
 
         healthBar.kill();
-
-        playField.healthBar = new OldHealthBar(0.0, 0.0, conductor);
-
-        healthBar = playField.healthBar;
-        
-        healthBar.onEmptied.add(gameOver);
-
-        healthBar.setPosition(healthBar.getCenterX(),
-            Options.downscroll ? -20.0 : FlxG.height - healthBar.height + 20.0);
-
-        updateHealthBar("opponent");
-
-        updateHealthBar("player");
-
-        playField.insert(playField.members.indexOf(playField.scoreText) + 1, healthBar);
     }
-}
 
-// TODO: Update to use ProgressBar.
-class OldHealthBar extends HealthBar
-{
-    public function new(x:Float = 0.0, y:Float = 0.0, conductor:Conductor):Void
+    override function update(elapsed:Float):Void
     {
-        super(x, y, conductor);
+        super.update(elapsed);
 
-        gradient.kill();
+        var scoreText:FlxText = playField.scoreText;
 
-        needle.kill();
-
-        overlay.kill();
-
-        positionNeedle = null;
+        if (scoreText.active)
+            scoreText.update(elapsed);
     }
-}
 
-class OldBarSideSprite extends FlxSprite
-{
-    @:noCompletion
-    override function set_clipRect(clip:FlxRect):FlxRect
+    override function draw():Void
     {
-        clipRect = clip;
+        super.draw();
 
-        return clipRect;
+        var scoreText:FlxText = playField.scoreText;
+
+        if (scoreText.visible)
+            scoreText.draw();
     }
 }

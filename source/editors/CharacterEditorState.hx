@@ -409,7 +409,7 @@ class CharacterEditorState extends CustomState
                 {
                     Clipboard.generalClipboard.clear();
 
-                    Clipboard.generalClipboard.setData(TEXT_FORMAT, Json.stringify(getCurrentAnimation().offset), false);
+                    Clipboard.generalClipboard.setData(TEXT_FORMAT, Json.stringify(animData.offset), false);
                 }
 
                 if (FlxG.keys.justPressed.V)
@@ -667,7 +667,7 @@ class CharacterEditorState extends CustomState
 
         if (animationToUse == null)
         {
-            ghost.visible = false;
+            ghost.kill();
 
             return;
         }
@@ -676,7 +676,7 @@ class CharacterEditorState extends CustomState
 
         ghost.loadGraphic(FlxGraphic.fromFrame(frameToLoad));
 
-        ghost.visible = true;
+        ghost.revive();
     }
 
     public function updateGhostScale():Void

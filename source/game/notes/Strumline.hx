@@ -563,7 +563,7 @@ class Strumline extends FlxGroup
             if (note?.kindData?.altAnimation)
                 animSuffix = "-alt";
 
-            var direcStr:String = Note.DIRECTIONS[note.direction];
+            var direcStr:String = Note.DIRECTIONS[direction];
 
             var animToPlay:String = 'Sing${direcStr}MISS${animSuffix}';
 

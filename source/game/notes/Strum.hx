@@ -60,7 +60,7 @@ class Strum extends FlxSprite
         {
             holdTimer += elapsed;
 
-            if (holdTimer >= conductor.stepLength * 0.001)
+            if (holdTimer >= conductor.beatLength * 0.25 * 0.001)
             {
                 holdTimer = 0.0;
 

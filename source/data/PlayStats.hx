@@ -58,24 +58,20 @@ class PlayStats
         return score == 0 && hits == 0 && misses == 0 && bonus == 0.0;
     }
 
-    public function concat(...stats:PlayStats):PlayStats
+    public function concat(...stats:PlayStats):Void
     {
-        var result:PlayStats = copy();
-
         for (i in 0 ... stats.length)
         {
             var stat:PlayStats = stats[i];
 
-            result.score += stat.score;
+            score += stat.score;
 
-            result.hits += stat.hits;
+            hits += stat.hits;
 
-            result.misses += stat.misses;
+            misses += stat.misses;
 
-            result.bonus += stat.bonus;
+            bonus += stat.bonus;
         }
-
-        return result;
     }
 
     public function copy():PlayStats

@@ -23,6 +23,8 @@ class LauncherScreen extends CustomState
 
     public var exitButton:LauncherButton;
 
+    public var slapSound:FlxSound;
+
     public var tune:FlxSound;
 
     override function create():Void
@@ -35,8 +37,6 @@ class LauncherScreen extends CustomState
 
         launcher = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/LauncherScreen/launcher"));
 
-        InitState.setMouseRect(415.0, FlxG.width - 415.0, 70.0, FlxG.height - 70.0);
-
         launcher.active = false;
 
         launcher.scale.set(1.5, 1.5);
@@ -47,11 +47,11 @@ class LauncherScreen extends CustomState
 
         add(launcher);
 
+        InitState.setMouseRect(launcher.x, launcher.x + launcher.width, launcher.y, launcher.y + launcher.height);
+
         playButton = new LauncherButton(0.0, 0.0, "playButton");
 
-        playButton.onClick.add(() -> playSlapSound(clickPlayButton));
-
-        playButton.onClick.add(clearClickSignals);
+        playButton.onClick.add(playSlapSound.bind(clickPlayButton));
 
         playButton.setPosition(launcher.x + 15.0, launcher.y + launcher.height - playButton.height - 15.0);
 
@@ -59,7 +59,7 @@ class LauncherScreen extends CustomState
 
         twitterButton = new LauncherButton(0.0, 0.0, "twitterButton");
 
-        twitterButton.onClick.add(() -> playSlapSound(clickTwitterButton));
+        twitterButton.onClick.add(() -> {playSlapSound(null); clickTwitterButton();});
 
         twitterButton.setPosition(launcher.getMidpoint().x - twitterButton.width * 0.5, launcher.y + launcher.height - twitterButton.height - 15.0);
 
@@ -67,13 +67,13 @@ class LauncherScreen extends CustomState
 
         exitButton = new LauncherButton(0.0, 0.0, "exitButton");
 
-        exitButton.onClick.add(() -> playSlapSound(clickExitButton));
-
-        exitButton.onClick.add(clearClickSignals);
+        exitButton.onClick.add(playSlapSound.bind(clickExitButton));
 
         exitButton.setPosition(launcher.x + launcher.width - exitButton.width - 15.0, launcher.y + launcher.height - exitButton.height - 15.0);
 
         add(exitButton);
+
+        slapSound = FlxG.sound.load(AssetCache.getSound("shared/slap"));
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/LauncherScreen/tune"));
 
@@ -82,7 +82,10 @@ class LauncherScreen extends CustomState
 
     public function playSlapSound(onComplete:()->Void):Void
     {
-        FlxG.sound.play(AssetCache.getSound("shared/slap"), 1.0, false, null, true, onComplete);
+        slapSound.play(true);
+        
+        if (onComplete != null)
+            slapSound.onComplete = onComplete;
     }
 
     public function clickPlayButton():Void
@@ -98,15 +101,6 @@ class LauncherScreen extends CustomState
     public function clickExitButton():Void
     {
         Sys.exit(0);
-    }
-
-    public function clearClickSignals():Void
-    {
-        playButton.onClick.removeAll();
-
-        twitterButton.onClick.removeAll();
-
-        exitButton.onClick.removeAll();
     }
 }
 
@@ -139,13 +133,14 @@ class LauncherButton extends FlxSprite
 
         if (FlxG.mouse.overlaps(this, camera))
         {
-            animation.play("1");
+            if (FlxG.mouse.pressed)
+                animation.play("1");
+            else
+                animation.play("0");
 
             if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
-        else
-            animation.play("0");
     }
 
     override function destroy():Void

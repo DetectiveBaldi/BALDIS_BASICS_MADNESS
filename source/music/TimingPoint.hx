@@ -1,5 +1,7 @@
 package music;
 
+import data.Chart.TimingPointData;
+
 @:structInit
 class TimingPoint
 {
@@ -24,5 +26,10 @@ class TimingPoint
         this.tempo = tempo;
 
         beatOffset = 0.0;
+    }
+
+    public static function decodeData(v:TimingPointData):TimingPoint
+    {
+        return {time: v.time, tempo: v.tempo}
     }
 }

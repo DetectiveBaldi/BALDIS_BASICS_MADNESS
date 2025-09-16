@@ -213,16 +213,16 @@ class DetentionL extends PlayState
             tween.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
-        if (step == 674)
+        if (step == 684)
         {
-            tween.tween(player, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+            tween.tween(player, {x: player.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
             var __plr:Character = getPlayer("walk-legs");
 
-            tween.tween(__plr, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+            tween.tween(__plr, {x: __plr.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
-        if (step == 728)
+        if (step == 736)
         {
             detentionS.hall.animation.pause();
 
@@ -243,15 +243,17 @@ class DetentionL extends PlayState
         
         if (step == 752)
         {
-            player.x = -800.0;
+            tween.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001);
 
-            tween.tween(player, {x: 810.0}, conductor.beatLength * 8.0 * 0.001);
+            player.x = -300.0;
+
+            tween.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
 
-            __plr.x = -800.0;
+            __plr.x = -300.0;
             
-            tween.tween(__plr, {x: 810.0}, conductor.beatLength * 8.0 * 0.001);
+            tween.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             detentionS.hall.visible = false;
 

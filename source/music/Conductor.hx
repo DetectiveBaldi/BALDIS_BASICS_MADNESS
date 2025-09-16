@@ -75,20 +75,12 @@ class Conductor
         return getTimingPointAtTime(time).tempo;
     }
 
-    public var stepLength(get, never):Float;
-
-    @:noCompletion
-    function get_stepLength():Float
-    {
-        return 60.0 / tempo * 0.25 * 1000.0;
-    }
-
     public var beatLength(get, never):Float;
 
     @:noCompletion
     function get_beatLength():Float
     {
-        return stepLength * 4.0;
+        return getTimingPointAtTime(time).beatLength;
     }
 
     public var time:Float;
@@ -173,14 +165,10 @@ class Conductor
         return getBeatAt(time) * 0.25;
     }
 
-    public function writeTimingPointData(dataList:Array<TimingPointData>):Void
+    public function writeTimingPointData(list:Array<TimingPointData>):Void
     {
-        for (i in 0 ... dataList.length)
-        {
-            var data:TimingPointData = dataList[i];
-
-            timingPoints.push({time: data.time, tempo: data.tempo});
-        }
+        for (i in 0 ... list.length)
+            timingPoints.push(TimingPoint.decodeData(list[i]));
 
         timingPoints.sortTimed();
     }

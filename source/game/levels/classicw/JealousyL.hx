@@ -149,7 +149,7 @@ class JealousyL extends PlayState
 
             opponent.x = 1800.0;
 
-            tween.tween(opponent, {x: 660.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(opponent, {x: 600.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 64)
@@ -159,8 +159,6 @@ class JealousyL extends PlayState
             opponent.skipDance = false;
 
             tween.cancelTweensOf(opponent);
-
-            tween.tween(opponent, {x: 600.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 128 || step == 224 || step == 784)

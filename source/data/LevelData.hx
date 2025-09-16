@@ -21,7 +21,7 @@ class LevelData
 
     public var showInFreeplayMenu:Bool;
 
-    public var obscurity:ObscurityLevel;
+    public var obscurity:ObscurityStatus;
 
     public function new(week:WeekData, name:String, difficulty:String = "Normal"):Void
     {
@@ -44,7 +44,7 @@ class LevelData
         {
             var s:String = split[i];
 
-            split[i] = s.getFirstCharacter().toUpperCase();
+            split[i] = s.getFirstChar().toUpperCase();
         }
 
         return '${split.join("")}L';
@@ -66,11 +66,20 @@ class LevelData
     }
 }
 
-enum ObscurityLevel
+enum ObscurityStatus
 {
+    /**
+     * Level only appears in the Freeplay Screen.
+     */
     NONE;
 
+    /**
+     * Level only appears in the Mystery Screen, and has an unlock screen when initially completing the level.
+     */
     SMALL;
 
+    /**
+     * Level only appears in the Mystery Screen, but does not have an unlock screen when initially completing the level.
+     */
     LARGE;
 }

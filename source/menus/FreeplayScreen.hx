@@ -8,6 +8,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 import flixel.group.FlxSpriteGroup;
 
+import flixel.input.keyboard.FlxKey;
+
 import flixel.math.FlxMath;
 import flixel.math.FlxRect;
 
@@ -36,6 +38,8 @@ import game.PlayState;
 import ui.HeightenedButton;
 import ui.OrientedButton;
 
+using StringTools;
+
 using util.MathUtil;
 using util.StringUtil;
 
@@ -63,6 +67,8 @@ class FreeplayScreen extends CustomState
     public var poster:FlxSprite;
 
     public var difficultyPanel:FlxSprite;
+
+    public var filter:String;
 
     override function create():Void
     {
@@ -203,6 +209,56 @@ class FreeplayScreen extends CustomState
         super.update(elapsed);
 
         scrollBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
+
+        if (!scrollBg.animation.finished)
+            return;
+
+        var key:FlxKey = FlxG.keys.firstJustPressed();
+
+        if (key != -1)
+        {
+            var strKey:String = FlxKey.toStringMap[key];
+
+            var lastFilter:String = filter;
+
+            if (StringUtil.ALPHABET_FILTER.match(strKey))
+                filter += strKey;
+            else
+            {
+                if (key == FlxKey.BACKSPACE)
+                    filter = filter.substring(0, filter.length - 1);
+            }
+
+            if (filter != lastFilter)
+            {
+                if (lastFilter == "")
+                    lastSelectedLevel[selectedDifficulty] = selectedLevel;
+
+                var resetSearch:Bool = filter.length == 0.0;
+
+                var newLevels:Array<LevelData> = filterLevelsList(resetSearch);
+
+                if (newLevels.length == 0.0)
+                {
+                    filter = lastFilter;
+
+                    FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
+
+                    return;
+                }
+
+                levels = newLevels;
+
+                if (resetSearch)
+                    selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
+                else
+                    selectedLevel = 0;
+
+                changeSelection(0);
+
+                FlxG.sound.play(AssetCache.getSound("shared/type"));
+            }
+        }
     }
 
     override function destroy():Void
@@ -216,7 +272,8 @@ class FreeplayScreen extends CustomState
     {
         var list:Array<String> = Difficulty.list;
 
-        lastSelectedLevel[selectedDifficulty] = selectedLevel;
+        if (filter == "")
+            lastSelectedLevel[selectedDifficulty] = selectedLevel;
 
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
 
@@ -272,8 +329,11 @@ class FreeplayScreen extends CustomState
         }
     }
 
-    public function filterLevelsList():Array<LevelData>
+    public function filterLevelsList(resetSearch:Bool = true):Array<LevelData>
     {
+        if (resetSearch)
+            filter = "";
+
         var res:Array<LevelData> = new Array<LevelData>();
 
         var list:Array<String> = Difficulty.list;
@@ -290,14 +350,27 @@ class FreeplayScreen extends CustomState
             var hasDifficulty:Bool = week.hasDifficulty(difficulty);
 
             if (!hasDifficulty #if !debug || (difficulty != "Normal" &&
-                HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end)
+                HighScore.getWeekScore(week.name, "Normal").score == 0.0) #end )
                     continue;
 
             for (j in 0 ... week.levels.length)
             {
                 var level:LevelData = week.levels[j];
 
-                if (level.difficulty != difficulty)
+                var passesSearch:Bool = true;
+
+                #if !debug
+                if (filter != "")
+                {
+                    if (!level.name.toUpperCase().startsWith(filter))
+                        passesSearch = false;
+
+                    if (!week.scoresValidated() || week.levels.indexOf(level) != 0.0 && HighScore.getLevelScore(level.name, level.difficulty).score == 0.0)
+                        passesSearch = false;
+                }
+                #end
+
+                if (!passesSearch || level.difficulty != difficulty)
                     continue;
 
                 res.push(level);
@@ -308,8 +381,19 @@ class FreeplayScreen extends CustomState
         {
             var level:LevelData = LevelData.list[i];
 
-            if (level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu || level.obscurity != NONE)
-                continue;
+            var passesSearch:Bool = true;
+
+            #if !debug
+            if (filter != "")
+            {
+                if (!level.name.toUpperCase().startsWith(filter) || HighScore.getLevelScore(level.name, level.difficulty).score == 0.0)
+                    passesSearch = false;
+            }
+            #end
+
+            if (!passesSearch || level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu ||
+                level.obscurity != NONE)
+                    continue;
 
             res.push(level);
         }
@@ -348,8 +432,8 @@ class FreeplayScreen extends CustomState
         {
             var filtered:Array<LevelData> = week.filterByDifficulty(level.difficulty);
             
-            if (#if debug false #else !week.scoresValidated() || filtered.indexOf(level) != 0.0 &&
-                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end)
+            if ( #if debug false #else !week.scoresValidated() || filtered.indexOf(level) != 0.0 &&
+                HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end )
                     path = "week-score-needed";
         }
 
@@ -414,7 +498,7 @@ class FreeplayScreen extends CustomState
 
     public function clickLeftLevel():Void
     {
-        if (!scrollBg.animation.finished)
+        if (levels.length == 1.0 || !scrollBg.animation.finished)
             return;
 
         changeSelection(-1);
@@ -422,7 +506,7 @@ class FreeplayScreen extends CustomState
 
     public function clickRightLevel():Void
     {
-        if (!scrollBg.animation.finished)
+        if (levels.length == 1.0 || !scrollBg.animation.finished)
             return;
 
         changeSelection(1);
@@ -481,6 +565,6 @@ class FreeplayScreen extends CustomState
                 return;
         }
 
-        openSubState(new LevelInfoScreen(levels[selectedLevel]));
+        openSubState(new LevelInfoScreen(level));
     }
 }

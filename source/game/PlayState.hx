@@ -424,7 +424,7 @@ class PlayState extends CustomState
 
         if (FlxG.keys.justPressed.EIGHT)
             FlxG.switchState(() -> new editors.CharacterEditorState(
-                () -> PlayState.getClassFromLevel(), player.config.name));
+                () -> PlayState.getClassFromLevel(params), player.config.name));
         #end
     }
 
@@ -553,7 +553,7 @@ class PlayState extends CustomState
 
                 var totalStats:PlayStats = PlayStats.empty();
 
-                totalStats = totalStats.concat(for (k => v in weekStats) v);
+                totalStats.concat(for (k => v in weekStats) v);
 
                 score = totalStats.score;
 
@@ -773,10 +773,6 @@ class PlayState extends CustomState
 
     public function gameOver():Void
     {
-        #if !FEATURE_GAME_OVER
-        return;
-        #end
-        
         persistentDraw = false;
 
         openSubState(new GameOverScreen(this));

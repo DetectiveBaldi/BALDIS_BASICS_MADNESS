@@ -105,7 +105,7 @@ class StandoffL extends PlayState
 
             baldi = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
             baldi.setPosition(400.0, 110.0);
-            baldi.scale.set(0.29, 0.29);
+            baldi.scale.set(0.25, 0.25);
             baldi.skipDance = true;
             baldi.skipSing = true;
             baldi.animation.play("slap");
@@ -131,7 +131,7 @@ class StandoffL extends PlayState
             
             baldi.animation.play("slap");
         
-            tween.tween(baldi, {y: 108.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tween.tween(baldi, {y: 112.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         
             tween.tween(baldi.scale, {x: baldi.scale.x + 0.035, y: baldi.scale.y + 0.035}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
