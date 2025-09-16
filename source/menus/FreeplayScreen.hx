@@ -359,16 +359,14 @@ class FreeplayScreen extends CustomState
 
                 var passesSearch:Bool = true;
 
-                #if !debug
                 if (filter != "")
                 {
                     if (!level.name.toUpperCase().startsWith(filter))
                         passesSearch = false;
 
-                    if (!week.scoresValidated() || week.levels.indexOf(level) != 0.0 && HighScore.getLevelScore(level.name, level.difficulty).score == 0.0)
+                    if ( #if debug false #else !week.scoresValidated() || week.levels.indexOf(level) != 0.0 && HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end )
                         passesSearch = false;
                 }
-                #end
 
                 if (!passesSearch || level.difficulty != difficulty)
                     continue;
@@ -383,13 +381,14 @@ class FreeplayScreen extends CustomState
 
             var passesSearch:Bool = true;
 
-            #if !debug
             if (filter != "")
             {
-                if (!level.name.toUpperCase().startsWith(filter) || HighScore.getLevelScore(level.name, level.difficulty).score == 0.0)
+                if (!level.name.toUpperCase().startsWith(filter)
+                    return;
+                
+                if ( #if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0) #end )
                     passesSearch = false;
             }
-            #end
 
             if (!passesSearch || level.difficulty != list[selectedDifficulty] || !level.showInFreeplayMenu ||
                 level.obscurity != NONE)
