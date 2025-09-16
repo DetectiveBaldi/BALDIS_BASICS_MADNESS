@@ -104,7 +104,7 @@ class StandoffL extends PlayState
             standoffS.hall_Overlay0.visible = true;
 
             baldi = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
-            baldi.setPosition(400.0, 105.0);
+            baldi.setPosition(400.0, 110.0);
             baldi.scale.set(0.29, 0.29);
             baldi.skipDance = true;
             baldi.skipSing = true;
@@ -140,7 +140,7 @@ class StandoffL extends PlayState
                     ease: FlxEase.quartOut,
                     onComplete: (_tween:FlxTween) ->
                     {
-                        tween.tween(baldi, {y: 105.0}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
+                        tween.tween(baldi, {y: 110.0}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
 
                         tween.tween(baldi.scale, {x: baldi.scale.x - 0.035, y: baldi.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
 
@@ -217,7 +217,7 @@ class StandoffL extends PlayState
                     {                        
                         tween.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 3.5 * 0.001);
 
-                        tween.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 3.5 * 0.001,
+                        tween.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 4.0 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {

@@ -241,26 +241,17 @@ class DetentionL extends PlayState
             );
         }
         
-        if (step == 736)
-            if (Options.flashingLights)
-                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001);
-        
         if (step == 752)
         {
-            if (Options.flashingLights)
-                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
-            
-            tween.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.backIn});
+            player.x = -800.0;
 
-            player.x = -300.0;
-
-            tween.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
+            tween.tween(player, {x: 810.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
 
-            __plr.x = -300.0;
+            __plr.x = -800.0;
             
-            tween.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
+            tween.tween(__plr, {x: 810.0}, conductor.beatLength * 8.0 * 0.001);
 
             detentionS.hall.visible = false;
 

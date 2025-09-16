@@ -157,6 +157,10 @@ class LiteratureL extends PlayState
         {
             FlxG.camera.visible = true;
 
+            cameraLock = FOCUS_CAM_POINT;
+
+            cameraPoint.centerTo();
+
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
@@ -243,6 +247,8 @@ class LiteratureL extends PlayState
             opponent.visible = false;
 
             player.visible = false;
+
+            cameraLock = FOCUS_CAM_CHAR;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-dance"));
             opp.scale.set(1.5, 1.5);
