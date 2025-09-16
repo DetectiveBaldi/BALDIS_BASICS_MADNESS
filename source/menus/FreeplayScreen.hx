@@ -384,9 +384,9 @@ class FreeplayScreen extends CustomState
             if (filter != "")
             {
                 if (!level.name.toUpperCase().startsWith(filter))
-                    return;
+                    passesSearch = false;
                 
-                if ( #if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0) #end )
+                if ( #if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end )
                     passesSearch = false;
             }
 
