@@ -548,6 +548,8 @@ class GainGL extends PlayState
 
         if (step == 1296.0)
         {
+            cameraPoint.x += 600.0;
+
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
         

@@ -222,17 +222,45 @@ class DetentionL extends PlayState
             tween.tween(__plr, {x: 340.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
+        if (step == 728)
+        {
+            detentionS.hall.animation.pause();
+
+            var _plr:Character = getPlayer("walk-legs");
+
+            tween.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
+                {
+                    ease: FlxEase.sineIn, 
+                }
+            );
+        
+            tween.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
+                {
+                    ease: FlxEase.sineIn, 
+                }
+            );
+        }
+        
+        if (step == 736)
+            if (Options.flashingLights)
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001);
+        
         if (step == 752)
         {
-            player.x = -1200.0;
+            if (Options.flashingLights)
+                gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
+            
+            tween.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.backIn});
 
-            tween.tween(player, {x: 800.0}, conductor.beatLength * 8.0 * 0.001);
+            player.x = -300.0;
+
+            tween.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
 
-            __plr.x = -1200.0;
+            __plr.x = -300.0;
             
-            tween.tween(__plr, {x: 800.0}, conductor.beatLength * 8.0 * 0.001);
+            tween.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             detentionS.hall.visible = false;
 
@@ -264,6 +292,8 @@ class DetentionL extends PlayState
             FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
             getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
+
+            gameCameraZoom = 0.6;
 
             var plr:Character = getPlayer("bf-walk-detention");
             plr.visible = false;
