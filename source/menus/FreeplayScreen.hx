@@ -383,7 +383,7 @@ class FreeplayScreen extends CustomState
 
             if (filter != "")
             {
-                if (!level.name.toUpperCase().startsWith(filter)
+                if (!level.name.toUpperCase().startsWith(filter))
                     return;
                 
                 if ( #if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0) #end )
