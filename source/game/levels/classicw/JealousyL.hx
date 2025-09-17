@@ -77,10 +77,13 @@ class JealousyL extends PlayState
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-        
-        {
-            playField.healthBar.opponentIcon.offset.x = Math.random() * 8 - 4;
-        }
+
+        var offset:Float = FlxG.random.float(0.0, 4.0) * 2.0;
+
+        if (playField.healthBar.value > 80.0)
+            offset = FlxG.random.float(4.0, 8.0) * 4.0;
+
+        playField.healthBar.opponentIcon.offset.x = offset;
     }
 
     override function stepHit(step:Int):Void
@@ -149,7 +152,7 @@ class JealousyL extends PlayState
 
             opponent.x = 1800.0;
 
-            tween.tween(opponent, {x: 600.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
+            tween.tween(opponent, {x: 580.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 64)
@@ -157,8 +160,6 @@ class JealousyL extends PlayState
             playField.visible = true;
 
             opponent.skipDance = false;
-
-            tween.cancelTweensOf(opponent);
         }
 
         if (step == 128 || step == 224 || step == 784)

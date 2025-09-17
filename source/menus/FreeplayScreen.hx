@@ -68,7 +68,13 @@ class FreeplayScreen extends CustomState
 
     public var difficultyPanel:FlxSprite;
 
-    public var filter:String;
+    public var lastSearch:String;
+
+    public var search:String;
+
+    public var searchText:FlxText;
+
+    public var searchGlass:FlxSprite;
 
     override function create():Void
     {
@@ -161,6 +167,44 @@ class FreeplayScreen extends CustomState
 
         updateDifficultyPanel(true);
 
+        lastSearch = "";
+
+        search = "";
+
+        searchText = new FlxText(0.0, 0.0);
+
+        searchText.visible = false;
+
+        searchText.color = FlxColor.BLACK;
+
+        searchText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        searchText.size = 32;
+
+        searchText.bold = true;
+
+        searchText.underline = true;
+
+        searchText.alignment = CENTER;
+
+        searchText.setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
+
+        searchText.textField.antiAliasType = ADVANCED;
+
+        searchText.textField.sharpness = 400.0;
+
+        searchText.setPosition(searchText.getCenterX(), 465.0);
+
+        add(searchText);
+
+        searchGlass = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/search-glass"));
+
+        searchGlass.active = false;
+
+        searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
+
+        add(searchGlass);
+
         changeDifficulty(0);
 
         var playButton:HeightenedButton = addHeightenedButton("Play!", LARGE, clickPlayButton);
@@ -219,45 +263,78 @@ class FreeplayScreen extends CustomState
         {
             var strKey:String = FlxKey.toStringMap[key];
 
-            var lastFilter:String = filter;
+            var alphMatch:Bool = StringUtil.ALPHABET_FILTER.match(strKey);
 
-            if (StringUtil.ALPHABET_FILTER.match(strKey))
-                filter += strKey;
+            if (alphMatch)
+                search += strKey;
             else
             {
+                if (key == FlxKey.SPACE)
+                    search += " ";
+
                 if (key == FlxKey.BACKSPACE)
-                    filter = filter.substring(0, filter.length - 1);
+                    search = search.substring(0, search.length - 1);
             }
 
-            if (filter != lastFilter)
+            if (alphMatch || key == FlxKey.SPACE || key == FlxKey.BACKSPACE)
             {
-                if (lastFilter == "")
-                    lastSelectedLevel[selectedDifficulty] = selectedLevel;
+                searchText.text = search;
 
-                var resetSearch:Bool = filter.length == 0.0;
+                searchText.setPosition(searchText.getCenterX(), 465.0);
 
-                var newLevels:Array<LevelData> = filterLevelsList(resetSearch);
-
-                if (newLevels.length == 0.0)
+                if (search.length > 0.0)
                 {
-                    filter = lastFilter;
+                    searchText.visible = true;
 
-                    FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
+                    searchGlass.visible = true;
 
-                    return;
+                    searchGlass.setPosition(searchText.x + searchText.width, searchGlass.getCenterY(searchText));
+
+                    FlxG.sound.play(AssetCache.getSound("shared/type"));
                 }
+                else
+                {
+                    searchText.visible = false;
 
+                    searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
+                }
+            }
+        }
+
+        if (FlxG.keys.justPressed.ENTER)
+        {
+            if (lastSearch == "")
+                lastSelectedLevel[selectedDifficulty] = selectedLevel;
+
+            var resetSearch:Bool = search.length == 0.0;
+
+            var newLevels:Array<LevelData> = filterLevelsList(resetSearch);
+
+            if (newLevels.length > 0.0)
+            {
                 levels = newLevels;
 
                 if (resetSearch)
+                {
                     selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
+
+                    searchGlass.visible = true;
+
+                    searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
+                }
                 else
+                {
                     selectedLevel = 0;
 
-                changeSelection(0);
+                    searchGlass.visible = false;
+                }
 
-                FlxG.sound.play(AssetCache.getSound("shared/type"));
+                lastSearch = search;
+
+                changeSelection(0);
             }
+            else
+                FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
         }
     }
 
@@ -272,7 +349,7 @@ class FreeplayScreen extends CustomState
     {
         var list:Array<String> = Difficulty.list;
 
-        if (filter == "")
+        if (search == "")
             lastSelectedLevel[selectedDifficulty] = selectedLevel;
 
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
@@ -332,7 +409,15 @@ class FreeplayScreen extends CustomState
     public function filterLevelsList(resetSearch:Bool = true):Array<LevelData>
     {
         if (resetSearch)
-            filter = "";
+        {
+            search = "";
+
+            searchText.visible = false;
+
+            searchGlass.visible = true;
+
+            searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
+        }
 
         var res:Array<LevelData> = new Array<LevelData>();
 
@@ -359,9 +444,9 @@ class FreeplayScreen extends CustomState
 
                 var passesSearch:Bool = true;
 
-                if (filter != "")
+                if (search != "")
                 {
-                    if (!level.name.toUpperCase().startsWith(filter))
+                    if (!level.name.toUpperCase().startsWith(search))
                         passesSearch = false;
 
                     if ( #if debug false #else !week.scoresValidated() || week.levels.indexOf(level) != 0.0 && HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end )
@@ -381,9 +466,9 @@ class FreeplayScreen extends CustomState
 
             var passesSearch:Bool = true;
 
-            if (filter != "")
+            if (search != "")
             {
-                if (!level.name.toUpperCase().startsWith(filter))
+                if (!level.name.toUpperCase().startsWith(search))
                     passesSearch = false;
                 
                 if ( #if debug false #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end )
