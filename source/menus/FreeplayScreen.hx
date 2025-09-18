@@ -58,6 +58,8 @@ class FreeplayScreen extends CustomState
 
     public var scrollBg:FlxSprite;
 
+    public var levitateBg:FlxSprite;
+
     public var tv:FlxSprite;
 
     public var tvPortrait:FlxSprite;
@@ -118,6 +120,27 @@ class FreeplayScreen extends CustomState
         scrollBg.screenCenter();
 
         add(scrollBg);
+
+        levitateBg = new FlxSprite();
+
+        levitateBg.visible = false;
+
+        levitateBg.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/levitate-bg"), 
+            Paths.image(Paths.xml("menus/FreeplayScreen/levitate-bg")));
+
+        levitateBg.animation.addByPrefix("levitate", "levitate", 20.0, false);
+
+        levitateBg.animation.onFinish.add((name:String) -> { levitateBg.visible = false; poster.visible = true; });
+
+        levitateBg.setGraphicSize(FlxG.width, FlxG.height);
+
+        levitateBg.updateHitbox();
+
+        levitateBg.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
+
+        levitateBg.screenCenter();
+
+        add(levitateBg);
 
         tv = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/tv"));
 
@@ -257,6 +280,11 @@ class FreeplayScreen extends CustomState
         if (!scrollBg.animation.finished)
             return;
 
+        levitateBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
+
+        if (!levitateBg.animation.finished)
+            return;
+
         var key:FlxKey = FlxG.keys.firstJustPressed();
 
         if (key != -1)
@@ -349,6 +377,14 @@ class FreeplayScreen extends CustomState
     {
         var list:Array<String> = Difficulty.list;
 
+        scrollBg.visible = false;
+
+        levitateBg.visible = true;
+
+        levitateBg.animation.play("levitate", false, change < 0.0);
+
+        poster.visible = false;
+
         if (search == "")
             lastSelectedLevel[selectedDifficulty] = selectedLevel;
 
@@ -368,7 +404,9 @@ class FreeplayScreen extends CustomState
         if (change != 0.0)
             selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
 
-        changeSelection(0);
+        var level:LevelData = levels[selectedLevel];
+
+        updatePoster(level);
 
         if (change != 0.0)
             updateDifficultyPanel();
@@ -379,6 +417,8 @@ class FreeplayScreen extends CustomState
         selectedLevel = FlxMath.wrap(selectedLevel + change, 0, levels.length - 1);
 
         scrollBg.visible = true;
+
+        levitateBg.visible = false;
 
         scrollBg.animation.play("move", false, change < 0.0);
 
@@ -566,7 +606,7 @@ class FreeplayScreen extends CustomState
 
     public function clickLeftDifficulty():Void
     {
-        if (!scrollBg.animation.finished)
+        if (!levitateBg.animation.finished)
             return;
 
         changeDifficulty(-1);
@@ -574,7 +614,7 @@ class FreeplayScreen extends CustomState
 
     public function clickRightDifficulty():Void
     {
-        if (!scrollBg.animation.finished)
+        if (!levitateBg.animation.finished)
             return;
 
         changeDifficulty(1);

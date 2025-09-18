@@ -119,7 +119,7 @@ class LiteratureL extends PlayState
 
         if (step == 640)
         {
-            tween.tween(this, {gameCameraZoom: 1.3}, conductor.beatLength * 16.0 * 0.001);
+            tween.tween(this, {gameCameraZoom: 1.1}, conductor.beatLength * 16.0 * 0.001);
             
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -156,10 +156,6 @@ class LiteratureL extends PlayState
         if (step == 776)
         {
             FlxG.camera.visible = true;
-
-            cameraLock = FOCUS_CAM_POINT;
-
-            cameraPoint.centerTo();
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -208,6 +204,12 @@ class LiteratureL extends PlayState
         {
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            cameraLock = FOCUS_CAM_POINT;
+
+            gameCameraZoom = 0.65;
+
+            cameraPoint.centerTo();
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;

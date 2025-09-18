@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="levitate-bg.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="levitate0000" x="0" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0001" x="0" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0002" x="1280" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0003" x="1280" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0004" x="2560" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0005" x="2560" y="0" width="1280" height="720"/>
+	<SubTexture name="levitate0006" x="0" y="720" width="1280" height="720"/>
+	<SubTexture name="levitate0007" x="0" y="720" width="1280" height="720"/>
+	<SubTexture name="levitate0008" x="1280" y="720" width="1280" height="720"/>
+	<SubTexture name="levitate0009" x="1280" y="720" width="1280" height="720"/>
+</TextureAtlas>
