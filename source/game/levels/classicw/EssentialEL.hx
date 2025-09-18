@@ -52,6 +52,8 @@ class EssentialEL extends PlayState
 
         essentialES.exit0.visible = true;
 
+        plrStrumline.botplay = true;
+
         var opp:Character = getOpponent("baldi-mad-face-front");
         opp.scale.set(1.4, 1.4);
         opp.updateHitbox();
@@ -88,6 +90,8 @@ class EssentialEL extends PlayState
             tween.tween(player, {x: 550.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             playField.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 320)
@@ -106,6 +110,13 @@ class EssentialEL extends PlayState
             tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
+        if (step == 336.0)
+        {
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
+        }
+
         if (step == 384 || step == 394 || step == 396)
         {
             essentialES.exit1.color = 0xF19999;
@@ -121,6 +132,8 @@ class EssentialEL extends PlayState
             tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
             tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+
+            plrStrumline.botplay = Options.botplay;
 
             tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFFD8D8,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
@@ -345,6 +358,11 @@ class EssentialEL extends PlayState
 
             cameraPoint.x = 500.0;
 
+            oppStrumline.strums.alpha = 0.0;
+            plrStrumline.strums.alpha = 0.0;
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
+
             opponent.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-zesty-essential"));
@@ -386,6 +404,9 @@ class EssentialEL extends PlayState
         if (step == 1544)
         {
             tween.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadIn});
+
+            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 1546)
@@ -398,6 +419,8 @@ class EssentialEL extends PlayState
 
             essentialES.hall.visible = true;
             essentialES.hall0.visible = false;
+
+            plrStrumline.botplay = Options.botplay;
 
             opponent.x = -845.0;
 
@@ -497,6 +520,11 @@ class EssentialEL extends PlayState
             win.camera = gameCamera;
             win.screenCenter();
             insert(0, win);
+        }
+
+        if (step == 1856)
+        {
+            plrStrumline.botplay = true;
         }
 
         if (step == 1916)

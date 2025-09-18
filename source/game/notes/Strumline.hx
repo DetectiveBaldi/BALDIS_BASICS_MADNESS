@@ -277,7 +277,7 @@ class Strumline extends FlxGroup
         }
 
         while (notesPendingRemoval.length > 0.0)
-            removeNote (notesPendingRemoval.pop());
+            removeNote(notesPendingRemoval.pop());
 
         notes.update(elapsed);
 
@@ -299,7 +299,6 @@ class Strumline extends FlxGroup
         onNoteHit = cast FlxDestroyUtil.destroy(onNoteHit);
 
         onNoteMiss = cast FlxDestroyUtil.destroy(onNoteMiss);
-
 
         onNoteSpawn = cast FlxDestroyUtil.destroy(onNoteSpawn);
 

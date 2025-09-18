@@ -75,8 +75,6 @@ class RoughEL extends PlayState
 
         plrStrumline.botplay = true;
 
-        plrStrumline.resetStrums();
-
         AssetCache.getGraphic("game/Character/1st-prize-anim-coming");
 
         AssetCache.getGraphic("game/Character/1st-prize-0");

@@ -59,6 +59,8 @@ class DetentionL extends PlayState
 
         playField.visible = false;
 
+        plrStrumline.botplay = true;
+
         var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("walk-legs"));
 
         var anim:FlxAnimation = __plr.animation.getByName("legs");
@@ -179,9 +181,14 @@ class DetentionL extends PlayState
         {
             player.animation.play("t2");
 
-            player.skipDance = false;
+            player.animation.onFinish.addOnce((name:String) ->
+            {
+                plrStrumline.botplay = Options.botplay;
 
-            player.skipSing = false;
+                player.skipDance = false;
+
+                player.skipSing = false;
+            });
         }
 
         if (step == 400)
@@ -220,6 +227,20 @@ class DetentionL extends PlayState
             var __plr:Character = getPlayer("walk-legs");
 
             tween.tween(__plr, {x: __plr.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+        }
+
+        if (step == 688)
+        {
+            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+
+            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+        }
+
+        if (step == 696)
+        {
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
         }
 
         if (step == 736)
@@ -271,6 +292,12 @@ class DetentionL extends PlayState
             detentionS.facultyStandard.visible = false;
 
             detentionS.facultyStandardOpen.setPosition(detentionS.facultyStandard.x, detentionS.facultyStandard.y);
+
+            plrStrumline.botplay = Options.botplay;
+
+            plrStrumline.strums.x = plrStrumline.strums.getCenterX();
+
+            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 776)
@@ -319,6 +346,12 @@ class DetentionL extends PlayState
 
             gameCameraZoom = 0.6;
 
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
+
+            plrStrumline.strums.alpha = 0.0;
+
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
 
@@ -349,10 +382,7 @@ class DetentionL extends PlayState
             tween.tween(opponent, {x: 250.0, y: 20.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
             tween.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
-        }
 
-        if (step == 940)
-        {
             var plr2:Character = getPlayer("bf-anim-caught");
 
             plr2.animation.play("turn");
@@ -372,6 +402,14 @@ class DetentionL extends PlayState
             detentionS.faculty1.visible = false;
             detentionS.faculty2.visible = false;
             detentionS.faculty0.visible = false;
+
+            oppStrumline.strums.alpha = 1.0;
+
+            plrStrumline.botplay = Options.botplay;
+
+            plrStrumline.strums.alpha = 1.0;
+
+            plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
 
             var plr2:Character = getPlayer("bf-anim-caught");
             plr2.visible = false;
@@ -465,6 +503,11 @@ class DetentionL extends PlayState
             detentionS.office1.visible = true;
 
             tween.tween(opponent, {x: -320.0}, conductor.beatLength * 2.0 * 0.001);
+        }
+
+        if (step == 1504)
+        {
+            plrStrumline.botplay = true;
         }
     }
 

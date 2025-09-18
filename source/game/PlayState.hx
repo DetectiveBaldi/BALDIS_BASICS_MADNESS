@@ -641,15 +641,15 @@ class PlayState extends CustomState
         {
             conductor.time = newTime;
             
-            playField.noteSpawner.reverseNoteIndex(newTime);
+            playField.noteSpawner.setNoteIndexAt(newTime);
 
-            reverseEventIndex(newTime);
+            setEventIndexAt(newTime);
         }
         else
         {
             pauseMusic();
 
-            playField.noteSpawner.removeNotesBefore(newTime);
+            playField.noteSpawner.setNoteIndexAt(newTime);
 
             while (conductor.time < newTime)
             {
@@ -661,7 +661,7 @@ class PlayState extends CustomState
         }
     }
 
-    public function reverseEventIndex(time:Float):Void
+    public function setEventIndexAt(time:Float):Void
     {
         eventIndex = 0;
         
@@ -670,7 +670,7 @@ class PlayState extends CustomState
         while (eventIndex < chart.events.length && event.time <= time)
         {
             eventIndex++;
-
+            
             event = chart.events[eventIndex];
         }
     }

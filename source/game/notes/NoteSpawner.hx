@@ -185,7 +185,7 @@ class NoteSpawner extends FlxBasic
         return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
     }
 
-    public function reverseNoteIndex(time:Float):Void
+    public function setNoteIndexAt(time:Float):Void
     {
         noteIndex = 0;
         
@@ -194,23 +194,8 @@ class NoteSpawner extends FlxBasic
         while (noteIndex < noteData.length && note.time <= time)
         {
             noteIndex++;
-
+            
             note = noteData[noteIndex];
-        }
-    }
-
-    public function removeNotesBefore(time:Float):Void
-    {
-        var i = noteData.length - 1;
-
-        while (i >= 0.0)
-        {
-            var noteSchema:NoteSchema = noteData[i];
-
-            if (noteIndex < i && noteSchema.time - getSpawnDistance(noteSchema.lane) < time)
-                noteData.remove(noteSchema);
-
-            i--;
         }
     }
 

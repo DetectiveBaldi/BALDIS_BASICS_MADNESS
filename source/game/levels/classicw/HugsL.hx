@@ -68,6 +68,12 @@ class HugsL extends PlayState
         playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
+        oppStrumline.strums.alpha = 0.0;
+
+        plrStrumline.botplay = true;
+
+        plrStrumline.strums.alpha = 0.0;
+
         player.setPosition(-1000.0, 120.0);
 
         player.skipDance = true;
@@ -141,12 +147,21 @@ class HugsL extends PlayState
             tween.tween(player, {x: -260.0}, conductor.beatLength * 4.0 * 0.001);
 
         if (step == 32)
-            player.animation.play("sright");
-
-        if (step == 64)
         {
-            if (Options.flashingLights)
-                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+            cameraLock = FOCUS_CAM_POINT;
+
+            cameraPoint.x += 250.0;
+
+            tween.tween(this, {gameCameraZoom: gameCameraZoom + 0.35}, conductor.beatLength * 0.001);
+
+            gameCameraZoom += 0.35;
+
+            player.animation.play("sright");
+        }
+
+        if (step == 56)
+        {
+            plrStrumline.botplay = Options.botplay;
 
             var _plr:Character = getPlayer("bf-intro-adrenaline");
             _plr.visible = false;
@@ -156,6 +171,24 @@ class HugsL extends PlayState
             plr.skipDance = false;
             players.add(plr);
             player = plr;
+
+            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+
+            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+        }
+
+        if (step == 64)
+        {
+            if (Options.flashingLights)
+                gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            cameraPoint.centerTo();
+
+            gameCamera.snapToTarget();
+
+            gameCamera.zoom = gameCameraZoom - 0.35;
+
+            gameCameraZoom -= 0.35;
 
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;

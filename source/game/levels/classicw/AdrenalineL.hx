@@ -59,6 +59,8 @@ class AdrenalineL extends PlayState
 
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
         oppStrumline.strums.alpha = 0.25;
+
+        plrStrumline.botplay = true;
        
         adrenalineS.closet.visible = true;
     
@@ -113,6 +115,8 @@ class AdrenalineL extends PlayState
         {
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            plrStrumline.botplay = Options.botplay;
 
             playField.visible = true;
 

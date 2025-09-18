@@ -43,6 +43,8 @@ class JealousyL extends PlayState
 
         super.create();
 
+        plrStrumline.botplay = true;
+
         player.setPosition(1600.0, 160.0);
 
         player.skipDance = true;
@@ -140,6 +142,8 @@ class JealousyL extends PlayState
         {
             jealousyS.hall0.visible = false;
             jealousyS.hall.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
 
             player.visible = false;
 
@@ -278,6 +282,10 @@ class JealousyL extends PlayState
             FlxG.camera.visible = false;
 
             gameCameraZoom = 0.6;
+
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
 
             opponent.visible = false;
 

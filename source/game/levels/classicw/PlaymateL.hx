@@ -173,6 +173,10 @@ class PlaymateL extends PlayState
 
             tutorText.kill();
 
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
+
             oppStrumline.strums.alpha = 0.0;
 
             plrStrumline.strums.alpha = 0.0;
@@ -248,6 +252,8 @@ class PlaymateL extends PlayState
         
         if (step == 1040)
         {
+            plrStrumline.botplay = Options.botplay;
+
             tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
 
             tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
@@ -361,6 +367,11 @@ class PlaymateL extends PlayState
 
         if (step == 1488)
         {
+            plrStrumline.botplay = true;
+        }
+
+        if (step == 1488)
+        {
             opp.animation.play("slap");
 
             tween.tween(opp, {x: 800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
@@ -407,6 +418,8 @@ class PlaymateL extends PlayState
         playmateS.hall.color = playmateS.cafe.color = FlxColor.WHITE;
 
         opponentVocals.volume = 1.0;
+
+        plrStrumline.botplay = Options.botplay;
         
         player.visible = false;
 
