@@ -412,6 +412,9 @@ class EssentialEL extends PlayState
         if (step == 1546)
             player.animation.play("run");
 
+        if (step == 1548)
+            plrStrumline.botplay = Options.botplay;
+
         if (step == 1552)
         {
             if (Options.flashingLights)
@@ -419,8 +422,6 @@ class EssentialEL extends PlayState
 
             essentialES.hall.visible = true;
             essentialES.hall0.visible = false;
-
-            plrStrumline.botplay = Options.botplay;
 
             opponent.x = -845.0;
 
