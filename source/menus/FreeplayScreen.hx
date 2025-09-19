@@ -201,7 +201,7 @@ class FreeplayScreen extends CustomState
 
         searchItem = new SearchItem();
 
-        searchItem.setPosition(searchItem.getCenterX(), 465.0);
+        searchItem.setPosition(searchItem.getCenterX(), 125.0);
 
         searchItem.updateIconPosition();
 
@@ -335,7 +335,7 @@ class FreeplayScreen extends CustomState
 
         var list:Array<String> = Difficulty.list;
 
-        var search:String = searchItem.search;
+        var search:String = searchItem.text;
 
         for (i in 0 ... WeekData.list.length)
         {
@@ -581,7 +581,7 @@ class FreeplayScreen extends CustomState
 
     public function clickPlayButton():Void
     {
-        if (searchItem.search != searchItem.lastSearch)
+        if (searchItem.text != searchItem.lastSearch && searchItem.text.length != 0.0)
         {
             searchItem.forceSearch();
 
@@ -634,8 +634,6 @@ class FreeplayScreen extends CustomState
 
 class SearchItem<T> extends FlxInputText
 {
-    public var search:String;
-
     public var lastSearch:String;
 
     public var getSearchData:()->Array<T>;
@@ -674,7 +672,7 @@ class SearchItem<T> extends FlxInputText
 
         useSelectedTextFormat = false;
 
-        search = "";
+        lastSearch = "";
 
         onSearchComplete = new FlxTypedSignal<(status:SearchStatus, result:Array<T>, search:String, lastSearch:String)->Void>();
 
@@ -720,9 +718,7 @@ class SearchItem<T> extends FlxInputText
                 {
                     if (text == filterEReg.replace(text, ""))
                     {
-                        search = this.text;
-
-                        icon.visible = true;
+                        updateIconVisible();
 
                         updateIconPosition();
 
@@ -753,8 +749,6 @@ class SearchItem<T> extends FlxInputText
 
                                 if (clipboardText != null && safeText.length > 0.0)
                                 {
-                                    search = safeText;
-
                                     updateIconVisible();
 
                                     updateIconPosition();
@@ -763,22 +757,27 @@ class SearchItem<T> extends FlxInputText
                                 }
                             }
                             else
-                            {
-                                search = text;
-
                                 updateIconPosition();
-                            }
                         }
 
                         if (cmd == DELETE_LEFT || cmd == DELETE_RIGHT)
                         {
-                            search = text;
-
                             updateIconVisible();
 
                             updateIconPosition();
 
-                            if (oldText.length > 0.0)
+                            var playSound:Bool = true;
+
+                            if (oldText.length == 0.0)
+                                playSound = false;
+
+                            if (caretIndex == 0.0 && cmd == DELETE_LEFT)
+                                playSound == false;
+
+                            if (caretIndex == text.length + 1 && cmd == DELETE_RIGHT)
+                                playSound = false;
+
+                            if (playSound)
                                 FlxG.sound.play(AssetCache.getSound("shared/type"));
                         }
                     }
@@ -815,30 +814,28 @@ class SearchItem<T> extends FlxInputText
         var lastSearch:String = this.lastSearch;
 
         if (status == SUCCESS)
-            this.lastSearch = search;
+            this.lastSearch = text;
 
         updateIconVisible();
 
-        onSearchComplete.dispatch(status, result, search, lastSearch);
+        onSearchComplete.dispatch(status, result, text, lastSearch);
     }
 
     public function emptySearch():Void
     {
-        search = "";
-
-        text = search;
+        text = "";
 
         updateIconPosition();
     }
 
     public function isEmpty():Bool
     {
-        return search.length == 0.0;
+        return text.length == 0.0;
     }
 
     public function updateIconVisible():Void
     {
-        icon.visible = search.length == 0.0 || search != lastSearch;
+        icon.visible = text.length == 0.0 || text != lastSearch;
     }
 
     public function updateIconPosition():Void
