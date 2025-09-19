@@ -395,7 +395,7 @@ class PlayState extends CustomState
         else
         {   
             if (Math.abs(conductor.time - instrumental.time) >= 25.0)
-                conductor.time = instrumental.time;
+                instrumental.time = conductor.time;
 
             if (mainVocals != null)
                 if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)

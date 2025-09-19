@@ -268,11 +268,15 @@ class DetentionL extends PlayState
 
             player.x = -300.0;
 
+            tween.cancelTweensOf(player);
+
             tween.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
 
             __plr.x = -300.0;
+
+            tween.cancelTweensOf(__plr);
             
             tween.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
