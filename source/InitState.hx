@@ -21,6 +21,8 @@ import game.HighScore;
 
 import plugins.MouseRectPlugin;
 
+import util.ClickSoundUtil;
+
 class InitState extends FlxState
 {
     public var nextState:NextState;
@@ -77,6 +79,8 @@ class InitState extends FlxState
         mouseRectPlugin = new MouseRectPlugin();
 
         FlxG.plugins.addPlugin(mouseRectPlugin);
+
+        ClickSoundUtil.init();
 
         FlxG.switchState(nextState);
     }

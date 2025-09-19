@@ -4,11 +4,9 @@ using StringTools;
 
 class StringUtil
 {
-    public static var ALPHABET_FILTER:EReg = ~/^[a-zA-Z]$/;
-
     public static function getFirstChar(str:String):String
     {
-        return str.substring(0, 1);
+        return str.charAt(0);
     }
 
     public static function setCase(str:String, delimiter:String = " ", strCase:StringCase):String

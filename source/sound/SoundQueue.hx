@@ -37,7 +37,7 @@ class SoundQueue
         if (!list.contains(sound))
             return;
 
-        var isPlaying:Bool = list.indexOf(sound) == 0.0;
+        var isPlaying:Bool = list[0] == sound;
 
         if (isPlaying)
             updateQueue();

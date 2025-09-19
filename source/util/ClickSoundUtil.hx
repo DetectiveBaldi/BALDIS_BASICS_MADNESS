@@ -12,19 +12,20 @@ class ClickSoundUtil
 
     public static var buttonClick:FlxSound;
 
-    public static function resolve(type:ClickSoundType = ITEM):FlxSound
+    public static function init():Void
     {
         buttonClick = FlxG.sound.load(AssetCache.getSound("shared/button-click"));
 
         buttonClick.persist = true;
 
-        itemClick ??= FlxG.sound.load(AssetCache.getSound("shared/item-click"));
+        itemClick = FlxG.sound.load(AssetCache.getSound("shared/item-click"));
 
         itemClick.persist = true;
+    }
 
-        var soundOut:FlxSound = type == BUTTON ? buttonClick : itemClick;
-
-        return soundOut;
+    public static function resolve(type:ClickSoundType = ITEM):FlxSound
+    {
+        return type == BUTTON ? buttonClick : itemClick;
     }
 
     public static function play(type:ClickSoundType = ITEM, volume:Float = 1.0):Void

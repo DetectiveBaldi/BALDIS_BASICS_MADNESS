@@ -1,13 +1,11 @@
 package util;
 
-import haxe.ds.ArraySort;
-
 class ArrayUtil
 {
-    public static function pushMany<T>(arr:Array<T>, ...values:T):Void
+    public static function pushMany<T>(arr:Array<T>, ...v:T):Void
     {
-        for (i in 0 ... values.length)
-            arr.push(values[i]);
+        for (i in 0 ... v.length)
+            arr.push(v[i]);
     }
 
     public static function first<T>(arr:Array<T>, func:(T)->Bool = null):T
@@ -48,11 +46,11 @@ class ArrayUtil
             result = arr[arr.length - 1];
         else
         {
-            var index:Int = arr.length - 1;
+            var i:Int = arr.length - 1;
 
-            while (index >= 0.0)
+            while (i >= 0.0)
             {
-                var value:T = arr[index];
+                var value:T = arr[i];
 
                 if (func(value))
                 {
@@ -61,7 +59,7 @@ class ArrayUtil
                     break;
                 }
 
-                index--;
+                i--;
             }
         }
 

@@ -1,1 +1,1 @@
-composer=KayipKux, BerryBoggle|step=16
+composer=BerryBoggle, KayipKux|step=16

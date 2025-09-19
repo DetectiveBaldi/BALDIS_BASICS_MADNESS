@@ -1,5 +1,9 @@
 package menus;
 
+import openfl.desktop.Clipboard;
+
+import openfl.geom.Rectangle;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -13,11 +17,14 @@ import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
 import flixel.math.FlxRect;
 
+import flixel.text.FlxInputText;
+import flixel.text.FlxInputTextManager;
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 
+import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
@@ -56,9 +63,17 @@ class FreeplayScreen extends CustomState
 
     public var background:FlxSprite;
 
-    public var scrollBg:FlxSprite;
+    public var scrollBgH:FlxSprite;
 
-    public var levitateBg:FlxSprite;
+    public var scrollBgV:FlxSprite;
+
+    public var isScrolling(get, never):Bool;
+
+    @:noCompletion
+    function get_isScrolling():Bool
+    {
+        return !scrollBgH.animation.finished || !scrollBgV.animation.finished;
+    }
 
     public var tv:FlxSprite;
 
@@ -70,13 +85,7 @@ class FreeplayScreen extends CustomState
 
     public var difficultyPanel:FlxSprite;
 
-    public var lastSearch:String;
-
-    public var search:String;
-
-    public var searchText:FlxText;
-
-    public var searchGlass:FlxSprite;
+    public var searchItem:SearchItem<LevelData>;
 
     override function create():Void
     {
@@ -100,47 +109,47 @@ class FreeplayScreen extends CustomState
 
         add(background);
 
-        scrollBg = new FlxSprite();
+        scrollBgH = new FlxSprite();
 
-        scrollBg.visible = false;
+        scrollBgH.visible = false;
 
-        scrollBg.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg"), 
-            Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg")));
+        scrollBgH.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg-h"), 
+            Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg-h")));
 
-        scrollBg.animation.addByPrefix("move", "move", 12.0, false);
+        scrollBgH.animation.addByPrefix("scroll-h", "scroll-h", 12.0, false);
 
-        scrollBg.animation.onFinish.add((name:String) -> { scrollBg.visible = false; poster.visible = true; });
+        scrollBgH.animation.onFinish.add((name:String) -> { scrollBgH.visible = false; poster.visible = true; });
 
-        scrollBg.setGraphicSize(FlxG.width, FlxG.height);
+        scrollBgH.setGraphicSize(FlxG.width, FlxG.height);
 
-        scrollBg.updateHitbox();
+        scrollBgH.updateHitbox();
 
-        scrollBg.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
+        scrollBgH.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
 
-        scrollBg.screenCenter();
+        scrollBgH.screenCenter();
 
-        add(scrollBg);
+        add(scrollBgH);
 
-        levitateBg = new FlxSprite();
+        scrollBgV = new FlxSprite();
 
-        levitateBg.visible = false;
+        scrollBgV.visible = false;
 
-        levitateBg.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/levitate-bg"), 
-            Paths.image(Paths.xml("menus/FreeplayScreen/levitate-bg")));
+        scrollBgV.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg-v"), 
+            Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg-v")));
 
-        levitateBg.animation.addByPrefix("levitate", "levitate", 20.0, false);
+        scrollBgV.animation.addByPrefix("scroll-v", "scroll-v", 20.0, false);
 
-        levitateBg.animation.onFinish.add((name:String) -> { levitateBg.visible = false; poster.visible = true; });
+        scrollBgV.animation.onFinish.add((name:String) -> { scrollBgV.visible = false; poster.visible = true; });
 
-        levitateBg.setGraphicSize(FlxG.width, FlxG.height);
+        scrollBgV.setGraphicSize(FlxG.width, FlxG.height);
 
-        levitateBg.updateHitbox();
+        scrollBgV.updateHitbox();
 
-        levitateBg.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
+        scrollBgV.clipRect = FlxRect.get(160.0, 0.0, 960.0, 720.0);
 
-        levitateBg.screenCenter();
+        scrollBgV.screenCenter();
 
-        add(levitateBg);
+        add(scrollBgV);
 
         tv = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/tv"));
 
@@ -190,43 +199,17 @@ class FreeplayScreen extends CustomState
 
         updateDifficultyPanel(true);
 
-        lastSearch = "";
+        searchItem = new SearchItem();
 
-        search = "";
+        searchItem.setPosition(searchItem.getCenterX(), 465.0);
 
-        searchText = new FlxText(0.0, 0.0);
+        searchItem.updateIconPosition();
 
-        searchText.visible = false;
+        searchItem.getSearchData = filterLevelsList;
 
-        searchText.color = FlxColor.BLACK;
+        searchItem.onSearchComplete.add(processSearchStatus);
 
-        searchText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        searchText.size = 32;
-
-        searchText.bold = true;
-
-        searchText.underline = true;
-
-        searchText.alignment = CENTER;
-
-        searchText.setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
-
-        searchText.textField.antiAliasType = ADVANCED;
-
-        searchText.textField.sharpness = 400.0;
-
-        searchText.setPosition(searchText.getCenterX(), 465.0);
-
-        add(searchText);
-
-        searchGlass = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/search-glass"));
-
-        searchGlass.active = false;
-
-        searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
-
-        add(searchGlass);
+        add(searchItem);
 
         changeDifficulty(0);
 
@@ -275,95 +258,11 @@ class FreeplayScreen extends CustomState
     {
         super.update(elapsed);
 
-        scrollBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
+        scrollBgH.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
 
-        if (!scrollBg.animation.finished)
-            return;
+        scrollBgV.animation.timeScale = scrollBgH.animation.timeScale;
 
-        levitateBg.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
-
-        if (!levitateBg.animation.finished)
-            return;
-
-        var key:FlxKey = FlxG.keys.firstJustPressed();
-
-        if (key != -1)
-        {
-            var strKey:String = FlxKey.toStringMap[key];
-
-            var alphMatch:Bool = StringUtil.ALPHABET_FILTER.match(strKey);
-
-            if (alphMatch)
-                search += strKey;
-            else
-            {
-                if (key == FlxKey.SPACE)
-                    search += " ";
-
-                if (key == FlxKey.BACKSPACE)
-                    search = search.substring(0, search.length - 1);
-            }
-
-            if (alphMatch || key == FlxKey.SPACE || key == FlxKey.BACKSPACE)
-            {
-                searchText.text = search;
-
-                searchText.setPosition(searchText.getCenterX(), 465.0);
-
-                if (search.length > 0.0)
-                {
-                    searchText.visible = true;
-
-                    searchGlass.visible = true;
-
-                    searchGlass.setPosition(searchText.x + searchText.width, searchGlass.getCenterY(searchText));
-
-                    FlxG.sound.play(AssetCache.getSound("shared/type"));
-                }
-                else
-                {
-                    searchText.visible = false;
-
-                    searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
-                }
-            }
-        }
-
-        if (FlxG.keys.justPressed.ENTER)
-        {
-            if (lastSearch == "")
-                lastSelectedLevel[selectedDifficulty] = selectedLevel;
-
-            var resetSearch:Bool = search.length == 0.0;
-
-            var newLevels:Array<LevelData> = filterLevelsList(resetSearch);
-
-            if (newLevels.length > 0.0)
-            {
-                levels = newLevels;
-
-                if (resetSearch)
-                {
-                    selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
-
-                    searchGlass.visible = true;
-
-                    searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
-                }
-                else
-                {
-                    selectedLevel = 0;
-
-                    searchGlass.visible = false;
-                }
-
-                lastSearch = search;
-
-                changeSelection(0);
-            }
-            else
-                FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
-        }
+        searchItem.editable = !isScrolling;
     }
 
     override function destroy():Void
@@ -377,18 +276,9 @@ class FreeplayScreen extends CustomState
     {
         var list:Array<String> = Difficulty.list;
 
-        scrollBg.visible = false;
-
-        levitateBg.visible = true;
-
-        levitateBg.animation.play("levitate", false, change < 0.0);
-
-        poster.visible = false;
-
-        if (search == "")
-            lastSelectedLevel[selectedDifficulty] = selectedLevel;
-
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
+
+        searchItem.emptySearch();
 
         var newLevels:Array<LevelData> = filterLevelsList();
 
@@ -402,11 +292,9 @@ class FreeplayScreen extends CustomState
         levels = newLevels;
 
         if (change != 0.0)
-            selectedLevel = lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
+            selectedLevel = getLastSelectedLevel();
 
-        var level:LevelData = levels[selectedLevel];
-
-        updatePoster(level);
+        changeSelection(0);
 
         if (change != 0.0)
             updateDifficultyPanel();
@@ -416,13 +304,8 @@ class FreeplayScreen extends CustomState
     {
         selectedLevel = FlxMath.wrap(selectedLevel + change, 0, levels.length - 1);
 
-        scrollBg.visible = true;
-
-        levitateBg.visible = false;
-
-        scrollBg.animation.play("move", false, change < 0.0);
-
-        poster.visible = false;
+        if (searchItem.isEmpty())
+            setLastSelectedLevel();
 
         var level:LevelData = levels[selectedLevel];
 
@@ -446,22 +329,13 @@ class FreeplayScreen extends CustomState
         }
     }
 
-    public function filterLevelsList(resetSearch:Bool = true):Array<LevelData>
+    public function filterLevelsList():Array<LevelData>
     {
-        if (resetSearch)
-        {
-            search = "";
-
-            searchText.visible = false;
-
-            searchGlass.visible = true;
-
-            searchGlass.setPosition(searchGlass.getCenterX(), searchGlass.getCenterY(searchText));
-        }
-
-        var res:Array<LevelData> = new Array<LevelData>();
+        var filtered:Array<LevelData> = new Array<LevelData>();
 
         var list:Array<String> = Difficulty.list;
+
+        var search:String = searchItem.search;
 
         for (i in 0 ... WeekData.list.length)
         {
@@ -496,7 +370,7 @@ class FreeplayScreen extends CustomState
                 if (!passesSearch || level.difficulty != difficulty)
                     continue;
 
-                res.push(level);
+                filtered.push(level);
             }
         }
     
@@ -519,10 +393,29 @@ class FreeplayScreen extends CustomState
                 level.obscurity != NONE)
                     continue;
 
-            res.push(level);
+            filtered.push(level);
         }
 
-        return res;
+        return filtered;
+    }
+
+    public function scrollBg(axes:FlxAxes, reverse:Bool = false):Void
+    {
+        if (axes.x)
+        {
+            scrollBgH.visible = true;
+            
+            scrollBgH.animation.play("scroll-h", false, reverse);
+        }
+
+        if (axes.y)
+        {
+            scrollBgV.visible = true;
+
+            scrollBgV.animation.play("scroll-v", false, reverse);
+        }
+
+        poster.visible = false;
     }
 
     public function updateTvPortrait(level:LevelData):Void
@@ -593,6 +486,27 @@ class FreeplayScreen extends CustomState
         FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
     }
 
+    public function processSearchStatus(status:SearchStatus, result:Array<LevelData>, search:String, lastSearch:String):Void
+    {
+        if (status == SUCCESS && search != lastSearch)
+        {
+            levels = result;
+
+            var isEmpty:Bool = searchItem.isEmpty();
+
+            if (isEmpty)
+                selectedLevel = getLastSelectedLevel();
+            else
+                selectedLevel = 0;
+
+            changeSelection(0);
+
+            scrollBg(Y, !isEmpty);
+        }
+        else
+            FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
+    }
+
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
     {
         var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
@@ -604,36 +518,54 @@ class FreeplayScreen extends CustomState
         return button;
     }
 
+    public function getLastSelectedLevel():Int
+    {
+        return lastSelectedLevel.exists(selectedDifficulty) ? lastSelectedLevel[selectedDifficulty] : 0;
+    }
+
+    public function setLastSelectedLevel():Void
+    {
+        lastSelectedLevel[selectedDifficulty] = selectedLevel;
+    }
+
     public function clickLeftDifficulty():Void
     {
-        if (!levitateBg.animation.finished)
+        if (!scrollBgV.animation.finished)
             return;
 
         changeDifficulty(-1);
+
+        scrollBg(Y, true);
     }
 
     public function clickRightDifficulty():Void
     {
-        if (!levitateBg.animation.finished)
+        if (!scrollBgV.animation.finished)
             return;
 
         changeDifficulty(1);
+
+        scrollBg(Y);
     }
 
     public function clickLeftLevel():Void
     {
-        if (levels.length == 1.0 || !scrollBg.animation.finished)
+        if (isScrolling)
             return;
 
         changeSelection(-1);
+
+        scrollBg(X, true);
     }
 
     public function clickRightLevel():Void
     {
-        if (levels.length == 1.0 || !scrollBg.animation.finished)
+        if (isScrolling)
             return;
 
         changeSelection(1);
+
+        scrollBg(X);
     }
 
     public function addHeightenedButton(text:String, size:ButtonSize, onClick:()->Void):HeightenedButton
@@ -649,6 +581,13 @@ class FreeplayScreen extends CustomState
 
     public function clickPlayButton():Void
     {
+        if (searchItem.search != searchItem.lastSearch)
+        {
+            searchItem.forceSearch();
+
+            return;
+        }
+
         var level:LevelData = levels[selectedLevel];
 
         var week:WeekData = level.week;
@@ -691,4 +630,235 @@ class FreeplayScreen extends CustomState
 
         openSubState(new LevelInfoScreen(level));
     }
+}
+
+class SearchItem<T> extends FlxInputText
+{
+    public var search:String;
+
+    public var lastSearch:String;
+
+    public var getSearchData:()->Array<T>;
+
+    public var onSearchComplete:FlxTypedSignal<(status:SearchStatus, result:Array<T>, search:String, lastSearch:String)->Void>;
+
+    public var filterEReg:EReg;
+
+    public var icon:FlxSprite;
+
+    public function new():Void
+    {
+        super(0.0, 0.0, FlxG.width, "", 32, FlxColor.BLACK, FlxColor.TRANSPARENT);
+
+        font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        bold = true;
+
+        underline = true;
+
+        alignment = CENTER;
+
+        setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
+
+        textField.antiAliasType = ADVANCED;
+
+        textField.sharpness = 400.0;
+
+        filterMode = REG(~/[^a-zA-Z ]/g);
+
+        forceCase = UPPER_CASE;
+
+        multiline = false;
+
+        selectionColor = 0x990074FF;
+
+        useSelectedTextFormat = false;
+
+        search = "";
+
+        onSearchComplete = new FlxTypedSignal<(status:SearchStatus, result:Array<T>, search:String, lastSearch:String)->Void>();
+
+        filterEReg = switch (filterMode:FlxInputTextFilterMode)
+        {
+            case REG(reg):
+                reg;
+            
+            default:
+                null;
+        }
+
+        icon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/search-glass"));
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (icon.exists && icon.active)
+            icon.update(elapsed);
+    }
+
+    override function draw():Void
+    {
+        super.draw();
+
+        if (icon.exists && icon.visible)
+            icon.draw();
+    }
+
+    override function dispatchTypingAction(action:TypingAction):Void
+    {
+        var oldText:String = text;
+
+        super.dispatchTypingAction(action);
+
+        switch (action:TypingAction)
+        {
+            case ADD_TEXT(text):
+            {
+                if (editable)
+                {
+                    if (text == filterEReg.replace(text, ""))
+                    {
+                        search = this.text;
+
+                        icon.visible = true;
+
+                        updateIconPosition();
+
+                        FlxG.sound.play(AssetCache.getSound("shared/type"));
+                    }
+                }
+            }
+
+            case COMMAND(cmd):
+            {
+                if (editable)
+                {
+                    if (cmd == NEW_LINE)
+                    {
+                        if (editable)
+                            forceSearch();
+                    }
+
+                    if (cmd == DELETE_LEFT || cmd == DELETE_RIGHT || cmd == CUT || cmd == PASTE)
+                    {
+                        if (cmd == CUT || cmd == PASTE)
+                        {
+                            if (cmd == PASTE)
+                            {
+                                var clipboardText:String = Clipboard.generalClipboard.getData(TEXT_FORMAT);
+
+                                var safeText:String = filterEReg.replace(clipboardText, "");
+
+                                if (clipboardText != null && safeText.length > 0.0)
+                                {
+                                    search = safeText;
+
+                                    updateIconVisible();
+
+                                    updateIconPosition();
+
+                                    FlxG.sound.play(AssetCache.getSound("shared/type"));
+                                }
+                            }
+                            else
+                            {
+                                search = text;
+
+                                updateIconPosition();
+                            }
+                        }
+
+                        if (cmd == DELETE_LEFT || cmd == DELETE_RIGHT)
+                        {
+                            search = text;
+
+                            updateIconVisible();
+
+                            updateIconPosition();
+
+                            if (oldText.length > 0.0)
+                                FlxG.sound.play(AssetCache.getSound("shared/type"));
+                        }
+                    }
+                }
+            }
+
+            default:
+        }
+    }
+
+    override function updateSelectionBoxes():Void
+    {
+        super.updateSelectionBoxes();
+
+        for (v in _selectionBoxes)
+            v.alpha = v.color.alphaFloat;
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        onSearchComplete = cast FlxDestroyUtil.destroy(onSearchComplete);
+
+        icon.destroy();
+    }
+
+    public function forceSearch():Void
+    {
+        var result:Array<T> = getSearchData();
+
+        var status:SearchStatus = result.length == 0.0 ? FAIL : SUCCESS;
+
+        var lastSearch:String = this.lastSearch;
+
+        if (status == SUCCESS)
+            this.lastSearch = search;
+
+        updateIconVisible();
+
+        onSearchComplete.dispatch(status, result, search, lastSearch);
+    }
+
+    public function emptySearch():Void
+    {
+        search = "";
+
+        text = search;
+
+        updateIconPosition();
+    }
+
+    public function isEmpty():Bool
+    {
+        return search.length == 0.0;
+    }
+
+    public function updateIconVisible():Void
+    {
+        icon.visible = search.length == 0.0 || search != lastSearch;
+    }
+
+    public function updateIconPosition():Void
+    {
+        if (text.length == 0.0)
+        {
+            icon.centerTo(this);
+
+            return;
+        }
+
+        var boundaries:Rectangle = getCharBoundaries(text.length - 1);
+
+        icon.setPosition(boundaries.x + boundaries.width, icon.getCenterY(this));
+    }
+}
+
+enum SearchStatus
+{
+    SUCCESS;
+
+    FAIL;
 }

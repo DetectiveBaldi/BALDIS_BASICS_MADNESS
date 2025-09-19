@@ -56,7 +56,6 @@ using StringTools;
 using util.ArrayUtil;
 using util.TimingUtil;
 
-// TODO: Improve song syncing.
 class PlayState extends CustomState
 {
     public static var week:WeekData;
@@ -395,8 +394,8 @@ class PlayState extends CustomState
         }
         else
         {   
-            if (Math.abs(instrumental.time - conductor.time) >= 25.0)
-                instrumental.time = conductor.time;
+            if (Math.abs(conductor.time - instrumental.time) >= 25.0)
+                conductor.time = instrumental.time;
 
             if (mainVocals != null)
                 if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)
