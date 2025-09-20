@@ -29,6 +29,7 @@ import data.Chart;
 import data.Chart.EventSchema;
 import data.Chart.NoteSchema;
 import data.ChartLoader;
+import data.Difficulty;
 import data.LevelData;
 import data.WeekData;
 
@@ -46,6 +47,7 @@ import game.events.CameraZoomEvent;
 import game.events.SetCamFocusEvent;
 
 import menus.FreeplayScreen;
+import menus.MysteryScreen;
 import menus.StoryMenuScreen;
 import menus.UnlockScreen;
 
@@ -564,11 +566,13 @@ class PlayState extends CustomState
 
                 var testA:Bool = #if debug true #else HighScore.getWeekScore(week.name, level.difficulty).score == 0.0 #end ;
 
-                var weekToSearch:WeekData = WeekData.list.first((w:WeekData) -> w.name == week.name);
+                var weeks:Array<WeekData> = WeekData.list;
+
+                var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == week.name);
 
                 if (testA)
                 {
-                    if (WeekData.list.first() == weekToSearch)
+                    if (weekToSearch == weeks[0])
                     {
                         unlocks.push({unlock: "Freeplay Mode"});
 
@@ -597,7 +601,13 @@ class PlayState extends CustomState
                 if (testA)
                 {
                     if (week.scoreRequirements.exists(week.name))
+                    {
                         unlocks.push({unlock: week.name + week.nameSuffix});
+
+                        StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(level.difficulty);
+
+                        StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
+                    }
                 }
 
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
@@ -613,10 +623,19 @@ class PlayState extends CustomState
         }
         else
         {
-            nextState ??= () -> new FreeplayScreen();
+            if (level.obscurity == NONE)
+                nextState ??= () -> new FreeplayScreen();
+            else
+            {
+                nextState ??= () -> new MysteryScreen();
+
+                var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+
+                MysteryScreen.curSelected = filtered.indexOf(level);
+            }
 
             var testA:Bool = #if debug true #else HighScore.getLevelScore(level.name, level.difficulty).score == 0.0 #end &&
-                level.obscurity == SMALL;
+                level.obscurity == MINIMAL;
 
             if (testA)
                 unlocks.push({unlock : level.name});

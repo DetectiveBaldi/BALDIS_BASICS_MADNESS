@@ -1,9 +1,11 @@
 package game.levels;
 
-import core.Paths;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.FlxSprite;
+
+import flixel.graphics.frames.FlxAtlasFrames;
+
+import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
 
@@ -11,9 +13,11 @@ import flixel.util.FlxColor;
 
 import core.AssetCache;
 import core.Options;
+import core.Paths;
 
 import data.CharacterData;
 
+import game.levels.ScribbleL.ScribbleUI;
 import game.stages.SetbackS;
 
 using util.MathUtil;
@@ -23,6 +27,8 @@ using StringTools;
 class SetbackL extends PlayState
 {
     public var setbackS:SetbackS;
+
+    public var setbackUI:SetbackUI;
 
     public var thanks:FlxSprite;
 
@@ -36,13 +42,17 @@ class SetbackL extends PlayState
 
         super.create();
 
+        setbackUI = new SetbackUI(this);
+
+        setbackUI.visible = false;
+
+        add(setbackUI);
+
         cameraLock = FOCUS_CAM_POINT;
 
         cameraPoint.centerTo();
 
         gameCamera.alpha = 0.0;
-
-        playField.healthBar.visible = false;
 
         setbackS.room.visible = true;
 
@@ -106,8 +116,6 @@ class SetbackL extends PlayState
         if (step == 32)
         {
             gameCamera.alpha = 1.0;
-
-            playField.healthBar.visible = true;
         }
 
         if (step == 156)
@@ -122,8 +130,9 @@ class SetbackL extends PlayState
 
         if (step == 416)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = false;
+
+            setbackUI.progressBar.visible = false;
         }
 
         if (step == 476)
@@ -137,9 +146,12 @@ class SetbackL extends PlayState
         if (step == 480)
         {
             gameCamera.alpha = 1.0;
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = true;
+
+            setbackUI.progressBar.visible = true;
+
             playField.visible = true;
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
 
             var opp:Character = getOpponent("dsci");
             opp.visible = false;
@@ -186,8 +198,9 @@ class SetbackL extends PlayState
         if (step == 800)
         {
             thanks = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/thanks"));
-            thanks.scale.set(2.7, 2.7);
             thanks.camera = hudCamera;
+            thanks.setGraphicSize(FlxG.width, FlxG.height);
+            thanks.updateHitbox();
             thanks.screenCenter();
             add(thanks);
 
@@ -257,5 +270,34 @@ class SetbackL extends PlayState
             balloon.velocity.x = 550.0;
         else
             balloon.velocity.x = -550.0;
+    }
+}
+
+/**
+ * A "component" of sorts to extend the ui.
+ */
+class SetbackUI extends ScribbleUI
+{
+    public function new(game:PlayState):Void
+    {
+        super(game);
+
+        var playField:PlayField = game.playField;
+
+        playField.scoreClip.revive();
+
+        var scoreText:FlxText = game.playField.scoreText;
+
+        scoreText.antialiasing = false;
+
+        scoreText.textField.antiAliasType = ADVANCED;
+
+        scoreText.textField.sharpness = 400.0;
+
+        timeText.antialiasing = false;
+
+        timeText.textField.antiAliasType = ADVANCED;
+
+        timeText.textField.sharpness = 400.0;
     }
 }

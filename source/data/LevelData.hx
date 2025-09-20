@@ -76,10 +76,10 @@ enum ObscurityStatus
     /**
      * Level only appears in the Mystery Screen, and has an unlock screen when initially completing the level.
      */
-    SMALL;
+    MINIMAL;
 
     /**
      * Level only appears in the Mystery Screen, but does not have an unlock screen when initially completing the level.
      */
-    LARGE;
+    OBSCURE;
 }

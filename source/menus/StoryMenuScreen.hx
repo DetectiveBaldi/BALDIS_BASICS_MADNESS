@@ -364,8 +364,6 @@ class StoryMenuScreen extends CustomState
     {
         var list:Array<String> = Difficulty.list;
 
-        lastSelectedWeek[selectedDifficulty] = selectedWeek;
-
         selectedDifficulty = FlxMath.wrap(selectedDifficulty + change, 0, list.length - 1);
 
         var newWeeks:Array<WeekData> = filterWeeksList();
@@ -390,6 +388,8 @@ class StoryMenuScreen extends CustomState
     public function changeSelection(change:Int):Void
     {
         selectedWeek = FlxMath.wrap(selectedWeek + change, 0, weeks.length - 1);
+
+        lastSelectedWeek[selectedDifficulty] = selectedWeek;
 
         var week:WeekData = weeks[selectedWeek];
 

@@ -212,7 +212,7 @@ class GameOverScreen extends CustomSubState
                 if ( #if debug false #else HighScore.getLevelScore("Overseer", "Normal").score != 0.0 #end )
                     chance = -1;
 
-                if (FlxG.random.int(1, Math.floor(Math.abs(chance))) == chance)
+                if (FlxG.random.int(1, Std.int(Math.abs(chance))) == chance)
                 {
                     rollTimer.cancel();
 

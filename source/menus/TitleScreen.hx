@@ -154,7 +154,7 @@ class TitleScreen extends CustomState
         super.update(elapsed);
 
         if (FlxG.mouse.visible && FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
-            HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end )
+            HighScore.getWeekScore("Classic", "Normal").score != 0.0 && HighScore.getLevelScore("Two", "Normal").score == 0.0 #end )
         {
             if (FlxG.mouse.justReleased)
             {

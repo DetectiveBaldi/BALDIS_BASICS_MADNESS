@@ -116,12 +116,12 @@ class UnlockScreen extends CustomState
         {
             if (params.length == 0.0)
             {
-                // FlxG.switchState(nextState);
+                FlxG.switchState(nextState);
 
                 return;
             }
 
-            // FlxG.switchState(() -> new UnlockScreen(nextState, params));
+            FlxG.switchState(() -> new UnlockScreen(nextState, params));
         });
     }
 

@@ -244,8 +244,9 @@ class JealousyL extends PlayState
             
             opponent.setPosition(-200.0, -280.0);
             
-            jealousyS.remove(opponent, true);
-            jealousyS.add(opponent);
+            jealousyS.remove(opponents, true);
+
+            jealousyS.insert(jealousyS.members.indexOf(players) + 1, opponents);
 
             tween.tween(opponent, {x: 300}, timeInterval, 
                 {
@@ -299,6 +300,7 @@ class JealousyL extends PlayState
             plr.setPosition(120.0, 155.0);
             plr.skipDance = true;
             plr.visible = true;
+            players.add(plr);
             player = plr;
         }
 
@@ -339,22 +341,15 @@ class JealousyL extends PlayState
     public function craftersLayerUpdate():Void
     {
         if (timeInterval > 0.1)
-        {
-            timeInterval = timeInterval - 0.05;
-        }
+            timeInterval -= 0.05;
 
-        if (checkLayer == true)
-        {
-            checkLayer = false;        
-            jealousyS.remove(opponent, true);
-            jealousyS.insert(jealousyS.members.indexOf(players), opponent);
-        }
+        jealousyS.remove(opponents, true);
+
+        if (checkLayer)
+            jealousyS.insert(jealousyS.members.indexOf(players), opponents);
         else
-        {
-            checkLayer = true;
-
-            jealousyS.remove(opponent, true);
-            jealousyS.add(opponent);
-        }
+            jealousyS.insert(jealousyS.members.indexOf(players) + 1, opponents);
+        
+        checkLayer = !checkLayer;
     }
 }

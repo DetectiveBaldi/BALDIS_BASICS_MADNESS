@@ -77,28 +77,28 @@ class Playlist
         // Beginnings
         level = {week: null, name: "Beginnings"}
 
-        level.obscurity = SMALL;
+        level.obscurity = MINIMAL;
 
         LevelData.list.push(level);
 
         // Uncanon
-        var level:LevelData = {week: null, name: "Uncanon"}
+        level = {week: null, name: "Uncanon"}
 
-        level.obscurity = SMALL;
+        level.obscurity = MINIMAL;
 
         LevelData.list.push(level);
 
         // Two
         level = {week: null, name: "Two"}
 
-        level.obscurity = LARGE;
+        level.obscurity = OBSCURE;
 
         LevelData.list.push(level);
 
         // Overseer
-        var level:LevelData = {week: null, name: "Overseer"}
+        level = {week: null, name: "Overseer"}
 
-        level.obscurity = LARGE;
+        level.obscurity = OBSCURE;
 
         LevelData.list.push(level);
     }
