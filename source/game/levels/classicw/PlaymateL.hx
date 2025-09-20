@@ -1,6 +1,5 @@
 package game.levels.classicw;
 
-import core.Paths;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,6 +16,7 @@ import flixel.util.FlxColor;
 
 import core.AssetCache;
 import core.Options;
+import core.Paths;
 
 import game.events.SetCamFocusEvent;
 import game.stages.classicw.PlaymateS;
@@ -33,11 +33,11 @@ class PlaymateL extends PlayState
 
     public var opp:Character;
 
+    public var tutorText:FlxText;
+
     public var jumpUI:JumpRopeUI;
 
     public var jumpMinigame:JumpRopeMinigame;
-
-    public var tutorText:FlxText;
 
     override function create():Void
     {
@@ -66,6 +66,26 @@ class PlaymateL extends PlayState
         gameCamera.color = FlxColor.BLACK;
 
         playField.visible = false;
+
+        tutorText = new FlxText(0.0, 0.0, player.width * 2.0, "Time to jump rope!\nPress Left Mouse Button to jump!");
+
+        tutorText.color = FlxColor.BLACK;
+
+        tutorText.size = 42;
+
+        tutorText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        tutorText.alignment = CENTER;
+
+        tutorText.setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
+
+        tutorText.textField.antiAliasType = ADVANCED;
+
+        tutorText.textField.sharpness = 400.0;
+
+        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 2.5);
+
+        add(tutorText);
     }
 
     override function update(elapsed:Float):Void
@@ -145,23 +165,8 @@ class PlaymateL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tutorText = new FlxText(0.0, 0.0, FlxG.width, 'Press SPACE to jump!');
-
-            tutorText.color = FlxColor.BLACK;
-
-            tutorText.size = 44;
-
-            tutorText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-            tutorText.alignment = CENTER;
-
-            tutorText.textField.antiAliasType = ADVANCED;
-
-            tutorText.textField.sharpness = 400.0;
-
-            tutorText.screenCenter();
-
-            add(tutorText);
+            tween.tween(tutorText, {y: player.y - tutorText.height * 0.5}, conductor.beatLength * 2.0 * 0.001,
+                {ease: FlxEase.backOut});
         }
 
         if (step == 928)
@@ -170,8 +175,6 @@ class PlaymateL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
             gameCameraZoom = 0.7;
-
-            tutorText.kill();
 
             plrStrumline.botplay = true;
 
@@ -235,6 +238,9 @@ class PlaymateL extends PlayState
 
             if (step == 1008.0)
             {
+                tween.tween(tutorText, {y: -tutorText.height * 2.5}, conductor.beatLength * 2.0 * 0.001,
+                    {ease: FlxEase.backOut});
+                
                 jumpUI.kill();
 
                 jumpMinigame.kill();
@@ -428,6 +434,8 @@ class PlaymateL extends PlayState
         player.visible = true;
 
         SetCamFocusEvent.dispatch(this, 0.0, 0.0, "player", -1.0, "linear", true);
+
+        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 2.5);
     }
 }
 
@@ -518,7 +526,7 @@ class JumpRopeMinigame extends FlxBasic
     {
         super.update(elapsed);
 
-        if (FlxG.keys.justPressed.SPACE && !Options.botplay)
+        if (FlxG.mouse.justPressed && !Options.botplay)
             jumpAction();
 
         if (height >= 0.0)
