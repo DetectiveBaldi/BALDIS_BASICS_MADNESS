@@ -466,10 +466,12 @@ class GainGL extends PlayState
             tween.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
                 {
                     ease: FlxEase.sineIn, 
-                    onUpdate: (tween:FlxTween) -> 
-                    {
-                        _plr.x = player.x;
-                    }
+                }
+            );
+        
+            tween.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
+                {
+                    ease: FlxEase.sineIn, 
                 }
             );
 

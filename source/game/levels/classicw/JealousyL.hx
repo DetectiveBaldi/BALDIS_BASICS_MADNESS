@@ -242,29 +242,25 @@ class JealousyL extends PlayState
             opponent.skipDance = false;
             tween.cancelTweensOf(opponent);
             
-            opponent.setPosition(50.0, -280.0);
+            opponent.setPosition(-200.0, -280.0);
+            
+            jealousyS.remove(opponent, true);
+            jealousyS.add(opponent);
 
-            tween.tween(opponent, {x: -200}, 0.5,                
+            tween.tween(opponent, {x: 300}, timeInterval, 
                 {
-                    onComplete: (_tween:FlxTween) ->  
-                    {
-                        tween.tween(opponent, {x: 300}, timeInterval, 
-                            {
-                                ease: FlxEase.quadInOut, 
-                                type: PINGPONG,
-                                onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
-                            }
-                        );
-                    
-                        tween.tween(opponent.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
-                            {
-                                ease: FlxEase.smootherStepOut, 
-                                type: PINGPONG,
-                                loopDelay: timeInterval / 2,
-                                onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
-                            }
-                        );
-                    }
+                    ease: FlxEase.quadInOut, 
+                    type: PINGPONG,
+                    onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
+                }
+            );
+            
+            tween.tween(opponent.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
+                {
+                    ease: FlxEase.smootherStepOut, 
+                    type: PINGPONG,
+                    loopDelay: timeInterval / 2,
+                    onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
                 }
             );
         }
@@ -352,7 +348,8 @@ class JealousyL extends PlayState
             checkLayer = false;        
             jealousyS.remove(opponent, true);
             jealousyS.insert(jealousyS.members.indexOf(players), opponent);
-        }else
+        }
+        else
         {
             checkLayer = true;
 
