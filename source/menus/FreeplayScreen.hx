@@ -826,7 +826,11 @@ class SearchItem<T> extends FlxInputText
         var lastSearch:String = this.lastSearch;
 
         if (status == SUCCESS)
+        {
             this.lastSearch = text;
+
+            endFocus();
+        }
 
         updateIconVisible();
 
