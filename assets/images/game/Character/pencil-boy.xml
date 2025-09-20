@@ -32,21 +32,21 @@
 	<SubTexture name="idle0012" x="3620" y="2" width="400" height="400"/>
 	<SubTexture name="idle0013" x="3620" y="2" width="400" height="400"/>
 	<SubTexture name="idle0014" x="3620" y="2" width="400" height="400"/>
-	<SubTexture name="left0000" x="2" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0001" x="2" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0002" x="404" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0003" x="404" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0004" x="806" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0005" x="806" y="404" width="400" height="400" frameX="0" frameY="0" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0006" x="1208" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0007" x="1208" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0008" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0009" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0010" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0011" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0012" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0013" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
-	<SubTexture name="left0014" x="1610" y="404" width="400" height="400" frameX="0" frameY="-1" frameWidth="400" frameHeight="401"/>
+	<SubTexture name="left0000" x="2" y="404" width="400" height="401"/>
+	<SubTexture name="left0001" x="2" y="404" width="400" height="401"/>
+	<SubTexture name="left0002" x="404" y="404" width="400" height="401"/>
+	<SubTexture name="left0003" x="404" y="404" width="400" height="401"/>
+	<SubTexture name="left0004" x="806" y="404" width="400" height="401"/>
+	<SubTexture name="left0005" x="806" y="404" width="400" height="401"/>
+	<SubTexture name="left0006" x="1208" y="404" width="400" height="401"/>
+	<SubTexture name="left0007" x="1208" y="404" width="400" height="401"/>
+	<SubTexture name="left0008" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0009" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0010" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0011" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0012" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0013" x="1610" y="404" width="400" height="401"/>
+	<SubTexture name="left0014" x="1610" y="404" width="400" height="401"/>
 	<SubTexture name="right0000" x="2012" y="404" width="400" height="400"/>
 	<SubTexture name="right0001" x="2012" y="404" width="400" height="400"/>
 	<SubTexture name="right0002" x="2414" y="404" width="400" height="400"/>
@@ -62,67 +62,80 @@
 	<SubTexture name="right0012" x="3620" y="404" width="400" height="400"/>
 	<SubTexture name="right0013" x="3620" y="404" width="400" height="400"/>
 	<SubTexture name="right0014" x="3620" y="404" width="400" height="400"/>
-	<SubTexture name="sIntro0000" x="3620" y="2" width="400" height="400"/>
-	<SubTexture name="sIntro0001" x="3620" y="2" width="400" height="400"/>
-	<SubTexture name="sIntro0002" x="2" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0003" x="2" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0004" x="404" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0005" x="404" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0006" x="806" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0007" x="806" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0008" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sIntro0009" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sLoop0000" x="1610" y="806" width="400" height="400"/>
-	<SubTexture name="sLoop0001" x="2012" y="806" width="400" height="400"/>
-	<SubTexture name="sLoop0002" x="2414" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0000" x="2816" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0001" x="2816" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0002" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0003" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0004" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0005" x="1208" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0006" x="3218" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0007" x="3218" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0008" x="3620" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0009" x="3620" y="806" width="400" height="400"/>
-	<SubTexture name="sPrepare0010" x="2" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0011" x="2" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0012" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0013" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0014" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0015" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0016" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0017" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0018" x="404" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0019" x="806" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0020" x="806" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0021" x="1208" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0022" x="1208" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0023" x="1610" y="1208" width="400" height="400"/>
-	<SubTexture name="sPrepare0024" x="1610" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0000" x="2012" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0001" x="2012" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0002" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0003" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0004" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0005" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0006" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0007" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0008" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="sThrow0009" x="2414" y="1208" width="400" height="400"/>
-	<SubTexture name="up0000" x="2816" y="1208" width="400" height="400"/>
-	<SubTexture name="up0001" x="2816" y="1208" width="400" height="400"/>
-	<SubTexture name="up0002" x="3218" y="1208" width="400" height="400"/>
-	<SubTexture name="up0003" x="3218" y="1208" width="400" height="400"/>
-	<SubTexture name="up0004" x="3620" y="1208" width="400" height="400"/>
-	<SubTexture name="up0005" x="3620" y="1208" width="400" height="400"/>
-	<SubTexture name="up0006" x="2" y="1610" width="400" height="400"/>
-	<SubTexture name="up0007" x="2" y="1610" width="400" height="400"/>
-	<SubTexture name="up0008" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0009" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0010" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0011" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0012" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0013" x="404" y="1610" width="400" height="400"/>
-	<SubTexture name="up0014" x="404" y="1610" width="400" height="400"/>
+	<SubTexture name="stab0000" x="3620" y="2" width="400" height="400"/>
+	<SubTexture name="stab0001" x="3620" y="2" width="400" height="400"/>
+	<SubTexture name="stab0002" x="2" y="807" width="400" height="400"/>
+	<SubTexture name="stab0003" x="2" y="807" width="400" height="400"/>
+	<SubTexture name="stab0004" x="404" y="807" width="400" height="400"/>
+	<SubTexture name="stab0005" x="404" y="807" width="400" height="400"/>
+	<SubTexture name="stab0006" x="806" y="807" width="400" height="400"/>
+	<SubTexture name="stab0007" x="806" y="807" width="400" height="400"/>
+	<SubTexture name="stab0008" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0009" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0010" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0011" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0012" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0013" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0014" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0015" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0016" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0017" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0018" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0019" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0020" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0021" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0022" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0023" x="1208" y="807" width="400" height="400"/>
+	<SubTexture name="stab0024" x="1610" y="807" width="400" height="400"/>
+	<SubTexture name="stab0025" x="2012" y="807" width="400" height="400"/>
+	<SubTexture name="stab0026" x="2414" y="807" width="400" height="400"/>
+	<SubTexture name="stab0027" x="2414" y="807" width="400" height="400"/>
+	<SubTexture name="stab0028" x="2816" y="807" width="400" height="400"/>
+	<SubTexture name="stab0029" x="2816" y="807" width="400" height="400"/>
+	<SubTexture name="stab0030" x="2816" y="807" width="400" height="400"/>
+	<SubTexture name="stab0031" x="2816" y="807" width="400" height="400"/>
+	<SubTexture name="stab0032" x="3218" y="807" width="400" height="400"/>
+	<SubTexture name="stab0033" x="3218" y="807" width="400" height="400"/>
+	<SubTexture name="stab0034" x="3620" y="807" width="400" height="400"/>
+	<SubTexture name="stab0035" x="3620" y="807" width="400" height="400"/>
+	<SubTexture name="stab0036" x="2" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0037" x="2" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0038" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0039" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0040" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0041" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0042" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0043" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0044" x="404" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0045" x="806" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0046" x="806" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0047" x="1208" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0048" x="1208" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0049" x="1610" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0050" x="1610" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0051" x="2012" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0052" x="2012" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0053" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0054" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0055" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0056" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0057" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0058" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0059" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="stab0060" x="2414" y="1209" width="400" height="400"/>
+	<SubTexture name="up0000" x="2816" y="1209" width="400" height="400"/>
+	<SubTexture name="up0001" x="2816" y="1209" width="400" height="400"/>
+	<SubTexture name="up0002" x="3218" y="1209" width="400" height="400"/>
+	<SubTexture name="up0003" x="3218" y="1209" width="400" height="400"/>
+	<SubTexture name="up0004" x="3620" y="1209" width="400" height="400"/>
+	<SubTexture name="up0005" x="3620" y="1209" width="400" height="400"/>
+	<SubTexture name="up0006" x="2" y="1611" width="400" height="400"/>
+	<SubTexture name="up0007" x="2" y="1611" width="400" height="400"/>
+	<SubTexture name="up0008" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0009" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0010" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0011" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0012" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0013" x="404" y="1611" width="400" height="400"/>
+	<SubTexture name="up0014" x="404" y="1611" width="400" height="400"/>
 </TextureAtlas>

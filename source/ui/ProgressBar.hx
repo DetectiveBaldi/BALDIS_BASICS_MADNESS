@@ -69,10 +69,6 @@ class ProgressBar extends FlxSpriteGroup
 
     public var onFilled:FlxSignal;
 
-    public var barWidth:Int;
-
-    public var barHeight:Int;
-
     public var fillDirection(default, set):ProgressBarFillDirection;
 
     @:noCompletion
@@ -91,26 +87,12 @@ class ProgressBar extends FlxSpriteGroup
 
     public var border:FlxSprite;
 
-    public var borderSize(default, set):Int;
+    public var borderSize:Int;
 
-    @:noCompletion
-    function set_borderSize(_borderSize:Int):Int
+    public function new(x:Float = 0.0, y:Float = 0.0, width:Int = 600, height:Int = 25, borderSize:Int = 5,
+        fillDirection:ProgressBarFillDirection):Void
     {
-        borderSize = _borderSize;
-
-        border.graphic.bitmap.fillRect(new Rectangle(0.0, 0.0, barWidth, barHeight), FlxColor.BLACK);
-
-        border.graphic.bitmap.fillRect(new Rectangle(borderSize, borderSize, barWidth - borderSize * 2.0, barHeight - borderSize * 2.0), FlxColor.TRANSPARENT);
-
-        return borderSize;
-    }
-
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _barWidth:Int = 600, _barHeight:Int = 25, _borderSize:Int = 5, _fillDirection:ProgressBarFillDirection):Void
-    {
-        super(_x, _y);
-        
-        @:bypassAccessor
-        value = 50.0;
+        super(x, y);
 
         min = 0.0;
 
@@ -119,27 +101,16 @@ class ProgressBar extends FlxSpriteGroup
         onEmptied = new FlxSignal();
 
         onFilled = new FlxSignal();
-
-        barWidth = _barWidth;
-
-        barHeight = _barHeight;
-
-        @:bypassAccessor
-        fillDirection = _fillDirection;
         
         emptiedSide = new ProgressBarSideSprite();
 
-        emptiedSide.makeGraphic(barWidth, barHeight, FlxColor.WHITE);
+        emptiedSide.clipRect = FlxRect.get();
 
         emptiedSide.color = FlxColor.RED;
-
-        emptiedSide.clipRect = FlxRect.get();
 
         add(emptiedSide);
 
         filledSide = new ProgressBarSideSprite();
-
-        filledSide.makeGraphic(barWidth, barHeight, FlxColor.WHITE);
 
         filledSide.color = FlxColor.LIME;
 
@@ -147,15 +118,23 @@ class ProgressBar extends FlxSpriteGroup
 
         add(filledSide);
 
-        updateClipping();
-
         border = new FlxSprite();
-
-        border.makeGraphic(barWidth, barHeight, FlxColor.BLACK);
         
         add(border);
 
-        borderSize = _borderSize;
+        this.width = width;
+
+        this.height = height;
+
+        regenerateSides();
+
+        this.fillDirection = fillDirection;
+
+        value = 50.0;
+
+        this.borderSize = borderSize;
+
+        regenerateBorder();
     }
 
     override function destroy():Void
@@ -231,6 +210,53 @@ class ProgressBar extends FlxSpriteGroup
                 filledSide.clipRect.y = filledSide.height - filledSide.clipRect.height;
             }
         }
+    }
+
+    public function regenerateSides():Void
+    {
+        var iWidth:Int = Std.int(width);
+
+        var iHeight:Int = Std.int(height);
+
+        emptiedSide.makeGraphic(iWidth, iHeight, FlxColor.WHITE);
+
+        filledSide.makeGraphic(iWidth, iHeight, FlxColor.WHITE);
+    }
+
+    public function regenerateBorder():Void
+    {
+        border.makeGraphic(Std.int(width), Std.int(height), FlxColor.BLACK);
+
+        border.graphic.bitmap.fillRect(new Rectangle(0.0, 0.0, width, height), 0xFF000000);
+
+        border.graphic.bitmap.fillRect(new Rectangle(borderSize, borderSize,
+            width - borderSize * 2.0, height - borderSize * 2.0), 0x00000000);
+    }
+
+    @:noCompletion
+    override function get_width():Float
+    {
+        return width;
+    }
+
+    @:noCompletion
+    override function get_height():Float
+    {
+        return height;
+    }
+
+    override function set_width(width:Float):Float
+    {
+        this.width = width;
+
+        return width;
+    }
+
+    override function set_height(height:Float):Float
+    {
+        this.height = height;
+
+        return height;
     }
 }
 

@@ -311,7 +311,7 @@ class PlayField extends FlxGroup
 
         updateScoreText();
 
-        healthBar.value -= 1.5;
+        healthBar.value -= 2.5;
     }
 
     public function sustainHold(ev:SustainHoldEvent):Void
@@ -336,7 +336,7 @@ class PlayField extends FlxGroup
 
             updateScoreText();
 
-            healthBar.value -= 1.5;
+            healthBar.value -= 2.5;
         }
     }
 }

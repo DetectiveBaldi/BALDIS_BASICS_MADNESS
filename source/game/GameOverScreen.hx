@@ -276,7 +276,7 @@ class GameOverScreen extends CustomSubState
 
         add(character);
 
-        new FlxTimer(timer).start(9.0, (_:FlxTimer) ->
+        new FlxTimer(timer).start(9.9, (_:FlxTimer) ->
         {
             var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Overseer");
         

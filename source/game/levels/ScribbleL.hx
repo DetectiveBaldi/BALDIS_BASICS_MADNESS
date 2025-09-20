@@ -1,16 +1,25 @@
 package game.levels;
 
-import flixel.text.FlxText;
+import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+
 import flixel.group.FlxGroup;
+
+import flixel.sound.FlxSound;
+
+import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 
+import core.AssetCache;
 import core.Options;
+import core.Paths;
 
 import game.stages.ScribbleS;
 
@@ -26,6 +35,14 @@ class ScribbleL extends PlayState
 {
     public var scribbleS:ScribbleS;
 
+    public var scribbleUI:ScribbleUI;
+
+    public var pencil:FlxSprite;
+
+    public var throwPencilSound:FlxSound;
+
+    public var stabPencilSound:FlxSound;
+
     override function create():Void
     {
         stage = new ScribbleS();
@@ -33,6 +50,16 @@ class ScribbleL extends PlayState
         scribbleS = cast (stage, ScribbleS);
 
         super.create();
+
+        scribbleUI = new ScribbleUI(this);
+
+        scribbleUI.visible = false;
+
+        add(scribbleUI);
+
+        throwPencilSound = FlxG.sound.load(AssetCache.getSound("shared/throw-pencil"));
+
+        stabPencilSound = FlxG.sound.load(AssetCache.getSound("shared/stab-pencil"));
 
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
 
@@ -44,12 +71,24 @@ class ScribbleL extends PlayState
         opponent.setPosition(1070, 185);
         opponent.scale.set(0.85, 0.85);
 
+        pencil = new FlxSprite();
+
+        pencil.visible = false;
+
+        pencil.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("shared/pencil-throw"),
+            Paths.image(Paths.xml("shared/pencil-throw")));
+
+        pencil.animation.addByPrefix("throw", "throw", 32.0, false);
+
+        add(pencil);
+
         opponent.colorTransform.setOffsets(FlxColor.WHITE);
 
         player.colorTransform.setOffsets(FlxColor.WHITE);
 
-        playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+        playField.scoreText.visible = playField.timerClock.visible = false;
+
+        scribbleUI.progressBar.visible = scribbleUI.timeText.visible = false;
 
         oppStrumline.strums.alpha = 0.0;
 
@@ -73,8 +112,9 @@ class ScribbleL extends PlayState
 
         if (step == 288.0)
         {
-            playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.scoreText.visible = playField.timerClock.visible = true;
+
+            scribbleUI.progressBar.visible = scribbleUI.timeText.visible = true;
 
             scribbleS.classicHall0.visible = true;
 
@@ -93,10 +133,16 @@ class ScribbleL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.healthBar.visible = playField.scoreText.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.scoreText.visible = playField.timerClock.visible = false;
+
+            scribbleUI.progressBar.visible = scribbleUI.timeText.visible = false;
 
             scribbleS.classicHall0.colorTransform.setOffsets(20, 20, 20, 155);
+        }
+
+        if (step == 368.0 || step == 560.0 || step ==  784.0)
+        {
+            throwPencilSequence();
         }
 
         if (step == 1312)
@@ -121,15 +167,6 @@ class ScribbleL extends PlayState
 
             scribbleS.classicHall0.visible = false;
         }
-
-        // TODO: Look into this later, right now certain zooms cause clipping issues.
-        /*
-        if (step == 548.0 || step == 552 || step == 555  || step == 682 || step == 684 || step == 736 || step == 1062 || step == 1068)
-            gameCameraZoom += 0.1;
-
-        if (step == 558  || step == 686 || step == 740)
-            gameCameraZoom -= 0.1;
-        */
     }
 
     override function measureHit(measure:Int):Void
@@ -141,52 +178,166 @@ class ScribbleL extends PlayState
         else
             gameCameraZoom = 1;
     }
+
+    public function resetPencilPosition():Void
+    {
+
+    }
+
+    public function throwPencilSequence():Void
+    {
+        opponent.skipDance = true;
+
+        opponent.skipSing = true;
+
+        opponent.animation.onFrameChange.add(animChange);
+
+        opponent.animation.onFinish.addOnce(animFinish);
+
+        opponent.animation.play("stab");
+    }
+
+    public function animChange(name:String, num:Int, index:Int):Void
+    {
+        if (num == 51)
+        {
+            throwPencilSound.play(true);
+
+            pencil.visible = true;
+
+            pencil.animation.play("throw");
+
+            pencil.setPosition(865.0, 215.0);
+        }
+    }
+
+    public function animFinish(name:String):Void
+    {
+        opponent.animation.onFrameChange.remove(animChange);
+
+        opponent.skipDance = false;
+
+        opponent.skipSing = false;
+
+        reduceMaxHealth();
+
+        pencil.visible = false;
+
+        stabPencilSound.play(true);
+    }
+
+    public function reduceMaxHealth():Void
+    {
+        var healthBar:HealthBar = playField.healthBar;
+
+        var oldMaxHealth:Float = healthBar.max;
+
+        healthBar.max -= 10.0;
+
+        healthBar.value = healthBar.value;
+
+        healthBar.value *= 0.85;
+
+        healthBar.value = healthBar.value * healthBar.max / oldMaxHealth;
+
+        var progressBar:ProgressBar = scribbleUI.progressBar;
+
+        progressBar.max = healthBar.max;
+
+        progressBar.width -= 48.0;
+
+        progressBar.regenerateSides();
+
+        progressBar.regenerateBorder();
+
+        progressBar.setPosition(progressBar.getCenterX(), Options.downscroll ? 50.0 : FlxG.height - progressBar.height - 50.0);
+    }
 }
 
-class ScribbleUI extends FlxGroup
+/**
+ * A "component" of sorts to extend the ui.
+ */
+class ScribbleUI extends FlxBasic
 {
-    public var playField:PlayField;
+    public var game:PlayState;
+
+    public var healthBar:HealthBar;
 
     public var progressBar:ProgressBar;
 
-    public function new(playField:PlayField):Void
+    public var timeText:FlxText;
+
+    public function new(game:PlayState):Void
     {
         super();
 
-        this.playField = playField;
+        this.game = game;
+
+        var playField:PlayField = game.playField;
+
+        healthBar = playField.healthBar;
 
         playField.scoreClip.kill();
 
         var scoreText:FlxText = playField.scoreText;
 
+        scoreText.antialiasing = true;
+
         scoreText.textField.antiAliasType = NORMAL;
 
         scoreText.textField.sharpness = 100.0;
 
-        scoreText.kill();
-
-        var healthBar:HealthBar = playField.healthBar;
-
         healthBar.kill();
+
+        var timerClock:FlxSprite = playField.timerClock;
+
+        timerClock.loadGraphic(AssetCache.getGraphic("shared/alarm-clock-classic"));
+
+        timerClock.scale.set(1.5, 1.5);
+
+        timerClock.updateHitbox();
+
+        timerClock.setPosition(FlxG.width - timerClock.width - 25.0,
+            Options.downscroll ? 25.0 : FlxG.height - timerClock.height - 25.0);
+
+        playField.timerNeedle.kill();
+
+        progressBar = new ProgressBar(0.0, 0.0, 480, 30, 0, LEFT_TO_RIGHT);
+
+        progressBar.emptiedSide.color = FlxColor.RED;
+
+        progressBar.filledSide.color = FlxColor.LIME;
+
+        progressBar.setPosition(progressBar.getCenterX(), Options.downscroll ? 50.0 : FlxG.height - progressBar.height - 50.0);
+
+        playField.insert(playField.members.indexOf(healthBar), progressBar);
+
+        timeText = new FlxText(0.0, 0.0, timerClock.width);
+
+        timeText.antialiasing = true;
+
+        timeText.color = FlxColor.BLACK;
+
+        timeText.size = 16;
+
+        timeText.text = "0:00";
+
+        timeText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        timeText.alignment = CENTER;
+
+        timeText.setPosition(timerClock.x, timeText.getCenterY(timerClock) + 18.5);
+
+        playField.insert(playField.members.indexOf(timerClock) + 1, timeText);
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
-        var scoreText:FlxText = playField.scoreText;
-
-        if (scoreText.active)
-            scoreText.update(elapsed);
-    }
-
-    override function draw():Void
-    {
-        super.draw();
-
-        var scoreText:FlxText = playField.scoreText;
-
-        if (scoreText.visible)
-            scoreText.draw();
+        if (!game.startingSong)
+            timeText.text = FlxStringUtil.formatTime(game.conductor.time * 0.001);
+        
+        progressBar.value = healthBar.value;
     }
 }
