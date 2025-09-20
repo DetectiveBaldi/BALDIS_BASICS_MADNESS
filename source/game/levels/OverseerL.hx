@@ -5,8 +5,11 @@ import openfl.filters.BitmapFilter;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 
 import flixel.animation.FlxAnimation;
+
+import flixel.sound.FlxSound;
 
 import flixel.text.FlxText;
 
@@ -16,13 +19,15 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import flixel.addons.display.FlxBackdrop; 
+
 import core.AssetCache;
 import core.Options;
 import core.Paths;
 
 import data.CharacterData;
 
-import flixel.addons.display.FlxBackdrop; 
+import extendable.CustomSubState;
 
 import game.stages.OverseerS;
 
@@ -481,5 +486,47 @@ class OverseerL extends PlayState
                 conductor.beatLength * 3.0 * 0.001);
             }
         }
+    }
+
+    override function gameOver():Void
+    {
+        persistentDraw = false;
+
+        openSubState(new OverseerGameOverScreen());
+
+        pauseMusic();
+    }
+}
+
+class OverseerGameOverScreen extends CustomSubState
+{
+    public function new():Void
+    {
+        super();
+
+        var opponent:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
+
+        opponent.scale.set(0.85, 0.85);
+
+        opponent.updateHitbox();
+
+        opponent.screenCenter();
+
+        add(opponent);
+
+        new FlxTimer(timer).start(5.0, (_:FlxTimer) ->
+        {
+            opponent.color = FlxColor.RED;
+            
+            opponent.scale.set(1.9, 1.9);
+
+            opponent.updateHitbox();
+
+            var no:FlxSound = FlxG.sound.load(AssetCache.getSound("shared/oh-no"), 1.0, true);
+
+            no.play();
+
+            new FlxTimer(timer).start(5.0, (_:FlxTimer) -> Sys.exit(0));
+        });
     }
 }

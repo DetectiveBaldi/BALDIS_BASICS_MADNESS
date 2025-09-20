@@ -266,21 +266,21 @@ class GameOverScreen extends CustomSubState
     {
         CustomState.cancelNextTransition();
 
-        var character:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
+        var opponent:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
 
-        character.scale.set(0.85, 0.85);
+        opponent.scale.set(0.85, 0.85);
 
-        character.updateHitbox();
+        opponent.updateHitbox();
 
-        character.screenCenter();
+        opponent.screenCenter();
 
-        add(character);
+        add(opponent);
 
         new FlxTimer(timer).start(9.9, (_:FlxTimer) ->
         {
             var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Overseer");
         
-            PlayState.loadLevel(levelToLoad, {nextState: () -> new TitleScreen()});
+            PlayState.loadLevel(levelToLoad);
         });
     }
 }
