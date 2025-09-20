@@ -1,8 +1,5 @@
 package game.levels;
 
-import util.ClickSoundUtil;
-import data.PlayStats;
-import core.AssetCache;
 import openfl.filters.BitmapFilter;
 
 import flixel.FlxCamera;
@@ -10,6 +7,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.animation.FlxAnimation;
+
+import flixel.group.FlxSpriteGroup;
 
 import flixel.text.FlxText;
 
@@ -19,12 +18,16 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import core.AssetCache;
 import core.Options;
 import core.Paths;
 
 import data.CharacterData;
+import data.PlayStats;
 
 import game.stages.MishapS;
+
+import util.ClickSoundUtil;
 
 using util.MathUtil;
 
@@ -35,12 +38,6 @@ using flixel.util.FlxColorTransformUtil;
 class MishapL extends PlayState
 {
     public var mishapS:MishapS;
-
-    public var adChance:Int;
-
-    var ads:Array<FlxSprite> = [];
-    
-    var closes:Array<FlxSprite> = [];
 
     override function create():Void
     {
@@ -67,6 +64,13 @@ class MishapL extends PlayState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
     }
 
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
+    }
+
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
@@ -74,6 +78,7 @@ class MishapL extends PlayState
         if (step == 16)
         {
             opponent.skipDance = true;
+
             opponent.animation.play("wave");
         }
         
@@ -111,71 +116,96 @@ class MishapL extends PlayState
     {
         super.beatHit(beat);
 
-        if (beat >= 80 && beat <= 175)
-            adChance = FlxG.random.int(0, 25);
-
-        if (adChance == 25)
-            spawnAdPopup();
+        if (beat >= 80.0 && beat < 176.0)
+        {
+            if (FlxG.random.bool(5.0))
+                spawnPopup();
+        }
     }
 
-    public function spawnAdPopup():Void
+    override function resume():Void
     {
-        var ad = new FlxSprite();
-        ad.loadGraphic(AssetCache.getGraphic('shared/mishapAds/ad${FlxG.random.int(0, 6)}'));
-        ad.scale.set(1.7, 1.7);
-        ad.updateHitbox();
-        ad.setPosition(FlxG.random.float(0, FlxG.width - ad.width), 
-        FlxG.random.float(0, FlxG.height - ad.height));
-        ad.camera = hudCamera;
-        add(ad);
-            
-        var close = new FlxSprite();
-        close.loadGraphic(AssetCache.getGraphic("shared/mishapAds/close-sheet"), true, 15, 15);
-        close.animation.add("0", [0], 0.0, false);
-        close.animation.add("1", [1], 0.0, false);
-        close.animation.play("0");
-        close.scale.set(1.7, 1.7);
-        close.updateHitbox();
-        close.setPosition(ad.getMidpoint().x + 240.0, ad.y + 8.25);
-        close.camera = hudCamera;
-        add(close);
-            
-        ads.push(ad);
-        closes.push(close);
+        super.resume();
+        
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
     }
-    
+
+    public function spawnPopup():Void
+    {
+        var popup:MishapPopup = new MishapPopup();
+
+        popup.camera = hudCamera;
+
+        popup.setPosition(FlxG.random.int(0, FlxG.width - Std.int(popup.width)),
+            FlxG.random.int(0, FlxG.height - Std.int(popup.height)));
+
+        add(popup);
+    }
+}
+
+class MishapPopup extends FlxSpriteGroup
+{
+    public var base:FlxSprite;
+
+    public var closeButton:FlxSprite;
+
+    public function new():Void
+    {
+        super();
+
+        base = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('shared/mishap-popups/popup-${getRandomIndex()}'));
+
+        base.active = false;
+
+        base.scale.set(1.75, 1.75);
+
+        base.updateHitbox();
+
+        add(base);
+
+        closeButton = new FlxSprite().loadGraphic(AssetCache.getGraphic("shared/mishap-popups/close-button-sheet"), true, 15, 15);
+
+        closeButton.animation.add("0", [0], 0.0, false);
+
+        closeButton.animation.add("1", [1], 0.0, false);
+
+        closeButton.animation.play("0");
+
+        closeButton.scale.set(1.75, 1.75);
+
+        closeButton.updateHitbox();
+
+        closeButton.x = base.width - closeButton.width;
+
+        add(closeButton);
+    }
+
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-        
-        for (i in 0...closes.length)
+
+        if (FlxG.mouse.overlaps(closeButton, camera))
+        {
+            closeButton.animation.play("1");
+                        
+            if (FlxG.mouse.justReleased)
             {
-                var close = closes[i];
-                var ad = ads[i];
-                
-                if (close != null && ad != null)
-                    {
-                        if (FlxG.mouse.overlaps(close, hudCamera))
-                            {
-                                close.animation.play("1");
-                                
-                                if (FlxG.mouse.justReleased)
-                                    {
-                                        ClickSoundUtil.play();
-                                        
-                                        ad.destroy();
-                                        close.destroy();
-                                        
-                                        ads[i] = null;
-                                        closes[i] = null;
-                                    }
-                            }
-                else
-                    close.animation.play("0");
-                }
+                kill();
+
+                ClickSoundUtil.play();
             }
-            
-        ads = ads.filter(function(a) return a != null);
-        closes = closes.filter(function(c) return c != null);
+        }
+        else
+            closeButton.animation.play("0");
+    }
+
+    public function getRandomIndex():Int
+    {
+        var result:Int = FlxG.random.int(0, 5);
+
+        if (FlxG.random.int(0, 9) == 9)
+            result = 99;
+
+        return result;
     }
 }
