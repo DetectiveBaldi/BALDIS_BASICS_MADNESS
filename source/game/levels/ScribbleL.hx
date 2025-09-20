@@ -140,7 +140,7 @@ class ScribbleL extends PlayState
             scribbleS.classicHall0.colorTransform.setOffsets(20, 20, 20, 155);
         }
 
-        if (step == 368.0 || step == 560.0 || step ==  784.0)
+        if (step == 368.0 || step == 592.0 || step ==  784.0)
         {
             throwPencilSequence();
         }
