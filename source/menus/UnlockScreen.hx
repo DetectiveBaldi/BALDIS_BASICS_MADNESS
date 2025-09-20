@@ -5,6 +5,8 @@ import openfl.geom.Rectangle;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.math.FlxPoint;
+
 import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
@@ -21,6 +23,8 @@ import data.WeekData;
 
 import extendable.CustomState;
 
+import ui.BaldiHeads;
+
 using util.MathUtil;
 
 class UnlockScreen extends CustomState
@@ -28,6 +32,8 @@ class UnlockScreen extends CustomState
     public var nextState:NextState;
 
     public var params:Array<UnlockScreenParams>;
+
+    public var baldi:BaldiHeads;
 
     public function new(nextState:NextState, params:Array<UnlockScreenParams>):Void    
     {
@@ -60,11 +66,9 @@ class UnlockScreen extends CustomState
 
         add(background);
 
-        var baldi:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic("menus/BaldiHeads"));
+        baldi = new BaldiHeads();
 
-        baldi.active = true;
-
-        baldi.velocity.set(100.0, 50.0);
+        baldi.screenCenter();
 
         add(baldi);
 
@@ -112,12 +116,12 @@ class UnlockScreen extends CustomState
         {
             if (params.length == 0.0)
             {
-                FlxG.switchState(nextState);
+                // FlxG.switchState(nextState);
 
                 return;
             }
 
-            FlxG.switchState(() -> new UnlockScreen(nextState, params));
+            // FlxG.switchState(() -> new UnlockScreen(nextState, params));
         });
     }
 
