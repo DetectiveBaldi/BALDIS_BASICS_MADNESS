@@ -488,7 +488,7 @@ class FreeplayScreen extends CustomState
 
     public function processSearchStatus(status:SearchStatus, result:Array<LevelData>, search:String, lastSearch:String):Void
     {
-        if (status == SUCCESS && search != lastSearch)
+        if (status == SUCCESS)
         {
             levels = result;
 
@@ -807,9 +807,21 @@ class SearchItem<T> extends FlxInputText
 
     public function forceSearch():Void
     {
+        var status:SearchStatus = SUCCESS;
+        
+        if (text == lastSearch)
+        {
+            status = FAIL;
+
+            onSearchComplete.dispatch(status, null, text, lastSearch);
+
+            return;
+        }
+
         var result:Array<T> = getSearchData();
 
-        var status:SearchStatus = result.length == 0.0 ? FAIL : SUCCESS;
+        if (result.length == 0.0)
+            status = FAIL;
 
         var lastSearch:String = this.lastSearch;
 
