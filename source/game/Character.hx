@@ -280,8 +280,7 @@ class Character extends FlxSprite
             if (isSinging())
                 return;
 
-            // TODO: Why do we need this again?
-            if (danceSteps.length > 1.0)
+            if (danceSteps.length != 1.0)
             {
                 if (!animation.finished && danceSteps.contains(animation.name))
                     return;

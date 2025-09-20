@@ -1971,21 +1971,21 @@ class RoughEL extends PlayState
     public function craftersLayerUpdate():Void
     {
         if (timeInterval > 0.3)
-        {
             timeInterval = timeInterval - 0.15;
-        }
 
-        if (checkLayer == true)
-        {
-            checkLayer = false;        
+        if (checkLayer)
+        {      
             roughES.remove(craftersSprite1, true);
+
             roughES.insert(roughES.members.indexOf(players), craftersSprite1);
-        }else
-        {
-            checkLayer = true;
-
-            roughES.remove(craftersSprite1, true);
-            roughES.add(craftersSprite1);
         }
+        else
+        {
+            roughES.remove(craftersSprite1, true);
+
+            roughES.insert(roughES.members.indexOf(players) + 1, craftersSprite1);
+        }
+
+        checkLayer = !checkLayer;
     }
 }

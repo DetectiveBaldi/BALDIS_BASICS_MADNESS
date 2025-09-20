@@ -50,7 +50,6 @@ using StringTools;
 using util.MathUtil;
 using util.StringUtil;
 
-// TODO: Optimize using local static variables.
 class FreeplayScreen extends CustomState
 {
     public static var selectedDifficulty:Int = 0;
