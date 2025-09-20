@@ -126,7 +126,7 @@ class FundamentalsL extends PlayState
             player.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fundamentals"));
-            plr.setPosition(player.x + 62.0, player.y + 62.0);
+            plr.setPosition(player.x + 68.0, player.y + 56.0);
             plr.color = 0xB8B19C;
             plr.skipDance = true;
             plr.animation.play("happy");
@@ -276,7 +276,8 @@ class FundamentalsL extends PlayState
             plr.animation.play("realize");
             plr.visible = true;
         
-            tween.tween(principal, {x: -300.0}, conductor.beatLength * 4.0 * 0.001);
+            if (FlxG.random.bool())
+                tween.tween(principal, {x: -300.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1396)
@@ -366,7 +367,7 @@ class FundamentalsL extends PlayState
             gameCameraZoom = 0.65;
         }
 
-        if (step == 1864)
+        if (step == 1876)
         {
             fundamentalsS.hall2.visible = true;
             fundamentalsS.hall1.visible = false;
