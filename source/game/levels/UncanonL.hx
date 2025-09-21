@@ -21,6 +21,8 @@ import core.Paths;
 
 import data.CharacterData;
 
+import extendable.CustomState;
+
 import game.stages.UncanonS;
 
 using util.MathUtil;
@@ -39,6 +41,8 @@ class UncanonL extends PlayState
 
         uncanonS = cast (stage, UncanonS);
 
+        CustomState.cancelFadeOut = true;
+
         super.create();
 
         cameraLock = FOCUS_CAM_POINT;
@@ -46,6 +50,8 @@ class UncanonL extends PlayState
         cameraPoint.centerTo(opponent);
 
         cameraPoint.x -= 50.0;
+
+        gameCamera.zoom = 0.3;
 
         gameCameraZoom = 0.3;
 
@@ -63,6 +69,8 @@ class UncanonL extends PlayState
         opponent.setPosition(-75.0, 0.0);
         opponent.colorTransform.setOffsets(FlxColor.WHITE);
         opponent.alpha = 0.0;
+
+        countdown.skip();
     }
 
     override function stepHit(step:Int):Void

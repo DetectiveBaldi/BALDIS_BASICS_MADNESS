@@ -29,6 +29,8 @@ class TwoL extends PlayState
 
         twoS = cast (stage, TwoS);
 
+        CustomState.cancelFadeOut = true;
+
         super.create();
 
         canPause = false;
@@ -212,11 +214,7 @@ class TwoL extends PlayState
     override function endSong():Void
     {
         if (getClassFromNextState() == TitleScreen)
-        {
-            CustomState.cancelFadeIn = true;
-
-            CustomState.cancelFadeOut = true;
-        }
+            CustomState.cancelNextTransition();
 
         super.endSong();
     }

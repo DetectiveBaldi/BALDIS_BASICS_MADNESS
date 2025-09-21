@@ -27,6 +27,7 @@ import core.Paths;
 
 import data.CharacterData;
 
+import extendable.CustomState;
 import extendable.CustomSubState;
 
 import game.stages.OverseerS;
@@ -54,6 +55,8 @@ class OverseerL extends PlayState
         stage = new OverseerS();
 
         overseerS = cast (stage, OverseerS);
+
+        CustomState.cancelFadeOut = true;
 
         super.create();
 
