@@ -49,8 +49,6 @@ class OverseerL extends PlayState
 
     public var musicBox:FlxSprite;
 
-    public var blackEnd:FlxSprite;
-
     override function create():Void
     {
         stage = new OverseerS();
@@ -416,21 +414,12 @@ class OverseerL extends PlayState
             overseerS.redstatic.alpha = 1.0;
 
             opponent.scale.set(1.9, 1.9);
+
             opponent.updateHitbox();
-            opponent.screenCenter();
         }
 
         if (step == 3216)
-        {
-            blackEnd = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-            blackEnd.scale.set(1280.0, 720.0);
-            blackEnd.updateHitbox();
-            blackEnd.screenCenter();
-            blackEnd.alpha = 0.0;
-            add(blackEnd);
-
-            tween.tween(blackEnd, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
-        }
+            gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 4.0 * 0.001);
     }
 
     override function beatHit(beat:Int):Void

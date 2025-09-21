@@ -26,7 +26,7 @@ class LiteratureS extends Stage
 
         sky = getSprite("baldina-sky");
 
-        clouds = getBackdrop("baldina-clouds");
+        clouds = getBackdrop("baldina-clouds", false, false, X);
 
         clouds.active = true;
 

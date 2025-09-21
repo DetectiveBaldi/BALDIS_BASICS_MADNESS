@@ -83,39 +83,15 @@ class Stage extends FlxGroup
     }
 
     public function getBackdrop(file:String, useSharedPath:Bool = false, useCustomPath:Bool = false,
-        scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
+        axes:FlxAxes = XY, scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
     {
         file = '${getPathPrepend(useSharedPath, useCustomPath)}${file}';
 
-        var newBackdrop:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic(file), X);
+        var newBackdrop:FlxBackdrop = new FlxBackdrop(AssetCache.getGraphic(file), axes);
 
         newBackdrop.active = false;
 
         newBackdrop.visible = false;
-
-        newBackdrop.scale.set(scaleX, scaleY);
-
-        newBackdrop.updateHitbox();
-
-        newBackdrop.screenCenter();
-
-        add(newBackdrop);
-
-        return newBackdrop;
-    }
-
-    public function getAtlasBackdrop(file:String, useSharedPath:Bool = false, useCustomPath:Bool = false,
-        scaleX:Float = 1.15, scaleY:Float = 1.15):FlxBackdrop
-    {
-        file = '${getPathPrepend(useSharedPath, useCustomPath)}${file}';
-
-        var newBackdrop:FlxBackdrop = new FlxBackdrop(null, X);
-
-        newBackdrop.active = false;
-
-        newBackdrop.visible = false;
-
-        newBackdrop.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic(file), Paths.image(Paths.xml(file)));
 
         newBackdrop.scale.set(scaleX, scaleY);
 
