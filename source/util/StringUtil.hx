@@ -57,11 +57,11 @@ class StringUtil
     {
         str = str.toLowerCase();
 
-        var cache:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
+        var stringToInt:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
             "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
 
-        if (cache.exists(str))
-            return cache[str];
+        if (stringToInt.exists(str))
+            return stringToInt[str];
 
         return Std.parseInt(str) ?? -1;
     }
