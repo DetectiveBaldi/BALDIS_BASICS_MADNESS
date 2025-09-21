@@ -88,10 +88,10 @@ class OverseerL extends PlayState
         oppStrumline.strums.alpha = 0.25;
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
 
-        playField.visible = false;
+        playField.strumlines.visible = false;
     }
 
     override function stepHit(step:Int):Void
@@ -100,7 +100,10 @@ class OverseerL extends PlayState
 
         if (step == 64)
         {
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -345,7 +348,10 @@ class OverseerL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             scissors = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/GameOverScreen/4"));
             scissors.scale.set(1.0, 1.0);

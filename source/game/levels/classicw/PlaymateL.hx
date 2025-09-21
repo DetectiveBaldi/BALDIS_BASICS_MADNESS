@@ -65,7 +65,10 @@ class PlaymateL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         tutorText = new FlxText(0.0, 0.0, player.width * 2.0, "Time to jump rope!\nPress Left Mouse Button to jump!");
 
@@ -142,7 +145,10 @@ class PlaymateL extends PlayState
 
             opponent.skipDance = false;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             gameCameraZoom = 0.65;
         }

@@ -57,7 +57,10 @@ class DetentionL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         plrStrumline.botplay = true;
 
@@ -174,7 +177,10 @@ class DetentionL extends PlayState
             
             gameCameraZoom = 0.65;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
         }
 
         if (step == 147)

@@ -277,7 +277,7 @@ class ScribbleUI extends FlxBasic
 
         healthBar = playField.healthBar;
 
-        playField.scoreClip.kill();
+        playField.scoreClip.visible = false;
 
         var scoreText:FlxText = playField.scoreText;
 
@@ -287,7 +287,7 @@ class ScribbleUI extends FlxBasic
 
         scoreText.textField.sharpness = 100.0;
 
-        healthBar.kill();
+        healthBar.visible = false;
 
         var timerClock:FlxSprite = playField.timerClock;
 
@@ -300,7 +300,7 @@ class ScribbleUI extends FlxBasic
         timerClock.setPosition(FlxG.width - timerClock.width - 25.0,
             Options.downscroll ? 25.0 : FlxG.height - timerClock.height - 25.0);
 
-        playField.timerNeedle.kill();
+        playField.timerNeedle.visible = false;
 
         progressBar = new ProgressBar(0.0, 0.0, 480, 30, 0, LEFT_TO_RIGHT);
 
@@ -311,6 +311,9 @@ class ScribbleUI extends FlxBasic
         progressBar.setPosition(progressBar.getCenterX(), Options.downscroll ? 50.0 : FlxG.height - progressBar.height - 50.0);
 
         playField.insert(playField.members.indexOf(healthBar), progressBar);
+
+        if (Options.botplay)
+            progressBar.kill();
 
         timeText = new FlxText(0.0, 0.0, timerClock.width);
 
@@ -329,6 +332,9 @@ class ScribbleUI extends FlxBasic
         timeText.setPosition(timerClock.x, timeText.getCenterY(timerClock) + 18.5);
 
         playField.insert(playField.members.indexOf(timerClock) + 1, timeText);
+
+        if (Options.botplay)
+            timeText.kill();
     }
 
     override function update(elapsed:Float):Void

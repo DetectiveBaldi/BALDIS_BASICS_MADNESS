@@ -138,7 +138,8 @@ class SetbackL extends PlayState
         if (step == 476)
         {
             gameCamera.alpha = 0.0;
-            playField.visible = false;
+
+            playField.strumlines.visible = false;
 
             gameCameraZoom = 0.5;
         }
@@ -151,7 +152,7 @@ class SetbackL extends PlayState
 
             setbackUI.progressBar.visible = true;
 
-            playField.visible = true;
+            playField.strumlines.visible = true;
 
             var opp:Character = getOpponent("dsci");
             opp.visible = false;
@@ -284,7 +285,7 @@ class SetbackUI extends ScribbleUI
 
         var playField:PlayField = game.playField;
 
-        playField.scoreClip.revive();
+        playField.scoreClip.visible = true;
 
         var scoreText:FlxText = game.playField.scoreText;
 

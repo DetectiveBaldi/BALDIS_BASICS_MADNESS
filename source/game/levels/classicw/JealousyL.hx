@@ -57,7 +57,10 @@ class JealousyL extends PlayState
         opponent.skipDance = true;
         opponent.visible = false;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         gameCameraZoom = 0.6;
 
@@ -161,7 +164,10 @@ class JealousyL extends PlayState
 
         if (step == 64)
         {
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             opponent.skipDance = false;
         }
@@ -288,7 +294,10 @@ class JealousyL extends PlayState
 
             player.visible = false;
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             jealousyS.hall1.visible = false;
             

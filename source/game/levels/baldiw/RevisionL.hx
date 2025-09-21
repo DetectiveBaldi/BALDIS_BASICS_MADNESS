@@ -73,7 +73,10 @@ class RevisionL extends PlayState
         gameCamera.color = 0xFF000000;
         temperature.color = 0xFF000000;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         revisionS.entranceA2.visible = true;
         
@@ -142,7 +145,10 @@ class RevisionL extends PlayState
 
             gameCameraZoom = 0.7;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             var opp:Character = getOpponent("baldi-face-right");
             opp.skipDance = false;
@@ -202,7 +208,10 @@ class RevisionL extends PlayState
     
         if (step == 1184)
         {
-            hudCamera.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             cameraPoint.centerTo();
             gameCamera.snapToTarget();
@@ -245,7 +254,13 @@ class RevisionL extends PlayState
 
             if (step != 1584.0)
                 padMinigame.nextProblem(step == 1456.0);
-        } 
+        }
+
+        if (step == 1216.0 || step == 1344.0 || step == 1536.0)
+        {
+            if (Options.botplay)
+                padMinigame.checkSubmission();
+        }
     }
 }
 
@@ -331,13 +346,20 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         super(x, y);
 
+        FlxG.keys.enabled = false;
+
+        keys = new FlxKeyboard();
+
+        FlxG.inputs.addInput(keys);
+
         mouseVis = FlxG.mouse.visible;
 
-        FlxG.mouse.visible = true;
+        if (!Options.botplay)
+        {
+            FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
-
-        FlxG.keys.enabled = false;
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        }
 
         #if FLX_DEBUG
         debugToggleKeys = FlxG.debugger.toggleKeys.copy();
@@ -346,10 +368,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         FlxG.debugger.visible = false;
         #end
-
-        keys = new FlxKeyboard();
-
-        FlxG.inputs.addInput(keys);
 
         baldi = new FlxSprite();
 
@@ -630,6 +648,9 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         super.update(elapsed);
 
+        if (Options.botplay)
+            return;
+
         if (problemIndex == totalSolved)
         {
             for (k => v in buttons)
@@ -655,8 +676,10 @@ class ThinkpadMinigame extends FlxSpriteGroup
                     updateSubmission(-1);
                 
                 case FlxKey.ENTER:
-                    if (submission != "")
+                {
+                    if (submission != "" && problemIndex != 3.0)
                         checkSubmission();
+                }
 
                 default:
                 {
@@ -690,8 +713,10 @@ class ThinkpadMinigame extends FlxSpriteGroup
                                 updateSubmission(-1);
                             
                             case "OK":
-                                if (submission != "")
+                            {
+                                if (submission != "" && problemIndex != 3.0)
                                     checkSubmission();
+                            }
                             
                             default:
                                 updateSubmission(k.toLowerCase().parseInt());
@@ -711,21 +736,19 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         super.destroy();
 
-        FlxG.mouse.visible = mouseVis;
-
         FlxG.keys.enabled = true;
 
         FlxG.inputs.remove(keys);
-
-        #if FLX_DEBUG
-        FlxG.debugger.toggleKeys = debugToggleKeys;
-        #end
 
         keys.destroy();
 
         sndQueue.destroy();
 
+        FlxG.mouse.visible = mouseVis;
+
         #if FLX_DEBUG
+        FlxG.debugger.toggleKeys = debugToggleKeys;
+
         debugToggleKeys = null;
         #end
     }
@@ -898,8 +921,8 @@ class ThinkpadMinigame extends FlxSpriteGroup
         var indicat:FlxSprite = indicators[problemIndex - 1];
 
         indicat.visible = true;
-
-        if (parsSub * multiplier == answer)
+        
+        if (parsSub * multiplier == answer || Options.botplay && problemIndex != 3.0)
         {
             questionText.text += '=${answer}';
 

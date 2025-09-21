@@ -19,6 +19,7 @@ import data.Playlist;
 
 import game.HighScore;
 
+import plugins.FullscreenTogglePlugin;
 import plugins.MouseRectPlugin;
 
 import util.ClickSoundUtil;
@@ -26,6 +27,8 @@ import util.ClickSoundUtil;
 class InitState extends FlxState
 {
     public var nextState:NextState;
+
+    public static var fullscreenTogglePlugin:FullscreenTogglePlugin;
 
     public static var mouseRectPlugin:MouseRectPlugin;
 
@@ -56,6 +59,8 @@ class InitState extends FlxState
 
         setFrameRateCap(Options.frameRate);
 
+        FlxG.fullscreen = true;
+
         FlxG.mouse.visible = false;
 
         FlxG.console.registerClass(InitState);
@@ -75,6 +80,10 @@ class InitState extends FlxState
         HighScore.init();
 
         HighScore.purgeInvalid();
+
+        fullscreenTogglePlugin = new FullscreenTogglePlugin();
+
+        FlxG.plugins.addPlugin(fullscreenTogglePlugin);
 
         mouseRectPlugin = new MouseRectPlugin();
 

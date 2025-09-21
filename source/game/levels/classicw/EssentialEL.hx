@@ -64,7 +64,10 @@ class EssentialEL extends PlayState
         plr.updateHitbox();
         plr.setPosition(1600.0, -250.0);
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         temperature = new FlxSprite();
     }
@@ -89,7 +92,10 @@ class EssentialEL extends PlayState
 
             tween.tween(player, {x: 550.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             plrStrumline.botplay = Options.botplay;
         }
@@ -530,8 +536,12 @@ class EssentialEL extends PlayState
 
         if (step == 1916)
         {
-            hudCamera.visible = false;
             gameCamera.visible = false;
+            
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
         }
     }
 

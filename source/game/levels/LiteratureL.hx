@@ -55,7 +55,10 @@ class LiteratureL extends PlayState
 
         gameCamera.snapToTarget();
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         literatureS.hall0.visible = true;
     
@@ -102,7 +105,10 @@ class LiteratureL extends PlayState
 
             cameraLock = FOCUS_CAM_CHAR;
            
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
            
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);

@@ -41,9 +41,6 @@ class TwoL extends PlayState
         oppStrumline.strums.alpha = 0.25;
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
-
         countdown.skip();
 
         cameraLock = FOCUS_CAM_POINT;
@@ -56,7 +53,10 @@ class TwoL extends PlayState
 
         twoS.noise.visible = false;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         gameCameraZoom = 1.0;
         
@@ -79,7 +79,7 @@ class TwoL extends PlayState
         {
             opponent.alpha = 1.0;
 
-            playField.visible = true;
+            playField.strumlines.visible = true;
 
             FlxG.camera.visible = true;
         }
@@ -180,7 +180,10 @@ class TwoL extends PlayState
         {
             opponent.alpha = 0.0;
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             FlxG.camera.visible = true;
 

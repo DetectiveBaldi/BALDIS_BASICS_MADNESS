@@ -841,6 +841,8 @@ class SearchItem<T> extends FlxInputText
         text = "";
 
         updateIconPosition();
+
+        updateIconVisible();
     }
 
     public function isEmpty():Bool

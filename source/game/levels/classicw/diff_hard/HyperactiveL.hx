@@ -63,7 +63,10 @@ class HyperactiveL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
     }
 
     override function stepHit(step:Int):Void
@@ -135,7 +138,10 @@ class HyperactiveL extends PlayState
 
             tween.tween(player, {x: 160.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             gameCameraZoom = 0.6;
         }

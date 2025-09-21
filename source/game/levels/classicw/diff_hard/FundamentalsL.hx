@@ -63,7 +63,10 @@ class FundamentalsL extends PlayState
 
         gameCamera.alpha = 0.0;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
     }
 
     override function stepHit(step:Int):Void
@@ -80,7 +83,10 @@ class FundamentalsL extends PlayState
         {
             gameCamera.alpha += 1.0;
             
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
         }
 
         if (step == 272)
@@ -240,7 +246,10 @@ class FundamentalsL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             cameraLock = FOCUS_CAM_POINT;
             cameraPoint.centerTo();
@@ -336,7 +345,10 @@ class FundamentalsL extends PlayState
             fundamentalsS.hall1open.visible = false;
             fundamentalsS.hall1front.visible = false;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             opponent.skipDance = false;
 

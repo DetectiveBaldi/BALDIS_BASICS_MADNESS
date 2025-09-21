@@ -49,7 +49,10 @@ class AdrenalineL extends PlayState
 
         cameraLock = FOCUS_CAM_POINT;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
         
         plrStrumlineX = plrStrumline.strums.x;
 
@@ -118,7 +121,10 @@ class AdrenalineL extends PlayState
 
             plrStrumline.botplay = Options.botplay;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             adrenalineS.closet.visible = false;
             

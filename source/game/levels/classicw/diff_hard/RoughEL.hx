@@ -71,7 +71,10 @@ class RoughEL extends PlayState
 
         gameCameraZoom = 1.15;
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
 
         plrStrumline.botplay = true;
 
@@ -206,7 +209,10 @@ class RoughEL extends PlayState
 
             _plr.animation.onFrameChange.add(updateLegStatus);
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             plrStrumline.botplay = Options.botplay;
         }
@@ -712,7 +718,10 @@ class RoughEL extends PlayState
 
             updateHealthBar("opponent");
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             plrStrumline.botplay = true;
 
@@ -966,7 +975,10 @@ class RoughEL extends PlayState
 
             plrStrumline.visible = true;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             plrStrumline.botplay = Options.botplay;
 
@@ -993,7 +1005,10 @@ class RoughEL extends PlayState
 
             gameCameraZoom = 0.8;
 
-            playField.visible = false;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             plrStrumline.botplay = true;
 
@@ -1156,7 +1171,10 @@ class RoughEL extends PlayState
 
             plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             plrStrumline.botplay = Options.botplay;
         
@@ -1570,7 +1588,11 @@ class RoughEL extends PlayState
 
             remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
-            hudCamera.visible = false;
+
+             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = false;
+
+            playField.strumlines.visible = false;
 
             SetCamFocusEvent.dispatch(this, (FlxG.width - cameraPoint.width) * 0.5 + 200.0,
                 (FlxG.height - cameraPoint.height) * 0.5, null, 0.0);
@@ -1631,7 +1653,11 @@ class RoughEL extends PlayState
             roughES.hall2rev.visible = false;
             roughES.hall2.visible = true;
 
-            hudCamera.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
+
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
         

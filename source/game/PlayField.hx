@@ -52,6 +52,8 @@ class PlayField extends FlxGroup
 
     public var playStats:PlayStats;
 
+    public var botplayIcon:FlxSprite;
+
     public var scoreClip:FlxSprite;
 
     public var scoreText:FlxText;
@@ -107,6 +109,17 @@ class PlayField extends FlxGroup
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
+        botplayIcon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/botplay-icon"));
+
+        botplayIcon.active = false;
+
+        botplayIcon.setPosition(10.0, Options.downscroll ? FlxG.height - botplayIcon.height - 10.0 : 10.0);
+
+        add(botplayIcon);
+
+        if (!Options.botplay)
+            botplayIcon.kill();
+
         scoreClip = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/clipboard"));
 
         scoreClip.active = false;
@@ -120,6 +133,9 @@ class PlayField extends FlxGroup
         scoreClip.setPosition(25.0, Options.downscroll ? -scoreClip.height * 0.35 : FlxG.height - scoreClip.height * 0.65);
 
         add(scoreClip);
+
+        if (Options.botplay)
+            scoreClip.kill();
 
         scoreText = new FlxText(0.0, 0.0, scoreClip.width, "", 18);
 
@@ -141,6 +157,9 @@ class PlayField extends FlxGroup
 
         add(scoreText);
 
+        if (Options.botplay)
+            scoreText.kill();
+
         scoreTextFormat = new FlxTextFormat(FlxColor.BLACK);
 
         formatRules = [new FlxTextFormatMarkerPair(scoreTextFormat, "<color-format>")];
@@ -154,6 +173,9 @@ class PlayField extends FlxGroup
 
         add(healthBar);
 
+        if (Options.botplay)
+            healthBar.kill();
+
         timerClock = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/PlayField/timerClock"));
         
         timerClock.active = false;
@@ -165,6 +187,9 @@ class PlayField extends FlxGroup
         timerClock.setPosition(FlxG.width - timerClock.width - 25.0, Options.downscroll ? 25.0 : FlxG.height - timerClock.height - 25.0);
         
         add(timerClock);
+
+        if (Options.botplay)
+            timerClock.kill();
 
         timerNeedle = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("game/PlayField/timerNeedle"));
 
@@ -178,6 +203,9 @@ class PlayField extends FlxGroup
             timerClock.y + (timerClock.height * 0.5) - ((timerNeedle.height * 0.25) + 20.0));
 
         add(timerNeedle);
+
+        if (Options.botplay)
+            timerNeedle.kill();
 
         creditsPop = new CreditsPopup(0.0, 0.0, tween, timer, chart.credits);
 
@@ -298,9 +326,9 @@ class PlayField extends FlxGroup
             playStats.bonus += rating.bonus;
 
             updateScoreText();
-
-            healthBar.value += rating.health;
         }
+
+        healthBar.value += rating.health;
     }
 
     public function noteMiss(note:Note):Void
@@ -316,12 +344,12 @@ class PlayField extends FlxGroup
 
     public function sustainHold(ev:SustainHoldEvent):Void
     {
-        if (ev.note.strumline.botplay)
-            return;
+        if (!ev.note.strumline.botplay)
+        {
+            playStats.score += Math.floor(250.0 * ev.elapsed);
 
-        playStats.score += Math.floor(250.0 * ev.elapsed);
-
-        updateScoreText();
+            updateScoreText();
+        }
 
         healthBar.value += 10.0 * ev.elapsed;
     }

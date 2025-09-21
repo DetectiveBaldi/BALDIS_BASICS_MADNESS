@@ -21,7 +21,7 @@
 
 	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
 
-	<window if="desktop" orientation="landscape" fullscreen="false" />
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="false" />
 
 	<!-- ______________________________ Defines, Haxedefs, and Libraries _____________________________ -->
 

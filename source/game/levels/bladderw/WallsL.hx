@@ -26,7 +26,10 @@ class WallsL extends PlayState
 
         super.create();
 
-        playField.visible = false;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
+
+        playField.strumlines.visible = false;
             
         oppStrumline.visible = false;
         oppStrumline.strums.visible = false;
@@ -79,7 +82,10 @@ class WallsL extends PlayState
 
         if (step == 16)
         {            
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
         
             gameCameraZoom = 1.3;
 
