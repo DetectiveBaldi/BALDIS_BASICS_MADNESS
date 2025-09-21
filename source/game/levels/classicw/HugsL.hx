@@ -111,7 +111,7 @@ class HugsL extends PlayState
         {
             if (FlxG.mouse.justPressed && FlxMath.pointInFlxRect(FlxG.mouse.x, FlxG.mouse.y, portalRect))
             {
-                if ( #if debug false #else PlayState.isWeek #end )
+                if ( #if debug false #else Options.botplay || PlayState.isWeek #end )
                     FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));
                 else
                 {

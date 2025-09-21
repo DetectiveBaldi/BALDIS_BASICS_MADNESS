@@ -16,6 +16,7 @@ import flixel.util.FlxSignal;
 import extendable.CustomState;
 
 import core.AssetCache;
+import core.Options;
 import core.Paths;
 
 import data.LevelData;
@@ -154,7 +155,8 @@ class TitleScreen extends CustomState
         super.update(elapsed);
 
         if (FlxG.mouse.visible && FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
-            HighScore.getWeekScore("Classic", "Normal").score != 0.0 && HighScore.getLevelScore("Two", "Normal").score == 0.0 #end )
+            !Options.botplay && HighScore.getWeekScore("Classic", "Normal").score != 0.0 &&
+                HighScore.getLevelScore("Two", "Normal").score == 0.0 #end )
         {
             if (FlxG.mouse.justReleased)
             {
