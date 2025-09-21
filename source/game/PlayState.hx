@@ -644,7 +644,8 @@ class PlayState extends CustomState
         if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
             HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
-        FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
+        FlxG.switchState(#if debug true #else !Options.botplay #end && unlocks.length > 0.0 ?
+            () -> new UnlockScreen(nextState, unlocks) : nextState);
     }
 
     public function changeTime(newTime:Float):Void
