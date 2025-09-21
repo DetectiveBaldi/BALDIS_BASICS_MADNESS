@@ -26,6 +26,8 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
+import data.LevelData;
+
 import extendable.CustomSubState;
 
 import game.PlayState;
@@ -198,10 +200,18 @@ class PauseScreen extends CustomSubState
                 nextState ??= () -> new StoryMenuScreen();
             else
             {
-                if (PlayState.level.obscurity == NONE)
+                var level:LevelData = PlayState.level;
+
+                if (level.obscurity == NONE)
                     nextState ??= () -> new FreeplayScreen();
                 else
+                {
                     nextState ??= () -> new MysteryScreen();
+
+                    var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+
+                    MysteryScreen.curSelected = filtered.indexOf(level);
+                }
             }
 
             FlxG.switchState(nextState);

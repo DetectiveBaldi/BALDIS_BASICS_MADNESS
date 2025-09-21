@@ -396,20 +396,23 @@ class PlayState extends CustomState
         }
         else
         {   
-            if (Math.abs(conductor.time - instrumental.time) >= 25.0)
-                instrumental.time = conductor.time;
+            if (instrumental.playing)
+            {
+                if (Math.abs(conductor.time - instrumental.time) >= 25.0)
+                    conductor.time = instrumental.time;
 
-            if (mainVocals != null)
-                if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)
-                    mainVocals.time = instrumental.time;
+                if (mainVocals != null)
+                    if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)
+                        mainVocals.time = instrumental.time;
 
-            if (opponentVocals != null)
-                if (Math.abs(opponentVocals.time - instrumental.time) >= 5.0)
-                    opponentVocals.time = instrumental.time;
+                if (opponentVocals != null)
+                    if (Math.abs(opponentVocals.time - instrumental.time) >= 5.0)
+                        opponentVocals.time = instrumental.time;
 
-            if (playerVocals != null)
-                if (Math.abs(playerVocals.time - instrumental.time) >= 5.0)
-                    playerVocals.time = instrumental.time;
+                if (playerVocals != null)
+                    if (Math.abs(playerVocals.time - instrumental.time) >= 5.0)
+                        playerVocals.time = instrumental.time;
+            }
         }
         
         gameCamera.zoom = FlxMath.lerp(gameCamera.zoom, gameCameraZoom, FlxMath.getElapsedLerp(0.15, elapsed));
@@ -658,15 +661,23 @@ class PlayState extends CustomState
 
         if (conductor.time > newTime)
         {
+            pauseMusic();
+
+            setMusicTime(newTime);
+
             conductor.time = newTime;
             
             playField.noteSpawner.setNoteIndexAt(newTime);
 
             setEventIndexAt(newTime);
+
+            resumeMusic();
         }
         else
         {
             pauseMusic();
+
+            setMusicTime(newTime);
 
             playField.noteSpawner.setNoteIndexAt(newTime);
 
@@ -819,6 +830,20 @@ class PlayState extends CustomState
         opponentVocals?.resume();
 
         playerVocals?.resume();
+    }
+
+    public function setMusicTime(time:Float):Void
+    {
+        instrumental.time = time;
+
+        if (mainVocals != null)
+            mainVocals.time = time;
+
+        if (opponentVocals != null)
+            opponentVocals.time = time;
+
+        if (playerVocals != null)
+            playerVocals.time = time;
     }
 }
 
