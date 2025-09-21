@@ -309,6 +309,8 @@ class EssentialEL extends PlayState
             _opp.setPosition(-100.0, 18.5);
             opponents.add(_opp);
             opponent = _opp;
+
+            updateHealthBar("opponent");
         }
 
         if (step == 1296)
@@ -341,6 +343,8 @@ class EssentialEL extends PlayState
             var _opp:Character = getOpponent("baldi-mad");
             _opp.visible = true;
             opponent = _opp;
+
+            updateHealthBar("opponent");
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);

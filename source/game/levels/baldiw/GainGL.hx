@@ -345,7 +345,7 @@ class GainGL extends PlayState
             opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
             opponent.scale.set(1.5, 1.5);
             opponent.updateHitbox();
-            opponent.setPosition(500.0, 180.0);
+            opponent.setPosition(550.0, 180.0);
             opponents.add(opponent);
 
             tween.tween(opponent, {x: opponent.x - 150.0, y: opponent.y + 15.0}, conductor.beatLength * 0.275 * 0.001, 
@@ -385,11 +385,13 @@ class GainGL extends PlayState
 
         if (step == 648 || step == 880 || step == 896)
         {            
-            tween.tween(opponent, {x: opponent.x - 150.0}, conductor.beatLength * 0.275 * 0.001, 
+            tween.tween(opponent, {x: opponent.x - 200.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     ease: FlxEase.sineIn
                 }
             );
+
+            opponent.animation.play("slap");
         }
     
         if (step == 912)
