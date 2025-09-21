@@ -36,6 +36,8 @@ class DetentionL extends PlayState
     public var detentionS:DetentionS;
 
     public var portalRect:FlxRect;
+    
+    public var principal:FlxSprite;
 
     override function create():Void
     {
@@ -498,24 +500,32 @@ class DetentionL extends PlayState
 
         if (step == 1484)
         {
-            tween.tween(opponent, {x: 300.0, y: -10.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            opponent.visible = false;
+            
+            principal = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/principal"));
+            principal.scale.set(1.45, 1.45);
+            principal.updateHitbox();
+            principal.setPosition(355.0, 155.0);
+            detentionS.insert(detentionS.members.indexOf(players), principal);
 
-            tween.tween(opponent.scale, {x: 0.6, y: 0.6}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(principal, {x: 480.0, y: 80.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+
+            tween.tween(principal.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 1493)
         {
-            detentionS.remove(opponents, true);
+            detentionS.remove(principal, true);
 
-            detentionS.insert(detentionS.members.indexOf(detentionS.office1), opponents);
+            detentionS.insert(detentionS.members.indexOf(detentionS.office1), principal);
 
             detentionS.office0.visible = false;
             detentionS.office1.visible = true;
 
             if (FlxG.random.bool())
-                tween.tween(opponent, {x: -opponent.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
+                tween.tween(principal, {x: -principal.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
             else
-                tween.tween(opponent, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
+                tween.tween(principal, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1504)

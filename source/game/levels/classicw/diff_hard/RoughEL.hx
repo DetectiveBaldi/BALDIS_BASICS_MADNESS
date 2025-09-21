@@ -49,6 +49,8 @@ class RoughEL extends PlayState
     public var checkLayer:Bool;
     public var timeInterval:Float;
 
+    public var principal:FlxSprite;
+
     public var craftersSprite1:FlxSprite;
 
     public var vignette:FlxSprite;
@@ -635,10 +637,18 @@ class RoughEL extends PlayState
         if (step == 1456.0)
         {
             var opp:Character = getOpponent("principal");
+            opp.visible = false;
 
-            tween.tween(opp, {x: 60.0, y: -3.5}, conductor.beatLength * 2.5 * 0.001);
+            principal = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/principal"));
+            principal.scale.set(1.65, 1.65);
+            principal.updateHitbox();
+            principal.setPosition(-180.0, 110.0);
+            principal.color = 0xC4B7A0;
+            roughES.insert(roughES.members.indexOf(players), principal);
 
-            tween.tween(opp.scale, {x: 0.515, y: 0.515}, conductor.beatLength * 2.5 * 0.001);
+            tween.tween(principal, {x: 215.0, y: 25.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+
+            tween.tween(principal.scale, {x: 0.65, y: 0.65}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
 
             tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
@@ -648,16 +658,14 @@ class RoughEL extends PlayState
 
         if (step == 1466.0)
         {
-            var opp:Character = getOpponent("principal");
+            roughES.remove(principal, true);
 
+            roughES.insert(roughES.members.indexOf(roughES.office2), principal);
+            
             if (FlxG.random.bool())
-                tween.tween(opp, {x: -opp.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
+                tween.tween(principal, {x: -principal.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
             else
-                tween.tween(opp, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
-
-            roughES.remove(opponents, true);
-
-            roughES.insert(roughES.members.indexOf(roughES.office2), opponents);
+                tween.tween(principal, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
 
             roughES.office0.visible = false;
 
@@ -678,6 +686,8 @@ class RoughEL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
+            principal.visible = false;
+
             var opp:Character = getOpponent("baldi-mad-face-front");
 
             opp.visible = true;
@@ -687,10 +697,6 @@ class RoughEL extends PlayState
             opp.color = 0x000000;
 
             opp.setPosition(385.0, 110.0);
-
-            var _opp:Character = getOpponent("principal");
-
-            _opp.visible = false;
 
             roughES.remove(opponents, true);
 
@@ -1290,7 +1296,15 @@ class RoughEL extends PlayState
             updateHealthBar("opponent");
             
             var plr:Character = getPlayer("bf-face-left");
-            plr.setPosition(-1000.0, 170.0);
+            plr.visible = false;
+            
+            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            plr.setPosition(-1200.0, 170.0);
+            plr.color = 0xBEB398;
+            players.add(plr);
+
+            roughES.remove(opponents, true);
+            roughES.insert(roughES.members.indexOf(players), opponents);
 
             tween.tween(opp, {x: 100}, 1,                 
                 {
@@ -1326,12 +1340,11 @@ class RoughEL extends PlayState
         {
             gameCameraZoom = 1;
 
-            roughES.hall2.visible = false;
-            roughES.hall2still.visible = true;
-        
+            roughES.hall2.animation.pause();
+
             roughES.facultyStandard.velocity.x = 0.0;
 
-            var plr:Character = getPlayer("bf-face-left");
+            var plr:Character = getPlayer("bf-face-right");
 
             var opp:Character = getOpponent("gotta-sweep");
 
@@ -1368,9 +1381,6 @@ class RoughEL extends PlayState
             _opp.color = 0xAFA487;
             _opp.setPosition(950, -150);
             opponents.add(_opp);
-            
-            roughES.remove(opponents, true);
-            roughES.insert(roughES.members.indexOf(players), opponents);
 
             opponent = _opp;
 
@@ -1487,7 +1497,7 @@ class RoughEL extends PlayState
 
         if (step == 2648)
             {
-                var plr:Character = getPlayer("bf-face-left");
+                var plr:Character = getPlayer("bf-face-right");
                 var opp:Character = getOpponent("1st-prize-90");
                 
                 tween.tween(opp, {x: -1450}, 1,            
@@ -1495,7 +1505,7 @@ class RoughEL extends PlayState
                         ease: FlxEase.quartIn,
                     });
                     
-                tween.tween(plr, {x: -1300}, 0.75,            
+                tween.tween(plr, {x: -1350}, 0.75,            
                     {
                         startDelay: 0.65,
                         ease: FlxEase.quadOut,
@@ -1515,14 +1525,19 @@ class RoughEL extends PlayState
             opponent.color = 0xC7BEA7;
            
             gameCameraZoom = 0.7;
-            roughES.hall2rev.visible = true;
-            roughES.hall2still.visible = false;
+            roughES.hall2.animation.play("0", false, true);
             roughES.facultyStandard.velocity.x = 5560.0;
         }
     
         if (step == 2660)
         {
+            var plr:Character = getPlayer("bf-face-right");
+            plr.visible = false;
+
             var plr:Character = getPlayer("bf-face-left");
+            plr.setPosition(-1350, 170);
+            plr.visible = true;
+
             var opp:Character = getOpponent("1st-prize-90");
 
             tween.tween(opp, {x: 300}, 1, {ease: FlxEase.quartOut});
@@ -1650,8 +1665,7 @@ class RoughEL extends PlayState
 
             gameCameraZoom = 0.75;
 
-            roughES.hall2rev.visible = false;
-            roughES.hall2.visible = true;
+            roughES.hall2.animation.play("0", false, false);
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
                 playField.timerNeedle.visible = true;

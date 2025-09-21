@@ -261,7 +261,7 @@ class FundamentalsL extends PlayState
 
             principal.scale.set(0.75, 0.75);
             principal.updateHitbox();
-            principal.setPosition(650.0, 250.0);
+            principal.setPosition(800.0, 250.0);
             principal.visible = true;
             
             fundamentalsS.remove(principal, true);
@@ -281,7 +281,7 @@ class FundamentalsL extends PlayState
             var plr:Character = getPlayer("bf-anim-fundamentals");
             plr.scale.set(4.5, 4.5);
             plr.updateHitbox();
-            plr.setPosition(-150.0, -50.0);
+            plr.setPosition(-170.0, -50.0);
             plr.animation.play("realize");
             plr.visible = true;
         

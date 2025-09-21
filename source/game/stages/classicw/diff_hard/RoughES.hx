@@ -16,10 +16,6 @@ class RoughES extends Stage
 
     public var hall2:FlxSprite;
 
-    public var hall2rev:FlxSprite;
-
-    public var hall2still:FlxSprite;
-
     public var hall3:FlxSprite;
 
     public var hall4:FlxSprite;
@@ -101,18 +97,6 @@ class RoughES extends Stage
         hall2.animation.addByPrefix("0", "scroll", 60.0);
 
         hall2.animation.play("0");
-
-        hall2rev = getAtlasSprite("scrolling-hall3", true);
-
-        hall2rev.active = true;
-
-        hall2rev.animation.addByPrefix("0", "scroll", 70.0);
-
-        hall2rev.animation.play("0", false, true);
-
-        hall2still = getSprite("hall2");
-
-        hall2still.active = true;
 
         hall3 = getSprite("hall3");
 
