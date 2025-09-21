@@ -236,13 +236,14 @@ class HyperactiveL extends PlayState
             opponent = opp;
             tween.tween(opp, {x: 130.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            updateHealthBar("opponent");
-
             var _opp:Character = getOpponent("1st-prize-270");
             tween.tween(_opp, {x: -140.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
-        if (step == 1440 || step == 1504)
+        if (step == 1380.0)
+            updateHealthBar("opponent");
+
+        if (step == 1440 || step == 1502)
         {
             var opp:Character = getOpponent("1st-prize-270");
             opponent = opp;
