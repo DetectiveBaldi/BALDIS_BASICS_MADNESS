@@ -201,7 +201,7 @@ class MishapPopup extends FlxSpriteGroup
 
     public function getRandomIndex():Int
     {
-        var result:Int = FlxG.random.int(0, 5);
+        var result:Int = FlxG.random.int(0, 6);
 
         if (FlxG.random.int(0, 9) == 9)
             result = 99;
