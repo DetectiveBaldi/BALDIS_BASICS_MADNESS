@@ -98,9 +98,6 @@ class OverseerL extends PlayState
 
         if (step == 64)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
-
             playField.strumlines.visible = true;
 
             if (Options.flashingLights)
@@ -345,9 +342,6 @@ class OverseerL extends PlayState
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
 
             playField.strumlines.visible = false;
 
