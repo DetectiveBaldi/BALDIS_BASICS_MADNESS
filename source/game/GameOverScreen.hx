@@ -180,6 +180,8 @@ class GameOverScreen extends CustomSubState
 
         var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('game/GameOverScreen/${rollIndex}'));
 
+        player.visible = false;
+
         rollSprite.scale.set(2.0, 2.0);
 
         rollSprite.updateHitbox();
