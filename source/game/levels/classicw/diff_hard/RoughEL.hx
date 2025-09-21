@@ -651,7 +651,7 @@ class RoughEL extends PlayState
             var opp:Character = getOpponent("principal");
 
             if (FlxG.random.bool())
-                tween.tween(opp, {x: -opp.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
+                tween.tween(opp, {x: -opp.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
             else
                 tween.tween(opp, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
 

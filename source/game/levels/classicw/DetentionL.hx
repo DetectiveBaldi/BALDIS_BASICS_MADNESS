@@ -512,7 +512,10 @@ class DetentionL extends PlayState
             detentionS.office0.visible = false;
             detentionS.office1.visible = true;
 
-            tween.tween(opponent, {x: -320.0}, conductor.beatLength * 2.0 * 0.001);
+            if (FlxG.random.bool())
+                tween.tween(opponent, {x: -opponent.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
+            else
+                tween.tween(opponent, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1504)

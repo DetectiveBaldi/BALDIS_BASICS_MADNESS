@@ -86,7 +86,7 @@ class PlaymateL extends PlayState
 
         tutorText.textField.sharpness = 400.0;
 
-        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 2.5);
+        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 3.0);
 
         add(tutorText);
     }
@@ -249,7 +249,7 @@ class PlaymateL extends PlayState
             {
                 if (!Options.botplay)
                 {
-                    tween.tween(tutorText, {y: -tutorText.height * 2.5}, conductor.beatLength * 2.0 * 0.001,
+                    tween.tween(tutorText, {y: -tutorText.height * 3.0}, conductor.beatLength * 2.0 * 0.001,
                         {ease: FlxEase.backOut});
                 }
                 
@@ -447,7 +447,7 @@ class PlaymateL extends PlayState
 
         SetCamFocusEvent.dispatch(this, 0.0, 0.0, "player", -1.0, "linear", true);
 
-        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 2.5);
+        tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 3.0);
     }
 }
 

@@ -677,7 +677,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 
                 case FlxKey.ENTER:
                 {
-                    if (submission != "" && problemIndex != 3.0)
+                    if (submission != "" || problemIndex == 3.0)
                         checkSubmission();
                 }
 
@@ -714,7 +714,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                             
                             case "OK":
                             {
-                                if (submission != "" && problemIndex != 3.0)
+                                if (submission != "" || problemIndex == 3.0)
                                     checkSubmission();
                             }
                             
@@ -723,7 +723,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                         }
                     }
                     
-                    if (k != "OK" || submission != "")
+                    if (k != "OK" || submission != "" || problemIndex == 3.0)
                         v.animation.play("selected");
                 }
                 else

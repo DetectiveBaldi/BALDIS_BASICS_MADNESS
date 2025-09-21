@@ -578,8 +578,16 @@ class FreeplayScreen extends CustomState
         return button;
     }
 
+    public function clickExitButton():Void
+    {
+        FlxG.switchState(() -> new ModeSelectScreen());
+    }
+
     public function clickPlayButton():Void
     {
+        if (isScrolling)
+            return;
+        
         if (searchItem.text != searchItem.lastSearch && searchItem.text.length != 0.0)
         {
             searchItem.forceSearch();
@@ -605,13 +613,11 @@ class FreeplayScreen extends CustomState
         PlayState.loadLevel(level);
     }
 
-    public function clickExitButton():Void
-    {
-        FlxG.switchState(() -> new ModeSelectScreen());
-    }
-
     public function clickInfoButton():Void
     {
+        if (isScrolling)
+            return;
+
         var level:LevelData = levels[selectedLevel];
 
         var week:WeekData = level.week;

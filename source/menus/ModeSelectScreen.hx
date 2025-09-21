@@ -16,6 +16,8 @@ import flixel.addons.display.FlxBackdrop;
 import core.AssetCache;
 import core.Paths;
 
+import data.WeekData;
+
 import extendable.CustomState;
 
 import game.HighScore;
@@ -122,8 +124,7 @@ class ModeSelectScreen extends CustomState
         var freeplayIcon:ModeSelectIcon = createIcon("freeplayIcon", "Freeplay", text, () -> FlxG.switchState(() -> 
             new FreeplayScreen()));
 
-        var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore("Baldi", "Normal").score != 0.0 &&
-            HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end ;
+        var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 #end ;
 
         if (!scoresValidated)
             freeplayIcon.lock(true);

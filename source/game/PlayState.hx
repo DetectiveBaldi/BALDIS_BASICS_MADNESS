@@ -540,6 +540,9 @@ class PlayState extends CustomState
 
         var grade:String = playStats.grade;
 
+        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
+
         var unlocks:Array<UnlockScreenParams> = new Array<UnlockScreenParams>();
 
         if (isWeek)
@@ -640,9 +643,6 @@ class PlayState extends CustomState
             if (testA)
                 unlocks.push({unlock : level.name});
         }
-
-        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
-            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
 
         FlxG.switchState(#if debug true #else !Options.botplay #end && unlocks.length > 0.0 ?
             () -> new UnlockScreen(nextState, unlocks) : nextState);
