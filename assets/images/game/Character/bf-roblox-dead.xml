@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="bf-roblox-dead.png">
+<SubTexture name="death0000" x="334" y="0" width="133" height="134" frameX="-31" frameY="-21" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0001" x="467" y="132" width="138" height="131" frameX="-34" frameY="-25" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0002" x="334" y="134" width="130" height="132" frameX="-38" frameY="-24" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0003" x="467" y="263" width="142" height="131" frameX="-27" frameY="-25" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0004" x="0" y="328" width="140" height="134" frameX="-24" frameY="-21" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0005" x="0" y="462" width="136" height="131" frameX="-33" frameY="-25" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0006" x="467" y="0" width="153" height="132" frameX="-17" frameY="-24" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0007" x="140" y="328" width="153" height="134" frameX="-22" frameY="-22" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0008" x="293" y="328" width="174" height="134" frameX="-2" frameY="-21" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0009" x="143" y="167" width="134" height="142" frameX="-31" frameY="-13" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0010" x="0" y="167" width="143" height="161" frameX="-33" frameY="-4" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0011" x="0" y="0" width="149" height="167" frameX="-31" frameY="-1" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0012" x="149" y="0" width="185" height="167" frameX="-1" frameY="-1" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0013" x="136" y="462" width="155" height="100" frameX="-16" frameY="-34" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0014" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0015" x="333" y="593" width="169" height="90" frameX="-9" frameY="-39" frameWidth="187" frameHeight="168" />
+<SubTexture name="death0016" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0000" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0001" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0002" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0003" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0004" x="620" y="188" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0005" x="0" y="593" width="167" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0006" x="167" y="593" width="166" height="92" frameX="-10" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0007" x="291" y="462" width="165" height="94" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+<SubTexture name="loop0008" x="620" y="0" width="165" height="94" frameX="-11" frameY="-36" frameWidth="187" frameHeight="168" />
+<SubTexture name="end0000" x="502" y="593" width="169" height="90" frameX="-9" frameY="-39" frameWidth="187" frameHeight="168" />
+<SubTexture name="end0001" x="620" y="94" width="163" height="94" frameX="-12" frameY="-37" frameWidth="187" frameHeight="168" />
+<SubTexture name="end0002" x="620" y="280" width="165" height="92" frameX="-11" frameY="-38" frameWidth="187" frameHeight="168" />
+</TextureAtlas>
