@@ -171,8 +171,11 @@ class PlaymateL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(tutorText, {y: player.y - tutorText.height * 0.5}, conductor.beatLength * 2.0 * 0.001,
-                {ease: FlxEase.backOut});
+            if (!Options.botplay)
+            {
+                tween.tween(tutorText, {y: player.y - tutorText.height * 0.5}, conductor.beatLength * 2.0 * 0.001,
+                    {ease: FlxEase.backOut});
+            }
         }
 
         if (step == 928)
@@ -244,8 +247,11 @@ class PlaymateL extends PlayState
 
             if (step == 1008.0)
             {
-                tween.tween(tutorText, {y: -tutorText.height * 2.5}, conductor.beatLength * 2.0 * 0.001,
-                    {ease: FlxEase.backOut});
+                if (!Options.botplay)
+                {
+                    tween.tween(tutorText, {y: -tutorText.height * 2.5}, conductor.beatLength * 2.0 * 0.001,
+                        {ease: FlxEase.backOut});
+                }
                 
                 jumpUI.kill();
 

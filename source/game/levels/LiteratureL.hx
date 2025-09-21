@@ -167,7 +167,8 @@ class LiteratureL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-angry"));
-            opp.setPosition(1800.0, -130.0);
+            opp.visible = false;
+            opp.setPosition(650.0, -130.0);
             opp.scale.set(1.2, 1.2);
             opponents.add(opp);
             opponent = opp;
@@ -201,6 +202,14 @@ class LiteratureL extends PlayState
 
         if (step == 888)
         {
+            cameraLock = FOCUS_CAM_POINT;
+
+            SetCamFocusEvent.dispatch(this, 0.0, 0.0, "opponent", -1.0, "linear", true);
+
+            opponent.visible = true;
+
+            opponent.x = 1800;
+
             tween.tween(opponent, {x: 650.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             opponent.animation.play("talk");
@@ -208,14 +217,10 @@ class LiteratureL extends PlayState
 
         if (step == 904)
         {
+            cameraLock = FOCUS_CAM_CHAR;
+
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
-            cameraLock = FOCUS_CAM_POINT;
-
-            gameCameraZoom = 0.65;
-
-            cameraPoint.centerTo();
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
