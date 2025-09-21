@@ -107,6 +107,12 @@ class SetbackL extends PlayState
         spoop.camera = hudCamera;
 
         add(spoop);
+
+        playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = false;
+
+        playField.strumlines.visible = false;
+
+        setbackUI.progressBar.visible = setbackUI.timeText.visible = false;
     }
 
     override function stepHit(step:Int):Void
@@ -116,6 +122,12 @@ class SetbackL extends PlayState
         if (step == 32)
         {
             gameCamera.alpha = 1.0;
+
+            playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = true;
+
+            playField.strumlines.visible = true;
+
+            setbackUI.progressBar.visible = setbackUI.timeText.visible = true;
         }
 
         if (step == 156)
@@ -132,14 +144,14 @@ class SetbackL extends PlayState
         {
             playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = false;
 
-            setbackUI.progressBar.visible = false;
+            playField.strumlines.visible = false;
+
+            setbackUI.progressBar.visible = setbackUI.timeText.visible = false;
         }
 
         if (step == 476)
         {
             gameCamera.alpha = 0.0;
-
-            playField.strumlines.visible = false;
 
             gameCameraZoom = 0.5;
         }

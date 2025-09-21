@@ -217,17 +217,6 @@ class PlayField extends FlxGroup
 
         strumlines = new FlxTypedGroup<Strumline>();
 
-        strumlines.memberAdded.add((strumline:Strumline) ->
-        {
-            strumline.onNoteHit.add(noteHit);
-
-            strumline.onNoteMiss.add(noteMiss);
-
-            strumline.onSustainHold.add(sustainHold);
-
-            strumline.onGhostTap.add(ghostTap);
-        });
-
         add(strumlines);
 
         noteSpawner.strumlines = strumlines;
@@ -244,6 +233,14 @@ class PlayField extends FlxGroup
         playerStrumline = new Strumline(conductor);
 
         playerStrumline.botplay = Options.botplay;
+
+        playerStrumline.onNoteHit.add(noteHit);
+
+        playerStrumline.onNoteMiss.add(noteMiss);
+
+        playerStrumline.onSustainHold.add(sustainHold);
+
+        playerStrumline.onGhostTap.add(ghostTap);
 
         playerStrumline.strums.setPosition(FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ?
             FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
