@@ -31,6 +31,7 @@ import extendable.CustomSubState;
 import game.PlayState;
 
 import menus.FreeplayScreen;
+import menus.MysteryScreen;
 import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
@@ -196,7 +197,12 @@ class PauseScreen extends CustomSubState
             if (PlayState.isWeek)
                 nextState ??= () -> new StoryMenuScreen();
             else
-                nextState ??= () -> new FreeplayScreen();
+            {
+                if (PlayState.level.obscurity == NONE)
+                    nextState ??= () -> new FreeplayScreen();
+                else
+                    nextState ??= () -> new MysteryScreen();
+            }
 
             FlxG.switchState(nextState);
         });
