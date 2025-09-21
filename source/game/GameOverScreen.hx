@@ -14,6 +14,7 @@ import core.AssetCache;
 
 import data.CharacterData;
 import data.LevelData;
+import data.WeekData;
 
 import extendable.CustomState;
 import extendable.CustomSubState;
@@ -35,6 +36,10 @@ class GameOverScreen extends CustomSubState
     public var player:Character;
 
     public var dead:FlxSound;
+
+    public var rollSprite:FlxSprite;
+
+    public var rollSound:FlxSound;
 
     public var rollTimer:FlxTimer;
 
@@ -67,7 +72,11 @@ class GameOverScreen extends CustomSubState
 
         add(player);
 
-        dead = FlxG.sound.load(AssetCache.getSound("game/GameOverScreen/dead"));
+        var split:Array<String> = player.config.name.split("-");
+
+        split.pop();
+
+        dead = FlxG.sound.load(AssetCache.getSound('game/GameOverScreen/dead-${split.join("-")}'));
 
         dead.onComplete = showImages;
 
@@ -174,13 +183,13 @@ class GameOverScreen extends CustomSubState
     {
         camera.zoom = 1.0;
 
+        player.visible = false;
+
         var rollIndex:Int = 0;
 
         var totalRolls:Int = 0;
 
-        var rollSprite:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('game/GameOverScreen/${rollIndex}'));
-
-        player.visible = false;
+        rollSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic('game/GameOverScreen/${rollIndex}'));
 
         rollSprite.scale.set(2.0, 2.0);
 
@@ -190,9 +199,11 @@ class GameOverScreen extends CustomSubState
 
         add(rollSprite);
 
-        var rollSound:FlxSound = FlxG.sound.load(AssetCache.getSound('game/GameOverScreen/${rollIndex}'));
+        rollSound = FlxG.sound.load(AssetCache.getSound('game/GameOverScreen/${rollIndex}'));
 
         rollSound.play();
+
+        var rollExclusions:Array<Int> = [0];
 
         rollTimer.start(0.125, (_rollTimer:FlxTimer) ->
         {
@@ -203,51 +214,33 @@ class GameOverScreen extends CustomSubState
                 rollTimer.time = sequence.length * 0.001;
             }
             else
+            {
                 if (rollTimer.loopsLeft == 0.0)
                     skipShowcase();
                 else
                     rollTimer.time += 0.01;
+            }
 
             if (rollTimer.loopsLeft != 0.0)
             {
                 rollIndex = FlxMath.wrap(rollIndex + 1, 0, 4);
 
+                rollExclusions[0] = rollIndex;
+
                 totalRolls++;
-
-                var chance:Int = #if debug 3 #else 99 #end ; 
-
-                if (totalRolls < 24.0)
-                    chance = -1;
-
-                if (PlayState.level.obscurity != NONE)
-                    chance = -1;
-
-                if ( #if debug false #else HighScore.getWeekScore("Classic", "Normal").score != 0.0 #end )
-                    chance = -1;
-
-                if ( #if debug false #else HighScore.getLevelScore("Overseer", "Normal").score != 0.0 #end )
-                    chance = -1;
-
-                if (FlxG.random.int(1, Std.int(Math.abs(chance))) == chance)
-                {
-                    rollTimer.cancel();
-
-                    rollSprite.kill();
-
-                    secretSequence();
-
-                    return;
-                }
             }
 
-            rollSprite.loadGraphic(AssetCache.getGraphic
-                ('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : FlxG.random.int(0, 4, [rollIndex])}'));
+            if (rollSprite.exists)
+            {
+                rollSprite.loadGraphic(AssetCache.getGraphic
+                    ('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : FlxG.random.int(0, 4, rollExclusions)}'));
 
-            rollSprite.updateHitbox();
+                rollSprite.updateHitbox();
 
-            rollSound.loadEmbedded(AssetCache.getSound('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : 5.0}'));
+                rollSound.loadEmbedded(AssetCache.getSound('game/GameOverScreen/${rollTimer.loopsLeft > 0.0 ? rollIndex : 5.0}'));
 
-            rollSound.play();
+                rollSound.play();
+            }
         }, 35);
 
         canSkip = true;
@@ -255,10 +248,6 @@ class GameOverScreen extends CustomSubState
 
     public function skipShowcase(skipTimer:Bool = false):Void
     {
-        FlxG.mouse.visible = true;
-
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
-
         camera.zoom = 0.75;
 
         if (skipTimer)
@@ -270,6 +259,37 @@ class GameOverScreen extends CustomSubState
                 rollTimer._timeCounter = rollTimer.time;
             }
         }
+        else
+        {
+            var chance:Int = 9;
+
+            if (PlayState.isWeek)
+                chance = -1;
+
+            if (PlayState.level.obscurity != NONE)
+                chance = -1;
+
+            var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
+                HighScore.getLevelScore("Overseer", "Normal").score != 0.0 #end ;
+
+            if (!scoresValidated)
+                chance = -1;
+
+            var oddsValidated:Bool = FlxG.random.int(1, #if debug 3 #else 9 #end ) == chance;
+
+            if (oddsValidated)
+            {
+                secretSequence();
+
+                rollSprite.kill();
+
+                return;
+            }
+        }
+
+        FlxG.mouse.visible = true;
+
+        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         retryButton.visible = true;
 
@@ -294,9 +314,7 @@ class GameOverScreen extends CustomSubState
 
         new FlxTimer(timer).start(9.9, (_:FlxTimer) ->
         {
-            var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Overseer");
-        
-            PlayState.loadLevel(levelToLoad);
+            PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Overseer"));
         });
     }
 }

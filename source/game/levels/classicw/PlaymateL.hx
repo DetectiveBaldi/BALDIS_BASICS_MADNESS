@@ -59,6 +59,8 @@ class PlaymateL extends PlayState
 
         gameCameraZoom = 0.75;
 
+        plrStrumline.botplay = true;
+
         player.setPosition(700.0, 150.0);
 
         opponent.setPosition(-1500.0, 190.0);
@@ -124,6 +126,8 @@ class PlaymateL extends PlayState
             gameCamera.color = FlxColor.WHITE;
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 32.0 * 0.001, true);
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 128)

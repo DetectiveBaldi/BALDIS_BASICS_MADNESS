@@ -261,8 +261,6 @@ class PlayState extends CustomState
 
         add(stage);
 
-        AssetCache.getGraphic("game/Character/bf-dead");
-
         spectators = new FlxTypedSpriteGroup<Character>();
 
         stage.add(spectators);
