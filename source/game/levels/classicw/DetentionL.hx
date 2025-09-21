@@ -508,9 +508,9 @@ class DetentionL extends PlayState
             principal.setPosition(355.0, 155.0);
             detentionS.insert(detentionS.members.indexOf(players), principal);
 
-            tween.tween(principal, {x: 480.0, y: 80.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(principal, {x: 480.0, y: 64.0}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(principal.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(principal.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 1493)

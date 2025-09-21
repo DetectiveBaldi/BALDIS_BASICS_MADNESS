@@ -646,9 +646,9 @@ class RoughEL extends PlayState
             principal.color = 0xC4B7A0;
             roughES.insert(roughES.members.indexOf(players), principal);
 
-            tween.tween(principal, {x: 215.0, y: 25.0}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(principal, {x: 215.0, y: 20.0}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(principal.scale, {x: 0.65, y: 0.65}, conductor.beatLength * 2.2 * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(principal.scale, {x: 0.65, y: 0.65}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
 
             tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
@@ -656,7 +656,7 @@ class RoughEL extends PlayState
                 {ease: FlxEase.quartOut});
         }
 
-        if (step == 1466.0)
+        if (step == 1465.0)
         {
             roughES.remove(principal, true);
 
@@ -968,9 +968,6 @@ class RoughEL extends PlayState
             opp.setPosition(390.0, 135.0);
 
             oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
-
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
             
             oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -978,11 +975,6 @@ class RoughEL extends PlayState
                 conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
             tween.tween(oppStrumline.strums, {alpha: 0.35}, conductor.beatLength * 0.001);
-
-            plrStrumline.visible = true;
-
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
 
             playField.strumlines.visible = true;
 
@@ -1011,9 +1003,6 @@ class RoughEL extends PlayState
 
             gameCameraZoom = 0.8;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
-
             playField.strumlines.visible = false;
 
             plrStrumline.botplay = true;
@@ -1037,7 +1026,7 @@ class RoughEL extends PlayState
 
             plr.setPosition(640.0, -125.0);
 
-            tween.tween(plr, {x: 540.0}, conductor.beatLength * 0.5 * 0.001);
+            tween.tween(plr, {x: 480.0}, conductor.beatLength * 0.5 * 0.001);
 
             roughES.remove(players, true);
 
@@ -1646,6 +1635,10 @@ class RoughEL extends PlayState
 
             roughES.remove(opponents, true);
             roughES.insert(roughES.members.indexOf(roughES.hall7), opponents);
+
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
         }
 
         if (step == 2824)
@@ -1682,7 +1675,7 @@ class RoughEL extends PlayState
             opp.visible = false;
 
             var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-furious"));
-            opp.setPosition(-885.0, 18.5);
+            opp.setPosition(-900.0, 18.5);
             opp.color = 0xC2B499;
             opp.skipDance = true;
             opponents.add(opp);
@@ -1710,6 +1703,8 @@ class RoughEL extends PlayState
             tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
             tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 3218.0)
@@ -1718,8 +1713,8 @@ class RoughEL extends PlayState
 
             opp.animation.play("slap", true);
 
-            tween.tween(opp, {x: opp.x + 325.0}, conductor.beatLength * 0.25 * 0.001,
-                {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x + 725.0},
+            tween.tween(opp, {x: opp.x + 330.0}, conductor.beatLength * 0.25 * 0.001,
+                {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x + 730.0},
                     conductor.beatLength * 0.25 * 0.001, {ease: FlxEase.quadOut});}});
         }
 
@@ -1736,7 +1731,7 @@ class RoughEL extends PlayState
 
             tween.completeTweensOf(opp);
 
-            tween.tween(opp, {x: opp.x - 1050.0}, conductor.beatLength * 0.001, {ease: FlxEase.quadIn});
+            tween.tween(opp, {x: opp.x - 1060.0}, conductor.beatLength * 0.001, {ease: FlxEase.quadIn});
         }
     
         if (step == 3344)
@@ -1788,6 +1783,8 @@ class RoughEL extends PlayState
             
             var _plr:Character = getPlayer("run-legs");
             _plr.visible = false;
+
+            plrStrumline.botplay = true;
         }
     }
 
@@ -1932,8 +1929,8 @@ class RoughEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-furious");
 
-                tween.tween(opp, {x: opp.x + 755.0}, conductor.beatLength * 0.275 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 755.0}, 0.35);}});
+                tween.tween(opp, {x: opp.x + 765.0}, conductor.beatLength * 0.275 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 765.0}, 0.35);}});
 
                 opp.animation.play("slap", true);
             }

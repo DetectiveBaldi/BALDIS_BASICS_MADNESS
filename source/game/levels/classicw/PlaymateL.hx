@@ -168,12 +168,16 @@ class PlaymateL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
         }
 
-        if (step == 912)
+        if (step == 920)
         {
             gameCameraZoom = 0.8;
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
+
+            plrStrumline.botplay = true;
+
+            plrStrumline.resetStrums();
 
             if (!Options.botplay)
             {
@@ -188,10 +192,6 @@ class PlaymateL extends PlayState
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
             gameCameraZoom = 0.7;
-
-            plrStrumline.botplay = true;
-
-            plrStrumline.resetStrums();
 
             oppStrumline.strums.alpha = 0.0;
 
@@ -263,17 +263,14 @@ class PlaymateL extends PlayState
             }
         }
 
-        if (step == 1033.0)
+        if (step == 1048.0)
         {
             player.visible = false;
 
             player = getPlayer("bf-face-left");
 
             player.visible = true;
-        }
-        
-        if (step == 1040)
-        {
+
             plrStrumline.botplay = Options.botplay;
 
             tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
@@ -424,24 +421,13 @@ class PlaymateL extends PlayState
 
     public function runItBack():Void
     {
-        changeTime(84800.0);
+        changeTime(91999);
 
         getTransitionSprite(conductor.beatLength * 0.001, OUT, null);
-
-        gameCameraZoom = 0.8;
-
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
-
-        oppStrumline.strums.alpha = 1.0;
-
-        plrStrumline.strums.alpha = 1.0;
 
         playmateS.hall.color = playmateS.cafe.color = FlxColor.WHITE;
 
         opponentVocals.volume = 1.0;
-
-        plrStrumline.botplay = Options.botplay;
         
         player.visible = false;
 
@@ -449,7 +435,7 @@ class PlaymateL extends PlayState
 
         player.visible = true;
 
-        SetCamFocusEvent.dispatch(this, 0.0, 0.0, "player", -1.0, "linear", true);
+        SetCamFocusEvent.dispatch(this, 0.0, 0.0, "opponent", -1.0, "linear", true);
 
         tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 3.0);
     }
@@ -591,7 +577,7 @@ class JumpRopeMinigame extends FlxBasic
         if (timesJumped == jumpCount)
             return;
 
-        sprite?.animation?.play("jump");
+        sprite?.animation?.play("jump", true);
 
         timesJumped++;
 
