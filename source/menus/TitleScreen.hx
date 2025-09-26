@@ -143,7 +143,7 @@ class TitleScreen extends TransitionState
 
         exitSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/exitSound"));
 
-        exitSound.onComplete = getTransitionSprite.bind(0.5, IN, Sys.exit.bind(0));
+        exitSound.onComplete = getTransitionSprite.bind(0.5, OUT, Sys.exit.bind(0));
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 

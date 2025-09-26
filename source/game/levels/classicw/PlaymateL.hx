@@ -99,7 +99,7 @@ class PlaymateL extends PlayState
 
         if (jumpMinigame?.failed)
         {
-            getTransitionSprite(conductor.beatLength * 0.001, IN, runItBack);
+            getTransitionSprite(conductor.beatLength * 0.001, OUT, runItBack);
 
             FlxG.sound.play(AssetCache.getSound('shared/playmate-reverse'), 1.0);
 
@@ -423,7 +423,7 @@ class PlaymateL extends PlayState
     {
         changeTime(91999);
 
-        getTransitionSprite(conductor.beatLength * 0.001, OUT, null);
+        getTransitionSprite(conductor.beatLength * 0.001, IN, null);
 
         playmateS.hall.color = playmateS.cafe.color = FlxColor.WHITE;
 

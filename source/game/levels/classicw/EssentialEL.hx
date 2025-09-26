@@ -469,11 +469,11 @@ class EssentialEL extends PlayState
         }
 
         if (step == 1820)
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
 
         if (step == 1824)
         {
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;

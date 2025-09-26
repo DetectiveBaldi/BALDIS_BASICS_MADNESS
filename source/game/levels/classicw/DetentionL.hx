@@ -314,7 +314,7 @@ class DetentionL extends PlayState
 
         if (step == 776)
         {
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
         }
 
         if (step == 780)
@@ -323,7 +323,7 @@ class DetentionL extends PlayState
 
             FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
-            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, OUT, null);
+            getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
 
             gameCameraZoom = 0.6;
 
