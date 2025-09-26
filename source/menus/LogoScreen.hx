@@ -16,12 +16,18 @@ import flixel.util.FlxTimer;
 import core.AssetCache;
 import core.Paths;
 
-import extendable.CustomState;
+import extendable.TransitionState;
+
+import interfaces.ISequenceHandler;
 
 using util.MathUtil;
 
-class LogoScreen extends CustomState
+class LogoScreen extends TransitionState implements ISequenceHandler
 {
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
+
     public var splash:FlxSprite;
 
     public var logo:FlxSprite;
@@ -35,6 +41,14 @@ class LogoScreen extends CustomState
         FlxG.mouse.visible = false;
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         splash = new FlxSprite();
 
@@ -65,26 +79,27 @@ class LogoScreen extends CustomState
 
         add(logo);
 
-        FlxTimer.wait(0.5, () ->
+        new FlxTimer(timers).start(0.5, (_:FlxTimer) ->
         {
             splash.animation.play("formation");
 
-            FlxTimer.wait(0.15, () ->
+            new FlxTimer(timers).start(0.15, (_:FlxTimer) ->
             {
                 tune = FlxG.sound.load(AssetCache.getMusic("menus/LogoScreen/tune"));
 
                 tune.play();
 
-                FlxTimer.wait(2.65, () -> 
+                new FlxTimer(timers).start(2.65, (_:FlxTimer) -> 
                 {
                     splash.animation.play("spin");
 
-                    FlxTween.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
+                    tweens.tween(splash, {y: splash.y + 150.0}, 0.55, {ease: FlxEase.smoothStepOut});
 
-                    FlxTween.tween(logo, {y: logo.getCenterY() - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
+                    tweens.tween(logo, {y: logo.getCenterY() - 125.0}, 0.5, {ease: FlxEase.smoothStepOut});
                 });
 
-                FlxTimer.wait(3.25, () -> FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
+                 new FlxTimer(timers).start(3.25, (_:FlxTimer) ->
+                    FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
             });
         });
     }

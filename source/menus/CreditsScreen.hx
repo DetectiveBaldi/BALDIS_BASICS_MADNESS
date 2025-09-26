@@ -12,7 +12,7 @@ import flixel.util.FlxColor;
 
 import core.AssetCache;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import flixel.sound.FlxSound;
 
@@ -20,7 +20,7 @@ import ui.BackOutButton;
 
 using util.MathUtil;
 
-class CreditsScreen extends CustomState
+class CreditsScreen extends TransitionState
 {
     public var backOutButton:BackOutButton;
 

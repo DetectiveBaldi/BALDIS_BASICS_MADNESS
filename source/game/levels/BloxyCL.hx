@@ -104,7 +104,7 @@ class BloxyCL extends PlayState
     
         if (step == 328)
         {
-            tween.tween(hudCamera, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(hudCamera, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
         }
         
         if (step == 336)
@@ -230,7 +230,7 @@ class BloxyCL extends PlayState
     
         if (beat >= 206)
             if (beat % 2 == 1.0)
-                tween.tween(opponent, {x: opponent.x + 150.0}, conductor.beatLength * 0.275 * 0.001, 
+                tweens.tween(opponent, {x: opponent.x + 150.0}, conductor.beatLength * 0.275 * 0.001, 
                     {
                         ease: FlxEase.sineIn
                     }

@@ -40,9 +40,9 @@ using util.StringUtil;
 
 class PlayField extends FlxGroup
 {
-    public var tween:FlxTweenManager;
+    public var tweens:FlxTweenManager;
 
-    public var timer:FlxTimerManager;
+    public var timers:FlxTimerManager;
 
     public var conductor:Conductor;
 
@@ -90,14 +90,14 @@ class PlayField extends FlxGroup
 
     public var playerStrumline:Strumline;
 
-    public function new(?tween:FlxTweenManager, ?timer:FlxTimerManager, _conductor:Conductor, 
+    public function new(?tweens:FlxTweenManager, ?timers:FlxTimerManager, _conductor:Conductor, 
         _chart:Chart, _instrumental:FlxSound):Void
     {
         super();
 
-        this.tween = tween ?? FlxTween.globalManager;
+        this.tweens = tweens ?? FlxTween.globalManager;
 
-        this.timer = timer ?? FlxTimer.globalManager;
+        this.timers = timers ?? FlxTimer.globalManager;
 
         conductor = _conductor;
 
@@ -207,7 +207,7 @@ class PlayField extends FlxGroup
         if (Options.botplay)
             timerNeedle.kill();
 
-        creditsPop = new CreditsPopup(0.0, 0.0, tween, timer, chart.credits);
+        creditsPop = new CreditsPopup(0.0, 0.0, tweens, timers, chart.credits);
 
         add(creditsPop);
 

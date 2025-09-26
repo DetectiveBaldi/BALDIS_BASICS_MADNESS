@@ -86,7 +86,7 @@ class RevisionL extends PlayState
         quarter.setPosition(15.0, 350.0);
         revisionS.insert(revisionS.members.indexOf(opponents), quarter);
 
-        tween.tween(quarter, {y: quarter.y - 50}, conductor.beatLength * 4.0 * 0.001, 
+        tweens.tween(quarter, {y: quarter.y - 50}, conductor.beatLength * 4.0 * 0.001, 
             {
                 ease: FlxEase.sineInOut, 
                 type: PINGPONG
@@ -132,7 +132,7 @@ class RevisionL extends PlayState
 
         if (step == 0)
         {
-            tween.color(temperature, conductor.beatLength * 12.0 * 0.001, temperature.color, 0xFFFFFFFF,
+            tweens.color(temperature, conductor.beatLength * 12.0 * 0.001, temperature.color, 0xFFFFFFFF,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -167,13 +167,13 @@ class RevisionL extends PlayState
 
             var plrStrumlineX:Float = plrStrumline.strums.x;
 
-            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             gameCameraZoom = 0.8;
 
-            tween.cancelTweensOf(this, ["gameCameraZoom"]);
+            tweens.cancelTweensOf(this, ["gameCameraZoom"]);
             
             SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX() + 100.0, cameraPoint.getCenterY() + 50.0, null,
                 0.0, "linear");

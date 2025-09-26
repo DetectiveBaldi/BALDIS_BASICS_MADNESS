@@ -96,7 +96,7 @@ class GainGL extends PlayState
             gainGS.entranceA4_Overlay2.visible = true;
             
             player.visible = true;
-            tween.tween(player, {x: player.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: player.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
         }
 
         if (step == 124)
@@ -110,9 +110,9 @@ class GainGL extends PlayState
             gainGS.remove(opponents, true);
             gainGS.insert(gainGS.members.indexOf(players), opponents);
         
-            tween.tween(opponent.scale, {x: opponent.scale.x + 0.25, y: opponent.scale.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
+            tweens.tween(opponent.scale, {x: opponent.scale.x + 0.25, y: opponent.scale.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
             
-            tween.tween(opponent, {y: opponent.y + 10.0}, conductor.beatLength * 0.275 * 0.001, 
+            tweens.tween(opponent, {y: opponent.y + 10.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     onComplete: (_tween:FlxTween) ->
                     {
@@ -156,9 +156,9 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            tween.tween(cameraPoint, {x: 950, y: 300.0}, conductor.beatLength * 28.0 * 0.001);
+            tweens.tween(cameraPoint, {x: 950, y: 300.0}, conductor.beatLength * 28.0 * 0.001);
 
-            tween.tween(this, {gameCameraZoom: 1.35}, conductor.beatLength * 28.0 * 0.001);
+            tweens.tween(this, {gameCameraZoom: 1.35}, conductor.beatLength * 28.0 * 0.001);
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -205,7 +205,7 @@ class GainGL extends PlayState
         
         if (step == 444)
         {
-            tween.tween(opponent, {x: opponent.x - 300.0}, conductor.beatLength * 0.275 * 0.001, 
+            tweens.tween(opponent, {x: opponent.x - 300.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     ease: FlxEase.sineIn
                 }
@@ -252,7 +252,7 @@ class GainGL extends PlayState
             opponent.skipDance = true;
             opponents.add(opponent);
 
-            tween.tween(opponent, {x: opponent.x + 200.0}, conductor.beatLength * 0.275 * 0.001, 
+            tweens.tween(opponent, {x: opponent.x + 200.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     ease: FlxEase.sineIn
                 }
@@ -299,7 +299,7 @@ class GainGL extends PlayState
             principal.setPosition(2500, 150.0);
             gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), principal);
         
-            tween.tween(principal, {x: player.x + 200}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(principal, {x: player.x + 200}, conductor.beatLength * 2.0 * 0.001);
         }
     
         if (step == 640)
@@ -348,7 +348,7 @@ class GainGL extends PlayState
             opponent.setPosition(550.0, 180.0);
             opponents.add(opponent);
 
-            tween.tween(opponent, {x: opponent.x - 150.0, y: opponent.y + 15.0}, conductor.beatLength * 0.275 * 0.001, 
+            tweens.tween(opponent, {x: opponent.x - 150.0, y: opponent.y + 15.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     ease: FlxEase.quadOut
                 }
@@ -372,7 +372,7 @@ class GainGL extends PlayState
 
             add(timerText);
 
-            new FlxTimer(timer).start(1.0, (_timer:FlxTimer) ->
+            new FlxTimer(timers).start(1.0, (_timer:FlxTimer) ->
             {
                 if (_timer.loopsLeft == 0.0)
                     timerText.active = timerText.visible = false;
@@ -385,7 +385,7 @@ class GainGL extends PlayState
 
         if (step == 648 || step == 880 || step == 896)
         {            
-            tween.tween(opponent, {x: opponent.x - 200.0}, conductor.beatLength * 0.275 * 0.001, 
+            tweens.tween(opponent, {x: opponent.x - 200.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
                     ease: FlxEase.sineIn
                 }
@@ -465,21 +465,21 @@ class GainGL extends PlayState
 
             var _plr:Character = getPlayer("walk-legs");
 
-            tween.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
+            tweens.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
                 {
                     ease: FlxEase.sineIn, 
                 }
             );
         
-            tween.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
+            tweens.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 2.0 * 0.001, 
                 {
                     ease: FlxEase.sineIn, 
                 }
             );
 
-            tween.tween(player.animation, {timeScale: 1.25}, conductor.beatLength * 0.001, {ease: FlxEase.sineIn});
+            tweens.tween(player.animation, {timeScale: 1.25}, conductor.beatLength * 0.001, {ease: FlxEase.sineIn});
 
-            tween.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
+            tweens.tween(_plr.animation, {timeScale: 1.25}, conductor.beatLength * 4.0 * 0.001 * 0.001, {ease: FlxEase.sineIn});
         }
 
         if (step == 1164.0)
@@ -487,7 +487,7 @@ class GainGL extends PlayState
             if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 0.5 * 0.001);
             
-            tween.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+            tweens.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
                 {
                     ease: FlxEase.quadOut,
                 }
@@ -529,7 +529,7 @@ class GainGL extends PlayState
 
             cameraLock = FOCUS_CAM_POINT;
 
-            tween.tween(cameraPoint, {x: cameraPoint.x - 550.0}, conductor.beatLength * 2.0 * 0.001, 
+            tweens.tween(cameraPoint, {x: cameraPoint.x - 550.0}, conductor.beatLength * 2.0 * 0.001, 
                 {
                     startDelay: 0.5,
                     ease: FlxEase.backIn,
@@ -538,7 +538,7 @@ class GainGL extends PlayState
 
             var opp:Character = getOpponent("baldi-mad");
 
-            tween.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: -opp.width * 1.85}, 0.5, {startDelay: 1.0, ease: FlxEase.quartIn});
 
             sweeper = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/gotta-sweep"));
             sweeper.scale.set(2.75, 2.75);
@@ -546,8 +546,8 @@ class GainGL extends PlayState
             sweeper.setPosition(0.0, 90.0);
             gainGS.insert(gainGS.members.indexOf(players), sweeper);
             
-            tween.tween(sweeper, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
-                onComplete: (_tween:FlxTween) -> {tween.tween(sweeper, {x: -opp.width * 2}, 0.5, {ease: FlxEase.quartIn});}});
+            tweens.tween(sweeper, {x: opp.x -50.0}, 0.5, {startDelay: 0.5, ease: FlxEase.quartOut,
+                onComplete: (_tween:FlxTween) -> {tweens.tween(sweeper, {x: -opp.width * 2}, 0.5, {ease: FlxEase.quartIn});}});
         }
 
         if (step == 1296.0)
@@ -557,9 +557,9 @@ class GainGL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
         
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
             
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -576,8 +576,8 @@ class GainGL extends PlayState
                 {
                     var opp:Character = getOpponent("baldi-mad-face-front");
     
-                    tween.tween(opp.scale, {x: opp.scale.x + 0.1, y: opp.scale.y + 0.1}, conductor.beatLength * 0.275 * 0.001);
-                    tween.tween(opp, {y: opp.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
+                    tweens.tween(opp.scale, {x: opp.scale.x + 0.1, y: opp.scale.y + 0.1}, conductor.beatLength * 0.275 * 0.001);
+                    tweens.tween(opp, {y: opp.y + 0.25}, conductor.beatLength * 0.275 * 0.001);
     
                     opp.animation.play("slap", true);
                 }
@@ -591,9 +591,9 @@ class GainGL extends PlayState
             {
                 if (beat % 4 == 0.0)
                 {        
-                    tween.tween(opponent.scale, {x: opponent.scale.x + 0.225, y: opponent.scale.y + 0.225}, conductor.beatLength * 0.275 * 0.001);
+                    tweens.tween(opponent.scale, {x: opponent.scale.x + 0.225, y: opponent.scale.y + 0.225}, conductor.beatLength * 0.275 * 0.001);
         
-                    tween.tween(opponent, {x: opponent.x + 40.0, y: opponent.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
+                    tweens.tween(opponent, {x: opponent.x + 40.0, y: opponent.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
                 }
             }
         
@@ -601,13 +601,13 @@ class GainGL extends PlayState
         {
             if (beat % 4.0 == 0.0)
             {                
-                tween.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
+                tweens.tween(opponent, {x: opponent.x + 725.0}, conductor.beatLength * 0.35 * 0.001,
                     {
                         ease: FlxEase.quadOut, 
                         onComplete: (_tween:FlxTween) -> 
                         {
                             if (beat < 290)
-                                tween.tween(opponent, {x: opponent.x - 725.0}, 0.5);
+                                tweens.tween(opponent, {x: opponent.x - 725.0}, 0.5);
                         }
                     }
                 );
@@ -616,7 +616,7 @@ class GainGL extends PlayState
     
         if (beat >= 292.0 && beat < 320.0)
             if (beat % 4 == 0.0)
-                tween.tween(opponent, {x: opponent.x + 250.0}, conductor.beatLength * 0.35 * 0.001,
+                tweens.tween(opponent, {x: opponent.x + 250.0}, conductor.beatLength * 0.35 * 0.001,
                     {
                         ease: FlxEase.quadOut,
                     }

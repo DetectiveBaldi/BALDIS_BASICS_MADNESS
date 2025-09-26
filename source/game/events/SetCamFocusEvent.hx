@@ -31,7 +31,7 @@ class SetCamFocusEvent
 
             game.cameraPoint.setPosition(x, y);
 
-            game.tween.tween(game.gameCamera.scroll, {x: game.cameraPoint.x - game.gameCamera.width * 0.5, y: game.cameraPoint.y - game.gameCamera.height * 0.5}, duration,
+            game.tweens.tween(game.gameCamera.scroll, {x: game.cameraPoint.x - game.gameCamera.width * 0.5, y: game.cameraPoint.y - game.gameCamera.height * 0.5}, duration,
             {
                 ease: Reflect.getProperty(FlxEase, ease),
 

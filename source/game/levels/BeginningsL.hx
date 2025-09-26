@@ -99,7 +99,7 @@ class BeginningsL extends PlayState
     
         if (step == 416)
         {
-            tween.tween(this, {gameCameraZoom: 0.8}, 0.25,
+            tweens.tween(this, {gameCameraZoom: 0.8}, 0.25,
                 {
                     ease: FlxEase.backIn
                 }

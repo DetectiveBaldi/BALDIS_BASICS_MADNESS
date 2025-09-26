@@ -32,11 +32,12 @@ import data.LevelData;
 import data.PlayStats;
 import data.WeekData;
 
-import extendable.CustomState;
-import extendable.CustomSubState;
+import extendable.TransitionState;
 
 import game.HighScore;
 import game.PlayState;
+
+import interfaces.ISequenceHandler;
 
 import ui.BackOutButton;
 import ui.HeightenedButton;
@@ -50,8 +51,12 @@ using flixel.util.FlxColorTransformUtil;
 using util.MathUtil;
 using util.StringUtil;
 
-class MysteryScreen extends CustomState
+class MysteryScreen extends TransitionState implements ISequenceHandler
 {
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
+
     public var levels:Array<LevelData>;
 
     public var hasScore:Bool;
@@ -93,6 +98,14 @@ class MysteryScreen extends CustomState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         levels = new Array<LevelData>();
     
@@ -347,15 +360,15 @@ class MysteryScreen extends CustomState
 
     public function fadeOutUI():Void
     {
-        tween.tween(startButton, {alpha: 0.0}, 0.35);
+        tweens.tween(startButton, {alpha: 0.0}, 0.35);
 
-        tween.tween(infoText, {alpha: 0.0}, 0.35);
+        tweens.tween(infoText, {alpha: 0.0}, 0.35);
 
-        tween.tween(leftButton, {alpha: 0.0}, 0.35);
+        tweens.tween(leftButton, {alpha: 0.0}, 0.35);
 
-        tween.tween(rightButton, {alpha: 0.0}, 0.35);
+        tweens.tween(rightButton, {alpha: 0.0}, 0.35);
 
-        tween.tween(backOutButton, {alpha: 0.0}, 0.35);
+        tweens.tween(backOutButton, {alpha: 0.0}, 0.35);
     }
 
     public function clickNeedHintButton():Void
@@ -394,7 +407,7 @@ class MysteryScreen extends CustomState
 
         hintTimer = -1.0;
 
-        new FlxTimer(timer).start(1.5, (_:FlxTimer) ->
+        new FlxTimer(timers).start(1.5, (_:FlxTimer) ->
         {
             var doorOpen:FlxSprite = new FlxSprite();
 
@@ -416,11 +429,11 @@ class MysteryScreen extends CustomState
 
             var noiseSnd:FlxSound = FlxG.sound.play(AssetCache.getSound("shared/static-noise"), 0.15, true);
 
-            new FlxTimer(timer).start(1.0, (_:FlxTimer) ->
+            new FlxTimer(timers).start(1.0, (_:FlxTimer) ->
             {
-                tween.num(0.15, 0.35, 1.0, {ease: FlxEase.expoIn}, (num:Float) -> {noiseSnd.volume = num;});
+                tweens.num(0.15, 0.35, 1.0, {ease: FlxEase.expoIn}, (num:Float) -> {noiseSnd.volume = num;});
 
-                tween.tween(camera, {zoom: 1.65}, 1.0, {ease: FlxEase.expoIn, onComplete: (_:FlxTween) ->
+                tweens.tween(camera, {zoom: 1.65}, 1.0, {ease: FlxEase.expoIn, onComplete: (_:FlxTween) ->
                 {
                     FlxG.camera.visible = false;
 
@@ -502,7 +515,7 @@ class MysteryScreen extends CustomState
     }
 }
 
-class HintScreen extends CustomSubState
+class HintScreen extends FlxSubState implements ISequenceHandler
 {
     public static var hintTable:Map<String, String> =
     [
@@ -514,6 +527,10 @@ class HintScreen extends CustomSubState
 
         "Two" => "\"Welcome 2 Baldi's...\""
     ];
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
 
     public var name:String;
 
@@ -534,6 +551,14 @@ class HintScreen extends CustomSubState
     {
         super.create();
 
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
+
         thumbsUp = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/baldi-thumbs-up"));
 
         thumbsUp.scale.set(2.0, 2.0);
@@ -542,7 +567,7 @@ class HintScreen extends CustomSubState
 
         thumbsUp.setPosition(thumbsUp.getCenterX(), FlxG.height);
 
-        tween.tween(thumbsUp, {y: 0.0}, 0.5);
+        tweens.tween(thumbsUp, {y: 0.0}, 0.5);
 
         add(thumbsUp);
 
@@ -574,11 +599,11 @@ class HintScreen extends CustomSubState
 
         add(backOutButton);
 
-        new FlxTimer(timer).start(0.5, (_:FlxTimer) ->
+        new FlxTimer(timers).start(0.5, (_:FlxTimer) ->
         {
             setUIVisible(true);
 
-            tween.flicker(hintText, 1.5, 0.2);
+            tweens.flicker(hintText, 1.5, 0.2);
 
             FlxG.sound.play(AssetCache.getSound("shared/correct-activ"), 0.75);
         });
@@ -592,14 +617,14 @@ class HintScreen extends CustomSubState
     public function clickBackOutButton():Void
     {
         @:privateAccess
-        if (!tween.containsTweensOf(thumbsUp))
+        if (!tweens.containsTweensOf(thumbsUp))
         {
-            tween.tween(thumbsUp, {y: FlxG.height}, 0.5, {onComplete: (_:FlxTween) ->
+            tweens.tween(thumbsUp, {y: FlxG.height}, 0.5, {onComplete: (_:FlxTween) ->
             {
                 close();
             }});
 
-            tween.cancelTweensOf(hintText);
+            tweens.cancelTweensOf(hintText);
 
             setUIVisible(false);
         }

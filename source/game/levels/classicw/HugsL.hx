@@ -140,11 +140,11 @@ class HugsL extends PlayState
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 16.0 * 0.001, true);
 
-            tween.tween(opponent, {x: 450.0}, conductor.beatLength * 8.0 * 0.001);
+            tweens.tween(opponent, {x: 450.0}, conductor.beatLength * 8.0 * 0.001);
         }
 
         if (step == 16)
-            tween.tween(player, {x: -260.0}, conductor.beatLength * 4.0 * 0.001);
+            tweens.tween(player, {x: -260.0}, conductor.beatLength * 4.0 * 0.001);
 
         if (step == 32)
         {
@@ -152,7 +152,7 @@ class HugsL extends PlayState
 
             cameraPoint.x += 250.0;
 
-            tween.tween(this, {gameCameraZoom: gameCameraZoom + 0.35}, conductor.beatLength * 0.001);
+            tweens.tween(this, {gameCameraZoom: gameCameraZoom + 0.35}, conductor.beatLength * 0.001);
 
             gameCameraZoom += 0.35;
 
@@ -172,9 +172,9 @@ class HugsL extends PlayState
             players.add(plr);
             player = plr;
 
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
 
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 64)
@@ -288,10 +288,10 @@ class HugsL extends PlayState
         }
 
         if (step == 306)
-            tween.tween(opponent, {x: -1500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -1500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
         if (step == 316)
-            tween.tween(player, {x: -800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: -800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
 
         if (step == 320)
         {
@@ -304,9 +304,9 @@ class HugsL extends PlayState
 
             var plrStrumlineX:Float = plrStrumline.strums.x;
             
-            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             var opp:Character = getOpponent("1st-prize-90");
             opp.visible = false;
@@ -323,8 +323,8 @@ class HugsL extends PlayState
 
             player.x = -800.0;
 
-            tween.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
         
         if (step == 576)
@@ -357,8 +357,8 @@ class HugsL extends PlayState
             hugsS.remove(players, true);
             hugsS.insert(hugsS.members.indexOf(opponents), players);
 
-            tween.tween(player.scale, {x: 2.4, y: 2.4}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(player, {x: 190.0, y: 110.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player.scale, {x: 2.4, y: 2.4}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 190.0, y: 110.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 720)
@@ -372,13 +372,13 @@ class HugsL extends PlayState
             opponents.add(opp);
             opponent = opp;
 
-            tween.tween(opponent.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent.scale, {x: 2.0, y: 2.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opponent, {x: -97.0, y: -250.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -97.0, y: -250.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player, {x: 192.0, y: 80.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 192.0, y: 80.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 736)
@@ -406,8 +406,8 @@ class HugsL extends PlayState
             hugsS.remove(opponents, true);
             hugsS.insert(hugsS.members.indexOf(players), opponents);
 
-            tween.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 992 || step == 1440)
@@ -433,7 +433,7 @@ class HugsL extends PlayState
 
             playField.healthBar.percent -= 35;
 
-            tween.tween(opponent, {x: -110.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -110.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1120)
@@ -485,18 +485,18 @@ class HugsL extends PlayState
             opp.visible = true;
             opponent = opp;
 
-            tween.tween(opponent, {x: -2000.0}, conductor.beatLength * 1.25 * 0.001);
+            tweens.tween(opponent, {x: -2000.0}, conductor.beatLength * 1.25 * 0.001);
         }
 
         if (step == 1178)
-            tween.tween(opponent, {x: 3800.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(opponent, {x: 3800.0}, conductor.beatLength * 2.0 * 0.001);
 
         if (step == 1180)
         {
-            tween.tween(player, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
+            tweens.tween(player, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
 
             var _plr:Character = getPlayer("run-legs");
-            tween.tween(_plr, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
+            tweens.tween(_plr, {x: 2100.0}, conductor.beatLength * 1.0 * 0.001);
 
             hugsS.hall.animation.pause();
         }
@@ -533,8 +533,8 @@ class HugsL extends PlayState
             hugsS.remove(opponents, true);
             hugsS.insert(hugsS.members.indexOf(players), opponents);
 
-            tween.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -100.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1562)
@@ -567,7 +567,7 @@ class HugsL extends PlayState
             plr.visible = true;
             player = plr;
 
-            tween.tween(player, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
+            tweens.tween(player, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
 
             var _plr:Character = getPlayer("run-legs");
 
@@ -583,7 +583,7 @@ class HugsL extends PlayState
 
             players.insert(players.members.indexOf(player), _plr);
 
-            tween.tween(_plr, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
+            tweens.tween(_plr, {x: 2400.0}, conductor.beatLength * 4.0 * 0.001);
             _plr.visible = true;
 
             player.animation.onFrameChange.add(updateLegStatus);

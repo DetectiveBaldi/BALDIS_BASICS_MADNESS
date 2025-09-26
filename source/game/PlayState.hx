@@ -16,6 +16,9 @@ import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 
+import flixel.tweens.FlxTween;
+
+import flixel.util.FlxTimer;
 import flixel.util.typeLimit.NextState;
 
 import flixel.sound.FlxSound;
@@ -35,7 +38,7 @@ import data.WeekData;
 
 import data.PlayStats;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.notes.Note;
 import game.notes.Strumline;
@@ -46,10 +49,15 @@ import game.notes.events.NoteHitEvent;
 import game.events.CameraZoomEvent;
 import game.events.SetCamFocusEvent;
 
+import interfaces.IBeatDispatcher;
+import interfaces.ISequenceHandler;
+
 import menus.FreeplayScreen;
 import menus.MysteryScreen;
 import menus.StoryMenuScreen;
 import menus.UnlockScreen;
+
+import music.Conductor;
 
 import ui.Countdown;
 
@@ -58,7 +66,8 @@ using StringTools;
 using util.ArrayUtil;
 using util.TimingUtil;
 
-class PlayState extends CustomState
+
+class PlayState extends TransitionState implements IBeatDispatcher implements ISequenceHandler
 {
     public static var week:WeekData;
 
@@ -115,6 +124,12 @@ class PlayState extends CustomState
 
     public var params:PlayStateParams;
 
+    public var conductor:Conductor;
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
+
     /**
      * Characters and stages are drawn on this camera.
      */
@@ -155,8 +170,6 @@ class PlayState extends CustomState
      * Elements such as the pause menu and other sub states are drawn on this camera.
      */
     public var topCamera:FlxCamera;
-
-    public var canPause:Bool;
 
     public var chart:Chart;
 
@@ -206,6 +219,8 @@ class PlayState extends CustomState
 
     public var startingSong:Bool;
 
+    public var canPause:Bool;
+
     public function new(params:PlayStateParams):Void
     {
         super();
@@ -215,6 +230,8 @@ class PlayState extends CustomState
 
     override function create():Void
     {
+        super.create();
+
         gameCamera.filters = new Array<BitmapFilter>();
         
         hudCamera = new FlxCamera();
@@ -231,9 +248,21 @@ class PlayState extends CustomState
 
         FlxG.cameras.add(topCamera, false);
 
-        canPause = true;
+        conductor = new Conductor();
 
-        super.create();
+        conductor.onStepHit.add(stepHit);
+
+        conductor.onBeatHit.add(beatHit);
+
+        conductor.onMeasureHit.add(measureHit);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         cameraPoint = new FlxObject();
 
@@ -284,7 +313,7 @@ class PlayState extends CustomState
 
         player = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.player));
 
-        playField = new PlayField(tween, timer, conductor, chart, instrumental);
+        playField = new PlayField(tweens, timers, conductor, chart, instrumental);
 
         playField.camera = hudCamera;
 
@@ -359,6 +388,8 @@ class PlayState extends CustomState
         }
 
         startingSong = true;
+
+        canPause = true;
     }
 
     override function update(elapsed:Float):Void
@@ -430,10 +461,18 @@ class PlayState extends CustomState
         #end
     }
 
-    override function measureHit(measure:Int):Void
+    public function stepHit(step:Int):Void
     {
-        super.measureHit(measure);
+        
+    }
 
+    public function beatHit(beat:Int):Void
+    {
+
+    }
+
+    public function measureHit(measure:Int):Void
+    {
         gameCamera.zoom += gameCamBopStrength;
 
         hudCamera.zoom += hudCamBopStrength;

@@ -22,9 +22,9 @@ using util.MathUtil;
 
 class CreditsPopup extends FlxSpriteGroup
 {
-    public var tween:FlxTweenManager;
+    public var tweens:FlxTweenManager;
 
-    public var timer:FlxTimerManager;
+    public var timers:FlxTimerManager;
 
     public var credits:CreditsData;
 
@@ -32,13 +32,13 @@ class CreditsPopup extends FlxSpriteGroup
 
     public var label:FlxText;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, ?tween:FlxTweenManager, ?timer:FlxTimerManager, credits:CreditsData):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, ?tweens:FlxTweenManager, ?timers:FlxTimerManager, credits:CreditsData):Void
     {
         super(x, y);
 
-        this.tween = tween ?? FlxTween.globalManager;
+        this.tweens = tweens ?? FlxTween.globalManager;
 
-        this.timer = timer ?? FlxTimer.globalManager;
+        this.timers = timers ?? FlxTimer.globalManager;
 
         this.credits = credits;
 
@@ -71,15 +71,15 @@ class CreditsPopup extends FlxSpriteGroup
 
     public function popUp():Void
     {
-        tween.tween(this, {y: Options.downscroll ? 0.0 : FlxG.height - height}, 1.25, 
+        tweens.tween(this, {y: Options.downscroll ? 0.0 : FlxG.height - height}, 1.25, 
             {ease: FlxEase.quartOut});
 
-        new FlxTimer(timer).start(2.0, (tmr:FlxTimer) ->
+        new FlxTimer(timers).start(2.0, (tmr:FlxTimer) ->
         {
-            tween.tween(this, {y: Options.downscroll ? -height : FlxG.height}, 2.0, 
+            tweens.tween(this, {y: Options.downscroll ? -height : FlxG.height}, 2.0, 
                {ease: FlxEase.quartIn, onComplete: (twn:FlxTween) -> kill()});
 
-            tween.flicker(label, 2.0, 0.5);
+            tweens.flicker(label, 2.0, 0.5);
 
             label.text = 'Composer(s): ${credits.composer}';
 

@@ -18,7 +18,7 @@ import core.Paths;
 
 import data.WeekData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.HighScore;
 
@@ -28,7 +28,7 @@ import util.ClickSoundUtil;
 
 using util.MathUtil;
 
-class ModeSelectScreen extends CustomState
+class ModeSelectScreen extends TransitionState
 {
     public var background:FlxSprite;
 

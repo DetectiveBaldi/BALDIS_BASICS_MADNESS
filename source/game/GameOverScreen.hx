@@ -2,10 +2,13 @@ package game;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 
 import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
+
+import flixel.tweens.FlxTween;
 
 import flixel.util.FlxTimer;
 import flixel.util.typeLimit.NextState;
@@ -16,8 +19,7 @@ import data.CharacterData;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.CustomState;
-import extendable.CustomSubState;
+import interfaces.ISequenceHandler;
 
 import menus.FreeplayScreen;
 import menus.MysteryScreen;
@@ -29,9 +31,13 @@ import util.ClickSoundUtil;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class GameOverScreen extends CustomSubState
+class GameOverScreen extends FlxSubState implements ISequenceHandler
 {
     public var game:PlayState;
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
     
     public var player:Character;
 
@@ -64,6 +70,14 @@ class GameOverScreen extends CustomSubState
 
         camera.zoom = 0.75;
 
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
+
         player = new Character(null, 0.0, 0.0, Character.getConfig(game.player.deathCharacter));
 
         player.dance();
@@ -82,7 +96,7 @@ class GameOverScreen extends CustomSubState
 
         dead.play();
 
-        rollTimer = new FlxTimer(timer);
+        rollTimer = new FlxTimer(timers);
 
         retryButton = new FlxSprite(0.0, 0.0);
 
@@ -158,11 +172,11 @@ class GameOverScreen extends CustomSubState
                 {
                     ClickSoundUtil.play();
                     
-                    tween.tween(retryButton, {alpha: 0.0}, 0.5);
+                    tweens.tween(retryButton, {alpha: 0.0}, 0.5);
 
                     canRetry = false;
 
-                    new FlxTimer(timer).start(2.5, (_timer:FlxTimer) -> FlxG.resetState());
+                    new FlxTimer(timers).start(2.5, (_timer:FlxTimer) -> FlxG.resetState());
 
                     FlxG.sound.play(AssetCache.getSound("game/GameOverScreen/confirm"), 0.5, false, null, true);
                 }
@@ -300,8 +314,6 @@ class GameOverScreen extends CustomSubState
 
     public function secretSequence():Void
     {
-        CustomState.cancelNextTransition();
-
         var opponent:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
 
         opponent.scale.set(0.85, 0.85);
@@ -312,7 +324,7 @@ class GameOverScreen extends CustomSubState
 
         add(opponent);
 
-        new FlxTimer(timer).start(9.9, (_:FlxTimer) ->
+        new FlxTimer(timers).start(9.9, (_:FlxTimer) ->
         {
             PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Overseer"));
         });

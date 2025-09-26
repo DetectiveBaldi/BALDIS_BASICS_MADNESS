@@ -107,9 +107,9 @@ class ScribbleL extends PlayState
 
         if (step == 132.0)
         {
-            tween.tween(oppStrumline.strums, {alpha: 0.25}, conductor.beatLength * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.25}, conductor.beatLength * 0.001);
 
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
         }
 
         if (step == 288.0)
@@ -120,10 +120,10 @@ class ScribbleL extends PlayState
 
             scribbleS.classicHall0.visible = true;
 
-            tween.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+            tweens.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
                 conductor.beatLength * 2.0 * 0.001);
 
-            tween.tween(player.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+            tweens.tween(player.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
                 conductor.beatLength * 2.0 * 0.001);
 
             if (Options.flashingLights)
@@ -151,13 +151,13 @@ class ScribbleL extends PlayState
 
         if (step == 1312)
         {
-            tween.tween(player.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
+            tweens.tween(player.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
                 conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opponent.colorTransform, {redOffset: 204.0, greenOffset: 204.0, blueOffset: 204.0, alphaOffset: 0.0},
+            tweens.tween(opponent.colorTransform, {redOffset: 204.0, greenOffset: 204.0, blueOffset: 204.0, alphaOffset: 0.0},
                 conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(scribbleS.classicHall0.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
+            tweens.tween(scribbleS.classicHall0.colorTransform, {redOffset: 255.0, greenOffset: 255.0, blueOffset: 255.0, alphaOffset: 0.0},
                 conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
@@ -167,7 +167,7 @@ class ScribbleL extends PlayState
 
             player.colorTransform.setOffsets(0xFFFFFF);
 
-            tween.tween(player, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
             scribbleS.classicHall0.visible = false;
         }

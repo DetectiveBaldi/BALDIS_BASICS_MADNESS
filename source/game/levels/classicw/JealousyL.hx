@@ -103,7 +103,7 @@ class JealousyL extends PlayState
 
             player.animation.play("wleft");
 
-            tween.tween(player, {x: 500.0}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(player, {x: 500.0}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 32)
@@ -113,7 +113,7 @@ class JealousyL extends PlayState
 
             jealousyS.hall0.visible = true;
 
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(player);
             player.visible = false;
 
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-jealousy"));
@@ -126,7 +126,7 @@ class JealousyL extends PlayState
 
             opponent.visible = true;
 
-            tween.tween(player, {x: 108.0, y: 272.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 108.0, y: 272.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 42)
@@ -136,9 +136,9 @@ class JealousyL extends PlayState
         {
             opponent.animation.play("scream");
 
-            tween.tween(opponent, {x: -6960.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -6960.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opponent.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent.scale, {x: 1.5, y: 1.5}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 60)
@@ -155,11 +155,11 @@ class JealousyL extends PlayState
             players.add(plr);
             player = plr;
 
-            tween.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(opponent);
 
             opponent.x = 1800.0;
 
-            tween.tween(opponent, {x: 580.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: 580.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 64)
@@ -215,7 +215,7 @@ class JealousyL extends PlayState
             cameraPoint.centerTo();
             gameCamera.snapToTarget();
 
-            tween.tween(opponent, {x: -1000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -1000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
             opponent.animation.play("scream");
 
@@ -246,7 +246,7 @@ class JealousyL extends PlayState
             player = plr;
 
             opponent.skipDance = false;
-            tween.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(opponent);
             
             opponent.setPosition(-200.0, -280.0);
             
@@ -254,7 +254,7 @@ class JealousyL extends PlayState
 
             jealousyS.insert(jealousyS.members.indexOf(players) + 1, opponents);
 
-            tween.tween(opponent, {x: 300}, timeInterval, 
+            tweens.tween(opponent, {x: 300}, timeInterval, 
                 {
                     ease: FlxEase.quadInOut, 
                     type: PINGPONG,
@@ -262,7 +262,7 @@ class JealousyL extends PlayState
                 }
             );
             
-            tween.tween(opponent.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
+            tweens.tween(opponent.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
                 {
                     ease: FlxEase.smootherStepOut, 
                     type: PINGPONG,

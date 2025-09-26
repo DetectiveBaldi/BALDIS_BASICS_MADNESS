@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import core.AssetCache;
 import core.Options;
@@ -29,7 +29,7 @@ import util.ClickSoundUtil;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class TitleScreen extends CustomState
+class TitleScreen extends TransitionState
 {
     public var title:FlxSprite;
 
@@ -160,7 +160,7 @@ class TitleScreen extends CustomState
         {
             if (FlxG.mouse.justReleased)
             {
-                CustomState.cancelNextTransition();
+                TransitionState.cancelNextTransition();
 
                 var levelToLoad:LevelData = LevelData.list.first((lv:LevelData) -> lv.name == "Two");
 

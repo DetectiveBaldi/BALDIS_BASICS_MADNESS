@@ -82,7 +82,7 @@ class LookalikeL extends PlayState
             remove(baldi, true);
             lookalikeS.insert(lookalikeS.members.indexOf(lookalikeS.room3_Overlay0), baldi);
 
-            tween.tween(baldi, {x: 175.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(baldi, {x: 175.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
         
         if (step == 246)
@@ -163,7 +163,7 @@ class LookalikeL extends PlayState
 
             gameCamBopStrength = 0.02;
 
-            tween.tween(smoke.scale, {x: 4, y: 4}, 
+            tweens.tween(smoke.scale, {x: 4, y: 4}, 
                 conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
         }
     
@@ -176,7 +176,7 @@ class LookalikeL extends PlayState
 
             gameCamBopStrength = 0.065;
 
-            tween.tween(this, {gameCameraZoom: 1.1}, 18);
+            tweens.tween(this, {gameCameraZoom: 1.1}, 18);
 
             lookalikeS.room3.visible = false;
            
@@ -189,7 +189,7 @@ class LookalikeL extends PlayState
         }
 
         if (step == 512 || step == 1024)
-            tween.tween(smoke.scale, {x: 2.7, y: 2.7}, 
+            tweens.tween(smoke.scale, {x: 2.7, y: 2.7}, 
                 conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
     }
 }

@@ -27,10 +27,11 @@ import core.Paths;
 
 import data.CharacterData;
 
-import extendable.CustomState;
-import extendable.CustomSubState;
+import extendable.TransitionState;
 
 import game.stages.OverseerS;
+
+import interfaces.ISequenceHandler;
 
 using util.MathUtil;
 
@@ -56,7 +57,7 @@ class OverseerL extends PlayState
 
         overseerS = cast (stage, OverseerS);
 
-        CustomState.cancelFadeOut = true;
+        TransitionState.cancelFadeIn = true;
 
         super.create();
 
@@ -124,7 +125,7 @@ class OverseerL extends PlayState
         if (step == 704)
         {
             overseerS.redstatic.alpha = 1.0;
-            tween.tween(overseerS.redstatic, {alpha: 0.1}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(overseerS.redstatic, {alpha: 0.1}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartOut});
 
             opponent.color = 0xFF0000;
 
@@ -133,7 +134,7 @@ class OverseerL extends PlayState
 
         if (step == 816)
         {
-            tween.tween(overseerS.redstatic, {alpha: 0.8}, conductor.beatLength * 4 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(overseerS.redstatic, {alpha: 0.8}, conductor.beatLength * 4 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 832)
@@ -153,7 +154,7 @@ class OverseerL extends PlayState
         {
             overseerS.redstatic.alpha = 1.0;
             overseerS.redstatic.animation.play("0");
-            tween.tween(overseerS.redstatic, {alpha: 0.2}, conductor.beatLength * 4 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(overseerS.redstatic, {alpha: 0.2}, conductor.beatLength * 4 * 0.001, {ease: FlxEase.quadOut});
 
             overseerS.ninenine.visible = true;
             overseerS.ninenine.velocity.set(-100.0, -100.0);
@@ -162,11 +163,11 @@ class OverseerL extends PlayState
         if (step == 1856)
         {
             overseerS.redstatic.alpha = 1.0;
-            tween.tween(overseerS.redstatic, {alpha: 0.2}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(overseerS.redstatic, {alpha: 0.2}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8 * 0.001, {ease: FlxEase.quartIn});
 
             opponent.color = 0xFF0000;
 
@@ -302,9 +303,9 @@ class OverseerL extends PlayState
 
         if (step == 2336)
         {
-            tween.tween(overseerS.redstatic, {alpha: 0.6}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(overseerS.redstatic, {alpha: 0.6}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(this, {gameCameraZoom: 1.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(this, {gameCameraZoom: 1.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 2352)
@@ -322,7 +323,7 @@ class OverseerL extends PlayState
 
             hudCamBopStrength = 0.03;
             
-            tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadOut});
 
             oppStrumline.strums.alpha = 0.25;
 
@@ -348,7 +349,7 @@ class OverseerL extends PlayState
         {
             gameCameraZoom = 1.3;
 
-            tween.tween(opponent, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(opponent, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 2880)
@@ -405,20 +406,20 @@ class OverseerL extends PlayState
         }
 
         if (step == 3104)
-            tween.tween(musicBox, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(musicBox, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quadIn});
 
         if (step == 3136 || step == 3148 || step == 3156)
         {
             overseerS.redstatic.visible = true;
             overseerS.redstatic.alpha = 0.6;
-            tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.8 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.8 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 3160)
         {
-            tween.tween(overseerS.redstatic, {alpha: 1.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(overseerS.redstatic, {alpha: 1.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(opponent, {alpha: 1.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(opponent, {alpha: 1.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 3168)
@@ -443,7 +444,7 @@ class OverseerL extends PlayState
                 overseerS.redstatic.visible = true;
                 overseerS.redstatic.alpha = 0.35;
                 overseerS.redstatic.animation.play("0");
-                tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
+                tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
             }
         }
 
@@ -454,13 +455,13 @@ class OverseerL extends PlayState
                 overseerS.redstatic.visible = true;
                 overseerS.redstatic.alpha = 0.35;
                 overseerS.redstatic.animation.play("0");
-                tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
+                tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
             }
 
             if (beat % 4 == 0)
             {
                 opponent.colorTransform.setOffsets(155, 0, 0, 155);
-                tween.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+                tweens.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
                 conductor.beatLength * 3.0 * 0.001);
             }
         }
@@ -472,7 +473,7 @@ class OverseerL extends PlayState
                 overseerS.redstatic.visible = true;
                 overseerS.redstatic.alpha = 0.15;
                 overseerS.redstatic.animation.play("0");
-                tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
+                tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
             }
         }
 
@@ -483,13 +484,13 @@ class OverseerL extends PlayState
                 overseerS.redstatic.visible = true;
                 overseerS.redstatic.alpha = 0.35;
                 overseerS.redstatic.animation.play("0");
-                tween.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
+                tweens.tween(overseerS.redstatic, {alpha: 0.0}, conductor.beatLength * 1.9 * 0.001, {ease: FlxEase.quadOut});
             }
 
             if (beat % 4 == 0)
             {
                 opponent.colorTransform.setOffsets(155, 0, 0, 155);
-                tween.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
+                tweens.tween(opponent.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 0.0},
                 conductor.beatLength * 3.0 * 0.001);
             }
         }
@@ -505,11 +506,23 @@ class OverseerL extends PlayState
     }
 }
 
-class OverseerGameOverScreen extends CustomSubState
+class OverseerGameOverScreen extends FlxSubState implements ISequenceHandler
 {
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
+
     public function new():Void
     {
         super();
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         var opponent:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
 
@@ -521,7 +534,7 @@ class OverseerGameOverScreen extends CustomSubState
 
         add(opponent);
 
-        new FlxTimer(timer).start(5.0, (_:FlxTimer) ->
+        new FlxTimer(timers).start(5.0, (_:FlxTimer) ->
         {
             opponent.color = FlxColor.RED;
             
@@ -533,7 +546,7 @@ class OverseerGameOverScreen extends CustomSubState
 
             no.play();
 
-            new FlxTimer(timer).start(5.0, (_:FlxTimer) -> Sys.exit(0));
+            new FlxTimer(timers).start(5.0, (_:FlxTimer) -> Sys.exit(0));
         });
     }
 }

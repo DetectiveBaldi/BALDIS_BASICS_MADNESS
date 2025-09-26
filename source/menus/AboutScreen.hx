@@ -7,13 +7,13 @@ import flixel.util.FlxColor;
 
 import core.AssetCache;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import ui.BackOutButton;
 
 using util.MathUtil;
 
-class AboutScreen extends CustomState
+class AboutScreen extends TransitionState
 {
     public var backOutButton:BackOutButton;
 

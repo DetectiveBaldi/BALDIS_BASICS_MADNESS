@@ -9,6 +9,8 @@ import flixel.math.FlxPoint;
 
 import flixel.text.FlxText;
 
+import flixel.tweens.FlxTween;
+
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.util.typeLimit.NextState;
@@ -21,17 +23,23 @@ import core.Paths;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
+
+import interfaces.ISequenceHandler;
 
 import ui.BaldiHeads;
 
 using util.MathUtil;
 
-class UnlockScreen extends CustomState
+class UnlockScreen extends TransitionState implements ISequenceHandler
 {
     public var nextState:NextState;
 
     public var params:Array<UnlockScreenParams>;
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
 
     public var baldi:BaldiHeads;
 
@@ -53,6 +61,14 @@ class UnlockScreen extends CustomState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         var background:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
@@ -112,7 +128,7 @@ class UnlockScreen extends CustomState
 
         params.shift();
 
-        new FlxTimer(timer).start(5.0, (_:FlxTimer) ->
+        new FlxTimer(timers).start(5.0, (_:FlxTimer) ->
         {
             if (params.length == 0.0)
             {

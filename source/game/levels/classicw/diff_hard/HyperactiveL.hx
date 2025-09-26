@@ -86,7 +86,7 @@ class HyperactiveL extends PlayState
         {
             hyperactiveS.hall.animation.play("0");
             
-            tween.tween(player, {x: 160.0}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 160.0}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 136)
@@ -97,7 +97,7 @@ class HyperactiveL extends PlayState
 
             opponent.visible = true;
 
-            tween.tween(player, {x: 175.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 175.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 144 || step == 1472)
@@ -105,14 +105,14 @@ class HyperactiveL extends PlayState
 
         if (step == 168)
         {
-            tween.tween(opponent, {x: -1800.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(opponent, {x: -1800.0}, conductor.beatLength * 2.0 * 0.001);
 
             opponent.visible = true;
         }
 
         if (step == 171)
         {
-            tween.tween(player, {x: -1900.0}, conductor.beatLength * 1.25 * 0.001);
+            tweens.tween(player, {x: -1900.0}, conductor.beatLength * 1.25 * 0.001);
         }
 
         if (step == 176)
@@ -126,8 +126,8 @@ class HyperactiveL extends PlayState
             hyperactiveS.hall2.visible = true;
             hyperactiveS.hall2.animation.play("0", false, true);
 
-            tween.cancelTweensOf(opponent);
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(player);
 
             opponent.x = 1800.0;
             player.x = 1780.0;
@@ -138,9 +138,9 @@ class HyperactiveL extends PlayState
             players.add(plr);
             player = plr;
 
-            tween.tween(opponent, {x: 180.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 180.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 160.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 160.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
                 playField.timerNeedle.visible = true;
@@ -160,9 +160,9 @@ class HyperactiveL extends PlayState
         {
             gameCameraZoom = 0.6;
 
-            tween.tween(opponent, {x: 1600.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: 1600.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player, {x: 130.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(player, {x: 130.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 816)
@@ -180,14 +180,14 @@ class HyperactiveL extends PlayState
             opponents.add(opp);
             opponent = opp;
 
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(player);
 
-            tween.tween(opponent, {x: 1800.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(opponent, {x: 1800.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 827)
         {
-            tween.tween(player, {x: 2700.0}, conductor.beatLength * 1.0 * 0.001);
+            tweens.tween(player, {x: 2700.0}, conductor.beatLength * 1.0 * 0.001);
         }
 
         if (step == 832)
@@ -197,8 +197,8 @@ class HyperactiveL extends PlayState
 
             hyperactiveS.hall2.animation.play("0", false, false);
 
-            tween.cancelTweensOf(opponent);
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(player);
 
             opponent.x = -1800.0;
             player.x = -1780.0;
@@ -211,9 +211,9 @@ class HyperactiveL extends PlayState
 
             updateHealthBar("opponent");
 
-            tween.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1088)
@@ -238,10 +238,10 @@ class HyperactiveL extends PlayState
             opp.visible = true;
             opp.x = -1800.0;
             opponent = opp;
-            tween.tween(opp, {x: 130.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 130.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             var _opp:Character = getOpponent("1st-prize-270");
-            tween.tween(_opp, {x: -140.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(_opp, {x: -140.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 1380.0)
@@ -278,13 +278,13 @@ class HyperactiveL extends PlayState
         {
             var opp:Character = getOpponent("1st-prize-270");
             
-            tween.tween(opp, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player, {x: 1900.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 1900.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
             var _opp:Character = getOpponent("gotta-sweep");
 
-            tween.tween(_opp, {x: 100.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(_opp, {x: 100.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 1632)
@@ -301,33 +301,33 @@ class HyperactiveL extends PlayState
             var _opp:Character = getOpponent("gotta-sweep");
             _opp.setPosition(-1675.0, -55.0);
 
-            tween.cancelTweensOf(opponent);
-            tween.cancelTweensOf(_opp);
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(_opp);
+            tweens.cancelTweensOf(player);
 
             opponent.x = -1800.0;
             player.x = -1780.0;
 
             updateHealthBar("opponent");
 
-            tween.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1690)
         {
             var opp:Character = getOpponent("gotta-sweep");
             opponent = opp;
-            tween.tween(opponent, {x: 170.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 170.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1692)
         {
             var opp:Character = getOpponent("1st-prize-270");
-            tween.tween(opp, {x: 1900.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: 1900.0}, conductor.beatLength * 3.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player, {x: 130.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(player, {x: 130.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 1696)
@@ -343,7 +343,7 @@ class HyperactiveL extends PlayState
             plr.setPosition(player.x, player.y);
             player = plr;
 
-            tween.tween(player, {x: 125.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 125.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1758)
@@ -357,15 +357,15 @@ class HyperactiveL extends PlayState
             opponents.add(opp);
             opponent = opp;
 
-            tween.tween(opp, {x: 190.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 190.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1760)
         {
             var opp:Character = getOpponent("gotta-sweep");
-            tween.tween(opp, {x: 140.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 140.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 95.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 95.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             updateHealthBar("opponent");
         }
@@ -373,12 +373,12 @@ class HyperactiveL extends PlayState
         if (step == 1880)
         {
             var opp:Character = getOpponent("1st-prize-90");
-            tween.tween(opp, {x: -1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: -1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
             var opp:Character = getOpponent("gotta-sweep");
-            tween.tween(opp, {x: 165.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(opp, {x: 165.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartInOut});
 
-            tween.tween(player, {x: -1850.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: -1850.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 1888)
@@ -404,44 +404,44 @@ class HyperactiveL extends PlayState
             plr.setPosition(player.x, player.y);
             player = plr;
 
-            tween.cancelTweensOf(__opp);
-            tween.cancelTweensOf(opponent);
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(__opp);
+            tweens.cancelTweensOf(opponent);
+            tweens.cancelTweensOf(player);
 
             updateHealthBar("opponent");
 
             opponent.x = -1800.0;
             player.x = -1780.0;
 
-            tween.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: -120.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 470.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 2008)
         {
             var opp:Character = getOpponent("gotta-sweep");
             opponent = opp;
-            tween.tween(opponent, {x: 285.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(opponent, {x: 285.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 2016)
         {
-            tween.tween(opponent, {x: 185.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 185.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(player, {x: 547.5}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 547.5}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
             updateHealthBar("opponent");
         }
 
         if (step == 2152)
         {
-            tween.tween(opponent, {x: 1860.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: 1860.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(player, {x: 2240.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 2240.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
             var opp:Character = getOpponent("1st-prize-270");
-            tween.tween(opp, {x: 1700.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: 1700.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 2160)
@@ -495,7 +495,7 @@ class HyperactiveL extends PlayState
             book.setPosition(1063.0, 340.0);
             book.color = 0xA19686;
 
-            tween.tween(book, {y: book.y - 25}, conductor.beatLength * 2.0 * 0.001, 
+            tweens.tween(book, {y: book.y - 25}, conductor.beatLength * 2.0 * 0.001, 
                 {
                     ease: FlxEase.sineInOut, 
                     type: PINGPONG
@@ -504,35 +504,35 @@ class HyperactiveL extends PlayState
             
             add(book);
 
-            tween.cancelTweensOf(_opp);
-            tween.cancelTweensOf(opp);
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(_opp);
+            tweens.cancelTweensOf(opp);
+            tweens.cancelTweensOf(player);
 
-            tween.tween(opp, {x: -300.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: -300.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(_opp, {x: -50.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(_opp, {x: -50.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(plr, {x: 800.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plr, {x: 800.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 2176)
         {
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
             
             var opp:Character = getOpponent("1st-prize-270");
             var _opp:Character = getOpponent("gotta-sweep");
 
-            tween.tween(_opp, {y: _opp.y - 30.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(_opp, {y: _opp.y - 30.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
             
-            tween.tween(opp, {y: opp.y - 65.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {y: opp.y - 65.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(_opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
-            tween.tween(_opp.scale, {x: _opp.scale.x - 0.25, y: _opp.scale.y - 0.25}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(_opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(_opp.scale, {x: _opp.scale.x - 0.25, y: _opp.scale.y - 0.25}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
-            tween.tween(opp.scale, {x: opp.scale.x - 0.5, y: opp.scale.y - 0.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opp.scale, {x: opp.scale.x - 0.5, y: opp.scale.y - 0.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     }
 

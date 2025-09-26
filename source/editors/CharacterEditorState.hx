@@ -50,7 +50,7 @@ import data.AnimationData;
 import data.AxisData;
 import data.CharacterData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.Character;
 import game.HealthIcon;
@@ -63,7 +63,7 @@ using StringTools;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class CharacterEditorState extends CustomState
+class CharacterEditorState extends TransitionState
 {
     public var nextState:NextState;
 

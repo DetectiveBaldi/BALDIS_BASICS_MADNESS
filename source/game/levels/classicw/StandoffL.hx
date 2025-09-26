@@ -65,9 +65,9 @@ class StandoffL extends PlayState
         {
             gameCameraZoom = 0.7; 
         
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
 
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
         }
 
         if (step == 304)
@@ -111,7 +111,7 @@ class StandoffL extends PlayState
             baldi.animation.play("slap");
             standoffS.insert(standoffS.members.indexOf(standoffS.hall_Overlay0), baldi);
             
-            tween.tween(baldi, {x: 338.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(baldi, {x: 338.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
     
         if (step == 832)
@@ -131,30 +131,30 @@ class StandoffL extends PlayState
             
             baldi.animation.play("slap");
         
-            tween.tween(baldi, {y: 112.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(baldi, {y: 112.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         
-            tween.tween(baldi.scale, {x: baldi.scale.x + 0.035, y: baldi.scale.y + 0.035}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(baldi.scale, {x: baldi.scale.x + 0.035, y: baldi.scale.y + 0.035}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(sweeper, {x: 547.0}, conductor.beatLength * 1.0 * 0.001, 
+            tweens.tween(sweeper, {x: 547.0}, conductor.beatLength * 1.0 * 0.001, 
                 {
                     ease: FlxEase.quartOut,
                     onComplete: (_tween:FlxTween) ->
                     {
-                        tween.tween(baldi, {y: 110.0}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
+                        tweens.tween(baldi, {y: 110.0}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
 
-                        tween.tween(baldi.scale, {x: baldi.scale.x - 0.035, y: baldi.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
+                        tweens.tween(baldi.scale, {x: baldi.scale.x - 0.035, y: baldi.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001, {startDelay: 0.05});
 
-                        tween.tween(sweeper, {y: 320.0}, conductor.beatLength * 1.0 * 0.001);
+                        tweens.tween(sweeper, {y: 320.0}, conductor.beatLength * 1.0 * 0.001);
 
-                        tween.tween(sweeper, {x: 550.0}, conductor.beatLength * 1.0 * 0.001);
+                        tweens.tween(sweeper, {x: 550.0}, conductor.beatLength * 1.0 * 0.001);
 
-                        tween.tween(sweeper.scale, {x: sweeper.scale.x - 0.035, y: sweeper.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001,
+                        tweens.tween(sweeper.scale, {x: sweeper.scale.x - 0.035, y: sweeper.scale.y - 0.035}, conductor.beatLength * 1.0 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {
-                                    tween.tween(baldi, {x: 500.0}, conductor.beatLength * 1.0 * 0.001);
+                                    tweens.tween(baldi, {x: 500.0}, conductor.beatLength * 1.0 * 0.001);
                                     
-                                    tween.tween(sweeper, {x: 700.0}, conductor.beatLength * 1.0 * 0.001, 
+                                    tweens.tween(sweeper, {x: 700.0}, conductor.beatLength * 1.0 * 0.001, 
                                         {
                                             onComplete: (_tween:FlxTween) ->
                                             {
@@ -203,21 +203,21 @@ class StandoffL extends PlayState
             sweeper.setPosition(1200.0, 400.0);
             sweeper.visible = true;
         
-            tween.tween(player, {x: player.x - 500.0}, conductor.beatLength * 0.5 * 0.001, 
+            tweens.tween(player, {x: player.x - 500.0}, conductor.beatLength * 0.5 * 0.001, 
                 {
                     onComplete: (_tween:FlxTween) ->
                     {
-                        tween.tween(player, {x: player.x + 500.0}, conductor.beatLength * 1.5 * 0.001, {ease: FlxEase.circInOut});
+                        tweens.tween(player, {x: player.x + 500.0}, conductor.beatLength * 1.5 * 0.001, {ease: FlxEase.circInOut});
                     }
                 });
 
-            tween.tween(sweeper, {x: 200.0}, conductor.beatLength * 1.0 * 0.001, 
+            tweens.tween(sweeper, {x: 200.0}, conductor.beatLength * 1.0 * 0.001, 
                 {
                     onComplete: (_tween:FlxTween) ->
                     {                        
-                        tween.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 3.5 * 0.001);
+                        tweens.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 3.5 * 0.001);
 
-                        tween.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 4.0 * 0.001,
+                        tweens.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 4.0 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {
@@ -225,7 +225,7 @@ class StandoffL extends PlayState
 
                                     standoffS.hall_Overlay1.visible = true;
                                     
-                                    tween.tween(sweeper, {x: 400.0}, conductor.beatLength * 1.0 * 0.001,
+                                    tweens.tween(sweeper, {x: 400.0}, conductor.beatLength * 1.0 * 0.001,
                                         {
                                             onComplete: (_tween:FlxTween) ->
                                             {
@@ -262,7 +262,7 @@ class StandoffL extends PlayState
 
             cameraLock = FOCUS_CAM_POINT;
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
 
             opponent.visible = false;
         

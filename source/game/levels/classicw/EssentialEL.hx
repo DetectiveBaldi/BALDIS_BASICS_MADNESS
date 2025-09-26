@@ -82,7 +82,7 @@ class EssentialEL extends PlayState
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 16.0 * 0.001, true);
 
-            tween.tween(this, {gameCameraZoom: 0.6}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(this, {gameCameraZoom: 0.6}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 64)
@@ -90,7 +90,7 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            tween.tween(player, {x: 550.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 550.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
                 playField.timerNeedle.visible = true;
@@ -111,9 +111,9 @@ class EssentialEL extends PlayState
             essentialES.exit0.visible = false;
             essentialES.exit1.visible = true;
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 336.0)
@@ -135,13 +135,13 @@ class EssentialEL extends PlayState
 
         if (step == 384)
         {
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
             plrStrumline.botplay = Options.botplay;
 
-            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFFD8D8,
+            tweens.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFFD8D8,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -205,8 +205,8 @@ class EssentialEL extends PlayState
 
             plr.animation.onFrameChange.add(updateLegStatus);
 
-            tween.tween(plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(__plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(__plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             essentialES.exit1.visible = false;
             essentialES.hall.visible = true;
@@ -235,7 +235,7 @@ class EssentialEL extends PlayState
 
             essentialES.exitClosed.x = essentialES.exit.x;
 
-            tween.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF8D8D,
+            tweens.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF8D8D,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -275,7 +275,7 @@ class EssentialEL extends PlayState
 
             cameraPoint.centerTo();
 
-            tween.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF4848,
+            tweens.color(temperature, conductor.beatLength * 8.0 * 0.001, temperature.color, 0xFFFF4848,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
         }
 
@@ -289,14 +289,14 @@ class EssentialEL extends PlayState
 
             cameraPoint.x = 950.0;
 
-            tween.tween(this, {gameCameraZoom: 0.95}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(this, {gameCameraZoom: 0.95}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1248)
         {
-            tween.tween(this.cameraPoint, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(this.cameraPoint, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(essentialES.hall.colorTransform, {redOffset: 155.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 155.0},
+            tweens.tween(essentialES.hall.colorTransform, {redOffset: 155.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 155.0},
                 conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
@@ -318,7 +318,7 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            tween.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF0E0E,
+            tweens.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF0E0E,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
@@ -349,11 +349,11 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            tween.tween(player, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
 
             var _plr:Character = getPlayer("run-legs");
 
-            tween.tween(_plr, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(_plr, {x: 1800.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartIn});
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 7.9 * 0.001, false);
         }
@@ -384,7 +384,7 @@ class EssentialEL extends PlayState
             players.add(plr);
             player = plr;
 
-            tween.tween(plr, {x: 300.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plr, {x: 300.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1472)
@@ -413,10 +413,10 @@ class EssentialEL extends PlayState
 
         if (step == 1544)
         {
-            tween.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 1546)
@@ -447,8 +447,8 @@ class EssentialEL extends PlayState
             var _plr:Character = getPlayer("run-legs");
             _plr.x = player.x;
 
-            tween.tween(player, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(_plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(_plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = true;
@@ -515,13 +515,13 @@ class EssentialEL extends PlayState
 
             canPause = false;
 
-            tween.tween(plrStrumline.strums, {x: plrStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plrStrumline.strums, {x: plrStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(oppStrumline.strums, {x: oppStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: oppStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
             hudCamBopStrength = 0.0;
             gameCamBopStrength = 0.0;
@@ -561,13 +561,13 @@ class EssentialEL extends PlayState
 
                 if (beat == 227)
                 {
-                tween.tween(opp, {x: opp.x + 830.0}, conductor.beatLength * 0.15 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 830.0}, 0.15);}});
+                tweens.tween(opp, {x: opp.x + 830.0}, conductor.beatLength * 0.15 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tweens.tween(opp, {x: opp.x - 830.0}, 0.15);}});
                 }
                 else 
                 {
-                tween.tween(opp, {x: opp.x + 830.0}, conductor.beatLength * 0.35 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 830.0}, 0.5);}});
+                tweens.tween(opp, {x: opp.x + 830.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tweens.tween(opp, {x: opp.x - 830.0}, 0.5);}});
                 }
 
                 opp.animation.play("slap", true);
@@ -580,8 +580,8 @@ class EssentialEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad");
 
-                tween.tween(opp, {x: opp.x + 870.0}, conductor.beatLength * 0.35 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 870.0}, 0.5);}});
+                tweens.tween(opp, {x: opp.x + 870.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tweens.tween(opp, {x: opp.x - 870.0}, 0.5);}});
 
                 opp.animation.play("slap", true);
             }
@@ -595,8 +595,8 @@ class EssentialEL extends PlayState
                 {
                     essentialES.hall.colorTransform.setOffsets(200, 0, 0, 155);
 
-                    tween.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
-                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tween.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
+                    tweens.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
+                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tweens.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
                 }
                 else
                 {
@@ -604,8 +604,8 @@ class EssentialEL extends PlayState
 
                     gameCamera.color = 0xFF0000;
 
-                    tween.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
-                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tween.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
+                    tweens.tween(essentialES.hall.colorTransform, {redOffset: 0.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 255.0},
+                        conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartIn, onComplete: (_tween:FlxTween) -> {tweens.tween(this.gameCamera, {color: 0x000000}, 0.001);}});
                 }
             }
         }
@@ -616,8 +616,8 @@ class EssentialEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad-glitch");
 
-                tween.tween(opp, {x: opp.x + 940.0}, conductor.beatLength * 0.35 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 940.0}, 0.5);}});
+                tweens.tween(opp, {x: opp.x + 940.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tweens.tween(opp, {x: opp.x - 940.0}, 0.5);}});
             }
         }
 
@@ -630,7 +630,7 @@ class EssentialEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad");
 
-                tween.tween(opp, {x: opp.x + 520.0}, conductor.beatLength * 0.35 * 0.001, {ease: FlxEase.quadOut});
+                tweens.tween(opp, {x: opp.x + 520.0}, conductor.beatLength * 0.35 * 0.001, {ease: FlxEase.quadOut});
 
                 opp.animation.play("slap", true);
             }
@@ -642,8 +642,8 @@ class EssentialEL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad");
 
-                tween.tween(opp, {x: opp.x + 900.0}, conductor.beatLength * 0.35 * 0.001,
-                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tween.tween(opp, {x: opp.x - 900.0}, 0.5);}});
+                tweens.tween(opp, {x: opp.x + 900.0}, conductor.beatLength * 0.35 * 0.001,
+                    {ease: FlxEase.quadOut, onComplete: (_tween:FlxTween) -> {tweens.tween(opp, {x: opp.x - 900.0}, 0.5);}});
 
                 opp.animation.play("slap", true);
             }

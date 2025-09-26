@@ -163,13 +163,13 @@ class DetentionL extends PlayState
 
         if (step == 140)
         {
-            tween.tween(opponent, {x: 385.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(opponent, {x: 385.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
-            tween.tween(player, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(player, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
             var __plr:Character = getPlayer("walk-legs");
 
-            tween.tween(__plr, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(__plr, {x: 250.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
         }
         
         if (step == 144)
@@ -225,23 +225,23 @@ class DetentionL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 684)
         {
-            tween.tween(player, {x: player.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(player, {x: player.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
 
             var __plr:Character = getPlayer("walk-legs");
 
-            tween.tween(__plr, {x: __plr.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
+            tweens.tween(__plr, {x: __plr.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartInOut});
         }
 
         if (step == 688)
         {
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 696)
@@ -257,13 +257,13 @@ class DetentionL extends PlayState
 
             var _plr:Character = getPlayer("walk-legs");
 
-            tween.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
+            tweens.tween(player, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
                 {
                     ease: FlxEase.sineIn, 
                 }
             );
         
-            tween.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
+            tweens.tween(_plr, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001, 
                 {
                     ease: FlxEase.sineIn, 
                 }
@@ -272,21 +272,21 @@ class DetentionL extends PlayState
         
         if (step == 752)
         {
-            tween.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001);
+            tweens.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001);
 
             player.x = -750.0;
 
-            tween.cancelTweensOf(player);
+            tweens.cancelTweensOf(player);
 
-            tween.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
+            tweens.tween(player, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             var __plr:Character = getPlayer("walk-legs");
 
             __plr.x = player.x;
 
-            tween.cancelTweensOf(__plr);
+            tweens.cancelTweensOf(__plr);
             
-            tween.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
+            tweens.tween(__plr, {x: 680.0}, conductor.beatLength * 8.0 * 0.001);
 
             detentionS.hall.visible = false;
 
@@ -309,7 +309,7 @@ class DetentionL extends PlayState
 
             plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
         }
 
         if (step == 776)
@@ -338,7 +338,7 @@ class DetentionL extends PlayState
             plr2.setPosition(1000.0, 120.0);
             players.add(plr2);
 
-            tween.tween(plr2, {x: 650.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plr2, {x: 650.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             detentionS.hall.visible = false;
             detentionS.facultyStandardOpen.visible = false;
@@ -379,8 +379,8 @@ class DetentionL extends PlayState
             opponent.setPosition(90.0, -20.0);
             opponent.scale.set(0.4, 0.4);
 
-            tween.tween(opponent, {x: 105.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(opponent.scale, {x: 0.5, y: 0.5}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 105.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent.scale, {x: 0.5, y: 0.5}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             detentionS.faculty0.visible = false;
             detentionS.faculty0portal.visible = false;
@@ -391,9 +391,9 @@ class DetentionL extends PlayState
         {
             detentionS.faculty1.visible = true;
 
-            tween.tween(opponent, {x: 250.0, y: 20.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: 250.0, y: 20.0}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent.scale, {x: 1.7, y: 1.7}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
 
             var plr2:Character = getPlayer("bf-anim-caught");
 
@@ -456,7 +456,7 @@ class DetentionL extends PlayState
 
             add(timerText);
 
-            new FlxTimer(timer).start(1.0, (_timer:FlxTimer) ->
+            new FlxTimer(timers).start(1.0, (_timer:FlxTimer) ->
             {
                 if (_timer.loopsLeft == 0.0)
                     timerText.active = timerText.visible = false;
@@ -493,9 +493,9 @@ class DetentionL extends PlayState
 
             gameCameraZoom = 0.7;
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 1484)
@@ -508,9 +508,9 @@ class DetentionL extends PlayState
             principal.setPosition(355.0, 155.0);
             detentionS.insert(detentionS.members.indexOf(players), principal);
 
-            tween.tween(principal, {x: 480.0, y: 64.0}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(principal, {x: 480.0, y: 64.0}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(principal.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(principal.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 2.25 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 1493)
@@ -523,9 +523,9 @@ class DetentionL extends PlayState
             detentionS.office1.visible = true;
 
             if (FlxG.random.bool())
-                tween.tween(principal, {x: -principal.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
+                tweens.tween(principal, {x: -principal.width / 0.75}, conductor.beatLength * 2.0 * 0.001);
             else
-                tween.tween(principal, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
+                tweens.tween(principal, {x: FlxG.width / 0.75}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1504)

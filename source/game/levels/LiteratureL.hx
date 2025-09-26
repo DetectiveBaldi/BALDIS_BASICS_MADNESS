@@ -80,14 +80,14 @@ class LiteratureL extends PlayState
         
         if (step == 88)
         {
-            tween.tween(opponent, {x: 1200.0, y: -120.0}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(opponent, {x: 1200.0, y: -120.0}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
 
-            tween.tween(opponent.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(opponent.scale, {x: 0.75, y: 0.75}, conductor.beatLength * 4.5 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 112)
         {
-            tween.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 3.9 * 0.001, {ease: FlxEase.quartIn});
             
             opponent.skipDance = false;
         }
@@ -101,7 +101,7 @@ class LiteratureL extends PlayState
 
             player.setPosition(700.0, 180.0);
 
-            tween.tween(player, {x: 515.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(player, {x: 515.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             literatureS.remove(players, true);
 
@@ -129,7 +129,7 @@ class LiteratureL extends PlayState
 
         if (step == 640)
         {
-            tween.tween(this, {gameCameraZoom: 1.1}, conductor.beatLength * 16.0 * 0.001);
+            tweens.tween(this, {gameCameraZoom: 1.1}, conductor.beatLength * 16.0 * 0.001);
             
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
@@ -146,9 +146,9 @@ class LiteratureL extends PlayState
         {
             gameCameraZoom = 0.75;
             
-            tween.tween(player, {x: 1500.0, y: 140.0}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 1500.0, y: 140.0}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
         
-            tween.tween(player.scale, {x: 0.8, y: 0.8}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player.scale, {x: 0.8, y: 0.8}, conductor.beatLength * 7.9 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 768)
@@ -219,7 +219,7 @@ class LiteratureL extends PlayState
 
             opponent.x = 1800;
 
-            tween.tween(opponent, {x: 650.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 650.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             opponent.animation.play("talk");
         }
@@ -245,7 +245,7 @@ class LiteratureL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 31.9 * 0.001);
+            tweens.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 31.9 * 0.001);
         }
 
         if (step == 1416)
@@ -262,11 +262,9 @@ class LiteratureL extends PlayState
 
             var plrStrumlineX:Float = plrStrumline.strums.x;
 
-            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
-
-            plrStrumline.botplay = Options.botplay;
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1464)

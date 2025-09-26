@@ -136,7 +136,7 @@ class PlaymateL extends PlayState
             
             opponent.animation.play("play");
 
-            tween.tween(opponent, {x: -80.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(opponent, {x: -80.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 142)
@@ -181,7 +181,7 @@ class PlaymateL extends PlayState
 
             if (!Options.botplay)
             {
-                tween.tween(tutorText, {y: player.y - tutorText.height * 0.5}, conductor.beatLength * 2.0 * 0.001,
+                tweens.tween(tutorText, {y: player.y - tutorText.height * 0.5}, conductor.beatLength * 2.0 * 0.001,
                     {ease: FlxEase.backOut});
             }
         }
@@ -253,7 +253,7 @@ class PlaymateL extends PlayState
             {
                 if (!Options.botplay)
                 {
-                    tween.tween(tutorText, {y: -tutorText.height * 3.0}, conductor.beatLength * 2.0 * 0.001,
+                    tweens.tween(tutorText, {y: -tutorText.height * 3.0}, conductor.beatLength * 2.0 * 0.001,
                         {ease: FlxEase.backOut});
                 }
                 
@@ -273,14 +273,14 @@ class PlaymateL extends PlayState
 
             plrStrumline.botplay = Options.botplay;
 
-            tween.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
 
-            tween.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 1168)
         {
-            tween.tween(this, {gameCameraZoom: 0.55}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(this, {gameCameraZoom: 0.55}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 1184)
@@ -298,7 +298,7 @@ class PlaymateL extends PlayState
             remove(opp, true);
             playmateS.insert(playmateS.members.indexOf(playmateS.hall), opp);
 
-            tween.tween(opp, {x: 540.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 540.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
             gameCameraZoom = 0.8;
         }
@@ -307,21 +307,21 @@ class PlaymateL extends PlayState
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1216)
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 260.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 260.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1232)
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 120.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 120.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1188)
@@ -353,33 +353,33 @@ class PlaymateL extends PlayState
             opp.animation.play("slap");
             add(opp);
 
-            tween.tween(opp, {x: -300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: -300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1456)
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 0.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 0.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
             gameCameraZoom += 0.05;
         }
 
         if (step == 1464)
-            tween.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
 
         if (step == 1472)
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
                 playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tween.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
             gameCameraZoom = 0.7;
         }
@@ -393,9 +393,9 @@ class PlaymateL extends PlayState
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 800.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
-            tween.tween(opponent, {x: -1200.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -1200.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
 
             gameCamera.fade(FlxColor.BLACK, conductor.beatLength * 8.0 * 0.001, false);
         }
@@ -404,7 +404,7 @@ class PlaymateL extends PlayState
         {
             opp.animation.play("slap");
 
-            tween.tween(opp, {x: 1300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opp, {x: 1300.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
         }
     }
 

@@ -3,7 +3,7 @@ package plugins;
 import flixel.FlxBasic;
 import flixel.FlxG;
 
-class FullscreenTogglePlugin extends FlxBasic
+class FullscreenPlugin extends FlxBasic
 {
     public function new():Void
     {

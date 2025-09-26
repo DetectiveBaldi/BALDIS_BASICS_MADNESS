@@ -21,7 +21,7 @@ import core.Paths;
 
 import data.CharacterData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.stages.UncanonS;
 
@@ -41,7 +41,7 @@ class UncanonL extends PlayState
 
         uncanonS = cast (stage, UncanonS);
 
-        CustomState.cancelFadeOut = true;
+        TransitionState.cancelFadeIn = true;
 
         super.create();
 
@@ -152,9 +152,9 @@ class UncanonL extends PlayState
                 opponent.alpha = 1.0;
                 
                 if (beat == 12)
-                    tween.tween(this, {gameCameraZoom: 5.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+                    tweens.tween(this, {gameCameraZoom: 5.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
                 else
-                    tween.tween(opponent, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+                    tweens.tween(opponent, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
             }
         }
     }

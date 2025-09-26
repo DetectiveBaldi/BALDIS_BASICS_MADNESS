@@ -28,6 +28,7 @@ import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
+import flixel.util.FlxTimer;
 
 import core.AssetCache;
 import core.Paths;
@@ -37,10 +38,12 @@ import data.LevelData;
 import data.PlayStats;
 import data.WeekData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.HighScore;
 import game.PlayState;
+
+import interfaces.ISequenceHandler;
 
 import ui.HeightenedButton;
 import ui.OrientedButton;
@@ -50,13 +53,17 @@ using StringTools;
 using util.MathUtil;
 using util.StringUtil;
 
-class FreeplayScreen extends CustomState
+class FreeplayScreen extends TransitionState implements ISequenceHandler
 {
     public static var selectedDifficulty:Int = 0;
 
     public static var lastSelectedLevel:Map<Int, Int> = new Map<Int, Int>();
 
     public static var selectedLevel:Int = 0;
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
 
     public var levels:Array<LevelData>;
 
@@ -95,6 +102,14 @@ class FreeplayScreen extends CustomState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         background = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/FreeplayScreen/background"));
 
@@ -312,7 +327,7 @@ class FreeplayScreen extends CustomState
 
         updatePoster(level);
 
-        tween.cancelTweensOf(tvStatic, ["alpha"]);
+        tweens.cancelTweensOf(tvStatic, ["alpha"]);
 
         tvStatic.alpha = 1.0;
 
@@ -324,7 +339,7 @@ class FreeplayScreen extends CustomState
             
            if (#if debug true #else week.scoresValidated() && (filtered.indexOf(level) == 0.0 ||
                 HighScore.getLevelScore(level.name, level.difficulty).score != 0.0) #end)
-                    tween.tween(tvStatic, {alpha: 0.0}, 0.5);
+                    tweens.tween(tvStatic, {alpha: 0.0}, 0.5);
         }
     }
 
@@ -464,7 +479,7 @@ class FreeplayScreen extends CustomState
 
     public function updateDifficultyPanel(cancelFadeIn:Bool = false):Void
     {
-        tween.cancelTweensOf(difficultyPanel);
+        tweens.cancelTweensOf(difficultyPanel);
 
         if (cancelFadeIn)
         {
@@ -474,13 +489,13 @@ class FreeplayScreen extends CustomState
         }
         else
         {
-            tween.tween(difficultyPanel, {y: -difficultyPanel.height}, 0.25, {ease: FlxEase.backOut, onComplete: (_:FlxTween) ->
+            tweens.tween(difficultyPanel, {y: -difficultyPanel.height}, 0.25, {ease: FlxEase.backOut, onComplete: (_:FlxTween) ->
             {
                 difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty]}'));
             }});
         }
 
-        tween.tween(difficultyPanel, {y: -15.0}, 0.25, {ease: FlxEase.backOut, startDelay: cancelFadeIn ? 0.0 : 0.25});
+        tweens.tween(difficultyPanel, {y: -15.0}, 0.25, {ease: FlxEase.backOut, startDelay: cancelFadeIn ? 0.0 : 0.25});
 
         FlxG.sound.play(AssetCache.getSound("shared/swinging-lock"));
     }

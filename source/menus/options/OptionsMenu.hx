@@ -16,7 +16,7 @@ import flixel.util.typeLimit.NextState;
 import core.AssetCache;
 import core.Paths;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import menus.options.pages.GeneralOptionsPage;
 import menus.options.pages.BaseOptionsPage;
@@ -29,7 +29,7 @@ import ui.OrientedButton;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class OptionsMenu extends CustomState
+class OptionsMenu extends TransitionState
 {
     public var nextState:NextState;
 

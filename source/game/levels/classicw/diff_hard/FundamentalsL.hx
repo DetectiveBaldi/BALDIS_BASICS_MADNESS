@@ -121,7 +121,7 @@ class FundamentalsL extends PlayState
             principal.color = 0xBBAC91;
             fundamentalsS.insert(fundamentalsS.members.indexOf(players), principal);
 
-            tween.tween(principal, {x: 2000.0}, conductor.beatLength * 6.5 * 0.001);
+            tweens.tween(principal, {x: 2000.0}, conductor.beatLength * 6.5 * 0.001);
         }
 
         if (step == 798)
@@ -147,7 +147,7 @@ class FundamentalsL extends PlayState
         {
             var plr:Character = getPlayer("bf-anim-fundamentals");
             plr.animation.play("run");
-            tween.tween(plr, {x: 60.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
+            tweens.tween(plr, {x: 60.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
         }
 
         if (step == 832)
@@ -158,7 +158,7 @@ class FundamentalsL extends PlayState
 
         if (step == 840)
         {
-           tween.tween(principal, {x: -1200.0}, conductor.beatLength * 4.0 * 0.001);
+           tweens.tween(principal, {x: -1200.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 848)
@@ -223,7 +223,7 @@ class FundamentalsL extends PlayState
 
             add(timerText);
 
-            new FlxTimer(timer).start(1.0, (_timer:FlxTimer) ->
+            new FlxTimer(timers).start(1.0, (_timer:FlxTimer) ->
             {
                 if (_timer.loopsLeft == 0.0)
                     timerText.active = timerText.visible = false;
@@ -244,7 +244,7 @@ class FundamentalsL extends PlayState
         }
 
         if (step == 1344)
-            tween.tween(opponent, {x: 1500.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(opponent, {x: 1500.0}, conductor.beatLength * 2.0 * 0.001);
        
         if (step == 1360)
         {
@@ -293,7 +293,7 @@ class FundamentalsL extends PlayState
             plr.visible = true;
         
             if (FlxG.random.bool())
-                tween.tween(principal, {x: -300.0}, conductor.beatLength * 4.0 * 0.001);
+                tweens.tween(principal, {x: -300.0}, conductor.beatLength * 4.0 * 0.001);
         }
 
         if (step == 1396)
@@ -322,14 +322,14 @@ class FundamentalsL extends PlayState
 
         if (step == 1438)
         {
-            tween.tween(opponent, {x: 665.0}, conductor.beatLength * 5.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(opponent, {x: 665.0}, conductor.beatLength * 5.0 * 0.001, {ease: FlxEase.quartOut});
 
             opponent.animation.play("play");
 
             var plr:Character = getPlayer("bf-anim-fundamentals");
             plr.visible = true;
 
-            tween.tween(plr, {x: -315.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plr, {x: -315.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             fundamentalsS.hall1open.visible = true;
             fundamentalsS.hall1front.visible = true;
@@ -373,8 +373,8 @@ class FundamentalsL extends PlayState
             var oppStrumlineX:Float = oppStrumline.strums.x;
             var plrStrumlineX:Float = plrStrumline.strums.x;
 
-            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1660 || step == 1666)
@@ -411,8 +411,8 @@ class FundamentalsL extends PlayState
             var oppStrumlineX:Float = oppStrumline.strums.x;
             var plrStrumlineX:Float = plrStrumline.strums.x;
 
-            tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
-            tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
         }
 
         if (step == 1876)
@@ -439,7 +439,7 @@ class FundamentalsL extends PlayState
 
         if (step == 2056)
         {
-            tween.tween(player, {x: 1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(player, {x: 1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
 
         if (step == 2068)
@@ -453,7 +453,7 @@ class FundamentalsL extends PlayState
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
-            tween.tween(opponent, {x: -2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(opponent, {x: -2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
     }
 
@@ -472,7 +472,7 @@ class FundamentalsL extends PlayState
             {
                 var opp:Character = getOpponent("baldi-mad");
 
-                tween.tween(opp, {x: opp.x + 350.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(opp, {x: opp.x + 350.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
                 opp.animation.play("slap");
             }

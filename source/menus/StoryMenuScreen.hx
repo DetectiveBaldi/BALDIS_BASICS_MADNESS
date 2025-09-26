@@ -10,6 +10,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 import flixel.addons.display.FlxBackdrop;
 
@@ -20,10 +21,12 @@ import data.Difficulty;
 import data.LevelData;
 import data.WeekData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import game.HighScore;
 import game.PlayState;
+
+import interfaces.ISequenceHandler;
 
 import ui.BackOutButton;
 import ui.OrientedButton;
@@ -33,13 +36,17 @@ import util.ClickSoundUtil;
 using util.MathUtil;
 using util.StringUtil;
 
-class StoryMenuScreen extends CustomState
+class StoryMenuScreen extends TransitionState implements ISequenceHandler
 {
     public static var selectedDifficulty:Int = 0;
 
     public static var lastSelectedWeek:Map<Int, Int> = new Map<Int, Int>();
 
     public static var selectedWeek:Int;
+
+    public var tweens:FlxTweenManager;
+
+    public var timers:FlxTimerManager;
 
     public var weeks:Array<WeekData>;
 
@@ -82,6 +89,14 @@ class StoryMenuScreen extends CustomState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        tweens = new FlxTweenManager();
+
+        add(tweens);
+
+        timers = new FlxTimerManager();
+
+        add(timers);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
@@ -410,7 +425,7 @@ class StoryMenuScreen extends CustomState
 
         scoreTween?.cancel();
 
-        scoreTween = tween.num(weekScore, HighScore.getWeekScore(week.name, levels[0].difficulty).score, 0.35, null, (v:Float) -> {
+        scoreTween = tweens.num(weekScore, HighScore.getWeekScore(week.name, levels[0].difficulty).score, 0.35, null, (v:Float) -> {
             weekScore = Math.floor(v); scoreText.text = 'High Score: ${weekScore}';});
 
         updateWeekPortrait(week);

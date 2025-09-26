@@ -173,15 +173,15 @@ class WarmWL extends PlayState
             warmWS.entranceA1.visible = false;
             warmWS.entranceA1_Alt0.visible = true;
 
-            tween.tween(plrAnim, {x: plrAnim.x - 40.0}, 1.3,
+            tweens.tween(plrAnim, {x: plrAnim.x - 40.0}, 1.3,
                 {
                     startDelay: 1,
                     ease: FlxEase.sineOut
                 }
             );
             
-            tween.tween(plrAnim, {y: plrAnim.y - 120.0}, 5, {ease: FlxEase.sineOut});
-            tween.tween(plrAnim.scale, {x: 0.7, y: 0.7}, 5, {ease: FlxEase.sineOut});
+            tweens.tween(plrAnim, {y: plrAnim.y - 120.0}, 5, {ease: FlxEase.sineOut});
+            tweens.tween(plrAnim.scale, {x: 0.7, y: 0.7}, 5, {ease: FlxEase.sineOut});
         }
     
         if (step == 1434)
@@ -204,13 +204,13 @@ class WarmWL extends PlayState
             {
                 gameCameraZoom = 1.0;
             
-                tween.tween(player, {alpha: 0.0}, conductor.beatLength * 0.001);
+                tweens.tween(player, {alpha: 0.0}, conductor.beatLength * 0.001);
             }
             else
             {
                 gameCameraZoom = 0.6;
                     
-                tween.tween(player, {alpha: 1.0}, conductor.beatLength * 0.001);
+                tweens.tween(player, {alpha: 1.0}, conductor.beatLength * 0.001);
             }
         }
     }

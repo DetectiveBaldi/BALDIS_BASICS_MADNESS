@@ -24,7 +24,7 @@ class Countdown extends FlxGroup
 {
     public var conductor:Conductor;
 
-    public var tween:FlxTweenManager;
+    public var tweens:FlxTweenManager;
 
     public var tick:Int;
 
@@ -52,9 +52,9 @@ class Countdown extends FlxGroup
 
         addListeners();
 
-        tween = new FlxTweenManager();
+        tweens = new FlxTweenManager();
 
-        add(tween);
+        add(tweens);
 
         tick = 0;
 
@@ -110,14 +110,14 @@ class Countdown extends FlxGroup
         {
             case 0:
             {
-                tween.tween(threeSpr, {y: 0.0}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(threeSpr, {y: 0.0}, conductor.beatLength * 0.5 * 0.001, {ease: FlxEase.quartOut});
 
                 threeSnd.play();
             }
 
             case 1:
             {
-                tween.tween(twoSpr, {y: twoSpr.getCenterY()}, conductor.beatLength * 0.5 * 0.001, 
+                tweens.tween(twoSpr, {y: twoSpr.getCenterY()}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
                 twoSnd.play();
@@ -125,7 +125,7 @@ class Countdown extends FlxGroup
 
             case 2:
             {
-                tween.tween(oneSpr, {y: FlxG.height - oneSpr.height}, conductor.beatLength * 0.5 * 0.001, 
+                tweens.tween(oneSpr, {y: FlxG.height - oneSpr.height}, conductor.beatLength * 0.5 * 0.001, 
                     {ease: FlxEase.quartOut});
 
                 oneSnd.play();
@@ -133,13 +133,13 @@ class Countdown extends FlxGroup
 
             case 3:
             {
-                tween.tween(threeSpr, {x: -threeSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(threeSpr, {x: -threeSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(twoSpr, {x: FlxG.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(twoSpr, {x: FlxG.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(oneSpr, {x: -oneSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(oneSpr, {x: -oneSpr.width}, conductor.beatLength * 0.001, {ease: FlxEase.quartOut});
 
-                tween.tween(goSpr, {y: FlxG.height - goSpr.height * 0.75}, conductor.beatLength * 0.001, 
+                tweens.tween(goSpr, {y: FlxG.height - goSpr.height * 0.75}, conductor.beatLength * 0.001, 
                     {ease: FlxEase.quartOut});
                 
                 goSnd.play();
@@ -147,7 +147,7 @@ class Countdown extends FlxGroup
 
             case 4:
             {
-                tween.tween(goSpr, {y: FlxG.height}, conductor.beatLength * 0.001, 
+                tweens.tween(goSpr, {y: FlxG.height}, conductor.beatLength * 0.001, 
                     {ease: FlxEase.quartIn});
             }
 

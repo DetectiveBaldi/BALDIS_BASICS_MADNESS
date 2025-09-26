@@ -7,7 +7,7 @@ import flixel.tweens.FlxEase;
 
 import data.LevelData;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import menus.TitleScreen;
 
@@ -30,7 +30,7 @@ class TwoL extends PlayState
 
         twoS = cast (stage, TwoS);
 
-        CustomState.cancelFadeOut = true;
+        TransitionState.cancelFadeIn = true;
 
         super.create();
 
@@ -95,7 +95,7 @@ class TwoL extends PlayState
         {
             twoS.plus.visible = true;
             twoS.plus.animation.play("0");
-            tween.tween(twoS.plus, {alpha: 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(twoS.plus, {alpha: 0.75}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             for (i in 0 ... 4)
                 toggleStrumScroll(oppStrumline, i);
@@ -104,20 +104,20 @@ class TwoL extends PlayState
             {
                 var strum:Strum = plrStrumline.strums.members[i];
 
-                tween.tween(strum, {x: strum.x - 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(strum, {x: strum.x - 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
             }
 
             for (i in 2 ... 4)
             {
                 var strum:Strum = plrStrumline.strums.members[i];
 
-                tween.tween(strum, {x: strum.x + 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(strum, {x: strum.x + 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
             }
         }
 
         if (step == 1024)
         {
-            tween.tween(twoS.plus, {alpha: 0.35}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(twoS.plus, {alpha: 0.35}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             for (i in 0 ... 4)
                 toggleStrumScroll(oppStrumline, i);
@@ -126,31 +126,31 @@ class TwoL extends PlayState
             {
                 var strum:Strum = plrStrumline.strums.members[i];
 
-                tween.tween(strum, {x: strum.x + 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(strum, {x: strum.x + 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
             }
 
             for (i in 2 ... 4)
             {
                 var strum:Strum = plrStrumline.strums.members[i];
 
-                tween.tween(strum, {x: strum.x - 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+                tweens.tween(strum, {x: strum.x - 185.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
             }
         }
 
         if (step == 1032)
-            tween.tween(twoS.plus, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(twoS.plus, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
         if (step == 1280.0)
         {
             twoS.noise.visible = true;
             twoS.noise.animation.play("1");
-            tween.tween(twoS.noise, {alpha: 0.35}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(twoS.noise, {alpha: 0.35}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             for (i in 0 ... 4)
             {
                 var strum:Strum = oppStrumline.strums.members[i];
 
-                tween.tween(strum, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
+                tweens.tween(strum, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
             }
 
             toggleStrumScroll(plrStrumline, 1);
@@ -198,21 +198,21 @@ class TwoL extends PlayState
 
             twoS.noise.alpha = 1.0;
 
-            tween.tween(twoS.noise, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
+            tweens.tween(twoS.noise, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             FlxG.camera.alpha = 0.0;
 
-            tween.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quadOut});
+            tweens.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 16.0 * 0.001, {ease: FlxEase.quadOut});
         }
 
         if (step == 1600)
-            tween.tween(FlxG.camera, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(FlxG.camera, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
         if (step == 1616)
         {
             opponent.alpha = 1.0;
 
-            tween.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
+            tweens.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
             
             twoS.noise.alpha = twoS.plus.alpha = 0.75;
         }
@@ -221,7 +221,7 @@ class TwoL extends PlayState
     override function endSong():Void
     {
         if (getClassFromNextState() == TitleScreen)
-            CustomState.cancelNextTransition();
+            TransitionState.cancelNextTransition();
 
         super.endSong();
     }
@@ -232,7 +232,7 @@ class TwoL extends PlayState
 
         strum.downscroll = !strum.downscroll;
 
-        tween.tween(strum, {y: strum.downscroll ? FlxG.height - strum.height - 15.0 : 15.0},
+        tweens.tween(strum, {y: strum.downscroll ? FlxG.height - strum.height - 15.0 : 15.0},
             conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
     }
 }

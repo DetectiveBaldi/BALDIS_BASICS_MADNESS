@@ -11,9 +11,9 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Paths;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
-class WarningScreen extends CustomState
+class WarningScreen extends TransitionState
 {
     public var text:FlxText;
 

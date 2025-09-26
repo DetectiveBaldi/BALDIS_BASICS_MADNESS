@@ -18,7 +18,7 @@ import flixel.addons.display.FlxBackdrop;
 import core.AssetCache;
 import core.Paths;
 
-import extendable.CustomState;
+import extendable.TransitionState;
 
 import menus.options.OptionsMenu;
 
@@ -27,7 +27,7 @@ import ui.MenuText;
 
 using util.MathUtil;
 
-class MainMenuScreen extends CustomState
+class MainMenuScreen extends TransitionState
 {
     public static var tune:FlxSound;
 
@@ -61,7 +61,7 @@ class MainMenuScreen extends CustomState
         tune.fadeOut(0.25, 0.0, stopTune);
     }
 
-    public static function stopTune(tween:FlxTween):Void
+    public static function stopTune(tweens:FlxTween):Void
     {
         tune.stop();
 

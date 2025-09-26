@@ -9,7 +9,7 @@ class CameraZoomEvent
     public static function dispatch(game:PlayState, zoom:Float, duration:Float, ease:String = "linear"):Void
     {
         if (duration > 0.0)
-            game.tween.tween(game, {gameCameraZoom: zoom}, duration, {ease: Reflect.getProperty(FlxEase, ease)});
+            game.tweens.tween(game, {gameCameraZoom: zoom}, duration, {ease: Reflect.getProperty(FlxEase, ease)});
         else
             game.gameCameraZoom = zoom;
     }

@@ -7,69 +7,45 @@ import flixel.FlxSubState;
 
 import flixel.animation.FlxAnimation;
 
-import flixel.math.FlxRect;
-
-import flixel.tweens.FlxTween.FlxTweenManager;
-
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
-import flixel.util.FlxTimer.FlxTimerManager;
 
 import flixel.addons.display.FlxBackdrop;
 
 import core.AssetCache;
 
-import music.Conductor;
-
 using util.ArrayUtil;
 
-class CustomState extends FlxState
+class TransitionState extends FlxState
 {
-    public static var cancelFadeOut:Bool;
-
     public static var cancelFadeIn:Bool;
+
+    public static var cancelFadeOut:Bool;
 
     public static function cancelNextTransition():Void
     {
-        CustomState.cancelFadeIn = true;
+        cancelFadeIn = true;
 
-        CustomState.cancelFadeOut = true;
+        cancelFadeOut = true;
     }
-
-    public var tween:FlxTweenManager;
-
-    public var timer:FlxTimerManager;
-
-    public var conductor:Conductor;
 
     override function create():Void
     {
         super.create();
 
-        if (!cancelFadeOut)
+        if (!cancelFadeIn)
         {
             persistentUpdate = true;
 
-            openSubState(new CustomTransition(OUT, () -> { persistentUpdate = false; closeSubState(); } ));
+            openSubState(new CustomTransition(IN, () ->
+            {
+                persistentUpdate = false;
+                
+                closeSubState();
+            }));
         }
 
-        cancelFadeOut = false;
-
-        tween = new FlxTweenManager();
-
-        add(tween);
-
-        timer = new FlxTimerManager();
-
-        add(timer);
-
-        conductor = new Conductor();
-
-        conductor.onStepHit.add(stepHit);
-
-        conductor.onBeatHit.add(beatHit);
-        
-        conductor.onMeasureHit.add(measureHit);
+        cancelFadeIn = false;
     }
 
     override function openSubState(newSubState:FlxSubState):Void
@@ -96,44 +72,31 @@ class CustomState extends FlxState
 
     override function startOutro(onOutroComplete:()->Void):Void
     {
-        if (cancelFadeIn)
+        if (cancelFadeOut)
         {
-            onOutroComplete();
+            cancelFadeOut = false;
 
-            cancelFadeIn = false;
+            onOutroComplete();
 
             return;
         }
 
         persistentUpdate = false;
 
-        openSubState(new CustomTransition(IN, onOutroComplete));
+        openSubState(new CustomTransition(OUT, onOutroComplete));
     }
 
-    public function getTransitionSprite(duration:Float, fade:CustomTransitionFade, onFinish:()->Void):FlxSprite
+    public function getTransitionSprite(duration:Float, fade:CustomTransitionFade, onFinish:()->Void):CustomTransitionSprite
     {
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(duration, fade, onFinish);
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(duration, fade);
         
         spr.onFinish.add(spr.kill);
+
+        spr.onFinish.add(onFinish);
 
         add(spr);
 
         return spr;
-    }
-
-    public function stepHit(step:Int):Void
-    {
-
-    }
-
-    public function beatHit(beat:Int):Void
-    {
-
-    }
-
-    public function measureHit(measure:Int):Void
-    {
-
     }
 }
 
@@ -143,29 +106,36 @@ class CustomTransition extends FlxSubState
     
     public var onFinish:()->Void;
 
-    public function new(fad:CustomTransitionFade, onFinis:()->Void):Void
+    public function new(fade:CustomTransitionFade, onFinish:()->Void):Void
     {
         super();
 
-        fade = fad;
+        this.fade = fade;
 
-        onFinish = onFinis;
+        this.onFinish = onFinish;
     }
 
     override function create():Void
     {
         super.create();
 
-        camera = FlxG.cameras.list.last();
-
-        getTransitionSprite();
-    }
-
-    public function getTransitionSprite():FlxSprite
-    {
-        var spr:CustomTransitionSprite = new CustomTransitionSprite(0.5, fade, onFinish);
+        var spr:CustomTransitionSprite = getTransitionSprite();
 
         add(spr);
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        camera = FlxG.cameras.list.last();
+    }
+
+    public function getTransitionSprite():CustomTransitionSprite
+    {
+        var spr:CustomTransitionSprite = new CustomTransitionSprite(0.5, fade);
+
+        spr.onFinish.add(onFinish);
 
         return spr;
     }
@@ -179,21 +149,17 @@ class CustomTransitionSprite extends FlxBackdrop
 
     public var onFinish:FlxSignal;
 
-    public function new(durat:Float, fad:CustomTransitionFade, onFinis:()->Void):Void
+    public function new(duration:Float, fade:CustomTransitionFade):Void
     {
         super();
 
-        camera = FlxG.cameras.list.last();
+        this.duration = duration;
 
-        duration = durat;
-
-        fade = fad;
+        this.fade = fade;
 
         onFinish = new FlxSignal();
 
-        onFinish.add(onFinis);
-
-        loadGraphic(AssetCache.getGraphic("extendable/CustomState/gradient"), true, 16, 16);
+        loadGraphic(AssetCache.getGraphic("extendable/TransitionState/gradient"), true, 16, 16);
 
         animation.onFinish.add((name:String) -> onFinish.dispatch());
 
@@ -203,7 +169,14 @@ class CustomTransitionSprite extends FlxBackdrop
 
         anim.frameRate = anim.numFrames / duration;
 
-		animation.play("fade", true, fade == IN);
+		animation.play("fade", true, fade == OUT);
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        camera = FlxG.cameras.list.last();
     }
 
     override function destroy():Void

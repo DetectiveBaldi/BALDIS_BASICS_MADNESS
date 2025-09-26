@@ -1,7 +1,6 @@
 package game;
 
-import openfl.filters.BitmapFilter;
-import openfl.filters.BlurFilter;
+import openfl.geom.Rectangle;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -15,6 +14,7 @@ import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
@@ -28,37 +28,52 @@ import core.Paths;
 
 import data.LevelData;
 
-import extendable.CustomSubState;
+import extendable.TransitionState;
+import extendable.TransitionSubState;
 
 import game.PlayState;
+
+import interfaces.ISequenceHandler;
 
 import menus.FreeplayScreen;
 import menus.MysteryScreen;
 import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
+import ui.BaldiHeads;
+
 import util.ClickSoundUtil;
 
 using util.ArrayUtil;
 using util.MathUtil;
 
-class PauseScreen extends CustomSubState
+class PauseScreen extends TransitionSubState
 {
     public var game:PlayState;
 
     public var mouseVisible:Bool;
 
-    public static var blur:BlurFilter;
+    public var tweens:FlxTweenManager;
 
-    public var iconText:FlxText;
+    public var timers:FlxTimerManager;
 
     public var pauseIcons:FlxTypedGroup<PauseScreenIcon>;
+
+    public var resumeIcon:PauseScreenIcon;
+
+    public var restartIcon:PauseScreenIcon;
+
+    public var optionsIcon:PauseScreenIcon;
+
+    public var quitIcon:PauseScreenIcon;
+
+    public var selectedIcon:PauseScreenIcon;
 
     public var tune:FlxSound;
 
     public function new(_game:PlayState):Void
     {
-        super();
+        super(FlxColor.WHITE);
 
         game = _game;
     }
@@ -75,60 +90,33 @@ class PauseScreen extends CustomSubState
 
         FlxG.mouse.visible = true;
 
-        if (Options.shaders)
-        {
-            blur ??= new BlurFilter(0.0, 0.0, 0);
+        tweens = new FlxTweenManager();
 
-            blur.blurX = 0.0;
+        add(tweens);
 
-            blur.blurY = 0.0;
+        timers = new FlxTimerManager();
 
-            blur.quality = 0;
+        add(timers);
 
-            tween.tween(blur, {blurX: 3.0, blurY: 3.0, quality: 1}, 0.65, {ease: FlxEase.quartIn});
+        var baldi:BaldiHeads = new BaldiHeads();
 
-            if (!game.gameCamera.filters.contains(blur))
-                game.gameCamera.filters.push(blur);
+        baldi.screenCenter();
 
-            if (!game.hudCamera.filters.contains(blur))
-                game.hudCamera.filters.push(blur);
-        }
+        add(baldi);
 
-        var background:FlxSprite = new FlxSprite();
+        var chalkboard:FlxSprite = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/chalkboard-arrows"));
 
-        background.active = false;
+        chalkboard.active = false;
 
-        background.alpha = 0.0;
+        chalkboard.scale.set(2.5, 2.5);
 
-        background.makeGraphic(1, 1, FlxColor.BLACK);
+        chalkboard.updateHitbox();
 
-        background.scale.set(FlxG.width, FlxG.height);
-
-        background.updateHitbox();
+        chalkboard.screenCenter();
         
-        add(background);
+        add(chalkboard);
 
-        tween.tween(background, {alpha: 0.65}, 0.65, {ease: FlxEase.quartIn});
-
-        var separator:FlxSprite = new FlxSprite();
-
-        separator.makeGraphic(1, 1, FlxColor.WHITE);
-
-        separator.active = false;
-
-        separator.alpha = 0.0;
-
-        separator.scale.set(FlxG.width, 15.0);
-        
-        separator.updateHitbox();
-
-        separator.screenCenter();
-
-        add(separator);
-
-        tween.tween(separator, {alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
-
-        var pausedText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "PAUSED?!");
+        var pausedText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "PAUSE");
 
         pausedText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -136,13 +124,11 @@ class PauseScreen extends CustomSubState
 
         pausedText.alignment = CENTER;
 
-        pausedText.setBorderStyle(OUTLINE, FlxColor.WHITE, 0.5);
-
         pausedText.textField.antiAliasType = ADVANCED;
 
         pausedText.textField.sharpness = 400.0;
 
-        pausedText.setPosition(pausedText.getCenterX(), pausedText.getCenterY() - 250.0);
+        pausedText.setPosition(pausedText.getCenterX(), pausedText.getCenterY() - 265.0);
 
         add(pausedText);
 
@@ -162,103 +148,116 @@ class PauseScreen extends CustomSubState
 
         nameText.textField.sharpness = 400.0;
 
-        nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 150.0);
+        nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 265.0);
 
         add(nameText);
-
-        iconText = new FlxText(0.0, 0.0, FlxG.width, "");
-
-        iconText.alpha = 0.5;
-
-        iconText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        iconText.size = 42;
-
-        iconText.alignment = CENTER;
-
-        iconText.textField.antiAliasType = ADVANCED;
-
-        iconText.textField.sharpness = 400.0;
-
-        iconText.setPosition(iconText.getCenterX(), iconText.getCenterY() - 150.0);
-
-        add(iconText);
 
         pauseIcons = new FlxTypedGroup<PauseScreenIcon>();
 
         add(pauseIcons);
 
-        var resumeIcon:PauseScreenIcon = createIcon("resumeIcon", "Resume", game.resume);
+        resumeIcon = createIcon("resumeIcon");
 
-        tween.tween(resumeIcon, {x: 50.0, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        resumeIcon.setPosition(380.0, 120.0);
 
-        var quitIcon:PauseScreenIcon = createIcon("quitIcon", "Quit", () -> 
-        {
-            var nextState:NextState = game.params?.nextState;
+        restartIcon = createIcon("restartIcon");
 
-            if (PlayState.isWeek)
-                nextState ??= () -> new StoryMenuScreen();
-            else
-            {
-                var level:LevelData = PlayState.level;
+        restartIcon.setPosition(FlxG.width - restartIcon.width - 380.0, 120.0);
 
-                if (level.obscurity == NONE)
-                    nextState ??= () -> new FreeplayScreen();
-                else
-                {
-                    nextState ??= () -> new MysteryScreen();
+        optionsIcon = createIcon("optionsIcon");
 
-                    var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+        optionsIcon.setPosition(380.0, FlxG.height - optionsIcon.height - 120.0);
 
-                    MysteryScreen.curSelected = filtered.indexOf(level);
-                }
-            }
+        quitIcon = createIcon("quitIcon");
 
-            FlxG.switchState(nextState);
-        });
+        quitIcon.setPosition(FlxG.width - quitIcon.width - 380.0, FlxG.height - quitIcon.height - 120.0);
 
-        tween.tween(quitIcon, {x: 1007.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        var foreground:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
 
-        var optionsIcon:PauseScreenIcon = createIcon("optionsIcon", "Options", () -> FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel())));
+        foreground.active = false;
 
-        tween.tween(optionsIcon, {x: 347.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        var rectToFill:Rectangle = new Rectangle(0.0, 0.0, 160.0, FlxG.height);
 
-        var restartIcon:PauseScreenIcon = createIcon("restartIcon", "Restart", () -> FlxG.switchState(() -> PlayState.getClassFromLevel()));
+        foreground.pixels.fillRect(rectToFill, 0xFF000000);
 
-        tween.tween(restartIcon, {x: 710.5, alpha: 1.0}, 1.0, {ease: FlxEase.quartOut});
+        rectToFill.setTo(FlxG.width - 160.0, 0.0, 160.0, FlxG.height);
 
-        FlxTimer.wait(1.0, () ->
-        {
-            resumeIcon.active = true;
+        foreground.pixels.fillRect(rectToFill, 0xFF000000);
 
-            quitIcon.active = true;
+        foreground.centerTo();
 
-            optionsIcon.active = true;
-
-            restartIcon.active = true;
-        });
+        add(foreground);
 
         tune = FlxG.sound.load(AssetCache.getMusic("game/PauseScreen/tune"), 1.0, true);
 
         tune.volume = 0.0;
 
-        tune.play();
-
         tune.fadeIn(1.0, 0.0, 0.5);
+
+        tune.play();
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
-        if (!FlxG.mouse.overlaps(pauseIcons, camera))
-            iconText.text = "";
+        if (FlxG.mouse.overlaps(pauseIcons))
+        {
+            for (icon in pauseIcons)
+            {
+                if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(icon))
+                    selectedIcon = icon;
+            }
+        }
 
         if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]))
         {
+            selectedIcon = resumeIcon;
+            
             close();
+        }
+    }
 
+    override function closeHelper():Void
+    {
+        super.closeHelper();
+
+        if (selectedIcon == resumeIcon)
             game.resume();
+        else
+        {
+            TransitionState.cancelFadeOut = true;
+
+            if (selectedIcon == restartIcon)
+                FlxG.resetState();
+
+            if (selectedIcon == optionsIcon)
+                FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
+
+            if (selectedIcon == quitIcon)
+            {
+                var nextState:NextState = game.params?.nextState;
+
+                if (PlayState.isWeek)
+                    nextState ??= () -> new StoryMenuScreen();
+                else
+                {
+                    var level:LevelData = PlayState.level;
+
+                    if (level.obscurity == NONE)
+                        nextState ??= () -> new FreeplayScreen();
+                    else
+                    {
+                        nextState ??= () -> new MysteryScreen();
+
+                        var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+
+                        MysteryScreen.curSelected = filtered.indexOf(level);
+                    }
+                }
+
+                FlxG.switchState(nextState);
+            }
         }
     }
 
@@ -266,37 +265,20 @@ class PauseScreen extends CustomSubState
     {
         super.destroy();
 
-        FlxG.mouse.visible = mouseVisible;
-
-        if (Options.shaders)
-        {
-            blur.blurX = 0.0;
-
-            blur.blurY = 0.0;
-
-            blur.quality = 0;
-        }
-
         tune.stop();
     }
 
-    public function createIcon(path:String, text:String, onClick:()->Void):PauseScreenIcon
+    public function createIcon(file:String):PauseScreenIcon
     {
-        var icon:PauseScreenIcon = new PauseScreenIcon(path);
+        var icon:PauseScreenIcon = new PauseScreenIcon(file);
 
         icon.camera = camera;
 
-        icon.active = false;
+        icon.onClick.add(() -> FlxG.mouse.visible = mouseVisible);
 
-        icon.alpha = 0.0;
+        icon.onClick.add(() -> close());
 
-        icon.onSelect.add(() -> iconText.text = text);
-
-        icon.onClick.add(close);
-
-        icon.onClick.add(onClick);
-
-        icon.setPosition(-icon.width, icon.getCenterY());
+        icon.onClick.add(() -> tune.fadeOut(0.5, 0.0));
 
         pauseIcons.add(icon);
 
@@ -312,9 +294,9 @@ class PauseScreenIcon extends FlxSprite
 
     public var onClick:FlxSignal;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _path:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, file:String):Void
     {
-        super(x, y, AssetCache.getGraphic('game/PauseScreen/${_path}'));
+        super(x, y, AssetCache.getGraphic('game/PauseScreen/${file}'));
 
         selected = false;
 
@@ -344,9 +326,9 @@ class PauseScreenIcon extends FlxSprite
 
             if (FlxG.mouse.justReleased)
             {
-                ClickSoundUtil.play();
-
                 onClick.dispatch();
+
+                ClickSoundUtil.play();
             }
         }
         else
