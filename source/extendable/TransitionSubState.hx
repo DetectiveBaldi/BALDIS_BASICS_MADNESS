@@ -74,10 +74,7 @@ class TransitionSubState extends FlxSubState
 
         openSubState(new CustomTransition(OUT, closeHelper));
     }
-
-    /**
-     * Always override `closeHelper` instead of `close` in sub-classes!
-     */
+    
     public function closeHelper():Void
     {
         super.close();

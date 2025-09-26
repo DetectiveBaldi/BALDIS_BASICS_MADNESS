@@ -218,46 +218,51 @@ class PauseScreen extends TransitionSubState
         }
     }
 
+    override function close():Void
+    {
+        super.close();
+
+        FlxG.mouse.visible = mouseVisible;
+    }
+
     override function closeHelper():Void
     {
         super.closeHelper();
 
+        TransitionState.cancelFadeOut = true;
+
         if (selectedIcon == resumeIcon)
             game.resume();
-        else
+
+        if (selectedIcon == restartIcon)
+            FlxG.resetState();
+
+        if (selectedIcon == optionsIcon)
+            FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
+
+        if (selectedIcon == quitIcon)
         {
-            TransitionState.cancelFadeOut = true;
+            var nextState:NextState = game.params?.nextState;
 
-            if (selectedIcon == restartIcon)
-                FlxG.resetState();
-
-            if (selectedIcon == optionsIcon)
-                FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
-
-            if (selectedIcon == quitIcon)
+            if (PlayState.isWeek)
+                nextState ??= () -> new StoryMenuScreen();
+            else
             {
-                var nextState:NextState = game.params?.nextState;
+                var level:LevelData = PlayState.level;
 
-                if (PlayState.isWeek)
-                    nextState ??= () -> new StoryMenuScreen();
+                if (level.obscurity == NONE)
+                    nextState ??= () -> new FreeplayScreen();
                 else
                 {
-                    var level:LevelData = PlayState.level;
+                    nextState ??= () -> new MysteryScreen();
 
-                    if (level.obscurity == NONE)
-                        nextState ??= () -> new FreeplayScreen();
-                    else
-                    {
-                        nextState ??= () -> new MysteryScreen();
+                    var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
 
-                        var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
-
-                        MysteryScreen.curSelected = filtered.indexOf(level);
-                    }
+                    MysteryScreen.curSelected = filtered.indexOf(level);
                 }
-
-                FlxG.switchState(nextState);
             }
+
+            FlxG.switchState(nextState);
         }
     }
 
@@ -273,8 +278,6 @@ class PauseScreen extends TransitionSubState
         var icon:PauseScreenIcon = new PauseScreenIcon(file);
 
         icon.camera = camera;
-
-        icon.onClick.add(() -> FlxG.mouse.visible = mouseVisible);
 
         icon.onClick.add(() -> close());
 
