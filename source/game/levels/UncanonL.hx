@@ -71,6 +71,8 @@ class UncanonL extends PlayState
         opponent.alpha = 0.0;
 
         countdown.skip();
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -93,6 +95,8 @@ class UncanonL extends PlayState
                 playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = true;
 
             uncanonS.connorRoom0.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
             
             player.visible = true;
 

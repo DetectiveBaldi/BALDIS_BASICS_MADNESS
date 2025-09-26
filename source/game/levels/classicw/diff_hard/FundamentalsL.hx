@@ -131,6 +131,9 @@ class FundamentalsL extends PlayState
         {
             player.visible = false;
 
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
+
             var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fundamentals"));
             plr.setPosition(player.x + 68.0, player.y + 56.0);
             plr.color = 0xB8B19C;
@@ -162,6 +165,8 @@ class FundamentalsL extends PlayState
         {
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            plrStrumline.botplay = Options.botplay;
 
             fundamentalsS.hall0.visible = false;
             fundamentalsS.office.visible = true;
@@ -250,6 +255,8 @@ class FundamentalsL extends PlayState
                 playField.timerNeedle.visible = false;
 
             playField.strumlines.visible = false;
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
 
             cameraLock = FOCUS_CAM_POINT;
             cameraPoint.centerTo();
@@ -344,6 +351,8 @@ class FundamentalsL extends PlayState
 
             fundamentalsS.hall1open.visible = false;
             fundamentalsS.hall1front.visible = false;
+
+            plrStrumline.botplay = Options.botplay;
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
                 playField.timerNeedle.visible = true;

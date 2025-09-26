@@ -1,5 +1,6 @@
 package game.levels;
 
+import core.Options;
 import flixel.FlxG;
 
 import flixel.tweens.FlxEase;
@@ -66,6 +67,8 @@ class TwoL extends PlayState
         player.visible = false;
 
         opponent.setPosition(100.0, -148.0);
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -84,6 +87,8 @@ class TwoL extends PlayState
             playField.strumlines.visible = true;
 
             FlxG.camera.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 768)
@@ -186,6 +191,8 @@ class TwoL extends PlayState
                 playField.timerNeedle.visible = false;
 
             playField.strumlines.visible = false;
+
+            plrStrumline.botplay = true;
 
             FlxG.camera.visible = true;
 

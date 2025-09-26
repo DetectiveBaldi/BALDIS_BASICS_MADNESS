@@ -65,6 +65,8 @@ class ScribbleL extends PlayState
 
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
+        plrStrumline.botplay = true;
+
         player.scale.set(3.75, 3.75);
         player.setPosition(700, 100);
 
@@ -126,6 +128,8 @@ class ScribbleL extends PlayState
 
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 1072)
@@ -167,6 +171,9 @@ class ScribbleL extends PlayState
 
             scribbleS.classicHall0.visible = false;
         }
+
+        if (step == 1344)
+            plrStrumline.botplay = true;
     }
 
     override function measureHit(measure:Int):Void

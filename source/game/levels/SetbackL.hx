@@ -154,11 +154,16 @@ class SetbackL extends PlayState
             gameCamera.alpha = 0.0;
 
             gameCameraZoom = 0.5;
+
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
         }
 
         if (step == 480)
         {
             gameCamera.alpha = 1.0;
+
+            plrStrumline.botplay = Options.botplay;
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = true;
 
@@ -216,6 +221,8 @@ class SetbackL extends PlayState
             thanks.updateHitbox();
             thanks.screenCenter();
             add(thanks);
+
+            plrStrumline.botplay = true;
 
             hudCamBopStrength = 0.0;
 

@@ -67,6 +67,8 @@ class LiteratureL extends PlayState
         opponent.setPosition(-50.0, -100.0);
 
         opponent.skipDance = true;
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -94,6 +96,8 @@ class LiteratureL extends PlayState
         {
             opponent.scale.set(1.5, 1.5);
             opponent.x = -250.0;
+
+            plrStrumline.botplay = Options.botplay;
 
             player.setPosition(700.0, 180.0);
 
@@ -157,11 +161,16 @@ class LiteratureL extends PlayState
             var opp:Character = getOpponent("baldina-happy");
             opp.skipDance = false;
             opp.visible = false;
+
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
         }
 
         if (step == 776)
         {
             FlxG.camera.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -240,7 +249,12 @@ class LiteratureL extends PlayState
         }
 
         if (step == 1416)
+        {
             FlxG.camera.visible = false;
+
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
+        }
 
         if (step == 1432)
         {
@@ -251,6 +265,8 @@ class LiteratureL extends PlayState
             tween.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             tween.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 1464)

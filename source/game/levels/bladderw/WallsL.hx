@@ -47,6 +47,8 @@ class WallsL extends PlayState
         setCamStartPos();
     
         cameraLock = FOCUS_CAM_POINT;
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -86,6 +88,8 @@ class WallsL extends PlayState
                 playField.timerNeedle.visible = true;
 
             playField.strumlines.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         
             gameCameraZoom = 1.3;
 

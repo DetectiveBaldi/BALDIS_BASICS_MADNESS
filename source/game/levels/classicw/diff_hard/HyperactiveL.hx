@@ -67,6 +67,8 @@ class HyperactiveL extends PlayState
             playField.timerNeedle.visible = false;
 
         playField.strumlines.visible = false;
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -117,6 +119,8 @@ class HyperactiveL extends PlayState
         {
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
+
+            plrStrumline.botplay = Options.botplay;
 
             hyperactiveS.hall.visible = false;
             hyperactiveS.hall2.visible = true;
@@ -450,6 +454,9 @@ class HyperactiveL extends PlayState
         {
             if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
+
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;

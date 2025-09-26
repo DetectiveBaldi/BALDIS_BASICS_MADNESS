@@ -93,6 +93,8 @@ class OverseerL extends PlayState
             playField.timerNeedle.visible = false;
 
         playField.strumlines.visible = false;
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -105,6 +107,8 @@ class OverseerL extends PlayState
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 192)
@@ -167,6 +171,12 @@ class OverseerL extends PlayState
             opponent.color = 0xFF0000;
 
             overseerS.ninenine.visible = false;
+        }
+
+        if (step == 1888)
+        {
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
         }
 
         if (step == 2000 || step == 2032 || step == 2064 || step == 2096 || step == 2128 || step == 2160)
@@ -304,6 +314,8 @@ class OverseerL extends PlayState
         {
             FlxG.camera.visible = true;
 
+            plrStrumline.botplay = Options.botplay;
+
             gameCameraZoom = 1.2;
 
             gameCamBopStrength = 0.06;
@@ -342,6 +354,9 @@ class OverseerL extends PlayState
         if (step == 2880)
         {
             overseerS.redstatic.visible = false;
+
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);

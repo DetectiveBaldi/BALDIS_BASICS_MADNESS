@@ -136,6 +136,8 @@ class WarmWL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
+            plrStrumline.botplay = true;
+
             warmWS.entranceA1.color = 0xFFFFFFFF;
 
             SetCamFocusEvent.dispatch(this, cameraPoint.getCenterX(), cameraPoint.getCenterY(), null, 0.0,
