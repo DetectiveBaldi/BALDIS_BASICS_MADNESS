@@ -13,12 +13,9 @@ import flixel.sound.FlxSound;
 
 import flixel.text.FlxText;
 
-import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
-import flixel.util.FlxDestroyUtil;
-import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 import flixel.util.typeLimit.NextState;
 
@@ -28,12 +25,11 @@ import core.Paths;
 
 import data.LevelData;
 
-import extendable.TransitionState;
 import extendable.TransitionSubState;
 
-import game.PlayState;
-
 import interfaces.ISequenceHandler;
+
+import game.PlayState;
 
 import menus.FreeplayScreen;
 import menus.MysteryScreen;
@@ -47,7 +43,7 @@ import util.ClickSoundUtil;
 using util.ArrayUtil;
 using util.MathUtil;
 
-class PauseScreen extends TransitionSubState
+class PauseScreen extends TransitionSubState implements ISequenceHandler
 {
     public var game:PlayState;
 
@@ -206,7 +202,13 @@ class PauseScreen extends TransitionSubState
             for (icon in pauseIcons)
             {
                 if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(icon, camera))
+                {
                     selectedIcon = icon;
+
+                    ClickSoundUtil.play();
+
+                    close();
+                }
             }
         }
 
@@ -220,57 +222,53 @@ class PauseScreen extends TransitionSubState
 
     override function close():Void
     {
+        TransitionSubState.cancelFadeOut = true;
+
         super.close();
 
         FlxG.mouse.visible = mouseVisible;
-    }
-
-    override function closeHelper():Void
-    {
-        super.closeHelper();
-
-        TransitionState.cancelFadeOut = true;
 
         if (selectedIcon == resumeIcon)
+        {
             game.resume();
 
-        if (selectedIcon == restartIcon)
-            FlxG.resetState();
-
-        if (selectedIcon == optionsIcon)
-            FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
-
-        if (selectedIcon == quitIcon)
+            tune.stop();
+        }
+        else
         {
-            var nextState:NextState = game.params?.nextState;
+            if (selectedIcon == restartIcon)
+                FlxG.resetState();
 
-            if (PlayState.isWeek)
-                nextState ??= () -> new StoryMenuScreen();
-            else
+            if (selectedIcon == optionsIcon)
+                FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
+
+            if (selectedIcon == quitIcon)
             {
-                var level:LevelData = PlayState.level;
+                var nextState:NextState = game.params?.nextState;
 
-                if (level.obscurity == NONE)
-                    nextState ??= () -> new FreeplayScreen();
+                if (PlayState.isWeek)
+                    nextState ??= () -> new StoryMenuScreen();
                 else
                 {
-                    nextState ??= () -> new MysteryScreen();
+                    var level:LevelData = PlayState.level;
 
-                    var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+                    if (level.obscurity == NONE)
+                        nextState ??= () -> new FreeplayScreen();
+                    else
+                    {
+                        nextState ??= () -> new MysteryScreen();
 
-                    MysteryScreen.curSelected = filtered.indexOf(level);
+                        var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
+
+                        MysteryScreen.curSelected = filtered.indexOf(level);
+                    }
                 }
+
+                FlxG.switchState(nextState);
             }
 
-            FlxG.switchState(nextState);
+            tune.fadeOut(0.5, 0.0, (_tween:FlxTween) -> tune.stop());
         }
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        tune.stop();
     }
 
     public function createIcon(file:String):PauseScreenIcon
@@ -278,10 +276,6 @@ class PauseScreen extends TransitionSubState
         var icon:PauseScreenIcon = new PauseScreenIcon(file);
 
         icon.camera = camera;
-
-        icon.onClick.add(() -> close());
-
-        icon.onClick.add(() -> tune.fadeOut(0.5, 0.0));
 
         pauseIcons.add(icon);
 
@@ -291,21 +285,9 @@ class PauseScreen extends TransitionSubState
 
 class PauseScreenIcon extends FlxSprite
 {
-    public var selected:Bool;
-
-    public var onSelect:FlxSignal;
-
-    public var onClick:FlxSignal;
-
     public function new(x:Float = 0.0, y:Float = 0.0, file:String):Void
     {
         super(x, y, AssetCache.getGraphic('game/PauseScreen/${file}'));
-
-        selected = false;
-
-        onSelect = new FlxSignal();
-
-        onClick = new FlxSignal();
 
         scale.set(1.25, 1.25);
 
@@ -321,35 +303,12 @@ class PauseScreenIcon extends FlxSprite
             scale.x = FlxMath.lerp(scale.x, 1.5, FlxMath.getElapsedLerp(0.15, elapsed));
 
             scale.y = FlxMath.lerp(scale.y, 1.5, FlxMath.getElapsedLerp(0.15, elapsed));
-
-            if (!selected)
-                onSelect.dispatch();
-
-            selected = true;
-
-            if (FlxG.mouse.justReleased)
-            {
-                onClick.dispatch();
-
-                ClickSoundUtil.play();
-            }
         }
         else
         {
             scale.x = FlxMath.lerp(scale.x, 1.25, FlxMath.getElapsedLerp(0.15, elapsed));
 
             scale.y = FlxMath.lerp(scale.y, 1.25, FlxMath.getElapsedLerp(0.15, elapsed));
-
-            selected = false;
         }
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        onSelect = cast FlxDestroyUtil.destroy(onSelect);
-
-        onClick = cast FlxDestroyUtil.destroy(onClick);
     }
 }
