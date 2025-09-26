@@ -417,13 +417,12 @@ class EssentialEL extends PlayState
 
             tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
             tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 1546)
             player.animation.play("run");
-
-        if (step == 1548)
-            plrStrumline.botplay = Options.botplay;
 
         if (step == 1552)
         {
@@ -513,8 +512,6 @@ class EssentialEL extends PlayState
 
             oppStrumline.strums.alpha = 0.25;
 
-            canPause = false;
-
             tweens.tween(plrStrumline.strums, {x: plrStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
             tweens.tween(oppStrumline.strums, {x: oppStrumline.strums.getCenterX()}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
@@ -536,6 +533,8 @@ class EssentialEL extends PlayState
         if (step == 1856)
         {
             plrStrumline.botplay = true;
+
+            canPause = false;
         }
 
         if (step == 1916)

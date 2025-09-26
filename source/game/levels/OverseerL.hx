@@ -84,8 +84,6 @@ class OverseerL extends PlayState
 
         countdown.skip();
 
-        canPause = false;
-
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
         oppStrumline.strums.alpha = 0.25;
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
@@ -429,6 +427,8 @@ class OverseerL extends PlayState
             opponent.scale.set(1.9, 1.9);
 
             opponent.updateHitbox();
+
+            canPause = false;
         }
 
         if (step == 3216)

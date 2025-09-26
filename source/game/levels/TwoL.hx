@@ -34,8 +34,6 @@ class TwoL extends PlayState
 
         super.create();
 
-        canPause = false;
-
         gameCamBopStrength = 0.0;
 
         hudCamBopStrength = 0.0;
@@ -215,6 +213,8 @@ class TwoL extends PlayState
             tweens.tween(FlxG.camera, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartIn});
             
             twoS.noise.alpha = twoS.plus.alpha = 0.75;
+
+            canPause = false;
         }
     }
 
