@@ -119,10 +119,12 @@ class RevisionL extends PlayState
 
         if (padMinigame.loss)
         {
+            var lastTime:Float = instrumental.time;
+
             instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.level.getClassPath()}/Instrumental-Bad-Math'), 
                 false, false, endSong);
 
-            instrumental.play();
+            instrumental.play(lastTime);
         }
     }
 
