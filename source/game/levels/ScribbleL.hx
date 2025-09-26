@@ -107,6 +107,8 @@ class ScribbleL extends PlayState
 
         if (step == 132.0)
         {
+            plrStrumline.botplay = Options.botplay;
+
             tweens.tween(oppStrumline.strums, {alpha: 0.25}, conductor.beatLength * 0.001);
 
             tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 0.001);
@@ -128,8 +130,6 @@ class ScribbleL extends PlayState
 
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
-
-            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 1072)

@@ -201,11 +201,11 @@ class PauseScreen extends TransitionSubState
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(pauseIcons))
+        if (FlxG.mouse.overlaps(pauseIcons, camera))
         {
             for (icon in pauseIcons)
             {
-                if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(icon))
+                if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(icon, camera))
                     selectedIcon = icon;
             }
         }
