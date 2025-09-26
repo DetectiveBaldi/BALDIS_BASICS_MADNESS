@@ -186,11 +186,6 @@ class ScribbleL extends PlayState
             gameCameraZoom = 1;
     }
 
-    public function resetPencilPosition():Void
-    {
-
-    }
-
     public function throwPencilSequence():Void
     {
         opponent.skipDance = true;
