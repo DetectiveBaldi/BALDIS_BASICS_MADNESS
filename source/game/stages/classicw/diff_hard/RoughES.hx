@@ -16,6 +16,8 @@ class RoughES extends Stage
 
     public var hall2:FlxSprite;
 
+    public var hallstill:FlxSprite;
+
     public var hall3:FlxSprite;
 
     public var hall4:FlxSprite;
@@ -97,6 +99,8 @@ class RoughES extends Stage
         hall2.animation.addByPrefix("0", "scroll", 60.0);
 
         hall2.animation.play("0");
+
+        hallstill = getSprite("hall-dark0", true);
 
         hall3 = getSprite("hall3");
 

@@ -1321,7 +1321,7 @@ class RoughEL extends PlayState
         if (step == 2494)
         {
             roughES.facultyStandard.visible = true;
-            roughES.facultyStandard.velocity.x = -3119.5;
+            roughES.facultyStandard.velocity.x = -3120.0;
             roughES.facultyStandard.x = gameCamera.viewX + gameCamera.viewWidth;
         }
 
@@ -1331,7 +1331,11 @@ class RoughEL extends PlayState
 
             roughES.hall2.animation.pause();
 
+            roughES.hallstill.visible = true;
+
             roughES.facultyStandard.velocity.x = 0.0;
+
+            roughES.facultyStandard.x = 920.0;
 
             var plr:Character = getPlayer("bf-face-right");
 
@@ -1514,6 +1518,7 @@ class RoughEL extends PlayState
             opponent.color = 0xC7BEA7;
            
             gameCameraZoom = 0.7;
+            roughES.hallstill.visible = false;
             roughES.hall2.animation.play("0", false, true);
             roughES.facultyStandard.velocity.x = 5560.0;
         }

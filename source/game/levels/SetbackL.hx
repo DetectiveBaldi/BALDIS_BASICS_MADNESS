@@ -199,6 +199,11 @@ class SetbackL extends PlayState
             gameCameraZoom = 0.65;
 
             spoop.animation.play("lpopup");
+
+            if (Options.downscroll)
+            {
+                spoop.y = -410.0;
+            }
         }
 
         if (step == 748)
@@ -211,7 +216,10 @@ class SetbackL extends PlayState
             spoop.animation.play("rbye");
 
         if (step == 768)
+        {
+            spoop.screenCenter();
             spoop.animation.play("outro");
+        }
 
         if (step == 800)
         {

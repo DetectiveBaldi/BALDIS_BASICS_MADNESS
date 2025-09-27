@@ -199,8 +199,8 @@ class StandoffL extends PlayState
 
             gameCamera.snapToTarget();
 
-            sweeper.scale.set(2.75, 2.75);
-            sweeper.setPosition(1200.0, 400.0);
+            sweeper.scale.set(3.0, 3.0);
+            sweeper.setPosition(1200.0, 385.0);
             sweeper.visible = true;
         
             tweens.tween(player, {x: player.x - 500.0}, conductor.beatLength * 0.5 * 0.001, 
@@ -215,9 +215,9 @@ class StandoffL extends PlayState
                 {
                     onComplete: (_tween:FlxTween) ->
                     {                        
-                        tweens.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 3.5 * 0.001);
+                        tweens.tween(sweeper.scale, {x: 0.3, y: 0.3}, conductor.beatLength * 4.0 * 0.001);
 
-                        tweens.tween(sweeper, {x: 547, y: 325.0}, conductor.beatLength * 4.0 * 0.001,
+                        tweens.tween(sweeper, {x: 550, y: 325.0}, conductor.beatLength * 4.0 * 0.001,
                             {
                                 onComplete: (_tween:FlxTween) ->
                                 {

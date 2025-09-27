@@ -342,11 +342,13 @@ class GainGL extends PlayState
             gainGS.remove(opponents, true);
             gainGS.insert(gainGS.members.indexOf(gainGS.principalOffice0_Overlay0), opponents);
         
-            opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
-            opponent.scale.set(1.5, 1.5);
-            opponent.updateHitbox();
-            opponent.setPosition(550.0, 180.0);
-            opponents.add(opponent);
+            var opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
+            opp.scale.set(1.5, 1.5);
+            opp.updateHitbox();
+            opp.setPosition(550.0, 180.0);
+            opp.skipDance = true;
+            opponents.add(opp);
+            opponent = opp;
 
             tweens.tween(opponent, {x: opponent.x - 150.0, y: opponent.y + 15.0}, conductor.beatLength * 0.275 * 0.001, 
                 {
@@ -444,11 +446,12 @@ class GainGL extends PlayState
             gainGS.remove(opponents, true);
             gainGS.add(opponents);
 
-            opponent = getOpponent("baldi-mad");
-            opponent.visible = true;
-            opponent.scale.set(3.0, 3.0);
-            opponent.updateHitbox();
-            opponent.setPosition(-845.0, 20.0);
+            var opp = getOpponent("baldi-mad");
+            opp.visible = true;
+            opp.scale.set(3.0, 3.0);
+            opp.updateHitbox();
+            opp.setPosition(-845.0, 20.0);
+            opponent = opp;
             
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -583,7 +586,7 @@ class GainGL extends PlayState
                 }
             }
     
-        if (beat >= 32.0)
+        if (beat >= 32.0 && beat <= 159.0)
             if (beat % 4 == 0.0 && opponent.animation.exists("slap"))
                 opponent.animation.play("slap", true);
         
@@ -594,6 +597,8 @@ class GainGL extends PlayState
                     tweens.tween(opponent.scale, {x: opponent.scale.x + 0.225, y: opponent.scale.y + 0.225}, conductor.beatLength * 0.275 * 0.001);
         
                     tweens.tween(opponent, {x: opponent.x + 40.0, y: opponent.y + 5.0}, conductor.beatLength * 0.275 * 0.001);
+
+                    opponent.animation.play("slap", true);
                 }
             }
         
@@ -611,16 +616,22 @@ class GainGL extends PlayState
                         }
                     }
                 );
+
+                opponent.animation.play("slap", true);
             }
         }
     
         if (beat >= 292.0 && beat < 320.0)
             if (beat % 4 == 0.0)
+            {
                 tweens.tween(opponent, {x: opponent.x + 250.0}, conductor.beatLength * 0.35 * 0.001,
                     {
                         ease: FlxEase.quadOut,
                     }
                 );
+
+                opponent.animation.play("slap", true);
+            }
     }
 
     public function updateLegStatus(name:String, frameNum:Int, frameIndex:Int):Void
