@@ -21,6 +21,7 @@ import core.Paths;
 
 import data.CharacterData;
 
+import game.levels.SetbackL.SetbackUI;
 import game.stages.BeginningsS;
 
 using util.MathUtil;
@@ -31,6 +32,8 @@ class BeginningsL extends PlayState
 {
     public var beginningsS:BeginningsS;
 
+    public var beginningsUI:BeginningsUI;
+
     override function create():Void
     {
         stage = new BeginningsS();
@@ -40,6 +43,12 @@ class BeginningsL extends PlayState
         beginningsS.testRoom.visible = true;
 
         super.create();
+
+        beginningsUI = new BeginningsUI(this);
+
+        beginningsUI.visible = false;
+
+        add(beginningsUI);
 
         cameraPoint.centerTo();
 
@@ -127,3 +136,5 @@ class BeginningsL extends PlayState
             gameCameraZoom = 1.15;
     }
 }
+
+typedef BeginningsUI = SetbackUI;
