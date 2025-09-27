@@ -1526,6 +1526,7 @@ class RoughEL extends PlayState
             var plr:Character = getPlayer("bf-face-left");
             plr.setPosition(-1350, 170);
             plr.visible = true;
+            player = plr;
 
             var opp:Character = getOpponent("1st-prize-90");
 
@@ -1542,28 +1543,30 @@ class RoughEL extends PlayState
             craftersSprite1.updateHitbox();
             craftersSprite1.setPosition(-1500, 100);
             craftersSprite1.color = 0xC2B8A1;
-            roughES.add(craftersSprite1);
+            roughES.insert(roughES.members.indexOf(players) + 1, craftersSprite1);
 
-            tweens.tween(craftersSprite1, {x: 50}, 0.5,                
+            var centeredPos:Float = craftersSprite1.getCenterX(player);
+
+            tweens.tween(craftersSprite1, {x: centeredPos - 200.0}, 0.5,                
+            {
+                onComplete: (_tween:FlxTween) ->  
                 {
-                    onComplete: (_tween:FlxTween) ->  
+                    tweens.tween(craftersSprite1, {x: centeredPos + 150.0}, timeInterval, 
                     {
-                        tweens.tween(craftersSprite1, {x: 700}, timeInterval, 
-                            {
-                                ease: FlxEase.quadInOut, 
-                                type: PINGPONG,
-                                onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
-                            });
-                    
-                        tweens.tween(craftersSprite1.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
-                            {
-                                ease: FlxEase.smootherStepOut, 
-                                type: PINGPONG,
-                                loopDelay: timeInterval / 2,
-                                onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
-                            });
-                    }
-                });
+                        ease: FlxEase.quadInOut, 
+                        type: PINGPONG,
+                        onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
+                    });
+                
+                    tweens.tween(craftersSprite1.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
+                    {
+                        ease: FlxEase.smootherStepOut, 
+                        type: PINGPONG,
+                        loopDelay: timeInterval / 2,
+                        onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
+                    });
+                }
+            });
         }
 
         if (step == 2784)
@@ -1815,7 +1818,7 @@ class RoughEL extends PlayState
 
         if (beat >= 180.0 && beat < 212.0 || beat >= 440.0 && beat < 442.0)
         {
-            for (i in 0 ... FlxG.cameras.list.length)
+            for (i in 0 ... FlxG.cameras.list.length - 1)
             {
                 var camera:FlxCamera = FlxG.cameras.list[i];
 
@@ -2008,7 +2011,7 @@ class RoughEL extends PlayState
     public function craftersLayerUpdate():Void
     {
         if (timeInterval > 0.3)
-            timeInterval = timeInterval - 0.15;
+            timeInterval -= 0.15;
 
         if (checkLayer)
         {      

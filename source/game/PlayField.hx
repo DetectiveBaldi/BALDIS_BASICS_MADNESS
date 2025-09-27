@@ -143,17 +143,11 @@ class PlayField extends FlxGroup
 
         scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        scoreText.alignment = LEFT;
-
-        scoreText.textField.antiAliasType = ADVANCED;
-
         var tf:TextFormat = scoreText.textField.defaultTextFormat;
 
         tf.leading = 5;
 
         scoreText.textField.defaultTextFormat = tf;
-
-        scoreText.textField.sharpness = 400.0;
 
         add(scoreText);
 

@@ -580,13 +580,13 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         var grade:String = playStats.grade;
 
-        if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
-            HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
-
         var unlocks:Array<UnlockScreenParams> = new Array<UnlockScreenParams>();
 
         if (isWeek)
         {
+            if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+                HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
+
             weekStats[level.name] = playField.playStats.copy();
 
             week.levels.shift();
@@ -644,14 +644,12 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 if (testA)
                 {
                     if (week.scoreRequirements.exists(week.name))
-                    {
                         unlocks.push({unlock: week.name + week.nameSuffix});
-
-                        StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(level.difficulty);
-
-                        StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
-                    }
                 }
+
+                StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(level.difficulty);
+
+                StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
 
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
                     HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
@@ -682,10 +680,15 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
             if (testA)
                 unlocks.push({unlock : level.name});
+
+            if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+                HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
         }
 
-        FlxG.switchState(#if debug true #else !Options.botplay #end && unlocks.length > 0.0 ?
-            () -> new UnlockScreen(nextState, unlocks) : nextState);
+        if (accuracy == Math.NaN)
+            unlocks.resize(0);
+
+        FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
     }
 
     public function changeTime(newTime:Float):Void

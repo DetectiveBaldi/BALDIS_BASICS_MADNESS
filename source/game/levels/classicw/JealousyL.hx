@@ -255,21 +255,19 @@ class JealousyL extends PlayState
             jealousyS.insert(jealousyS.members.indexOf(players) + 1, opponents);
 
             tweens.tween(opponent, {x: 300}, timeInterval, 
-                {
-                    ease: FlxEase.quadInOut, 
-                    type: PINGPONG,
-                    onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
-                }
-            );
+            {
+                ease: FlxEase.quadInOut, 
+                type: PINGPONG,
+                onComplete: (_tween:FlxTween) -> {_tween.duration = timeInterval; craftersLayerUpdate();}
+            });
             
             tweens.tween(opponent.scale, {x: 1.7, y: 1.7}, timeInterval / 2, 
-                {
-                    ease: FlxEase.smootherStepOut, 
-                    type: PINGPONG,
-                    loopDelay: timeInterval / 2,
-                    onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
-                }
-            );
+            {
+                ease: FlxEase.smootherStepOut, 
+                type: PINGPONG,
+                loopDelay: timeInterval / 2,
+                onComplete: (_tween:FlxTween) -> {_tween.loopDelay = timeInterval * 0.5; _tween.duration = timeInterval * 0.5;}
+            });
         }
         
         if (step == 1024)

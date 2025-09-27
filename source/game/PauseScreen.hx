@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 
 import flixel.sound.FlxSound;
 
@@ -23,7 +24,9 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
+import data.Difficulty;
 import data.LevelData;
+import data.WeekData;
 
 import extendable.TransitionSubState;
 
@@ -36,6 +39,8 @@ import menus.MysteryScreen;
 import menus.StoryMenuScreen;
 import menus.options.OptionsMenu;
 
+import plugins.MouseRectPlugin;
+
 import ui.BaldiHeads;
 
 import util.ClickSoundUtil;
@@ -47,7 +52,9 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 {
     public var game:PlayState;
 
-    public var mouseVisible:Bool;
+    public var lastMouseVisible:Bool;
+
+    public var lastMouseRect:FlxRect;
 
     public var tweens:FlxTweenManager;
 
@@ -80,11 +87,17 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         camera = FlxG.cameras.list.last();
 
-        mouseVisible = FlxG.mouse.visible;
+        lastMouseVisible = FlxG.mouse.visible;
+
+        var mouseRectPlugin:MouseRectPlugin = InitState.mouseRectPlugin;
+
+        lastMouseRect = FlxRect.get(mouseRectPlugin.left, mouseRectPlugin.top, mouseRectPlugin.right, mouseRectPlugin.bottom);
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         FlxG.mouse.visible = true;
+
+        InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
         tweens = new FlxTweenManager();
 
@@ -226,7 +239,9 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         super.close();
 
-        FlxG.mouse.visible = mouseVisible;
+        FlxG.mouse.visible = lastMouseVisible;
+
+        InitState.setMouseRect(lastMouseRect.left, lastMouseRect.right, lastMouseRect.top, lastMouseRect.bottom);
 
         if (selectedIcon == resumeIcon)
         {
@@ -247,7 +262,15 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
                 var nextState:NextState = game.params?.nextState;
 
                 if (PlayState.isWeek)
-                    nextState ??= () -> new StoryMenuScreen();
+                {
+                    var weeks:Array<WeekData> = WeekData.list;
+
+                    var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == PlayState.week.name);
+
+                    StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(PlayState.level.difficulty);
+
+                    StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
+                }
                 else
                 {
                     var level:LevelData = PlayState.level;

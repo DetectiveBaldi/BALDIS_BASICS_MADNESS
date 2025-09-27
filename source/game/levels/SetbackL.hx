@@ -310,14 +310,6 @@ class SetbackUI extends ScribbleUI
 
         scoreText.antialiasing = false;
 
-        scoreText.textField.antiAliasType = ADVANCED;
-
-        scoreText.textField.sharpness = 400.0;
-
         timeText.antialiasing = false;
-
-        timeText.textField.antiAliasType = ADVANCED;
-
-        timeText.textField.sharpness = 400.0;
     }
 }

@@ -274,7 +274,7 @@ class DetentionL extends PlayState
         {
             tweens.tween(this, {gameCameraZoom: 0.8}, conductor.beatLength * 0.5 * 0.001);
 
-            player.x = -750.0;
+            player.x = -300.0;
 
             tweens.cancelTweensOf(player);
 

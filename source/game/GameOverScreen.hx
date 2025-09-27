@@ -16,8 +16,11 @@ import flixel.util.typeLimit.NextState;
 import core.AssetCache;
 
 import data.CharacterData;
+import data.Difficulty;
 import data.LevelData;
 import data.WeekData;
+
+import extendable.TransitionState;
 
 import interfaces.ISequenceHandler;
 
@@ -134,7 +137,17 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
                 var nextState:NextState = game.params?.nextState;
 
                 if (PlayState.isWeek)
+                {
                     nextState ??= () -> new StoryMenuScreen();
+
+                    var weeks:Array<WeekData> = WeekData.list;
+
+                    var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == PlayState.week.name);
+
+                    StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(PlayState.level.difficulty);
+
+                    StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
+                }
                 else
                 {
                     var level:LevelData = PlayState.level;
@@ -275,7 +288,7 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
         }
         else
         {
-            var chance:Int = 9;
+            var chance:Int = 1;
 
             if (PlayState.isWeek)
                 chance = -1;
@@ -284,12 +297,12 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
                 chance = -1;
 
             var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
-                HighScore.getLevelScore("Overseer", "Normal").score != 0.0 #end ;
+                HighScore.getLevelScore("Overseer", "Normal").score == 0.0 #end ;
 
             if (!scoresValidated)
                 chance = -1;
 
-            var oddsValidated:Bool = FlxG.random.int(1, #if debug 3 #else 9 #end ) == chance;
+            var oddsValidated:Bool = FlxG.random.int(1, 9) == chance;
 
             if (oddsValidated)
             {
@@ -314,6 +327,8 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
 
     public function secretSequence():Void
     {
+        camera.zoom = 1.0;
+
         var opponent:Character = new Character(null, 0.0, 0.0, Character.getConfig("overseer-99"));
 
         opponent.scale.set(0.85, 0.85);
@@ -326,6 +341,8 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
 
         new FlxTimer(timers).start(9.9, (_:FlxTimer) ->
         {
+            TransitionState.cancelNextTransition();
+
             PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Overseer"));
         });
     }
