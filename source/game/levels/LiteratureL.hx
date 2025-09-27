@@ -155,6 +155,13 @@ class LiteratureL extends PlayState
         {
             FlxG.camera.visible = false;
 
+            var oppStrumlineX:Float = oppStrumline.strums.x;
+            var plrStrumlineX:Float = plrStrumline.strums.x;
+
+            tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
             var plr:Character = getPlayer("bf-baldina");
             plr.visible = false;
 
@@ -201,12 +208,6 @@ class LiteratureL extends PlayState
             literatureS.clouds.velocity.set(-30.0, 0.0);
 
             literatureS.hall1.visible = true;
-
-            var oppStrumlineX:Float = oppStrumline.strums.x;
-            var plrStrumlineX:Float = plrStrumline.strums.x;
-
-            oppStrumline.strums.x = plrStrumlineX;
-            plrStrumline.strums.x = oppStrumlineX;
         }
 
         if (step == 888)

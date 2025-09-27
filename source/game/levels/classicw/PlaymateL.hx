@@ -263,7 +263,7 @@ class PlaymateL extends PlayState
             }
         }
 
-        if (step == 1048.0)
+        if (step == 1044.0)
         {
             player.visible = false;
 

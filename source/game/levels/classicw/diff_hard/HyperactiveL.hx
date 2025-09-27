@@ -455,9 +455,6 @@ class HyperactiveL extends PlayState
             if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
 
-            plrStrumline.botplay = true;
-            plrStrumline.resetStrums();
-
             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
             playField.timerClock.visible = playField.timerNeedle.visible = false;
 
@@ -517,9 +514,9 @@ class HyperactiveL extends PlayState
 
         if (step == 2176)
         {
-            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
 
-            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
             
             var opp:Character = getOpponent("1st-prize-270");
             var _opp:Character = getOpponent("gotta-sweep");
@@ -534,6 +531,9 @@ class HyperactiveL extends PlayState
             tweens.tween(opp, {x: -1800.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
             tweens.tween(opp.scale, {x: opp.scale.x - 0.5, y: opp.scale.y - 0.5}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
+
+        if (step == 2180)
+            plrStrumline.botplay = true;
     }
 
     override function beatHit(beat:Int):Void

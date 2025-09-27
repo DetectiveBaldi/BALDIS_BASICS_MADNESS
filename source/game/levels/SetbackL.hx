@@ -148,7 +148,9 @@ class SetbackL extends PlayState
         {
             playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = false;
 
-            playField.strumlines.visible = false;
+            tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
+
+            tweens.tween(plrStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quadIn});
 
             setbackUI.progressBar.visible = setbackUI.timeText.visible = false;
         }
@@ -176,7 +178,8 @@ class SetbackL extends PlayState
 
             setbackUI.progressBar.visible = true;
 
-            playField.strumlines.visible = true;
+            oppStrumline.strums.alpha = 1.0;
+            plrStrumline.strums.alpha = 1.0;
 
             var opp:Character = getOpponent("dsci");
             opp.visible = false;

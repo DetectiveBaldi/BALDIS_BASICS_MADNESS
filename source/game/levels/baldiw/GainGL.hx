@@ -82,6 +82,8 @@ class GainGL extends PlayState
         opponent.skipDance = true;
 
         AssetCache.getGraphic("game/Character/gotta-sweep");
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -97,6 +99,8 @@ class GainGL extends PlayState
             
             player.visible = true;
             tweens.tween(player, {x: player.x - 250.0}, 0.75, {ease: FlxEase.quartOut});
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 124)

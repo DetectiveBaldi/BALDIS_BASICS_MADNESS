@@ -409,14 +409,16 @@ class EssentialEL extends PlayState
         }
 
         if (step == 1540)
+        {
+            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+
             player.animation.play("eat");
+        }
 
         if (step == 1544)
         {
             tweens.tween(player, {x: 1600.0}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quadIn});
-
-            tweens.tween(oppStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
-            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
 
             plrStrumline.botplay = Options.botplay;
         }
