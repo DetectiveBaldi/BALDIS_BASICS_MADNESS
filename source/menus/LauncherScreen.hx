@@ -100,6 +100,8 @@ class LauncherScreen extends TransitionState
 
     public function clickExitButton():Void
     {
+        FlxG.save.flush();
+        
         Sys.exit(0);
     }
 }
