@@ -163,6 +163,8 @@ class MishapL extends PlayState
     {
         var popup:MishapPopup = new MishapPopup();
 
+        popup.camera = hudCamera;
+
         popup.setPosition(FlxG.random.int(0, FlxG.width - Std.int(popup.width)),
             FlxG.random.int(0, FlxG.height - Std.int(popup.height)));
 
@@ -191,6 +193,8 @@ class MishapPopup extends FlxSpriteGroup
         add(base);
 
         closeButton = new FlxSprite().loadGraphic(AssetCache.getGraphic("shared/mishap-popups/close-button-sheet"), true, 15, 15);
+
+        closeButton.active = false;
 
         closeButton.animation.add("0", [0], 0.0, false);
 
