@@ -73,6 +73,8 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
 
         camera.zoom = 0.75;
 
+        FlxG.mouse.visible = false;
+
         tweens = new FlxTweenManager();
 
         add(tweens);

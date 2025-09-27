@@ -20,6 +20,7 @@ import core.Options;
 import core.Paths;
 
 import data.LevelData;
+import data.WeekData;
 
 import game.HighScore;
 import game.PlayState;
@@ -155,7 +156,7 @@ class TitleScreen extends TransitionState
         super.update(elapsed);
 
         if (FlxG.mouse.visible && FlxG.mouse.overlaps(rulerHitbox) && #if debug true #else
-            !Options.botplay && HighScore.getWeekScore("Classic", "Normal").score != 0.0 &&
+            !Options.botplay && HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
                 HighScore.getLevelScore("Two", "Normal").score == 0.0 #end )
         {
             if (FlxG.mouse.justReleased)

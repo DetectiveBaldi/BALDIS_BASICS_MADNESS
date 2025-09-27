@@ -1,5 +1,7 @@
 package game;
 
+import openfl.display.Bitmap;
+
 import openfl.geom.Rectangle;
 
 import flixel.FlxG;
@@ -54,6 +56,8 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
     public var lastMouseVisible:Bool;
 
+    public var lastMouseCursor:Bitmap;
+
     public var lastMouseRect:FlxRect;
 
     public var tweens:FlxTweenManager;
@@ -88,6 +92,8 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         camera = FlxG.cameras.list.last();
 
         lastMouseVisible = FlxG.mouse.visible;
+
+        lastMouseCursor = FlxG.mouse.cursor;
 
         var mouseRectPlugin:MouseRectPlugin = InitState.mouseRectPlugin;
 
@@ -240,6 +246,8 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         super.close();
 
         FlxG.mouse.visible = lastMouseVisible;
+
+        FlxG.mouse.load(lastMouseCursor.bitmapData);
 
         InitState.setMouseRect(lastMouseRect.left, lastMouseRect.right, lastMouseRect.top, lastMouseRect.bottom);
 

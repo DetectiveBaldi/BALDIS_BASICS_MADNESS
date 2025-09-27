@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 
 import flixel.animation.FlxAnimation;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
 
 import flixel.text.FlxText;
@@ -39,6 +40,8 @@ class MishapL extends PlayState
 {
     public var mishapS:MishapS;
 
+    public var popups:FlxTypedGroup<MishapPopup>;
+
     override function create():Void
     {
         stage = new MishapS();
@@ -59,13 +62,18 @@ class MishapL extends PlayState
     
         opponent.setPosition(-200.0, 125.0);
 
-        FlxG.mouse.visible = true;
+        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+            playField.timerNeedle.visible = false;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
-
-        playField.visible = false;
+        playField.strumlines.visible = false;
 
         plrStrumline.botplay = true;
+
+        popups = new FlxTypedGroup<MishapPopup>();
+
+        popups.camera = hudCamera;
+        
+        add(popups);
     }
 
     override function destroy():Void
@@ -95,9 +103,19 @@ class MishapL extends PlayState
         
             opponent.skipDance = false;
 
-            playField.visible = true;
+            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
+                playField.timerNeedle.visible = true;
+
+            playField.strumlines.visible = true;
 
             plrStrumline.botplay = Options.botplay;
+        }
+
+        if (step == 320.0)
+        {
+            FlxG.mouse.visible = true;
+
+            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
         }
         
         if (step == 320 || step == 452)
@@ -118,6 +136,16 @@ class MishapL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
         }
+
+        if (step == 704.0)
+        {
+            FlxG.mouse.visible = false;
+
+            for (popup in popups)
+                popup.kill();
+
+            popups.members.resize(0);
+        }
     }
 
     override function beatHit(beat:Int):Void
@@ -131,23 +159,14 @@ class MishapL extends PlayState
         }
     }
 
-    override function resume():Void
-    {
-        super.resume();
-        
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
-    }
-
     public function spawnPopup():Void
     {
         var popup:MishapPopup = new MishapPopup();
 
-        popup.camera = hudCamera;
-
         popup.setPosition(FlxG.random.int(0, FlxG.width - Std.int(popup.width)),
             FlxG.random.int(0, FlxG.height - Std.int(popup.height)));
 
-        add(popup);
+        popups.add(popup);
     }
 }
 
