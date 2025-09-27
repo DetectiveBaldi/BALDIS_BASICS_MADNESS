@@ -685,7 +685,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
         }
 
-        if (accuracy == Math.NaN)
+        if (Math.isNaN(accuracy))
             unlocks.resize(0);
 
         FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
