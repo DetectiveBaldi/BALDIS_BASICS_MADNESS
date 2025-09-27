@@ -102,6 +102,8 @@ class RevisionL extends PlayState
         opp.scale.set(2.3, 2.3);
         opp.skipDance = true;
         opponents.setPosition(-70.0, 30.0);
+
+        plrStrumline.botplay = true;
     }
 
     override function update(elapsed:Float):Void
@@ -154,6 +156,8 @@ class RevisionL extends PlayState
 
             var opp:Character = getOpponent("baldi-face-right");
             opp.skipDance = false;
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 664)

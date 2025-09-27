@@ -48,6 +48,8 @@ class SetbackL extends PlayState
 
         add(setbackUI);
 
+        plrStrumline.botplay = true;
+
         cameraLock = FOCUS_CAM_POINT;
 
         cameraPoint.centerTo();
@@ -128,6 +130,8 @@ class SetbackL extends PlayState
             playField.strumlines.visible = true;
 
             setbackUI.progressBar.visible = setbackUI.timeText.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 156)
@@ -149,14 +153,17 @@ class SetbackL extends PlayState
             setbackUI.progressBar.visible = setbackUI.timeText.visible = false;
         }
 
+        if (step == 424)
+        {
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
+        }
+
         if (step == 476)
         {
             gameCamera.alpha = 0.0;
 
             gameCameraZoom = 0.5;
-
-            plrStrumline.botplay = true;
-            plrStrumline.resetStrums();
         }
 
         if (step == 480)
@@ -274,7 +281,7 @@ class SetbackL extends PlayState
         else
             posX = 1500.0;
 
-        scaleNum = FlxG.random.float(2.25, 5.0);
+        scaleNum = FlxG.random.float(2.25, 4.5);
 
         balloon = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("shared/spoopBalloon"));
 

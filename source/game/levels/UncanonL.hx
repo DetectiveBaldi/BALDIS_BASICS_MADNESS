@@ -116,11 +116,18 @@ class UncanonL extends PlayState
         }
 
         if (step == 589)
+        {
+            plrStrumline.botplay = true;
+            plrStrumline.resetStrums();
+
             FlxG.camera.visible = false;
+        }
 
         if (step == 592)
         {
             FlxG.camera.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         
             gameCameraZoom = 0.65;
 

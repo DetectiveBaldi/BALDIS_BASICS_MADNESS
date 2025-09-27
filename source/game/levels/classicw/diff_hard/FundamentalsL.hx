@@ -67,6 +67,8 @@ class FundamentalsL extends PlayState
             playField.timerNeedle.visible = false;
 
         playField.strumlines.visible = false;
+
+        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
@@ -87,6 +89,8 @@ class FundamentalsL extends PlayState
                 playField.timerNeedle.visible = true;
 
             playField.strumlines.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 272)

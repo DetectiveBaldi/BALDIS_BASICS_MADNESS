@@ -70,7 +70,7 @@ class BloxyCL extends PlayState
 
     override function stepHit(step:Int):Void
     {
-         
+        
         if (step == 16)
         {
             gameCameraZoom = 0.85;
@@ -179,7 +179,11 @@ class BloxyCL extends PlayState
         }
 
         if (step == 848)
+        {
+            plrStrumline.botplay = true;
+
             gameCamera.visible = false;
+        }
     }
 
     override function beatHit(beat:Int):Void

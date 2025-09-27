@@ -265,6 +265,8 @@ class LiteratureL extends PlayState
             tweens.tween(oppStrumline.strums, {x: plrStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
 
             tweens.tween(plrStrumline.strums, {x: oppStrumlineX}, conductor.beatLength * 2.0 * 0.001, {ease: FlxEase.quartOut});
+
+            plrStrumline.botplay = Options.botplay;
         }
 
         if (step == 1464)

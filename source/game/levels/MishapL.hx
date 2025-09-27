@@ -64,6 +64,8 @@ class MishapL extends PlayState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);
 
         playField.visible = false;
+
+        plrStrumline.botplay = true;
     }
 
     override function destroy():Void
@@ -94,6 +96,8 @@ class MishapL extends PlayState
             opponent.skipDance = false;
 
             playField.visible = true;
+
+            plrStrumline.botplay = Options.botplay;
         }
         
         if (step == 320 || step == 452)
