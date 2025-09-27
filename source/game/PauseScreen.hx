@@ -271,6 +271,8 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
                 if (PlayState.isWeek)
                 {
+                    nextState ??= () -> new StoryMenuScreen();
+                    
                     var weeks:Array<WeekData> = WeekData.list;
 
                     var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == PlayState.week.name);
