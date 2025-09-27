@@ -323,7 +323,7 @@ class ScribbleUI extends FlxBasic
 
         timeText.color = FlxColor.BLACK;
 
-        timeText.size = 20;
+        timeText.size = 18;
 
         timeText.text = "0:00";
 
