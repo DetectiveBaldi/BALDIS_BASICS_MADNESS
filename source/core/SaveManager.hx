@@ -67,7 +67,7 @@ class SaveManager
 
         if (Reflect.hasField(FlxG.save.data, "highScores"))
         {
-            highScores.mergeData(SaveManager.highScores.data);
+            highScores.mergeData(FlxG.save.data.highScores);
 
             Reflect.deleteField(FlxG.save.data, "highScores");
         }
