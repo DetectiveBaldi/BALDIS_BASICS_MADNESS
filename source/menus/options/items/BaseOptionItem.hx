@@ -8,7 +8,9 @@ import flixel.util.FlxColor;
 
 import core.Paths;
 
-class BaseOptionItem extends FlxSpriteGroup
+import interfaces.IHasTooltip;
+
+class BaseOptionItem extends FlxSpriteGroup implements IHasTooltip
 {
     public var title(default, set):String;
 
@@ -22,18 +24,18 @@ class BaseOptionItem extends FlxSpriteGroup
         return title;
     }
 
-    public var description:String;
+    public var tooltip:String;
 
     public var titleText:FlxText;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _title:String, _description:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, _title:String, _tooltip:String):Void
     {
         super(x, y);
 
         @:bypassAccessor
         title = _title;
 
-        description = _description;
+        tooltip = _tooltip;
 
         titleText = new FlxText(0.0, 0.0, 0.0, title, 42);
 

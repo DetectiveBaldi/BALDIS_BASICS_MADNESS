@@ -678,10 +678,6 @@ class SearchItem<T> extends FlxInputText
 
         setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
 
-        textField.antiAliasType = ADVANCED;
-
-        textField.sharpness = 400.0;
-
         filterMode = REG(~/[^a-zA-Z ]/g);
 
         forceCase = UPPER_CASE;

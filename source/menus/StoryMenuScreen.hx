@@ -130,10 +130,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
 
         songsLabel.alignment = CENTER;
 
-        songsLabel.textField.antiAliasType = ADVANCED;
-
-        songsLabel.textField.sharpness = 400.0;
-
         songsLabel.setPosition(clipboard.getMidpoint().x - songsLabel.width * 0.5, clipboard.y + 35.0);
 
         add(songsLabel);
@@ -147,10 +143,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
         songListText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         songListText.alignment = CENTER;
-
-        songListText.textField.antiAliasType = ADVANCED;
-
-        songListText.textField.sharpness = 400.0;
 
         songListText.setPosition(clipboard.getMidpoint().x - songsLabel.width * 0.5, songsLabel.y + 45.0);
 
@@ -178,10 +170,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
 
         weekNameText.alignment = CENTER;
 
-        weekNameText.textField.antiAliasType = ADVANCED;
-
-        weekNameText.textField.sharpness = 400.0;
-
         weekNameText.setPosition(weekInfoBoard.getMidpoint().x - weekNameText.width * 0.5, weekInfoBoard.y + 25.0);
 
         add(weekNameText);
@@ -195,10 +183,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
         weekDescText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         weekDescText.alignment = CENTER;
-
-        weekDescText.textField.antiAliasType = ADVANCED;
-
-        weekDescText.textField.sharpness = 400.0;
 
         weekDescText.setPosition(weekInfoBoard.getMidpoint().x - weekDescText.width * 0.5, weekNameText.y + 55.0);
 
@@ -228,10 +212,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
 
         difficultyText.alignment = CENTER;
 
-        difficultyText.textField.antiAliasType = ADVANCED;
-
-        difficultyText.textField.sharpness = 400.0;
-
         difficultyText.setPosition(difficultyText.getCenterX(chalkboard), chalkboard.y + chalkboard.height - 15.0);
 
         add(difficultyText);
@@ -247,10 +227,6 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
         scoreText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         scoreText.alignment = RIGHT;
-
-        scoreText.textField.antiAliasType = ADVANCED;
-
-        scoreText.textField.sharpness = 400.0;
 
         scoreText.setPosition(FlxG.width - scoreText.width - 160.0, FlxG.height - scoreText.height);
 

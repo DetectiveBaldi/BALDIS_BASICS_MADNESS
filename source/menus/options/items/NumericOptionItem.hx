@@ -1,5 +1,6 @@
 package menus.options.items;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.group.FlxSpriteGroup;
@@ -31,10 +32,10 @@ class IntOptionItem extends VariableOptionItem<Int>
 
     public var rightButton:OrientedButton;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _description:String, _option:String,
+    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String,
         _min:Int, _max:Int, _step:Int, cellsToGenerate:Int):Void
     {
-        super(_x, _y, _title, _description, _option);
+        super(_x, _y, _title, _tooltip, _option);
 
         min = _min;
 
@@ -113,15 +114,11 @@ class IntOptionItem extends VariableOptionItem<Int>
         add(rightButton);
     }
 
-    public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
+    override function update(elapsed:Float):Void
     {
-        var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+        super.update(elapsed);
 
-        button.onClick.add(onClick);
-
-        add(button);
-
-        return button;
+        titleText.underline = FlxG.mouse.overlaps(titleText, camera);
     }
 
     public function updateValueText():Void
@@ -143,6 +140,17 @@ class IntOptionItem extends VariableOptionItem<Int>
 
             cell.animation.play(stepMult <= value ? "on" : "off");
         }
+    }
+
+    public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
+    {
+        var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
+
+        button.onClick.add(onClick);
+
+        add(button);
+
+        return button;
     }
 }
 

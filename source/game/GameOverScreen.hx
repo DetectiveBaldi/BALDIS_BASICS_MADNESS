@@ -303,7 +303,7 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
         if (!scoresValidated)
             chance = -1;
 
-        var oddsValidated:Bool = FlxG.random.int(1, 9) != chance;
+        var oddsValidated:Bool = FlxG.random.int(1, 9) == chance;
 
         if (oddsValidated)
         {

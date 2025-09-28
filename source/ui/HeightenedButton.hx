@@ -56,10 +56,6 @@ class HeightenedButton extends FlxSpriteGroup
 
         label.alignment = CENTER;
 
-        label.textField.antiAliasType = ADVANCED;
-
-        label.textField.sharpness = 400.0;
-
         label.setPosition(base.getMidpoint().x - label.width * 0.5, size == LARGE ? 45.0 : 35.0);
 
         add(label);

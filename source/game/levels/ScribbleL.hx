@@ -285,10 +285,6 @@ class ScribbleUI extends FlxBasic
 
         scoreText.antialiasing = true;
 
-        scoreText.textField.antiAliasType = NORMAL;
-
-        scoreText.textField.sharpness = 100.0;
-
         healthBar.visible = false;
 
         var timerClock:FlxSprite = playField.timerClock;

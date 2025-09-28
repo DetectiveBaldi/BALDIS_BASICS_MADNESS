@@ -98,10 +98,6 @@ class UnlockScreen extends TransitionState implements ISequenceHandler
 
         wowText.bold = true;
 
-        wowText.textField.antiAliasType = ADVANCED;
-
-        wowText.textField.sharpness = 400.0;
-
         wowText.alignment = CENTER;
 
         wowText.centerTo();

@@ -84,10 +84,6 @@ class PlaymateL extends PlayState
 
         tutorText.setBorderStyle(OUTLINE, FlxColor.WHITE, 2.0);
 
-        tutorText.textField.antiAliasType = ADVANCED;
-
-        tutorText.textField.sharpness = 400.0;
-
         tutorText.setPosition(tutorText.getCenterX(player), -tutorText.height * 3.0);
 
         add(tutorText);

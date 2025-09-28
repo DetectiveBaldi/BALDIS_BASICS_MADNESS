@@ -26,6 +26,7 @@ import flixel.sound.FlxSound;
 import core.AssetCache;
 import core.Paths;
 import core.Options;
+import core.SaveManager;
 
 import data.CharacterData;
 import data.Chart;
@@ -585,7 +586,11 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         if (isWeek)
         {
             if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+            {
                 HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
+
+                SaveManager.saveHighScores();
+            }
 
             weekStats[level.name] = playField.playStats.copy();
 
@@ -652,8 +657,12 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
 
                 if (HighScore.isWeekHighScore(week.name, level.difficulty, score))
+                {
                     HighScore.setWeekScore(week.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy,
                         grade: grade});
+
+                    SaveManager.saveHighScores();
+                }
             }
             else
             {
@@ -682,7 +691,11 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 unlocks.push({unlock : level.name});
 
             if (HighScore.isLevelHighScore(level.name, level.difficulty, score))
+            {
                 HighScore.setLevelScore(level.name, level.difficulty, {score: score, misses: misses, accuracy: accuracy, grade: grade});
+
+                SaveManager.saveHighScores();
+            }
         }
 
         if (Math.isNaN(accuracy))

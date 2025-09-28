@@ -14,6 +14,7 @@ import flixel.util.typeLimit.NextState;
 import core.AssetCache;
 import core.Options;
 import core.Paths;
+import core.SaveManager;
 
 import data.Playlist;
 
@@ -51,9 +52,9 @@ class InitState extends FlxState
 
         FlxG.fixedTimestep = false;
 
-        Options.init();
+        SaveManager.init();
 
-        Options.purgeInvalid();
+        SaveManager.mergeData();
 
         setAutoPause(Options.autoPause);
 
@@ -67,6 +68,8 @@ class InitState extends FlxState
         
         FlxG.console.registerClass(Options);
 
+        FlxG.console.registerClass(SaveManager);
+
         FlxG.console.registerClass(HighScore);
 
         FlxG.plugins.drawOnTop = true;
@@ -76,8 +79,6 @@ class InitState extends FlxState
         Paths.init();
 
         Playlist.init();
-
-        HighScore.init();
 
         HighScore.purgeInvalid();
 

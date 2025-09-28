@@ -11,13 +11,13 @@ class Options
     @:noCompletion
     static function get_autoPause():Bool
     {
-        return FlxG.save.data.options.autoPause ??= true;
+        return SaveManager.options.data.autoPause ??= true;
     }
 
     @:noCompletion
     static function set_autoPause(_autoPause:Bool):Bool
     {
-        FlxG.save.data.options.autoPause = _autoPause;
+        SaveManager.options.data.autoPause = _autoPause;
 
         return autoPause;
     }
@@ -27,12 +27,12 @@ class Options
     @:noCompletion
     static function get_frameRate():Int
     {
-        return FlxG.save.data.options.frameRate ??= 60;
+        return SaveManager.options.data.frameRate ??= 60;
     }
 
     static function set_frameRate(_frameRate:Int):Int
     {
-        FlxG.save.data.options.frameRate = _frameRate;
+        SaveManager.options.data.frameRate = _frameRate;
 
         return frameRate;
     }
@@ -42,13 +42,13 @@ class Options
     @:noCompletion
     static function get_gpuCaching():Bool
     {
-        return FlxG.save.data.options.gpuCaching ??= false;
+        return SaveManager.options.data.gpuCaching ??= false;
     }
 
     @:noCompletion
     static function set_gpuCaching(_gpuCaching:Bool):Bool
     {
-        FlxG.save.data.options.gpuCaching = _gpuCaching;
+        SaveManager.options.data.gpuCaching = _gpuCaching;
 
         return gpuCaching;
     }
@@ -58,13 +58,13 @@ class Options
     @:noCompletion
     static function get_soundStreaming():Bool
     {
-        return FlxG.save.data.options.soundStreaming ??= false;
+        return SaveManager.options.data.soundStreaming ??= false;
     }
 
     @:noCompletion
     static function set_soundStreaming(_soundStreaming:Bool):Bool
     {
-        FlxG.save.data.options.soundStreaming = _soundStreaming;
+        SaveManager.options.data.soundStreaming = _soundStreaming;
 
         return soundStreaming;
     }
@@ -74,13 +74,13 @@ class Options
     @:noCompletion
     static function get_flashingLights():Bool
     {
-        return FlxG.save.data.options.flashingLights ??= true;
+        return SaveManager.options.data.flashingLights ??= true;
     }
 
     @:noCompletion
     static function set_flashingLights(_flashingLights:Bool):Bool
     {
-        FlxG.save.data.options.flashingLights = _flashingLights;
+        SaveManager.options.data.flashingLights = _flashingLights;
 
         return flashingLights;
     }
@@ -90,13 +90,13 @@ class Options
     @:noCompletion
     static function get_shaders():Bool
     {
-        return FlxG.save.data.options.shaders ??= true;
+        return SaveManager.options.data.shaders ??= true;
     }
 
     @:noCompletion
     static function set_shaders(_shaders:Bool):Bool
     {
-        FlxG.save.data.options.shaders = _shaders;
+        SaveManager.options.data.shaders = _shaders;
 
         return shaders;
     }
@@ -106,7 +106,7 @@ class Options
     @:noCompletion
     static function get_controls():Map<String, Array<Int>>
     {
-        return FlxG.save.data.options.controls ??= 
+        return SaveManager.options.data.controls ??= 
         [
             "NOTE:LEFT" => [65, 37],
 
@@ -123,7 +123,7 @@ class Options
     @:noCompletion
     static function set_controls(_controls:Map<String, Array<Int>>):Map<String, Array<Int>>
     {
-        FlxG.save.data.options.controls = _controls;
+        SaveManager.options.data.controls = _controls;
 
         return controls;
     }
@@ -133,13 +133,13 @@ class Options
     @:noCompletion
     static function get_downscroll():Bool
     {
-        return FlxG.save.data.options.downscroll ??= false;
+        return SaveManager.options.data.downscroll ??= false;
     }
 
     @:noCompletion
     static function set_downscroll(_downscroll:Bool):Bool
     {
-        FlxG.save.data.options.downscroll = _downscroll;
+        SaveManager.options.data.downscroll = _downscroll;
 
         return downscroll;
     }
@@ -149,13 +149,13 @@ class Options
     @:noCompletion
     static function get_ghostTapping():Bool
     {
-        return FlxG.save.data.options.ghostTapping ??= true;
+        return SaveManager.options.data.ghostTapping ??= true;
     }
 
     @:noCompletion
     static function set_ghostTapping(_ghostTapping:Bool):Bool
     {
-        FlxG.save.data.options.ghostTapping = _ghostTapping;
+        SaveManager.options.data.ghostTapping = _ghostTapping;
 
         return ghostTapping;
     }
@@ -165,53 +165,14 @@ class Options
     @:noCompletion
     static function get_botplay():Bool
     {
-        return FlxG.save.data.options.botplay ??= false;
+        return SaveManager.options.data.botplay ??= false;
     }
 
     @:noCompletion
     static function set_botplay(_botplay:Bool):Bool
     {
-        FlxG.save.data.options.botplay = _botplay;
+        SaveManager.options.data.botplay = _botplay;
 
         return botplay;
-    }
-
-    public static function init():Void
-    {
-        FlxG.save.data.options ??= {}
-    }
-
-    public static function purgeInvalid():Void
-    {
-        var options:Dynamic = FlxG.save.data.options;
-
-        if (Reflect.hasField(options, "frameRate"))
-        {
-            var newVal:Int = Reflect.field(options, "frameRate");
-
-            newVal = Math.round(newVal / 30.0) * 30;
-
-            Reflect.setField(options, "frameRate", FlxMath.bound(newVal, 30, 240));
-        }
-
-        if (Reflect.hasField(options, "persistentCache"))
-            Reflect.deleteField(options, "persistentCache");
-
-        if (Reflect.hasField(options, "flashing"))
-        {
-            Reflect.setField(options, "flashingLights", Reflect.field(options, "flashing"));
-
-            Reflect.deleteField(options, "flashing");
-        }
-
-        if (Reflect.hasField(options, "middlescroll"))
-            Reflect.deleteField(options, "middlescroll");
-
-        if (Reflect.hasField(options, "automatedInputs"))
-        {
-            botplay = Reflect.field(options, "automatedInputs");
-            
-            Reflect.deleteField(options, "automatedInputs");
-        }
     }
 }

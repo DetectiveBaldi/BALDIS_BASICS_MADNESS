@@ -112,15 +112,11 @@ class TitleScreen extends TransitionState
 
         studioText.alignment = RIGHT;
 
-        studioText.textField.antiAliasType = ADVANCED;
-
-        studioText.textField.sharpness = 400.0;
-
         studioText.setPosition(title.x + title.width - studioText.width - 5.0, title.y + title.height - studioText.height - 5.0);
 
         add(studioText);
 
-        versionText = new FlxText(0.0, 0.0, FlxG.width, "Version 2.0");
+        versionText = new FlxText(0.0, 0.0, FlxG.width, 'Version ${FlxG.stage.application.meta["version"]}');
 
         versionText.color = 0xCECECE;
 
@@ -129,10 +125,6 @@ class TitleScreen extends TransitionState
         versionText.size = 24;
 
         versionText.alignment = LEFT;
-
-        versionText.textField.antiAliasType = ADVANCED;
-
-        versionText.textField.sharpness = 400.0;
 
         versionText.setPosition(165.0, 5.0);
 
@@ -144,12 +136,7 @@ class TitleScreen extends TransitionState
 
         exitSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/exitSound"));
 
-        exitSound.onComplete = getTransitionSprite.bind(0.5, OUT, () ->
-        {
-            FlxG.save.flush();
-                
-            Sys.exit(0);
-        });
+        exitSound.onComplete = getTransitionSprite.bind(0.5, OUT, () -> Sys.exit(0));
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 

@@ -15,6 +15,7 @@ import flixel.util.typeLimit.NextState;
 
 import core.AssetCache;
 import core.Paths;
+import core.SaveManager;
 
 import extendable.TransitionState;
 
@@ -31,6 +32,8 @@ using util.MathUtil;
 
 class OptionsMenu extends TransitionState
 {
+    public static var pageIndex:Int = 0;
+
     public var nextState:NextState;
 
     public var fadeTuneOnExit:Bool;
@@ -40,8 +43,6 @@ class OptionsMenu extends TransitionState
     public var chalkboard:FlxSprite;
 
     public var optionPages:FlxTypedGroup<BaseOptionsPage>;
-
-    public var pageIndex:Int;
 
     public var pageLabel:FlxText;
 
@@ -109,18 +110,12 @@ class OptionsMenu extends TransitionState
         optionPage = new GameplayOptionsPage();
 
         optionPages.add(optionPage);
-
-        pageIndex = 0;
-
+        
         pageLabel = new FlxText(0.0, 0.0, 0.0, "", 36);
 
         pageLabel.color = FlxColor.WHITE;
 
         pageLabel.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        pageLabel.textField.antiAliasType = ADVANCED;
-
-        pageLabel.textField.sharpness = 400.0;
 
         pageLabel.alignment = LEFT;
 
@@ -130,7 +125,7 @@ class OptionsMenu extends TransitionState
 
         goLeftButton = addOrientedButton(LEFT, () ->
         {
-            setPage(pageIndex, pageIndex = FlxMath.wrap(pageIndex - 1, 0, optionPages.length - 1));
+            setPage(pageIndex = FlxMath.wrap(pageIndex - 1, 0, optionPages.length - 1));
         });
 
         goLeftButton.scale.set(2.0, 2.0);
@@ -141,7 +136,7 @@ class OptionsMenu extends TransitionState
 
         goRightButton = addOrientedButton(RIGHT, () ->
         {
-            setPage(pageIndex, pageIndex = FlxMath.wrap(pageIndex + 1, 0, optionPages.length - 1));
+            setPage(pageIndex = FlxMath.wrap(pageIndex + 1, 0, optionPages.length - 1));
         });
 
         goRightButton.scale.set(2.0, 2.0);
@@ -155,7 +150,7 @@ class OptionsMenu extends TransitionState
 
         add(tooltip);
 
-        setPage(0, 0);
+        setPage(pageIndex);
 
         backOutButton = new BackOutButton();
 
@@ -175,28 +170,38 @@ class OptionsMenu extends TransitionState
         FlxG.mouse.visible = false;
     }
 
-    public function setPage(oldIndex:Int, newIndex:Int):Void
+    public function setPage(newIndex:Int):Void
     {
-        var oldPage:BaseOptionsPage = optionPages.members[oldIndex];
+        SaveManager.saveOptions();
 
-        oldPage.cancelTouch();
+        for (page in optionPages)
+        {
+            page.active = false;
+
+            page.visible = false;
+
+            page.cancelTouch();
+        }
 
         var newPage:BaseOptionsPage = optionPages.members[newIndex];
 
-        for (i in 0 ... optionPages.members.length)
-        {
-            var page:BaseOptionsPage = optionPages.members[i];
+        newPage.active = true;
 
-            var enabled:Bool = newPage == page;
-
-            page.active = enabled;
-
-            page.visible = enabled;
-        }
+        newPage.visible = true;
 
         pageLabel.text = newPage.name;
 
         tooltip.options = newPage;
+    }
+
+    public function clickBackOutButton():Void
+    {
+        FlxG.switchState(nextState);
+
+        SaveManager.saveOptions();
+
+        if (fadeTuneOnExit)
+            MainMenuScreen.fadeTune();
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
@@ -208,13 +213,5 @@ class OptionsMenu extends TransitionState
         add(button);
 
         return button;
-    }
-
-    public function clickBackOutButton():Void
-    {
-        FlxG.switchState(nextState);
-
-        if (fadeTuneOnExit)
-            MainMenuScreen.fadeTune();
     }
 }

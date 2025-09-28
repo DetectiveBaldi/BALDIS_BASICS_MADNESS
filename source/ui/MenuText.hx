@@ -32,10 +32,6 @@ class MenuText extends FlxText
 
         alignment = CENTER;
 
-        textField.antiAliasType = ADVANCED;
-
-        textField.sharpness = 400.0;
-
         unlitColor = FlxColor.WHITE;
 
         litColor = FlxColor.LIME;

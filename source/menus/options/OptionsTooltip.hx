@@ -17,6 +17,8 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Paths;
 
+import interfaces.IHasTooltip;
+
 import menus.options.items.BaseOptionItem;
 import menus.options.pages.BaseOptionsPage;
 
@@ -26,11 +28,11 @@ class OptionsTooltip extends FlxSpriteGroup
 {
     public var options:BaseOptionsPage;
 
-    public var lastHover:BaseOptionItem;
+    public var lastHover:IHasTooltip;
 
     public var panel:FlxSprite;
 
-    public var descText:FlxText;
+    public var tooltipText:FlxText;
 
     public function new(options:BaseOptionsPage):Void
     {
@@ -42,19 +44,15 @@ class OptionsTooltip extends FlxSpriteGroup
 
         add(panel);
 
-        descText = new FlxText(0.0, 0.0, 0.0, "", 24);
+        tooltipText = new FlxText(0.0, 0.0, 0.0, "", 24);
 
-        descText.color = FlxColor.BLACK;
+        tooltipText.color = FlxColor.BLACK;
 
-        descText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+        tooltipText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        descText.textField.antiAliasType = ADVANCED;
+        tooltipText.alignment = CENTER;
 
-        descText.textField.sharpness = 400.0;
-
-        descText.alignment = CENTER;
-
-        add(descText);
+        add(tooltipText);
     }
 
     override function update(elapsed:Float):Void
@@ -63,8 +61,10 @@ class OptionsTooltip extends FlxSpriteGroup
 
         for (option in options.optionsGroup)
         {
-            if (FlxG.mouse.overlaps(option))
+            if (FlxG.mouse.overlaps(option.titleText, camera))
             {
+                visible = true;
+
                 if (lastHover == option)
                     break;
 
@@ -74,9 +74,33 @@ class OptionsTooltip extends FlxSpriteGroup
 
                 break;
             }
+            else
+                visible = false;
         }
-        
-        visible = FlxG.mouse.overlaps(options);
+
+        for (option in options)
+        {
+            if (!(option is IHasTooltip) || option == options.optionsGroup)
+                continue;
+
+            if (FlxG.mouse.overlaps(option, camera))
+            {
+                visible = true;
+
+                var option:IHasTooltip = cast (option, IHasTooltip);
+
+                if (lastHover == option)
+                    break;
+
+                lastHover = option;
+
+                updateTooltip(lastHover);
+
+                break;
+            }
+            else
+                visible = false;
+        }
 
         var newX:Float = FlxG.mouse.x + FlxG.mouse.cursor.width * 0.5 - width * 0.5;
 
@@ -89,16 +113,16 @@ class OptionsTooltip extends FlxSpriteGroup
         setPosition(newX, newY);
     }
 
-    public function updateTooltip(option:BaseOptionItem = null):Void
+    public function updateTooltip(tooltip:IHasTooltip = null):Void
     {
-        if (option == null)
-            descText.text = "Unrecognized option.";
+        if (tooltip == null)
+            tooltipText.text = "Unrecognized tooltip.";
         else
-            descText.text = option.description;
+            tooltipText.text = tooltip.tooltip;
 
-        var panelWidth:Int = Math.floor(descText.width) + 32;
+        var panelWidth:Int = Math.floor(tooltipText.width) + 32;
 
-        var panelHeight:Int = Math.floor(descText.height) + 8;
+        var panelHeight:Int = Math.floor(tooltipText.height) + 8;
 
         var rectWidth:Int = panelWidth - 8;
 
@@ -108,6 +132,6 @@ class OptionsTooltip extends FlxSpriteGroup
 
         panel.pixels.fillRect(new Rectangle(4, 4, rectWidth, rectHeight), 0xFFFFFFFF);
 
-        descText.centerTo(panel);
+        tooltipText.centerTo(panel);
     }
 }

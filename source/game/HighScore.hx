@@ -2,6 +2,8 @@ package game;
 
 import flixel.FlxG;
 
+import core.SaveManager;
+
 import data.PlayStats;
 
 class HighScore
@@ -11,7 +13,7 @@ class HighScore
     @:noCompletion
     static function get_weeks():Map<String, Map<String, WeekScore>>
     {
-        return FlxG.save.data.highScores.weeks ??= new Map<String, Map<String, WeekScore>>();
+        return SaveManager.highScores.data.weeks ??= new Map<String, Map<String, WeekScore>>();
     }
     
     public static var levels(get, never):Map<String, Map<String, LevelScore>>;
@@ -19,12 +21,7 @@ class HighScore
     @:noCompletion
     static function get_levels():Map<String, Map<String, LevelScore>>
     {
-        return FlxG.save.data.highScores.levels ??= new Map<String, Map<String, LevelScore>>();
-    }
-
-    public static function init():Void
-    {
-        FlxG.save.data.highScores ??= {}
+        return SaveManager.highScores.data.levels ??= new Map<String, Map<String, LevelScore>>();
     }
 
     public static function purgeInvalid():Void

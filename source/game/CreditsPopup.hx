@@ -58,10 +58,6 @@ class CreditsPopup extends FlxSpriteGroup
 
         label.alignment = CENTER;
 
-        label.textField.antiAliasType = ADVANCED;
-
-        label.textField.sharpness = 400.0;
-
         label.setPosition(label.getCenterX(screen), label.getCenterY(screen));
 
         add(label);

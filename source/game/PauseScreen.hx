@@ -140,10 +140,6 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         pausedText.alignment = CENTER;
 
-        pausedText.textField.antiAliasType = ADVANCED;
-
-        pausedText.textField.sharpness = 400.0;
-
         pausedText.setPosition(pausedText.getCenterX(), pausedText.getCenterY() - 265.0);
 
         add(pausedText);
@@ -159,10 +155,6 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         nameText.size = 42;
 
         nameText.alignment = CENTER;
-
-        nameText.textField.antiAliasType = ADVANCED;
-
-        nameText.textField.sharpness = 400.0;
 
         nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 265.0);
 

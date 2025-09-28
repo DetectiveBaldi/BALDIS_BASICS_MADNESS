@@ -29,9 +29,9 @@ class VariableOptionItem<T> extends BaseOptionItem
 
     public var onUpdate:FlxTypedSignal<(value:T)->Void>;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _description:String, _option:String):Void
+    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
     {
-        super(_x, _y, _title, _description);
+        super(_x, _y, _title, _tooltip);
 
         option = _option;
 

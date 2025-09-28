@@ -3,6 +3,8 @@ package plugins;
 import flixel.FlxBasic;
 import flixel.FlxG;
 
+import flixel.math.FlxPoint;
+
 class MouseRectPlugin extends FlxBasic
 {
     public var left:Float;
@@ -43,15 +45,17 @@ class MouseRectPlugin extends FlxBasic
         var mouseX:Int = Math.floor(x);
 
         var mouseY:Int = Math.floor(y);
-        
-        var newLeft:Int = Math.floor(left * FlxG.scaleMode.scale.x);
 
-        var newRight:Int = Math.floor(right * FlxG.scaleMode.scale.x -
+        var offset:FlxPoint = FlxG.scaleMode.offset;
+        
+        var newLeft:Int = Math.floor(left * FlxG.scaleMode.scale.x + offset.x);
+
+        var newRight:Int = Math.floor(right * FlxG.scaleMode.scale.x + offset.x -
             FlxG.mouse.cursor.width);
 
-        var newTop:Int = Math.floor(top * FlxG.scaleMode.scale.y);
+        var newTop:Int = Math.floor(top * FlxG.scaleMode.scale.y + offset.y);
 
-        var newBottom:Int = Math.floor(bottom * FlxG.scaleMode.scale.y -
+        var newBottom:Int = Math.floor(bottom * FlxG.scaleMode.scale.y + offset.y -
             FlxG.mouse.cursor.height);
 
         if (mouseX < newLeft)

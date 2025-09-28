@@ -219,10 +219,6 @@ class FundamentalsL extends PlayState
 
             timerText.alignment = CENTER;
 
-            timerText.textField.antiAliasType = ADVANCED;
-
-            timerText.textField.sharpness = 400.0;
-
             timerText.screenCenter();
 
             add(timerText);

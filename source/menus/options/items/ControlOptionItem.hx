@@ -42,19 +42,15 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
     public var selected:Bool;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _description:String, _option:String):Void
+    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
     {
-        super(_x, _y, _title, _description, _option);
+        super(_x, _y, _title, _tooltip, _option);
 
         controlsText = new FlxText(0.0, 0.0, 0.0, title, 42);
 
         controlsText.color = FlxColor.WHITE;
 
         controlsText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        controlsText.textField.antiAliasType = ADVANCED;
-
-        controlsText.textField.sharpness = 400.0;
 
         controlsText.alignment = CENTER;
 

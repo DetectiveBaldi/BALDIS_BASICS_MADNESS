@@ -72,10 +72,6 @@ class ModeSelectScreen extends TransitionState
 
         nameText.setBorderStyle(OUTLINE, FlxColor.BLACK, 0.5);
 
-        nameText.textField.antiAliasType = ADVANCED;
-
-        nameText.textField.sharpness = 400.0;
-
         nameText.setPosition(nameText.getCenterX(), nameText.getCenterY() + 150.0);
 
         add(nameText);
@@ -89,10 +85,6 @@ class ModeSelectScreen extends TransitionState
         iconText.size = 36;
 
         iconText.alignment = CENTER;
-
-        iconText.textField.antiAliasType = ADVANCED;
-
-        iconText.textField.sharpness = 400.0;
 
         iconText.setPosition(iconText.getCenterX(), nameText.y + nameText.height);
 

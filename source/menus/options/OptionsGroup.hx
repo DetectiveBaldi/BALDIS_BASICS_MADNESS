@@ -4,6 +4,8 @@ import flixel.FlxG;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 
+import flixel.util.FlxSave;
+
 import menus.options.items.BaseOptionItem;
 import menus.options.items.BoolOptionItem;
 import menus.options.items.ControlOptionItem;
@@ -22,10 +24,8 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
     {
         super.update(elapsed);
 
-        for (i in 0 ... members.length)
+        for (option in members)
         {
-            var option:BaseOptionItem = members[i];
-
             if (FlxG.mouse.overlaps(option))
             {
                 if (FlxG.mouse.justReleased)
@@ -36,33 +36,44 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
                     touch?.cancelTouch();
 
                     touch = option;
+
+                    break;
                 }
             }
         }
     }
 
-    public function addBoolOption(title:String, description:String, option:String):BoolOptionItem
+    public function addBoolOption(title:String, tooltip:String, option:String):BoolOptionItem
     {
-        var opt:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, description, option);
+        var opt:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, tooltip, option);
 
         add(opt);
 
         return opt;
     }
 
-    public function addControlOption(title:String, description:String, option:String):ControlOptionItem
+    public function addControlOption(title:String, tooltip:String, option:String):ControlOptionItem
     {
-        var opt:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, description, option);
+        var opt:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, tooltip, option);
 
         add(opt);
 
         return opt;
     }
 
-    public function addIntOption(title:String, description:String, option:String, min:Int, max:Int, step:Int,
+    public function addIntOption(title:String, tooltip:String, option:String, min:Int, max:Int, step:Int,
         cellsToGenerate:Int):IntOptionItem
     {
-        var opt:IntOptionItem = new IntOptionItem(0.0, 0.0, title, description, option, min, max, step, cellsToGenerate);
+        var opt:IntOptionItem = new IntOptionItem(0.0, 0.0, title, tooltip, option, min, max, step, cellsToGenerate);
+
+        add(opt);
+
+        return opt;
+    }
+
+    public function addSaveEraseGroup(title:String, tooltip:String, save:FlxSave):SaveEraseGroup
+    {
+        var opt:SaveEraseGroup = new SaveEraseGroup(0.0, 0.0, title, tooltip, save);
 
         add(opt);
 

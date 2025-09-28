@@ -587,10 +587,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         problemText.alignment = LEFT;
 
-        problemText.textField.antiAliasType = ADVANCED;
-
-        problemText.textField.sharpness = 400.0;
-
         problemText.setPosition(300.0, 260.0);
 
         add(problemText);
@@ -604,10 +600,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
         questionText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         questionText.alignment = LEFT;
-
-        questionText.textField.antiAliasType = ADVANCED;
-
-        questionText.textField.sharpness = 400.0;
 
         questionText.setPosition(300.0, 360.0);
 
@@ -624,10 +616,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
         submissionText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         submissionText.alignment = LEFT;
-
-        submissionText.textField.antiAliasType = ADVANCED;
-
-        submissionText.textField.sharpness = 400.0;
 
         submissionText.setPosition(375.0, 515.0);
 

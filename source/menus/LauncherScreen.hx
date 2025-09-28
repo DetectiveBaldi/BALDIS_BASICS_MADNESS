@@ -100,8 +100,6 @@ class LauncherScreen extends TransitionState
 
     public function clickExitButton():Void
     {
-        FlxG.save.flush();
-        
         Sys.exit(0);
     }
 }
@@ -143,6 +141,8 @@ class LauncherButton extends FlxSprite
             if (FlxG.mouse.justReleased)
                 onClick.dispatch();
         }
+        else
+            animation.play("0");
     }
 
     override function destroy():Void

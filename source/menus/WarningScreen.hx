@@ -61,10 +61,6 @@ class WarningScreen extends TransitionState
 
         text.size = 36;
 
-        text.textField.antiAliasType = ADVANCED;
-
-        text.textField.sharpness = 400.0;
-
         text.screenCenter();
 
         add(text);

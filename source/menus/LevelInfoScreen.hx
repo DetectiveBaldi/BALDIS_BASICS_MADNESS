@@ -87,10 +87,6 @@ class LevelInfoScreen extends FlxSubState
 
         nameText.alignment = CENTER;
 
-        nameText.textField.antiAliasType = ADVANCED;
-
-        nameText.textField.sharpness = 400.0;
-
         nameText.setPosition(clipboard.getCenterX(), 160.0);
 
         add(nameText);
@@ -107,10 +103,6 @@ class LevelInfoScreen extends FlxSubState
 
         scoreText.alignment = CENTER;
 
-        scoreText.textField.antiAliasType = ADVANCED;
-
-        scoreText.textField.sharpness = 400.0;
-
         scoreText.setPosition(clipboard.getCenterX(), 250.0);
 
         add(scoreText);
@@ -126,10 +118,6 @@ class LevelInfoScreen extends FlxSubState
         gradeText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         gradeText.alignment = CENTER;
-
-        gradeText.textField.antiAliasType = ADVANCED;
-
-        gradeText.textField.sharpness = 400.0;
 
         gradeText.setPosition(clipboard.getCenterX(), 450.0);
 

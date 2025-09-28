@@ -162,10 +162,6 @@ class MysteryScreen extends TransitionState implements ISequenceHandler
 
         nameText.alignment = CENTER;
 
-        nameText.textField.antiAliasType = ADVANCED;
-
-        nameText.textField.sharpness = 400.0;
-
         nameText.setPosition(door.getCenterX(), 258.5);
 
         add(nameText);
@@ -582,10 +578,6 @@ class HintScreen extends FlxSubState implements ISequenceHandler
         hintText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
         hintText.alignment = CENTER;
-
-        hintText.textField.antiAliasType = ADVANCED;
-
-        hintText.textField.sharpness = 400.0;
 
         hintText.setPosition(hintText.getCenterX(), 25.0);
 
