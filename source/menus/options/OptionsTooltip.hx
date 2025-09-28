@@ -32,11 +32,11 @@ class OptionsTooltip extends FlxSpriteGroup
 
     public var descText:FlxText;
 
-    public function new(_options:BaseOptionsPage):Void
+    public function new(options:BaseOptionsPage):Void
     {
         super();
 
-        options = _options;
+        this.options = options;
 
         panel = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/options/OptionsTooltip/panel"));
 
@@ -61,10 +61,8 @@ class OptionsTooltip extends FlxSpriteGroup
     {
         super.update(elapsed);
 
-        for (i in 0 ... options.members.length)
+        for (option in options.optionsGroup)
         {
-            var option:BaseOptionItem = options.members[i];
-
             if (FlxG.mouse.overlaps(option))
             {
                 if (lastHover == option)

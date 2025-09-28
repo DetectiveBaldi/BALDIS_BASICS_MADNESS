@@ -37,12 +37,7 @@ class TransitionState extends FlxState
         {
             persistentUpdate = true;
 
-            openSubState(new CustomTransition(IN, () ->
-            {
-                persistentUpdate = false;
-                
-                closeSubState();
-            }));
+            transitionIn(() -> persistentUpdate = false);
         }
 
         cancelFadeIn = false;
@@ -81,9 +76,7 @@ class TransitionState extends FlxState
             return;
         }
 
-        persistentUpdate = false;
-
-        openSubState(new CustomTransition(OUT, onOutroComplete));
+        transitionOut(onOutroComplete);
     }
 
     public function getTransitionSprite(duration:Float, fade:CustomTransitionFade, onFinish:()->Void):CustomTransitionSprite
@@ -97,6 +90,24 @@ class TransitionState extends FlxState
         add(spr);
 
         return spr;
+    }
+
+    public function transitionIn(onFinish:()->Void = null):Void
+    {
+        openSubState(new CustomTransition(IN, () ->
+        {
+            closeSubState();
+
+            if (onFinish != null)
+                onFinish();
+        }));
+    }
+
+    public function transitionOut(onFinish:()->Void = null):Void
+    {
+        persistentUpdate = false;
+
+        openSubState(new CustomTransition(OUT, () -> {if (onFinish != null) onFinish();}));
     }
 }
 

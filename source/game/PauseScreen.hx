@@ -30,6 +30,7 @@ import data.Difficulty;
 import data.LevelData;
 import data.WeekData;
 
+import extendable.TransitionState;
 import extendable.TransitionSubState;
 
 import interfaces.ISequenceHandler;
@@ -241,7 +242,7 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
     override function close():Void
     {
-        TransitionSubState.cancelFadeOut = true;
+        TransitionSubState.cancelFadeOut = selectedIcon != resumeIcon;
 
         super.close();
 
@@ -251,57 +252,56 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         InitState.setMouseRect(lastMouseRect.left, lastMouseRect.right, lastMouseRect.top, lastMouseRect.bottom);
 
-        if (selectedIcon == resumeIcon)
+        if (selectedIcon == restartIcon)
+            FlxG.resetState();
+
+        if (selectedIcon == optionsIcon)
+            FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
+
+        if (selectedIcon == quitIcon)
         {
-            game.resume();
+            var nextState:NextState = game.params?.nextState;
 
-            tune.stop();
-        }
-        else
-        {
-            if (selectedIcon == restartIcon)
-                FlxG.resetState();
-
-            if (selectedIcon == optionsIcon)
-                FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
-
-            if (selectedIcon == quitIcon)
+            if (PlayState.isWeek)
             {
-                var nextState:NextState = game.params?.nextState;
+                nextState ??= () -> new StoryMenuScreen();
+                
+                var weeks:Array<WeekData> = WeekData.list;
 
-                if (PlayState.isWeek)
-                {
-                    nextState ??= () -> new StoryMenuScreen();
-                    
-                    var weeks:Array<WeekData> = WeekData.list;
+                var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == PlayState.week.name);
 
-                    var weekToSearch:WeekData = weeks.first((w:WeekData) -> w.name == PlayState.week.name);
+                StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(PlayState.level.difficulty);
 
-                    StoryMenuScreen.selectedDifficulty = Difficulty.list.indexOf(PlayState.level.difficulty);
+                StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
+            }
+            else
+            {
+                var level:LevelData = PlayState.level;
 
-                    StoryMenuScreen.selectedWeek = weeks.indexOf(weekToSearch);
-                }
+                if (level.obscurity == NONE)
+                    nextState ??= () -> new FreeplayScreen();
                 else
                 {
-                    var level:LevelData = PlayState.level;
+                    nextState ??= () -> new MysteryScreen();
 
-                    if (level.obscurity == NONE)
-                        nextState ??= () -> new FreeplayScreen();
-                    else
-                    {
-                        nextState ??= () -> new MysteryScreen();
+                    var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
 
-                        var filtered:Array<LevelData> = LevelData.list.filter((lv:LevelData) -> lv.obscurity != NONE);
-
-                        MysteryScreen.curSelected = filtered.indexOf(level);
-                    }
+                    MysteryScreen.curSelected = filtered.indexOf(level);
                 }
-
-                FlxG.switchState(nextState);
             }
 
-            tune.fadeOut(0.5, 0.0, (_tween:FlxTween) -> tune.stop());
+            FlxG.switchState(nextState);
         }
+
+        tune.fadeOut(0.5, 0.0, (_tween:FlxTween) -> tune.stop());
+    }
+
+    override function closeHelper():Void
+    {
+        super.closeHelper();
+
+        if (selectedIcon == resumeIcon)
+            game.transitionIn(game.resume);
     }
 
     public function createIcon(file:String):PauseScreenIcon

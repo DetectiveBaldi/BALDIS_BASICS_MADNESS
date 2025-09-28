@@ -288,32 +288,30 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
                 rollTimer._timeCounter = rollTimer.time;
             }
         }
-        else
+
+        var chance:Int = 1;
+
+        if (PlayState.isWeek)
+            chance = -1;
+
+        if (PlayState.level.obscurity != NONE)
+            chance = -1;
+
+        var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
+            HighScore.getLevelScore("Overseer", "Normal").score == 0.0 #end ;
+
+        if (!scoresValidated)
+            chance = -1;
+
+        var oddsValidated:Bool = FlxG.random.int(1, 9) != chance;
+
+        if (oddsValidated)
         {
-            var chance:Int = 1;
+            secretSequence();
 
-            if (PlayState.isWeek)
-                chance = -1;
+            rollSprite.kill();
 
-            if (PlayState.level.obscurity != NONE)
-                chance = -1;
-
-            var scoresValidated:Bool = #if debug true #else HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
-                HighScore.getLevelScore("Overseer", "Normal").score == 0.0 #end ;
-
-            if (!scoresValidated)
-                chance = -1;
-
-            var oddsValidated:Bool = FlxG.random.int(1, 9) == chance;
-
-            if (oddsValidated)
-            {
-                secretSequence();
-
-                rollSprite.kill();
-
-                return;
-            }
+            return;
         }
 
         FlxG.mouse.visible = true;

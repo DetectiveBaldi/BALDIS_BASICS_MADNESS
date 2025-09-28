@@ -37,13 +37,7 @@ class BaseOptionItem extends FlxSpriteGroup
 
         titleText = new FlxText(0.0, 0.0, 0.0, title, 42);
 
-        titleText.color = FlxColor.WHITE;
-
         titleText.font = Paths.font(Paths.ttf("Comic Sans MS"));
-
-        titleText.textField.antiAliasType = ADVANCED;
-
-        titleText.textField.sharpness = 400.0;
 
         titleText.alignment = CENTER;
 

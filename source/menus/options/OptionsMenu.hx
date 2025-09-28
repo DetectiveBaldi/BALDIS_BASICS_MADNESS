@@ -45,7 +45,9 @@ class OptionsMenu extends TransitionState
 
     public var pageLabel:FlxText;
 
-    public var goRightButton:FlxSprite;
+    public var goLeftButton:OrientedButton;
+
+    public var goRightButton:OrientedButton;
 
     public var tooltip:OptionsTooltip;
 
@@ -126,6 +128,17 @@ class OptionsMenu extends TransitionState
 
         add(pageLabel);
 
+        goLeftButton = addOrientedButton(LEFT, () ->
+        {
+            setPage(pageIndex, pageIndex = FlxMath.wrap(pageIndex - 1, 0, optionPages.length - 1));
+        });
+
+        goLeftButton.scale.set(2.0, 2.0);
+
+        goLeftButton.updateHitbox();
+
+        goLeftButton.setPosition(chalkboard.x + 150.0, chalkboard.y + chalkboard.height - goLeftButton.height - 150.0);
+
         goRightButton = addOrientedButton(RIGHT, () ->
         {
             setPage(pageIndex, pageIndex = FlxMath.wrap(pageIndex + 1, 0, optionPages.length - 1));
@@ -166,8 +179,7 @@ class OptionsMenu extends TransitionState
     {
         var oldPage:BaseOptionsPage = optionPages.members[oldIndex];
 
-        for (i in 0 ... oldPage.members.length)
-            oldPage.members[i].cancelTouch();
+        oldPage.cancelTouch();
 
         var newPage:BaseOptionsPage = optionPages.members[newIndex];
 

@@ -6,7 +6,10 @@ import flixel.group.FlxSpriteGroup;
 
 import flixel.math.FlxMath;
 
+import flixel.text.FlxText;
+
 import core.AssetCache;
+import core.Paths;
 
 import ui.OrientedButton;
 
@@ -20,9 +23,11 @@ class IntOptionItem extends VariableOptionItem<Int>
 
     public var step:Int;
 
-    public var leftButton:OrientedButton;
+    public var valueText:FlxText;
 
     public var cells:FlxSpriteGroup;
+
+    public var leftButton:OrientedButton;
 
     public var rightButton:OrientedButton;
 
@@ -37,20 +42,13 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         step = _step;
 
-        leftButton = addOrientedButton(LEFT, () ->
-        {
-            value = Std.int(FlxMath.bound(value - step, min, max));
+        valueText = new FlxText(0.0, 0.0, 0.0, "", 42);
 
-            powerCells();
-        });
+        valueText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
-        leftButton.scale.set(1.85, 1.85);
+        add(valueText);
 
-        leftButton.updateHitbox();
-
-        leftButton.setPosition(titleText.x + titleText.width + 5.0, leftButton.getCenterY(titleText));
-
-        add(leftButton);
+        updateValueText();
 
         cells = new FlxSpriteGroup();
 
@@ -74,15 +72,36 @@ class IntOptionItem extends VariableOptionItem<Int>
             cells.add(cell);
         }
 
-        cells.setPosition(leftButton.x + leftButton.width, cells.getCenterY(titleText));
+        cells.setPosition(titleText.x + titleText.width + 60.0, cells.getCenterY(titleText));
 
         add(cells);
+
+        powerCells();
+
+        leftButton = addOrientedButton(LEFT, () ->
+        {
+            value = Std.int(FlxMath.bound(value - step, min, max));
+
+            powerCells();
+
+            updateValueText();
+        });
+
+        leftButton.scale.set(1.85, 1.85);
+
+        leftButton.updateHitbox();
+
+        leftButton.setPosition(cells.x - leftButton.width, leftButton.getCenterY(titleText));
+
+        add(leftButton);
 
         rightButton = addOrientedButton(RIGHT, () ->
         {
             value = Std.int(FlxMath.bound(value + step, min, max));
 
             powerCells();
+
+            updateValueText();
         });
 
         rightButton.scale.set(1.85, 1.85);
@@ -92,8 +111,6 @@ class IntOptionItem extends VariableOptionItem<Int>
         rightButton.setPosition(cells.x + cells.width, rightButton.getCenterY(titleText));
 
         add(rightButton);
-
-        powerCells();
     }
 
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
@@ -105,6 +122,15 @@ class IntOptionItem extends VariableOptionItem<Int>
         add(button);
 
         return button;
+    }
+
+    public function updateValueText():Void
+    {
+        valueText.text = '<- ${value}';
+
+        valueText.font = Paths.font(Paths.ttf("Comic Sans MS"));
+
+        valueText.setPosition(titleText.x + titleText.width + 265.0, valueText.getCenterY(titleText));
     }
 
     public function powerCells():Void
@@ -119,3 +145,8 @@ class IntOptionItem extends VariableOptionItem<Int>
         }
     }
 }
+
+/**
+ * Not implemented yet.
+ */
+typedef FloatOptionItem = IntOptionItem;
