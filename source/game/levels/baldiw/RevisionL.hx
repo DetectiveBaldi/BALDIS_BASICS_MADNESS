@@ -114,7 +114,7 @@ class RevisionL extends PlayState
             return;
 
         @:privateAccess
-            var musPath:String = AssetCache.getAudioPath(true, instrumental._sound);
+        var musPath:String = AssetCache.getAudioPath(true, instrumental._sound);
 
         if (musPath.contains("Bad-Math"))
             return;
@@ -841,11 +841,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
         if (baldi.animation.name != "frown")
             baldi.animation.play("frown");
 
-        var indicat:FlxSprite = indicators[problemIndex - 1];
-
-        indicat.visible = true;
-
-        indicat.animation.play("incorrect");
+        updateIndicator();
 
         totalIncorrect++;
 
@@ -886,13 +882,17 @@ class ThinkpadMinigame extends FlxSpriteGroup
         {
             PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
 
+            baldi.animation.play("idle");
+
+            updateIndicator(true);
+
+            sndQueue.clearQueue(true);
+
             problemText.text = "THIS IS WHERE IT ALL BEGAN";
 
             questionText.text = "";
 
-            sndQueue.clearQueue(true);
-
-            baldi.animation.play("idle");
+            clearSubmission();
 
             return;
         }
@@ -923,10 +923,6 @@ class ThinkpadMinigame extends FlxSpriteGroup
             default:
                 throw "Unrecognized pattern.";
         }
-
-        var indicat:FlxSprite = indicators[problemIndex - 1];
-
-        indicat.visible = true;
         
         if (parsSub * multiplier == answer || Options.botplay && problemIndex != 3.0)
         {
@@ -941,7 +937,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 sndQueue.queue(FlxG.sound.load(AssetCache.getSound("shared/BAL_Praise" + FlxG.random.int(1, 3))));
             }
 
-            indicat.animation.play("correct");
+            updateIndicator();
         }
         else
         {
@@ -954,7 +950,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             totalIncorrect++;
 
-            indicat.animation.play("incorrect");
+            updateIndicator(true);
         }
 
         if (corrupted)
@@ -987,6 +983,15 @@ class ThinkpadMinigame extends FlxSpriteGroup
         problemText.size = 32;
 
         questionText.text = "";
+    }
+
+    public function updateIndicator(incorrect:Bool = false):Void
+    {
+        var indicator:FlxSprite = indicators[problemIndex - 1];
+
+        indicator.visible = true;
+
+        indicator.animation.play(incorrect ? "incorrect" : "correct");
     }
 
     public function lengthenOp(op:String):String
