@@ -44,7 +44,7 @@ class LevelData
         {
             var s:String = split[i];
 
-            split[i] = s.getFirstChar().toUpperCase();
+            split[i] = s.charAt(0).toUpperCase();
         }
 
         return '${split.join("")}L';

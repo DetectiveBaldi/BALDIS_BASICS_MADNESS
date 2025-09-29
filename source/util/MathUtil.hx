@@ -8,6 +8,7 @@ import flixel.math.FlxMath;
 
 import flixel.util.FlxAxes;
 
+@:nullSafety
 class MathUtil
 {
     public static function minInt(...values:Int):Int

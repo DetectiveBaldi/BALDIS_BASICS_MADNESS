@@ -2,13 +2,9 @@ package util;
 
 using StringTools;
 
+@:nullSafety
 class StringUtil
 {
-    public static function getFirstChar(str:String):String
-    {
-        return str.charAt(0);
-    }
-
     public static function setCase(str:String, delimiter:String = " ", strCase:StringCase):String
     {
         switch (strCase:StringCase)
