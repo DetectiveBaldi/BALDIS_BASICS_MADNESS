@@ -642,87 +642,81 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         super.update(elapsed);
 
+        var firstJustPressed:Int = keys.firstJustPressed();
+
         if (Options.botplay)
-            return;
+            firstJustPressed = -1;
 
-        if (problemIndex == totalSolved)
+        switch (firstJustPressed:Int)
         {
-            for (k => v in buttons)
-                v.animation.play("deselected");
-        }
-        else
-        {
-            var firstJustPressed:Int = keys.firstJustPressed();
-
-            switch (firstJustPressed:Int)
+            case FlxKey.BACKSPACE:
             {
-                case FlxKey.BACKSPACE:
-                {
-                    if (submission.length > 0.0)
-                        submission = submission.substring(0, submission.length - 1);
-                    else
-                        negative = false;
-
-                    updateSubmissionText();
-                }
-
-                case FlxKey.MINUS:
-                    updateSubmission(-1);
-                
-                case FlxKey.ENTER:
-                {
-                    if (submission != "" || problemIndex == 3.0)
-                        checkSubmission();
-                }
-
-                default:
-                {
-                    var keyStr:String = FlxKey.toStringMap[firstJustPressed];
-
-                    var keyInt:Int = keyStr.parseInt();
-
-                    if (keyInt != -1)
-                        updateSubmission(keyInt);
-                }
-            }
-
-            for (k => v in buttons)
-            {
-                if (FlxG.mouse.overlaps(v))
-                {
-                    if (FlxG.mouse.justReleased)
-                    {
-                        switch (k:String)
-                        {
-                            case "CLEAR":
-                            {
-                                submission = "";
-
-                                negative = false;
-
-                                updateSubmissionText();
-                            }
-
-                            case "MINUS":
-                                updateSubmission(-1);
-                            
-                            case "OK":
-                            {
-                                if (submission != "" || problemIndex == 3.0)
-                                    checkSubmission();
-                            }
-                            
-                            default:
-                                updateSubmission(k.toLowerCase().parseInt());
-                        }
-                    }
-                    
-                    if (k != "OK" || submission != "" || problemIndex == 3.0)
-                        v.animation.play("selected");
-                }
+                if (submission.length > 0.0)
+                    submission = submission.substring(0, submission.length - 1);
                 else
-                    v.animation.play("deselected");
+                    negative = false;
+
+                updateSubmissionText();
             }
+
+            case FlxKey.MINUS:
+                updateSubmission(-1);
+            
+            case FlxKey.ENTER:
+            {
+                if (submission != "" || negative)
+                    checkSubmission();
+            }
+
+            default:
+            {
+                var keyStr:String = FlxKey.toStringMap[firstJustPressed];
+
+                var keyInt:Null<Int> = keyStr.parseInt();
+
+                if (keyInt != null)
+                    updateSubmission(keyInt);
+            }
+        }
+
+        for (k => v in buttons)
+        {
+            if (FlxG.mouse.overlaps(v))
+            {
+                if (Options.botplay)
+                    continue;
+
+                if (FlxG.mouse.justReleased)
+                {
+                    switch (k:String)
+                    {
+                        case "CLEAR":
+                        {
+                            submission = "";
+
+                            negative = false;
+
+                            updateSubmissionText();
+                        }
+
+                        case "MINUS":
+                            updateSubmission(-1);
+                        
+                        case "OK":
+                        {
+                            if (submission != "" || negative)
+                                checkSubmission();
+                        }
+                        
+                        default:
+                            updateSubmission(k.toLowerCase().parseInt());
+                    }
+                }
+                
+                v.animation.play("selected");
+            }
+            else
+                v.animation.play("deselected");
         }
     }
 
@@ -823,17 +817,17 @@ class ThinkpadMinigame extends FlxSpriteGroup
     {
         sndQueue.clearQueue(true);
 
+        clearSubmission();
+
         if (problemIndex == totalSolved)
             return;
 
         if (baldi.animation.name != "frown")
             baldi.animation.play("frown");
 
-        updateIndicator();
+        updateIndicator(true);
 
         totalIncorrect++;
-
-        clearSubmission();
 
         if (corrupted)
             showQuote();
@@ -866,6 +860,9 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public function checkSubmission():Void
     {
+        if (problemIndex == totalSolved)
+            return;
+
         if ( #if debug true #else !PlayState.isWeek #end && submission == "31718")
         {
             PlayState.loadLevel(LevelData.list.first((lv:LevelData) -> lv.name == "Beginnings"));
@@ -887,7 +884,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         questionText.text = '${val1}${op1}${val2}';
 
-        var parsSub:Int = submission.parseInt();
+        var numSubmission:Null<Int> = submission.parseInt();
 
         var multiplier:Int = 1;
 
@@ -911,8 +908,15 @@ class ThinkpadMinigame extends FlxSpriteGroup
             default:
                 throw "Unrecognized pattern.";
         }
+
+        var numToCheck:Null<Float> = numSubmission * multiplier;
+
+        var answerValidated:Bool = numToCheck != null && numToCheck == answer;
+
+        if (Options.botplay && problemIndex != 3.0)
+            answerValidated = true;
         
-        if (parsSub * multiplier == answer || Options.botplay && problemIndex != 3.0)
+        if (answerValidated)
         {
             questionText.text += '=${answer}';
 
@@ -929,7 +933,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
         }
         else
         {
-            questionText.text += '≠${submission}';
+            questionText.text += '≠${negative ? "-" : ""}${submission}';
 
             if (baldi.animation.name != "frown")
                 baldi.animation.play("frown");

@@ -53,7 +53,7 @@ class StringUtil
         }
     }
 
-    public static function parseInt(str:String):Int
+    public static function parseInt(str:String):Null<Int>
     {
         str = str.toLowerCase();
 
@@ -63,7 +63,7 @@ class StringUtil
         if (stringToInt.exists(str))
             return stringToInt[str];
 
-        return Std.parseInt(str) ?? -1;
+        return Std.parseInt(str);
     }
 }
 
