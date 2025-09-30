@@ -198,10 +198,4 @@ class NoteSpawner extends FlxBasic
             note = noteData[noteIndex];
         }
     }
-
-    public function removeActiveNotes():Void
-    {
-        for (strumline in strumlines)
-            strumline.removeAllNotes();
-    }
 }

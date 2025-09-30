@@ -483,7 +483,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         if (cancelFadeIn)
         {
-            difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty]}'));
+            difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty].toLowerCase()}'));
 
             difficultyPanel.setPosition(difficultyPanel.getCenterX(), -difficultyPanel.height);
         }
@@ -491,7 +491,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
         {
             tweens.tween(difficultyPanel, {y: -difficultyPanel.height}, 0.25, {ease: FlxEase.backOut, onComplete: (_:FlxTween) ->
             {
-                difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty]}'));
+                difficultyPanel.loadGraphic(AssetCache.getGraphic('menus/FreeplayScreen/panels/diff-${Difficulty.list[selectedDifficulty].toLowerCase()}'));
             }});
         }
 

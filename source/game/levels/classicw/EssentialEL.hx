@@ -296,8 +296,11 @@ class EssentialEL extends PlayState
         {
             tweens.tween(this.cameraPoint, {x: 500.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 
-            tweens.tween(essentialES.hall.colorTransform, {redOffset: 155.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 155.0},
-                conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            if (Options.flashingLights)
+            {
+                tweens.tween(essentialES.hall.colorTransform, {redOffset: 155.0, greenOffset: 0.0, blueOffset: 0.0, alphaOffset: 155.0},
+                    conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+            }
         }
 
         if (step == 1264)

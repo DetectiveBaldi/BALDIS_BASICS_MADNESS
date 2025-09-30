@@ -249,7 +249,7 @@ class PlayField extends FlxGroup
         super.update(elapsed);
 
         if (conductor.time > 0.0)
-            timerNeedle.angle = (conductor.time / instrumental.length) * 360.0;
+            timerNeedle.angle = (instrumental.time / instrumental.length) * 360.0;
     }
 
     override function destroy():Void

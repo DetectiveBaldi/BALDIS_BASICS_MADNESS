@@ -295,7 +295,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         stage.add(spectators);
 
-        if (chart?.spectator != "")
+        if (chart.spectator != "")
         {
             spectator = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.spectator));
 
@@ -425,23 +425,31 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 startSong();
         }
         else
-        {   
+        {
             if (instrumental.playing)
             {
-                if (Math.abs(conductor.time - instrumental.time) >= 25.0)
+                var conductorDesync:Float = Math.abs(conductor.time - instrumental.time);
+
+                if (conductorDesync >= 25.0)
                     conductor.time = instrumental.time;
 
+                var mainVocalsDesync:Float = 0.0;
+
                 if (mainVocals != null)
-                    if (Math.abs(mainVocals.time - instrumental.time) >= 5.0)
-                        mainVocals.time = instrumental.time;
+                    mainVocalsDesync = Math.abs(mainVocals.time - instrumental.time);
+
+                var opponentVocalsDesync:Float = 0.0;
 
                 if (opponentVocals != null)
-                    if (Math.abs(opponentVocals.time - instrumental.time) >= 5.0)
-                        opponentVocals.time = instrumental.time;
+                    opponentVocalsDesync = Math.abs(opponentVocals.time - instrumental.time);
+
+                var playerVocalsDesync:Float = 0.0;
 
                 if (playerVocals != null)
-                    if (Math.abs(playerVocals.time - instrumental.time) >= 5.0)
-                        playerVocals.time = instrumental.time;
+                    playerVocalsDesync = Math.abs(playerVocals.time - instrumental.time);
+
+                if (mainVocalsDesync >= 35.0 || opponentVocalsDesync >= 35.0 || playerVocalsDesync >= 35.0)
+                    resyncVocals();
             }
         }
         
@@ -840,11 +848,15 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function pause():Void
     {
-        openSubState(new PauseScreen(this));
-
         gameCamera.active = false;
 
+        plrStrumline.resetStrums();
+
+        plrStrumline.resetKeysHeld();
+
         pauseMusic();
+
+        openSubState(new PauseScreen(this));
     }
 
     public function resume():Void
@@ -897,6 +909,22 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         if (playerVocals != null)
             playerVocals.time = time;
+    }
+
+    public function resyncVocals():Void
+    {
+        pauseMusic();
+
+        if (mainVocals != null)
+            mainVocals.time = instrumental.time;
+
+        if (opponentVocals != null)
+            opponentVocals.time = instrumental.time;
+
+        if (playerVocals != null)
+            playerVocals.time = instrumental.time;
+
+        resumeMusic();
     }
 }
 

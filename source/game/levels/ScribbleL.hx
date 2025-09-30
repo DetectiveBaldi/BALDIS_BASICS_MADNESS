@@ -321,7 +321,7 @@ class ScribbleUI extends FlxBasic
 
         timeText.size = 18;
 
-        timeText.text = "0:00";
+        timeText.text = "0:00 / 0:00";
 
         timeText.font = Paths.font(Paths.ttf("Comic Sans MS"));
 
@@ -340,7 +340,10 @@ class ScribbleUI extends FlxBasic
         super.update(elapsed);
 
         if (!game.startingSong)
-            timeText.text = FlxStringUtil.formatTime(game.conductor.time * 0.001);
+        {
+            timeText.text = '${FlxStringUtil.formatTime(game.instrumental.time * 0.001)} / ${
+                FlxStringUtil.formatTime(game.instrumental.length * 0.001)}';
+        }
         
         progressBar.value = healthBar.value;
     }

@@ -13,6 +13,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 
+import flixel.util.FlxDestroyUtil;
+
 import core.AssetCache;
 import core.Options;
 import core.Paths;
@@ -161,7 +163,7 @@ class Character extends FlxSprite
 
         keys = null;
 
-        lastScale.put();
+        lastScale = FlxDestroyUtil.put(lastScale);
 
         danceSteps = null;
     }

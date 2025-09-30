@@ -29,7 +29,7 @@ class Strumline extends FlxGroup
 {
     public var conductor:Conductor;
 
-    public var keys:Map<Int, Int>;
+    public var keysToCheck:Map<Int, Int>;
 
     public var keysHeld:Array<Bool>;
 
@@ -105,7 +105,7 @@ class Strumline extends FlxGroup
 
         conductor = _conductor;
 
-        getKeys();
+        getKeysToCheck();
 
         keysHeld = [for (i in 0 ... 4) false];
 
@@ -197,7 +197,7 @@ class Strumline extends FlxGroup
         }
         else
         {
-            for (k => v in keys)
+            for (k => v in keysToCheck)
             {
                 var keyCode:Int = k;
 
@@ -205,8 +205,6 @@ class Strumline extends FlxGroup
 
                 if (FlxG.keys.checkStatus(keyCode, JUST_PRESSED))
                 {
-                    keysHeld[direc] = true;
-
                     var strum:Strum = strums.members[direc];
 
                     strum.animation.play(Note.DIRECTIONS[direc].toLowerCase() + "Press");
@@ -218,6 +216,9 @@ class Strumline extends FlxGroup
                     else
                         noteHit(note);
                 }
+
+                if (FlxG.keys.checkStatus(keyCode, PRESSED))
+                    keysHeld[direc] = true;
 
                 if (FlxG.keys.checkStatus(keyCode, JUST_RELEASED))
                 {
@@ -292,7 +293,7 @@ class Strumline extends FlxGroup
     {
         super.destroy();
 
-        keys = null;
+        keysToCheck = null;
 
         keysHeld = null;
 
@@ -305,9 +306,9 @@ class Strumline extends FlxGroup
         onGhostTap = cast FlxDestroyUtil.destroy(onGhostTap);
     }
 
-    public function getKeys():Map<Int, Int>
+    public function getKeysToCheck():Map<Int, Int>
     {
-        return keys =
+        return keysToCheck =
         [
             for (i in 0 ... Note.DIRECTIONS.length)
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
@@ -318,6 +319,12 @@ class Strumline extends FlxGroup
     public function resetStrums():Void
     {
         strums.forEach((strum:Strum) -> strum.animation.play(Note.DIRECTIONS[strum.direction].toLowerCase() + "Static", true));
+    }
+
+    public function resetKeysHeld():Void
+    {
+        for (i in 0 ... keysHeld.length)
+            keysHeld[i] = false;
     }
 
     public function setStrumActive(direc:Int, active:Bool):Void
@@ -621,18 +628,6 @@ class Strumline extends FlxGroup
             sustains.members.remove(note.sustain);
 
             trails.members.remove(note.sustain.trail);
-        }
-    }
-
-    public function removeAllNotes():Void
-    {
-        var i:Int = notes.members.length - 1;
-
-        while (i >= 0.0)
-        {
-            removeNote(notes.members[i]);
-
-            i--;
         }
     }
 }

@@ -176,7 +176,7 @@ class SetbackL extends PlayState
 
             playField.scoreClip.visible = playField.scoreText.visible = playField.timerClock.visible = true;
 
-            setbackUI.progressBar.visible = true;
+            setbackUI.progressBar.visible = setbackUI.timeText.visible = true;
 
             oppStrumline.strums.alpha = 1.0;
             plrStrumline.strums.alpha = 1.0;

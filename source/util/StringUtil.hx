@@ -52,10 +52,8 @@ class StringUtil
     {
         v = v.toLowerCase();
 
-        var base10:Map<String, Int> = MathUtil.BASE_10;
-
-        if (base10.exists(v))
-            return base10[v];
+        if (MathUtil.BASE_10.exists(v))
+            return MathUtil.BASE_10[v];
 
         return Std.parseInt(v);
     }

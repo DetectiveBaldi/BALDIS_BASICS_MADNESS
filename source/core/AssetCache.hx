@@ -55,7 +55,7 @@ class AssetCache
         if (graphics.exists(path))
             return graphics[path];
 
-        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));
+        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(Assets.getBitmapData(path, false));
 
         if (Options.gpuCaching && gpuCaching)
             graphic.bitmap.disposeImage();
@@ -89,7 +89,7 @@ class AssetCache
         if (sounds.exists(path))
             return sounds[path];
 
-        sounds[path] = Sound.fromFile(path);
+        sounds[path] = Assets.getSound(path, false);
 
         return sounds[path];
     }
@@ -101,7 +101,10 @@ class AssetCache
         if (music.exists(path))
             return music[path];
 
-        music[path] = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(path)));
+        if (Options.soundStreaming)
+            music[path] = Assets.getMusic(path, false);
+        else
+            music[path] = Assets.getSound(path, false);
 
         return music[path];
     }
