@@ -4,18 +4,13 @@ using StringTools;
 
 class StringUtil
 {
-    public static function getFirstChar(str:String):String
-    {
-        return str.charAt(0);
-    }
-
-    public static function setCase(str:String, delimiter:String = " ", strCase:StringCase):String
+    public static function setCase(v:String, delimiter:String = " ", strCase:StringCase):String
     {
         switch (strCase:StringCase)
         {
             case CAMEL:
             {
-                var split:Array<String> = str.split(delimiter);
+                var split:Array<String> = v.split(delimiter);
 
                 for (i in 0 ... split.length)
                 {
@@ -35,11 +30,11 @@ class StringUtil
             }
 
             case KEBAB:
-                return str.toLowerCase().replace(delimiter, "-");
+                return v.toLowerCase().replace(delimiter, "-");
 
             case PASCAL:
             {
-                var split:Array<String> = str.split(delimiter);
+                var split:Array<String> = v.split(delimiter);
 
                 for (i in 0 ... split.length)
                 {
@@ -53,17 +48,16 @@ class StringUtil
         }
     }
 
-    public static function parseInt(str:String):Null<Int>
+    public static function parseInt(v:String):Null<Int>
     {
-        str = str.toLowerCase();
+        v = v.toLowerCase();
 
-        var stringToInt:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
-            "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
+        var base10:Map<String, Int> = MathUtil.BASE_10;
 
-        if (stringToInt.exists(str))
-            return stringToInt[str];
+        if (base10.exists(v))
+            return base10[v];
 
-        return Std.parseInt(str);
+        return Std.parseInt(v);
     }
 }
 
