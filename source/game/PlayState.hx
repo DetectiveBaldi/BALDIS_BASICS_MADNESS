@@ -430,7 +430,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
             {
                 var conductorDesync:Float = Math.abs(conductor.time - instrumental.time);
 
-                if (conductorDesync >= 25.0)
+                if (conductorDesync >= 20.0)
                     conductor.time = instrumental.time;
 
                 var mainVocalsDesync:Float = 0.0;
@@ -448,7 +448,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
                 if (playerVocals != null)
                     playerVocalsDesync = Math.abs(playerVocals.time - instrumental.time);
 
-                if (mainVocalsDesync >= 35.0 || opponentVocalsDesync >= 35.0 || playerVocalsDesync >= 35.0)
+                if (mainVocalsDesync >= 20.0 || opponentVocalsDesync >= 20.0 || playerVocalsDesync >= 20.0)
                     resyncVocals();
             }
         }
@@ -856,6 +856,8 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         pauseMusic();
 
+        resyncVocals();
+
         openSubState(new PauseScreen(this));
     }
 
@@ -913,8 +915,6 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function resyncVocals():Void
     {
-        pauseMusic();
-
         if (mainVocals != null)
             mainVocals.time = instrumental.time;
 
@@ -923,8 +923,6 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         if (playerVocals != null)
             playerVocals.time = instrumental.time;
-
-        resumeMusic();
     }
 }
 
