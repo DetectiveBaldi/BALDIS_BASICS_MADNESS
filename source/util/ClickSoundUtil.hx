@@ -6,12 +6,11 @@ import flixel.sound.FlxSound;
 
 import core.AssetCache;
 
-@:nullSafety
 class ClickSoundUtil
 {
-    public static var itemClick:Null<FlxSound>;
+    public static var itemClick:FlxSound;
 
-    public static var buttonClick:Null<FlxSound>;
+    public static var buttonClick:FlxSound;
 
     public static function init():Void
     {
@@ -24,18 +23,15 @@ class ClickSoundUtil
         itemClick.persist = true;
     }
 
-    public static function resolve(type:ClickSoundType = ITEM):Null<FlxSound>
+    public static function resolve(type:ClickSoundType = ITEM):FlxSound
     {
         return type == BUTTON ? buttonClick : itemClick;
     }
 
     public static function play(type:ClickSoundType = ITEM, volume:Float = 1.0):Void
     {
-        var clickSound:Null<FlxSound> = resolve(type);
+        var clickSound:FlxSound = resolve(type);
 
-        if (clickSound == null)
-            return;
-        
         clickSound.volume = volume;
 
         clickSound.play(true);

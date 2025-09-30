@@ -25,14 +25,13 @@ import plugins.MouseRectPlugin;
 
 import util.ClickSoundUtil;
 
-@:nullSafety
 class InitState extends FlxState
 {
     public var nextState:NextState;
 
-    public static var fullscreenPlugin:Null<FullscreenPlugin>;
+    public static var fullscreenPlugin:FullscreenPlugin;
 
-    public static var mouseRectPlugin:Null<MouseRectPlugin>;
+    public static var mouseRectPlugin:MouseRectPlugin;
 
     public function new(_nextState:NextState):Void
     {
@@ -121,9 +120,6 @@ class InitState extends FlxState
 
     public static function setMouseRect(left:Float = 0.0, right:Float = 0.0, top:Float = 0.0, bottom:Float = 0.0):Void
     {
-        if (mouseRectPlugin == null)
-            return;
-        
         mouseRectPlugin.setMouseRect(left, right, top, bottom);
     }
 }

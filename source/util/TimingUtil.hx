@@ -2,7 +2,6 @@ package util;
 
 import haxe.ds.ArraySort;
 
-@:nullSafety
 class TimingUtil
 {
     public static function sortTimed<T:TimedObject>(v:Array<T>):Void

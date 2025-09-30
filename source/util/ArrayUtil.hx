@@ -1,6 +1,5 @@
 package util;
 
-@:nullSafety
 class ArrayUtil
 {
     public static function pushMany<T>(arr:Array<T>, ...v:T):Void
@@ -9,9 +8,9 @@ class ArrayUtil
             arr.push(v[i]);
     }
 
-    public static function first<T>(arr:Array<T>, func:(T)->Bool = null):Null<T>
+    public static function first<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
-        var result:Null<T> = null;
+        var result:T = null;
 
         if (arr.length == 0.0)
             return result;
@@ -36,9 +35,9 @@ class ArrayUtil
         return result;
     }
 
-    public static function last<T>(arr:Array<T>, func:(T)->Bool = null):Null<T>
+    public static function last<T>(arr:Array<T>, func:(T)->Bool = null):T
     {
-        var result:Null<T> = null;
+        var result:T = null;
 
         if (arr.length == 0.0)
             return result;
