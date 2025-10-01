@@ -7,6 +7,8 @@ class DiscordRPC
 
 	public static var userData:DiscordUserData;
 
+	public static var presence:hxdiscord_rpc.Types.DiscordRichPresence;
+
     public static function init():Void
     {
         final handlers:hxdiscord_rpc.Types.DiscordEventHandlers = new hxdiscord_rpc.Types.DiscordEventHandlers();
@@ -23,15 +25,18 @@ class DiscordRPC
 		{
 			while (true)
 			{
-				#if DISCORD_DISABLE_IO_THREAD
-				hxdiscord_rpc.Discord.UpdateConnection();
-				#end
-
 				hxdiscord_rpc.Discord.RunCallbacks();
 
 				Sys.sleep(2.0);
 			}
 		});
+
+		presence = new hxdiscord_rpc.Types.DiscordRichPresence();
+    }
+
+	public static function shutdown():Void
+    {
+        hxdiscord_rpc.Discord.Shutdown();
     }
 
     public static function onReady(request:cpp.RawConstPointer<hxdiscord_rpc.Types.DiscordUser>):Void
@@ -51,10 +56,51 @@ class DiscordRPC
 		userData = null;
 	}
 
-    public static function shutdown():Void
-    {
-        hxdiscord_rpc.Discord.Shutdown();
-    }
+	public static function setState(state:cpp.ConstCharStar):Void
+	{
+		presence.state = state;
+
+		updatePresence();
+	}
+
+	public static function setDetails(details:cpp.ConstCharStar):Void
+	{
+		presence.details = details;
+
+		updatePresence();
+	}
+
+	public static function setTimestamps(startTimestamp:cpp.Int64, endTimestamp:cpp.Int64):Void
+	{
+		presence.startTimestamp = startTimestamp;
+
+		presence.endTimestamp = endTimestamp;
+
+		updatePresence();
+	}
+
+	public static function setImageKeys(largeImageKey:cpp.ConstCharStar, smallImageKey:cpp.ConstCharStar):Void
+	{
+		presence.largeImageKey = largeImageKey;
+
+		presence.smallImageKey = smallImageKey;
+
+		updatePresence();
+	}
+
+	public static function setImageText(largeImageText:cpp.ConstCharStar, smallImageText:cpp.ConstCharStar):Void
+	{
+		presence.largeImageText = largeImageText;
+
+		presence.smallImageText = smallImageText;
+
+		updatePresence();
+	}
+
+	public static function updatePresence():Void
+	{
+		hxdiscord_rpc.Discord.UpdatePresence(cpp.RawConstPointer.addressOf(presence));
+	}
 }
 
 typedef DiscordUserData =
@@ -75,6 +121,19 @@ class DiscordRPC
     public static function init():Void {}
 
     public static function shutdown():Void {}
+
+	public static function setState(state:String):Void {}
+
+	public static function setDetails(details:String):Void {}
+
+	// Maybe we should just be using the `Int` type here, but `haxe.Int64` also seems suitable.
+	public static function setTimestamps(startTimestamp:haxe.Int64, endTimestamp:haxe.Int64):Void {}
+
+	public static function setImageKeys(largeImageKey:String, smallImageKey:String):Void {}
+
+	public static function setImageText(largeImageText:String, smallImageText:String):Void {}
+
+	public static function updatePresence():Void {}
 }
 
 typedef DiscordUserData =

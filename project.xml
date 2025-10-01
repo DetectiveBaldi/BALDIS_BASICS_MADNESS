@@ -43,8 +43,6 @@
 
 	<haxelib name="hxdiscord_rpc" unless="hl" />
 
-	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
-
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<set name="BUILD_DIR" value="bin/debug" if="debug" />
