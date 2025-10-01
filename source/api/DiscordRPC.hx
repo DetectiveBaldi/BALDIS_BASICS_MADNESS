@@ -1,27 +1,23 @@
 package api;
 
 #if cpp
+import hxdiscord_rpc.Types;
 class DiscordRPC
 {
-    public static final DISCORD_ID:String = "0";
+    public static final DISCORD_ID:String = "1220870416374038649";
 
-	public static var userData:DiscordUserData;
+	public static var workHelper:sys.thread.Thread;
 
+	// Cached helper object so that we don't need to constantly recreate this type.
 	public static var presence:hxdiscord_rpc.Types.DiscordRichPresence;
 
     public static function init():Void
     {
         final handlers:hxdiscord_rpc.Types.DiscordEventHandlers = new hxdiscord_rpc.Types.DiscordEventHandlers();
 
-		handlers.ready = cpp.Function.fromStaticFunction(onReady);
-
-		handlers.disconnected = cpp.Function.fromStaticFunction(onDisconnect);
-
-		handlers.errored = cpp.Function.fromStaticFunction(onError);
-
         hxdiscord_rpc.Discord.Initialize(DISCORD_ID, cpp.RawPointer.addressOf(handlers), false, null);
 
-        sys.thread.Thread.create(processConnection);
+        workHelper = sys.thread.Thread.create(doWork);
 
 		presence = new hxdiscord_rpc.Types.DiscordRichPresence();
     }
@@ -31,31 +27,18 @@ class DiscordRPC
         hxdiscord_rpc.Discord.Shutdown();
     }
 
-    public static function onReady(request:cpp.RawConstPointer<hxdiscord_rpc.Types.DiscordUser>):Void
-	{
-		var user:hxdiscord_rpc.Types.DiscordUser = request[0];
-
-		userData = {id: user.userId, username: user.username, avatar: user.avatar}
-	}
-
-	public static function onDisconnect(errorCode:Int, message:cpp.ConstCharStar):Void
-	{
-		userData = null;
-	}
-
-	public static function onError(errorCode:Int, message:cpp.ConstCharStar):Void
-	{
-		userData = null;
-	}
-
-	// The define `DISCORD_DISABLE_IO_THREAD` causes unexplainable failures, so we can't use it here.
-	public static function processConnection():Void
+	public static function doWork():Void
 	{
 		while (true)
 		{
+			#if DISCORD_DISABLE_IO_THREAD
+			Discord.UpdateConnection();
+			#end
+			
 			hxdiscord_rpc.Discord.RunCallbacks();
 
-			Sys.sleep(2.0);
+			// Sleep for 1 second to avoid large overload.
+			Sys.sleep(1.0);
 		}
 	}
 
@@ -82,8 +65,16 @@ class DiscordRPC
 		updatePresence();
 	}
 
+	public static function getLargeImageKey():cpp.ConstCharStar
+	{
+		return "large-image-key";
+	}
+
 	public static function setImageKeys(largeImageKey:cpp.ConstCharStar, smallImageKey:cpp.ConstCharStar):Void
 	{
+		if (largeImageKey == null)
+			presence.largeImageKey = getLargeImageKey();
+
 		presence.largeImageKey = largeImageKey;
 
 		presence.smallImageKey = smallImageKey;
@@ -102,31 +93,28 @@ class DiscordRPC
 
 	public static function updatePresence():Void
 	{
+		presence.type = DiscordActivityType_Playing;
+
+		final button:DiscordButton = new DiscordButton();
+		button.label = "Test 1";
+		button.url = "https://example.com";
+		presence.buttons[0] = button;
+
+		final button:DiscordButton = new DiscordButton();
+		button.label = "Test 2";
+		button.url = "https://example.com";
+		presence.buttons[1] = button;
+
 		hxdiscord_rpc.Discord.UpdatePresence(cpp.RawConstPointer.addressOf(presence));
 	}
 }
-
-typedef DiscordUserData =
-{
-	public var id:cpp.ConstCharStar;
-
-	public var username:cpp.ConstCharStar;
-
-	public var avatar:cpp.ConstCharStar;
-}
 #else
-// This module does not function on HashLink. We still create a helpful little structures to avoid various compiler checks.
+// This module does not function on HashLink. We still create this simplified structure to avoid various compiler checks.
 class DiscordRPC
 {
-	public static final DISCORD_ID:String = "0";
-
-	public static var userData:DiscordUserData;
-	
     public static function init():Void {}
 
-    public static function shutdown():Void {}
-
-	public static function processConnection():Void {}
+	public static function shutdown():Void {}
 
 	public static function setState(state:String):Void {}
 
@@ -138,16 +126,5 @@ class DiscordRPC
 	public static function setImageKeys(largeImageKey:String, smallImageKey:String):Void {}
 
 	public static function setImageText(largeImageText:String, smallImageText:String):Void {}
-
-	public static function updatePresence():Void {}
-}
-
-typedef DiscordUserData =
-{
-	public var id:String;
-
-	public var username:String;
-
-	public var avatar:String;
 }
 #end

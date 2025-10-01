@@ -8,6 +8,8 @@ import flixel.sound.FlxSound;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
+import api.DiscordRPC;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -30,6 +32,12 @@ class LauncherScreen extends TransitionState
     override function create():Void
     {
         super.create();
+
+        DiscordRPC.setState("Exploring the launcher.");
+
+        DiscordRPC.setDetails("In the menus...");
+
+        DiscordRPC.setImageKeys(null, "in-menu-small-image-key");
 
         FlxG.mouse.visible = true;
 
