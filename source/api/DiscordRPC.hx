@@ -21,15 +21,7 @@ class DiscordRPC
 
         hxdiscord_rpc.Discord.Initialize(DISCORD_ID, cpp.RawPointer.addressOf(handlers), false, null);
 
-        sys.thread.Thread.create(() ->
-		{
-			while (true)
-			{
-				hxdiscord_rpc.Discord.RunCallbacks();
-
-				Sys.sleep(2.0);
-			}
-		});
+        sys.thread.Thread.create(processConnection);
 
 		presence = new hxdiscord_rpc.Types.DiscordRichPresence();
     }
@@ -54,6 +46,17 @@ class DiscordRPC
 	public static function onError(errorCode:Int, message:cpp.ConstCharStar):Void
 	{
 		userData = null;
+	}
+
+	// The define `DISCORD_DISABLE_IO_THREAD` causes unexplainable failures, so we can't use it here.
+	public static function processConnection():Void
+	{
+		while (true)
+		{
+			hxdiscord_rpc.Discord.RunCallbacks();
+
+			Sys.sleep(2.0);
+		}
 	}
 
 	public static function setState(state:cpp.ConstCharStar):Void
@@ -112,6 +115,7 @@ typedef DiscordUserData =
 	public var avatar:cpp.ConstCharStar;
 }
 #else
+// This module does not function on HashLink. We still create a helpful little structures to avoid various compiler checks.
 class DiscordRPC
 {
 	public static final DISCORD_ID:String = "0";
@@ -121,6 +125,8 @@ class DiscordRPC
     public static function init():Void {}
 
     public static function shutdown():Void {}
+
+	public static function processConnection():Void {}
 
 	public static function setState(state:String):Void {}
 
