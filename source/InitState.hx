@@ -11,6 +11,8 @@ import flixel.FlxState;
 
 import flixel.util.typeLimit.NextState;
 
+import api.DiscordRPC;
+
 import core.AssetCache;
 import core.Options;
 import core.Paths;
@@ -73,6 +75,8 @@ class InitState extends FlxState
         FlxG.console.registerClass(HighScore);
 
         FlxG.plugins.drawOnTop = true;
+
+        DiscordRPC.init();
 
         AssetCache.init();
 

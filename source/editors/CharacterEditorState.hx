@@ -241,6 +241,8 @@ class CharacterEditorState extends TransitionState
 
             updateGhostScale();
 
+            character.calcOffsetsByScale();
+
             updateOffsetLabel();
         }
 
@@ -257,6 +259,8 @@ class CharacterEditorState extends TransitionState
             character.screenCenter();
 
             updateGhostScale();
+
+            character.calcOffsetsByScale();
 
             updateOffsetLabel();
         }
@@ -605,15 +609,13 @@ class CharacterEditorState extends TransitionState
 
     public function setAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
     {
+        var offsets:AxisData<Float> = getCurrentAnimationOffset();
+
+        offsets.x = x;
+
+        offsets.y = y;
+
         var animation:AnimationData = getCurrentAnimation();
-
-        animation.offset.x = x;
-
-        animation.offset.y = y;
-
-        var offsetsToCopy:AxisData<Float> = animation.offset;
-
-        character.baseOffsets[animation.name] = {x: offsetsToCopy.x, y: offsetsToCopy.y}
 
         updateOffsetLabel();
     }

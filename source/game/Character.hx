@@ -58,12 +58,10 @@ class Character extends FlxSprite
     public var strumline:Strumline;
 
     public var keys:Array<Int>;
-    
-    public var config:CharacterData;
 
     public var lastScale:FlxPoint;
-
-    public var baseOffsets:Map<String, AxisData<Float>>;
+    
+    public var config:CharacterData;
 
     public var danceSteps:Array<String>;
 
@@ -93,6 +91,8 @@ class Character extends FlxSprite
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
                     Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
         ];
+
+        lastScale = FlxPoint.get();
         
         loadConfig(_config);
 
@@ -187,8 +187,6 @@ class Character extends FlxSprite
 
         scale.set(config.scale?.x ?? 1.0, config.scale?.y ?? 1.0);
 
-        lastScale ??= FlxPoint.get();
-
         lastScale.copyFrom(scale);
 
         updateHitbox();
@@ -196,10 +194,6 @@ class Character extends FlxSprite
         flipX = config.flipX ?? false;
 
         flipY = config.flipY ?? false;
-
-        baseOffsets ??= new Map<String, AxisData<Float>>();
-
-        baseOffsets.clear();
 
         for (i in 0 ... config.animations.length)
         {
@@ -221,10 +215,6 @@ class Character extends FlxSprite
             else
                 animation.addByPrefix(animData.name, animData.prefix, animData.frameRate, animData.looped,
                     animData.flipX, animData.flipY);
-
-            var offsetToCopy:AxisData<Float> = animData.offset;
-
-            baseOffsets[animData.name] = {x: offsetToCopy.x, y: offsetToCopy.y};
         }
 
         danceSteps = config.danceSteps;
@@ -255,12 +245,10 @@ class Character extends FlxSprite
         for (i in 0 ... config.animations.length)
         {
             var animData:AnimationData = config.animations[i];
-
-            var oldOffsets:AxisData<Float> = baseOffsets[animData.name];
             
-            animData.offset.x = Math.floor(oldOffsets.x * xRatio);
+            animData.offset.x *= xRatio;
             
-            animData.offset.y = Math.floor(oldOffsets.y * yRatio);
+            animData.offset.y *= yRatio;
         }
 
         lastScale.copyFrom(scale);

@@ -24,11 +24,9 @@ class SaveEraseGroup extends BaseOptionItem
 
         panel = new ConfirmationPanel();
 
-        panel.active = false;
-
-        panel.visible = false;
-
         panel.x = titleText.x + 420.0;
+
+        panel.kill();
 
         panel.onClick.add(eraseSave);
 
@@ -45,9 +43,7 @@ class SaveEraseGroup extends BaseOptionItem
 
             if (FlxG.mouse.justReleased)
             {
-                panel.active = true;
-
-                panel.visible = true;
+                panel.revive();
 
                 ClickSoundUtil.play();
             }
@@ -60,9 +56,7 @@ class SaveEraseGroup extends BaseOptionItem
     {
         super.cancelTouch();
 
-        panel.active = false;
-
-        panel.visible = false;
+        panel.kill();
     }
 
     public function eraseSave():Void
