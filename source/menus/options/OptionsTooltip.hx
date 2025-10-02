@@ -80,7 +80,7 @@ class OptionsTooltip extends FlxSpriteGroup
 
         for (option in options)
         {
-            if (!(option is IHasTooltip) || option == options.optionsGroup)
+            if (!(option is IHasTooltip))
                 continue;
 
             if (FlxG.mouse.overlaps(option, camera))

@@ -122,7 +122,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
         {
             titleText.color = FlxColor.WHITE;
 
-            if (FlxG.mouse.overlaps(this, camera))
+            if (FlxG.mouse.overlaps(titleText, camera))
             {
                 titleText.underline = true;
 
