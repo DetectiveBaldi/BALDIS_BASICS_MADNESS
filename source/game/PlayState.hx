@@ -241,6 +241,8 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         DiscordHandler.setImageKeys(null, "in-song-small-image-key");
 
+        DiscordHandler.setImageText(null, null);
+
         gameCamera.filters = new Array<BitmapFilter>();
         
         hudCamera = new FlxCamera();
@@ -364,11 +366,11 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         plrStrumline.vocals = playerVocals ?? mainVocals;
 
-        spectators.group.memberAdded.add((spectator:Character) -> spectator.strumline = playField.opponentStrumline);
+        spectators.group.memberAdded.add((spectator:Character) -> spectator.strumline = oppStrumline);
 
-        opponents.group.memberAdded.add((opponent:Character) -> opponent.strumline = playField.opponentStrumline);
+        opponents.group.memberAdded.add((opponent:Character) -> opponent.strumline = oppStrumline);
 
-        players.group.memberAdded.add((player:Character) -> player.strumline = playField.playerStrumline);
+        players.group.memberAdded.add((player:Character) -> player.strumline = plrStrumline);
 
         if (spectator != null)
             spectators.add(spectator);
@@ -380,6 +382,8 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         updateHealthBar("opponent");
 
         updateHealthBar("player");
+
+        DiscordHandler.setImageText(null, playField.playStats.toString());
 
         countdown = new Countdown(conductor);
         
@@ -848,11 +852,29 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function noteSpawn(note:Note):Void {}
 
-    public function noteHit(ev:NoteHitEvent):Void {}
+    public function noteHit(ev:NoteHitEvent):Void
+    {
+        if (ev.note.lane == 0.0)
+            return;
 
-    public function noteMiss(note:Note):Void {}
+        DiscordHandler.setImageText(null, playField.playStats.toString());
+    }
 
-    public function ghostTap(ev:GhostTapEvent):Void {}
+    public function noteMiss(note:Note):Void
+    {
+        if (note.lane == 0.0)
+            return;
+
+        DiscordHandler.setImageText(null, playField.playStats.toString());
+    }
+
+    public function ghostTap(ev:GhostTapEvent):Void
+    {
+        if (ev.ghostTapping)
+            return;
+
+        DiscordHandler.setImageText(null, playField.playStats.toString());
+    }
 
     public function pause():Void
     {

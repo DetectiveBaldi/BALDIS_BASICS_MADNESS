@@ -75,6 +75,8 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
 
         DiscordHandler.setImageKeys(null, "game-over-small-image-key");
 
+        DiscordHandler.setImageText(null, null);
+
         camera = FlxG.cameras.list.last();
 
         camera.zoom = 0.75;

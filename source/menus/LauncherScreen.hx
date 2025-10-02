@@ -39,6 +39,8 @@ class LauncherScreen extends TransitionState
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
+        DiscordHandler.setImageText(null, null);
+
         FlxG.mouse.visible = true;
 
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-launcher").bitmap);

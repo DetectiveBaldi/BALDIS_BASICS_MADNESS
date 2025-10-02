@@ -52,6 +52,8 @@ class CreditsScreen extends TransitionState
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
+        DiscordHandler.setImageText(null, null);
+
         bg = new FlxSprite();
 
         bg.loadGraphic(AssetCache.getGraphic("menus/CreditsScreen/Text1"));

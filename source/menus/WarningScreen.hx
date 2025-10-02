@@ -31,6 +31,8 @@ class WarningScreen extends TransitionState
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
+        DiscordHandler.setImageText(null, null);
+
         var textColorSwap:FlxTextFormat = new FlxTextFormat(FlxColor.RED);
 
         var rules:Array<FlxTextFormatMarkerPair> = [new FlxTextFormatMarkerPair(textColorSwap, "<color-swap>")];

@@ -15,6 +15,16 @@ class PlayStats
     {
         return {score: 0, hits: 0, misses: 0, bonus: 0.0}
     }
+
+    public static function getColorForGrade(grade:String):FlxColor
+    {
+        var indexOf:Int = allGrades.indexOf(grade);
+
+        if (indexOf == -1)
+            return FlxColor.BLACK;
+
+        return FlxColor.interpolate(0xFF0EF403, 0xFFF70001, indexOf / (allGrades.length - 1));
+    }
     
     public var score:Int;
 
@@ -79,13 +89,8 @@ class PlayStats
         return {score: score, hits: hits, misses: misses, bonus: bonus}
     }
 
-    public static function getColorForGrade(grade:String):FlxColor
+    public function toString():String
     {
-        var indexOf:Int = allGrades.indexOf(grade);
-
-        if (indexOf == -1)
-            return FlxColor.BLACK;
-
-        return FlxColor.interpolate(0xFF0EF403, 0xFFF70001, indexOf / (allGrades.length - 1));
+        return 'Score: ${score}, Grade: ${grade}';
     }
 }
