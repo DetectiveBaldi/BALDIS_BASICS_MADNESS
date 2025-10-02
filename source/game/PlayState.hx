@@ -714,7 +714,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
             }
         }
 
-        if (Math.isNaN(accuracy))
+        if (Options.botplay)
             unlocks.resize(0);
 
         FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
