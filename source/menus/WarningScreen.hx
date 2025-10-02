@@ -41,19 +41,17 @@ class WarningScreen extends TransitionState
 
         textToShow += "<color-swap>WARNING\n\n<color-swap>";
 
-        textToShow += "This is a mod of Friday Night Funkin',\n";
+        textToShow += "This is a mod for Friday Night Funkin'\n";
 
-        textToShow += "based off a<color-swap> horror game <color-swap>called Baldi's Basics.\n";
+        textToShow += "based off of the<color-swap> indie horror game <color-swap>named\n Baldi's Basics.";
 
-        textToShow += "This mod includes\n";
+        textToShow += " As such, this mod includes\n";
 
         textToShow += "flashing lights, loud noises, and\n";
 
-        textToShow += "other elements that might make the player\n";
+        textToShow += "other elements that might make\nsome players uncomfortable.\n\n";
 
-        textToShow += "uncomfortable.\n\n";
-
-        textToShow += "If you wish to not experience any of this,\n";
+        textToShow += "If you don't wish to experience any of this,\n";
 
         textToShow += "<color-swap>DO NOT PLAY.\n\n<color-swap>";
 

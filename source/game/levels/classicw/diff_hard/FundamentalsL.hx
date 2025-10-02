@@ -1,18 +1,11 @@
 package game.levels.classicw.diff_hard;
 
-import flixel.animation.FlxAnimation;
 import flixel.FlxG;
-import flixel.FlxBasic;
 import flixel.FlxSprite;
 
 import flixel.text.FlxText;
 
-import flixel.group.FlxSpriteGroup;
-
-import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -20,10 +13,6 @@ import flixel.util.FlxTimer;
 import core.AssetCache;
 import core.Options;
 import core.Paths;
-
-import data.CharacterData;
-
-import game.events.SetCamFocusEvent;
 
 import game.stages.classicw.diff_hard.FundamentalsS;
 
@@ -44,6 +33,8 @@ class FundamentalsL extends PlayState
         fundamentalsS = cast (stage, FundamentalsS);
 
         super.create();
+        
+        AssetCache.getGraphic("game/Character/playtime");
 
         fundamentalsS.hall0.visible = true;
 
