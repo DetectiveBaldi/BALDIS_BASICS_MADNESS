@@ -8,6 +8,8 @@ import flixel.text.FlxText;
 
 import flixel.util.FlxColor;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -23,9 +25,11 @@ class WarningScreen extends TransitionState
     {
         super.create();
 
-        FlxG.mouse.visible = true;
+        DiscordHandler.setState(null);
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         var textColorSwap:FlxTextFormat = new FlxTextFormat(FlxColor.RED);
 
@@ -76,5 +80,12 @@ class WarningScreen extends TransitionState
     {
         if (FlxG.keys.justPressed.ANY || FlxG.mouse.justReleased)
             FlxG.switchState(() -> new TitleScreen());
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+        
+        FlxG.mouse.visible = false;
     }
 }

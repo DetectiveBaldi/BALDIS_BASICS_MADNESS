@@ -13,6 +13,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.util.typeLimit.NextState;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 
 import data.CharacterData;
@@ -68,6 +70,10 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
     override function create():Void
     {
         super.create();
+
+        DiscordHandler.setDetails("Game over!");
+
+        DiscordHandler.setImageKeys(null, "game-over-small-image-key");
 
         camera = FlxG.cameras.list.last();
 

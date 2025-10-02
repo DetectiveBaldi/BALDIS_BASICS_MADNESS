@@ -1,8 +1,7 @@
 package api;
 
 #if cpp
-import hxdiscord_rpc.Types;
-class DiscordRPC
+class DiscordHandler
 {
     public static final DISCORD_ID:String = "1220870416374038649";
 
@@ -13,13 +12,32 @@ class DiscordRPC
 
     public static function init():Void
     {
-        final handlers:hxdiscord_rpc.Types.DiscordEventHandlers = new hxdiscord_rpc.Types.DiscordEventHandlers();
+		if (workHelper == null)
+		{
+			workHelper = sys.thread.Thread.create(doWork);
 
-        hxdiscord_rpc.Discord.Initialize(DISCORD_ID, cpp.RawPointer.addressOf(handlers), false, null);
+			presence = new hxdiscord_rpc.Types.DiscordRichPresence();
 
-        workHelper = sys.thread.Thread.create(doWork);
+			final button:hxdiscord_rpc.Types.DiscordButton = new hxdiscord_rpc.Types.DiscordButton();
 
-		presence = new hxdiscord_rpc.Types.DiscordRichPresence();
+			button.label = "Download";
+
+			button.url = "https://gamebanana.com/mods/623189";
+
+			presence.buttons[0] = button;
+
+			final button:hxdiscord_rpc.Types.DiscordButton = new hxdiscord_rpc.Types.DiscordButton();
+
+			button.label = "Twitter (X)";
+
+			button.url = "https://x.com/BaldiMadness";
+
+			presence.buttons[1] = button;
+		}
+
+		final handlers:hxdiscord_rpc.Types.DiscordEventHandlers = new hxdiscord_rpc.Types.DiscordEventHandlers();
+
+		hxdiscord_rpc.Discord.Initialize(DISCORD_ID, cpp.RawPointer.addressOf(handlers), false, null);
     }
 
 	public static function shutdown():Void
@@ -29,7 +47,7 @@ class DiscordRPC
 
 	public static function doWork():Void
 	{
-		while (true)
+		while (core.Options.discordRPC)
 		{
 			#if DISCORD_DISABLE_IO_THREAD
 			Discord.UpdateConnection();
@@ -72,10 +90,7 @@ class DiscordRPC
 
 	public static function setImageKeys(largeImageKey:cpp.ConstCharStar, smallImageKey:cpp.ConstCharStar):Void
 	{
-		if (largeImageKey == null)
-			presence.largeImageKey = getLargeImageKey();
-
-		presence.largeImageKey = largeImageKey;
+		presence.largeImageKey = largeImageKey ?? getLargeImageKey();
 
 		presence.smallImageKey = smallImageKey;
 
@@ -93,24 +108,17 @@ class DiscordRPC
 
 	public static function updatePresence():Void
 	{
+		if (!core.Options.discordRPC)
+			return;
+
 		presence.type = DiscordActivityType_Playing;
-
-		final button:DiscordButton = new DiscordButton();
-		button.label = "Test 1";
-		button.url = "https://example.com";
-		presence.buttons[0] = button;
-
-		final button:DiscordButton = new DiscordButton();
-		button.label = "Test 2";
-		button.url = "https://example.com";
-		presence.buttons[1] = button;
 
 		hxdiscord_rpc.Discord.UpdatePresence(cpp.RawConstPointer.addressOf(presence));
 	}
 }
 #else
 // This module does not function on HashLink. We still create this simplified structure to avoid various compiler checks.
-class DiscordRPC
+class DiscordHandler
 {
     public static function init():Void {}
 
@@ -126,5 +134,7 @@ class DiscordRPC
 	public static function setImageKeys(largeImageKey:String, smallImageKey:String):Void {}
 
 	public static function setImageText(largeImageText:String, smallImageText:String):Void {}
+
+	public static function updatePresence():Void {}
 }
 #end

@@ -14,15 +14,23 @@ using util.MathUtil;
 
 class BoolOptionItem extends VariableOptionItem<Bool>
 {
+    public var editable:Bool;
+
     public var checkContainer:FlxSprite;
 
     public var checkbox:FlxSprite;
+
+    public var strikethrough:FlxSprite;
 
     public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
     {
         super(_x, _y, _title, _tooltip, _option);
 
+        editable = true;
+
         checkContainer = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/options/items/BoolOptionItem/checkContainer"));
+
+        checkContainer.active = false;
 
         checkContainer.scale.set(3.0, 3.0);
 
@@ -33,6 +41,8 @@ class BoolOptionItem extends VariableOptionItem<Bool>
         add(checkContainer);
 
         checkbox = new FlxSprite().loadGraphic(AssetCache.getGraphic("shared/numpad-indicators"), true, 24, 24);
+
+        checkbox.active = false;
 
         checkbox.visible = value;
 
@@ -47,17 +57,29 @@ class BoolOptionItem extends VariableOptionItem<Bool>
         checkbox.centerTo(checkContainer);
 
         add(checkbox);
+
+        strikethrough = new FlxSprite().makeGraphic(Math.floor(titleText.width), 4, FlxColor.WHITE);
+
+        strikethrough.active = false;
+
+        strikethrough.visible = false;
+
+        strikethrough.centerTo(titleText);
+
+        add(strikethrough);
     }
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(this, camera))
+        if (FlxG.mouse.overlaps(titleText, camera))
         {
             titleText.underline = true;
 
-            if (FlxG.mouse.justReleased)
+            strikethrough.visible = !editable;
+
+            if (FlxG.mouse.justReleased && editable)
             {
                 ClickSoundUtil.play();
                 
@@ -67,6 +89,15 @@ class BoolOptionItem extends VariableOptionItem<Bool>
             }
         }
         else
+        {
             titleText.underline = false;
+
+            strikethrough.visible = false;
+        }
+    }
+
+    public function setEditable(v:Bool):Void
+    {
+        editable = v;
     }
 }

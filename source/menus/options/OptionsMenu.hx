@@ -23,6 +23,7 @@ import menus.options.pages.GeneralOptionsPage;
 import menus.options.pages.BaseOptionsPage;
 import menus.options.pages.ControlsPage;
 import menus.options.pages.GameplayOptionsPage;
+import menus.options.pages.TestingOptionsPage;
 
 import ui.BackOutButton;
 import ui.OrientedButton;
@@ -108,6 +109,10 @@ class OptionsMenu extends TransitionState
         optionPages.add(optionPage);
 
         optionPage = new GameplayOptionsPage();
+
+        optionPages.add(optionPage);
+
+        optionPage = new TestingOptionsPage();
 
         optionPages.add(optionPage);
         

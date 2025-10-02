@@ -8,7 +8,7 @@ import flixel.sound.FlxSound;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
-import api.DiscordRPC;
+import api.DiscordHandler;
 
 import core.AssetCache;
 import core.Paths;
@@ -33,11 +33,11 @@ class LauncherScreen extends TransitionState
     {
         super.create();
 
-        DiscordRPC.setState("Exploring the launcher.");
+        DiscordHandler.setState(null);
 
-        DiscordRPC.setDetails("In the menus...");
+        DiscordHandler.setDetails("In the menus...");
 
-        DiscordRPC.setImageKeys(null, "in-menu-small-image-key");
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         FlxG.mouse.visible = true;
 
@@ -86,6 +86,13 @@ class LauncherScreen extends TransitionState
         tune = FlxG.sound.load(AssetCache.getMusic("menus/LauncherScreen/tune"));
 
         tune.play();
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+
+        FlxG.mouse.visible = false;
     }
 
     public function playSlapSound(onComplete:()->Void):Void

@@ -13,6 +13,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 
+import api.DiscordHandler;
+
 import extendable.TransitionState;
 
 import core.AssetCache;
@@ -59,6 +61,12 @@ class TitleScreen extends TransitionState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
         
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState(null);
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         title = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/TitleScreen/title"));
 

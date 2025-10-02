@@ -28,7 +28,7 @@ class OptionsTooltip extends FlxSpriteGroup
 {
     public var options:BaseOptionsPage;
 
-    public var lastHover:IHasTooltip;
+    public var hover:IHasTooltip;
 
     public var panel:FlxSprite;
 
@@ -65,12 +65,12 @@ class OptionsTooltip extends FlxSpriteGroup
             {
                 visible = true;
 
-                if (lastHover == option)
+                if (hover == option)
                     break;
 
-                lastHover = option;
+                hover = option;
 
-                updateTooltip(lastHover);
+                updateTooltip(hover);
 
                 break;
             }
@@ -89,12 +89,12 @@ class OptionsTooltip extends FlxSpriteGroup
 
                 var option:IHasTooltip = cast (option, IHasTooltip);
 
-                if (lastHover == option)
+                if (hover == option)
                     break;
 
-                lastHover = option;
+                hover = option;
 
-                updateTooltip(lastHover);
+                updateTooltip(hover);
 
                 break;
             }

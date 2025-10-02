@@ -25,6 +25,8 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -98,6 +100,12 @@ class MysteryScreen extends TransitionState implements ISequenceHandler
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState("Finding secrets...");
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         tweens = new FlxTweenManager();
 

@@ -37,38 +37,6 @@ class Options
         return frameRate;
     }
 
-    public static var gpuCaching(get, set):Bool;
-
-    @:noCompletion
-    static function get_gpuCaching():Bool
-    {
-        return SaveManager.options.data.gpuCaching ??= false;
-    }
-
-    @:noCompletion
-    static function set_gpuCaching(_gpuCaching:Bool):Bool
-    {
-        SaveManager.options.data.gpuCaching = _gpuCaching;
-
-        return gpuCaching;
-    }
-
-    public static var soundStreaming(get, set):Bool;
-
-    @:noCompletion
-    static function get_soundStreaming():Bool
-    {
-        return SaveManager.options.data.soundStreaming ??= false;
-    }
-
-    @:noCompletion
-    static function set_soundStreaming(_soundStreaming:Bool):Bool
-    {
-        SaveManager.options.data.soundStreaming = _soundStreaming;
-
-        return soundStreaming;
-    }
-
     public static var flashingLights(get, set):Bool;
 
     @:noCompletion
@@ -174,5 +142,53 @@ class Options
         SaveManager.options.data.botplay = _botplay;
 
         return botplay;
+    }
+
+    public static var discordRPC(get, set):Bool;
+
+    @:noCompletion
+    static function get_discordRPC():Bool
+    {
+        return #if (hl || debug) false #else SaveManager.options.data.discordRPC ??= true #end;
+    }
+
+    @:noCompletion
+    static function set_discordRPC(_discordRPC:Bool):Bool
+    {
+        SaveManager.options.data.discordRPC = _discordRPC;
+
+        return discordRPC;
+    }
+
+    public static var gpuCaching(get, set):Bool;
+
+    @:noCompletion
+    static function get_gpuCaching():Bool
+    {
+        return SaveManager.options.data.gpuCaching ??= false;
+    }
+
+    @:noCompletion
+    static function set_gpuCaching(_gpuCaching:Bool):Bool
+    {
+        SaveManager.options.data.gpuCaching = _gpuCaching;
+
+        return gpuCaching;
+    }
+
+    public static var soundStreaming(get, set):Bool;
+
+    @:noCompletion
+    static function get_soundStreaming():Bool
+    {
+        return SaveManager.options.data.soundStreaming ??= false;
+    }
+
+    @:noCompletion
+    static function set_soundStreaming(_soundStreaming:Bool):Bool
+    {
+        SaveManager.options.data.soundStreaming = _soundStreaming;
+
+        return soundStreaming;
     }
 }

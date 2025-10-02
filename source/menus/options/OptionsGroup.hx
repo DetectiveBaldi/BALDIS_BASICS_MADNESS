@@ -14,7 +14,7 @@ import menus.options.items.NumericOptionItem;
 class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
 {
     public var touch:BaseOptionItem;
-
+    
     public function new():Void
     {
         super();
@@ -24,8 +24,10 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
     {
         super.update(elapsed);
 
-        for (option in members)
+        for (i in 0 ... members.length)
         {
+            var option:BaseOptionItem = members[i];
+
             if (FlxG.mouse.overlaps(option))
             {
                 if (FlxG.mouse.justReleased)

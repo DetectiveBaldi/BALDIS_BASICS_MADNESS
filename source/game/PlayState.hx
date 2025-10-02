@@ -23,6 +23,8 @@ import flixel.util.typeLimit.NextState;
 
 import flixel.sound.FlxSound;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 import core.Options;
@@ -232,6 +234,12 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
     override function create():Void
     {
         super.create();
+
+        DiscordHandler.setState('${level.name}, ${level.difficulty.toUpperCase()}');
+
+        DiscordHandler.setDetails("Playing a level.");
+
+        DiscordHandler.setImageKeys(null, "in-song-small-image-key");
 
         gameCamera.filters = new Array<BitmapFilter>();
         

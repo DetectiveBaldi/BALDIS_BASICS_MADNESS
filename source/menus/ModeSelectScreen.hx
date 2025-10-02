@@ -13,6 +13,8 @@ import flixel.util.FlxSignal;
 
 import flixel.addons.display.FlxBackdrop;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -49,6 +51,12 @@ class ModeSelectScreen extends TransitionState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState("Picking a style.");
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 

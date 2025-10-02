@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 
 import flixel.util.FlxColor;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 
 import extendable.TransitionState;
@@ -30,6 +32,12 @@ class AboutScreen extends TransitionState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState(null);
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         bg = new FlxSprite();
 

@@ -1,14 +1,11 @@
 package menus;
 
-import ui.OrientedButton;
-import flixel.util.FlxDestroyUtil;
-import util.ClickSoundUtil;
-import flixel.graphics.FlxGraphic;
-import flixel.util.FlxSignal;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
 import flixel.util.FlxColor;
+
+import api.DiscordHandler;
 
 import core.AssetCache;
 
@@ -17,6 +14,7 @@ import extendable.TransitionState;
 import flixel.sound.FlxSound;
 
 import ui.BackOutButton;
+import ui.OrientedButton;
 
 using util.MathUtil;
 
@@ -47,6 +45,12 @@ class CreditsScreen extends TransitionState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState("Learning about who made this place special.");
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         bg = new FlxSprite();
 
@@ -103,6 +107,13 @@ class CreditsScreen extends TransitionState
         tune.play();
     }
 
+    override function destroy():Void
+    {
+        super.destroy();
+        
+        FlxG.mouse.visible = false;
+    }
+
     public function addOrientedButton(orientation:ButtonOrientation, onClick:()->Void):OrientedButton
     {
         var button:OrientedButton = new OrientedButton(0.0, 0.0, orientation);
@@ -146,12 +157,5 @@ class CreditsScreen extends TransitionState
         leftButton.active = false;
 
         leftButton.visible = false;
-    }
-
-    override function destroy():Void
-    {
-        super.destroy();
-
-        FlxG.mouse.visible = false;
     }
 }

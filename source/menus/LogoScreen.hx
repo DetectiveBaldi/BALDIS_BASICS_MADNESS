@@ -13,6 +13,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -38,9 +40,11 @@ class LogoScreen extends TransitionState implements ISequenceHandler
     {
         super.create();
 
-        FlxG.mouse.visible = false;
+        DiscordHandler.setState(null);
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
         tweens = new FlxTweenManager();
 
@@ -102,5 +106,12 @@ class LogoScreen extends TransitionState implements ISequenceHandler
                     FlxG.camera.fade(FlxColor.BLACK, 1.5, false, () -> FlxG.switchState(() -> new WarningScreen())));
             });
         });
+    }
+
+    override function destroy():Void
+    {
+        super.destroy();
+        
+        FlxG.mouse.visible = false;
     }
 }
