@@ -241,7 +241,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         DiscordHandler.setImageKeys(null, "in-song-small-image-key");
 
-        DiscordHandler.setImageText(null, null);
+        DiscordHandler.setImageTexts(null, null);
 
         gameCamera.filters = new Array<BitmapFilter>();
         
@@ -328,11 +328,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         playField.camera = hudCamera;
 
-        if (params?.playStats != null)
-            playField.playStats = params?.playStats;
-
-        if (params?.health != null)
-            playField.healthBar.value = params?.health;
+        playField.onUpdateScore.add(updateScore);
 
         add(playField);
 
@@ -340,19 +336,15 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         FlxG.watch.add(playField.playStats, "misses", "Misses");
 
-        FlxG.watch.add(playField.playStats, "accuracy", "Accuracy%");
+        FlxG.watch.add(playField.playStats, "accuracy", "Accuracy (%)");
 
         var healthBar:HealthBar = playField.healthBar;
 
         healthBar.onEmptied.add(gameOver);
 
-        oppStrumline.onNoteSpawn.add(noteSpawn); plrStrumline.onNoteSpawn.add(noteSpawn);
-
-        oppStrumline.onNoteHit.add(noteHit); plrStrumline.onNoteHit.add(noteHit);
-
-        oppStrumline.onNoteMiss.add(noteMiss); plrStrumline.onNoteMiss.add(noteMiss);
-
-        oppStrumline.onGhostTap.add(ghostTap); plrStrumline.onGhostTap.add(ghostTap);
+        oppStrumline.onNoteSpawn.add(noteSpawn);
+        
+        plrStrumline.onNoteSpawn.add(noteSpawn);
 
         oppStrumline.characters = opponents;
 
@@ -383,22 +375,13 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         updateHealthBar("player");
 
-        DiscordHandler.setImageText(null, playField.playStats.toString());
+        updateScore(playField.playStats);
 
         countdown = new Countdown(conductor);
         
         countdown.camera = hudCamera;
 
         add(countdown);
-
-        var startOnTime:Null<Float> = params?.startOnTime;
-
-        if (startOnTime != null && startOnTime > 0.0)
-        {
-            countdown.skip();
-
-            changeTime(startOnTime);
-        }
 
         startingSong = true;
 
@@ -852,32 +835,17 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function noteSpawn(note:Note):Void {}
 
-    public function noteHit(ev:NoteHitEvent):Void
+    public function updateScore(playStats:PlayStats):Void
     {
-        if (ev.note.lane == 0.0)
-            return;
-
-        DiscordHandler.setImageText(null, playField.playStats.toString());
-    }
-
-    public function noteMiss(note:Note):Void
-    {
-        if (note.lane == 0.0)
-            return;
-
-        DiscordHandler.setImageText(null, playField.playStats.toString());
-    }
-
-    public function ghostTap(ev:GhostTapEvent):Void
-    {
-        if (ev.ghostTapping)
-            return;
-
-        DiscordHandler.setImageText(null, playField.playStats.toString());
+        DiscordHandler.setImageTexts(null, playStats.toString());
     }
 
     public function pause():Void
     {
+        DiscordHandler.setDetails("PAUSE");
+
+        DiscordHandler.setImageKeys(null, "in-song-paused-small-image-key");
+
         gameCamera.active = false;
 
         plrStrumline.resetStrums();
@@ -893,6 +861,10 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function resume():Void
     {
+        DiscordHandler.setDetails("Playing a level.");
+
+        DiscordHandler.setImageKeys(null, "in-song-small-image-key");
+
         gameCamera.active = true;
         
         resumeMusic();
@@ -900,6 +872,12 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function gameOver():Void
     {
+        DiscordHandler.setDetails("Game over!");
+
+        DiscordHandler.setImageKeys(null, "game-over-small-image-key");
+
+        DiscordHandler.setImageTexts(null, null);
+
         persistentDraw = false;
 
         openSubState(new GameOverScreen(this));
@@ -981,21 +959,6 @@ enum CameraLockMode
 
 typedef PlayStateParams =
 {
-    /**
-     * At what point in time should the level initialize to?
-     */
-    var ?startOnTime:Float;
-
-    /**
-     * Play stats to initialize with.
-     */
-    var ?playStats:PlayStats;
-
-    /**
-     * Health to initialize with.
-     */
-    var ?health:Float;
-
     /**
      * Where should we go after this level is finished?
      */

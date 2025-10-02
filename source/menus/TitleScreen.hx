@@ -68,7 +68,7 @@ class TitleScreen extends TransitionState
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
-        DiscordHandler.setImageText(null, null);
+        DiscordHandler.setImageTexts(null, null);
 
         title = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/TitleScreen/title"));
 

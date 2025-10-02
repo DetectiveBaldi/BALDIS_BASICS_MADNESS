@@ -39,7 +39,7 @@ class AboutScreen extends TransitionState
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
-        DiscordHandler.setImageText(null, null);
+        DiscordHandler.setImageTexts(null, null);
 
         bg = new FlxSprite();
 

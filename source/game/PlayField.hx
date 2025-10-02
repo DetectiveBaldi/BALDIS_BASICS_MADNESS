@@ -17,6 +17,8 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 
 import flixel.util.FlxColor;
+import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 
 import data.Chart;
@@ -70,34 +72,26 @@ class PlayField extends FlxGroup
 
     public var creditsPop:CreditsPopup;
 
-    public var scrollSpeed(default, set):Float;
-
-    @:noCompletion
-    function set_scrollSpeed(_scrollSpeed:Float):Float
-    {
-        scrollSpeed = _scrollSpeed;
-
-        strumlines.forEach((strumline:Strumline) -> strumline.scrollSpeed = scrollSpeed);
-
-        return scrollSpeed;
-    }
-
     public var noteSpawner:NoteSpawner;
 
     public var strumlines:FlxTypedGroup<Strumline>;
+
+    public var scrollSpeed:Float;
 
     public var opponentStrumline:Strumline;
 
     public var playerStrumline:Strumline;
 
-    public function new(?tweens:FlxTweenManager, ?timers:FlxTimerManager, _conductor:Conductor, 
+    public var onUpdateScore:FlxTypedSignal<(playStats:PlayStats)->Void>;
+
+    public function new(tweens:FlxTweenManager, timers:FlxTimerManager, _conductor:Conductor, 
         _chart:Chart, _instrumental:FlxSound):Void
     {
         super();
 
-        this.tweens = tweens ?? FlxTween.globalManager;
+        this.tweens = tweens;
 
-        this.timers = timers ?? FlxTimer.globalManager;
+        this.timers = timers;
 
         conductor = _conductor;
 
@@ -213,9 +207,13 @@ class PlayField extends FlxGroup
 
         add(strumlines);
 
+        scrollSpeed = chart.scrollSpeed;
+
         noteSpawner.strumlines = strumlines;
 
         opponentStrumline = new Strumline(conductor);
+
+        opponentStrumline.scrollSpeed = scrollSpeed;
 
         opponentStrumline.botplay = true;
 
@@ -226,8 +224,6 @@ class PlayField extends FlxGroup
 
         playerStrumline = new Strumline(conductor);
 
-        playerStrumline.botplay = Options.botplay;
-
         playerStrumline.onNoteHit.add(noteHit);
 
         playerStrumline.onNoteMiss.add(noteMiss);
@@ -236,12 +232,16 @@ class PlayField extends FlxGroup
 
         playerStrumline.onGhostTap.add(ghostTap);
 
+        playerStrumline.scrollSpeed = scrollSpeed;
+
+        playerStrumline.botplay = Options.botplay;
+
         playerStrumline.strums.setPosition(FlxG.width - playerStrumline.strums.width - 45.0, playerStrumline.downscroll ?
             FlxG.height - playerStrumline.strums.height - 15.0 : 15.0);
 
         strumlines.add(playerStrumline);
 
-        scrollSpeed = chart.scrollSpeed;
+        onUpdateScore = new FlxTypedSignal<(playStats:PlayStats)->Void>();
     }
 
     override function update(elapsed:Float):Void
@@ -257,6 +257,8 @@ class PlayField extends FlxGroup
         super.destroy();
 
         conductor?.onStepHit?.remove(stepHit);
+
+        onUpdateScore = cast FlxDestroyUtil.destroy(onUpdateScore);
     }
 
     public function stepHit(step:Int):Void
@@ -316,6 +318,8 @@ class PlayField extends FlxGroup
 
             playStats.bonus += rating.bonus;
 
+            onUpdateScore.dispatch(playStats);
+
             updateScoreText();
         }
 
@@ -328,9 +332,11 @@ class PlayField extends FlxGroup
 
         playStats.misses++;
 
-        updateScoreText();
-
         healthBar.value -= 2.5;
+
+        onUpdateScore.dispatch(playStats);
+
+        updateScoreText();
     }
 
     public function sustainHold(ev:SustainHoldEvent):Void
@@ -338,6 +344,8 @@ class PlayField extends FlxGroup
         if (!ev.note.strumline.botplay)
         {
             playStats.score += Math.floor(250.0 * ev.elapsed);
+
+            onUpdateScore.dispatch(playStats);
 
             updateScoreText();
         }
@@ -353,9 +361,20 @@ class PlayField extends FlxGroup
 
             playStats.misses++;
 
-            updateScoreText();
-
             healthBar.value -= 2.5;
+
+            onUpdateScore.dispatch(playStats);
+
+            updateScoreText();
         }
+    }
+
+    public function setScrollSpeed(v:Float):Void
+    {
+        scrollSpeed = v;
+
+        opponentStrumline.scrollSpeed = scrollSpeed;
+
+        playerStrumline.scrollSpeed = scrollSpeed;
     }
 }

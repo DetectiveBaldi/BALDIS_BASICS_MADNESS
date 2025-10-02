@@ -97,9 +97,14 @@ class DiscordHandler
 		updatePresence();
 	}
 
-	public static function setImageText(largeImageText:cpp.ConstCharStar, smallImageText:cpp.ConstCharStar):Void
+	public static function getLargeImageText():cpp.ConstCharStar
 	{
-		presence.largeImageText = largeImageText;
+		return 'Version 2.2';
+	}
+
+	public static function setImageTexts(largeImageText:cpp.ConstCharStar, smallImageText:cpp.ConstCharStar):Void
+	{
+		presence.largeImageText = largeImageText ?? getLargeImageText();
 
 		presence.smallImageText = smallImageText;
 
@@ -133,7 +138,7 @@ class DiscordHandler
 
 	public static function setImageKeys(largeImageKey:String, smallImageKey:String):Void {}
 
-	public static function setImageText(largeImageText:String, smallImageText:String):Void {}
+	public static function setImageTexts(largeImageText:String, smallImageText:String):Void {}
 
 	public static function updatePresence():Void {}
 }

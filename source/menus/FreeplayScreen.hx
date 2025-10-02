@@ -111,7 +111,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
 
-        DiscordHandler.setImageText(null, null);
+        DiscordHandler.setImageTexts(null, null);
 
         tweens = new FlxTweenManager();
 
