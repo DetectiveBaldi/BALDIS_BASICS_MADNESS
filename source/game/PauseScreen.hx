@@ -81,7 +81,7 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
     public function new(_game:PlayState):Void
     {
-        super(FlxColor.WHITE);
+        super();
 
         game = _game;
     }
@@ -113,6 +113,14 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         timers = new FlxTimerManager();
 
         add(timers);
+
+        var background:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
+
+        background.scale.set(FlxG.width, FlxG.height);
+
+        background.updateHitbox();
+
+        add(background);
 
         var baldi:BaldiHeads = new BaldiHeads();
 
@@ -191,8 +199,6 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         rectToFill.setTo(FlxG.width - 160.0, 0.0, 160.0, FlxG.height);
 
         foreground.pixels.fillRect(rectToFill, 0xFF000000);
-
-        foreground.centerTo();
 
         add(foreground);
 

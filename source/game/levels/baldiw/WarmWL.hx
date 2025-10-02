@@ -47,16 +47,11 @@ class WarmWL extends PlayState
         opponents.setPosition(345, 180);
 
         setCamStartPos();
-
-        plrStrumline.botplay = true;
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
-
-        if (step == 0)
-            plrStrumline.botplay = Options.botplay;
 
         if (step == 128)
         {

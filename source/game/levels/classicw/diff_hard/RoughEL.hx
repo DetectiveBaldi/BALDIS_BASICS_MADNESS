@@ -1010,7 +1010,7 @@ class RoughEL extends PlayState
             roughES.cafeteriaHall0.visible = true;
         }
 
-        if (step == 1892.0)
+        if (step == 1890.0)
         {
             var plr:Character = getPlayer("bf-anim-window");
 
@@ -1022,7 +1022,7 @@ class RoughEL extends PlayState
 
             plr.setPosition(640.0, -125.0);
 
-            tweens.tween(plr, {x: 480.0}, conductor.beatLength * 0.5 * 0.001);
+            tweens.tween(plr, {x: 460.0}, conductor.beatLength * 0.5 * 0.001);
 
             roughES.remove(players, true);
 

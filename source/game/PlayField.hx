@@ -332,9 +332,9 @@ class PlayField extends FlxGroup
 
         playStats.misses++;
 
-        healthBar.value -= 2.5;
-
         onUpdateScore.dispatch(playStats);
+
+        healthBar.value -= 2.5;
 
         updateScoreText();
     }
@@ -361,9 +361,9 @@ class PlayField extends FlxGroup
 
             playStats.misses++;
 
-            healthBar.value -= 2.5;
-
             onUpdateScore.dispatch(playStats);
+
+            healthBar.value -= 2.5;
 
             updateScoreText();
         }
