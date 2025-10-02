@@ -58,7 +58,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
         add(checkbox);
 
-        strikethrough = new FlxSprite().makeGraphic(Math.floor(titleText.width), 4, FlxColor.WHITE);
+        strikethrough = new FlxSprite().makeGraphic(Math.floor(titleText.width), 3, FlxColor.WHITE);
 
         strikethrough.active = false;
 
@@ -94,10 +94,5 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
             strikethrough.visible = false;
         }
-    }
-
-    public function setEditable(v:Bool):Void
-    {
-        editable = v;
     }
 }
