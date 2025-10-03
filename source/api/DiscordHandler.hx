@@ -99,7 +99,7 @@ class DiscordHandler
 
 	public static function getLargeImageText():cpp.ConstCharStar
 	{
-		return 'Version 2.2';
+		return "Version 2.2";
 	}
 
 	public static function setImageTexts(largeImageText:cpp.ConstCharStar, smallImageText:cpp.ConstCharStar):Void

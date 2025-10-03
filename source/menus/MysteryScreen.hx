@@ -386,8 +386,6 @@ class MysteryScreen extends TransitionState implements ISequenceHandler
 
     public function clickInfoButton():Void
     {
-        var level:LevelData = levels[curSelected];
-
         if (#if debug false && #end !hasScore)
             return;
 
@@ -396,8 +394,6 @@ class MysteryScreen extends TransitionState implements ISequenceHandler
 
     public function clickStartButton():Void
     {
-        var level:LevelData = levels[curSelected];
-
         #if !debug
         if (!hasScore)
             return;
