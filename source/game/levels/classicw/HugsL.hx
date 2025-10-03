@@ -27,11 +27,11 @@ import data.LevelData;
 
 import game.stages.classicw.HugsS;
 
-using util.MathUtil;
-
 using StringTools;
 
 using util.ArrayUtil;
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class HugsL extends PlayState
 {
