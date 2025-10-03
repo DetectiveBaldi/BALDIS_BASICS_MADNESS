@@ -12,8 +12,6 @@ class PixelChunks extends FlxShader
 
         #define texture flixel_texture2D
 
-        #define iChannel0 bitmap
-
         uniform float tileSize;
 
         vec2 fragCoord = openfl_TextureCoordv * openfl_TextureSize;
@@ -37,7 +35,7 @@ class PixelChunks extends FlxShader
 
             vec2 tileIndex = ceil((fragCoord - edgePadding) / tileVec);
 
-            fragColor = texture(iChannel0, (edgePadding + tileIndex * tileVec - tileVec * 0.5) / iResolution.xy);
+            fragColor = texture(bitmap, (edgePadding + tileIndex * tileVec - tileVec * 0.5) / iResolution.xy);
         }
     ")
     public function new():Void
