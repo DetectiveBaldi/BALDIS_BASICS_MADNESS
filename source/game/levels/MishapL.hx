@@ -31,6 +31,7 @@ import game.stages.MishapS;
 import util.ClickSoundUtil;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -62,8 +63,7 @@ class MishapL extends PlayState
     
         opponent.setPosition(-200.0, 125.0);
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -103,8 +103,7 @@ class MishapL extends PlayState
         
             opponent.skipDance = false;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 

@@ -24,9 +24,10 @@ import data.CharacterData;
 
 import game.stages.baldiw.GainGS;
 
-using util.MathUtil;
-
 using StringTools;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class GainGL extends PlayState
 {
@@ -52,8 +53,7 @@ class GainGL extends PlayState
 
         cameraLock = FOCUS_CAM_POINT;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         plrStrumlineX = plrStrumline.strums.x;
 
@@ -133,8 +133,7 @@ class GainGL extends PlayState
         {
             gameCameraZoom == 0.8;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -164,8 +163,7 @@ class GainGL extends PlayState
 
             tweens.tween(this, {gameCameraZoom: 1.35}, conductor.beatLength * 28.0 * 0.001);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             plrStrumline.strums.x = oppStrumlineX;
 
@@ -226,8 +224,7 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             plrStrumline.strums.x = plrStrumlineX;
 
@@ -314,8 +311,7 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
                 
             plrStrumline.strums.x = plrStrumline.strums.getCenterX();
                 
@@ -404,8 +400,7 @@ class GainGL extends PlayState
 
             gameCamera.snapToTarget();
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
             
             plrStrumline.strums.x = plrStrumlineX;
 
@@ -557,8 +552,7 @@ class GainGL extends PlayState
         {
             cameraPoint.x += 600.0;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible =
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
         
             tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 2.0 * 0.001);
 

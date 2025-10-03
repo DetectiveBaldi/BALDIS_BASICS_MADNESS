@@ -23,6 +23,7 @@ import game.stages.classicw.EssentialES;
 using flixel.util.FlxColorTransformUtil;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -64,8 +65,7 @@ class EssentialEL extends PlayState
         plr.updateHitbox();
         plr.setPosition(1600.0, -250.0);
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -92,8 +92,7 @@ class EssentialEL extends PlayState
 
             tweens.tween(player, {x: 550.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -105,8 +104,7 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             essentialES.exit0.visible = false;
             essentialES.exit1.visible = true;
@@ -150,8 +148,7 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             var opp:Character = getOpponent("baldi-mad-face-front");
 
@@ -284,8 +281,7 @@ class EssentialEL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             cameraPoint.x = 950.0;
 
@@ -324,8 +320,7 @@ class EssentialEL extends PlayState
             tweens.color(temperature, conductor.beatLength * 4.0 * 0.001, temperature.color, 0xFFFF0E0E,
                 {onUpdate: (_tween:FlxTween) -> {gameCamera.color = temperature.color;}});
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             opponent.x = -880.0;
 
@@ -337,8 +332,7 @@ class EssentialEL extends PlayState
 
         if (step == 1424)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             var opp:Character = getOpponent("baldi-mad-glitch");
             opp.visible = false;
@@ -454,8 +448,7 @@ class EssentialEL extends PlayState
             tweens.tween(player, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
             tweens.tween(_plr, {x: 785.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
 
         if (step == 1792)
@@ -479,8 +472,7 @@ class EssentialEL extends PlayState
         {
             getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             player.visible = false;
 
@@ -546,8 +538,7 @@ class EssentialEL extends PlayState
         {
             gameCamera.visible = false;
             
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
         }

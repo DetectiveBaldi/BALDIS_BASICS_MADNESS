@@ -18,6 +18,8 @@ import core.Paths;
 
 import data.Chart.CreditsData;
 
+import interfaces.ISequenceHandler;
+
 using util.MathUtil;
 
 class CreditsPopup extends FlxSpriteGroup
@@ -32,13 +34,13 @@ class CreditsPopup extends FlxSpriteGroup
 
     public var label:FlxText;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, ?tweens:FlxTweenManager, ?timers:FlxTimerManager, credits:CreditsData):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, sequenceHandler:ISequenceHandler, credits:CreditsData):Void
     {
         super(x, y);
 
-        this.tweens = tweens ?? FlxTween.globalManager;
+        tweens = sequenceHandler.tweens;
 
-        this.timers = timers ?? FlxTimer.globalManager;
+        timers = sequenceHandler.timers;
 
         this.credits = credits;
 
@@ -73,18 +75,18 @@ class CreditsPopup extends FlxSpriteGroup
         new FlxTimer(timers).start(2.0, (tmr:FlxTimer) ->
         {
             tweens.tween(this, {y: Options.downscroll ? -height : FlxG.height}, 2.0, 
-               {ease: FlxEase.quartIn, onComplete: (twn:FlxTween) -> kill()});
+               {ease: FlxEase.quartIn, onComplete: (_:FlxTween) -> kill()});
 
             tweens.flicker(label, 2.0, 0.5);
 
             label.text = 'Composer(s): ${credits.composer}';
 
-            var widthToLimitTo:Float = screen.width * 0.675;
+            var newWidth:Float = screen.width * 0.675;
 
-            while (label.width > widthToLimitTo)
+            while (label.width > newWidth)
                 label.size--;
 
-            label.setPosition(label.getCenterX(screen), label.getCenterY(screen));
+            label.centerTo(screen);
         });
     }
 }

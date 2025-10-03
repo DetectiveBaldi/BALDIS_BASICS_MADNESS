@@ -16,9 +16,10 @@ import core.Paths;
 
 import game.stages.classicw.diff_hard.FundamentalsS;
 
-using util.MathUtil;
-
 using StringTools;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class FundamentalsL extends PlayState
 {
@@ -54,8 +55,7 @@ class FundamentalsL extends PlayState
 
         gameCamera.alpha = 0.0;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -76,8 +76,7 @@ class FundamentalsL extends PlayState
         {
             gameCamera.alpha += 1.0;
             
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -99,8 +98,7 @@ class FundamentalsL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             cameraLock = FOCUS_CAM_POINT;
 
@@ -166,8 +164,7 @@ class FundamentalsL extends PlayState
             fundamentalsS.hall0.visible = false;
             fundamentalsS.office.visible = true;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             cameraLock = FOCUS_CAM_CHAR;
 
@@ -242,8 +239,7 @@ class FundamentalsL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
             plrStrumline.botplay = true;
@@ -345,8 +341,7 @@ class FundamentalsL extends PlayState
 
             plrStrumline.botplay = Options.botplay;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -441,8 +436,7 @@ class FundamentalsL extends PlayState
             cameraLock = FOCUS_CAM_POINT;
             cameraPoint.centerTo();
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             tweens.tween(opponent, {x: -2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }

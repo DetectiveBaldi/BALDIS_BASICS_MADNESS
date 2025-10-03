@@ -26,6 +26,7 @@ import data.WeekData;
 import game.stages.classicw.DetentionS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -59,8 +60,7 @@ class DetentionL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -179,8 +179,7 @@ class DetentionL extends PlayState
             
             gameCameraZoom = 0.65;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
         }
@@ -222,8 +221,7 @@ class DetentionL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             tweens.tween(opponent, {x: 2000.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
         }
@@ -435,8 +433,7 @@ class DetentionL extends PlayState
             opponent.scale.set(1.2, 1.2);
             opponent.setPosition(170.0, 60.0);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             var timerText:FlxText = new FlxText(0.0, 0.0, FlxG.width, "You get detention!\n30 seconds remain!", 48);
 
@@ -478,8 +475,7 @@ class DetentionL extends PlayState
         {
             gameCameraZoom = 0.9;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
         }
 
         if (step == 1472)

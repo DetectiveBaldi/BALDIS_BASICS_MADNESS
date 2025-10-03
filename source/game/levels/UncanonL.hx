@@ -25,11 +25,12 @@ import extendable.TransitionState;
 
 import game.stages.UncanonS;
 
-using util.MathUtil;
-
 using StringTools;
 
 using flixel.util.FlxColorTransformUtil;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class UncanonL extends PlayState
 {
@@ -59,8 +60,9 @@ class UncanonL extends PlayState
 
         gameCamera.snapToTarget();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = false;
+        playField.setVisible(false);
+
+        playField.strumlines.visible = false;
 
         player.scale.set(4.5, 4.5);
         player.setPosition(500.0, 150.0);
@@ -91,8 +93,9 @@ class UncanonL extends PlayState
 
             cameraLock = FOCUS_CAM_CHAR;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = oppStrumline.strums.visible = plrStrumline.strums.visible = true;
+            playField.setVisible(true);
+
+            playField.strumlines.visible = true;
 
             uncanonS.connorRoom0.visible = true;
 

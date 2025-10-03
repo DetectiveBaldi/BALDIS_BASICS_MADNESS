@@ -22,6 +22,7 @@ import game.events.SetCamFocusEvent;
 import game.stages.classicw.PlaymateS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -67,8 +68,7 @@ class PlaymateL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -145,8 +145,7 @@ class PlaymateL extends PlayState
 
             opponent.skipDance = false;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -168,8 +167,7 @@ class PlaymateL extends PlayState
         {
             gameCameraZoom = 0.8;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             plrStrumline.botplay = true;
 
@@ -329,8 +327,7 @@ class PlaymateL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
 
         if (step == 1440)
@@ -370,8 +367,7 @@ class PlaymateL extends PlayState
 
             tweens.tween(opp, {x: 400.0}, conductor.beatLength * 1.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             tweens.tween(oppStrumline.strums, {alpha: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
 

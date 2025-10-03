@@ -324,7 +324,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         player = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.player));
 
-        playField = new PlayField(tweens, timers, conductor, chart, instrumental);
+        playField = new PlayField(this, this, chart);
 
         playField.camera = hudCamera;
 
@@ -337,6 +337,10 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         FlxG.watch.add(playField.playStats, "misses", "Misses");
 
         FlxG.watch.add(playField.playStats, "accuracy", "Accuracy (%)");
+
+        playField.getSongTime = getSongTime;
+
+        playField.getSongLength = getSongLength;
 
         var healthBar:HealthBar = playField.healthBar;
 
@@ -705,6 +709,18 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
             unlocks.resize(0);
 
         FlxG.switchState(unlocks.length > 0.0 ? () -> new UnlockScreen(nextState, unlocks) : nextState);
+    }
+
+    // To avoid closures where possible.
+    public function getSongTime():Float
+    {
+        return instrumental.time;
+    }
+
+    // To avoid closures where possible.
+    public function getSongLength():Float
+    {
+        return instrumental.length;
     }
 
     public function changeTime(newTime:Float):Void

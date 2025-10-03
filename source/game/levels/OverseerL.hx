@@ -34,6 +34,7 @@ import game.stages.OverseerS;
 import interfaces.ISequenceHandler;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -88,8 +89,7 @@ class OverseerL extends PlayState
         oppStrumline.strums.alpha = 0.25;
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 

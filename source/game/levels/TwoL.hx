@@ -17,6 +17,7 @@ import game.notes.Strumline;
 import game.stages.TwoS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -54,8 +55,7 @@ class TwoL extends PlayState
 
         twoS.noise.visible = false;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -185,8 +185,7 @@ class TwoL extends PlayState
         {
             opponent.alpha = 0.0;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 

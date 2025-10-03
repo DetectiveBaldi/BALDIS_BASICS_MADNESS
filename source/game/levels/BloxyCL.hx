@@ -23,11 +23,12 @@ import data.CharacterData;
 
 import game.stages.BloxyCS;
 
-using util.MathUtil;
-
 using StringTools;
 
 using flixel.util.FlxColorTransformUtil;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class BloxyCL extends PlayState
 {
@@ -49,8 +50,7 @@ class BloxyCL extends PlayState
 
         cameraLock = FOCUS_CAM_POINT;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -77,8 +77,7 @@ class BloxyCL extends PlayState
             
             cameraLock = FOCUS_CAM_CHAR;
             
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -169,8 +168,7 @@ class BloxyCL extends PlayState
 
             cameraPoint.x += 50.0;
         
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 

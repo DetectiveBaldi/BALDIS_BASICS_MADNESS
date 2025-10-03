@@ -26,6 +26,7 @@ import game.notes.Note;
 import game.stages.LiteratureS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -55,8 +56,7 @@ class LiteratureL extends PlayState
 
         gameCamera.snapToTarget();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -109,8 +109,7 @@ class LiteratureL extends PlayState
 
             cameraLock = FOCUS_CAM_CHAR;
            
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
            
@@ -131,8 +130,7 @@ class LiteratureL extends PlayState
         {
             tweens.tween(this, {gameCameraZoom: 1.1}, conductor.beatLength * 16.0 * 0.001);
             
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
@@ -232,8 +230,7 @@ class LiteratureL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
 
         if (step == 1288)
@@ -243,8 +240,7 @@ class LiteratureL extends PlayState
             
             literatureS.hall1.color = 0xACACAC;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             tweens.tween(this, {gameCameraZoom: 1.2}, conductor.beatLength * 31.9 * 0.001);
         }
@@ -304,8 +300,7 @@ class LiteratureL extends PlayState
 
             gameCameraZoom = 0.8;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
            
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
@@ -331,8 +326,7 @@ class LiteratureL extends PlayState
         {
             gameCameraZoom = 0.8;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             player.skipDance = true;
             player.animation.play("ay");

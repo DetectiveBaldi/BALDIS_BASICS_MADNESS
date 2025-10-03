@@ -10,8 +10,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 import flixel.math.FlxMath;
 
-import flixel.sound.FlxSound;
-
 import flixel.text.FlxText;
 
 import flixel.tweens.FlxTween;
@@ -35,12 +33,15 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
+import interfaces.IBeatDispatcher;
+import interfaces.ISequenceHandler;
+
 import music.Conductor;
 
 using util.MathUtil;
 using util.StringUtil;
 
-class PlayField extends FlxGroup
+class PlayField extends FlxGroup implements ISequenceHandler
 {
     public var tweens:FlxTweenManager;
 
@@ -48,9 +49,9 @@ class PlayField extends FlxGroup
 
     public var conductor:Conductor;
 
-    public var chart:Chart;
+    public var getSongTime:()->Float;
 
-    public var instrumental:FlxSound;
+    public var getSongLength:()->Float;
 
     public var playStats:PlayStats;
 
@@ -84,22 +85,17 @@ class PlayField extends FlxGroup
 
     public var onUpdateScore:FlxTypedSignal<(playStats:PlayStats)->Void>;
 
-    public function new(tweens:FlxTweenManager, timers:FlxTimerManager, _conductor:Conductor, 
-        _chart:Chart, _instrumental:FlxSound):Void
+    public function new(beatDispatcher:IBeatDispatcher, sequenceHandler:ISequenceHandler, chart:Chart):Void
     {
         super();
 
-        this.tweens = tweens;
+        tweens = sequenceHandler.tweens;
 
-        this.timers = timers;
+        timers = sequenceHandler.timers;
 
-        conductor = _conductor;
+        conductor = beatDispatcher.conductor;
 
         conductor.onStepHit.add(stepHit);
-
-        chart = _chart;
-
-        instrumental = _instrumental;
 
         playStats = {score: 0, hits: 0, misses: 0, bonus: 0.0}
 
@@ -195,7 +191,7 @@ class PlayField extends FlxGroup
         if (Options.botplay)
             timerNeedle.kill();
 
-        creditsPop = new CreditsPopup(0.0, 0.0, tweens, timers, chart.credits);
+        creditsPop = new CreditsPopup(0.0, 0.0, this, chart.credits);
 
         add(creditsPop);
 
@@ -249,7 +245,7 @@ class PlayField extends FlxGroup
         super.update(elapsed);
 
         if (conductor.time > 0.0)
-            timerNeedle.angle = (instrumental.time / instrumental.length) * 360.0;
+            timerNeedle.angle = (getSongTime() / getSongLength()) * 360.0;
     }
 
     override function destroy():Void

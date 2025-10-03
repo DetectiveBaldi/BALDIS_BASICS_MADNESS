@@ -11,6 +11,7 @@ import data.CharacterData;
 import game.stages.bladderw.WallsS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -26,8 +27,7 @@ class WallsL extends PlayState
 
         super.create();
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
             
@@ -84,8 +84,7 @@ class WallsL extends PlayState
 
         if (step == 16)
         {            
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 

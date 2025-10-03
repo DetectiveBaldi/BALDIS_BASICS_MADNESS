@@ -33,8 +33,7 @@ class WarmWL extends PlayState
 
         cameraLock = FOCUS_CAM_POINT;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+        playField.setVisible(false);
     
         warmWS.entranceA0.visible = true;
 
@@ -58,8 +57,7 @@ class WarmWL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 5.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
 
         if (step == 384)
@@ -69,8 +67,7 @@ class WarmWL extends PlayState
 
             warmWS.entranceA0.color = 0xFF999999;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
         }
 
         if (step == 640)
@@ -80,8 +77,7 @@ class WarmWL extends PlayState
 
             warmWS.entranceA0.color = 0xFFFFFFFF;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
     
         if (step == 1148)
@@ -98,8 +94,7 @@ class WarmWL extends PlayState
 
             gameCameraZoom = 0.7;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             player.visible = false;
             

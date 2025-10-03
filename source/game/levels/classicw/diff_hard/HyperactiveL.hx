@@ -19,9 +19,10 @@ import game.events.SetCamFocusEvent;
 
 import game.stages.classicw.diff_hard.HyperactiveS;
 
-using util.MathUtil;
-
 using StringTools;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class HyperactiveL extends PlayState
 {
@@ -63,8 +64,7 @@ class HyperactiveL extends PlayState
 
         gameCamera.color = FlxColor.BLACK;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -142,8 +142,7 @@ class HyperactiveL extends PlayState
 
             tweens.tween(player, {x: 160.0}, conductor.beatLength * 6.0 * 0.001, {ease: FlxEase.quartOut});
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -265,8 +264,7 @@ class HyperactiveL extends PlayState
 
         if (step == 1600)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             gameCameraZoom = 0.6;
 
@@ -292,8 +290,7 @@ class HyperactiveL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             var opp:Character = getOpponent("1st-prize-270");
             opponent = opp;
@@ -455,8 +452,7 @@ class HyperactiveL extends PlayState
             if (Options.flashingLights)
                 gameCamera.fade(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, true, null, true);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             hyperactiveS.hall2.visible = false;
             hyperactiveS.room.visible = true;

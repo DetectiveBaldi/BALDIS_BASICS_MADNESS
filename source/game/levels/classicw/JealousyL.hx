@@ -20,6 +20,7 @@ import game.events.SetCamFocusEvent;
 import game.stages.classicw.JealousyS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -57,8 +58,7 @@ class JealousyL extends PlayState
         opponent.skipDance = true;
         opponent.visible = false;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -164,8 +164,7 @@ class JealousyL extends PlayState
 
         if (step == 64)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -292,8 +291,7 @@ class JealousyL extends PlayState
 
             player.visible = false;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 

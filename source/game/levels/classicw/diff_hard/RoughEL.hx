@@ -30,9 +30,10 @@ import game.stages.classicw.diff_hard.RoughES;
 
 import shaders.PixelChunks;
 
-using util.MathUtil;
-
 using StringTools;
+
+using util.MathUtil;
+using util.PlayFieldTools;
 
 class RoughEL extends PlayState
 {
@@ -73,8 +74,7 @@ class RoughEL extends PlayState
 
         gameCameraZoom = 1.15;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -211,8 +211,7 @@ class RoughEL extends PlayState
 
             _plr.animation.onFrameChange.add(updateLegStatus);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -420,8 +419,7 @@ class RoughEL extends PlayState
 
             oppStrumline.strums.x = (FlxG.width - oppStrumline.strums.width) * 0.5;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
             
             oppStrumline.strums.alpha = 1.0;
 
@@ -502,8 +500,7 @@ class RoughEL extends PlayState
 
             _plr.setPosition(plr.x, plr.y);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -720,8 +717,7 @@ class RoughEL extends PlayState
 
             updateHealthBar("opponent");
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 
@@ -1150,8 +1146,7 @@ class RoughEL extends PlayState
             roughES.remove(opponents, true);
             roughES.add(opponents);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             oppStrumline.downscroll = !oppStrumline.downscroll;
 
@@ -1162,8 +1157,7 @@ class RoughEL extends PlayState
 
             plrStrumline.strums.x = FlxG.width - plrStrumline.strums.width - 45.0;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -1597,8 +1591,7 @@ class RoughEL extends PlayState
             remove(craftersSprite1, true);
             gameCameraZoom = 0.9;
 
-             playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+             playField.setVisible(false);
 
             playField.strumlines.visible = false;
 
@@ -1664,8 +1657,7 @@ class RoughEL extends PlayState
 
             roughES.hall2.animation.play("0", false, false);
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -1744,8 +1736,7 @@ class RoughEL extends PlayState
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
             gameCameraZoom = 0.9;
         
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-            playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
         }
         
         if (step == 3464)

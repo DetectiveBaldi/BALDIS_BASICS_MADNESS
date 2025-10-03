@@ -36,11 +36,12 @@ import game.stages.baldiw.RevisionS;
 
 import sound.SoundQueue;
 
+using StringTools;
+
 using util.ArrayUtil;
 using util.MathUtil;
+using util.PlayFieldTools;
 using util.StringUtil;
-
-using StringTools;
 
 class RevisionL extends PlayState
 {
@@ -73,8 +74,7 @@ class RevisionL extends PlayState
         gameCamera.color = 0xFF000000;
         temperature.color = 0xFF000000;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
 
@@ -149,8 +149,7 @@ class RevisionL extends PlayState
 
             gameCameraZoom = 0.7;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -214,8 +213,7 @@ class RevisionL extends PlayState
     
         if (step == 1184)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 

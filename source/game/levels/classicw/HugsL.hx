@@ -65,8 +65,7 @@ class HugsL extends PlayState
 
         gameCameraZoom = 0.6;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         oppStrumline.strums.alpha = 0.0;
 
@@ -199,8 +198,7 @@ class HugsL extends PlayState
             opponents.add(opp);
             opponent = opp;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
         }
 
         if (step == 96)
@@ -602,8 +600,7 @@ class HugsL extends PlayState
 
         if (step == 1584)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = false;
+            playField.setVisible(false);
 
             playField.strumlines.visible = false;
 

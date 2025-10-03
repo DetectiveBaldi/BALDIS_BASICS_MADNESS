@@ -22,6 +22,7 @@ import game.events.SetCamFocusEvent;
 import game.stages.classicw.AdrenalineS;
 
 using util.MathUtil;
+using util.PlayFieldTools;
 
 using StringTools;
 
@@ -49,8 +50,7 @@ class AdrenalineL extends PlayState
 
         cameraLock = FOCUS_CAM_POINT;
 
-        playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-            playField.timerNeedle.visible = false;
+        playField.setVisible(false);
 
         playField.strumlines.visible = false;
         
@@ -121,8 +121,7 @@ class AdrenalineL extends PlayState
 
             plrStrumline.botplay = Options.botplay;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = playField.timerClock.visible =
-                playField.timerNeedle.visible = true;
+            playField.setVisible(true);
 
             playField.strumlines.visible = true;
 
@@ -451,8 +450,7 @@ class AdrenalineL extends PlayState
     
         if (step == 1744)
         {
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
             
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 2.0 * 0.001, null, true);
@@ -486,8 +484,7 @@ class AdrenalineL extends PlayState
             oppStrumline.strums.x = oppStrumlineX;
             oppStrumline.strums.alpha = 1.0;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = true;
+            playField.setVisible(true);
             
             adrenalineS.hall2.visible = false;
 
@@ -530,8 +527,7 @@ class AdrenalineL extends PlayState
         {
             gameCameraZoom = 0.6;
 
-            playField.scoreClip.visible = playField.scoreText.visible = playField.healthBar.visible = 
-                playField.timerClock.visible = playField.timerNeedle.visible = false;
+            playField.setVisible(false);
             
             adrenalineS.hall.animation.pause();
 
