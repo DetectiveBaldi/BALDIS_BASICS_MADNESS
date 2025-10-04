@@ -186,12 +186,12 @@ class AdrenalineL extends PlayState
             
             opponent.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("gotta-sweep"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("gotta-sweep"));
             opp.setPosition(-1500.0, -25.0);
             opponents.add(opp);
             opponent = opp;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-1200.0, 170.0);
             players.add(plr);
             player = plr;
@@ -227,7 +227,7 @@ class AdrenalineL extends PlayState
             
             player.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.setPosition(300.0, 170.0);
             players.add(plr);
             player = plr;
@@ -402,7 +402,7 @@ class AdrenalineL extends PlayState
             opponent.updateHitbox();
             opponent.setPosition(600.0, 335.0);
 
-            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-front"));
+            var plr2:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-front"));
             plr2.scale.set(0.8, 0.8);
             plr2.updateHitbox();
             plr2.setPosition(550.0, 280.0);

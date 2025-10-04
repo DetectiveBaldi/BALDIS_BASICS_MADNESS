@@ -127,7 +127,7 @@ class FundamentalsL extends PlayState
             plrStrumline.botplay = true;
             plrStrumline.resetStrums();
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fundamentals"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-fundamentals"));
             plr.setPosition(player.x + 68.0, player.y + 56.0);
             plr.color = 0xB8B19C;
             plr.skipDance = true;
@@ -180,14 +180,14 @@ class FundamentalsL extends PlayState
             plr.visible = true;
             player = plr;
 
-            var bul:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bully-spectator"));
+            var bul:Character = new Character(this, 0.0, 0.0, Character.getConfig("bully-spectator"));
             bul.setPosition(-50.0, 115.0);
             bul.scale.set(2.05, 2.05);
             bul.updateHitbox();
             bul.color = 0xADA493;
             opponents.add(bul);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("principal"));
             opp.scale.set(1.35, 1.35);
             opp.updateHitbox();
             opp.setPosition(-60.0, 10.0);
@@ -263,7 +263,7 @@ class FundamentalsL extends PlayState
 
             opponent.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime-flipped"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("playtime-flipped"));
             opp.setPosition(1900.0, 110.0);
             opp.color = 0xBBAC91;
             opp.skipDance = true;
@@ -350,7 +350,7 @@ class FundamentalsL extends PlayState
             var plr:Character = getPlayer("bf-anim-fundamentals");
             plr.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-105.0, 145.0);
             plr.color = 0xB8B19C;
             players.add(plr);
@@ -382,13 +382,13 @@ class FundamentalsL extends PlayState
             opponent.visible = false;
             player.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.setPosition(625.0, 125.0);
             plr.color = 0xB8B19C;
             players.add(plr);
             player = plr;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("playtime"));
             opp.setPosition(-350.0, 180.0);
             opp.color = 0xBBAC91;
             opponents.add(opp);
@@ -413,7 +413,7 @@ class FundamentalsL extends PlayState
 
         if (step == 2044)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad"));
             opp.setPosition(-1500.0, 40.0);
             opp.color = 0xAFA38E;
             opp.scale.set(2.9, 2.9);

@@ -144,7 +144,7 @@ class UncanonL extends PlayState
             opponent.scale.set(3.4, 3.4);
             opponent.x += 20.0;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(1.65, 1.65);
             plr.setPosition(480, 40);
             players.add(plr);

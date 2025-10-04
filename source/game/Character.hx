@@ -26,6 +26,8 @@ import data.CharacterData;
 import game.notes.Note;
 import game.notes.Strumline;
 
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using StringTools;
@@ -39,25 +41,11 @@ class Character extends FlxSprite
         return Json.parse(File.getContent(Paths.data(Paths.json('game/Character/${file}'))));
     }
     
-    public var conductor(default, set):Conductor;
-
-    @:noCompletion
-    function set_conductor(_conductor:Conductor):Conductor
-    {
-        var __conductor:Conductor = conductor;
-
-        conductor = _conductor;
-
-        conductor?.onBeatHit?.add(beatHit);
-
-        __conductor?.onBeatHit?.remove(beatHit);
-
-        return conductor;
-    }
+    public var conductor:Conductor;
 
     public var strumline:Strumline;
 
-    public var keys:Array<Int>;
+    public var keysToCheck:Array<Int>;
 
     public var lastScale:FlxPoint;
     
@@ -79,13 +67,15 @@ class Character extends FlxSprite
 
     public var holdTimer:Float;
 
-    public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0, _config:CharacterData):Void
+    public function new(beatDispatcher:IBeatDispatcher, x:Float = 0.0, y:Float = 0.0, _config:CharacterData):Void
     {
         super(x, y);
 
-        conductor = _conductor;
+        conductor = beatDispatcher?.conductor;
 
-        keys =
+        conductor?.onBeatHit?.add(beatHit);
+
+        keysToCheck =
         [
             for (i in 0 ... Note.DIRECTIONS.length)
                 for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
@@ -120,7 +110,7 @@ class Character extends FlxSprite
         if (conductor == null || strumline == null)
             return;
 
-        if (FlxG.keys.anyJustPressed(keys) && !strumline.botplay)
+        if (FlxG.keys.anyJustPressed(keysToCheck) && !strumline.botplay)
             holdTimer = 0.0;
 
         if (isSinging())
@@ -159,9 +149,9 @@ class Character extends FlxSprite
     {
         super.destroy();
 
-        conductor = null;
+        conductor?.onBeatHit?.remove(beatHit);
 
-        keys = null;
+        keysToCheck = null;
 
         lastScale = FlxDestroyUtil.put(lastScale);
 

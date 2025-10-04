@@ -71,7 +71,7 @@ class LookalikeL extends PlayState
 
         if (step == 240)
         {
-            baldi = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
+            baldi = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
             baldi.setPosition(-100.0, 110.0);
             baldi.scale.set(0.75, 0.75);
             baldi.skipDance = true;

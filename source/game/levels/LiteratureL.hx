@@ -180,7 +180,7 @@ class LiteratureL extends PlayState
             if (Options.flashingLights)
                 gameCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-angry"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldina-angry"));
             opp.visible = false;
             opp.setPosition(650.0, -130.0);
             opp.scale.set(1.2, 1.2);
@@ -189,7 +189,7 @@ class LiteratureL extends PlayState
             
             updateHealthBar("opponent");
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-baldina-flipped"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-baldina-flipped"));
             plr.setPosition(-50.0, 155.0);
             plr.scale.set(1.2, 1.2);
             players.add(plr);
@@ -276,7 +276,7 @@ class LiteratureL extends PlayState
 
             cameraLock = FOCUS_CAM_CHAR;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldina-dance"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldina-dance"));
             opp.scale.set(1.5, 1.5);
             opponents.add(opp);
             opponent = opp;

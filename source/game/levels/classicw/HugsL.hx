@@ -166,7 +166,7 @@ class HugsL extends PlayState
             var _plr:Character = getPlayer("bf-intro-adrenaline");
             _plr.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-260.0, 175.0);
             plr.skipDance = false;
             players.add(plr);
@@ -193,7 +193,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -207,7 +207,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-292-5");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-315"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-315"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -219,7 +219,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-315");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -231,7 +231,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-337-5");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-0"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-0"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -243,7 +243,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-0");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -255,7 +255,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-22-5");
             opp.visible = false;
       
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-45"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-45"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -267,7 +267,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-45");
             opp.visible = false;
       
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -279,7 +279,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-67-5");
             opp.visible = false;
      
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-90"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-90"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(450.0, -145.0);
             opponents.add(opp);
@@ -347,7 +347,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-225"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-225"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(-100.0, -145.0);
             opponents.add(opp);
@@ -365,7 +365,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-225");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-180"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-180"));
             opp.scale.set(3.0, 3.0);
             opp.setPosition(-100.0, -145.0);
             opponents.add(opp);
@@ -451,13 +451,13 @@ class HugsL extends PlayState
             var plr:Character = getPlayer("bf-face-right");
             plr.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-running"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-running"));
             var anim:FlxAnimation = plr.animation.getByName("dance");
             anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
             players.add(plr);
             player = plr;
 
-            var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("run-legs"));
+            var __plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("run-legs"));
 
             var anim:FlxAnimation = __plr.animation.getByName("legs");
             anim.frameRate = anim.numFrames / (conductor.beatLength * 0.0025);
@@ -590,7 +590,7 @@ class HugsL extends PlayState
             var opp:Character = getOpponent("1st-prize-270");
             opp.visible = false;
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-spin"));
+            var _opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-spin"));
             _opp.setPosition(120.0, 245.0);
             _opp.animation.play("spin");
             _opp.skipDance = true;

@@ -132,7 +132,7 @@ class HyperactiveL extends PlayState
             opponent.x = 1800.0;
             player.x = 1780.0;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.setPosition(player.x, player.y);
             plr.color = 0xB8B19C;
             players.add(plr);
@@ -173,7 +173,7 @@ class HyperactiveL extends PlayState
 
         if (step == 824)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-270"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-270"));
             opp.setPosition(-1600.0, -145.0);
             opp.color = 0xC4B99B;
             opponents.add(opp);
@@ -202,7 +202,7 @@ class HyperactiveL extends PlayState
             opponent.x = -1800.0;
             player.x = -1780.0;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(player.x, player.y);
             plr.color = 0xB8B19C;
             players.add(plr);
@@ -348,7 +348,7 @@ class HyperactiveL extends PlayState
             var _opp:Character = getOpponent("1st-prize-270");
             _opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-90"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-90"));
             opp.setPosition(_opp.x, _opp.y);
             opp.color = 0xC4B99B;
             opponents.add(opp);
@@ -464,7 +464,7 @@ class HyperactiveL extends PlayState
 
             player.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-fly"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-fly"));
             plr.setPosition(100.0, -350.0);
             plr.color = 0xB8B19C;
             plr.skipDance = true;

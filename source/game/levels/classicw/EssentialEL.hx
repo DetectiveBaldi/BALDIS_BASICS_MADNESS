@@ -154,7 +154,7 @@ class EssentialEL extends PlayState
 
             opp.visible = false;
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
+            var _opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad"));
 
             _opp.skipDance = true;
 
@@ -168,7 +168,7 @@ class EssentialEL extends PlayState
 
             _plr.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-running"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-running"));
 
             var anim:FlxAnimation = plr.animation.getByName("dance");
 
@@ -180,7 +180,7 @@ class EssentialEL extends PlayState
 
             player = plr;
 
-            var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("run-legs"));
+            var __plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("run-legs"));
 
             anim = __plr.animation.getByName("legs");
 
@@ -304,7 +304,7 @@ class EssentialEL extends PlayState
             var opp:Character = getOpponent("baldi-mad");
             opp.visible = false;
 
-            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-glitch"));
+            var _opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad-glitch"));
             _opp.setPosition(-100.0, 18.5);
             opponents.add(_opp);
             opponent = _opp;
@@ -372,7 +372,7 @@ class EssentialEL extends PlayState
 
             opponent.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-zesty-essential"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-zesty-essential"));
             plr.visible = true;
             plr.skipDance = true;
             plr.skipSing = true;

@@ -307,7 +307,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         if (chart.spectator != "")
         {
-            spectator = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.spectator));
+            spectator = new Character(this, 0.0, 0.0, Character.getConfig(chart.spectator));
 
             spectator.skipSing = true;
         }
@@ -316,13 +316,13 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         stage.add(opponents);
 
-        opponent = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.opponent));
+        opponent = new Character(this, 0.0, 0.0, Character.getConfig(chart.opponent));
 
         players = new FlxTypedSpriteGroup<Character>();
 
         stage.add(players);
 
-        player = new Character(conductor, 0.0, 0.0, Character.getConfig(chart.player));
+        player = new Character(this, 0.0, 0.0, Character.getConfig(chart.player));
 
         playField = new PlayField(this, this, chart);
 

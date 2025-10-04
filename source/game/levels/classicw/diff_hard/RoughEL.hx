@@ -175,7 +175,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-running"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-running"));
 
             var anim:FlxAnimation = _plr.animation.getByName("dance");
 
@@ -187,7 +187,7 @@ class RoughEL extends PlayState
 
             players.add(_plr);
 
-            var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("run-legs"));
+            var __plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("run-legs"));
 
             anim = __plr.animation.getByName("legs");
 
@@ -288,7 +288,7 @@ class RoughEL extends PlayState
 
         if (step == 590.0)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bully"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("bully"));
 
             opp.flipX = true;
 
@@ -389,7 +389,7 @@ class RoughEL extends PlayState
             if (Options.flashingLights)
                 hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 0.001, null, true);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
 
             opp.skipDance = true;
 
@@ -405,7 +405,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
 
             _plr.setPosition(-280.0, 125.0);
 
@@ -526,7 +526,7 @@ class RoughEL extends PlayState
 
         if (step == 1240.0)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("principal"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("principal"));
 
             opp.setPosition(-862.5, 22.5);
 
@@ -699,7 +699,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-window"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-window"));
 
             _plr.skipDance = true;
 
@@ -793,7 +793,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-unlock"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-unlock"));
 
             _plr.skipDance = true;
 
@@ -1054,7 +1054,7 @@ class RoughEL extends PlayState
 
             plr.visible = false;
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-lock"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-lock"));
 
             _plr.skipDance = true;
 
@@ -1131,7 +1131,7 @@ class RoughEL extends PlayState
             var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("playtime"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("playtime"));
             opp.color = 0xC7BDA6;
             opp.setPosition(-1100, 220.0);
             opp.scale.set(1, 1);
@@ -1205,7 +1205,7 @@ class RoughEL extends PlayState
 
         if (step == 2176)
         {
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("gotta-sweep"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("gotta-sweep"));
             opp.color = 0xB4A88D;
             opp.setPosition(1750, -25);
             opp.skipSing = true;
@@ -1277,7 +1277,7 @@ class RoughEL extends PlayState
             var plr:Character = getPlayer("bf-face-left");
             plr.visible = false;
             
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-1200.0, 170.0);
             plr.color = 0xBEB398;
             players.add(plr);
@@ -1358,7 +1358,7 @@ class RoughEL extends PlayState
                 gameCamera.filters.push(pxContainer);
             }
             
-            var _opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-anim-coming"));
+            var _opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-anim-coming"));
             _opp.skipDance = true;
             _opp.animation.play("coming");
             _opp.color = 0xAFA487;
@@ -1383,7 +1383,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-anim-coming");
             _opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-292-5"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1394,7 +1394,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-292-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-315"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-315"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1405,7 +1405,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-315");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-337-5"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1416,7 +1416,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-337-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-0"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-0"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1427,7 +1427,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-0");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-22-5"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1438,7 +1438,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-22-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-45"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-45"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1449,7 +1449,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-45");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-67-5"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1460,7 +1460,7 @@ class RoughEL extends PlayState
             var _opp:Character = getOpponent("1st-prize-67-5");
             _opp.visible = false;
             
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("1st-prize-90"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("1st-prize-90"));
             opp.setPosition(950, -150);
             opp.color = 0xAFA487;
             opponents.add(opp);
@@ -1613,7 +1613,7 @@ class RoughEL extends PlayState
             craftersSprite1.visible = false;
             tweens.cancelTweensOf(craftersSprite1);
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-teleported"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-teleported"));
             _plr.skipDance = true;
             _plr.skipSing = true;
             _plr.color = 0xC7BEA7;
@@ -1670,7 +1670,7 @@ class RoughEL extends PlayState
             var opp:Character = getOpponent("baldi-mad-face-front");
             opp.visible = false;
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-furious"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-furious"));
             opp.setPosition(-900.0, 18.5);
             opp.color = 0xC2B499;
             opp.skipDance = true;

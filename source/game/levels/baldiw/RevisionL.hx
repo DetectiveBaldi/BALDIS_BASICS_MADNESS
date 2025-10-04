@@ -196,12 +196,12 @@ class RevisionL extends PlayState
             var opp:Character = getOpponent("baldi-face-right");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.scale.set(3.0, 3.0);
             plr.setPosition(0.0, 190.0);
             players.add(plr);
         
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-face-left"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("baldi-face-left"));
             opp.scale.set(3.2, 3.2);
             opp.setPosition(840.0, 45.0);
             opponents.add(opp);

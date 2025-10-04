@@ -241,8 +241,6 @@ class CharacterEditorState extends TransitionState
 
             updateGhostScale();
 
-            character.calcOffsetsByScale();
-
             updateOffsetLabel();
         }
 
@@ -259,8 +257,6 @@ class CharacterEditorState extends TransitionState
             character.screenCenter();
 
             updateGhostScale();
-
-            character.calcOffsetsByScale();
 
             updateOffsetLabel();
         }

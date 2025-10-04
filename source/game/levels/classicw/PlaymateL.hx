@@ -209,7 +209,7 @@ class PlaymateL extends PlayState
 
             if (plr == null)
             {
-                var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-jump"));
+                var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-jump"));
 
                 plr.skipDance = true;
 
@@ -281,7 +281,7 @@ class PlaymateL extends PlayState
         {
             playmateS.hall.color = playmateS.cafe.color = 0x777777;
 
-            opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
+            opp = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad-face-front"));
             opp.setPosition(650.0, 110.0);
             opp.scale.set(0.95, 0.95);
             opp.skipDance = true;
@@ -338,7 +338,7 @@ class PlaymateL extends PlayState
 
             gameCameraZoom = 0.6;
             
-            opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
+            opp = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad"));
             opp.setPosition(-700.0, 30.0);
             opp.scale.set(2.9, 2.9);
             opp.skipDance = true;

@@ -61,7 +61,7 @@ class BloxyCL extends PlayState
     
         opponent.setPosition(200.0, 125.0);
 
-        var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("old-baldi-mad"));
+        var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("old-baldi-mad"));
         opp.setPosition(168.0, 134.0);
         opp.skipDance = true;
         opp.visible = false;

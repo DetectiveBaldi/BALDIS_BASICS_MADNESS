@@ -116,7 +116,7 @@ class JealousyL extends PlayState
             tweens.cancelTweensOf(player);
             player.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-jealousy"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-jealousy"));
             plr.scale.set(0.9, 0.9);
             plr.updateHitbox();
             plr.setPosition(115.0, 276.0);
@@ -150,7 +150,7 @@ class JealousyL extends PlayState
 
             player.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-right"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-right"));
             plr.setPosition(-260.0, 155.0);
             players.add(plr);
             player = plr;
@@ -239,7 +239,7 @@ class JealousyL extends PlayState
 
             player.visible = false;
                     
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-nervous"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-nervous"));
             plr.setPosition(290.0, 150.0);
             players.add(plr);
             player = plr;

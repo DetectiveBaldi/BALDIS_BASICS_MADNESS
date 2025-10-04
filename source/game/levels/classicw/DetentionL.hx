@@ -66,7 +66,7 @@ class DetentionL extends PlayState
 
         plrStrumline.botplay = true;
 
-        var __plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("walk-legs"));
+        var __plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("walk-legs"));
 
         var anim:FlxAnimation = __plr.animation.getByName("legs");
 
@@ -332,7 +332,7 @@ class DetentionL extends PlayState
             var _plr:Character = getPlayer("walk-legs");
             _plr.visible = false;
 
-            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
+            var plr2:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
             plr2.scale.set(4.5, 4.5);
             plr2.setPosition(1000.0, 120.0);
             players.add(plr2);
@@ -366,7 +366,7 @@ class DetentionL extends PlayState
             var plr:Character = getPlayer("bf-face-back-left");
             plr.visible = false;
 
-            var plr2:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-anim-caught"));
+            var plr2:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-anim-caught"));
             plr2.scale.set(4.6, 4.6);
             plr2.setPosition(580.0, 100.0);
             plr2.skipDance = true;
@@ -425,7 +425,7 @@ class DetentionL extends PlayState
             var plr2:Character = getPlayer("bf-anim-caught");
             plr2.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(2.7, 2.7);
             plr.setPosition(840.0, 180.0);
             players.add(plr);

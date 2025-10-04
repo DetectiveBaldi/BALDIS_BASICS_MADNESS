@@ -131,12 +131,12 @@ class WallsL extends PlayState
             var opp:Character = getOpponent("bladder-side");
             opp.visible = false;
 
-            var plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            var plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             plr.scale.set(1.75, 1.75);
             plr.setPosition(450, 50);
             players.add(plr);
 
-            var opp:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("bladder-back"));
+            var opp:Character = new Character(this, 0.0, 0.0, Character.getConfig("bladder-back"));
             opp.scale.set(3, 3);
             opp.setPosition(150, 50);
             opponents.add(opp);

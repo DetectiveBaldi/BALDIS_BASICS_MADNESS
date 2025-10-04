@@ -181,7 +181,7 @@ class GainGL extends PlayState
             gainGS.remove(players, true);
             gainGS.add(players);
 
-            player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
+            player = new Character(this, 0.0, 0.0, Character.getConfig("bf-clutching-wall"));
             player.setPosition(-100.0, 125.0);
             players.add(player);
 
@@ -240,13 +240,13 @@ class GainGL extends PlayState
             gainGS.remove(players, true);
             gainGS.insert(gainGS.members.indexOf(gainGS.ggfaculty0_Overlay0), players);
 
-            player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-left"));
+            player = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-left"));
             player.scale.set(1.75, 1.75);
             player.updateHitbox();
             player.setPosition(1000.0, 235.0);
             players.add(player);
 
-            opponent = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad"));
+            opponent = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad"));
             opponent.scale.set(1.9, 1.9);
             opponent.updateHitbox();
             opponent.setPosition(-500.0, 145.0);
@@ -333,7 +333,7 @@ class GainGL extends PlayState
             gainGS.remove(players, true);
             gainGS.add(players);
 
-            player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
+            player = new Character(this, 0.0, 0.0, Character.getConfig("bf-face-back-left"));
             player.scale.set(2.0, 2.0);
             player.updateHitbox();
             player.setPosition(350.0, 175.0);
@@ -342,7 +342,7 @@ class GainGL extends PlayState
             gainGS.remove(opponents, true);
             gainGS.insert(gainGS.members.indexOf(gainGS.principalOffice0_Overlay0), opponents);
         
-            var opp = new Character(conductor, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
+            var opp = new Character(this, 0.0, 0.0, Character.getConfig("baldi-mad-angled"));
             opp.scale.set(1.5, 1.5);
             opp.updateHitbox();
             opp.setPosition(550.0, 180.0);
@@ -416,7 +416,7 @@ class GainGL extends PlayState
 
             opponent.visible = false;
 
-            player = new Character(conductor, 0.0, 0.0, Character.getConfig("bf-walking"));
+            player = new Character(this, 0.0, 0.0, Character.getConfig("bf-walking"));
             player.setPosition(798.5, 205.5);
             players.add(player);
 
@@ -425,7 +425,7 @@ class GainGL extends PlayState
             var anim:FlxAnimation = player.animation.getByName("dance");
             anim.frameRate = anim.numFrames / (conductor.beatLength * 2.0 * 0.001);
 
-            var _plr:Character = new Character(conductor, 0.0, 0.0, Character.getConfig("walk-legs"));
+            var _plr:Character = new Character(this, 0.0, 0.0, Character.getConfig("walk-legs"));
             _plr.setPosition(player.x, player.y);
             _plr.skipDance = true;
             _plr.skipSing = true;
