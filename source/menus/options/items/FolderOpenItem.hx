@@ -26,7 +26,7 @@ class FolderOpenItem extends BaseOptionItem
         {
             titleText.underline = true;
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 FileTools.openFolder(folderPath);
         }
         else

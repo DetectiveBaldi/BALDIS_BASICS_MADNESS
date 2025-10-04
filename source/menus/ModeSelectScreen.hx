@@ -240,7 +240,7 @@ class ModeSelectIcon extends FlxSprite
 
             selected = true;
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 if (locked)
                     FlxG.sound.play(AssetCache.getSound("shared/locked-door-rattle"));

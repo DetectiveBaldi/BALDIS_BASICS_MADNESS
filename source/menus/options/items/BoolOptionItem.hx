@@ -81,7 +81,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
             strikethrough.visible = !editable;
 
-            if (FlxG.mouse.justReleased && editable)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && editable)
             {
                 ClickSoundUtil.play();
                 

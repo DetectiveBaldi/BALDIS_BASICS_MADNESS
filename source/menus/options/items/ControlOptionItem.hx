@@ -112,7 +112,7 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
             if (FlxG.mouse.overlaps(titleText, camera))
             {
-                if (FlxG.mouse.justReleased)
+                if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 {
                     ClickSoundUtil.play();
 

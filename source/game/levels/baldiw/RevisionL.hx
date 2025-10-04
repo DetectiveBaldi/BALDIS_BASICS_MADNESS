@@ -684,7 +684,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
                 if (Options.botplay)
                     continue;
 
-                if (FlxG.mouse.justReleased)
+                if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 {
                     switch (k:String)
                     {

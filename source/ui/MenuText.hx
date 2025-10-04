@@ -49,7 +49,7 @@ class MenuText extends FlxText
 
             underline = true;
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 ClickSoundUtil.play();
 

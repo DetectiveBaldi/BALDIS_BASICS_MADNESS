@@ -219,7 +219,7 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         {
             for (icon in pauseIcons)
             {
-                if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(icon, camera))
+                if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && FlxG.mouse.overlaps(icon, camera))
                 {
                     selectedIcon = icon;
 

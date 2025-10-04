@@ -42,7 +42,7 @@ class EraseSaveItem extends BaseOptionItem
         {
             titleText.underline = true;
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 panel.revive();
 

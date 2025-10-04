@@ -41,7 +41,7 @@ class BackOutButton extends FlxSprite
         {
             animation.play("1");
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 ClickSoundUtil.play();
 

@@ -161,7 +161,7 @@ class TitleScreen extends TransitionState
             !Options.botplay && HighScore.getWeekScore(WeekData.list[0].name, "Normal").score != 0.0 &&
                 HighScore.getLevelScore("Two", "Normal").score == 0.0 #end )
         {
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 TransitionState.cancelNextTransition();
 

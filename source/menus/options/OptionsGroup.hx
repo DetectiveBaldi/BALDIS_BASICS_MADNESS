@@ -31,7 +31,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.justReleased)
+        if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
         {
             var foundOverlap:Bool = false;
 

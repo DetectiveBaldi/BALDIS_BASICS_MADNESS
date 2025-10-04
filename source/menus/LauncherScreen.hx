@@ -155,7 +155,7 @@ class LauncherButton extends FlxSprite
             else
                 animation.play("0");
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 onClick.dispatch();
         }
         else

@@ -123,7 +123,8 @@ class DetentionL extends PlayState
 
         if (detentionS.faculty0.visible || detentionS.faculty0portal.visible)
         {
-            if (FlxG.mouse.justPressed && FlxMath.pointInFlxRect(FlxG.mouse.x, FlxG.mouse.y, portalRect))
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) &&
+                FlxMath.pointInFlxRect(FlxG.mouse.x, FlxG.mouse.y, portalRect))
             {
                 if ( #if debug false #else Options.botplay || PlayState.isWeek #end )
                     FlxG.sound.play(AssetCache.getSound("shared/portal-poster-error"));

@@ -218,7 +218,7 @@ class MishapPopup extends FlxSpriteGroup
         {
             closeButton.animation.play("1");
                         
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 kill();
 

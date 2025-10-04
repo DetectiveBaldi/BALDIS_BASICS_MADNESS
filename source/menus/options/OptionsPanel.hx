@@ -118,7 +118,7 @@ class OptionsPanel extends BubbledSpriteGroup
             else
                 confirmButton.animation.play("unselected");
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 kill();
                 

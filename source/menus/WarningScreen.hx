@@ -78,7 +78,7 @@ class WarningScreen extends TransitionState
 
     override function update(elapsed:Float):Void
     {
-        if (FlxG.keys.justPressed.ANY || FlxG.mouse.justReleased)
+        if (FlxG.keys.justPressed.ANY || (FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             FlxG.switchState(() -> new TitleScreen());
     }
 

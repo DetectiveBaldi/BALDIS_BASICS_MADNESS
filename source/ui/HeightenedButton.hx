@@ -74,7 +74,7 @@ class HeightenedButton extends FlxSpriteGroup
             else
                 base.animation.play("up");
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 ClickSoundUtil.play(BUTTON);
 

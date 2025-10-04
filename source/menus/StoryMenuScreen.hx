@@ -307,7 +307,7 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
         {
             startButton.animation.play("select");
 
-            if (FlxG.mouse.justReleased)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
             {
                 var week:WeekData = weeks[selectedWeek];
 

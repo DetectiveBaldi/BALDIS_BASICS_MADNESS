@@ -185,7 +185,7 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
             {
                 retryButton.animation.play("1");
 
-                if (FlxG.mouse.justReleased)
+                if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 {
                     ClickSoundUtil.play();
                     
