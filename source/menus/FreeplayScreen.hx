@@ -559,7 +559,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         changeDifficulty(-1);
 
-        scrollBg(Y, true);
+        scrollBg(Y);
     }
 
     public function clickRightDifficulty():Void
@@ -569,7 +569,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         changeDifficulty(1);
 
-        scrollBg(Y);
+        scrollBg(Y, true);
     }
 
     public function clickLeftLevel():Void
