@@ -8,6 +8,8 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Paths;
 
+import menus.options.OptionsMenu.OptionTools;
+
 import util.ClickSoundUtil;
 
 using util.MathUtil;
@@ -22,9 +24,9 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
     public var strikethrough:FlxSprite;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, option:String, optionTools:OptionTools):Void
     {
-        super(_x, _y, _title, _tooltip, _option);
+        super(x, y, title, tooltip, option, optionTools);
 
         editable = true;
 
@@ -83,9 +85,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
             {
                 ClickSoundUtil.play();
                 
-                value = !value;
-
-                checkbox.visible = value;
+                setValue(!value);
             }
         }
         else
@@ -94,5 +94,12 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
             strikethrough.visible = false;
         }
+    }
+
+    override function setValue(val:Bool):Void
+    {
+        super.setValue(val);
+
+        checkbox.visible = value;
     }
 }

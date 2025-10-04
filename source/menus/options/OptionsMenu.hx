@@ -19,10 +19,13 @@ import core.SaveManager;
 
 import extendable.TransitionState;
 
+import menus.options.items.BaseOptionItem;
+import menus.options.items.VariableOptionItem;
 import menus.options.pages.GeneralOptionsPage;
 import menus.options.pages.BaseOptionsPage;
 import menus.options.pages.ControlsPage;
 import menus.options.pages.GameplayOptionsPage;
+import menus.options.pages.SavesOptionsPage;
 import menus.options.pages.TestingOptionsPage;
 
 import ui.BackOutButton;
@@ -42,6 +45,8 @@ class OptionsMenu extends TransitionState
     public var background:FlxSprite;
 
     public var chalkboard:FlxSprite;
+
+    public var optionTools:OptionTools;
 
     public var optionPages:FlxTypedGroup<BaseOptionsPage>;
 
@@ -96,25 +101,23 @@ class OptionsMenu extends TransitionState
 
         add(chalkboard);
 
+        optionTools = new OptionTools();
+
+        optionTools.add("erase-options", eraseOptions);
+
         optionPages = new FlxTypedGroup<BaseOptionsPage>();
 
         add(optionPages);
 
-        var optionPage:BaseOptionsPage = new GeneralOptionsPage();
+        addPage(GeneralOptionsPage);
 
-        optionPages.add(optionPage);
+        addPage(ControlsPage);
 
-        optionPage = new ControlsPage();
-        
-        optionPages.add(optionPage);
+        addPage(GameplayOptionsPage);
 
-        optionPage = new GameplayOptionsPage();
+        addPage(SavesOptionsPage);
 
-        optionPages.add(optionPage);
-
-        optionPage = new TestingOptionsPage();
-
-        optionPages.add(optionPage);
+        addPage(TestingOptionsPage);
         
         pageLabel = new FlxText(0.0, 0.0, 0.0, "", 36);
 
@@ -175,6 +178,15 @@ class OptionsMenu extends TransitionState
         FlxG.mouse.visible = false;
     }
 
+    public function addPage<T:BaseOptionsPage>(cls:Class<T>, args:Array<Dynamic> = null):Void
+    {
+        args ??= [optionTools];
+
+        var page:T = Type.createInstance(cls, args);
+
+        optionPages.add(page);
+    }
+
     public function setPage(newIndex:Int):Void
     {
         SaveManager.saveOptions();
@@ -199,6 +211,26 @@ class OptionsMenu extends TransitionState
         tooltip.options = newPage;
     }
 
+    public function eraseOptions():Void
+    {
+        for (i in 0 ... optionPages.members.length)
+        {
+            var group:OptionsGroup = optionPages.members[i].optionsGroup;
+
+            for (j in 0 ... group.members.length)
+            {
+                var option:BaseOptionItem = group.members[j];
+
+                if (option is VariableOptionItem)
+                {
+                    var varOption:VariableOptionItem<Dynamic> = cast option;
+
+                    varOption.setValue(varOption.getValue());
+                }
+            }
+        }
+    }
+
     public function clickBackOutButton():Void
     {
         FlxG.switchState(nextState);
@@ -218,5 +250,39 @@ class OptionsMenu extends TransitionState
         add(button);
 
         return button;
+    }
+}
+
+class OptionTools
+{
+    public var listeners:Map<String, Array<()->Void>>;
+
+    public function new():Void
+    {
+        listeners = new Map<String, Array<()->Void>>();
+    }
+
+    public function has(k:String):Bool
+    {
+        return listeners.exists(k);
+    }
+
+    public function add(k:String, v:()->Void):Void
+    {
+        if (!listeners.exists(k))
+            listeners[k] = [];
+
+        listeners[k].push(v);
+    }
+
+    public function dispatch(k:String):Void
+    {
+        if (!has(k))
+            return;
+
+        var list:Array<()->Void> = listeners[k];
+
+        for (i in 0 ... list.length)
+            list[i]();
     }
 }

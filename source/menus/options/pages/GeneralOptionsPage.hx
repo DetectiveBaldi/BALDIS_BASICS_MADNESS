@@ -2,12 +2,13 @@ package menus.options.pages;
 
 import menus.options.items.BoolOptionItem;
 import menus.options.items.NumericOptionItem.IntOptionItem;
+import menus.options.OptionsMenu.OptionTools;
 
 class GeneralOptionsPage extends BaseOptionsPage
 {
-    public function new():Void
+    public function new(optionTools:OptionTools):Void
     {
-        super("General Options");
+        super("General Options", optionTools);
 
         var bool:BoolOptionItem = addBoolOption("Auto Pause", "If checked, the game will freeze when\nwindow focus is lost.", "autoPause");
 
@@ -19,11 +20,11 @@ class GeneralOptionsPage extends BaseOptionsPage
 
         int.onUpdate.add(InitState.setFrameRateCap);
 
-        int.setPosition(285.0, 250.0);
+        int.setPosition(285.0, 260.0);
 
         bool = addBoolOption("Flashing Lights", "If unchecked, limits the use\nof screen flashing effects.", "flashingLights");
 
-        bool.setPosition(285.0, 375.0);
+        bool.setPosition(285.0, 365.0);
 
         bool = addBoolOption("Shaders", "If unchecked, shaders and screen\nfilters are disabled.", "shaders");
 

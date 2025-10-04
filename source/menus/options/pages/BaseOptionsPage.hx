@@ -6,7 +6,10 @@ import flixel.util.FlxSave;
 
 import menus.options.items.BoolOptionItem;
 import menus.options.items.ControlOptionItem;
+import menus.options.items.EraseSaveItem;
+import menus.options.items.FolderOpenItem;
 import menus.options.items.NumericOptionItem;
+import menus.options.OptionsMenu.OptionTools;
 
 class BaseOptionsPage extends FlxGroup
 {
@@ -14,13 +17,13 @@ class BaseOptionsPage extends FlxGroup
 
     public var optionsGroup:OptionsGroup;
 
-    public function new(name:String):Void
+    public function new(name:String, optionTools:OptionTools):Void
     {
         super();
 
         this.name = name;
 
-        optionsGroup = new OptionsGroup();
+        optionsGroup = new OptionsGroup(optionTools);
 
         add(optionsGroup);
     }
@@ -35,15 +38,20 @@ class BaseOptionsPage extends FlxGroup
         return optionsGroup.addControlOption(title, tooltip, option);
     }
 
-    public function addIntOption(title:String, tooltip:String, option:String, min:Int, max:Int, step:Int,
-        cellsToGenerate:Int):IntOptionItem
+    public function addFolderOpenItem(title:String, tooltip:String, folderPath:String):FolderOpenItem
     {
-        return optionsGroup.addIntOption(title, tooltip, option, min, max, step, cellsToGenerate);
+        return optionsGroup.addFolderOpenItem(title, tooltip, folderPath);
     }
 
-    public function addSaveEraseGroup(title:String, tooltip:String, save:FlxSave):SaveEraseGroup
+    public function addIntOption(title:String, tooltip:String, option:String, min:Int, max:Int, step:Int,
+        cellAmount:Int):IntOptionItem
     {
-        return optionsGroup.addSaveEraseGroup(title, tooltip, save);
+        return optionsGroup.addIntOption(title, tooltip, option, min, max, step, cellAmount);
+    }
+
+    public function addEraseSaveItem(title:String, tooltip:String, save:FlxSave):EraseSaveItem
+    {
+        return optionsGroup.addEraseSaveItem(title, tooltip, save);
     }
 
     public function cancelTouch():Void

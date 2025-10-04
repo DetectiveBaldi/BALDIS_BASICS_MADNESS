@@ -16,24 +16,12 @@ import flixel.util.FlxColor;
 import core.Options;
 import core.Paths;
 
+import menus.options.OptionsMenu.OptionTools;
+
 import util.ClickSoundUtil;
 
 class ControlOptionItem extends VariableOptionItem<Array<Int>>
 {
-    override function get_value():Array<Int>
-    {
-        return Options.controls[option];
-    }
-
-    override function set_value(_value:Array<Int>):Array<Int>
-    {
-        Options.controls[option] = _value;
-
-        Options.controls = Options.controls;
-
-        return value;
-    }
-
     public var controlsText:FlxText;
 
     public var controlIndex:Int;
@@ -42,9 +30,9 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
     public var selected:Bool;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, option:String, optionTools:OptionTools):Void
     {
-        super(_x, _y, _title, _tooltip, _option);
+        super(x, y, title, tooltip, option, optionTools);
 
         controlsText = new FlxText(0.0, 0.0, 0.0, title, 42);
 
@@ -124,8 +112,6 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
 
             if (FlxG.mouse.overlaps(titleText, camera))
             {
-                titleText.underline = true;
-
                 if (FlxG.mouse.justReleased)
                 {
                     ClickSoundUtil.play();
@@ -133,9 +119,12 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
                     selected = true;
                 }
             }
-            else
-                titleText.underline = false;
         }
+
+        if (FlxG.mouse.overlaps(titleText, camera))
+            titleText.underline = true;
+        else
+            titleText.underline = false;
     }
 
     override function destroy():Void
@@ -168,6 +157,24 @@ class ControlOptionItem extends VariableOptionItem<Array<Int>>
         input.enabled = false;
 
         selected = false;
+    }
+
+    override function getValue():Array<Int>
+    {
+        return Options.controls[option];
+    }
+
+    override function setValue(val:Array<Int>):Void
+    {
+        value = val;
+
+        onUpdate.dispatch(value);
+
+        Options.controls[option] = value;
+
+        Options.controls = Options.controls;
+
+        updateControlsText();
     }
 
     public function updateControlsText():Void

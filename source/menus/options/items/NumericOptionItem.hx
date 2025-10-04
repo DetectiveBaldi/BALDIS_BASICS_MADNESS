@@ -12,6 +12,8 @@ import flixel.text.FlxText;
 import core.AssetCache;
 import core.Paths;
 
+import menus.options.OptionsMenu.OptionTools;
+
 import ui.OrientedButton;
 
 using util.MathUtil;
@@ -32,16 +34,16 @@ class IntOptionItem extends VariableOptionItem<Int>
 
     public var rightButton:OrientedButton;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String,
-        _min:Int, _max:Int, _step:Int, cellsToGenerate:Int):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, option:String,
+        min:Int, max:Int, step:Int, cellAmount:Int,  optionTools:OptionTools):Void
     {
-        super(_x, _y, _title, _tooltip, _option);
+        super(x, y, title, tooltip, option, optionTools);
 
-        min = _min;
+        this.min = min;
 
-        max = _max;
+        this.max = max;
 
-        step = _step;
+        this.step = step;
 
         valueText = new FlxText(0.0, 0.0, 0.0, "", 42);
 
@@ -53,7 +55,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         cells = new FlxSpriteGroup();
 
-        for (i in 0 ... cellsToGenerate)
+        for (i in 0 ... cellAmount)
         {
             var cell:FlxSprite = new FlxSprite().loadGraphic(AssetCache.getGraphic("menus/options/items/IntOptionItem/cells"), true,
                 8, 32);
@@ -79,14 +81,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         powerCells();
 
-        leftButton = addOrientedButton(LEFT, () ->
-        {
-            value = Std.int(FlxMath.bound(value - step, min, max));
-
-            powerCells();
-
-            updateValueText();
-        });
+        leftButton = addOrientedButton(LEFT, () -> setValue(Std.int(FlxMath.bound(value - step, min, max))));
 
         leftButton.scale.set(1.85, 1.85);
 
@@ -96,14 +91,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         add(leftButton);
 
-        rightButton = addOrientedButton(RIGHT, () ->
-        {
-            value = Std.int(FlxMath.bound(value + step, min, max));
-
-            powerCells();
-
-            updateValueText();
-        });
+        rightButton = addOrientedButton(RIGHT, () -> setValue(Std.int(FlxMath.bound(value + step, min, max))));
 
         rightButton.scale.set(1.85, 1.85);
 
@@ -119,6 +107,15 @@ class IntOptionItem extends VariableOptionItem<Int>
         super.update(elapsed);
 
         titleText.underline = FlxG.mouse.overlaps(titleText, camera);
+    }
+
+    override function setValue(val:Int):Void
+    {
+        super.setValue(val);
+
+        updateValueText();
+
+        powerCells();
     }
 
     public function updateValueText():Void

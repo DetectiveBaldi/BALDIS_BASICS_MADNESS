@@ -3,8 +3,6 @@ package menus.options;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-import flixel.group.FlxSpriteGroup;
-
 import flixel.text.FlxText;
 
 import flixel.util.FlxDestroyUtil;
@@ -13,11 +11,13 @@ import flixel.util.FlxSignal;
 import core.AssetCache;
 import core.Paths;
 
+import group.BubbledSpriteGroup;
+
 import util.ClickSoundUtil;
 
 using util.MathUtil;
 
-class ConfirmationPanel extends FlxSpriteGroup
+class OptionsPanel extends BubbledSpriteGroup
 {
     public var panel:FlxSprite;
 
@@ -69,6 +69,8 @@ class ConfirmationPanel extends FlxSpriteGroup
 
         bodyText.x += 25.0;
 
+        bodyText.y += 5.0;
+
         add(bodyText);
 
         confirmButton = new FlxSprite(0.0, 0.0);
@@ -118,6 +120,8 @@ class ConfirmationPanel extends FlxSpriteGroup
 
             if (FlxG.mouse.justReleased)
             {
+                kill();
+                
                 onClick.dispatch();
 
                 FlxG.sound.play(AssetCache.getSound("shared/notebook-respawn"));

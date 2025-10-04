@@ -1,4 +1,4 @@
-package menus.options;
+package menus.options.items;
 
 import flixel.FlxG;
 
@@ -7,22 +7,21 @@ import flixel.util.FlxSave;
 import core.SaveManager;
 
 import menus.options.items.BaseOptionItem;
+import menus.options.OptionsMenu.OptionTools;
 
 import util.ClickSoundUtil;
 
-class SaveEraseGroup extends BaseOptionItem
+class EraseSaveItem extends BaseOptionItem
 {
     public var save:FlxSave;
 
-    public var panel:ConfirmationPanel;
+    public var panel:OptionsPanel;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, title:String, description:String, save:FlxSave):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, save:FlxSave, optionTools:OptionTools):Void
     {
-        super(x, y, title, description);
+        super(x, y, title, tooltip, optionTools);
 
-        this.save = save;
-
-        panel = new ConfirmationPanel();
+        panel = new OptionsPanel();
 
         panel.x = titleText.x + 420.0;
 
@@ -31,6 +30,8 @@ class SaveEraseGroup extends BaseOptionItem
         panel.onClick.add(eraseSave);
 
         add(panel);
+
+        this.save = save;
     }
 
     override function update(elapsed:Float):Void
@@ -61,6 +62,13 @@ class SaveEraseGroup extends BaseOptionItem
 
     public function eraseSave():Void
     {
-        save == SaveManager.options ? SaveManager.eraseOptions() : SaveManager.eraseHighScores();
+        if (save == SaveManager.options)
+        {
+            SaveManager.eraseOptions();
+
+            optionTools.dispatch("erase-options");
+        }
+        else
+            SaveManager.eraseHighScores();
     }
 }

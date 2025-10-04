@@ -5,35 +5,23 @@ import flixel.util.FlxSignal.FlxTypedSignal;
 
 import core.Options;
 
+import menus.options.OptionsMenu.OptionTools;
+
 class VariableOptionItem<T> extends BaseOptionItem
 {
     public var option:String;
 
-    public var value(get, set):T;
-
-    @:noCompletion
-    function get_value():T
-    {
-        return Reflect.getProperty(Options, option);
-    }
-
-    @:noCompletion
-    function set_value(_value:T):T
-    {
-        Reflect.setProperty(Options, option, _value);
-
-        onUpdate.dispatch(value);
-
-        return value;
-    }
+    public var value:T;
 
     public var onUpdate:FlxTypedSignal<(value:T)->Void>;
 
-    public function new(_x:Float = 0.0, _y:Float = 0.0, _title:String, _tooltip:String, _option:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, option:String, optionTools:OptionTools):Void
     {
-        super(_x, _y, _title, _tooltip);
+        super(x, y, title, tooltip, optionTools);
 
-        option = _option;
+        this.option = option;
+
+        value = getValue();
 
         onUpdate = new FlxTypedSignal<(value:T)->Void>();
     }
@@ -43,5 +31,19 @@ class VariableOptionItem<T> extends BaseOptionItem
         super.destroy();
 
         onUpdate = cast FlxDestroyUtil.destroy(onUpdate);
+    }
+
+    public function getValue():T
+    {
+        return Reflect.getProperty(Options, option);
+    }
+
+    public function setValue(val:T):Void
+    {
+        value = val;
+
+        Reflect.setProperty(Options, option, value);
+
+        onUpdate.dispatch(value);
     }
 }

@@ -1,12 +1,13 @@
 package menus.options.pages;
 
 import menus.options.items.ControlOptionItem;
+import menus.options.OptionsMenu.OptionTools;
 
 class ControlsPage extends BaseOptionsPage
 {
-    public function new():Void
+    public function new(optionTools:OptionTools):Void
     {
-        super("Controls");
+        super("Controls", optionTools);
 
         var control:ControlOptionItem = addControlOption("Left Note", "Controls for the first note in the strumline.", "NOTE:LEFT");
 

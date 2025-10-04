@@ -3,12 +3,13 @@ package menus.options.pages;
 import api.DiscordHandler;
 
 import menus.options.items.BoolOptionItem;
+import menus.options.OptionsMenu.OptionTools;
 
 class TestingOptionsPage extends BaseOptionsPage
 {
-    public function new():Void
+    public function new(optionTools:OptionTools):Void
     {
-        super("Testing Options");
+        super("Testing Options", optionTools);
 
         var bool:BoolOptionItem = addBoolOption("Discord RPC", "If checked, the game will appear with\na unique status on your Discord account.", "discordRPC");
 
@@ -34,6 +35,6 @@ class TestingOptionsPage extends BaseOptionsPage
 
         bool = addBoolOption("Sound Streaming", "If checked, audio is loaded progressively\nwhere suitable.", "soundStreaming");
 
-        bool.setPosition(285.0, 375.0);
+        bool.setPosition(285.0, 385.0);
     }
 }
