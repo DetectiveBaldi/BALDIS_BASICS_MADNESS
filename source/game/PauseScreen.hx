@@ -215,18 +215,17 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
     {
         super.update(elapsed);
 
-        if (FlxG.mouse.overlaps(pauseIcons, camera))
+        for (i in 0 ... pauseIcons.members.length)
         {
-            for (icon in pauseIcons)
+            var icon:PauseScreenIcon = pauseIcons.members[i];
+            
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && FlxG.mouse.overlaps(icon, camera))
             {
-                if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && FlxG.mouse.overlaps(icon, camera))
-                {
-                    selectedIcon = icon;
+                selectedIcon = icon;
 
-                    close();
+                close();
 
-                    ClickSoundUtil.play();
-                }
+                ClickSoundUtil.play();
             }
         }
 
@@ -234,6 +233,13 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         {
             selectedIcon = pauseIcons.members.first((icon:PauseScreenIcon) -> FlxG.mouse.overlaps(icon, camera));
             
+            close();
+        }
+
+        if (FlxG.keys.justPressed.ESCAPE)
+        {
+            selectedIcon = resumeIcon;
+
             close();
         }
     }
