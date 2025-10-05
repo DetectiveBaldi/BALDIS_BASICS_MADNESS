@@ -34,10 +34,10 @@ class IntOptionItem extends VariableOptionItem<Int>
 
     public var rightButton:OrientedButton;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, option:String,
-        min:Int, max:Int, step:Int, cellAmount:Int,  optionTools:OptionTools):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, optionTools:OptionTools, option:String,
+        min:Int, max:Int, step:Int, cellAmount:Int):Void
     {
-        super(x, y, title, tooltip, option, optionTools);
+        super(x, y, title, tooltip, optionTools, option);
 
         this.min = min;
 

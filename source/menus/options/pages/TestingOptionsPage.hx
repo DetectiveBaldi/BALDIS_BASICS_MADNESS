@@ -31,10 +31,10 @@ class TestingOptionsPage extends BaseOptionsPage
 
         bool = addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed\nfrom RAM where possible.", "gpuCaching");
 
-        bool.setPosition(285.0, 300.0);
+        bool.setPosition(285.0, 260.0);
 
         bool = addBoolOption("Sound Streaming", "If checked, audio is loaded progressively\nwhere suitable.", "soundStreaming");
 
-        bool.setPosition(285.0, 385.0);
+        bool.setPosition(285.0, 335.0);
     }
 }

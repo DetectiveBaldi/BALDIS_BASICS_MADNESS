@@ -103,7 +103,7 @@ class OptionsMenu extends TransitionState
 
         optionTools = new OptionTools();
 
-        optionTools.add("erase-options", eraseOptions);
+        optionTools.set("erase-options", eraseOptions);
 
         optionPages = new FlxTypedGroup<BaseOptionsPage>();
 
@@ -131,10 +131,7 @@ class OptionsMenu extends TransitionState
 
         add(pageLabel);
 
-        goLeftButton = addOrientedButton(LEFT, () ->
-        {
-            setPage(pageIndex = FlxMath.wrap(pageIndex - 1, 0, optionPages.length - 1));
-        });
+        goLeftButton = addOrientedButton(LEFT, () -> setPage(pageIndex - 1));
 
         goLeftButton.scale.set(2.0, 2.0);
 
@@ -142,10 +139,7 @@ class OptionsMenu extends TransitionState
 
         goLeftButton.setPosition(chalkboard.x + 150.0, chalkboard.y + chalkboard.height - goLeftButton.height - 150.0);
 
-        goRightButton = addOrientedButton(RIGHT, () ->
-        {
-            setPage(pageIndex = FlxMath.wrap(pageIndex + 1, 0, optionPages.length - 1));
-        });
+        goRightButton = addOrientedButton(RIGHT, () -> setPage(pageIndex + 1));
 
         goRightButton.scale.set(2.0, 2.0);
 
@@ -191,20 +185,18 @@ class OptionsMenu extends TransitionState
     {
         SaveManager.saveOptions();
 
+        pageIndex = FlxMath.wrap(newIndex, 0, optionPages.members.length - 1);
+
         for (page in optionPages)
         {
-            page.active = false;
-
-            page.visible = false;
+            page.exists = false;
 
             page.cancelTouch();
         }
 
-        var newPage:BaseOptionsPage = optionPages.members[newIndex];
+        var newPage:BaseOptionsPage = optionPages.members[pageIndex];
 
-        newPage.active = true;
-
-        newPage.visible = true;
+        newPage.exists = true;
 
         pageLabel.text = newPage.name;
 
@@ -255,34 +247,28 @@ class OptionsMenu extends TransitionState
 
 class OptionTools
 {
-    public var listeners:Map<String, Array<()->Void>>;
+    public var listeners:Map<String, ()->Void>;
 
     public function new():Void
     {
-        listeners = new Map<String, Array<()->Void>>();
+        listeners = new Map<String, ()->Void>();
     }
 
-    public function has(k:String):Bool
+    public function has(key:String):Bool
     {
-        return listeners.exists(k);
+        return listeners.exists(key);
     }
 
-    public function add(k:String, v:()->Void):Void
+    public function set(key:String, val:()->Void):Void
     {
-        if (!listeners.exists(k))
-            listeners[k] = [];
-
-        listeners[k].push(v);
+        listeners[key] = val;
     }
 
-    public function dispatch(k:String):Void
+    public function dispatch(key:String):Void
     {
-        if (!has(k))
+        if (!has(key))
             return;
 
-        var list:Array<()->Void> = listeners[k];
-
-        for (i in 0 ... list.length)
-            list[i]();
+        listeners[key]();
     }
 }

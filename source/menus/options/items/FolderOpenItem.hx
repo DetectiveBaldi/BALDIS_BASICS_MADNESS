@@ -10,8 +10,8 @@ class FolderOpenItem extends BaseOptionItem
 {
     public var folderPath:String;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, folderPath:String,
-        optionTools:OptionTools):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, optionTools:OptionTools,
+        folderPath:String):Void
     {
         super(x, y, title, tooltip, optionTools);
 

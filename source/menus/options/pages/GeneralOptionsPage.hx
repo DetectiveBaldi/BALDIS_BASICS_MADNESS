@@ -20,14 +20,14 @@ class GeneralOptionsPage extends BaseOptionsPage
 
         int.onUpdate.add(InitState.setFrameRateCap);
 
-        int.setPosition(285.0, 260.0);
+        int.setPosition(285.0, 250.0);
 
         bool = addBoolOption("Flashing Lights", "If unchecked, limits the use\nof screen flashing effects.", "flashingLights");
 
-        bool.setPosition(285.0, 365.0);
+        bool.setPosition(285.0, 335.0);
 
         bool = addBoolOption("Shaders", "If unchecked, shaders and screen\nfilters are disabled.", "shaders");
 
-        bool.setPosition(285.0, 450.0);
+        bool.setPosition(285.0, 410.0);
     }
 }

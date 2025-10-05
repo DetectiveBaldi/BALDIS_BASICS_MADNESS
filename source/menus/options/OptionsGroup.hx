@@ -57,7 +57,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
 
     public function addBoolOption(title:String, tooltip:String, option:String):BoolOptionItem
     {
-        var opt:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, tooltip, option, optionTools);
+        var opt:BoolOptionItem = new BoolOptionItem(0.0, 0.0, title, tooltip, optionTools, option);
 
         add(opt);
 
@@ -66,7 +66,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
 
     public function addControlOption(title:String, tooltip:String, option:String):ControlOptionItem
     {
-        var opt:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, tooltip, option, optionTools);
+        var opt:ControlOptionItem = new ControlOptionItem(0.0, 0.0, title, tooltip, optionTools, option);
 
         add(opt);
 
@@ -75,7 +75,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
 
     public function addFolderOpenItem(title:String, tooltip:String, folderPath:String):FolderOpenItem
     {
-        var opt:FolderOpenItem = new FolderOpenItem(0.0, 0.0, title, tooltip, folderPath, optionTools);
+        var opt:FolderOpenItem = new FolderOpenItem(0.0, 0.0, title, tooltip, optionTools, folderPath);
 
         add(opt);
 
@@ -85,7 +85,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
     public function addIntOption(title:String, tooltip:String, option:String, min:Int, max:Int, step:Int,
         cellAmount:Int):IntOptionItem
     {
-        var opt:IntOptionItem = new IntOptionItem(0.0, 0.0, title, tooltip, option, min, max, step, cellAmount, optionTools);
+        var opt:IntOptionItem = new IntOptionItem(0.0, 0.0, title, tooltip, optionTools, option, min, max, step, cellAmount);
 
         add(opt);
 
@@ -94,7 +94,7 @@ class OptionsGroup extends FlxTypedGroup<BaseOptionItem>
 
     public function addEraseSaveItem(title:String, tooltip:String, save:FlxSave):EraseSaveItem
     {
-        var opt:EraseSaveItem = new EraseSaveItem(0.0, 0.0, title, tooltip, save, optionTools);
+        var opt:EraseSaveItem = new EraseSaveItem(0.0, 0.0, title, tooltip, optionTools, save);
 
         add(opt);
 

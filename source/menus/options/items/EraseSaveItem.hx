@@ -17,7 +17,7 @@ class EraseSaveItem extends BaseOptionItem
 
     public var panel:OptionsPanel;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, save:FlxSave, optionTools:OptionTools):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, optionTools:OptionTools, save:FlxSave):Void
     {
         super(x, y, title, tooltip, optionTools);
 

@@ -175,7 +175,7 @@ class BubbledTypedSpriteGroup<T:FlxSprite> extends FlxTypedSpriteGroup<T>
 		_skipTransformChildren = false;
 	}
 
-	// Bubbles down information to members and takes care of type mis-matches.
+	// Bubbles down information to members and fixes type mismatches.
 	@:generic
 	public function forceTransformChildren<V>(func:T->V->Void, val:V):Void
 	{

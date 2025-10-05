@@ -223,16 +223,16 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
                 {
                     selectedIcon = icon;
 
-                    ClickSoundUtil.play();
-
                     close();
+
+                    ClickSoundUtil.play();
                 }
             }
         }
 
-        if (FlxG.keys.anyJustPressed(Options.controls["UI:PAUSE"]))
+        if (FlxG.keys.justPressed.ENTER)
         {
-            selectedIcon = resumeIcon;
+            selectedIcon = pauseIcons.members.first((icon:PauseScreenIcon) -> FlxG.mouse.overlaps(icon, camera));
             
             close();
         }
@@ -240,8 +240,6 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
     override function close():Void
     {
-        TransitionSubState.cancelFadeOut = selectedIcon != resumeIcon;
-
         super.close();
 
         FlxG.mouse.visible = lastMouseVisible;
@@ -250,11 +248,14 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         InitState.setMouseRect(lastMouseRect.left, lastMouseRect.right, lastMouseRect.top, lastMouseRect.bottom);
 
+        if (selectedIcon != resumeIcon)
+            TransitionState.cancelFadeOut = true;
+
         if (selectedIcon == restartIcon)
-            FlxG.resetState();
+            transitionOut(FlxG.resetState);
 
         if (selectedIcon == optionsIcon)
-            FlxG.switchState(() -> new OptionsMenu(() -> PlayState.getClassFromLevel()));
+            transitionOut(FlxG.switchState.bind(() -> new OptionsMenu(() -> PlayState.getClassFromLevel(game.params))));
 
         if (selectedIcon == quitIcon)
         {
@@ -288,7 +289,7 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
                 }
             }
 
-            FlxG.switchState(nextState);
+            transitionOut(FlxG.switchState.bind(nextState));
         }
 
         tune.fadeOut(0.5, 0.0, (_tween:FlxTween) -> tune.stop());
