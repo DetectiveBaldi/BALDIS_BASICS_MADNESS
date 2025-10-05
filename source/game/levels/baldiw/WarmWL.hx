@@ -28,7 +28,9 @@ class WarmWL extends PlayState
 
         super.create();
 
-        gameCameraZoom = 0.6;
+        gameCamera.zoom = 0.6;
+
+        gameCameraZoom = gameCamera.zoom;
 
         cameraPoint.centerTo();
 
@@ -45,8 +47,6 @@ class WarmWL extends PlayState
         
         players.setPosition(215, 165);
         opponents.setPosition(345, 180);
-
-        setCamStartPos();
     }
 
     override function stepHit(step:Int):Void

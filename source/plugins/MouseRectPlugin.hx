@@ -71,15 +71,15 @@ class MouseRectPlugin extends FlxBasic
             FlxG.stage.window.warpMouse(mouseX, newBottom);
     }
 
-    public function setMouseRect(newLeft:Float = 0.0, newRight:Float = 0.0, newTop:Float = 0.0, newBottom:Float = 0.0):Void
+    public function setMouseRect(left:Float = 0.0, right:Float = 0.0, top:Float = 0.0, bottom:Float = 0.0):Void
     {
-        left = newLeft;
+        this.left = left;
 
-        right = newRight;
+        this.right = right;
 
-        top = newTop;
+        this.top = top;
 
-        bottom = newBottom;
+        this.bottom = bottom;
 
         updateMouseRect(FlxG.stage.mouseX, FlxG.stage.mouseY);
     }
