@@ -13,6 +13,8 @@ import flixel.util.FlxColor;
 
 import flixel.util.typeLimit.NextState;
 
+import api.DiscordHandler;
+
 import core.AssetCache;
 import core.Paths;
 import core.SaveManager;
@@ -80,6 +82,14 @@ class OptionsMenu extends TransitionState
         FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
+
+        DiscordHandler.setState(null);
+
+        DiscordHandler.setDetails("In the menus...");
+
+        DiscordHandler.setImageKeys(null, "in-menu-small-image-key");
+
+        DiscordHandler.setImageTexts(null, null);
 
         background = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 

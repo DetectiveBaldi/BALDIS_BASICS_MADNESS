@@ -25,15 +25,19 @@ class TestingOptionsPage extends BaseOptionsPage
                 DiscordHandler.shutdown();
         });
 
-        bool.editable = #if (hl || debug) false #else true #end ;
+        bool.selectable = #if FEATURE_DISCORD_HANDLER true #else false #end ;
 
         bool.setPosition(285.0, 175.0);
 
         bool = addBoolOption("GPU Caching", "If checked, bitmap pixel data is disposed\nfrom RAM where possible.", "gpuCaching");
 
+        bool.selectable = #if FEATURE_GPU_CACHING true #else false #end ;
+
         bool.setPosition(285.0, 260.0);
 
         bool = addBoolOption("Sound Streaming", "If checked, audio is loaded progressively\nwhere suitable.", "soundStreaming");
+
+        bool.selectable = #if FEATURE_SOUND_STREAMING true #else false #end ;
 
         bool.setPosition(285.0, 335.0);
     }

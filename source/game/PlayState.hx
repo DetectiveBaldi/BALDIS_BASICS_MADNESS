@@ -1,7 +1,5 @@
 package game;
 
-import sys.FileSystem;
-
 import openfl.filters.BitmapFilter;
 
 import flixel.FlxCamera;
@@ -32,8 +30,7 @@ import core.SaveManager;
 
 import data.CharacterData;
 import data.Chart;
-import data.Chart.EventSchema;
-import data.Chart.NoteSchema;
+import data.Chart.EventData;
 import data.ChartLoader;
 import data.Difficulty;
 import data.LevelData;
@@ -381,7 +378,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         updateScore(playField.playStats);
 
-        countdown = new Countdown(conductor);
+        countdown = new Countdown(this, this);
         
         countdown.camera = hudCamera;
 
@@ -410,7 +407,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         while (eventIndex < chart.events.length)
         {
-            var event:EventSchema = chart.events[eventIndex];
+            var event:EventData = chart.events[eventIndex];
 
             if (conductor.time < event.time)
                 break;
@@ -508,7 +505,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         eventIndex = 0;
     }
 
-    public function onEvent(ev:EventSchema):Void
+    public function onEvent(ev:EventData):Void
     {
         var val:Dynamic = ev.value;
 
@@ -536,18 +533,18 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         pathSuffix = "Vocals-Main";
 
-        if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+        if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
             mainVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
         else
         {
             pathSuffix = "Vocals-Opponent";
 
-            if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+            if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
                 opponentVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
 
             pathSuffix = "Vocals-Player";
 
-            if (FileSystem.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
+            if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
                 playerVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
         }
     }
@@ -606,7 +603,8 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
                 var totalStats:PlayStats = PlayStats.empty();
 
-                totalStats.concat(for (k => v in weekStats) v);
+                for (k => v in weekStats)
+                    totalStats.concat(v);
 
                 score = totalStats.score;
 
@@ -764,7 +762,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
     {
         eventIndex = 0;
         
-        var event:EventSchema = chart.events[eventIndex];
+        var event:EventData = chart.events[eventIndex];
 
         while (eventIndex < chart.events.length && event.time <= time)
         {
@@ -796,19 +794,19 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         var healthBar:HealthBar = playField.healthBar;
 
         if (charType == "spectator" || charType == "opponent")
-            healthBar.opponentIcon.loadFromFile(character.config.healthIcon);
+            healthBar.opponentIcon.loadGraphic(character.config.healthIcon);
         else
-            healthBar.playerIcon.loadFromFile(character.config.healthIcon);
+            healthBar.playerIcon.loadGraphic(character.config.healthIcon);
     }
 
-    public function getStartingCamFocusEvent():EventSchema
+    public function getStartingCamFocusEvent():EventData
     {
-        return chart.events.first((e:EventSchema) -> e.name == "SetCamFocus");
+        return chart.events.first((e:EventData) -> e.name == "SetCamFocus");
     }
 
     public function setCamStartPos():Void
     {
-        var ev:EventSchema = getStartingCamFocusEvent();
+        var ev:EventData = getStartingCamFocusEvent();
 
         // I don't know why you wouldn't have atleast one of these, but who knows?
         if (ev == null)
@@ -821,7 +819,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
     public function getCameraTarget(timeToCheck:Float):String
     {
-        var ev:EventSchema = chart.events.last((e:EventSchema) -> e.name == "SetCamFocus" && e.time <= timeToCheck);
+        var ev:EventData = chart.events.last((e:EventData) -> e.name == "SetCamFocus" && e.time <= timeToCheck);
 
         if (ev == null)
             ev = getStartingCamFocusEvent();

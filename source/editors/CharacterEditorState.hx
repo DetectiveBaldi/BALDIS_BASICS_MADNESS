@@ -182,9 +182,13 @@ class CharacterEditorState extends TransitionState
 
         ui.findComponent("button", Button).onClick = (ev:MouseEvent) ->
         {
-            var path:String = Sys.getCwd().replace("/", "\\");
+            var path:String = "";
+
+            #if sys
+            path += Sys.getCwd().replace("/", "\\");
 
             path += Paths.data(Paths.json('game\\Character\\${character.config.name}')).replace("/", "\\");
+            #end
 
             var fileRef:FileReference = new FileReference();
 
@@ -209,7 +213,7 @@ class CharacterEditorState extends TransitionState
 
             progBar.emptiedSide.color = progBar.filledSide.color = FlxColor.fromString(character.config.healthColor);
 
-            healthIcon.loadFromFile(character.config.healthIcon);
+            healthIcon.loadGraphic(character.config.healthIcon);
 
             animationIndex = 0;
 
@@ -337,7 +341,7 @@ class CharacterEditorState extends TransitionState
         {
             character.config.healthIcon = ui.findComponent("____textfield", TextField).text;
 
-            healthIcon.loadFromFile(character.config.healthIcon);
+            healthIcon.loadGraphic(character.config.healthIcon);
 
             character.config.healthColor = ui.findComponent("_____textfield", TextField).text;
 

@@ -8,27 +8,27 @@ using StringTools;
 
 class Chart
 {
-    public static function parse(schema:ChartSchema):Chart
+    public static function decodeData(v:ChartData):Chart
     {
         var chart:Chart = new Chart();
 
-        chart.name = schema.name;
+        chart.name = v.name;
 
-        chart.scrollSpeed = schema.scrollSpeed;
+        chart.scrollSpeed = v.scrollSpeed;
 
-        chart.notes = schema.notes;
+        chart.notes = v.notes;
 
-        chart.events = schema.events;
+        chart.events = v.events;
 
-        chart.timingPoints = schema.timingPoints;
+        chart.timingPoints = v.timingPoints;
 
-        chart.spectator = schema.spectator;
+        chart.spectator = v.spectator;
 
-        chart.opponent = schema.opponent;
+        chart.opponent = v.opponent;
 
-        chart.player = schema.player;
+        chart.player = v.player;
 
-        chart.credits = schema.credits;
+        chart.credits = v.credits;
         
         return chart;
     }
@@ -39,9 +39,9 @@ class Chart
 
     public var scrollSpeed:Float;
 
-    public var notes:Array<NoteSchema>;
+    public var notes:Array<NoteData>;
 
-    public var events:Array<EventSchema>;
+    public var events:Array<EventData>;
 
     public var timingPoints:Array<TimingPointData>;
     
@@ -61,9 +61,9 @@ class Chart
 
         scrollSpeed = 1.6;
 
-        notes = new Array<NoteSchema>();
+        notes = new Array<NoteData>();
 
-        events = new Array<EventSchema>();
+        events = new Array<EventData>();
 
         timingPoints = new Array<TimingPointData>();
 
@@ -77,7 +77,7 @@ class Chart
     }
 }
 
-typedef ChartSchema =
+typedef ChartData =
 {
     var name:String;
 
@@ -85,9 +85,9 @@ typedef ChartSchema =
 
     var scrollSpeed:Float;
 
-    var notes:Array<NoteSchema>;
+    var notes:Array<NoteData>;
 
-    var events:Array<EventSchema>;
+    var events:Array<EventData>;
 
     var timingPoints:Array<TimingPointData>;
 
@@ -100,14 +100,14 @@ typedef ChartSchema =
     var credits:CreditsData;
 }
 
-typedef EventSchema = TimedObject &
+typedef EventData = TimedObject &
 {
     var name:String;
 
     var value:Dynamic;
 }
 
-typedef NoteSchema = TimedObject &
+typedef NoteData = TimedObject &
 {
     var direction:Int;
 

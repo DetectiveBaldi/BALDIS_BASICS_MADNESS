@@ -65,23 +65,18 @@ class PlayStats
 
     public function isEmpty():Bool
     {
-        return score == 0 && hits == 0 && misses == 0 && bonus == 0.0;
+        return hits == 0 && misses == 0;
     }
 
-    public function concat(...stats:PlayStats):Void
+    public function concat(stats:PlayStats):Void
     {
-        for (i in 0 ... stats.length)
-        {
-            var stat:PlayStats = stats[i];
+        score += stats.score;
 
-            score += stat.score;
+        hits += stats.hits;
 
-            hits += stat.hits;
+        misses += stats.misses;
 
-            misses += stat.misses;
-
-            bonus += stat.bonus;
-        }
+        bonus += stats.bonus;
     }
 
     public function copy():PlayStats

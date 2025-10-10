@@ -2,7 +2,7 @@ package game;
 
 import haxe.Json;
 
-import sys.io.File;
+import openfl.utils.Assets;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -38,14 +38,12 @@ class Character extends FlxSprite
 {
     public static function getConfig(file:String):CharacterData
     {
-        return Json.parse(File.getContent(Paths.data(Paths.json('game/Character/${file}'))));
+        return Json.parse(Assets.getText(Paths.data(Paths.json('game/Character/${file}'))));
     }
     
     public var conductor:Conductor;
 
     public var strumline:Strumline;
-
-    public var keysToCheck:Array<Int>;
 
     public var lastScale:FlxPoint;
     
@@ -75,13 +73,6 @@ class Character extends FlxSprite
 
         conductor?.onBeatHit?.add(beatHit);
 
-        keysToCheck =
-        [
-            for (i in 0 ... Note.DIRECTIONS.length)
-                for (j in 0 ... Options.controls['NOTE:${Note.DIRECTIONS[i]}'].length)
-                    Options.controls['NOTE:${Note.DIRECTIONS[i]}'][j]
-        ];
-
         lastScale = FlxPoint.get();
         
         loadConfig(_config);
@@ -109,9 +100,6 @@ class Character extends FlxSprite
 
         if (conductor == null || strumline == null)
             return;
-
-        if (FlxG.keys.anyJustPressed(keysToCheck) && !strumline.botplay)
-            holdTimer = 0.0;
 
         if (isSinging())
         {
@@ -150,8 +138,6 @@ class Character extends FlxSprite
         super.destroy();
 
         conductor?.onBeatHit?.remove(beatHit);
-
-        keysToCheck = null;
 
         lastScale = FlxDestroyUtil.put(lastScale);
 

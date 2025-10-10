@@ -150,7 +150,7 @@ class PlayField extends FlxGroup implements ISequenceHandler
 
         updateScoreText();
 
-        healthBar = new HealthBar(0.0, 0.0, conductor);
+        healthBar = new HealthBar(0.0, 0.0, beatDispatcher);
 
         healthBar.setPosition(healthBar.getCenterX(),
             Options.downscroll ? -20.0 : FlxG.height - healthBar.height + 20.0);
@@ -207,7 +207,7 @@ class PlayField extends FlxGroup implements ISequenceHandler
 
         noteSpawner.strumlines = strumlines;
 
-        opponentStrumline = new Strumline(conductor);
+        opponentStrumline = new Strumline(beatDispatcher);
 
         opponentStrumline.scrollSpeed = scrollSpeed;
 
@@ -218,7 +218,7 @@ class PlayField extends FlxGroup implements ISequenceHandler
 
         strumlines.add(opponentStrumline);
 
-        playerStrumline = new Strumline(conductor);
+        playerStrumline = new Strumline(beatDispatcher);
 
         playerStrumline.onNoteHit.add(noteHit);
 
@@ -244,8 +244,10 @@ class PlayField extends FlxGroup implements ISequenceHandler
     {
         super.update(elapsed);
 
-        if (conductor.time > 0.0)
-            timerNeedle.angle = (getSongTime() / getSongLength()) * 360.0;
+        var time:Float = getSongTime();
+
+        if (time > 0.0)
+            timerNeedle.angle = (time / getSongLength()) * 360.0;
     }
 
     override function destroy():Void

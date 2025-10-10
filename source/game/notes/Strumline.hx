@@ -18,6 +18,8 @@ import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
 import game.notes.events.SustainHoldEvent;
 
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using StringTools;
@@ -99,11 +101,11 @@ class Strumline extends FlxGroup
 
     public var lastStep:Int;
 
-    public function new(_conductor:Conductor):Void
+    public function new(beatDispatcher:IBeatDispatcher):Void
     {
         super();
 
-        conductor = _conductor;
+        conductor = beatDispatcher.conductor;
 
         getKeysToCheck();
 
@@ -115,7 +117,7 @@ class Strumline extends FlxGroup
 
         for (i in 0 ... 4)
         {
-            var strum:Strum = new Strum(conductor);
+            var strum:Strum = new Strum(beatDispatcher);
 
             strum.strumline = this;
 

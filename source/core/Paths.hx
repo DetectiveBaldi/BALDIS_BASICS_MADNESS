@@ -4,13 +4,6 @@ import openfl.utils.Assets;
 
 class Paths
 {
-    public static var list:Array<String>;
-
-    public static function init():Void
-    {
-        list = Assets.list();
-    }
-    
     public static function png(path:String):String
     {
         return '${path}.png';
@@ -68,6 +61,6 @@ class Paths
 
     public static function exists(path:String):Bool
     {
-        return list.contains(path);
+        return Assets.exists(path);
     }
 }

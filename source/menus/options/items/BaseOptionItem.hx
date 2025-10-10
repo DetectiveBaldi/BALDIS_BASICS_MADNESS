@@ -10,9 +10,7 @@ import group.BubbledSpriteGroup;
 
 import menus.options.OptionsMenu.OptionTools;
 
-import interfaces.IHasTooltip;
-
-class BaseOptionItem extends BubbledSpriteGroup implements IHasTooltip
+class BaseOptionItem extends BubbledSpriteGroup
 {
     public var title:String;
 

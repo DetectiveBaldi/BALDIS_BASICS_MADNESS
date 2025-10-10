@@ -8,6 +8,8 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using StringTools;
@@ -24,11 +26,11 @@ class Strum extends FlxSprite
 
     public var holdTimer:Float;
 
-    public function new(_conductor:Conductor, x:Float = 0.0, y:Float = 0.0):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, beatDispatcher:IBeatDispatcher):Void
     {
         super(x, y);
 
-        conductor = _conductor;
+        conductor = beatDispatcher.conductor;
 
         frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Strum/default"),
             Paths.image(Paths.xml("game/notes/Strum/default")));
@@ -52,9 +54,6 @@ class Strum extends FlxSprite
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        if (conductor == null)
-            return;
 
         if ((animation.name ?? "").endsWith("Confirm"))
         {

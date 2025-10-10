@@ -11,27 +11,15 @@ import flixel.util.FlxSignal;
 import core.AssetCache;
 import core.Paths;
 
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using util.MathUtil;
 
 class HealthBar extends FlxSpriteGroup
 {
-    public var conductor(default, set):Conductor;
-
-    @:noCompletion
-    function set_conductor(_conductor:Conductor):Conductor
-    {
-        var __conductor:Conductor = conductor;
-
-        conductor = _conductor;
-
-        conductor?.onBeatHit?.add(beatHit);
-
-        __conductor?.onBeatHit?.remove(beatHit);
-
-        return conductor;
-    }
+    public var conductor:Conductor;
 
     public var percent(get, set):Float;
 
@@ -93,11 +81,13 @@ class HealthBar extends FlxSpriteGroup
 
     public var playerIcon:HealthIcon;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, _conductor:Conductor):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, beatDispatcher:IBeatDispatcher):Void
     {
         super(x, y);
 
-        conductor = _conductor;
+        conductor = beatDispatcher.conductor;
+
+        conductor.onBeatHit.add(beatHit);
 
         @:bypassAccessor
         value = 50.0;

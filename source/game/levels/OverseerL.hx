@@ -546,7 +546,7 @@ class OverseerGameOverScreen extends FlxSubState implements ISequenceHandler
 
             no.play();
 
-            new FlxTimer(timers).start(5.0, (_:FlxTimer) -> Sys.exit(0));
+            new FlxTimer(timers).start(5.0, (_:FlxTimer) -> #if sys Sys.exit(0) #else FlxG.resetState() #end );
         });
     }
 }

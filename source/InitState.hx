@@ -82,11 +82,7 @@ class InitState extends FlxState
 
         AssetCache.init();
 
-        Paths.init();
-
         Playlist.init();
-
-        HighScore.purgeInvalid();
 
         fullscreenPlugin = new FullscreenPlugin();
 

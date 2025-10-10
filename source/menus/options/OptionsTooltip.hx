@@ -17,8 +17,6 @@ import flixel.util.FlxColor;
 import core.AssetCache;
 import core.Paths;
 
-import interfaces.IHasTooltip;
-
 import menus.options.items.BaseOptionItem;
 import menus.options.pages.BaseOptionsPage;
 
@@ -28,7 +26,7 @@ class OptionsTooltip extends FlxSpriteGroup
 {
     public var options:BaseOptionsPage;
 
-    public var hover:IHasTooltip;
+    public var hover:BaseOptionItem;
 
     public var panel:FlxSprite;
 
@@ -78,30 +76,6 @@ class OptionsTooltip extends FlxSpriteGroup
                 visible = false;
         }
 
-        for (option in options)
-        {
-            if (!(option is IHasTooltip))
-                continue;
-
-            if (FlxG.mouse.overlaps(option, camera))
-            {
-                visible = true;
-
-                var option:IHasTooltip = cast (option, IHasTooltip);
-
-                if (hover == option)
-                    break;
-
-                hover = option;
-
-                updateTooltip(hover);
-
-                break;
-            }
-            else
-                visible = false;
-        }
-
         var newX:Float = FlxG.mouse.x + FlxG.mouse.cursor.width * 0.5 - width * 0.5;
 
         newX = FlxMath.bound(newX, InitState.mouseRectPlugin.left, InitState.mouseRectPlugin.right - width);
@@ -113,7 +87,7 @@ class OptionsTooltip extends FlxSpriteGroup
         setPosition(newX, newY);
     }
 
-    public function updateTooltip(tooltip:IHasTooltip = null):Void
+    public function updateTooltip(tooltip:BaseOptionItem = null):Void
     {
         if (tooltip == null)
             tooltipText.text = "Unrecognized tooltip.";

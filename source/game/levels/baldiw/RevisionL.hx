@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
+import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 
 import flixel.input.keyboard.FlxKey;
@@ -51,7 +52,7 @@ class RevisionL extends PlayState
 
     public var quarter:FlxSprite;
 
-    public var padMinigame:ThinkpadMinigame;
+    public var yctp:YCTPGroup;
 
     override function create():Void
     {
@@ -110,16 +111,16 @@ class RevisionL extends PlayState
     {
         super.update(elapsed);
 
-        if (padMinigame == null)
+        if (yctp == null)
             return;
 
         @:privateAccess
-        var musPath:String = AssetCache.getAudioPath(true, instrumental._sound);
+        var musPath:String = AssetCache.getMusicPath(instrumental._sound);
 
         if (musPath.contains("Bad-Math"))
             return;
 
-        if (padMinigame.loss)
+        if (yctp.loss)
         {
             var lastTime:Float = instrumental.time;
 
@@ -242,11 +243,11 @@ class RevisionL extends PlayState
 
             revisionS.insert(revisionS.members.indexOf(opponents), padBack);
     
-            padMinigame = new ThinkpadMinigame();
+            yctp = new YCTPGroup();
 
-            padMinigame.screenCenter();
+            yctp.screenCenter();
 
-            add(padMinigame);
+            add(yctp);
 
             getTransitionSprite(conductor.beatLength * 2.0 * 0.001, IN, null);
         }
@@ -254,21 +255,21 @@ class RevisionL extends PlayState
         if (step == 1200.0 || step == 1328.0 || step == 1456.0 || step == 1584.0)
         {
             if (step != 1200.0)
-                padMinigame.skipProblem();
+                yctp.skipProblem();
 
             if (step != 1584.0)
-                padMinigame.nextProblem(step == 1456.0);
+                yctp.nextProblem(step == 1456.0);
         }
 
         if (step == 1216.0 || step == 1344.0 || step == 1536.0)
         {
             if (Options.botplay)
-                padMinigame.checkSubmission();
+                yctp.checkSubmission();
         }
     }
 }
 
-class ThinkpadMinigame extends FlxSpriteGroup
+class YCTPGroup extends FlxSpriteGroup
 {
     public var keys:FlxKeyboard;
 
@@ -276,9 +277,11 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
     public var pad:FlxSprite;
 
-    public var indicators:Array<FlxSprite>;
+    public var indicators:FlxSpriteGroup;
 
-    public var buttons:Map<String, FlxSprite>;
+    public var buttonKeys:Map<String, FlxSprite>;
+
+    public var buttons:FlxSpriteGroup;
 
     public var okButton:FlxSprite;
 
@@ -417,7 +420,9 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         add(pad);
 
-        indicators = new Array<FlxSprite>();
+        indicators = new FlxSpriteGroup();
+
+        add(indicators);
 
         var indicatorPos:Array<AxisData<Float>> =
         [
@@ -430,94 +435,92 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
         for (i in 0 ... 3)
         {
-            var pos:AxisData<Float> = indicatorPos[i];
+            var indicator:FlxSprite = new FlxSprite();
 
-            var indicat:FlxSprite = new FlxSprite();
+            indicator.active = false;
 
-            indicat.active = false;
+            indicator.visible = false;
 
-            indicat.visible = false;
+            indicator.loadGraphic(AssetCache.getGraphic("shared/numpad-indicators"), true, 24, 24);
 
-            indicat.loadGraphic(AssetCache.getGraphic("shared/numpad-indicators"), true, 24, 24);
+            indicator.animation.add("indicator", [0, 1], 0.0, false);
 
-            indicat.animation.add("correct", [0], 0.0, false);
+            indicator.animation.play("indicator");
 
-            indicat.animation.add("incorrect", [1], 0.0, false);
+            indicator.scale.set(2.0, 2.0);
 
-            indicat.scale.set(2.0, 2.0);
+            indicator.updateHitbox();
 
-            indicat.updateHitbox();
+            var position:AxisData<Float> = indicatorPos[i];
 
-            indicat.setPosition(pos.x, pos.y);
+            indicator.setPosition(position.x, position.y);
 
-            indicators.push(indicat);
-
-            insert(members.indexOf(pad), indicat);
+            indicators.add(indicator);
         }
 
-        buttons = new Map<String, FlxSprite>();
+        buttons = new FlxSpriteGroup();
 
-        var btnOrder:Array<String> = ["SEVEN", "EIGHT", "NINE",
-            "FOUR", "FIVE", "SIX",
-                "ONE", "TWO", "THREE",
-                    "CLEAR", "ZERO", "MINUS"];
+        buttons.setPosition(pad.x + pad.width - 280.0, pad.y + 245.0);
 
-        for (i in 0 ... btnOrder.length)
+        add(buttons);
+
+        var buttonOrder:Array<String> = ["seven", "eight", "nine", "four", "five", "six", "one", "two", "three",
+            "clear", "zero", "minus"];
+
+        for (i in 0 ... buttonOrder.length)
         {
-            var name:String = btnOrder[i];
+            var button:FlxSprite = new FlxSprite();
 
-            var btn:FlxSprite = new FlxSprite();
+            button.active = false;
 
-            btn.active = false;
-
-            btn.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("shared/numpad-button-sheet"), 
+            button.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("shared/numpad-button-sheet"), 
                 Paths.image(Paths.xml("shared/numpad-button-sheet")));
 
-            btn.animation.addByPrefix("deselected", '${name.toLowerCase()}-deselected', 0.0, false);
+            var name:String = buttonOrder[i];
 
-            btn.animation.addByPrefix("selected", '${name.toLowerCase()}-selected', 0.0, false);
+            var deselectedAnim:String = '${name}-deselected';
 
-            btn.animation.play("deselected");
+            var selectedAnim:String = '${name}-selected';
 
-            btn.scale.set(2.0, 2.0);
+            button.animation.addByPrefix(deselectedAnim, deselectedAnim, 0.0, false);
 
-            btn.updateHitbox();
+            button.animation.addByPrefix(selectedAnim, selectedAnim, 0.0, false);
 
-            btn.setPosition(pad.x + pad.width - 280.0 + btn.width + 65.0 * (i % 3.0), pad.y + 245.0 + 65.0 * (Std.int(i / 3.0)));
+            button.animation.play(deselectedAnim);
 
-            buttons[name] = btn;
+            button.scale.set(2.0, 2.0);
 
-            add(btn);
+            button.updateHitbox();
+
+            button.setPosition(button.width + 65.0 * (i % 3.0), 65.0 * (Std.int(i / 3.0)));
+
+            buttons.add(button);
         }
-
-        var zeroButton:FlxSprite = buttons["ZERO"];
 
         okButton = new FlxSprite();
 
         okButton.loadGraphic(AssetCache.getGraphic("shared/numpad-ok-button"), true, 64, 64);
 
-        okButton.animation.add("deselected", [0], 0.0, false);
+        okButton.animation.add("ok-deselected", [0], 0.0, false);
 
-        okButton.animation.add("selected", [1], 0.0, false);
+        okButton.animation.add("ok-selected", [1], 0.0, false);
 
-        okButton.animation.play("deselected");
+        okButton.animation.play("ok-deselected");
 
         okButton.scale.set(2.0, 2.0);
 
         okButton.updateHitbox();
 
-        okButton.setPosition(zeroButton.getMidpoint().x - okButton.width * 0.5, zeroButton.y + 70.0);
+        okButton.setPosition(buttons.width * 0.5, buttons.height + 2.0);
 
-        buttons["OK"] = okButton;
-
-        add(okButton);
+        buttons.add(okButton);
 
         sndQueue = new SoundQueue();
 
         sndQueue.onUpdate.add((sound:FlxSound) ->
         {
             @:privateAccess
-                var sndPath:String = AssetCache.getAudioPath(false, sound._sound);
+            var sndPath:String = AssetCache.getSoundPath(sound._sound);
             
             sndPath = sndPath.substring(0, sndPath.length - 4);
 
@@ -677,18 +680,22 @@ class ThinkpadMinigame extends FlxSpriteGroup
             }
         }
 
-        for (k => v in buttons)
+        for (i in 0 ... buttons.members.length)
         {
-            if (FlxG.mouse.overlaps(v))
+            var button:FlxSprite = buttons.members[i];
+
+            var name:String = button.animation.name.split("-").first();
+
+            if (FlxG.mouse.overlaps(button))
             {
                 if (Options.botplay)
                     continue;
 
                 if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight))
                 {
-                    switch (k:String)
+                    switch (name:String)
                     {
-                        case "CLEAR":
+                        case "clear":
                         {
                             submission = "";
 
@@ -697,24 +704,24 @@ class ThinkpadMinigame extends FlxSpriteGroup
                             updateSubmissionText();
                         }
 
-                        case "MINUS":
+                        case "minus":
                             updateSubmission(-1);
                         
-                        case "OK":
+                        case "ok":
                         {
                             if (submission != "" || negative)
                                 checkSubmission();
                         }
                         
                         default:
-                            updateSubmission(k.toLowerCase().parseInt());
+                            updateSubmission(name.toLowerCase().parseInt());
                     }
                 }
                 
-                v.animation.play("selected");
+                button.animation.play('${name}-selected');
             }
             else
-                v.animation.play("deselected");
+                button.animation.play('${name}-deselected');
         }
     }
 
@@ -823,7 +830,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
         if (baldi.animation.name != "frown")
             baldi.animation.play("frown");
 
-        updateIndicator(true);
+        updateIndicator(false);
 
         totalIncorrect++;
 
@@ -867,7 +874,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             baldi.animation.play("idle");
 
-            updateIndicator(true);
+            updateIndicator(false);
 
             sndQueue.clearQueue(true);
 
@@ -940,7 +947,7 @@ class ThinkpadMinigame extends FlxSpriteGroup
 
             totalIncorrect++;
 
-            updateIndicator(true);
+            updateIndicator(false);
         }
 
         if (corrupted)
@@ -975,13 +982,18 @@ class ThinkpadMinigame extends FlxSpriteGroup
         questionText.text = "";
     }
 
-    public function updateIndicator(incorrect:Bool = false):Void
+    public function getButton(name:String):FlxSprite
     {
-        var indicator:FlxSprite = indicators[problemIndex - 1];
+        return buttons.members.first((button:FlxSprite) -> button.animation.name.startsWith(name));
+    }
+
+    public function updateIndicator(correct:Bool = true):Void
+    {
+        var indicator:FlxSprite = indicators.members[problemIndex - 1];
 
         indicator.visible = true;
 
-        indicator.animation.play(incorrect ? "incorrect" : "correct");
+        indicator.animation.curAnim.curFrame = correct ? 0 : 1;
     }
 
     public function lengthenOp(op:String):String

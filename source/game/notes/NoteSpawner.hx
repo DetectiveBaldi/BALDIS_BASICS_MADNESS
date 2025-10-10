@@ -17,7 +17,7 @@ class NoteSpawner extends FlxBasic
 {
     public var conductor:Conductor;
 
-    public var noteData:Array<NoteSchema>;
+    public var noteParams:Array<NoteData>;
 
     public var strumlines:FlxTypedGroup<Strumline>;
 
@@ -29,7 +29,7 @@ class NoteSpawner extends FlxBasic
 
     public var noteIndex:Int;
 
-    public function new(_conductor:Conductor, _noteData:Array<NoteSchema>, _strumlines:FlxTypedGroup<Strumline>):Void
+    public function new(conductor:Conductor, noteParams:Array<NoteData>, strumlines:FlxTypedGroup<Strumline>):Void
     {
         super();
 
@@ -37,11 +37,11 @@ class NoteSpawner extends FlxBasic
 
         camera = FlxG.cameras.list.last();
 
-        conductor = _conductor;
+        this.conductor = conductor;
         
-        noteData = _noteData.copy();
+        this.noteParams = noteParams;
 
-        strumlines = _strumlines;
+        this.strumlines = strumlines;
 
         notes = new FlxTypedGroup<Note>();
 
@@ -56,32 +56,32 @@ class NoteSpawner extends FlxBasic
     {
         super.update(elapsed);
 
-        while (noteIndex < noteData.length)
+        while (noteIndex < noteParams.length)
         {
-            var noteSchema:NoteSchema = noteData[noteIndex];
+            var noteData:NoteData = noteParams[noteIndex];
 
-            var strumline:Strumline = strumlines.members[noteSchema.lane];
+            var strumline:Strumline = strumlines.members[noteData.lane];
 
-            if (noteSchema.time > conductor.time + getSpawnDistance(noteSchema.lane))
+            if (noteData.time > conductor.time + getSpawnDistance(noteData.lane))
                 break;
 
             var note:Note = notes.recycle(Note, noteConstructor);
 
             note.visible = true;
         
-            note.time = noteSchema.time;
+            note.time = noteData.time;
 
-            note.direction = noteSchema.direction;
+            note.direction = noteData.direction;
 
-            note.length = noteSchema.length;
+            note.length = noteData.length;
 
-            note.lane = noteSchema.lane;
+            note.lane = noteData.lane;
 
-            note.kind = noteSchema.kind;
+            note.kind = noteData.kind;
 
             note.kindData = NoteKindData.parseString(note.kind);
 
-            note.charId = noteSchema.charId;
+            note.charId = noteData.charId;
             
             note.status = MOVING;
 
@@ -103,15 +103,13 @@ class NoteSpawner extends FlxBasic
 
             note.updateHitbox();
 
-            note.setPosition(camera.viewRight, 0.0);
-
             notes.add(note);
 
             strumline.notes.add(note);
 
             strumline.onNoteSpawn.dispatch(note);
 
-            if (noteSchema.length > 0.0)
+            if (noteData.length > 0.0)
             {
                 var sustain:Sustain = sustains.recycle(Sustain, sustainConstructor);
 
@@ -124,8 +122,6 @@ class NoteSpawner extends FlxBasic
                 sustain.setGraphicSize(sustain.frameWidth * 0.7, note.length * strumline.scrollSpeed * 0.45);
 
                 sustain.updateHitbox();
-
-                sustain.setPosition(camera.viewRight, 0.0);
 
                 sustains.add(sustain);
 
@@ -144,8 +140,6 @@ class NoteSpawner extends FlxBasic
                 trail.scale.set(0.7, 0.7);
 
                 trail.updateHitbox();
-
-                trail.setPosition(camera.viewRight, 0.0);
 
                 trails.add(trail);
 
@@ -189,13 +183,13 @@ class NoteSpawner extends FlxBasic
     {
         noteIndex = 0;
         
-        var note:NoteSchema = noteData[noteIndex];
+        var noteData:NoteData = noteParams[noteIndex];
 
-        while (noteIndex < noteData.length && note.time <= time)
+        while (noteIndex < noteParams.length && noteData.time <= time)
         {
             noteIndex++;
             
-            note = noteData[noteIndex];
+            noteData = noteParams[noteIndex];
         }
     }
 }

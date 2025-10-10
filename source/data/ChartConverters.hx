@@ -4,7 +4,7 @@ import haxe.Json;
 
 import haxe.ds.ArraySort;
 
-import sys.io.File;
+import openfl.utils.Assets;
 
 import core.AssetCache;
 import core.Paths;
@@ -24,11 +24,11 @@ class FunkinConverter
     {
         var output:Chart = new Chart();
 
-        var rawChart:Dynamic = Json.parse(File.getContent(chartPath));
+        var rawChart:Dynamic = Json.parse(Assets.getText(chartPath));
 
         var notes:Array<FunkinNote> = Reflect.field(rawChart.notes, difficulty);
 
-        var rawMeta:Dynamic = Json.parse(File.getContent(metaPath));
+        var rawMeta:Dynamic = Json.parse(Assets.getText(metaPath));
 
         output.name = rawMeta.songName;
 
@@ -71,7 +71,7 @@ class PsychConverter
     {
         var output:Chart = new Chart();
 
-        var raw:Dynamic = Json.parse(File.getContent(chartPath));
+        var raw:Dynamic = Json.parse(Assets.getText(chartPath));
 
         output.name = raw.song;
 
@@ -167,7 +167,7 @@ class PsychConverter
 
         output.player = raw.player1;
 
-        var credits:String = File.getContent(creditsPath);
+        var credits:String = Assets.getText(creditsPath);
 
         var split:Array<String> = credits.split("|");
 

@@ -19,9 +19,7 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
-
-	<window if="desktop" orientation="landscape" fullscreen="false" />
+	<window width="1280" height="720" />
 
 	<!-- ______________________________ Defines, Haxedefs, and Libraries _____________________________ -->
 
@@ -41,7 +39,13 @@
 
 	<haxelib name="haxeui-core" />
 
-	<haxelib name="hxdiscord_rpc" unless="hl" />
+	<define name="FEATURE_DISCORD_HANDLER" if="cpp" unless="debug" />
+
+	<haxelib name="hxdiscord_rpc" if="FEATURE_DISCORD_HANDLER" />
+
+	<define name="FEATURE_GPU_CACHING" unless="html5" />
+
+	<define name="FEATURE_SOUND_STREAMING" unless="html5" />
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
@@ -49,12 +53,12 @@
 
 	<set name="BUILD_DIR" value="bin/stable" unless="debug" />
 
-	<!-- "preload='false'" might be optional, but just in case. -->
-	
+	<!-- `preload='false'` might be not be necessary, but just to be safe. -->
 	<assets path="assets" preload="false" />
 
 	<source path="source" />
 
+	<!-- Automatically compiles all of the level classes with a macro. -->
 	<haxeflag name="--macro" value="include('game.levels')" />
 
 	<!-- _____________________________ Resources ____________________________ -->

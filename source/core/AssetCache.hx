@@ -1,11 +1,5 @@
 package core;
 
-import sys.io.File;
-
-import lime.media.AudioBuffer;
-
-import lime.media.vorbis.VorbisFile;
-
 import openfl.display.BitmapData;
 
 import openfl.media.Sound;
@@ -43,9 +37,9 @@ class AssetCache
 
         music = new Map<String, Sound>();
 
-        FlxG.signals.preStateSwitch.add(() -> lastState = Type.getClass(FlxG.state) );
+        FlxG.signals.preStateSwitch.add(() -> lastState = Type.getClass(FlxG.state));
 
-        FlxG.signals.preStateCreate.add((next:FlxState) -> { if (lastState != Type.getClass(next)) clearAll(); });
+        FlxG.signals.preStateCreate.add((nextState:FlxState) -> {if (lastState != Type.getClass(nextState)) clearCaches();});
     }
 
     public static overload extern inline function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
@@ -109,47 +103,67 @@ class AssetCache
         return music[path];
     }
 
-    public static function getAudioPath(mus:Bool, aud:Sound):String
+    public static function getSoundPath(sound:Sound):String
     {
-        var map:Map<String, Sound> = mus ? music : sounds;
-
-        for (k => v in map)
-            if (aud == v)
+        for (k => v in sounds)
+            if (sound == v)
                 return k;
 
         return null;
     }
 
-    public static function removeAudio(mus:Bool, path:String):Void
+    public static function getMusicPath(sound:Sound):String
     {
-        var map:Map<String, Sound> = mus ? music : sounds;
+        for (k => v in music)
+            if (sound == v)
+                return k;
 
-        if (!map.exists(path))
-            return;
-
-        var aud:Sound = map[path];
-
-        @:privateAccess
-        if (FlxG.sound.defaultSoundGroup.sounds.first((snd:FlxSound) -> snd._sound == aud && (snd.active || snd.persist))
-            != null)
-                return;
-
-        aud.close();
-
-        Assets.cache.removeSound(path);
-
-        map.remove(path);
+        return null;
     }
 
-    public static function clearAll():Void
+    public static function removeSound(path:String):Void
+    {
+        if (!sounds.exists(path))
+            return;
+
+        var sound:Sound = sounds[path];
+
+        @:privateAccess
+        if (FlxG.sound.defaultSoundGroup.sounds.first((usedSound:FlxSound) -> usedSound._sound == sound
+            && usedSound.persist) != null)
+                return;
+
+        sound.close();
+
+        sounds.remove(path);
+    }
+
+    public static function removeMusic(path:String):Void
+    {
+        if (!music.exists(path))
+            return;
+
+        var sound:Sound = music[path];
+
+        @:privateAccess
+        if (FlxG.sound.defaultSoundGroup.sounds.first((usedSound:FlxSound) -> usedSound._sound == sound
+            && usedSound.persist) != null)
+                return;
+
+        sound.close();
+
+        music.remove(path);
+    }
+
+    public static function clearCaches():Void
     {
         for (k => v in graphics)
             removeGraphic(k);
 
         for (k => v in sounds)
-            removeAudio(false, k);
+            removeSound(k);
 
         for (k => v in music)
-            removeAudio(true, k);
+            removeMusic(k);
     }
 }

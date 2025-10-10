@@ -24,12 +24,6 @@ class HighScore
         return SaveManager.highScores.data.levels ??= new Map<String, Map<String, LevelScore>>();
     }
 
-    public static function purgeInvalid():Void
-    {
-        if (Reflect.hasField(FlxG.save.data, "scores"))
-            Reflect.deleteField(FlxG.save.data, "scores");
-    }
-
     public static function getBlankWeek():WeekScore
     {
         return {score: 0, misses: 0, accuracy: 0.0, grade: "N/A"}

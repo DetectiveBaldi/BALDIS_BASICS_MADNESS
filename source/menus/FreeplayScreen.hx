@@ -140,7 +140,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
         scrollBgH.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg-h"), 
             Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg-h")));
 
-        scrollBgH.animation.addByPrefix("scroll-h", "scroll-h", 12.0, false);
+        scrollBgH.animation.addByPrefix("scroll-h", "scroll-h", 18.0, false);
 
         scrollBgH.animation.onFinish.add((name:String) -> { scrollBgH.visible = false; poster.visible = true; });
 
@@ -161,7 +161,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
         scrollBgV.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("menus/FreeplayScreen/scroll-bg-v"), 
             Paths.image(Paths.xml("menus/FreeplayScreen/scroll-bg-v")));
 
-        scrollBgV.animation.addByPrefix("scroll-v", "scroll-v", 20.0, false);
+        scrollBgV.animation.addByPrefix("scroll-v", "scroll-v", 32.0, false);
 
         scrollBgV.animation.onFinish.add((name:String) -> { scrollBgV.visible = false; poster.visible = true; });
 
@@ -281,10 +281,6 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        scrollBgH.animation.timeScale = FlxG.keys.pressed.SHIFT ? 2.0 : 1.5;
-
-        scrollBgV.animation.timeScale = scrollBgH.animation.timeScale;
 
         searchItem.editable = !isScrolling;
     }
@@ -440,6 +436,13 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
         }
 
         poster.visible = false;
+
+        if (FlxG.keys.pressed.SHIFT)
+        {
+            scrollBgH.animation.finish();
+
+            scrollBgV.animation.finish();
+        }
     }
 
     public function updateTvPortrait(level:LevelData):Void
@@ -448,7 +451,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         var portraitStr:String = 'menus/FreeplayScreen/portraits/${week?.name?.toLowerCase()}';
 
-        if (Paths.list.contains(Paths.image(Paths.png(portraitStr))))
+        if (Paths.exists(Paths.image(Paths.png(portraitStr))))
             tvPortrait.loadGraphic(AssetCache.getGraphic(portraitStr));
 
         tvPortrait.scale.set(2.25, 2.25);

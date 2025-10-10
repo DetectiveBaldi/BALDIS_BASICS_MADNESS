@@ -2,8 +2,7 @@ package data;
 
 import haxe.Json;
 
-import sys.FileSystem;
-import sys.io.File;
+import openfl.utils.Assets;
 
 import core.AssetCache;
 import core.Paths;
@@ -20,13 +19,13 @@ class ChartLoader
     {
         var metaFilePath:String = '${path}/meta.json';
 
-        if (FileSystem.exists(metaFilePath))
+        if (Paths.exists(metaFilePath))
             return FunkinConverter.run('${path}/chart.json', metaFilePath, "normal");
         else
         {
             var chartFilePath:String = '${path}/chart.json';
 
-            var chart:Dynamic = Json.parse(File.getContent(chartFilePath));
+            var chart:Dynamic = Json.parse(Assets.getText(chartFilePath));
 
             if (Reflect.hasField(chart, "song"))
                 return PsychConverter.run(chartFilePath, '${path}/credits.txt');

@@ -16,6 +16,9 @@ import flixel.util.FlxSignal.FlxTypedSignal;
 
 import core.AssetCache;
 
+import interfaces.ISequenceHandler;
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using util.MathUtil;
@@ -44,17 +47,15 @@ class Countdown extends FlxGroup
 
     public var goSnd:FlxSound;
 
-    public function new(_conductor:Conductor):Void
+    public function new(beatDispatcher:IBeatDispatcher, sequenceHandler:ISequenceHandler):Void
     {
         super();
 
-        conductor = _conductor;
+        conductor = beatDispatcher.conductor;
 
-        addListeners();
+        conductor.onBeatHit.add(beatHit);
 
-        tweens = new FlxTweenManager();
-
-        add(tweens);
+        tweens = sequenceHandler.tweens;
 
         tick = 0;
 
@@ -91,17 +92,9 @@ class Countdown extends FlxGroup
     {
         super.destroy();
 
+        conductor?.onBeatHit?.remove(beatHit);
+
         stopSounds();
-    }
-
-    public function addListeners():Void
-    {
-        conductor.onBeatHit.add(beatHit);
-    }
-
-    public function removeListeners():Void
-    {
-        conductor.onBeatHit.remove(beatHit);
     }
 
     public function beatHit(beat:Int):Void
@@ -164,7 +157,7 @@ class Countdown extends FlxGroup
 
         conductor.update(0.0);
         
-        removeListeners();
+        conductor.onBeatHit.remove(beatHit);
 
         stopSounds(false);
     }

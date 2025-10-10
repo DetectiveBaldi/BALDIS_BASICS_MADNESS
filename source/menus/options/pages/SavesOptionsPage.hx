@@ -20,9 +20,17 @@ class SavesOptionsPage extends BaseOptionsPage
 
         option.setPosition(285.0, 250.0);
 
-        var folderPath:String = 'C:/Users/${Sys.getEnv("USERNAME")}/AppData/Roaming/Mamacitas';
+        var folderPath:String = "";
+
+        #if sys
+        folderPath += 'C:/Users/${Sys.getEnv("USERNAME")}/AppData/Roaming/Mamacitas';
+        #end
 
         var option:FolderOpenItem = addFolderOpenItem("Open Saves Folder", "Be careful! Altering files here\ncould result in data loss.", folderPath);
+
+        #if !sys
+        option.selectable = false;
+        #end
 
         option.setPosition(285.0, 335.0);
     }

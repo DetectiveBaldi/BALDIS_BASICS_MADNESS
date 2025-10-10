@@ -23,7 +23,9 @@ class MouseRectPlugin extends FlxBasic
 
         visible = false;
 
+        #if !html5
         FlxG.stage.window.onMouseMove.add(updateMouseRect);
+        #end
 
         FlxG.signals.preStateSwitch.add(resetMouseRect);
     }
@@ -32,7 +34,9 @@ class MouseRectPlugin extends FlxBasic
     {
         super.destroy();
 
+        #if !html5
         FlxG.stage.window.onMouseMove.remove(updateMouseRect);
+        #end
         
         FlxG.signals.preStateSwitch.remove(resetMouseRect);
     }

@@ -46,7 +46,7 @@ class WeekData
     }
 
     /**
-     * Returns an exact copy of this `WeekData`. Level data is not recreated!
+     * Returns a surface-level copy of this `WeekData`. Level data is not recreated!
      * @return `WeekData`
      */
     public function copy():WeekData

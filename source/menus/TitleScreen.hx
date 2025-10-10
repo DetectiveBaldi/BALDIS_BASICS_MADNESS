@@ -38,7 +38,9 @@ class TitleScreen extends TransitionState
 
     public var rulerHitbox:FlxSprite;
 
+    #if sys
     public var exitButton:TitleButton;
+    #end
 
     public var playButton:TitleButton;
 
@@ -48,7 +50,9 @@ class TitleScreen extends TransitionState
 
     public var introSound:FlxSound;
 
+    #if sys
     public var exitSound:FlxSound;
+    #end
 
     public var tune:FlxSound;
 
@@ -104,6 +108,7 @@ class TitleScreen extends TransitionState
 
         add(playButton);
 
+        #if sys
         exitButton = new TitleButton(0.0, 0.0, "exitButton");
 
         exitButton.onClick.add(clickExitButton);
@@ -111,6 +116,7 @@ class TitleScreen extends TransitionState
         exitButton.setPosition(title.x, title.y + title.height - exitButton.height);
 
         add(exitButton);
+        #end
 
         studioText = new FlxText(0.0, 0.0, FlxG.width, "2025 MamaCita's");
 
@@ -144,9 +150,11 @@ class TitleScreen extends TransitionState
 
         introSound.play();
 
+        #if sys
         exitSound = FlxG.sound.load(AssetCache.getSound("menus/TitleScreen/exitSound"));
 
         exitSound.onComplete = getTransitionSprite.bind(0.5, OUT, () -> Sys.exit(0));
+        #end
 
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 
@@ -184,6 +192,7 @@ class TitleScreen extends TransitionState
         FlxG.switchState(() -> new MainMenuScreen());
     }
 
+    #if sys
     public function clickExitButton():Void
     {
         FlxG.mouse.visible = false;
@@ -194,6 +203,7 @@ class TitleScreen extends TransitionState
         
         exitSound.play();
     }
+    #end
 }
 
 class TitleButton extends FlxSprite

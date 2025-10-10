@@ -23,7 +23,9 @@ class LauncherScreen extends TransitionState
 
     public var twitterButton:LauncherButton;
 
+    #if sys
     public var exitButton:LauncherButton;
+    #end
 
     public var slapSound:FlxSound;
 
@@ -75,6 +77,7 @@ class LauncherScreen extends TransitionState
 
         add(twitterButton);
 
+        #if sys
         exitButton = new LauncherButton(0.0, 0.0, "exitButton");
 
         exitButton.onClick.add(playSlapSound.bind(clickExitButton));
@@ -82,6 +85,7 @@ class LauncherScreen extends TransitionState
         exitButton.setPosition(launcher.x + launcher.width - exitButton.width - 15.0, launcher.y + launcher.height - exitButton.height - 15.0);
 
         add(exitButton);
+        #end
 
         slapSound = FlxG.sound.load(AssetCache.getSound("shared/slap"));
 
@@ -115,10 +119,12 @@ class LauncherScreen extends TransitionState
         FlxG.openURL("https://x.com/BaldiMadness");
     }
 
+    #if sys
     public function clickExitButton():Void
     {
         Sys.exit(0);
     }
+    #end
 }
 
 class LauncherButton extends FlxSprite

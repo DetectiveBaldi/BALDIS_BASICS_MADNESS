@@ -11,11 +11,13 @@ import menus.options.OptionsMenu.OptionTools;
 
 import util.ClickSoundUtil;
 
+using util.MathUtil;
+
 class EraseSaveItem extends BaseOptionItem
 {
-    public var save:FlxSave;
-
     public var panel:OptionsPanel;
+
+    public var save:FlxSave;
 
     public function new(x:Float = 0.0, y:Float = 0.0, title:String, tooltip:String, optionTools:OptionTools, save:FlxSave):Void
     {

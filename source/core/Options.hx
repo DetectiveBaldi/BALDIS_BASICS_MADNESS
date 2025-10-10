@@ -149,7 +149,7 @@ class Options
     @:noCompletion
     static function get_discordRPC():Bool
     {
-        return #if (hl || debug) false #else SaveManager.options.data.discordRPC ??= true #end;
+        return #if (FEATURE_DISCORD_HANDLER) SaveManager.options.data.discordRPC ??= true #else false #end;
     }
 
     @:noCompletion
@@ -165,7 +165,7 @@ class Options
     @:noCompletion
     static function get_gpuCaching():Bool
     {
-        return SaveManager.options.data.gpuCaching ??= false;
+        return #if FEATURE_GPU_CACHING SaveManager.options.data.gpuCaching ??= false #else false #end ;
     }
 
     @:noCompletion
@@ -181,7 +181,7 @@ class Options
     @:noCompletion
     static function get_soundStreaming():Bool
     {
-        return SaveManager.options.data.soundStreaming ??= false;
+        return #if FEATURE_SOUND_STREAMING SaveManager.options.data.soundStreaming ??= false #else false #end ;
     }
 
     @:noCompletion

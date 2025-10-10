@@ -247,14 +247,14 @@ class ProgressBar extends FlxSpriteGroup
 
     override function set_width(width:Float):Float
     {
-        this.width = width;
+        this.width = Std.int(width);
 
         return width;
     }
 
     override function set_height(height:Float):Float
     {
-        this.height = height;
+        this.height = Std.int(height);
 
         return height;
     }

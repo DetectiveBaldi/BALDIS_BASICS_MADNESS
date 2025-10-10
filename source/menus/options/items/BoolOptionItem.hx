@@ -16,7 +16,7 @@ using util.MathUtil;
 
 class BoolOptionItem extends VariableOptionItem<Bool>
 {
-    public var editable:Bool;
+    public var selectable:Bool;
 
     public var checkContainer:FlxSprite;
 
@@ -28,7 +28,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
     {
         super(x, y, title, tooltip, optionTools, option);
 
-        editable = true;
+        selectable = true;
 
         checkContainer = new FlxSprite(0.0, 0.0, AssetCache.getGraphic("menus/options/items/BoolOptionItem/checkContainer"));
 
@@ -62,9 +62,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
 
         strikethrough = new FlxSprite().makeGraphic(Math.floor(titleText.width), 3, FlxColor.WHITE);
 
-        strikethrough.active = false;
-
-        strikethrough.visible = false;
+        strikethrough.kill();
 
         strikethrough.centerTo(titleText);
 
@@ -79,9 +77,10 @@ class BoolOptionItem extends VariableOptionItem<Bool>
         {
             titleText.underline = true;
 
-            strikethrough.visible = !editable;
+            if (!selectable)
+                strikethrough.revive();
 
-            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && editable)
+            if ((FlxG.mouse.justReleased || FlxG.mouse.justReleasedRight) && selectable)
             {
                 ClickSoundUtil.play();
                 
@@ -92,7 +91,7 @@ class BoolOptionItem extends VariableOptionItem<Bool>
         {
             titleText.underline = false;
 
-            strikethrough.visible = false;
+            strikethrough.kill();
         }
     }
 

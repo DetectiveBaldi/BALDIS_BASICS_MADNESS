@@ -27,6 +27,9 @@ class SaveManager
 
     public static function mergeData():Void
     {
+        if (Reflect.hasField(FlxG.save.data, "scores"))
+            Reflect.deleteField(FlxG.save.data, "scores");
+        
         if (Reflect.hasField(FlxG.save.data, "options"))
         {
             options.mergeData(FlxG.save.data.options);
@@ -71,9 +74,6 @@ class SaveManager
 
             Reflect.deleteField(FlxG.save.data, "highScores");
         }
-
-        if (Reflect.hasField(FlxG.save.data, "scores"))
-            Reflect.deleteField(FlxG.save.data, "scores");
     }
 
     public static function saveOptions():Void
@@ -96,13 +96,6 @@ class SaveManager
     public static function eraseHighScores():Void
     {
         highScores.erase();
-
-        saveHighScores();
-    }
-
-    public static function saveAll():Void
-    {
-        saveOptions();
 
         saveHighScores();
     }

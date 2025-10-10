@@ -1,6 +1,6 @@
 package api;
 
-#if cpp
+#if FEATURE_DISCORD_HANDLER
 class DiscordHandler
 {
     public static final DISCORD_ID:String = "1220870416374038649";
@@ -122,7 +122,7 @@ class DiscordHandler
 	}
 }
 #else
-// This module does not function on HashLink. We still create this simplified structure to avoid various compiler checks.
+// This module does not function on HashLink or HTML5. We still create this simplified structure to avoid various compiler checks.
 class DiscordHandler
 {
     public static function init():Void {}

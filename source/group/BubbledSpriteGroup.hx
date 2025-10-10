@@ -139,6 +139,7 @@ class BubbledTypedSpriteGroup<T:FlxSprite> extends FlxTypedSpriteGroup<T>
 	{
 		if (blend != val)
 			forceTransformChildren(blendTransform, val);
+		
 		return blend = val;
 	}
 
