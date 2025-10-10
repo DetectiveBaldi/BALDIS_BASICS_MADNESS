@@ -263,9 +263,9 @@ class ProgressBar extends FlxSpriteGroup
 class ProgressBarSideSprite extends FlxSprite
 {
     @:noCompletion
-    override function set_clipRect(clip:FlxRect):FlxRect
+    override function set_clipRect(clipRect:FlxRect):FlxRect
     {
-        clipRect = clip;
+        this.clipRect = clipRect;
 
         return clipRect;
     }

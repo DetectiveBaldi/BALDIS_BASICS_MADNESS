@@ -168,13 +168,9 @@ class BrokenDL extends PlayState
         if (beat >= 32.0 && beat < 431.0)
         {
             if (cameraCharTarget == "OPPONENT")
-            {           
-                tweens.tween(player, {alpha: 0.0}, conductor.beatLength * 0.5 * 0.001);
-            }
+                tweens.tween(player, {alpha: 0.5}, conductor.beatLength * 0.5 * 0.001);
             else
-            {
                 tweens.tween(player, {alpha: 1.0}, conductor.beatLength * 0.5 * 0.001);
-            }
         }
     }
 }
