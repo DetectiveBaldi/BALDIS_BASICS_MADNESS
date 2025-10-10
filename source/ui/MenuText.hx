@@ -20,11 +20,9 @@ class MenuText extends FlxText
 
     public var onClick:FlxSignal;
 
-    public function new(x:Float = 0.0, y:Float = 0.0, text:String):Void
+    public function new(x:Float = 0.0, y:Float = 0.0, text:String = ""):Void
     {
         super(x, y, 0.0, text);
-
-        onClick = new FlxSignal();
 
         font = Paths.font(Paths.ttf("Comic Sans MS"));
 

@@ -1,7 +1,5 @@
 package data;
 
-import haxe.Json;
-
 import util.TimingUtil;
 
 using StringTools;
@@ -115,9 +113,7 @@ typedef NoteData = TimedObject &
 
     var lane:Int;
 
-    var kind:String;
-
-    var charId:Int;
+    var kind:NoteKindData;
 }
 
 typedef TimingPointData = TimedObject &
@@ -135,36 +131,13 @@ typedef CreditsData =
 @:structInit
 class NoteKindData
 {
+    public var type:String;
+    
     public var altAnimation:Bool;
 
     public var noAnimation:Bool;
 
     public var specSing:Bool;
 
-    public static function parseString(str:String):NoteKindData
-    {
-        return {altAnimation: NoteKindData.hasField(str, "alt-animation"),
-            noAnimation: NoteKindData.hasField(str, "no-animation"), specSing: NoteKindData.hasField(str, "spec-sing")};
-    }
-
-    public static function addField(data:String, field:String):String
-    {
-        if (data.length == 0.0)
-        {
-            data = field;
-
-            return data;
-        }
-
-        data = data.trim();
-
-        data += '&& ${field}';
-
-        return data;
-    }
-
-    public static function hasField(data:String, field:String):Bool
-    {
-        return data.contains(field);
-    }
+    public var charIds:Array<Int>;
 }

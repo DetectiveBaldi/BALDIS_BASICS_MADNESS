@@ -31,11 +31,7 @@ class Note extends FlxSprite
 
     public var lane:Int;
 
-    public var kind:String;
-
-    public var kindData:NoteKindData;
-
-    public var charId:Int;
+    public var kind:NoteKindData;
 
     public var status:NoteStatus;
 
@@ -71,11 +67,7 @@ class Note extends FlxSprite
 
         lane = 0;
 
-        kind = "";
-
-        kindData = {altAnimation: false, noAnimation: false, specSing: false}
-
-        charId = -1;
+        kind = {type: "", altAnimation: false, noAnimation: false, specSing: false, charIds: null}
 
         status = MOVING;
 

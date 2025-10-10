@@ -6,6 +6,8 @@ import haxe.ds.ArraySort;
 
 import openfl.utils.Assets;
 
+import flixel.util.FlxStringUtil;
+
 import core.AssetCache;
 import core.Paths;
 
@@ -38,8 +40,10 @@ class FunkinConverter
         {
             var note:FunkinNote = notes[i];
 
+            var kind:NoteKindData = {type: note.k, altAnimation: false, noAnimation: false, specSing: false, charIds: null}
+
             output.notes.push({time: note.t, direction: note.d % 4, lane: 1 - Math.floor(note.d * 0.25), length: note.l,
-                kind: note.k, charId: -1});
+                kind: kind});
         }
 
         var timingPoints:Array<FunkinTimingPoint> = rawMeta.timingPoints;
@@ -105,6 +109,8 @@ class PsychConverter
 
                 mustHitSection: section.mustHitSection,
 
+                altAnim: section.altAnim,
+
                 gfSection: section.gfSection,
 
                 changeBPM: section.changeBPM,
@@ -139,25 +145,33 @@ class PsychConverter
 
                 var type:String = note.type ?? "";
 
-                var kind:String = "";
-
-                // `_section.gfSection` is not supported here unfortunately.
-                if (type == "GF Sing")
-                    kind = NoteKindData.addField(kind, "spec-sing");
+                var kind:NoteKindData = {type: "", altAnimation: false, noAnimation: false, specSing: false, charIds: null}
 
                 if (type == "Alt Animation")
-                    kind = NoteKindData.addField(kind, "alt-animation");
+                    kind.altAnimation = true;
 
-                if (type == "No Animation")
-                    kind = NoteKindData.addField(kind, "no-animation");
+                if (_section.altAnim || type == "No Animation")
+                    kind.noAnimation = true;
 
-                var charId:Int = -1;
+                if (_section.gfSection || type == "GF Sing")
+                    kind.specSing = true;
 
                 if (type.startsWith("mamacitas-char-id"))
-                    charId = Std.parseInt(type.split("-").last());
+                {
+                    var charIds:Array<Int> = new Array<Int>();
+
+                    var commas:String = type.split("-").last();
+
+                    var ids:Array<Int> = FlxStringUtil.toIntArray(commas);
+
+                    for (i in 0 ... ids.length)
+                        charIds.push(ids[i]);
+
+                    kind.charIds = charIds;
+                }
 
                 output.notes.push({time: note.time, direction: note.direction % 4, lane: 1 - Math.floor(note.direction * 0.25),
-                    length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind, charId: charId});
+                    length: Math.max(note.length - beatLength * 0.25, 0.0), kind: kind});
             }
         }
 
@@ -222,6 +236,8 @@ typedef PsychSection =
     var sectionBeats:Float;
 
     var mustHitSection:Bool;
+
+    var altAnim:Bool;
 
     var gfSection:Bool;
 

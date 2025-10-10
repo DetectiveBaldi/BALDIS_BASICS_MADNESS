@@ -495,19 +495,19 @@ class Strumline extends FlxGroup
     {
         var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
-        if (note.kindData.specSing)
+        if (note.kind.specSing)
             charGroup = spectators;
 
         for (i in 0 ... charGroup.members.length)
         {
             var character:Character = charGroup.members[i];
 
-            if (note.kindData.noAnimation)
+            if (note.kind.noAnimation)
                 continue;
 
-            var charId:Int = note.charId;
+            var charIds:Array<Int> = note.kind.charIds;
 
-            if (charId != -1.0 && i != charId)
+            if (charIds != null && !charIds.contains(-1) && !charIds.contains(i))
                 continue;
 
             if (character.skipSing)
@@ -517,7 +517,7 @@ class Strumline extends FlxGroup
 
             var animSuffix:String = "";
 
-            if (note.kindData.altAnimation)
+            if (note.kind.altAnimation)
                 animSuffix = "-alt";
 
             var direcStr:String = Note.DIRECTIONS[note.direction];
@@ -543,7 +543,7 @@ class Strumline extends FlxGroup
     {
         var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
-        if (note?.kindData?.specSing)
+        if (note?.kind?.specSing)
             charGroup = spectators;
 
         for (i in 0 ... charGroup.members.length)
@@ -552,12 +552,12 @@ class Strumline extends FlxGroup
 
             if (note != null)
             {
-                if (note.kindData.noAnimation)
+                if (note.kind.noAnimation)
                     continue;
 
-                 var charId:Int = note.charId;
+                var charIds:Array<Int> = note.kind.charIds;
 
-                if (charId != -1.0 && i != charId)
+                if (charIds != null && !charIds.contains(-1) && !charIds.contains(i))
                     continue;
             }
 
@@ -568,7 +568,7 @@ class Strumline extends FlxGroup
 
             var animSuffix:String = "";
 
-            if (note?.kindData?.altAnimation)
+            if (note?.kind?.altAnimation)
                 animSuffix = "-alt";
 
             var direcStr:String = Note.DIRECTIONS[direction];
@@ -591,7 +591,7 @@ class Strumline extends FlxGroup
     {
         var charGroup:FlxTypedSpriteGroup<Character> = characters;
 
-        if (note?.kindData?.specSing)
+        if (note?.kind?.specSing)
             charGroup = spectators;
 
         for (i in 0 ... charGroup.members.length)
@@ -600,12 +600,12 @@ class Strumline extends FlxGroup
 
             if (note != null)
             {
-                if (note.kindData.noAnimation)
+                if (note.kind.noAnimation)
                     continue;
 
-                 var charId:Int = note.charId;
+                var charIds:Array<Int> = note.kind.charIds;
 
-                if (charId != -1.0 && i != charId)
+                if (charIds != null && !charIds.contains(-1) && !charIds.contains(i))
                     continue;
             }
 
