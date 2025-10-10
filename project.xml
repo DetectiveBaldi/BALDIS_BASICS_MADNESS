@@ -19,7 +19,7 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<window width="1280" height="720" />
+	<window width="1280" height="720" background="#000000" />
 
 	<!-- ______________________________ Defines, Haxedefs, and Libraries _____________________________ -->
 
