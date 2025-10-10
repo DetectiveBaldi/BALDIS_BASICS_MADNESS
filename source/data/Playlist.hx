@@ -49,6 +49,16 @@ class Playlist
         
         WeekData.list.push(week);
 
+        // Null Week
+
+        week = {name: "NULL", nameSuffix: " Style", description: ""}
+
+        week.description += 'NULL';
+
+        week.levels.pushMany({week: week, name: "Broken Discovery"});
+
+        WeekData.list.push(week);
+
         // Scribble
         var level:LevelData = {week: null, name: "Scribble"}
 
