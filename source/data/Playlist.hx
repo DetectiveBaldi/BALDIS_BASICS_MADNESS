@@ -84,6 +84,11 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Exception (MOVE LATER)
+        level = {week: null, name: "Exception"}
+
+        LevelData.list.push(level);
+
         // Beginnings
         level = {week: null, name: "Beginnings"}
 
