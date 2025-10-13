@@ -185,8 +185,6 @@ class Conductor
     {
         for (i in 0 ... list.length)
             timingPoints.push(TimingPoint.decodeData(list[i]));
-
-        timingPoints.sortTimed();
     }
 
     public function calibrateTimingPoints():Void

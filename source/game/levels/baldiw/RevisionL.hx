@@ -672,9 +672,9 @@ class YCTPGroup extends FlxSpriteGroup
 
             default:
             {
-                var keyStr:String = FlxKey.toStringMap[firstJustPressed];
+                var keyStr:String = FlxKey.toStringMap[firstJustPressed].toLowerCase();
 
-                var keyInt:Null<Int> = keyStr.parseInt();
+                var keyInt:Null<Int> = StringUtil.parseInt(keyStr);
 
                 if (keyInt != null)
                     updateSubmission(keyInt);
@@ -715,7 +715,7 @@ class YCTPGroup extends FlxSpriteGroup
                         }
                         
                         default:
-                            updateSubmission(name.toLowerCase().parseInt());
+                            updateSubmission(StringUtil.parseInt(name.toLowerCase()));
                     }
                 }
                 
@@ -890,7 +890,7 @@ class YCTPGroup extends FlxSpriteGroup
 
         questionText.text = '${val1}${op1}${val2}';
 
-        var numSubmission:Null<Int> = submission.parseInt();
+        var numSubmission:Null<Int> = StringUtil.parseInt(submission);
 
         var multiplier:Int = 1;
 

@@ -448,8 +448,10 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
                 if (mainVocalsDesync >= 20.0 || opponentVocalsDesync >= 20.0 || playerVocalsDesync >= 20.0)
                     resyncVocals();
-
-                if (instrumental.time >= instrumental.length)
+            }
+            else
+            {
+                if (conductor.time >= instrumental.length)
                     endSong();
             }
         }
@@ -491,6 +493,8 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         chart.notes.sortTimed();
 
         chart.events.sortTimed();
+
+        chart.timingPoints.sortTimed();
         
         conductor.writeTimingPointData(chart.timingPoints);
 

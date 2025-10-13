@@ -50,8 +50,6 @@ class StringUtil
 
     public static function parseInt(v:String):Null<Int>
     {
-        v = v.toLowerCase();
-
         if (MathUtil.BASE_10.exists(v))
             return MathUtil.BASE_10[v];
 

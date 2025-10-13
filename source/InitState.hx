@@ -67,6 +67,7 @@ class InitState extends FlxState
 
         FlxG.mouse.visible = false;
 
+        #if FLX_DEBUG
         FlxG.console.registerClass(InitState);
 
         FlxG.console.registerClass(DiscordHandler);
@@ -76,6 +77,7 @@ class InitState extends FlxState
         FlxG.console.registerClass(SaveManager);
 
         FlxG.console.registerClass(HighScore);
+        #end
 
         FlxG.plugins.drawOnTop = true;
         
@@ -104,7 +106,9 @@ class InitState extends FlxState
     {
         FlxG.autoPause = autoPause;
 
+        #if FLX_DEBUG
         FlxG.console.autoPause = autoPause;
+        #end
     }
 
     public static function setFrameRateCap(frameRate:Int):Void
