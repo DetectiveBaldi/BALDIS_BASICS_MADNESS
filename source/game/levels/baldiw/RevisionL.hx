@@ -126,8 +126,7 @@ class RevisionL extends PlayState
         {
             var lastTime:Float = instrumental.time;
 
-            instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.level.getClassPath()}/Instrumental-Bad-Math'), 
-                false, false, endSong);
+            instrumental.loadEmbedded(AssetCache.getMusic('${PlayState.level.getClassPath()}/Instrumental-Bad-Math'));
 
             instrumental.play(lastTime);
         }

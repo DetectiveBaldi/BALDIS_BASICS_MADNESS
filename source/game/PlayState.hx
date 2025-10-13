@@ -448,6 +448,9 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
                 if (mainVocalsDesync >= 20.0 || opponentVocalsDesync >= 20.0 || playerVocalsDesync >= 20.0)
                     resyncVocals();
+
+                if (instrumental.time >= instrumental.length)
+                    endSong();
             }
         }
         
@@ -531,8 +534,6 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         var pathSuffix:String = "Instrumental";
 
         instrumental = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
-
-        instrumental.onComplete = endSong;
 
         pathSuffix = "Vocals-Main";
 
@@ -810,10 +811,6 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
     public function setCamStartPos():Void
     {
         var ev:EventData = getStartingCamFocusEvent();
-
-        // I don't know why you wouldn't have atleast one of these, but who knows?
-        if (ev == null)
-            return;
 
         SetCamFocusEvent.dispatch(this, ev.value.x, ev.value.y, ev.value.charType, 0.0, "linear");
 
