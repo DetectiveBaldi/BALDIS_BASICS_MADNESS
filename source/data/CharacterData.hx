@@ -12,7 +12,7 @@ typedef CharacterData =
 
     var ?antialiasing:Bool;
 
-    var ?scale:AxisData<Float>;
+    var ?scale:AxisData;
 
     var ?flipX:Bool;
 
@@ -26,7 +26,7 @@ typedef CharacterData =
 
     var ?singDuration:Float;
 
-    var cameraPoint:AxisData<Float>;
+    var cameraPoint:AxisData;
 
     var healthIcon:String;
 

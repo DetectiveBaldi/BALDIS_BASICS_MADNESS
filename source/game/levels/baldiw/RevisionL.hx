@@ -425,7 +425,7 @@ class YCTPGroup extends FlxSpriteGroup
 
         add(indicators);
 
-        var indicatorPos:Array<AxisData<Float>> =
+        var indicatorPos:Array<AxisData> =
         [
             {x: 195.0, y: 261.0},
 
@@ -452,7 +452,7 @@ class YCTPGroup extends FlxSpriteGroup
 
             indicator.updateHitbox();
 
-            var position:AxisData<Float> = indicatorPos[i];
+            var position:AxisData = indicatorPos[i];
 
             indicator.setPosition(position.x, position.y);
 

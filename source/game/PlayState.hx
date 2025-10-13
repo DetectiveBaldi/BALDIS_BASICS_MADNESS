@@ -535,25 +535,17 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
     {
         var songPath:String = '${level.getClassPath()}/';
 
-        var pathSuffix:String = "Instrumental";
+        instrumental = FlxG.sound.load(AssetCache.getMusic('${songPath}Instrumental'));
 
-        instrumental = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
-
-        pathSuffix = "Vocals-Main";
-
-        if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-            mainVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
+        if (Paths.exists(Paths.music(Paths.ogg('${songPath}Vocals-Main'))))
+            mainVocals = FlxG.sound.load(AssetCache.getMusic('${songPath}Vocals-Main'));
         else
         {
-            pathSuffix = "Vocals-Opponent";
+            if (Paths.exists(Paths.music(Paths.ogg('${songPath}Vocals-Opponent'))))
+                opponentVocals = FlxG.sound.load(AssetCache.getMusic('${songPath}Vocals-Opponent'));
 
-            if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-                opponentVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
-
-            pathSuffix = "Vocals-Player";
-
-            if (Paths.exists(Paths.music(Paths.ogg(songPath + pathSuffix))))
-                playerVocals = FlxG.sound.load(AssetCache.getMusic(songPath + pathSuffix));
+            if (Paths.exists(Paths.music(Paths.ogg('${songPath}Vocals-Player'))))
+                playerVocals = FlxG.sound.load(AssetCache.getMusic('${songPath}Vocals-Player'));
         }
     }
 

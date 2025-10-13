@@ -91,7 +91,7 @@ class WeekData
             {
                 var difficulty:String = val[i];
 
-                if (HighScore.getWeekScore(key, difficulty).score == 0.0)
+                if (HighScore.getWeekScore(name, difficulty).score == 0.0)
                     return false;
             }
         }

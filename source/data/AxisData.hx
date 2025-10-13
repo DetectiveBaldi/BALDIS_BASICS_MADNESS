@@ -1,8 +1,8 @@
 package data;
 
-typedef AxisData<T:Float> =
+typedef AxisData =
 {
-    public var x:T;
+    public var x:Float;
 
-    public var y:T;
+    public var y:Float;
 }

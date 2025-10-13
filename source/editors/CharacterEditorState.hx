@@ -420,7 +420,7 @@ class CharacterEditorState extends TransitionState
 
                 if (FlxG.keys.justPressed.V)
                 {
-                    var offset:AxisData<Float> = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
+                    var offset:AxisData = Json.parse(Clipboard.generalClipboard.getData(TEXT_FORMAT));
 
                     setAnimationOffset(offset.x, offset.y);
                 }
@@ -597,21 +597,21 @@ class CharacterEditorState extends TransitionState
         return getCurrentAnimation();
     }
 
-    public function getCurrentAnimationOffset():AxisData<Float>
+    public function getCurrentAnimationOffset():AxisData
     {
         return getCurrentAnimation().offset;
     }
 
     public function updateOffsetLabel():Void
     {
-        var newOffset:AxisData<Float> = getCurrentAnimationOffset();
+        var newOffset:AxisData = getCurrentAnimationOffset();
 
         ui.findComponent("_______________label", Label).text = 'Offset: (${newOffset.x}, ${newOffset.y})';
     }
 
     public function setAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
     {
-        var offsets:AxisData<Float> = getCurrentAnimationOffset();
+        var offsets:AxisData = getCurrentAnimationOffset();
 
         offsets.x = x;
 
@@ -624,7 +624,7 @@ class CharacterEditorState extends TransitionState
 
     public function addAnimationOffset(x:Float = 0.0, y:Float = 0.0):Void
     {
-        var data:AxisData<Float> = getCurrentAnimationOffset();
+        var data:AxisData = getCurrentAnimationOffset();
 
         setAnimationOffset(data.x + x, data.y + y);
     }
@@ -644,7 +644,7 @@ class CharacterEditorState extends TransitionState
 
     public function resetCameraPoint():Void
     {
-        var point:AxisData<Float> = character.config.cameraPoint;
+        var point:AxisData = character.config.cameraPoint;
 
         var middle:FlxPoint = character.getMidpoint();
 
