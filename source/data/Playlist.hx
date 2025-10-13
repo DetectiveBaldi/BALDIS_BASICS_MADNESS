@@ -81,6 +81,11 @@ class Playlist
 
         LevelData.list.push(level);
 
+        // Viral Sensation
+        level = {week: null, name: "Viral Sensation"}
+
+        LevelData.list.push(level);
+
         // Exception (MOVE LATER)
         level = {week: null, name: "Exception"}
 
