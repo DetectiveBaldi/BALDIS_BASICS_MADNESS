@@ -25,6 +25,8 @@ import data.WeekData;
 
 import game.stages.classicw.DetentionS;
 
+import util.MouseBitmaps;
+
 using util.MathUtil;
 using util.PlayFieldTools;
 
@@ -320,7 +322,7 @@ class DetentionL extends PlayState
         {
             FlxG.mouse.visible = true;
 
-            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+            MouseBitmaps.setMouseBitmap(HAND);
 
             getTransitionSprite(conductor.beatLength * 1.0 * 0.001, IN, null);
 

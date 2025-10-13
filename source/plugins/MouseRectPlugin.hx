@@ -43,8 +43,10 @@ class MouseRectPlugin extends FlxBasic
 
     public function updateMouseRect(x:Float, y:Float):Void
     {
+        #if FLX_DEBUG
         if (FlxG.debugger.visible)
             return;
+        #end
         
         var mouseX:Int = Math.floor(x);
 

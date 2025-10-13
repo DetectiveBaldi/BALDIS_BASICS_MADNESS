@@ -40,7 +40,7 @@ class StringUtil
                 {
                     var s:String = split[i];
 
-                    split[i] = s.substring(0, 1).toUpperCase() + s.substring(1, s.length + 1);
+                    split[i] = s.charAt(0).toUpperCase() + s.substring(1, s.length + 1);
                 }
 
                 return split.join("");

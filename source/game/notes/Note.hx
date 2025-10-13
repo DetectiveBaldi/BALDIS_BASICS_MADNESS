@@ -69,7 +69,7 @@ class Note extends FlxSprite
 
         kind = {type: "", altAnimation: false, noAnimation: false, specSing: false, charIds: null}
 
-        status = MOVING;
+        status = IDLING;
 
         playSplash = false;
 
@@ -103,7 +103,7 @@ class Note extends FlxSprite
 
     public function isHittable():Bool
     {
-        if (status != MOVING)
+        if (status != IDLING)
             return false;
 
         var botplay:Bool = strumline.botplay;
@@ -117,11 +117,11 @@ class Note extends FlxSprite
 
 enum NoteStatus
 {
-    MOVING;
+    IDLING;
 
     HIT;
 
     MISSED;
 
-    DROPPING;
+    FAILING;
 }

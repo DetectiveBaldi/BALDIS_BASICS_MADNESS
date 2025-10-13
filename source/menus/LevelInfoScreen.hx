@@ -111,7 +111,7 @@ class LevelInfoScreen extends FlxSubState
 
         gradeText.visible = false;
 
-        gradeText.color = PlayStats.getColorForGrade(highScore.grade);
+        gradeText.color = PlayStats.getColor(highScore.grade);
 
         gradeText.size = 200;
 

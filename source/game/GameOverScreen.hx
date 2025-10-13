@@ -32,6 +32,7 @@ import menus.StoryMenuScreen;
 import menus.TitleScreen;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -318,7 +319,7 @@ class GameOverScreen extends FlxSubState implements ISequenceHandler
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         retryButton.visible = true;
 

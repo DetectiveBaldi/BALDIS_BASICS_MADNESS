@@ -214,9 +214,9 @@ class ProgressBar extends FlxSpriteGroup
 
     public function regenerateSides():Void
     {
-        var iWidth:Int = Std.int(width);
+        var iWidth:Int = Math.floor(width);
 
-        var iHeight:Int = Std.int(height);
+        var iHeight:Int = Math.floor(height);
 
         emptiedSide.makeGraphic(iWidth, iHeight, FlxColor.WHITE);
 
@@ -225,7 +225,7 @@ class ProgressBar extends FlxSpriteGroup
 
     public function regenerateBorder():Void
     {
-        border.makeGraphic(Std.int(width), Std.int(height), FlxColor.BLACK);
+        border.makeGraphic(Math.floor(width), Math.floor(height), FlxColor.BLACK);
 
         border.graphic.bitmap.fillRect(new Rectangle(0.0, 0.0, width, height), 0xFF000000);
 
@@ -247,14 +247,14 @@ class ProgressBar extends FlxSpriteGroup
 
     override function set_width(width:Float):Float
     {
-        this.width = Std.int(width);
+        this.width = Math.floor(width);
 
         return width;
     }
 
     override function set_height(height:Float):Float
     {
-        this.height = Std.int(height);
+        this.height = Math.floor(height);
 
         return height;
     }

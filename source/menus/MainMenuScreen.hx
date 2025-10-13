@@ -27,6 +27,8 @@ import menus.options.OptionsMenu;
 import ui.BackOutButton;
 import ui.MenuText;
 
+import util.MouseBitmaps;
+
 using util.MathUtil;
 
 class MainMenuScreen extends TransitionState
@@ -84,7 +86,7 @@ class MainMenuScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

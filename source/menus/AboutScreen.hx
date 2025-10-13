@@ -13,6 +13,8 @@ import extendable.TransitionState;
 
 import ui.BackOutButton;
 
+import util.MouseBitmaps;
+
 using util.MathUtil;
 
 class AboutScreen extends TransitionState
@@ -29,7 +31,7 @@ class AboutScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

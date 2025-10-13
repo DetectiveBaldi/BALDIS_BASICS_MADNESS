@@ -50,6 +50,8 @@ import interfaces.ISequenceHandler;
 import ui.HeightenedButton;
 import ui.OrientedButton;
 
+import util.MouseBitmaps;
+
 using StringTools;
 
 using util.MathUtil;
@@ -101,7 +103,7 @@ class FreeplayScreen extends TransitionState implements ISequenceHandler
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 
@@ -821,8 +823,12 @@ class SearchItem<T> extends FlxInputText
     {
         super.updateSelectionBoxes();
 
-        for (v in _selectionBoxes)
-            v.alpha = v.color.alphaFloat;
+        for (i in 0 ... _selectionBoxes.length)
+        {
+            var box:FlxSprite = _selectionBoxes[i];
+
+            box.alpha = box.color.alphaFloat;
+        }
     }
 
     override function destroy():Void

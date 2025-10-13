@@ -47,6 +47,7 @@ import ui.OrientedButton;
 import ui.MenuText;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 using flixel.util.FlxColorTransformUtil;
 
@@ -97,7 +98,7 @@ class MysteryScreen extends TransitionState implements ISequenceHandler
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

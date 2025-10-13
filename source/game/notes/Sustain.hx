@@ -25,7 +25,11 @@ class Sustain extends FlxSprite
             Paths.image(Paths.xml("game/notes/Note/default")));
 
         for (i in 0 ... Note.DIRECTIONS.length)
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldPiece", Note.DIRECTIONS[i].toLowerCase() + "HoldPiece0", 24.0, false);
+        {
+            var direction:String = Note.DIRECTIONS[i].toLowerCase();
+
+            animation.addByPrefix('${direction}HoldPiece', '${direction}HoldPiece0', 24.0, false);
+        }
     }
 
     override function update(elapsed:Float):Void

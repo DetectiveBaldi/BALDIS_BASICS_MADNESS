@@ -36,7 +36,7 @@ class LevelData
         obscurity = NONE;
     }
 
-    public function getFormattedName():String
+    public function encodeName():String
     {
         var split:Array<String> = name.split(" ");
 
@@ -55,12 +55,12 @@ class LevelData
         var path:String = "game/levels";
 
         if (week != null)
-            path += '/${week.getFormattedName()}';
+            path += '/${week.encodeName()}';
 
         if (difficulty != "Normal")
             path += '/diff_${difficulty.toLowerCase()}';
 
-        path += '/${getFormattedName()}';
+        path += '/${encodeName()}';
 
         return path.replace("/", sep);
     }

@@ -7,6 +7,8 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 import data.Chart;
 
+import interfaces.IBeatDispatcher;
+
 import music.Conductor;
 
 using StringTools;
@@ -29,15 +31,13 @@ class NoteSpawner extends FlxBasic
 
     public var noteIndex:Int;
 
-    public function new(conductor:Conductor, noteParams:Array<NoteData>, strumlines:FlxTypedGroup<Strumline>):Void
+    public function new(beatDispatcher:IBeatDispatcher, noteParams:Array<NoteData>, strumlines:FlxTypedGroup<Strumline>):Void
     {
         super();
 
         visible = false;
 
-        camera = FlxG.cameras.list.last();
-
-        this.conductor = conductor;
+        this.conductor = beatDispatcher.conductor;
         
         this.noteParams = noteParams;
 
@@ -79,7 +79,7 @@ class NoteSpawner extends FlxBasic
 
             note.kind = noteData.kind;
             
-            note.status = MOVING;
+            note.status = IDLING;
 
             note.playSplash = false;
 
@@ -172,7 +172,7 @@ class NoteSpawner extends FlxBasic
     {
         var strumline:Strumline = getStrumline(lane);
 
-        return FlxG.height / camera.zoom / strumline.scrollSpeed / 0.45;
+        return FlxG.height / 0.45 / Math.max(strumline.scrollSpeed, 1.0);
     }
 
     public function setNoteIndexAt(time:Float):Void

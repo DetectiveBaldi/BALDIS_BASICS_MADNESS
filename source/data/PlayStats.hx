@@ -7,23 +7,23 @@ using util.ArrayUtil;
 @:structInit
 class PlayStats
 {
-    public static var allGrades:Array<String> = ["A+", "A", "B", "C", "D", "F"];
+    public static var grades:Array<String> = ["A+", "A", "B", "C", "D", "F"];
 
-    public static var gradePercentages:Array<Float> = [97.0, 90.0, 80.0, 70.0, 60.0, 50.0];
+    public static var gradeThreshold:Array<Float> = [97.0, 90.0, 80.0, 70.0, 60.0, 50.0];
 
     public static function empty():PlayStats
     {
         return {score: 0, hits: 0, misses: 0, bonus: 0.0}
     }
 
-    public static function getColorForGrade(grade:String):FlxColor
+    public static function getColor(grade:String):FlxColor
     {
-        var indexOf:Int = allGrades.indexOf(grade);
-
-        if (indexOf == -1)
+        if (!grades.contains(grade))
             return FlxColor.BLACK;
 
-        return FlxColor.interpolate(0xFF0EF403, 0xFFF70001, indexOf / (allGrades.length - 1));
+        var i:Int = grades.indexOf(grade);
+
+        return FlxColor.interpolate(0xFF0EF403, 0xFFF70001, i / (grades.length - 1.0));
     }
     
     public var score:Int;
@@ -50,17 +50,13 @@ class PlayStats
         if (Math.isNaN(accuracy))
             return "N/A";
 
-        for (i in 0 ... allGrades.length - 1)
+        for (i in 0 ... grades.length - 1)
         {
-            var gradeStr:String = allGrades[i];
-
-            var percentage:Float = gradePercentages[i];
-
-            if (accuracy >= percentage)
-                return gradeStr;
+            if (accuracy >= gradeThreshold[i])
+                return grades[i];
         }
 
-        return allGrades.last();
+        return grades.last();
     }
 
     public function isEmpty():Bool

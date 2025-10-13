@@ -27,6 +27,8 @@ import data.LevelData;
 
 import game.stages.classicw.HugsS;
 
+import util.MouseBitmaps;
+
 using StringTools;
 
 using util.ArrayUtil;
@@ -549,7 +551,7 @@ class HugsL extends PlayState
         {
             FlxG.mouse.visible = true;
 
-            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+            MouseBitmaps.setMouseBitmap(HAND);
 
             hugsS.hallend.velocity.x = 0.0;
 

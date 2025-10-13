@@ -31,6 +31,8 @@ import interfaces.ISequenceHandler;
 
 import ui.BaldiHeads;
 
+import util.MouseBitmaps;
+
 using util.MathUtil;
 
 class UnlockScreen extends TransitionState implements ISequenceHandler
@@ -60,7 +62,7 @@ class UnlockScreen extends TransitionState implements ISequenceHandler
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

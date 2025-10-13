@@ -26,6 +26,7 @@ import plugins.FullscreenPlugin;
 import plugins.MouseRectPlugin;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 class InitState extends FlxState
 {
@@ -93,6 +94,8 @@ class InitState extends FlxState
         FlxG.plugins.addPlugin(mouseRectPlugin);
 
         ClickSoundUtil.init();
+
+        MouseBitmaps.init();
 
         FlxG.switchState(nextState);
     }

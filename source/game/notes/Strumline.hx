@@ -239,7 +239,7 @@ class Strumline extends FlxGroup
 
             var hasMissed:Bool = conductor.time > note.time + note.latestTiming;
 
-            if ((note.status == MOVING || note.status == DROPPING) && hasMissed)
+            if ((note.status == IDLING || note.status == FAILING) && hasMissed)
                 noteMiss(note);
 
             var hasExpired:Bool = conductor.time > note.time + note.length + note.latestTiming;
@@ -256,15 +256,15 @@ class Strumline extends FlxGroup
             {
                 if (note.status == HIT)
                 {
-                    if (note.status != DROPPING)
+                    if (note.status != FAILING)
                     {
                         resizeSustainNote(note);
 
-                        note.status = DROPPING;
+                        note.status = FAILING;
                     }
                 }
 
-                if (note.status == DROPPING)
+                if (note.status == FAILING)
                 {
                     setStrumActive(note.direction, true);
 
@@ -402,7 +402,7 @@ class Strumline extends FlxGroup
 
     public function isHoldingNote(note:Note):Bool
     {
-        if (note.length == 0.0 || (note.status != HIT && note.status != DROPPING))
+        if (note.length == 0.0 || (note.status != HIT && note.status != FAILING))
             return false;
 
         if (botplay)
@@ -520,18 +520,18 @@ class Strumline extends FlxGroup
             if (note.kind.altAnimation)
                 animSuffix = "-alt";
 
-            var direcStr:String = Note.DIRECTIONS[note.direction];
+            var directionStr:String = Note.DIRECTIONS[note.direction];
 
-            if (hold && character.animation.name.contains(direcStr))
+            if (hold && character.animation.name.contains(directionStr))
                 continue;
 
-            var animToPlay:String = 'Sing${direcStr}${animSuffix}';
+            var animToPlay:String = 'Sing${directionStr}${animSuffix}';
 
             if (character.animation.exists(animToPlay))
                 character.animation.play(animToPlay, true);
             else
             {
-                animToPlay = 'Sing${direcStr}';
+                animToPlay = 'Sing${directionStr}';
 
                 if (character.animation.exists(animToPlay))
                     character.animation.play(animToPlay, true);
@@ -571,15 +571,15 @@ class Strumline extends FlxGroup
             if (note?.kind?.altAnimation)
                 animSuffix = "-alt";
 
-            var direcStr:String = Note.DIRECTIONS[direction];
+            var directionStr:String = Note.DIRECTIONS[direction];
 
-            var animToPlay:String = 'Sing${direcStr}MISS${animSuffix}';
+            var animToPlay:String = 'Sing${directionStr}MISS${animSuffix}';
 
             if (character.animation.exists(animToPlay))
                 character.animation.play(animToPlay, true);
             else
             {
-                animToPlay = 'Sing${direcStr}MISS';
+                animToPlay = 'Sing${directionStr}MISS';
 
                 if (character.animation.exists(animToPlay))
                     character.animation.play(animToPlay, true);

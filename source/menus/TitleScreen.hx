@@ -28,6 +28,7 @@ import game.HighScore;
 import game.PlayState;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -62,7 +63,7 @@ class TitleScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
         
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

@@ -40,7 +40,7 @@ class WeekData
         scoreRequirements = new Map<String, Array<String>>();
     }
 
-    public function getFormattedName():String
+    public function encodeName():String
     {
         return '${name.split(" ").join("").toLowerCase()}w';
     }
@@ -83,13 +83,15 @@ class WeekData
 
     public function scoresValidated():Bool
     {
-        for (k => v in scoreRequirements)
+        for (key => val in scoreRequirements)
         {
-            var requirement:Array<String> = v;
+            var name:String = key;
 
-            for (diff in requirement)
+            for (i in 0 ... val.length)
             {
-                if (HighScore.getWeekScore(k, diff).score == 0.0)
+                var difficulty:String = val[i];
+
+                if (HighScore.getWeekScore(key, difficulty).score == 0.0)
                     return false;
             }
         }

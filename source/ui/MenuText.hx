@@ -14,10 +14,6 @@ import util.ClickSoundUtil;
 
 class MenuText extends FlxText
 {
-    public var unlitColor:FlxColor;
-
-    public var litColor:FlxColor;
-
     public var onClick:FlxSignal;
 
     public function new(x:Float = 0.0, y:Float = 0.0, text:String = ""):Void
@@ -30,10 +26,6 @@ class MenuText extends FlxText
 
         alignment = CENTER;
 
-        unlitColor = FlxColor.WHITE;
-
-        litColor = FlxColor.LIME;
-
         onClick = new FlxSignal();
     }
 
@@ -43,7 +35,7 @@ class MenuText extends FlxText
 
         if (FlxG.mouse.overlaps(this, camera))
         {
-            color = litColor;
+            color = FlxColor.LIME;
 
             underline = true;
 
@@ -56,7 +48,7 @@ class MenuText extends FlxText
         }
         else
         {
-            color = unlitColor;
+            color = FlxColor.WHITE;
 
             underline = false;
         }

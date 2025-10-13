@@ -2,23 +2,18 @@ package data;
 
 import haxe.Json;
 
-import haxe.ds.ArraySort;
-
 import openfl.utils.Assets;
 
 import flixel.util.FlxStringUtil;
 
-import core.AssetCache;
-import core.Paths;
-
 import data.Chart;
 
-import util.MathUtil;
 import util.TimingUtil;
 
 using StringTools;
 
 using util.ArrayUtil;
+using util.MathUtil;
 
 class FunkinConverter
 {
@@ -187,7 +182,7 @@ class PsychConverter
 
         var composer:String = split[0].split("=").last();
 
-        var step:Int = Std.int(Math.abs(Std.parseInt(split[1]?.split("=")?.last() ?? "0")));
+        var step:Int = Std.parseInt(split[1]?.split("=")?.last() ?? "0");
 
         output.credits = {composer: composer, step: step}
 

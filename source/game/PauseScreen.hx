@@ -1,6 +1,7 @@
 package game;
 
 import openfl.display.Bitmap;
+import openfl.display.BitmapData;
 
 import openfl.geom.Rectangle;
 
@@ -47,6 +48,7 @@ import plugins.MouseRectPlugin;
 import ui.BaldiHeads;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 using util.ArrayUtil;
 using util.MathUtil;
@@ -57,7 +59,7 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
     public var lastMouseVisible:Bool;
 
-    public var lastMouseCursor:Bitmap;
+    public var lastMouseBitmap:CustomMouseBitmap;
 
     public var lastMouseRect:FlxRect;
 
@@ -94,13 +96,13 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
 
         lastMouseVisible = FlxG.mouse.visible;
 
-        lastMouseCursor = FlxG.mouse.cursor;
+        lastMouseBitmap = MouseBitmaps.getMouseBitmap(FlxG.mouse.cursor.bitmapData);
 
         var mouseRectPlugin:MouseRectPlugin = InitState.mouseRectPlugin;
 
         lastMouseRect = FlxRect.get(mouseRectPlugin.left, mouseRectPlugin.top, mouseRectPlugin.right, mouseRectPlugin.bottom);
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         FlxG.mouse.visible = true;
 
@@ -249,8 +251,8 @@ class PauseScreen extends TransitionSubState implements ISequenceHandler
         super.close();
 
         FlxG.mouse.visible = lastMouseVisible;
-
-        FlxG.mouse.load(lastMouseCursor.bitmapData);
+        
+        MouseBitmaps.setMouseBitmap(lastMouseBitmap);
 
         InitState.setMouseRect(lastMouseRect.left, lastMouseRect.right, lastMouseRect.top, lastMouseRect.bottom);
 

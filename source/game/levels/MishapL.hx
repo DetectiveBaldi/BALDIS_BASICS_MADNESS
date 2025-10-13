@@ -164,8 +164,8 @@ class MishapL extends PlayState
 
         popup.camera = hudCamera;
 
-        popup.setPosition(FlxG.random.int(0, FlxG.width - Std.int(popup.width)),
-            FlxG.random.int(0, FlxG.height - Std.int(popup.height)));
+        popup.setPosition(FlxG.random.int(0, FlxG.width - Math.floor(popup.width)),
+            FlxG.random.int(0, FlxG.height - Math.floor(popup.height)));
 
         popups.add(popup);
     }

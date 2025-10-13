@@ -16,6 +16,8 @@ import flixel.sound.FlxSound;
 import ui.BackOutButton;
 import ui.OrientedButton;
 
+import util.MouseBitmaps;
+
 using util.MathUtil;
 
 class CreditsScreen extends TransitionState
@@ -42,7 +44,7 @@ class CreditsScreen extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

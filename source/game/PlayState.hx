@@ -329,11 +329,13 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         add(playField);
 
+        #if FLX_DEBUG
         FlxG.watch.add(playField.playStats, "score", "Score");
 
         FlxG.watch.add(playField.playStats, "misses", "Misses");
 
         FlxG.watch.add(playField.playStats, "accuracy", "Accuracy (%)");
+        #end
 
         playField.getSongTime = getSongTime;
 
@@ -458,8 +460,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         #if debug
         if (FlxG.keys.justPressed.EIGHT)
-            FlxG.switchState(() -> new editors.CharacterEditorState(
-                () -> PlayState.getClassFromLevel(params), player.config.name));
+            FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClassFromLevel(params), player.config.name));
         #end
     }
 
@@ -494,6 +495,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
 
         conductor.update(-conductor.beatLength * 5.0);
 
+        #if FLX_DEBUG
         FlxG.watch.add(conductor, "time", "Time");
 
         FlxG.watch.add(conductor, "step", "Step");
@@ -501,6 +503,7 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
         FlxG.watch.add(conductor, "beat", "Beat");
 
         FlxG.watch.add(conductor, "measure", "Measure");
+        #end
 
         eventIndex = 0;
     }

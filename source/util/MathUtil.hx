@@ -13,34 +13,48 @@ class MathUtil
     public static final BASE_10:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
         "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
 
-    public static function minInt(...values:Int):Int
+    @:inheritDoc(Math.abs)
+    public static function absInt(val:Float):Int
+    {
+        return Math.floor(Math.abs(val));
+    }
+
+    @:inheritDoc(Math.min)
+    public static function minInt(...vals:Int):Int
     {
         var output:Int = FlxMath.MAX_VALUE_INT;
 
-        for (i in 0 ... values.length)
+        for (i in 0 ... vals.length)
         {
-            var value:Int = values[i];
+            var val:Int = vals[i];
 
-            if (value < output)
-                output = value;
+            if (val < output)
+                output = val;
         }
 
         return output;
     }
 
-    public static function maxInt(...values:Int):Int
+    @:inheritDoc(Math.max)
+    public static function maxInt(...vals:Int):Int
     {
         var output:Int = FlxMath.MIN_VALUE_INT;
 
-        for (i in 0 ... values.length)
+        for (i in 0 ... vals.length)
         {
-            var value:Int = values[i];
+            var val:Int = vals[i];
 
-            if (value > output)
-                output = value;
+            if (val > output)
+                output = val;
         }
 
         return output;
+    }
+
+    @:inheritDoc(flixel.math.FlxMath.bound)
+    public static function boundInt(val:Float, ?min:Float, ?max:Float):Int
+    {
+        return Math.floor(FlxMath.bound(val, min, max));
     }
 
     /**

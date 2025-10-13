@@ -34,6 +34,7 @@ import ui.BackOutButton;
 import ui.OrientedButton;
 
 import util.ClickSoundUtil;
+import util.MouseBitmaps;
 
 using util.MathUtil;
 using util.StringUtil;
@@ -88,7 +89,7 @@ class StoryMenuScreen extends TransitionState implements ISequenceHandler
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         InitState.setMouseRect(160.0, FlxG.width - 160.0, 0.0, FlxG.height);
 

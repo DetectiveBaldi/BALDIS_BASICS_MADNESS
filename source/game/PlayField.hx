@@ -195,7 +195,7 @@ class PlayField extends FlxGroup implements ISequenceHandler
 
         add(creditsPop);
 
-        noteSpawner = new NoteSpawner(conductor, chart.notes, null);
+        noteSpawner = new NoteSpawner(beatDispatcher, chart.notes, null);
 
         add(noteSpawner);
 
@@ -289,7 +289,7 @@ class PlayField extends FlxGroup implements ISequenceHandler
         var grade:String = playStats.grade;
 
         @:privateAccess
-        scoreTextFormat.format.color = PlayStats.getColorForGrade(grade);
+        scoreTextFormat.format.color = PlayStats.getColor(grade);
 
         if (Options.downscroll)
             scoreText.applyMarkup

@@ -58,6 +58,8 @@ import game.PlayState;
 
 import ui.ProgressBar;
 
+import util.MouseBitmaps;
+
 using StringTools;
 
 using util.ArrayUtil;
@@ -114,7 +116,7 @@ class CharacterEditorState extends TransitionState
 
         FlxG.mouse.visible = true;
 
-        FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+        MouseBitmaps.setMouseBitmap(HAND);
 
         gameCamera.zoom = 0.75;
 

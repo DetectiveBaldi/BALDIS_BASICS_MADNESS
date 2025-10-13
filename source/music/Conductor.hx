@@ -75,12 +75,28 @@ class Conductor
         return getTimingPointAtTime(time).tempo;
     }
 
+    public var stepLength(get, never):Float;
+
+    @:noCompletion
+    function get_stepLength():Float
+    {
+        return beatLength * 0.25;
+    }
+
     public var beatLength(get, never):Float;
 
     @:noCompletion
     function get_beatLength():Float
     {
         return getTimingPointAtTime(time).beatLength;
+    }
+
+    public var measureLength(get, never):Float;
+
+    @:noCompletion
+    function get_measureLength():Float
+    {
+        return beatLength * 4.0;
     }
 
     public var time:Float;

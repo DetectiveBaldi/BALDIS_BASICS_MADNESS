@@ -37,6 +37,8 @@ import game.stages.baldiw.RevisionS;
 
 import sound.SoundQueue;
 
+import util.MouseBitmaps;
+
 using StringTools;
 
 using util.ArrayUtil;
@@ -365,11 +367,11 @@ class YCTPGroup extends FlxSpriteGroup
         {
             FlxG.mouse.visible = true;
 
-            FlxG.mouse.load(AssetCache.getGraphic("shared/cursor-default").bitmap);
+            MouseBitmaps.setMouseBitmap(HAND);
         }
 
         #if FLX_DEBUG
-        debugToggleKeys = FlxG.debugger.toggleKeys.copy();
+        debugToggleKeys = FlxG.debugger.toggleKeys;
 
         FlxG.debugger.toggleKeys = null;
 
@@ -492,7 +494,7 @@ class YCTPGroup extends FlxSpriteGroup
 
             button.updateHitbox();
 
-            button.setPosition(button.width + 65.0 * (i % 3.0), 65.0 * (Std.int(i / 3.0)));
+            button.setPosition(button.width + 65.0 * (i % 3.0), 65.0 * (Math.floor(i / 3.0)));
 
             buttons.add(button);
         }
@@ -746,17 +748,17 @@ class YCTPGroup extends FlxSpriteGroup
         #end
     }
 
-    public function nextProblem(corrupt:Bool):Void
+    public function nextProblem(corrupted:Bool):Void
     {
         problemIndex += 1;
 
-        corrupted = corrupt;
+        this.corrupted = corrupted;
 
         problemText.text = 'Solve Math Q${problemIndex}';
 
         var ops:Array<String> = ["+", "-"];
 
-        if (corrupt)
+        if (corrupted)
         {
             ops.push("*");
 
@@ -793,7 +795,7 @@ class YCTPGroup extends FlxSpriteGroup
         {
             sndQueue.queue(FlxG.sound.load(AssetCache.getSound('shared/BAL_Problem${problemIndex}')));
 
-            if (corrupt)
+            if (corrupted)
             {
                 sndQueue.queue(FlxG.sound.load(AssetCache.getSound("shared/BAL_Buzz")));
 

@@ -37,11 +37,13 @@ class Strum extends FlxSprite
         
         for (i in 0 ... Note.DIRECTIONS.length)
         {
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "Static", Note.DIRECTIONS[i].toLowerCase() + "Static0", 24.0, false);
+            var direction:String = Note.DIRECTIONS[i].toLowerCase();
 
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "Press", Note.DIRECTIONS[i].toLowerCase() + "Press0", 24.0, false);
+            animation.addByPrefix('${direction}Static', '${direction}Static0', 24.0, false);
+
+            animation.addByPrefix('${direction}Press', '${direction}Press0', 24.0, false);
             
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "Confirm", Note.DIRECTIONS[i].toLowerCase() + "Confirm0", 24.0, false);
+            animation.addByPrefix('${direction}Confirm', '${direction}Confirm0', 24.0, false);
         }
 
         direction = 0;

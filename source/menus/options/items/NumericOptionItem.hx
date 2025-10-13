@@ -16,6 +16,8 @@ import menus.options.OptionsMenu.OptionTools;
 
 import ui.OrientedButton;
 
+import util.MathUtil;
+
 using util.MathUtil;
 
 class IntOptionItem extends VariableOptionItem<Int>
@@ -81,7 +83,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         powerCells();
 
-        leftButton = addOrientedButton(LEFT, () -> setValue(Std.int(FlxMath.bound(value - step, min, max))));
+        leftButton = addOrientedButton(LEFT, () -> setValue(MathUtil.boundInt(value - step, min, max)));
 
         leftButton.scale.set(1.85, 1.85);
 
@@ -91,7 +93,7 @@ class IntOptionItem extends VariableOptionItem<Int>
 
         add(leftButton);
 
-        rightButton = addOrientedButton(RIGHT, () -> setValue(Std.int(FlxMath.bound(value + step, min, max))));
+        rightButton = addOrientedButton(RIGHT, () -> setValue(MathUtil.boundInt(value + step, min, max)));
 
         rightButton.scale.set(1.85, 1.85);
 
