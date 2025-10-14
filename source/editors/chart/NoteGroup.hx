@@ -6,7 +6,7 @@ import flixel.group.FlxSpriteGroup;
 
 import data.Chart;
 
-// A `NoteGroup` is similar to a `game.notes.Note` object, except that it updates and draws the sustain and sustain trail
+// A `NoteGroup` is similar to a `game.notes.Note` object, except that it updates the note, sustain and sustain trail
     // all from one instance.
 class NoteGroup extends FlxSpriteGroup
 {
