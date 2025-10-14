@@ -50,6 +50,17 @@ class LevelData
         return '${split.join("")}L';
     }
 
+    public function copy():LevelData
+    {
+        var level:LevelData = {week: week, name: name, difficulty: difficulty}
+
+        level.showInFreeplayMenu = showInFreeplayMenu;
+
+        level.obscurity = obscurity;
+
+        return level;
+    }
+
     public function getClassPath(sep:String = "/"):String
     {
         var path:String = "game/levels";

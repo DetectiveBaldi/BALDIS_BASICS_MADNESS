@@ -164,6 +164,23 @@ class Conductor
         return res;
     }
 
+    public function getTimingPointAtBeat(beat:Float):TimingPoint
+    {
+        var output:TimingPoint = timingPoints[0];
+
+        for (i in 1 ... timingPoints.length)
+        {
+            var point:TimingPoint = timingPoints[i];
+
+            if (beat < point.beatOffset)
+                break;
+
+            output = point;
+        }
+
+        return output;
+    }
+
     public function getStepAt(time:Float):Float
     {
         return getBeatAt(time) * 4.0;
@@ -179,6 +196,23 @@ class Conductor
     public function getMeasureAt(time:Float):Float
     {
         return getBeatAt(time) * 0.25;
+    }
+
+    public function stepToTime(step:Float):Float
+    {
+        return beatToTime(step) * 4.0;
+    }
+
+    public function beatToTime(beat:Float):Float
+    {
+        var point:TimingPoint = getTimingPointAtBeat(beat);
+
+        return point.time + point.beatLength * (beat - point.beatOffset);
+    }
+
+    public function measureToTime(measure:Float):Float
+    {
+        return beatToTime(measure) * 0.25;
     }
 
     public function writeTimingPointData(list:Array<TimingPointData>):Void
