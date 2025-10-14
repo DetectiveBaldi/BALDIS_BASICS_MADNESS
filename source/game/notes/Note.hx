@@ -57,8 +57,6 @@ class Note extends FlxSprite
         for (i in 0 ... DIRECTIONS.length)
             animation.addByPrefix(DIRECTIONS[i].toLowerCase(), DIRECTIONS[i].toLowerCase() + "0", 24.0, false);
 
-        antialiasing = true;
-
         time = 0.0;
 
         direction = 0;

@@ -3,6 +3,8 @@ package editors.chart;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
+
 import flixel.math.FlxMath;
 
 import flixel.sound.FlxSound;
@@ -24,6 +26,7 @@ import music.Conductor;
 
 import util.MouseBitmaps;
 
+using util.ArrayUtil;
 using util.MathUtil;
 using util.TimingUtil;
 
@@ -48,6 +51,10 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
     public var songPosBar:FlxSprite;
 
     public var gridPosHighlight:FlxSprite;
+
+    public var notes:FlxTypedGroup<NoteGroup>;
+
+    public var notesSelected:Array<NoteGroup>;
 
     public var hasUnsavedChanges:Bool;
 
@@ -102,6 +109,8 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
         add(songPosBar);
 
+        camera.follow(songPosBar, LOCKON);
+
         gridPosHighlight = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 
         gridPosHighlight.scale.set(40.0, 40.0);
@@ -110,7 +119,13 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
         add(gridPosHighlight);
 
-        camera.follow(songPosBar, LOCKON);
+        notes = new FlxTypedGroup<NoteGroup>();
+
+        add(notes);
+
+        addNotes();
+
+        notesSelected = new Array<NoteGroup>();
 
         hasUnsavedChanges = false;
     }
@@ -119,19 +134,19 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
     {
         super.update(elapsed);
 
+        if (FlxG.mouse.wheel != 0.0)
+        {
+            addToMusicTime(-FlxG.mouse.wheel * conductor.stepLength);
+
+            conductor.time = instrumental.time;
+        }
+
         if (FlxG.keys.justPressed.SPACE)
         {
             if (instrumental.playing)
                 pauseMusic();
             else
                 resumeMusic();
-        }
-
-        if (FlxG.mouse.wheel != 0.0)
-        {
-            addToMusicTime(-FlxG.mouse.wheel * conductor.stepLength);
-
-            conductor.time = instrumental.time;
         }
 
         if (instrumental.playing)
@@ -178,6 +193,85 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
             highlightY = Math.floor((FlxG.mouse.y - grid.y) / 40.0) * 40.0 + grid.y;
 
         gridPosHighlight.setPosition(highlightX, highlightY);
+
+        if (FlxG.mouse.overlaps(grid) && (FlxG.mouse.justPressed || FlxG.mouse.justPressedRight))
+        {
+            var time:Float = getTimeFromPos(gridPosHighlight.y);
+
+            var direction:Int = Math.floor((FlxG.mouse.x - grid.x - 40.0) / 40.0);
+
+            if (direction != -1.0)
+            {
+                var lane:Int = Math.floor(direction * 0.25);
+
+                direction %= 4;
+
+                var noteToSelect:NoteGroup = notes.members.last((noteGroup:NoteGroup) -> FlxG.mouse.overlaps(noteGroup, camera) &&
+                    noteGroup.noteData.direction == direction);
+
+                if (noteToSelect == null)
+                {
+                    var noteData:NoteData =
+                    {
+                        time: time,
+
+                        direction: direction,
+
+                        length: 0.0,
+
+                        lane: lane,
+
+                        kind: null
+                    }
+
+                    var note:NoteGroup = new NoteGroup(noteData);
+
+                    note.setPosition(gridPosHighlight.x, gridPosHighlight.y);
+
+                    notes.add(note);
+
+                    clearNoteSelect();
+
+                    addNoteSelect(note);
+                }
+                else
+                {
+                    var note:NoteGroup = noteToSelect;
+
+                    if (FlxG.mouse.justPressed)
+                    {
+                        notes.remove(note, true);
+
+                        note.kill();
+
+                        removeNoteSelect(note);
+                    }
+                    else
+                        addNoteSelect(note);
+                }
+            }
+        }
+
+        if (FlxG.keys.justPressed.DELETE)
+        {
+            for (i in 0 ... notesSelected.length)
+            {
+                var note:NoteGroup = notesSelected[i];
+
+                notes.remove(note, true);
+            }
+
+            notesSelected.resize(0);
+        }
+
+        var fade:Float = 0.75 + 0.25 * Math.sin(FlxG.game.ticks * 0.001 * 1.5);
+
+        for (i in 0 ... notesSelected.length)
+        {
+            var note:NoteGroup = notesSelected[i];
+
+            note.color = FlxColor.fromRGBFloat(fade, fade, fade, 1.0);
+        }
     }
 
     override function destroy():Void
@@ -323,5 +417,39 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
     public function getTimeFromPos(v:Float):Float
     {
         return conductor.beatToTime(v / 160.0);
+    }
+
+    public function addNotes():Void
+    {
+        for (i in 0 ... chart.notes.length)
+        {
+            var note:NoteData = chart.notes[i];
+        }
+    }
+
+    public function addNoteSelect(note:NoteGroup):Void
+    {
+        notesSelected.push(note);
+    }
+
+    public function removeNoteSelect(note:NoteGroup):Void
+    {
+        notesSelected.remove(note);
+    }
+
+    public function clearNoteSelect():Void
+    {
+        for (i in 0 ... notesSelected.length)
+        {
+            var note:NoteGroup = notesSelected[i];
+
+            note.colorTransform.redMultiplier = 1.0;
+
+            note.colorTransform.greenMultiplier = 1.0;
+
+            note.colorTransform.blueMultiplier = 1.0;
+        }
+
+        notesSelected.resize(0);
     }
 }
