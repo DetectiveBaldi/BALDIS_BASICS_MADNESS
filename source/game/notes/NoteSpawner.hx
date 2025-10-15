@@ -7,8 +7,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 import data.Chart;
 
-import interfaces.IBeatDispatcher;
-
 import music.Conductor;
 
 using StringTools;

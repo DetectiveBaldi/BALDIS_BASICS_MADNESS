@@ -11,8 +11,6 @@ import flixel.util.FlxSignal;
 import core.AssetCache;
 import core.Paths;
 
-import interfaces.IBeatDispatcher;
-
 import music.Conductor;
 
 using util.MathUtil;

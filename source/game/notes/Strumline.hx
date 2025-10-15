@@ -18,8 +18,6 @@ import game.notes.events.GhostTapEvent;
 import game.notes.events.NoteHitEvent;
 import game.notes.events.SustainHoldEvent;
 
-import interfaces.IBeatDispatcher;
-
 import music.Conductor;
 
 using StringTools;

@@ -49,7 +49,6 @@ import game.notes.events.NoteHitEvent;
 import game.events.CameraZoomEvent;
 import game.events.SetCamFocusEvent;
 
-import interfaces.IBeatDispatcher;
 import interfaces.ISequenceHandler;
 
 import menus.FreeplayScreen;

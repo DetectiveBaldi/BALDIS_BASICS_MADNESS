@@ -1,5 +1,9 @@
 package editors.chart;
 
+import haxe.ds.ArraySort;
+
+import openfl.net.FileReference;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -19,8 +23,6 @@ import data.ChartLoader;
 import data.LevelData;
 
 import extendable.TransitionState;
-
-import interfaces.IBeatDispatcher;
 
 import music.Conductor;
 
@@ -136,7 +138,15 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
         if (FlxG.mouse.wheel != 0.0)
         {
-            addToMusicTime(-FlxG.mouse.wheel * conductor.stepLength);
+            var wheel:Int = FlxG.mouse.wheel;
+
+            wheel *= -1;
+
+            var add:Float = wheel * (conductor.stepLength * 0.25);
+
+            var time:Float = conductor.time + add;
+
+            setMusicTime(time);
 
             conductor.time = instrumental.time;
         }
@@ -147,6 +157,8 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                 pauseMusic();
             else
                 resumeMusic();
+
+            resyncVocals();
         }
 
         if (instrumental.playing)
@@ -224,11 +236,15 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                         kind: null
                     }
 
-                    var note:NoteGroup = new NoteGroup(noteData);
+                    chart.notes.push(noteData);
+
+                    var note:NoteGroup = new NoteGroup(this, noteData);
 
                     note.setPosition(gridPosHighlight.x, gridPosHighlight.y);
 
                     notes.add(note);
+
+                    sortNotes();
 
                     clearNoteSelect();
 
@@ -238,16 +254,24 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                 {
                     var note:NoteGroup = noteToSelect;
 
-                    if (FlxG.mouse.justPressed)
+                    if (FlxG.mouse.justPressed && !FlxG.keys.pressed.SHIFT)
                     {
+                        chart.notes.remove(note.noteData);
+
                         notes.remove(note, true);
+
+                        sortNotes();
 
                         note.kill();
 
                         removeNoteSelect(note);
+
+                        hasUnsavedChanges = true;
                     }
                     else
                         addNoteSelect(note);
+
+                    sortSelectedNotes();
                 }
             }
         }
@@ -261,7 +285,11 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                 notes.remove(note, true);
             }
 
+            sortNotes();
+
             notesSelected.resize(0);
+
+            hasUnsavedChanges = true;
         }
 
         var fade:Float = 0.75 + 0.25 * Math.sin(FlxG.game.ticks * 0.001 * 1.5);
@@ -271,6 +299,24 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
             var note:NoteGroup = notesSelected[i];
 
             note.color = FlxColor.fromRGBFloat(fade, fade, fade, 1.0);
+        }
+
+        for (i in 0 ... notes.members.length)
+        {
+            var note:NoteGroup = notes.members[i];
+
+            note.active = note.isOnScreen(camera);
+        }
+
+        if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
+        {
+            var speed:Float = FlxG.keys.pressed.SHIFT ? 16.0 : 8.0;
+
+            var add:Float = conductor.stepLength * ((FlxG.keys.pressed.W ? -1.0 : 1.0) * speed) * elapsed;
+
+            setMusicTime(conductor.time + add);
+
+            conductor.time = instrumental.time;
         }
     }
 
@@ -372,17 +418,16 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
         playerVocals?.resume();
     }
 
-    public function addToMusicTime(v:Float):Void
+    public function setMusicTime(v:Float):Void
     {
         if (instrumental.playing)
             pauseMusic();
 
-        setMusicTime(instrumental.time + v);
-    }
+        if (v < 0.0)
+            v = instrumental.length;
 
-    public function setMusicTime(v:Float):Void
-    {
-        v = FlxMath.bound(v, 0.0, instrumental.length);
+        if (v > instrumental.length)
+            v = 0.0;
 
         instrumental.time = v;
 
@@ -423,7 +468,14 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
     {
         for (i in 0 ... chart.notes.length)
         {
-            var note:NoteData = chart.notes[i];
+            var noteData:NoteData = chart.notes[i];
+
+            var noteGroup:NoteGroup = new NoteGroup(this, noteData);
+
+            noteGroup.setPosition(grid.x + 40.0 + 40.0 * noteData.direction + 160.0 * noteData.lane,
+                getPosFromTime(noteData.time));
+
+            notes.add(noteGroup);
         }
     }
 
@@ -443,13 +495,33 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
         {
             var note:NoteGroup = notesSelected[i];
 
-            note.colorTransform.redMultiplier = 1.0;
-
-            note.colorTransform.greenMultiplier = 1.0;
-
-            note.colorTransform.blueMultiplier = 1.0;
+            note.color = FlxColor.fromRGBFloat(1.0, 1.0, 1.0, 1.0);
         }
 
         notesSelected.resize(0);
+    }
+
+    public function sortNotes():Void
+    {
+        chart.notes.sortTimed();
+
+        sortNoteGroups(notes.members);
+    }
+
+    public function sortSelectedNotes():Void
+    {
+        sortNoteGroups(notesSelected);
+    }
+
+    public function sortNoteGroups(v:Array<NoteGroup>):Void
+    {
+        ArraySort.sort(v, (a:NoteGroup, b:NoteGroup) ->
+        {
+            var aTime:Float = a.noteData.time;
+
+            var bTime:Float = b.noteData.time;
+
+            Math.floor(aTime - bTime);
+        });
     }
 }

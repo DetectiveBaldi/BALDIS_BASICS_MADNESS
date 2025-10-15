@@ -42,7 +42,7 @@ class AssetCache
         FlxG.signals.preStateCreate.add((nextState:FlxState) -> {if (lastState != Type.getClass(nextState)) clearCaches();});
     }
 
-    public static overload extern inline function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
+    public static overload inline extern function getGraphic(path:String, gpuCaching:Bool = true):FlxGraphic
     {
         path = Paths.image(Paths.png(path));
 

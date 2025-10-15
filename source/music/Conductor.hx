@@ -200,7 +200,7 @@ class Conductor
 
     public function stepToTime(step:Float):Float
     {
-        return beatToTime(step) * 4.0;
+        return beatToTime(step) * 0.25;
     }
 
     public function beatToTime(beat:Float):Float
@@ -212,7 +212,7 @@ class Conductor
 
     public function measureToTime(measure:Float):Float
     {
-        return beatToTime(measure) * 0.25;
+        return beatToTime(measure) * 4.0;
     }
 
     public function writeTimingPointData(list:Array<TimingPointData>):Void
@@ -247,4 +247,15 @@ class Conductor
             timingPoint.beatOffset = beatOffset;
         }
     }
+}
+
+interface IBeatDispatcher
+{
+    public var conductor:Conductor;
+
+    public function stepHit(step:Int):Void;
+
+    public function beatHit(beat:Int):Void;
+
+    public function measureHit(measure:Int):Void;
 }

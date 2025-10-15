@@ -26,8 +26,6 @@ import data.CharacterData;
 import game.notes.Note;
 import game.notes.Strumline;
 
-import interfaces.IBeatDispatcher;
-
 import music.Conductor;
 
 using StringTools;

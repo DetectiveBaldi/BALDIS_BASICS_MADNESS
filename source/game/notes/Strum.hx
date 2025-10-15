@@ -8,8 +8,6 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
-import interfaces.IBeatDispatcher;
-
 import music.Conductor;
 
 using StringTools;

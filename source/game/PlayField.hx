@@ -33,7 +33,6 @@ import core.AssetCache;
 import core.Options;
 import core.Paths;
 
-import interfaces.IBeatDispatcher;
 import interfaces.ISequenceHandler;
 
 import music.Conductor;
