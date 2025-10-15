@@ -43,6 +43,8 @@ class NoteGroup extends FlxSpriteGroup
 
         note = new FlxSprite();
 
+        note.active = false;
+
         note.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
             Paths.image(Paths.xml("game/notes/Note/default")));
 
@@ -62,7 +64,7 @@ class NoteGroup extends FlxSpriteGroup
 
         sustain = new FlxSprite();
 
-        sustain.visible = noteData.length != 0.0;
+        sustain.active = false;
 
         sustain.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
             Paths.image(Paths.xml("game/notes/Note/default")));
@@ -75,15 +77,13 @@ class NoteGroup extends FlxSpriteGroup
 
         sustain.updateHitbox();
 
-        sustain.x = sustain.getCenterX(note);
-
-        sustain.y = note.height * 0.5;
+        sustain.setPosition(sustain.getCenterX(note), note.height * 0.5);
 
         insert(0, sustain);
 
         trail = new FlxSprite();
 
-        trail.visible = noteData.length != 0.0;
+        trail.active = false;
 
         trail.frames = FlxAtlasFrames.fromSparrow(AssetCache.getGraphic("game/notes/Note/default"),
             Paths.image(Paths.xml("game/notes/Note/default")));
@@ -105,9 +105,13 @@ class NoteGroup extends FlxSpriteGroup
     {
         super.update(elapsed);
 
+        sustain.visible = noteData.length != 0.0;
+
+        trail.visible = noteData.length != 0.0;
+
         var stepLength:Float = conductor.getTimingPointAtTime(noteData.time).beatLength * 0.25;
 
-        var height:Float = Math.max(40.0, 40.0 * (noteData.length / stepLength));
+        var height:Float = 40.0 * (noteData.length / stepLength);
 
         sustain.setGraphicSize(sustain.width, height);
 

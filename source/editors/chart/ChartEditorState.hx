@@ -206,7 +206,7 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
         gridPosHighlight.setPosition(highlightX, highlightY);
 
-        if (FlxG.mouse.overlaps(grid) && (FlxG.mouse.justPressed || FlxG.mouse.justPressedRight))
+        if (FlxG.mouse.overlaps(grid) && FlxG.mouse.justPressed)
         {
             var time:Float = getTimeFromPos(gridPosHighlight.y);
 
@@ -254,7 +254,14 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                 {
                     var note:NoteGroup = noteToSelect;
 
-                    if (FlxG.mouse.justPressed && !FlxG.keys.pressed.SHIFT)
+                    if (FlxG.keys.pressed.SHIFT)
+                    {
+                        if (notesSelected.contains(note))
+                            removeNoteSelect(note);
+                        else
+                            addNoteSelect(note);
+                    }
+                    else
                     {
                         chart.notes.remove(note.noteData);
 
@@ -268,8 +275,6 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
                         hasUnsavedChanges = true;
                     }
-                    else
-                        addNoteSelect(note);
 
                     sortSelectedNotes();
                 }
@@ -317,6 +322,19 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
             setMusicTime(conductor.time + add);
 
             conductor.time = instrumental.time;
+        }
+
+        if (FlxG.keys.justPressed.E || FlxG.keys.justPressed.Q)
+        {
+            for (i in 0 ... notesSelected.length)
+            {
+                var note:NoteGroup = notesSelected[i];
+
+                var halfStepLength:Float = conductor.getTimingPointAtTime(note.noteData.time).beatLength * 0.25 * 0.5;
+
+                note.noteData.length = Math.max(0.0, note.noteData.length + halfStepLength * 
+                    (FlxG.keys.justPressed.E ? 1.0 : -1.0));
+            }
         }
     }
 
@@ -486,6 +504,8 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
     public function removeNoteSelect(note:NoteGroup):Void
     {
+        note.color = FlxColor.fromRGBFloat(1.0, 1.0, 1.0, 1.0);
+        
         notesSelected.remove(note);
     }
 

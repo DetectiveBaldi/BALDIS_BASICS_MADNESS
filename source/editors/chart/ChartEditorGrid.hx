@@ -11,6 +11,8 @@ class ChartEditorGrid extends FlxTiledSprite
     {
         super(null, 0.0, 0.0);
 
+        active = false;
+
         var bitmapWidth:Int = 40 * 8;
 
         bitmapWidth += 40;
