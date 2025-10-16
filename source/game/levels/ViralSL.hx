@@ -49,7 +49,7 @@ class ViralSL extends PlayState
         hudCamBopStrength = 0.0;
 
         oppStrumline.strums.x = oppStrumline.strums.getCenterX();
-        oppStrumline.strums.alpha = 0.25;
+        oppStrumline.strums.alpha = 0.0;
         plrStrumline.strums.x = plrStrumline.strums.getCenterX();
 
         cameraLock = FOCUS_CAM_POINT;
@@ -63,13 +63,69 @@ class ViralSL extends PlayState
         player.setPosition(700, 125);
         player.visible = false;
 
-        opponent.setPosition(200.0, -78.0);
+        opponent.screenCenter();
+        opponent.y += 35.0;
     }
 
     override function stepHit(step:Int):Void
     {
         super.stepHit(step);
 
-        
+        if (step == 272)
+        {
+            opponent.skipDance = true;
+
+            opponent.animation.play("talk0");
+
+            playField.setVisible(false);
+        }
+
+        if (step == 336)
+        {
+            if (Options.flashingLights)
+                hudCamera.flash(FlxColor.WHITE, conductor.beatLength * 4.0 * 0.001, null, true);
+
+            playField.setVisible(true);
+
+            opponent.skipDance = false;
+        }
+
+        if (step == 576)
+        {
+            opponent.skipDance = true;
+
+            opponent.animation.play("frown");
+        }
+
+        if (step == 1096)
+            opponent.animation.play("smile");
+
+        if (step == 1104 || step == 1336)
+            opponent.skipDance = false;
+
+        if (step == 1232)
+        {
+            tweens.tween(hudCamera, {alpha: 0.0}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 1244)
+            plrStrumline.botplay = true;
+
+        if (step == 1273)
+        {
+            opponent.skipDance = true;
+
+            opponent.animation.play("talk1");
+        }
+
+        if (step == 1344)
+        {
+            tweens.tween(opponent.scale, {x: 0.0, y: 0.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+
+            tweens.tween(opponent, {angle: 180.0}, conductor.beatLength * 4.0 * 0.001, {ease: FlxEase.quartIn});
+        }
+
+        if (step == 1360)
+            opponent.visible = false;
     }
 }

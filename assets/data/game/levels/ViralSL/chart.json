@@ -783,6 +783,7 @@
 			"sectionBeats": 4,
 			"sectionNotes": [
 				[56250, 4, 0, "Alt Animation"],
+				[56250, 0, 312.5],
 				[56406.25, 7, 0, "Alt Animation"],
 				[56562.5, 5, 0, "Alt Animation"],
 				[56875, 6, 0, "Alt Animation"],
@@ -1014,7 +1015,7 @@
 				[72500, 5, 156.25, "Alt Animation"],
 				[72656.25, 4, 312.5, "Alt Animation"],
 				[72968.75, 6, 312.5, "Alt Animation"],
-				[73281.25, 4, 937.5]
+				[73281.25, 4, 937.5, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1048,8 +1049,8 @@
 				[75156.25, 0, 312.5, "Alt Animation"],
 				[75468.75, 2, 312.5, "Alt Animation"],
 				[75781.25, 3, 468.75],
-				[75937.5, 5, 0],
-				[76093.75, 4, 0]
+				[75937.5, 5, 0, "Alt Animation"],
+				[76093.75, 4, 0, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1060,13 +1061,13 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[76250, 7, 0],
 				[76250, 2, 781.25],
-				[76562.5, 6, 0],
-				[76875, 7, 0],
-				[77187.5, 6, 0],
+				[76250, 7, 0, "Alt Animation"],
+				[76562.5, 6, 0, "Alt Animation"],
+				[76875, 7, 0, "Alt Animation"],
 				[77187.5, 0, 468.75],
-				[77343.75, 5, 0]
+				[77187.5, 6, 0, "Alt Animation"],
+				[77343.75, 5, 0, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1077,14 +1078,14 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[77656.25, 4, 312.5],
+				[77656.25, 4, 312.5, "Alt Animation"],
 				[77812.5, 3, 0],
-				[77968.75, 7, 312.5],
+				[77968.75, 7, 312.5, "Alt Animation"],
 				[78125, 1, 0],
-				[78281.25, 6, 0],
-				[78437.5, 5, 0],
+				[78281.25, 6, 0, "Alt Animation"],
 				[78437.5, 2, 937.5],
-				[78593.75, 6, 0]
+				[78437.5, 5, 0, "Alt Animation"],
+				[78593.75, 6, 0, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1095,9 +1096,9 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[78750, 4, 468.75],
-				[79218.75, 5, 312.5],
-				[79531.25, 7, 468.75],
+				[78750, 4, 468.75, "Alt Animation"],
+				[79218.75, 5, 312.5, "Alt Animation"],
+				[79531.25, 7, 468.75, "Alt Animation"],
 				[79687.5, 0, 312.5]
 			],
 			"gfSection": false,
@@ -1109,10 +1110,10 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[80000, 6, 468.75],
 				[80000, 1, 937.5],
-				[80468.75, 7, 429.6875],
-				[80937.5, 5, 273.4375]
+				[80000, 6, 468.75, "Alt Animation"],
+				[80468.75, 7, 468.75, "Alt Animation"],
+				[80937.5, 5, 273.4375, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1123,17 +1124,17 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[81250, 4, 0],
-				[81406.25, 5, 0],
-				[81484.375, 7, 0],
-				[81562.5, 6, 0],
-				[81718.75, 4, 0],
-				[81875, 7, 0],
-				[81953.125, 5, 0],
-				[82031.25, 6, 0],
-				[82187.5, 4, 0],
-				[82343.75, 5, 0],
-				[82421.875, 7, 0]
+				[81250, 4, 0, "Alt Animation"],
+				[81406.25, 5, 0, "Alt Animation"],
+				[81484.375, 7, 0, "Alt Animation"],
+				[81562.5, 6, 0, "Alt Animation"],
+				[81718.75, 4, 0, "Alt Animation"],
+				[81875, 7, 0, "Alt Animation"],
+				[81953.125, 5, 0, "Alt Animation"],
+				[82031.25, 6, 0, "Alt Animation"],
+				[82187.5, 4, 0, "Alt Animation"],
+				[82343.75, 5, 0, "Alt Animation"],
+				[82421.875, 7, 0, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1144,19 +1145,19 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[82500, 6, 0],
-				[82578.125, 5, 0],
-				[82656.25, 7, 0],
-				[82734.375, 5, 0],
-				[82812.5, 6, 0],
-				[82890.625, 5, 0],
-				[82968.75, 7, 0],
-				[83046.875, 5, 0],
-				[83125, 4, 156.25],
-				[83437.5, 6, 0],
-				[83515.625, 7, 0],
-				[83593.75, 5, 0],
-				[83671.875, 7, 0]
+				[82500, 6, 0, "Alt Animation"],
+				[82578.125, 5, 0, "Alt Animation"],
+				[82656.25, 7, 0, "Alt Animation"],
+				[82734.375, 5, 0, "Alt Animation"],
+				[82812.5, 6, 0, "Alt Animation"],
+				[82890.625, 5, 0, "Alt Animation"],
+				[82968.75, 7, 0, "Alt Animation"],
+				[83046.875, 5, 0, "Alt Animation"],
+				[83125, 4, 156.25, "Alt Animation"],
+				[83437.5, 6, 0, "Alt Animation"],
+				[83515.625, 7, 0, "Alt Animation"],
+				[83593.75, 5, 0, "Alt Animation"],
+				[83671.875, 7, 0, "Alt Animation"]
 			],
 			"gfSection": false,
 			"altAnim": false,
@@ -1167,7 +1168,7 @@
 		{
 			"sectionBeats": 4,
 			"sectionNotes": [
-				[83750, 5, 312.5],
+				[83750, 4, 312.5, "Alt Animation"],
 				[84062.5, 0, 0],
 				[84140.625, 1, 0],
 				[84218.75, 3, 0],
@@ -1400,7 +1401,9 @@
 		},
 		{
 			"sectionBeats": 4,
-			"sectionNotes": [],
+			"sectionNotes": [
+				[105390.625, 6, 859.375]
+			],
 			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
@@ -1420,9 +1423,9 @@
 	"gfVersion": "",
 	"events": [],
 	"song": "Viral Sensation",
-	"needsVoices": true,
 	"validScore": true,
 	"stage": "stage",
+	"needsVoices": true,
 	"speed": 3.3,
 	"bpm": 192,
 	"format": "psych_v1_convert"
