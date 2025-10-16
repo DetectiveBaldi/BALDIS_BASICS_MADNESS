@@ -25,6 +25,7 @@ import data.LevelData;
 import extendable.TransitionState;
 
 import music.Conductor;
+import music.TimingPoint;
 
 import util.MouseBitmaps;
 
@@ -37,6 +38,8 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
     public var level:LevelData;
 
     public var conductor:Conductor;
+
+    public var lastTimingPoint:TimingPoint;
 
     public var chart:Chart;
 
@@ -88,14 +91,10 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
         startSong();
 
         pauseMusic();
-
-        var songLengthInSteps:Float = conductor.getStepAt(instrumental.length);
-
-        var gridHeight:Int = Math.floor(songLengthInSteps * 40.0);
         
         grid = new ChartEditorGrid();
 
-        grid.height = gridHeight;
+        grid.height = getPosFromTime(instrumental.length);
 
         grid.x = grid.getCenterX() - 40.0;
 
@@ -336,6 +335,27 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
                     (FlxG.keys.justPressed.E ? 1.0 : -1.0));
             }
         }
+
+        updateGridHeight();
+    }
+
+    public function updateGridHeight():Void
+    {
+        var point:TimingPoint = conductor.timingPoint;
+
+        if (point != lastTimingPoint)
+        {
+            lastTimingPoint = point;
+
+            grid.height = getPosFromTime(instrumental.length);
+
+            for (i in 0 ... notes.members.length)
+            {
+                var note:NoteGroup = notes.members[i];
+
+                note.y = getPosFromTime(note.noteData.time);
+            }
+        }
     }
 
     override function destroy():Void
@@ -476,7 +496,6 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
         return conductor.getStepAt(v) * 40.0;
     }
 
-    // TODO: Test
     public function getTimeFromPos(v:Float):Float
     {
         return conductor.beatToTime(v / 160.0);

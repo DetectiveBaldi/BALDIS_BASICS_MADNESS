@@ -119,6 +119,8 @@ typedef NoteData = TimedObject &
 typedef TimingPointData = TimedObject &
 {
     var tempo:Float;
+
+    var beatsPerMeasure:Int;
 }
 
 typedef CreditsData =

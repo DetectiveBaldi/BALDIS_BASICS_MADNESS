@@ -67,12 +67,36 @@ class Conductor
 
     public var onMeasureHit:FlxTypedSignal<(measure:Int)->Void>;
 
-    public var tempo(get, never):Float;
+    public var tempo(get, set):Float;
 
     @:noCompletion
     function get_tempo():Float
     {
-        return getTimingPointAtTime(time).tempo;
+        return timingPoint.tempo;
+    }
+
+    @:noCompletion
+    function set_tempo(val:Float):Float
+    {
+        timingPoint.tempo = val;
+
+        return tempo;
+    }
+
+    public var beatsPerMeasure(get, set):Int;
+
+    @:noCompletion
+    function get_beatsPerMeasure():Int
+    {
+        return timingPoint.beatsPerMeasure;
+    }
+
+    @:noCompletion
+    function set_beatsPerMeasure(val:Int):Int
+    {
+        timingPoint.beatsPerMeasure = val;
+
+        return beatsPerMeasure;
     }
 
     public var stepLength(get, never):Float;
@@ -88,7 +112,7 @@ class Conductor
     @:noCompletion
     function get_beatLength():Float
     {
-        return getTimingPointAtTime(time).beatLength;
+        return timingPoint.beatLength;
     }
 
     public var measureLength(get, never):Float;
@@ -96,12 +120,20 @@ class Conductor
     @:noCompletion
     function get_measureLength():Float
     {
-        return beatLength * 4.0;
+        return timingPoint.measureLength;
     }
 
     public var time:Float;
 
     public var timingPoints:Array<TimingPoint>;
+
+    public var timingPoint(get, never):TimingPoint;
+    
+    @:noCompletion
+    function get_timingPoint():TimingPoint
+    {
+        return getTimingPointAtTime(time);
+    }
 
     public function new():Void
     {
@@ -188,14 +220,16 @@ class Conductor
 
     public function getBeatAt(time:Float):Float
     {
-        var point:TimingPoint = getTimingPointAtTime(time);
-        
-        return point.beatOffset + (time - point.time) / point.beatLength;
+        var point:TimingPoint = timingPoint;
+
+        return point.beatOffset + (time - point.time) / beatLength;
     }
 
     public function getMeasureAt(time:Float):Float
     {
-        return getBeatAt(time) * 0.25;
+        var point:TimingPoint = timingPoint;
+
+        return point.measureOffset + (time - point.time) / measureLength;
     }
 
     public function stepToTime(step:Float):Float
@@ -207,12 +241,14 @@ class Conductor
     {
         var point:TimingPoint = getTimingPointAtBeat(beat);
 
-        return point.time + point.beatLength * (beat - point.beatOffset);
+        return point.time + beatLength * (beat - point.beatOffset);
     }
 
     public function measureToTime(measure:Float):Float
     {
-        return beatToTime(measure) * 4.0;
+        var point:TimingPoint = timingPoint;
+
+        return point.time + measureLength * (measure - point.measureOffset);
     }
 
     public function writeTimingPointData(list:Array<TimingPointData>):Void
@@ -227,7 +263,11 @@ class Conductor
 
         var beatOffset:Float = 0.0;
 
+        var measureOffset:Float = 0.0;
+
         var lastTempo:Float = 0.0;
+
+        var lastBeatsPerMeasure:Int = 0;
 
         for (timingPoint in timingPoints)
         {
@@ -235,16 +275,26 @@ class Conductor
             {
                 lastTempo = timingPoint.tempo;
 
+                lastBeatsPerMeasure = timingPoint.beatsPerMeasure;
+
                 continue;
             }
 
-            beatOffset += (timingPoint.time - timeOffset) / (60.0 / lastTempo * 1000.0);
+            var beatDifference:Float = (timingPoint.time - timeOffset) / (60.0 / lastTempo * 1000.0);
+
+            measureOffset += beatDifference / lastBeatsPerMeasure;
+
+            beatOffset += beatDifference;
 
             timeOffset = timingPoint.time;
 
             lastTempo = timingPoint.tempo;
 
+            lastBeatsPerMeasure = timingPoint.beatsPerMeasure;
+
             timingPoint.beatOffset = beatOffset;
+
+            timingPoint.measureOffset = measureOffset;
         }
     }
 }

@@ -2,6 +2,8 @@ package editors.chart;
 
 import openfl.display.BitmapData;
 
+import openfl.geom.Rectangle;
+
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.display.FlxTiledSprite;
 
@@ -9,17 +11,23 @@ class ChartEditorGrid extends FlxTiledSprite
 {
     public function new():Void
     {
-        super(null, 0.0, 0.0);
+        super(null, 0, 0);
 
         active = false;
 
-        var bitmapWidth:Int = 40 * 8;
+        var bitmapWidth:Int = 360;
 
-        bitmapWidth += 40;
-
-        var bitmapHeight:Int = 40 * 16;
+        var bitmapHeight:Int = 80;
 
         var bitmap:BitmapData = FlxGridOverlay.createGrid(40, 40, bitmapWidth, bitmapHeight, true, 0xFF181919, 0xFF202020);
+
+        var drawPos:Rectangle = new Rectangle(40.0, 0.0, 3.0, 80.0);
+
+        bitmap.fillRect(drawPos, 0xFFA3A3A3);
+
+        drawPos.setTo(200.0, 0.0, 3.0, 80.0);
+
+        bitmap.fillRect(drawPos, 0xFFA3A3A3);
 
         bitmap.disposeImage();
 
@@ -27,6 +35,6 @@ class ChartEditorGrid extends FlxTiledSprite
 
         width = bitmapWidth;
 
-        height = 1000.0;
+        height = bitmapHeight;
     }
 }

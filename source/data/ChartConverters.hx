@@ -47,7 +47,7 @@ class FunkinConverter
         {
             var timeChange:FunkinTimingPoint = timingPoints[i];
 
-            output.timingPoints.push({time: timeChange.t, tempo: timeChange.bpm});
+            output.timingPoints.push({time: timeChange.t, tempo: timeChange.bpm, beatsPerMeasure: timeChange.n});
         }
 
         var characters:Dynamic = rawMeta.playData.characters;
@@ -72,6 +72,8 @@ class PsychConverter
 
         var raw:Dynamic = Json.parse(Assets.getText(chartPath));
 
+        var section:Dynamic = raw.notes[0];
+
         output.name = raw.song;
 
         output.scrollSpeed = raw.speed;
@@ -80,13 +82,15 @@ class PsychConverter
 
         var tempo:Float = raw.bpm;
 
-        output.timingPoints.push({time: 0.0, tempo: tempo});
+        var beatsPerMeasure:Int = section.sectionBeats ?? 4;
+
+        output.timingPoints.push({time: 0.0, tempo: tempo, beatsPerMeasure: beatsPerMeasure});
 
         var character:String = "";
 
         for (i in 0 ... raw.notes.length)
         {
-            var section:Dynamic = raw.notes[i];
+            section = raw.notes[i];
 
             var _section:PsychSection =
             {
@@ -129,10 +133,10 @@ class PsychConverter
 
                 beatLength = (60.0 / tempo * 1000.0);
 
-                output.timingPoints.push({time: time, tempo: tempo});
+                output.timingPoints.push({time: time, tempo: tempo, beatsPerMeasure: Math.round(_section.sectionBeats)});
             }
 
-            time += beatLength * (Math.round(_section.sectionBeats * 4.0) * 0.25);
+            time += beatLength * _section.sectionBeats;
 
             for (j in 0 ... _section.sectionNotes.length)
             {
