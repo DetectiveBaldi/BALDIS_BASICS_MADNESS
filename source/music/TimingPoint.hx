@@ -11,6 +11,14 @@ class TimingPoint
 
     public var beatsPerMeasure:Int;
 
+    public var stepLength(get, never):Float;
+
+    @:noCompletion
+    function get_stepLength():Float
+    {
+        return beatLength * 0.25;
+    }
+
     public var beatLength(get, never):Float;
 
     @:noCompletion

@@ -104,7 +104,7 @@ class Conductor
     @:noCompletion
     function get_stepLength():Float
     {
-        return beatLength * 0.25;
+        return timingPoint.stepLength;
     }
 
     public var beatLength(get, never):Float;
