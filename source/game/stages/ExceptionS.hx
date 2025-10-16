@@ -20,6 +20,8 @@ class ExceptionS extends Stage
 
         bg.animation.addByPrefix("g0", "g0", 24.0, false);
 
+        bg.animation.addByPrefix("gep", "gep", 24.0, false);
+
         bg.animation.addByPrefix("g1", "g1", 12.0, false);
 
         bg.animation.addByPrefix("g2", "g2", 12.0, false);
