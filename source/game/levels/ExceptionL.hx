@@ -98,7 +98,7 @@ class ExceptionL extends PlayState
         }
 
         if (step == 216 || step == 408 || step == 432 || step == 496 || step == 636)
-            exceptionS.bg.color = 0x000000;
+            exceptionS.bg.color = 0x3A3A3A;
 
         if (step == 224 || step == 416 || step == 434 || step == 498 || step == 640)
             exceptionS.bg.color = 0xFFFFFF;
@@ -126,6 +126,31 @@ class ExceptionL extends PlayState
                 exceptionS.bg.animation.play("g2");
         }
 
+        if (step == 648)
+            exceptionS.text.visible = true;
+
+        if (step >= 648 && step <= 888)
+        {
+            if (step % 32 == 8.0)
+            {
+                exceptionS.text.animation.play("textjump");
+            }
+        }
+
+        if (step == 664 || step == 696 || step == 708 || step == 766 || step == 792 || step == 856)
+            exceptionS.text.animation.play("textleft");
+
+        if (step == 664 || step == 702 || step == 728 || step == 760 || step == 824)
+            exceptionS.text.animation.play("textright");
+
+        if (step >= 888 && step < 900)
+        {
+            if (step % 3 == 0.0)
+            {
+                exceptionS.text.animation.play("textleft");
+            }
+        }
+
         if (step == 900)
         {
             if (Options.flashingLights)
@@ -136,12 +161,15 @@ class ExceptionL extends PlayState
             {
                 tweens.tween(exceptionS.bg, {alpha: 0.0}, conductor.beatLength * 1.0 * 0.001);
             }
-                
+            
+            exceptionS.text.animation.play("textgone");
         }
 
         if (step == 906)
         {
             exceptionS.bg.animation.play("gn");
+
+            exceptionS.text.visible = false;
 
             exceptionS.bg.alpha = 1.0;
         }
@@ -157,15 +185,14 @@ class ExceptionL extends PlayState
             opponent = opp;
         }
 
+        if (step == 924)
+            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 2.0 * 0.001);
+
         if (step == 940)
         {
             tweens.tween(opponent, {alpha: 1.0}, conductor.beatLength * 1.0 * 0.001);
 
             plrStrumline.botplay = Options.botplay;
-
-            tweens.tween(oppStrumline.strums, {alpha: 0.25}, conductor.beatLength * 1.0 * 0.001);
-
-            tweens.tween(plrStrumline.strums, {alpha: 1.0}, conductor.beatLength * 1.0 * 0.001);
         }
 
         if (step == 944)
@@ -221,7 +248,7 @@ class ExceptionL extends PlayState
         {
             if (beat % 2 == 1.0)
             {    
-                exceptionS.bg.color = 0xFF0000;
+                exceptionS.bg.color = 0xFF7979;
             }
             if (beat % 2 == 0.0)
             {    
@@ -231,15 +258,14 @@ class ExceptionL extends PlayState
 
         if (beat >= 162 && beat <= 222)
         {
-            if (beat % 8 == 2.0)
+            if (Options.flashingLights)
             {
-                exceptionS.bg.color = 0xFF0000;
-
-                tweens.tween(exceptionS.bg, {color: 0xFFFFFF}, conductor.beatLength * 8.0 * 0.001, {ease: FlxEase.quartOut});
-            
-                if (beat % 4 == 2.0)
+                if (beat % 8 == 2.0)
                 {
-                    exceptionS.bg.animation.play("g1");
+                    if (beat % 4 == 2.0)
+                    {
+                        exceptionS.bg.animation.play("g1");
+                    }
                 }
             }
         }

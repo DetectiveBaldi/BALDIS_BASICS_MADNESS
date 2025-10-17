@@ -6,6 +6,8 @@ class ExceptionS extends Stage
 {
     public var bg:FlxSprite;
 
+    public var text:FlxSprite;
+
     public function new():Void
     {
         super();
@@ -28,7 +30,7 @@ class ExceptionS extends Stage
 
         bg.animation.addByPrefix("gf", "gf", 20.0, false);
 
-        bg.animation.addByPrefix("gn", "gn", 6.0, false);
+        bg.animation.addByPrefix("gn", "gn", 4.0, false);
 
         bg.animation.addByPrefix("nl", "nl", 24.0);
 
@@ -47,5 +49,27 @@ class ExceptionS extends Stage
         bg.screenCenter();
 
         add(bg);
+
+        text = getAtlasSprite("exceptiontext");
+
+        text.animation.addByPrefix("textjump", "textjump", 20.0, false);
+
+        text.animation.addByPrefix("textloop", "textloop", 20.0, true);
+
+        text.animation.addByPrefix("textleft", "textleft", 20.0, false);
+
+        text.animation.addByPrefix("textright", "textright", 20.0, false);
+
+        text.animation.addByPrefix("textgone", "textgone", 20.0, false);
+
+        text.scale.set(2.0, 2.0);
+
+        text.active = true;
+
+        text.updateHitbox();
+
+        text.screenCenter();
+
+        add(text);
     }
 }
