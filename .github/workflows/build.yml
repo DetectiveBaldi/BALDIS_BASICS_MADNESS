@@ -27,4 +27,4 @@ jobs:
               uses: peaceiris/actions-gh-pages@v4
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
-                publish_dir: bin/debug/html5/bin
+                publish_dir: bin/stable/html5/bin
