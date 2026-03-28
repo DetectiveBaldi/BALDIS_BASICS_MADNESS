@@ -462,9 +462,6 @@ class PlayState extends TransitionState implements IBeatDispatcher implements IS
             pause();
 
         #if debug
-        if (FlxG.keys.justPressed.SEVEN)
-            FlxG.switchState(() -> new editors.chart.ChartEditorState(level));
-
         if (FlxG.keys.justPressed.EIGHT)
             FlxG.switchState(() -> new editors.CharacterEditorState(() -> PlayState.getClassFromLevel(params), player.config.name));
         #end
