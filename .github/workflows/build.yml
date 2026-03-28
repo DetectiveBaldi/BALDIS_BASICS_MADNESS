@@ -18,10 +18,9 @@ jobs:
                 haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons --quiet
                 haxelib git haxeui-flixel https://github.com/haxeui/haxeui-flixel --quiet --skip-dependencies
                 haxelib git haxeui-core https://github.com/haxeui/haxeui-core --quiet
-              shell: cmd
             - name: Build
               run: |
-                haxelib run lime build html5 -debug
+                haxelib run lime build html5
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v4
               if: github.ref == 'refs/heads/dev'
