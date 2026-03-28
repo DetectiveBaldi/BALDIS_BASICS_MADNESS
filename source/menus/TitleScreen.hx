@@ -157,6 +157,7 @@ class TitleScreen extends TransitionState
         exitSound.onComplete = getTransitionSprite.bind(0.5, OUT, () -> Sys.exit(0));
         #end
 
+        // TODO: Fix issue where, on HTML5, the music won't load after entering the state more than once.
         tune = FlxG.sound.load(AssetCache.getMusic("menus/TitleScreen/tune"));
 
         tune.play();

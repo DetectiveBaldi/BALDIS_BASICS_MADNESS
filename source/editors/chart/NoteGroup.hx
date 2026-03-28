@@ -109,7 +109,7 @@ class NoteGroup extends FlxSpriteGroup
 
         trail.visible = noteData.length != 0.0;
 
-        var stepLength:Float = conductor.getTimingPointAtTime(noteData.time).stepLength * 0.25;
+        var stepLength:Float = conductor.timingPoint.stepLength;
 
         var height:Float = 40.0 * (noteData.length / stepLength);
 

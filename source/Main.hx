@@ -4,8 +4,6 @@ import openfl.display.Sprite;
 
 import flixel.FlxGame;
 
-import flixel.util.typeLimit.NextState;
-
 import menus.LauncherScreen;
 
 class Main extends Sprite

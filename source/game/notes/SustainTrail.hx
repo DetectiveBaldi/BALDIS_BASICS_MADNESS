@@ -19,6 +19,10 @@ class SustainTrail extends FlxSprite
             Paths.image(Paths.xml("game/notes/Note/default")));
         
         for (i in 0 ... Note.DIRECTIONS.length)
-            animation.addByPrefix(Note.DIRECTIONS[i].toLowerCase() + "HoldTail", Note.DIRECTIONS[i].toLowerCase() + "HoldTail0", 24.0, false);
+        {
+            var direction:String = Note.DIRECTIONS[i].toLowerCase();
+
+            animation.addByPrefix('${direction}HoldTail', '${direction}HoldTail0', 24.0, false);
+        }
     }
 }

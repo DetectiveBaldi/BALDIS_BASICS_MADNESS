@@ -49,12 +49,14 @@ class Playlist
         
         WeekData.list.push(week);
 
+        #if debug
         // NULL Week
         week = {name: "NULL", nameSuffix: " Style", description: ""}
 
         week.levels.pushMany({week: week, name: "Broken Discovery"});
 
         WeekData.list.push(week);
+        #end
 
         // Scribble
         var level:LevelData = {week: null, name: "Scribble"}
@@ -81,6 +83,7 @@ class Playlist
 
         LevelData.list.push(level);
 
+        #if debug
         // Viral Sensation
         level = {week: null, name: "Viral Sensation"}
 
@@ -95,6 +98,7 @@ class Playlist
         level = {week: null, name: "Exception"}
 
         LevelData.list.push(level);
+        #end
 
         // Beginnings
         level = {week: null, name: "Beginnings"}

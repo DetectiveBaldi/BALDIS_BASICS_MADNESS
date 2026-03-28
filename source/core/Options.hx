@@ -1,9 +1,5 @@
 package core;
 
-import flixel.FlxG;
-
-import flixel.math.FlxMath;
-
 class Options
 {
     public static var autoPause(get, set):Bool;
@@ -11,7 +7,7 @@ class Options
     @:noCompletion
     static function get_autoPause():Bool
     {
-        return SaveManager.options.data.autoPause ??= true;
+        return #if html5 true #else SaveManager.options.data.autoPause ??= true #end ;
     }
 
     @:noCompletion

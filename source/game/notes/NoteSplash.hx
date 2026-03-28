@@ -30,8 +30,8 @@ class NoteSplash extends FlxSprite
         {
             var direction:String = Note.DIRECTIONS[i].toLowerCase();
 
-            for (i in 0 ... 2)
-                animation.addByPrefix('${direction}${i}', 'note impact ${i} ${direction}', 24.0, false);
+            for (j in 0 ... 2)
+                animation.addByPrefix('${direction}${j}', 'note impact ${j} ${direction}', 24.0, false);
         }
 
         animation.onFinish.add((_:String) -> kill());

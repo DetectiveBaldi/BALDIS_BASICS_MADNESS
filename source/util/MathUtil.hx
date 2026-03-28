@@ -10,9 +10,6 @@ import flixel.util.FlxAxes;
 
 class MathUtil
 {
-    public static final BASE_10:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5,
-        "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
-
     @:inheritDoc(Math.abs)
     public static function absInt(val:Float):Int
     {

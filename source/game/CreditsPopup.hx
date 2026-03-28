@@ -60,7 +60,7 @@ class CreditsPopup extends FlxSpriteGroup
 
         label.alignment = CENTER;
 
-        label.setPosition(label.getCenterX(screen), label.getCenterY(screen));
+        label.centerTo(screen);
 
         add(label);
 

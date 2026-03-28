@@ -12,6 +12,8 @@ class GeneralOptionsPage extends BaseOptionsPage
 
         var bool:BoolOptionItem = addBoolOption("Auto Pause", "If checked, the game will freeze when\nwindow focus is lost.", "autoPause");
 
+        bool.selectable = #if html5 false #else true #end ;
+
         bool.onUpdate.add(InitState.setAutoPause);
 
         bool.setPosition(285.0, 175.0);

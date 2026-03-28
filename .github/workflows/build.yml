@@ -1,0 +1,30 @@
+name: Build
+
+on: [push]
+
+jobs:
+    HTML5:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: krdlab/setup-haxe@master
+              with:
+                haxe-version: 4.3.6
+            - name: Install Dependencies
+              run: |
+                haxelib install lime 8.2.3 --quiet
+                haxelib install openfl 9.4.1 --quiet
+                haxelib install flixel 6.1.0 --quiet --skip-dependencies
+                haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons --quiet
+                haxelib git haxeui-flixel https://github.com/haxeui/haxeui-flixel --quiet --skip-dependencies
+                haxelib git haxeui-core https://github.com/haxeui/haxeui-core --quiet
+              shell: cmd
+            - name: Build
+              run: |
+                haxelib run lime build html5 -debug
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v4
+              if: github.ref == 'refs/heads/dev'
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                publish_dir: bin/debug/html5/bin

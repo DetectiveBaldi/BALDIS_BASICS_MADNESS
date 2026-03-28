@@ -143,6 +143,9 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
             var add:Float = wheel * (conductor.stepLength * 0.25);
 
+            if (FlxG.keys.pressed.SHIFT)
+                add *= 2.0;
+
             var time:Float = conductor.time + add;
 
             setMusicTime(time);
@@ -314,9 +317,12 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
 
         if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
         {
-            var speed:Float = FlxG.keys.pressed.SHIFT ? 16.0 : 8.0;
+            var add:Float = conductor.stepLength * ((FlxG.keys.pressed.W ? -1.0 : 1.0) * 8.0);
 
-            var add:Float = conductor.stepLength * ((FlxG.keys.pressed.W ? -1.0 : 1.0) * speed) * elapsed;
+            if (FlxG.keys.pressed.SHIFT)
+                add *= 2.0;
+
+            add *= elapsed;
 
             setMusicTime(conductor.time + add);
 
@@ -329,7 +335,7 @@ class ChartEditorState extends TransitionState implements IBeatDispatcher
             {
                 var note:NoteGroup = notesSelected[i];
 
-                var halfStepLength:Float = conductor.getTimingPointAtTime(note.noteData.time).beatLength * 0.25 * 0.5;
+                var halfStepLength:Float = conductor.getTimingPointAtTime(note.noteData.time).stepLength * 0.5;
 
                 note.noteData.length = Math.max(0.0, note.noteData.length + halfStepLength * 
                     (FlxG.keys.justPressed.E ? 1.0 : -1.0));

@@ -67,6 +67,8 @@ class InitState extends FlxState
 
         FlxG.mouse.visible = false;
 
+        FlxG.keys.preventDefaultKeys = null;
+
         #if FLX_DEBUG
         FlxG.console.registerClass(InitState);
 

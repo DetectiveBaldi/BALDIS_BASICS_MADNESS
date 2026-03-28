@@ -44,7 +44,6 @@ using StringTools;
 using util.ArrayUtil;
 using util.MathUtil;
 using util.PlayFieldTools;
-using util.StringUtil;
 
 class RevisionL extends PlayState
 {
@@ -674,7 +673,7 @@ class YCTPGroup extends FlxSpriteGroup
             {
                 var keyStr:String = FlxKey.toStringMap[firstJustPressed].toLowerCase();
 
-                var keyInt:Null<Int> = StringUtil.parseInt(keyStr);
+                var keyInt:Null<Int> = keycodeToInt(keyStr);
 
                 if (keyInt != null)
                     updateSubmission(keyInt);
@@ -715,7 +714,7 @@ class YCTPGroup extends FlxSpriteGroup
                         }
                         
                         default:
-                            updateSubmission(StringUtil.parseInt(name.toLowerCase()));
+                            updateSubmission(keycodeToInt(name.toLowerCase()));
                     }
                 }
                 
@@ -890,7 +889,7 @@ class YCTPGroup extends FlxSpriteGroup
 
         questionText.text = '${val1}${op1}${val2}';
 
-        var numSubmission:Null<Int> = StringUtil.parseInt(submission);
+        var numSubmission:Null<Int> = keycodeToInt(submission);
 
         var multiplier:Int = 1;
 
@@ -1012,5 +1011,16 @@ class YCTPGroup extends FlxSpriteGroup
             default:
                 throw "Unrecognized pattern.";
         }
+    }
+
+    public function keycodeToInt(key:String):Null<Int>
+    {
+        var keycodes:Map<String, Int> = ["zero" => 0, "one" => 1, "two" => 2, "three" => 3, "four" => 4, "five" => 5, "six" => 6, "seven" => 7, "eight" => 8, "nine" => 9];
+
+        if (keycodes.exists(key))
+            return keycodes[key];
+
+        // Fallback
+        return Std.parseInt(key);
     }
 }
