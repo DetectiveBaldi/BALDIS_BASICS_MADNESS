@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="arts-and-crafters.png">
+<SubTexture name="ArtsandCrafts Idle0000" x="186" y="540" width="249" height="463" frameX="-109" frameY="-87" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Idle0001" x="517" y="1032" width="294" height="369" frameX="-59" frameY="-181" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Idle0002" x="693" y="540" width="269" height="438" frameX="-83" frameY="-115" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Idle0003" x="435" y="540" width="258" height="454" frameX="-97" frameY="-97" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Left0000" x="1191" y="0" width="298" height="428" frameX="-55" frameY="-122" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Left0001" x="1191" y="428" width="285" height="422" frameX="-69" frameY="-128" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Left0002" x="0" y="1032" width="275" height="418" frameX="-80" frameY="-132" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Down0000" x="811" y="1032" width="231" height="309" frameX="-150" frameY="-240" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Down0001" x="962" y="540" width="229" height="365" frameX="-145" frameY="-184" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Down0002" x="275" y="1032" width="242" height="385" frameX="-128" frameY="-164" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Right0000" x="761" y="0" width="231" height="507" frameX="-220" frameY="-41" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Right0001" x="992" y="0" width="199" height="504" frameX="-219" frameY="-44" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Right0002" x="0" y="540" width="186" height="492" frameX="-211" frameY="-56" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Up0000" x="0" y="0" width="239" height="540" frameX="-107" frameY="-8" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Up0001" x="239" y="0" width="253" height="530" frameX="-100" frameY="-19" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Up0002" x="492" y="0" width="269" height="520" frameX="-92" frameY="-29" frameWidth="454" frameHeight="600" />
+<SubTexture name="ArtsandCrafts Scream0000" x="492" y="0" width="269" height="520" frameX="-92" frameY="-29" frameWidth="454" frameHeight="600" />
+</TextureAtlas>

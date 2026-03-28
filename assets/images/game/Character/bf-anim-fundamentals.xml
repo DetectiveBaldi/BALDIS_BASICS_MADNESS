@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-anim-fundamentals.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="c00000" x="2" y="2" width="256" height="282"/>
+	<SubTexture name="c00001" x="2" y="2" width="256" height="282"/>
+	<SubTexture name="c00002" x="260" y="2" width="256" height="282"/>
+	<SubTexture name="c00003" x="260" y="2" width="256" height="282"/>
+	<SubTexture name="d00000" x="518" y="2" width="256" height="256"/>
+	<SubTexture name="d00001" x="518" y="2" width="256" height="256"/>
+	<SubTexture name="d10000" x="776" y="2" width="256" height="256"/>
+	<SubTexture name="d10001" x="776" y="2" width="256" height="256"/>
+	<SubTexture name="d10002" x="1034" y="2" width="256" height="256"/>
+	<SubTexture name="d10003" x="1034" y="2" width="256" height="256"/>
+	<SubTexture name="d10004" x="1292" y="2" width="256" height="256"/>
+	<SubTexture name="d10005" x="1292" y="2" width="256" height="256"/>
+	<SubTexture name="d10006" x="1550" y="2" width="256" height="256"/>
+	<SubTexture name="d10007" x="1550" y="2" width="256" height="256"/>
+	<SubTexture name="d10008" x="1550" y="2" width="256" height="256"/>
+	<SubTexture name="d10009" x="1550" y="2" width="256" height="256"/>
+	<SubTexture name="happy0000" x="2" y="286" width="256" height="282"/>
+	<SubTexture name="happy0001" x="2" y="286" width="256" height="282"/>
+	<SubTexture name="happy0002" x="260" y="286" width="256" height="282"/>
+	<SubTexture name="happy0003" x="260" y="286" width="256" height="282"/>
+	<SubTexture name="happy0004" x="518" y="286" width="256" height="282"/>
+	<SubTexture name="happy0005" x="518" y="286" width="256" height="282"/>
+	<SubTexture name="happy0006" x="776" y="286" width="256" height="282"/>
+	<SubTexture name="happy0007" x="776" y="286" width="256" height="282"/>
+	<SubTexture name="happy0008" x="1034" y="286" width="256" height="282"/>
+	<SubTexture name="happy0009" x="1034" y="286" width="256" height="282"/>
+	<SubTexture name="realize0000" x="1292" y="286" width="256" height="256"/>
+	<SubTexture name="realize0001" x="1292" y="286" width="256" height="256"/>
+	<SubTexture name="realize0002" x="1550" y="286" width="256" height="256"/>
+	<SubTexture name="realize0003" x="1550" y="286" width="256" height="256"/>
+	<SubTexture name="run0000" x="2" y="570" width="256" height="282"/>
+	<SubTexture name="run0001" x="2" y="570" width="256" height="282"/>
+	<SubTexture name="run0002" x="260" y="570" width="256" height="282"/>
+	<SubTexture name="run0003" x="260" y="570" width="256" height="282"/>
+	<SubTexture name="run0004" x="518" y="570" width="256" height="282"/>
+	<SubTexture name="run0005" x="518" y="570" width="256" height="282"/>
+	<SubTexture name="run0006" x="776" y="570" width="256" height="282"/>
+	<SubTexture name="run0007" x="776" y="570" width="256" height="282"/>
+	<SubTexture name="run0008" x="1034" y="570" width="256" height="282"/>
+	<SubTexture name="run0009" x="1034" y="570" width="256" height="282"/>
+	<SubTexture name="run0010" x="1292" y="570" width="256" height="282"/>
+	<SubTexture name="run0011" x="1292" y="570" width="256" height="282"/>
+	<SubTexture name="run0012" x="1550" y="570" width="256" height="282"/>
+	<SubTexture name="run0013" x="1550" y="570" width="256" height="282"/>
+	<SubTexture name="run0014" x="2" y="854" width="256" height="282"/>
+	<SubTexture name="run0015" x="2" y="854" width="256" height="282"/>
+	<SubTexture name="turn0000" x="260" y="854" width="256" height="256"/>
+	<SubTexture name="turn0001" x="260" y="854" width="256" height="256"/>
+	<SubTexture name="turn0002" x="518" y="854" width="256" height="256"/>
+	<SubTexture name="turn0003" x="518" y="854" width="256" height="256"/>
+	<SubTexture name="turn0004" x="776" y="854" width="256" height="256"/>
+	<SubTexture name="turn0005" x="776" y="854" width="256" height="256"/>
+	<SubTexture name="turn0006" x="1034" y="854" width="256" height="256"/>
+	<SubTexture name="turn0007" x="1034" y="854" width="256" height="256"/>
+	<SubTexture name="turn0008" x="1034" y="854" width="256" height="256"/>
+	<SubTexture name="turn0009" x="1034" y="854" width="256" height="256"/>
+</TextureAtlas>

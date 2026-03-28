@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-anim-door.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="outro10000" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="outro10001" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="outro10002" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="outro10003" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="outro10004" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="outro10005" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="outro10006" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="outro10007" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="outro10008" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="outro10009" x="788" y="5" width="256" height="256"/>
+	<SubTexture name="outro20000" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="outro20001" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="outro20002" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="outro20003" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="outro20004" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="outro20005" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="outro20006" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="outro20007" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="outro20008" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="outro20009" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="outro20010" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="outro20011" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="outro30000" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="outro30001" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="outro30002" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="outro30003" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="outro30004" x="1049" y="266" width="256" height="256"/>
+	<SubTexture name="outro30005" x="1049" y="266" width="256" height="256"/>
+	<SubTexture name="outro30006" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="outro30007" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="outro30008" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="outro30009" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="outro30010" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="outro30011" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="outro30012" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="outro30013" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="outro30014" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="outro30015" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="outro30016" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="outro30017" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="outro30018" x="1049" y="266" width="256" height="256"/>
+	<SubTexture name="outro30019" x="1049" y="266" width="256" height="256"/>
+</TextureAtlas>

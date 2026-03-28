@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-anim-teleported.png">
+	<SubTexture name="shock0000" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="shock0001" x="5" y="5" width="256" height="256"/>
+	<SubTexture name="shock0002" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="shock0003" x="266" y="5" width="256" height="256"/>
+	<SubTexture name="turn0000" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="turn0001" x="527" y="5" width="256" height="256"/>
+	<SubTexture name="turn0002" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="turn0003" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="turn0004" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="turn0005" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="turn0006" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="turn0007" x="527" y="266" width="256" height="256"/>
+</TextureAtlas>

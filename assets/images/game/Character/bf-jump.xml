@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-jump.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="jump0000" x="2" y="2" width="256" height="280"/>
+	<SubTexture name="jump0001" x="2" y="2" width="256" height="280"/>
+	<SubTexture name="jump0002" x="260" y="2" width="256" height="280"/>
+	<SubTexture name="jump0003" x="260" y="2" width="256" height="280"/>
+	<SubTexture name="jump0004" x="518" y="2" width="256" height="280"/>
+	<SubTexture name="jump0005" x="518" y="2" width="256" height="280"/>
+	<SubTexture name="jump0006" x="776" y="2" width="256" height="280"/>
+	<SubTexture name="jump0007" x="776" y="2" width="256" height="280"/>
+	<SubTexture name="jump0008" x="1034" y="2" width="256" height="280"/>
+	<SubTexture name="jump0009" x="1034" y="2" width="256" height="280"/>
+	<SubTexture name="jump0010" x="1292" y="2" width="256" height="280"/>
+	<SubTexture name="jump0011" x="1292" y="2" width="256" height="280"/>
+	<SubTexture name="jump0012" x="1550" y="2" width="256" height="280"/>
+	<SubTexture name="jump0013" x="1550" y="2" width="256" height="280"/>
+	<SubTexture name="jump0014" x="2" y="2" width="256" height="280"/>
+	<SubTexture name="jump0015" x="2" y="2" width="256" height="280"/>
+	<SubTexture name="miss0000" x="2" y="284" width="256" height="256"/>
+	<SubTexture name="miss0001" x="2" y="284" width="256" height="256"/>
+	<SubTexture name="miss0002" x="260" y="284" width="256" height="256"/>
+	<SubTexture name="miss0003" x="260" y="284" width="256" height="256"/>
+	<SubTexture name="miss0004" x="518" y="284" width="256" height="256"/>
+	<SubTexture name="miss0005" x="518" y="284" width="256" height="256"/>
+	<SubTexture name="miss0006" x="776" y="284" width="256" height="256"/>
+	<SubTexture name="miss0007" x="776" y="284" width="256" height="256"/>
+</TextureAtlas>

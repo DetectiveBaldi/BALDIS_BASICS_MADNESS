@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-anim-fly.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="fly0000" x="2" y="2" width="705" height="650"/>
+	<SubTexture name="fly0001" x="709" y="2" width="705" height="650"/>
+	<SubTexture name="fly0002" x="1416" y="2" width="705" height="650"/>
+	<SubTexture name="fly0003" x="2123" y="2" width="705" height="650"/>
+	<SubTexture name="fly0004" x="2830" y="2" width="705" height="650"/>
+	<SubTexture name="fly0005" x="2" y="654" width="705" height="650"/>
+	<SubTexture name="fly0006" x="709" y="654" width="705" height="650"/>
+	<SubTexture name="fly0007" x="1416" y="654" width="705" height="650"/>
+	<SubTexture name="fly0008" x="2123" y="654" width="705" height="650"/>
+	<SubTexture name="fly0009" x="2830" y="654" width="705" height="650"/>
+	<SubTexture name="fly0010" x="2830" y="654" width="705" height="650"/>
+	<SubTexture name="fly0011" x="2" y="1306" width="705" height="650"/>
+	<SubTexture name="fly0012" x="2" y="1306" width="705" height="650"/>
+	<SubTexture name="fly0013" x="709" y="1306" width="705" height="650"/>
+	<SubTexture name="fly0014" x="709" y="1306" width="705" height="650"/>
+	<SubTexture name="fly0015" x="709" y="1306" width="705" height="650"/>
+	<SubTexture name="fly0016" x="709" y="1306" width="705" height="650"/>
+</TextureAtlas>

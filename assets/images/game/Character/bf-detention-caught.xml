@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-detention-caught.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="caught0000" x="2" y="2" width="256" height="256"/>
+	<SubTexture name="caught0001" x="2" y="2" width="256" height="256"/>
+	<SubTexture name="caught0002" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0003" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0004" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0005" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0006" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0007" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0008" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="caught0009" x="260" y="2" width="256" height="256"/>
+	<SubTexture name="turn0000" x="518" y="2" width="256" height="256"/>
+	<SubTexture name="turn0001" x="518" y="2" width="256" height="256"/>
+	<SubTexture name="turn0002" x="2" y="260" width="256" height="256"/>
+	<SubTexture name="turn0003" x="2" y="260" width="256" height="256"/>
+	<SubTexture name="turn0004" x="260" y="260" width="256" height="256"/>
+	<SubTexture name="turn0005" x="260" y="260" width="256" height="256"/>
+	<SubTexture name="turn0006" x="518" y="260" width="256" height="256"/>
+	<SubTexture name="turn0007" x="518" y="260" width="256" height="256"/>
+	<SubTexture name="turn0008" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0009" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0010" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0011" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0012" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0013" x="2" y="518" width="256" height="256"/>
+	<SubTexture name="turn0014" x="2" y="518" width="256" height="256"/>
+</TextureAtlas>

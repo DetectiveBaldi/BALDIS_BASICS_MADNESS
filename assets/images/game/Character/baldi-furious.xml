@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="baldi-furious.png">
+	<SubTexture name="down0000" x="5" y="5" width="256" height="256" frameX="0" frameY="-22" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0001" x="5" y="5" width="256" height="256" frameX="0" frameY="-22" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0002" x="266" y="5" width="256" height="256" frameX="0" frameY="-16" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0003" x="266" y="5" width="256" height="256" frameX="0" frameY="-16" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0004" x="527" y="5" width="256" height="256" frameX="0" frameY="-1" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0005" x="527" y="5" width="256" height="256" frameX="0" frameY="-1" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0006" x="788" y="5" width="256" height="256" frameX="0" frameY="0" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="down0007" x="788" y="5" width="256" height="256" frameX="0" frameY="0" frameWidth="256" frameHeight="278"/>
+	<SubTexture name="idle0000" x="266" y="527" width="256" height="256"/>
+	<SubTexture name="idle0001" x="266" y="527" width="256" height="256"/>
+	<SubTexture name="left0000" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="left0001" x="1049" y="5" width="256" height="256"/>
+	<SubTexture name="left0002" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="left0003" x="1310" y="5" width="256" height="256"/>
+	<SubTexture name="left0004" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="left0005" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="left0006" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="left0007" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="right0000" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="right0001" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="right0002" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="right0003" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="right0004" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="right0005" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="right0006" x="1049" y="266" width="256" height="256"/>
+	<SubTexture name="right0007" x="1049" y="266" width="256" height="256"/>
+	<SubTexture name="slap0000" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="slap0001" x="1310" y="266" width="256" height="256"/>
+	<SubTexture name="slap0002" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="slap0003" x="1571" y="266" width="256" height="256"/>
+	<SubTexture name="slap0004" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="slap0005" x="5" y="527" width="256" height="256"/>
+	<SubTexture name="slap0006" x="266" y="527" width="256" height="256"/>
+	<SubTexture name="slap0007" x="266" y="527" width="256" height="256"/>
+	<SubTexture name="up0000" x="527" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0001" x="527" y="527" width="256" height="256" frameX="0" frameY="0" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0002" x="788" y="527" width="256" height="256" frameX="0" frameY="-1" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0003" x="788" y="527" width="256" height="256" frameX="0" frameY="-1" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0004" x="1049" y="527" width="256" height="256" frameX="0" frameY="-7" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0005" x="1049" y="527" width="256" height="256" frameX="0" frameY="-7" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0006" x="1310" y="527" width="256" height="256" frameX="0" frameY="-8" frameWidth="256" frameHeight="264"/>
+	<SubTexture name="up0007" x="1310" y="527" width="256" height="256" frameX="0" frameY="-8" frameWidth="256" frameHeight="264"/>
+</TextureAtlas>

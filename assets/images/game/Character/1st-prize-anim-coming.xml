@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="1st-prize-anim-coming.png">
+    <SubTexture name="FP_REComing Coming0000" x="148" y="0" width="150" height="171" frameX="-135" frameY="-143" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0001" x="298" y="0" width="150" height="171" frameX="-135" frameY="-143" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0002" x="0" y="516" width="158" height="169" frameX="-135" frameY="-145" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0003" x="158" y="516" width="159" height="168" frameX="-135" frameY="-146" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0004" x="317" y="516" width="162" height="168" frameX="-135" frameY="-146" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0005" x="0" y="0" width="148" height="175" frameX="-135" frameY="-139" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0006" x="0" y="175" width="151" height="171" frameX="-135" frameY="-143" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0007" x="448" y="0" width="151" height="170" frameX="-135" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0008" x="0" y="346" width="154" height="170" frameX="-134" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0009" x="151" y="175" width="163" height="171" frameX="-133" frameY="-143" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0010" x="154" y="346" width="171" height="170" frameX="-132" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0011" x="325" y="346" width="179" height="170" frameX="-129" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0012" x="599" y="0" width="179" height="170" frameX="-129" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0013" x="599" y="170" width="176" height="170" frameX="-130" frameY="-144" frameWidth="475" frameHeight="475" />
+    <SubTexture name="FP_REComing Coming0014" x="599" y="340" width="175" height="170" frameX="-130" frameY="-144" frameWidth="475" frameHeight="475" />
+</TextureAtlas>
