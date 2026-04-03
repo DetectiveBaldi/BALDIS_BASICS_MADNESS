@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-anim-lock.png">
+	<SubTexture name="check0000" x="5" y="5" width="256" height="256" frameX="0" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0001" x="5" y="5" width="256" height="256" frameX="0" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0002" x="266" y="5" width="256" height="256" frameX="-1" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0003" x="266" y="5" width="256" height="256" frameX="-1" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0004" x="527" y="5" width="256" height="256" frameX="-15" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0005" x="527" y="5" width="256" height="256" frameX="-15" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0006" x="788" y="5" width="256" height="256" frameX="-27" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0007" x="788" y="5" width="256" height="256" frameX="-27" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0008" x="1049" y="5" width="256" height="256" frameX="-29" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0009" x="1049" y="5" width="256" height="256" frameX="-29" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0010" x="1310" y="5" width="256" height="256" frameX="-30" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0011" x="1310" y="5" width="256" height="256" frameX="-30" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="check0012" x="1310" y="5" width="256" height="256" frameX="-30" frameY="0" frameWidth="286" frameHeight="256"/>
+	<SubTexture name="lock0000" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="lock0001" x="1571" y="5" width="256" height="256"/>
+	<SubTexture name="lock0002" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="lock0003" x="5" y="266" width="256" height="256"/>
+	<SubTexture name="lock0004" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="lock0005" x="266" y="266" width="256" height="256"/>
+	<SubTexture name="lock0006" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="lock0007" x="527" y="266" width="256" height="256"/>
+	<SubTexture name="lock0008" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0009" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0010" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0011" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0012" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0013" x="788" y="266" width="256" height="256"/>
+	<SubTexture name="lock0014" x="788" y="266" width="256" height="256"/>
+</TextureAtlas>

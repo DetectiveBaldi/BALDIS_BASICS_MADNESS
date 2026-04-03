@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="default.png">
+	<SubTexture name="note impact 0 right0000" x="594" y="486" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 right0001" x="594" y="0" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 right0002" x="388" y="198" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 right0003" x="198" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 up0000" x="200" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 up0001" x="594" y="162" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 up0002" x="198" y="198" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 up0003" x="0" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 left0000" x="0" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 left0001" x="380" y="396" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 left0002" x="190" y="396" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 left0003" x="0" y="198" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 down0000" x="100" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 down0001" x="594" y="324" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 down0002" x="0" y="396" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 0 down0003" x="396" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 right0000" x="594" y="486" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 right0001" x="594" y="0" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 right0002" x="388" y="198" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 right0003" x="198" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 up0000" x="200" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 up0001" x="594" y="162" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 up0002" x="198" y="198" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 up0003" x="0" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 left0000" x="0" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 left0001" x="380" y="396" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 left0002" x="190" y="396" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 left0003" x="0" y="198" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 down0000" x="100" y="586" width="100" height="100" frameX="-72" frameY="-72" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 down0001" x="594" y="324" width="162" height="162" frameX="-41" frameY="-41" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 down0002" x="0" y="396" width="190" height="190" frameX="-27" frameY="-27" frameWidth="244" frameHeight="244"/>
+	<SubTexture name="note impact 1 down0003" x="396" y="0" width="198" height="198" frameX="-23" frameY="-23" frameWidth="244" frameHeight="244"/>
+</TextureAtlas>

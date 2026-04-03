@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="overseer-redstatic.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="static0000" x="2" y="2" width="472" height="283"/>
+	<SubTexture name="static0001" x="476" y="2" width="472" height="283"/>
+</TextureAtlas>

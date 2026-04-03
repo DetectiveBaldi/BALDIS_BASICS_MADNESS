@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="pencil-throw.png">
+    <SubTexture name="throw0000" x="106" y="32" width="18" height="7" frameX="-323" frameY="-180" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0001" x="124" y="32" width="21" height="7" frameX="-314" frameY="-180" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0002" x="62" y="68" width="23" height="7" frameX="-305" frameY="-180" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0003" x="109" y="55" width="25" height="9" frameX="-295" frameY="-179" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0004" x="0" y="68" width="29" height="9" frameX="-282" frameY="-179" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0005" x="29" y="68" width="33" height="9" frameX="-268" frameY="-179" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0006" x="106" y="21" width="38" height="11" frameX="-251" frameY="-178" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0007" x="65" y="55" width="44" height="11" frameX="-231" frameY="-178" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0008" x="81" y="40" width="53" height="13" frameX="-206" frameY="-177" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0009" x="0" y="55" width="65" height="13" frameX="-174" frameY="-177" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0010" x="0" y="40" width="81" height="15" frameX="-134" frameY="-176" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0011" x="0" y="21" width="106" height="19" frameX="-79" frameY="-174" frameWidth="368" frameHeight="368" />
+    <SubTexture name="throw0012" x="0" y="0" width="146" height="21" frameX="-1" frameY="-173" frameWidth="368" frameHeight="368" />
+</TextureAtlas>

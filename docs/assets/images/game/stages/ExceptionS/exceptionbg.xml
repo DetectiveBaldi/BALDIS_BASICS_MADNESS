@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="exceptionbg.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="g00000" x="2" y="2" width="480" height="360"/>
+	<SubTexture name="g10000" x="484" y="2" width="480" height="360"/>
+	<SubTexture name="g10001" x="966" y="2" width="480" height="360"/>
+	<SubTexture name="g10002" x="1448" y="2" width="480" height="360"/>
+	<SubTexture name="g10003" x="1930" y="2" width="480" height="360"/>
+	<SubTexture name="g10004" x="2412" y="2" width="480" height="360"/>
+	<SubTexture name="g20000" x="2894" y="2" width="480" height="360"/>
+	<SubTexture name="g20001" x="3376" y="2" width="480" height="360"/>
+	<SubTexture name="g20002" x="2" y="364" width="480" height="360"/>
+	<SubTexture name="g20003" x="484" y="364" width="480" height="360"/>
+	<SubTexture name="gf0000" x="2" y="2" width="480" height="360"/>
+	<SubTexture name="gf0001" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="gf0002" x="1448" y="364" width="480" height="360"/>
+	<SubTexture name="gf0003" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="gf0004" x="1930" y="364" width="480" height="360"/>
+	<SubTexture name="gf0005" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="gn0000" x="2412" y="364" width="480" height="360"/>
+	<SubTexture name="gn0001" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="gn0002" x="2894" y="364" width="480" height="360"/>
+	<SubTexture name="ne0000" x="3376" y="364" width="480" height="360"/>
+	<SubTexture name="ne0001" x="3376" y="364" width="480" height="360"/>
+	<SubTexture name="ne0002" x="2" y="726" width="480" height="360"/>
+	<SubTexture name="ne0003" x="2" y="726" width="480" height="360"/>
+	<SubTexture name="ne0004" x="484" y="726" width="480" height="360"/>
+	<SubTexture name="ne0005" x="484" y="726" width="480" height="360"/>
+	<SubTexture name="ne0006" x="966" y="726" width="480" height="360"/>
+	<SubTexture name="ne0007" x="966" y="726" width="480" height="360"/>
+	<SubTexture name="ne0008" x="1448" y="726" width="480" height="360"/>
+	<SubTexture name="ne0009" x="1448" y="726" width="480" height="360"/>
+	<SubTexture name="ne0010" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="ne0011" x="966" y="364" width="480" height="360"/>
+	<SubTexture name="ni0000" x="1930" y="726" width="480" height="360"/>
+	<SubTexture name="off0000" x="2412" y="726" width="480" height="360"/>
+	<SubTexture name="on0000" x="2894" y="726" width="480" height="360"/>
+	<SubTexture name="room0000" x="3376" y="726" width="480" height="360"/>
+	<SubTexture name="gep0000" x="2" y="1088" width="480" height="360"/>
+	<SubTexture name="pc0000" x="484" y="1088" width="480" height="360"/>
+	<SubTexture name="nl0000" x="2894" y="364" width="480" height="360"/>
+	<SubTexture name="nl0001" x="966" y="1088" width="480" height="360"/>
+</TextureAtlas>

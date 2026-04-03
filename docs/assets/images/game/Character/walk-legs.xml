@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="walk-legs.png">
+	<SubTexture name="legs0000" x="4" y="4" width="256" height="256"/>
+	<SubTexture name="legs0001" x="4" y="4" width="256" height="256"/>
+	<SubTexture name="legs0002" x="264" y="4" width="256" height="256"/>
+	<SubTexture name="legs0003" x="264" y="4" width="256" height="256"/>
+	<SubTexture name="legs0004" x="524" y="4" width="256" height="256"/>
+	<SubTexture name="legs0005" x="524" y="4" width="256" height="256"/>
+	<SubTexture name="legs0006" x="784" y="4" width="256" height="256"/>
+	<SubTexture name="legs0007" x="784" y="4" width="256" height="256"/>
+	<SubTexture name="legs0008" x="1044" y="4" width="256" height="256"/>
+	<SubTexture name="legs0009" x="1044" y="4" width="256" height="256"/>
+	<SubTexture name="legs0010" x="1304" y="4" width="256" height="256"/>
+	<SubTexture name="legs0011" x="1304" y="4" width="256" height="256"/>
+	<SubTexture name="legs0012" x="1564" y="4" width="256" height="256"/>
+	<SubTexture name="legs0013" x="1564" y="4" width="256" height="256"/>
+	<SubTexture name="legs0014" x="1824" y="4" width="256" height="256"/>
+	<SubTexture name="legs0015" x="1824" y="4" width="256" height="256"/>
+	<SubTexture name="legs0016" x="2084" y="4" width="256" height="256"/>
+	<SubTexture name="legs0017" x="2084" y="4" width="256" height="256"/>
+	<SubTexture name="legs0018" x="2084" y="4" width="256" height="256"/>
+	<SubTexture name="legs0019" x="2084" y="4" width="256" height="256"/>
+	<SubTexture name="legs0020" x="1824" y="4" width="256" height="256"/>
+	<SubTexture name="legs0021" x="1824" y="4" width="256" height="256"/>
+	<SubTexture name="legs0022" x="1564" y="4" width="256" height="256"/>
+	<SubTexture name="legs0023" x="1564" y="4" width="256" height="256"/>
+	<SubTexture name="legs0024" x="1304" y="4" width="256" height="256"/>
+	<SubTexture name="legs0025" x="1304" y="4" width="256" height="256"/>
+	<SubTexture name="legs0026" x="1044" y="4" width="256" height="256"/>
+	<SubTexture name="legs0027" x="1044" y="4" width="256" height="256"/>
+	<SubTexture name="legs0028" x="784" y="4" width="256" height="256"/>
+	<SubTexture name="legs0029" x="784" y="4" width="256" height="256"/>
+	<SubTexture name="legs0030" x="524" y="4" width="256" height="256"/>
+	<SubTexture name="legs0031" x="524" y="4" width="256" height="256"/>
+	<SubTexture name="legs0032" x="264" y="4" width="256" height="256"/>
+	<SubTexture name="legs0033" x="264" y="4" width="256" height="256"/>
+	<SubTexture name="legs0034" x="4" y="4" width="256" height="256"/>
+	<SubTexture name="legs0035" x="4" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0000" x="2344" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0001" x="2344" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0002" x="2604" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0003" x="2864" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0004" x="3124" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0005" x="3384" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0006" x="4" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0007" x="264" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0008" x="524" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0009" x="524" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0010" x="784" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0011" x="264" y="264" width="256" height="256"/>
+	<SubTexture name="legs miss0012" x="3384" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0013" x="3124" y="4" width="256" height="256"/>
+	<SubTexture name="legs miss0014" x="2604" y="4" width="256" height="256"/>
+</TextureAtlas>
